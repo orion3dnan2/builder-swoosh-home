@@ -19,7 +19,7 @@ export default function Login() {
     rememberMe: false
   });
 
-    const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
@@ -46,19 +46,19 @@ export default function Login() {
     try {
       // محاكاة عملية تسجيل الدخول
       await new Promise(resolve => setTimeout(resolve, 1500));
-
+      
       // في التطبيق الحقيقي، ستتم عملية المصادقة هنا
       console.log("Login successful:", formData);
-
+      
       // حفظ بيانات المستخدم (محاكاة)
       localStorage.setItem('user', JSON.stringify({
         username: formData.username,
         loginTime: new Date().toISOString()
       }));
-
+      
       // توجه إلى الصفحة الرئيسية
       navigate('/');
-
+      
     } catch (err) {
       setError("حدث خطأ في تسجيل الدخول. يرجى المحاولة مرة أخرى.");
     } finally {
@@ -143,13 +143,27 @@ export default function Login() {
                   </Link>
                 </div>
 
+                {error && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-center arabic">
+                    ⚠️ {error}
+                  </div>
+                )}
+
                 <Button 
                   type="submit" 
                   variant="sudan"
                   size="lg"
                   className="w-full text-lg py-3 arabic"
+                  disabled={isLoading}
                 >
-                  تسجيل الدخول →
+                  {isLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white ml-2"></div>
+                      جاري تسجيل الدخول...
+                    </>
+                  ) : (
+                    "تسجيل الدخول →"
+                  )}
                 </Button>
 
                 <div className="text-center">
@@ -177,6 +191,17 @@ export default function Login() {
                 <li>📞 تاجر / زبون: merchant@example.com</li>
                 <li>👥 خدمة الزبائن: customer@example.com</li>
               </ul>
+            </CardContent>
+          </Card>
+
+          {/* Demo Instructions */}
+          <Card className="mt-4 bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+            <CardContent className="p-4">
+              <h3 className="font-semibold text-green-800 mb-2 arabic">للتجربة</h3>
+              <p className="text-sm text-green-700 arabic">
+                يمكنك استخدام أي اسم مستخدم وكلمة مرور (على الأقل 6 أحرف) للتجربة. 
+                سيتم توجيهك للصفحة الرئيسية بعد نجاح العملية.
+              </p>
             </CardContent>
           </Card>
         </div>
