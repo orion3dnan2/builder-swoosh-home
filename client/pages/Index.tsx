@@ -56,9 +56,9 @@ export default function Index() {
     },
   ];
 
-  const services = [
+    const services = [
     {
-      icon: ShoppingBag,
+      icon: Store,
       title: "السوق التجاري",
       description: "اكتشف منتجات سودانية أصيلة من تجار موثوقين",
       href: "/marketplace",
@@ -66,7 +66,7 @@ export default function Index() {
       bgColor: "bg-blue-50 dark:bg-blue-900/20",
     },
     {
-      icon: Building2,
+      icon: Factory,
       title: "دليل الشركات",
       description: "تواصل مع الشركات والمؤسسات السودانية في الخليج",
       href: "/companies",
@@ -74,7 +74,7 @@ export default function Index() {
       bgColor: "bg-green-50 dark:bg-green-900/20",
     },
     {
-      icon: Briefcase,
+      icon: UserCheck,
       title: "لوحة الوظائف",
       description: "ابحث عن فرص عمل مناسبة أو أعلن عن وظائف شاغرة",
       href: "/jobs",
@@ -82,7 +82,7 @@ export default function Index() {
       bgColor: "bg-purple-50 dark:bg-purple-900/20",
     },
     {
-      icon: Wrench,
+      icon: Settings,
       title: "الخدمات المهنية",
       description: "احصل على خدمات مهنية متخصصة من خبراء سودانيين",
       href: "/services",
@@ -90,7 +90,7 @@ export default function Index() {
       bgColor: "bg-orange-50 dark:bg-orange-900/20",
     },
     {
-      icon: Megaphone,
+      icon: Volume2,
       title: "الإعلانات",
       description: "روج لأعمالك وخدماتك للمجتمع السوداني",
       href: "/ads",
