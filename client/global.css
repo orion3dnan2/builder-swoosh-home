@@ -14,6 +14,21 @@
    * Sudanese cultural colors with modern aesthetics
    */
   :root {
+    /* Font CSS Variables */
+    --font-amiri: "Amiri", "Noto Sans Arabic", serif;
+    --font-cairo: "Cairo", "Noto Sans Arabic", sans-serif;
+    --font-tajawal: "Tajawal", "Noto Sans Arabic", sans-serif;
+    --font-noto-kufi: "Noto Kufi Arabic", "Cairo", sans-serif;
+    --font-ibm-plex: "IBM Plex Sans Arabic", "Cairo", sans-serif;
+    --font-lateef: "Lateef", "Amiri", serif;
+    --font-almarai: "Almarai", "Cairo", sans-serif;
+    --font-markazi: "Markazi Text", "Amiri", serif;
+    --font-kufi-standard: "Amiri", "Noto Sans Arabic", serif;
+    --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-roboto: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-poppins: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-montserrat: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-open-sans: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     /* Light Theme - Base Colors */
     --background: 0 0% 100%;
     --foreground: 215 25% 27%;
