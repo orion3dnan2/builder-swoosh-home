@@ -45,9 +45,66 @@ export default function Services() {
           </CardContent>
         </Card>
 
-        {/* Placeholder Content */}
-        <div className="text-center py-20">
-          <Wrench className="w-24 h-24 text-gray-300 mx-auto mb-6" />
+                {/* Service Categories Preview */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {/* Construction & Repairs */}
+          <Card className="text-center p-6 border-2 border-dashed border-gray-300 hover:border-primary-400 transition-colors">
+            <div className="w-16 h-16 mx-auto mb-4 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center">
+              <Hammer className="w-8 h-8 text-orange-600" />
+            </div>
+            <h3 className="text-lg font-semibold mb-2 arabic">البناء والتشييد</h3>
+            <p className="text-sm text-gray-600 arabic">مقاولون ومختصو التشييد والصيانة</p>
+          </Card>
+
+          {/* Design & Arts */}
+          <Card className="text-center p-6 border-2 border-dashed border-gray-300 hover:border-primary-400 transition-colors">
+            <div className="w-16 h-16 mx-auto mb-4 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center">
+              <PaintBrush className="w-8 h-8 text-purple-600" />
+            </div>
+            <h3 className="text-lg font-semibold mb-2 arabic">التصميم والفنون</h3>
+            <p className="text-sm text-gray-600 arabic">مصممون وفنانون متخصصون</p>
+          </Card>
+
+          {/* Automotive */}
+          <Card className="text-center p-6 border-2 border-dashed border-gray-300 hover:border-primary-400 transition-colors">
+            <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center">
+              <Car className="w-8 h-8 text-blue-600" />
+            </div>
+            <h3 className="text-lg font-semibold mb-2 arabic">السيارات</h3>
+            <p className="text-sm text-gray-600 arabic">صيانة وإصلاح المركبات</p>
+          </Card>
+
+          {/* Home Services */}
+          <Card className="text-center p-6 border-2 border-dashed border-gray-300 hover:border-primary-400 transition-colors">
+            <div className="w-16 h-16 mx-auto mb-4 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center">
+              <Home className="w-8 h-8 text-green-600" />
+            </div>
+            <h3 className="text-lg font-semibold mb-2 arabic">الخدمات المنزلية</h3>
+            <p className="text-sm text-gray-600 arabic">تنظيف وصيانة منزلية</p>
+          </Card>
+
+          {/* Technology */}
+          <Card className="text-center p-6 border-2 border-dashed border-gray-300 hover:border-primary-400 transition-colors">
+            <div className="w-16 h-16 mx-auto mb-4 bg-indigo-100 dark:bg-indigo-900/20 rounded-full flex items-center justify-center">
+              <Laptop className="w-8 h-8 text-indigo-600" />
+            </div>
+            <h3 className="text-lg font-semibold mb-2 arabic">التكنولوجيا</h3>
+            <p className="text-sm text-gray-600 arabic">برمجة وتطوير وإصلاح أجهزة</p>
+          </Card>
+
+          {/* Health & Wellness */}
+          <Card className="text-center p-6 border-2 border-dashed border-gray-300 hover:border-primary-400 transition-colors">
+            <div className="w-16 h-16 mx-auto mb-4 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center">
+              <Heart className="w-8 h-8 text-red-600" />
+            </div>
+            <h3 className="text-lg font-semibold mb-2 arabic">الصحة والعافية</h3>
+            <p className="text-sm text-gray-600 arabic">خدمات طبية ورياضية</p>
+          </Card>
+        </div>
+
+        {/* Coming Soon Message */}
+        <div className="text-center py-12">
+          <Settings className="w-20 h-20 text-gray-300 mx-auto mb-6" />
           <h2 className="text-2xl font-bold text-gray-400 mb-4 arabic">
             قريباً...
           </h2>
@@ -56,7 +113,7 @@ export default function Services() {
           </p>
           <Button
             size="lg"
-            className="bg-gradient-to-r from-sudan-brown to-amber-700 text-white hover:from-sudan-brown/90 hover:to-amber-700/90 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic px-8"
+            className="bg-gradient-to-r from-primary-600 to-secondary-600 text-white hover:from-primary-700 hover:to-secondary-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic px-8"
           >
             كن أول من يعلم عند الإطلاق 🔔
           </Button>
