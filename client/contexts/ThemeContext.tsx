@@ -12,7 +12,6 @@ interface ThemeContextType {
   arabicFont: ArabicFontFamily;
   englishFont: EnglishFontFamily;
   toggleTheme: () => void;
-  toggleLanguage: () => void;
   setArabicFont: (font: ArabicFontFamily) => void;
   setEnglishFont: (font: EnglishFontFamily) => void;
   t: (key: string) => string;
@@ -142,7 +141,7 @@ const translations = {
     "dashboard.system_settings_desc": "صلاحيات وإعدادات الأمان",
     "dashboard.content_management": "إدارة المحتوى",
     "dashboard.content_management_desc": "النصوص والصور والترجمات",
-    "dashboard.view_site": "عرض الموقع",
+    "dashboard.view_site": "عرض ��لموقع",
     "dashboard.super_admin": "مدير أعلى",
     "dashboard.urgent": "عاجل",
 
