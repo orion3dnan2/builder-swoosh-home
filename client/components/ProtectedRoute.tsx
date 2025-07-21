@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '@/lib/auth';
+import { useAuth } from '@/contexts/AuthContext';
 import { UserRole } from '../../shared/types';
 
 interface ProtectedRouteProps {
@@ -23,7 +23,16 @@ export function ProtectedRoute({
   
   // Use try-catch to handle any potential errors
   try {
-    const { isAuthenticated, hasRole, hasPermission } = useAuth();
+    const { isAuthenticated, isLoading, hasRole, hasPermission } = useAuth();
+
+    // Show loading state while checking authentication
+    if (isLoading) {
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+        </div>
+      );
+    }
 
     // Check if user is authenticated
     if (!isAuthenticated) {
@@ -77,7 +86,16 @@ export function MerchantRoute({ children }: { children: ReactNode }) {
 
 export function AdminOrMerchantRoute({ children }: { children: ReactNode }) {
   try {
-    const { isSuperAdmin, isMerchant } = useAuth();
+    const { isSuperAdmin, isMerchant, isLoading } = useAuth();
+    
+    // Show loading state
+    if (isLoading) {
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+        </div>
+      );
+    }
     
     if (!isSuperAdmin && !isMerchant) {
       return <Navigate to="/unauthorized" replace />;
