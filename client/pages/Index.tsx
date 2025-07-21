@@ -33,26 +33,22 @@ export default function Index() {
     {
       icon: Users,
       number: "100K+",
-      labelKey: "stats.users",
-      label: "مستخدم نشط",
+      labelKey: "home.stats.users",
     },
     {
       icon: Building2,
       number: "5K+",
-      labelKey: "stats.companies",
-      label: "شركة مسجلة",
+      labelKey: "home.stats.companies",
     },
     {
       icon: ShoppingBag,
       number: "50K+",
-      labelKey: "stats.products",
-      label: "منتج متوفر",
+      labelKey: "home.stats.products",
     },
     {
       icon: Briefcase,
       number: "2K+",
-      labelKey: "stats.jobs",
-      label: "فرصة عمل",
+      labelKey: "home.stats.jobs",
     },
   ];
 
@@ -83,7 +79,7 @@ export default function Index() {
     },
     {
       icon: Settings,
-      title: "الخدمات المهنية",
+      title: "الخ��مات المهنية",
       description: "احصل على خدمات مهنية متخصصة من خبراء سودانيين",
       href: "/services",
       color: "from-orange-500 to-orange-600",
