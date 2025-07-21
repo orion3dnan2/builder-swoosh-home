@@ -68,12 +68,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
                         <div className="flex items-center gap-4 md:gap-8">
               {/* Logo */}
               <Link to="/" className="flex items-center gap-3">
-                                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg">
-                  <span className="text-primary-600 text-xl font-bold">🇸🇩</span>
+                                                <div className="w-8 h-8 md:w-12 md:h-12 bg-white rounded-xl flex items-center justify-center shadow-lg">
+                  <span className="text-primary-600 text-lg md:text-xl font-bold">🇸🇩</span>
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold arabic">البيت السوداني</h1>
-                  <p className="text-sm opacity-90">سوق وخدمات السودان</p>
+                  <h1 className="text-lg md:text-2xl font-bold arabic">البيت السوداني</h1>
+                  <p className="text-xs md:text-sm opacity-90 hidden sm:block">سوق وخدمات السودان</p>
                 </div>
               </Link>
 
@@ -172,7 +172,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <h4 className="text-lg font-semibold mb-4 arabic">الأعمال</h4>
               <ul className="space-y-2 arabic">
                 <li><Link to="/companies" className="text-gray-300 hover:text-white">الشركات</Link></li>
-                <li><Link to="/jobs" className="text-gray-300 hover:text-white">الوظا��ف</Link></li>
+                <li><Link to="/jobs" className="text-gray-300 hover:text-white">��لوظا��ف</Link></li>
                 <li><Link to="/ads" className="text-gray-300 hover:text-white">الإعلانات</Link></li>
               </ul>
             </div>
