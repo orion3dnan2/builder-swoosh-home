@@ -88,7 +88,7 @@ const translations = {
     "home.testimonials.subtitle": "ماذا يقول عملاؤنا عن تجربتهم معنا",
     "home.cta.title": "ابدأ رحلتك معنا اليوم",
     "home.cta.subtitle":
-      "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم",
+      "انضم إلى آلاف السودانيين الذين يستخدمون البي�� السوداني لتنمية أعمالهم وخدماتهم",
     "home.cta.create_account": "إنشاء حساب مجاني",
     "home.stats.users": "مستخدم نشط",
     "home.stats.companies": "شركة مسجلة",
@@ -181,7 +181,7 @@ const translations = {
     "stores.phone": "رقم الهاتف",
     "stores.location": "الموقع",
     "stores.status": "الحالة",
-    "stores.total_products": "إجمالي المنتجات",
+    "stores.total_products": "إج��الي المنتجات",
     "stores.total_orders": "إجمالي الطلبات",
     "stores.revenues": "الإيرادات",
     "stores.confirm_action": "تأكيد الإجراء",
@@ -629,14 +629,25 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   // Translation function - Arabic only
   const t = (key: string): string => {
-    const keys = key.split(".");
-    let value: any = translations["ar"]; // Always use Arabic translations
+    try {
+      const keys = key.split(".");
+      let value: any = translations["ar"]; // Always use Arabic translations
 
-    for (const k of keys) {
-      value = value?.[k];
+      for (const k of keys) {
+        if (value && typeof value === 'object' && k in value) {
+          value = value[k];
+        } else {
+          // If key is not found, return a fallback or the key itself
+          console.warn(`Translation key not found: ${key}`);
+          return key;
+        }
+      }
+
+      return typeof value === 'string' ? value : key;
+    } catch (error) {
+      console.error(`Translation error for key: ${key}`, error);
+      return key;
     }
-
-    return value || key;
   };
 
   const isRTL = language === "ar";
