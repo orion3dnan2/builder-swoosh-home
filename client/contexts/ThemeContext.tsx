@@ -51,7 +51,7 @@ const translations = {
     "common.edit": "تعديل",
     "common.delete": "حذف",
     "common.view": "عرض",
-    "common.details": "التف��صيل",
+    "common.details": "التفاصيل",
     "common.more": "المزيد",
     "common.loading": "جاري التحميل...",
     "common.success": "تم بنجاح",
@@ -76,7 +76,7 @@ const translations = {
       "اكتشف منتجات سودانية أصيلة من تجار موثوقين",
     "home.services.companies": "دليل الشركات",
     "home.services.companies_desc":
-      "تواصل مع ��لشركات والمؤسسات السودانية في الخليج",
+      "تواصل مع الشركات والمؤسسات السودانية في الخليج",
     "home.services.jobs": "لوحة الوظائف",
     "home.services.jobs_desc": "ابحث عن فرص عمل مناسبة أو أعلن عن وظائف شاغرة",
     "home.services.professional": "الخدمات ا��مهنية",
@@ -135,7 +135,7 @@ const translations = {
     "dashboard.user_management": "إدارة المستخدمين",
     "dashboard.user_management_desc": "عرض وإدارة حسابات المستخدمين",
     "dashboard.store_management": "إدارة المتاجر",
-    "dashboard.store_management_desc": "مراجعة وإدارة المتاجر المسجلة",
+    "dashboard.store_management_desc": "مر��جعة وإدارة المتاجر المسجلة",
     "dashboard.appearance": "تخصيص المظهر",
     "dashboard.appearance_desc": "تغيير الألوان والصور والخلفيات",
     "dashboard.system_settings": "إعدادات النظام",
@@ -181,7 +181,7 @@ const translations = {
     "stores.email": "البريد الإلكتروني",
     "stores.phone": "رقم الهاتف",
     "stores.location": "الموقع",
-    "stores.status": "الحالة",
+    "stores.status": "الحا��ة",
     "stores.total_products": "إجمالي المنتجات",
     "stores.total_orders": "إجمالي الطلبات",
     "stores.revenues": "الإيرادات",
@@ -262,6 +262,16 @@ const translations = {
     "dashboard.time.1_hour_ago": "منذ ساعة",
     "dashboard.time.2_hours_ago": "منذ ساعتين",
     "dashboard.by": "بواسطة",
+
+    // Common pages
+    "common.coming_soon": "قريباً - قيد التطوير",
+    "common.under_development": "صفحة قيد التطوير",
+    "common.back_to_dashboard": "العودة للوحة الرئيسية",
+    "users.coming_soon_desc": "صفحة إدارة المستخدمين ستكون متاحة قريباً بميزات شاملة لإدارة حسابات المستخدمين",
+    "appearance.coming_soon_desc": "صفحة تخصيص المظهر ستكون متاحة قريباً لتغيير الأ��وان والصور والخلفيات",
+    "system.coming_soon_desc": "صفحة إعدادات النظام ستكون متاحة قريباً لإدارة الصلاحيات وإعدادات الأمان",
+    "content.coming_soon_desc": "صفحة إدارة المحتوى ستكون متاحة قريباً لإدارة النصوص والصور والترجمات",
+    "settings.current_settings": "إعدادات التطبيق الحالية",
 
     // Error messages
     "error.404": "الصفحة غير موجودة",
