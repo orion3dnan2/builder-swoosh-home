@@ -26,6 +26,7 @@ import {
 import { useAppSettings } from "@/lib/appSettings";
 import { useAuth } from "@/lib/auth";
 import { useTheme } from "@/contexts/ThemeContext";
+import { FontSettings } from "@/components/FontSettings";
 
 export default function AdminSettings() {
   const { user } = useAuth();
