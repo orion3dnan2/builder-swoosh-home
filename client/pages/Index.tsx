@@ -40,7 +40,7 @@ export default function Index() {
     {
       icon: <Building className="w-8 h-8 text-primary-600" />,
       title: "دليل الشركات",
-      description: "دليل شامل للشركات والأعمال السودانية",
+      description: "دليل شامل ��لشركات والأعمال السودانية",
       href: "/companies"
     },
     {
@@ -102,13 +102,13 @@ export default function Index() {
         <div className="absolute inset-0 bg-gradient-to-r from-primary-900/50 to-secondary-900/40"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 arabic">
+                        <h1 className="text-5xl md:text-6xl font-bold mb-6 arabic text-white drop-shadow-2xl">
               البيت السوداني
             </h1>
-            <p className="text-xl md:text-2xl mb-8 arabic opacity-95">
+            <p className="text-xl md:text-2xl mb-8 arabic text-white drop-shadow-lg">
               سوق وخدمات وشركات السودان في الخليج والعالم
             </p>
-            <p className="text-lg mb-10 arabic opacity-90 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg mb-10 arabic text-white/90 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
               انضم واشترك لتحصل على أفضل العروض والخدمات من البيت السوداني، شبكة التواصل التجاري الأولى للسودانيين في الخليج
             </p>
                                     <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -149,7 +149,7 @@ export default function Index() {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4 arabic">لماذا البيت السوداني؟</h2>
+            <h2 className="text-4xl font-bold text-gray-800 mb-4 arabic">لماذا البيت ال��وداني؟</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto arabic">
               نقدم لك أفضل الخدمات السودانية مع ضمان الجودة والأمان
             </p>
