@@ -381,6 +381,7 @@ export default function AdminDashboard() {
           </Card>
         </div>
       </div>
+      <TranslationTest />
     </div>
   );
 }
