@@ -7,11 +7,12 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Layout } from "@/components/Layout";
 import { LogIn, Eye, EyeOff } from "lucide-react";
-import { AuthService } from "@/lib/auth";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -40,7 +41,7 @@ export default function Login() {
     }
 
     try {
-      const user = await AuthService.login({
+      const user = await login({
         username: formData.username,
         password: formData.password
       });
@@ -137,7 +138,7 @@ export default function Login() {
                     </Label>
                   </div>
                   <Link to="/forgot-password" className="text-sm text-primary-600 hover:underline arabic font-semibold">
-                    نسيت كلمة المرور؟
+                    نسيت كل��ة المرور؟
                   </Link>
                 </div>
 
