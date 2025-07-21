@@ -76,7 +76,7 @@ export default function Index() {
     },
     {
       icon: <MapPin className="w-6 h-6 text-sudan-blue" />,
-      title: "توصي�� سريع",
+      title: "توصيل سريع",
       description: "خدمة توصيل سريعة لجميع دول الخليج"
     },
     {
@@ -157,9 +157,9 @@ export default function Index() {
                   </div>
                   <h3 className="text-xl font-bold mb-3 arabic text-gray-800">{service.title}</h3>
                   <p className="text-gray-600 mb-6 arabic leading-relaxed">{service.description}</p>
-                  <Link to={service.href}>
-                    <Button className="w-full bg-sudan-blue hover:bg-sudan-blue/90 arabic">
-                      اكتشف المزيد
+                                    <Link to={service.href}>
+                    <Button variant="sudan" className="w-full arabic">
+                      اكتشف المزيد →
                     </Button>
                   </Link>
                 </CardContent>
@@ -200,9 +200,9 @@ export default function Index() {
                 <p className="mb-6 arabic opacity-90">
                   انضم إلى آلاف العملاء الراضين في البيت السوداني
                 </p>
-                <Link to="/register">
-                  <Button size="lg" className="w-full bg-white text-sudan-blue hover:bg-gray-100 arabic">
-                    سجل دخ��لك الآن →
+                                <Link to="/register">
+                  <Button size="lg" className="w-full bg-white text-sudan-blue hover:bg-gray-100 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic">
+                    سجل دخولك الآن →
                   </Button>
                 </Link>
               </div>
@@ -220,9 +220,9 @@ export default function Index() {
           <p className="text-xl mb-8 arabic opacity-90 max-w-2xl mx-auto">
             انضم إلى الآلاف من العملاء الراضين في البيت السوداني
           </p>
-          <Link to="/register">
-            <Button size="lg" className="bg-white text-sudan-blue hover:bg-gray-100 px-12 py-4 text-lg arabic">
-              سجل دخولك الآن
+                    <Link to="/register">
+            <Button size="lg" className="bg-white text-sudan-blue hover:bg-gray-100 px-12 py-4 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic">
+              سجل دخولك الآن →
             </Button>
           </Link>
         </div>
