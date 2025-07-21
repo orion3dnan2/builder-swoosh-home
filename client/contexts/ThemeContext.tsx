@@ -81,7 +81,7 @@ const translations = {
     "home.services.ads": "الإعلانات",
     "home.services.ads_desc": "روج لأعمالك وخدماتك للمجتمع السوداني",
     "home.services.discover": "اكتشف المزيد",
-    "home.testimonials.title": "آراء عملائنا",
+    "home.testimonials.title": "آراء عملائ��ا",
     "home.testimonials.subtitle": "ماذا يقول عملاؤنا عن تجربتهم معنا",
     "home.cta.title": "ابدأ رحلتك معنا اليوم",
     "home.cta.subtitle":
@@ -149,7 +149,7 @@ const translations = {
     "stores.active_stores": "مت��جر نشطة",
     "stores.pending_stores": "في الانتظار",
     "stores.suspended_stores": "معلقة",
-    "stores.search_placeholder": "البحث في المتاجر...",
+    "stores.search_placeholder": "ا��بحث في المتاجر...",
     "stores.all_statuses": "جميع الحالات",
     "stores.status_active": "نشط",
     "stores.status_pending": "في الانتظار",
@@ -189,7 +189,7 @@ const translations = {
     "stores.action_suspend": "تعليق",
     "stores.action_reactivate": "إعادة تفعيل",
     "stores.success_approve": "تم اعتماد المتجر بنجاح! ✅",
-    "stores.success_suspend": "تم تعليق ا��متجر بنجاح! ⚠️",
+    "stores.success_suspend": "تم تعليق المتجر بنجاح! ⚠️",
     "stores.success_reactivate": "تم إعادة تفعيل المتجر بنجاح! ✅",
     "stores.reviews_count": "تقييم",
 
@@ -428,6 +428,12 @@ const translations = {
     "register.agree_terms": "I agree to the Terms and Conditions",
     "register.already_have_account": "Already have an account?",
     "register.login_here": "Sign in here",
+    "login.demo_accounts": "Demo Accounts",
+    "login.demo.super_admin": "Super Admin",
+    "login.demo.merchant": "Merchant",
+    "login.demo.username": "Username",
+    "login.demo.password": "Password",
+    "login.demo.use_account": "Use this account",
 
     // Error messages
     "error.404": "Page Not Found",
