@@ -110,7 +110,7 @@ const translations = {
     "language.toggle": "تبديل اللغة",
 
     // Dashboard
-    "dashboard.admin": "لوحة إدارة ��لتطبيق",
+    "dashboard.admin": "لوحة إدارة التطبيق",
     "dashboard.merchant": "لوحة إدارة المتجر",
     "dashboard.welcome": "مرحباً",
     "dashboard.overview": "نظرة عامة",
@@ -130,7 +130,7 @@ const translations = {
     "dashboard.new_registrations": "تسجيلات جديدة",
     "dashboard.total_orders": "إجمالي الطلبات",
     "dashboard.app_settings": "إعدادات التطبيق",
-    "dashboard.app_settings_desc": "تخصيص المظه�� والألوان والخطوط",
+    "dashboard.app_settings_desc": "تخصيص المظهر والألوان والخطوط",
     "dashboard.user_management": "إدارة المستخدمين",
     "dashboard.user_management_desc": "عرض وإدارة حسابات المستخدمين",
     "dashboard.store_management": "إدارة المتاجر",
@@ -152,7 +152,7 @@ const translations = {
     "stores.active_stores": "مت��جر نشطة",
     "stores.pending_stores": "في الانتظار",
     "stores.suspended_stores": "معلقة",
-    "stores.search_placeholder": "البحث في المتاجر...",
+    "stores.search_placeholder": "البحث في الم��اجر...",
     "stores.all_statuses": "جميع الحالات",
     "stores.status_active": "نشط",
     "stores.status_pending": "في الانتظار",
@@ -175,7 +175,7 @@ const translations = {
     "stores.store_details_desc": "معلومات شاملة عن المتجر ونشاطه",
     "stores.basic_info": "المعلومات الأساسية",
     "stores.performance_stats": "إحصائيات الأداء",
-    "stores.store_name": "اسم المتجر",
+    "stores.store_name": "اسم المتج��",
     "stores.owner": "المالك",
     "stores.email": "البريد الإلكتروني",
     "stores.phone": "رقم الهاتف",
@@ -197,7 +197,7 @@ const translations = {
     "stores.reviews_count": "تقييم",
 
     // Login & Register
-    "login.title": "تسجيل الدخول",
+    "login.title": "تسجيل الدخو��",
     "login.subtitle": "أدخل بياناتك للوصول إلى حسابك",
     "login.username": "اسم المستخدم أو البريد الإلكتروني",
     "login.password": "كلمة المرور",
@@ -216,7 +216,7 @@ const translations = {
     "register.phone": "رقم الهاتف",
     "register.confirm_password": "تأكيد كلمة المرور",
     "register.agree_terms": "أوافق على الشروط والأحكام",
-    "register.already_have_account": "لديك حساب بالفعل؟",
+    "register.already_have_account": "لديك حسا�� بالفعل؟",
     "register.login_here": "سجل دخولك هنا",
     "login.demo_accounts": "حسابات التجربة",
     "login.demo.super_admin": "مدير التطبيق (Super Admin)",
@@ -242,7 +242,7 @@ const translations = {
     "font_settings.english_font": "الخط الإنجليزي",
     "font_settings.arabic_fonts": "الخطوط العربية",
     "font_settings.english_fonts": "الخطوط الإنجليزية",
-    "font_settings.custom_preview": "معاي��ة مخصصة",
+    "font_settings.custom_preview": "معاينة مخصصة",
     "font_settings.arabic_preview_text": "نص المعاينة العربي",
     "font_settings.english_preview_text": "نص المعاينة الإنجليزي",
     "common.selected": "محدد",
@@ -624,7 +624,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   };
 
   const getCurrentFont = () => {
-    return language === 'ar' ? arabicFont : englishFont;
+    return arabicFont; // Always return Arabic font
   };
 
   // Translation function - Arabic only
