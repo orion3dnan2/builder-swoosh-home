@@ -89,7 +89,7 @@ const translations = {
     "home.testimonials.subtitle": "ماذا يقول عملاؤنا عن تجربتهم معنا",
     "home.cta.title": "ابدأ رحلتك معنا اليوم",
     "home.cta.subtitle":
-      "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم",
+      "انضم إلى آلاف السودانيين الذين يستخدمون ��لبيت السوداني لتنمية أعمالهم وخدماتهم",
     "home.cta.create_account": "إنشاء حساب مجاني",
     "home.stats.users": "مستخدم نشط",
     "home.stats.companies": "شركة مسجلة",
@@ -160,7 +160,7 @@ const translations = {
     "stores.status_suspended": "معلق",
     "stores.category": "الفئة",
     "stores.join_date": "تاريخ الانضمام",
-    "stores.last_active": "آخر نش��ط",
+    "stores.last_active": "آخر نشاط",
     "stores.rating": "التقييم",
     "stores.products": "منتج",
     "stores.orders": "طلب",
@@ -504,22 +504,26 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     localStorage.setItem(STORAGE_KEYS.LANGUAGE, language);
   }, [language]);
 
-  // Apply font family
+  // Apply fonts based on current language
   useEffect(() => {
     const root = document.documentElement;
 
-    // Remove previous font classes
-    root.classList.remove(
-      "font-cairo",
-      "font-tajawal",
-      "font-noto-kufi",
-      "font-amiri",
-    );
-    root.classList.add(`font-${fontFamily}`);
+    // Remove all font classes
+    const allFontClasses = [
+      'font-amiri', 'font-cairo', 'font-tajawal', 'font-noto-kufi',
+      'font-ibm-plex', 'font-lateef', 'font-almarai', 'font-markazi', 'font-kufi-standard',
+      'font-inter', 'font-roboto', 'font-poppins', 'font-montserrat', 'font-open-sans'
+    ];
+    root.classList.remove(...allFontClasses);
+
+    // Apply current language font
+    const currentFont = language === 'ar' ? arabicFont : englishFont;
+    root.classList.add(`font-${currentFont}`);
 
     // Store in localStorage
-    localStorage.setItem(STORAGE_KEYS.FONT_FAMILY, fontFamily);
-  }, [fontFamily]);
+    localStorage.setItem(STORAGE_KEYS.ARABIC_FONT, arabicFont);
+    localStorage.setItem(STORAGE_KEYS.ENGLISH_FONT, englishFont);
+  }, [arabicFont, englishFont, language]);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
