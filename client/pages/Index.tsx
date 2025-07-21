@@ -1,174 +1,217 @@
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Layout } from "@/components/Layout";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { 
-  ShoppingBag, 
-  Building, 
-  Briefcase, 
-  Megaphone, 
-  Wrench, 
-  Package,
-  MapPin,
-  Star,
-  TrendingUp,
-  Users,
-  CheckCircle
+  Search, 
+  Star, 
+  TrendingUp, 
+  Users, 
+  MapPin, 
+  Phone, 
+  Mail,
+  ShoppingBag,
+  Building2,
+  Briefcase,
+  Wrench,
+  Megaphone,
+  ArrowLeft,
+  ArrowRight
 } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Index() {
-      const stats = [
-    { icon: "🛍️", value: "+50", label: "متجر متوفر", color: "bg-gradient-to-br from-primary-600 to-primary-800" },
-    { icon: "📦", value: "+1000", label: "منتج متاح", color: "bg-gradient-to-br from-secondary-500 to-secondary-700" },
-    { icon: "👤", value: "+25", label: "أيام فعلي", color: "bg-gradient-to-br from-primary-500 to-primary-700" },
-    { icon: "🏪", value: "+200", label: "خدمة متوفرة", color: "bg-gradient-to-br from-secondary-400 to-secondary-600" },
+  const { t, isRTL } = useTheme();
+
+  const heroStats = [
+    { 
+      icon: Users, 
+      number: "100K+", 
+      labelKey: "stats.users",
+      label: isRTL ? "مستخدم نشط" : "Active Users"
+    },
+    { 
+      icon: Building2, 
+      number: "5K+", 
+      labelKey: "stats.companies",
+      label: isRTL ? "شركة مسجلة" : "Registered Companies"
+    },
+    { 
+      icon: ShoppingBag, 
+      number: "50K+", 
+      labelKey: "stats.products",
+      label: isRTL ? "منتج متوفر" : "Available Products"
+    },
+    { 
+      icon: Briefcase, 
+      number: "2K+", 
+      labelKey: "stats.jobs",
+      label: isRTL ? "فرصة عمل" : "Job Opportunities"
+    }
   ];
 
   const services = [
-        {
-      icon: <ShoppingBag className="w-8 h-8 text-primary-600" />,
-      title: "السوق التجاري",
-      description: "تسوق آمن من المتاجر السودانية المعتمدة",
-      href: "/marketplace"
+    {
+      icon: ShoppingBag,
+      titleKey: "services.marketplace.title",
+      title: isRTL ? "السوق التجاري" : "Marketplace",
+      descKey: "services.marketplace.desc",
+      description: isRTL ? "اكتشف منتجات سودانية أصيلة من تجار موثوقين" : "Discover authentic Sudanese products from trusted merchants",
+      href: "/marketplace",
+      color: "from-blue-500 to-blue-600",
+      bgColor: "bg-blue-50 dark:bg-blue-900/20"
     },
     {
-      icon: <Package className="w-8 h-8 text-secondary-600" />,
-      title: "المنتجات السودانية",
-      description: "أفضل المنتجات ال��قليدية والحديثة من السودان",
-      href: "/products"
+      icon: Building2,
+      titleKey: "services.companies.title", 
+      title: isRTL ? "دليل الشركات" : "Company Directory",
+      descKey: "services.companies.desc",
+      description: isRTL ? "تواصل مع الشركات والمؤسسات السودانية في الخليج" : "Connect with Sudanese companies and institutions in the Gulf",
+      href: "/companies",
+      color: "from-green-500 to-green-600",
+      bgColor: "bg-green-50 dark:bg-green-900/20"
     },
     {
-      icon: <Building className="w-8 h-8 text-primary-600" />,
-      title: "دليل الشركات",
-      description: "دليل شامل ��لشركات والأعمال السودانية",
-      href: "/companies"
+      icon: Briefcase,
+      titleKey: "services.jobs.title",
+      title: isRTL ? "لوحة الوظائف" : "Job Board", 
+      descKey: "services.jobs.desc",
+      description: isRTL ? "ابحث عن فرص عمل مناسبة أو أعلن عن وظائف شاغرة" : "Find suitable job opportunities or post job vacancies",
+      href: "/jobs",
+      color: "from-purple-500 to-purple-600",
+      bgColor: "bg-purple-50 dark:bg-purple-900/20"
     },
     {
-      icon: <Briefcase className="w-8 h-8 text-secondary-600" />,
-      title: "فرص العمل",
-      description: "وظائف متنوعة للمهنيين السودانيين",
-      href: "/jobs"
+      icon: Wrench,
+      titleKey: "services.services.title",
+      title: isRTL ? "الخدمات المهنية" : "Professional Services",
+      descKey: "services.services.desc", 
+      description: isRTL ? "احصل على خدمات مهنية متخصصة من خبراء سودانيين" : "Get specialized professional services from Sudanese experts",
+      href: "/services",
+      color: "from-orange-500 to-orange-600",
+      bgColor: "bg-orange-50 dark:bg-orange-900/20"
     },
     {
-      icon: <Megaphone className="w-8 h-8 text-primary-600" />,
-      title: "الإعلانات والعروض",
-      description: "أحدث العروض والإعلانات التجارية",
-      href: "/ads"
-    },
-    {
-      icon: <Wrench className="w-8 h-8 text-secondary-600" />,
-      title: "الخدمات المهنية",
-      description: "مقدمو خدمات ومهنيون ماهرون",
-      href: "/services"
-    },
+      icon: Megaphone,
+      titleKey: "services.ads.title",
+      title: isRTL ? "الإعلانات" : "Advertisements",
+      descKey: "services.ads.desc",
+      description: isRTL ? "روج لأعمالك وخدماتك للمجتمع السوداني" : "Promote your business and services to the Sudanese community",
+      href: "/ads",
+      color: "from-red-500 to-red-600", 
+      bgColor: "bg-red-50 dark:bg-red-900/20"
+    }
   ];
 
-  const features = [
-        {
-      icon: <CheckCircle className="w-6 h-6 text-primary-600" />,
-      title: "خدمة عملاء مميزة",
-      description: "دعم فني على مدار 24/7 للمستخدمين"
+  const testimonials = [
+    {
+      name: isRTL ? "أحمد محمد" : "Ahmed Mohamed",
+      role: isRTL ? "صاحب متجر" : "Store Owner",
+      content: isRTL ? "البيت السوداني ساعدني في الوصول لعملاء جدد وتنمية تجارتي بشكل كبير" : "Sudan House helped me reach new customers and grow my business significantly",
+      rating: 5
     },
     {
-      icon: <Star className="w-6 h-6 text-secondary-600" />,
-      title: "جودة مضمونة",
-      description: "جميع الخدمات ��المنتجات معتمدة ومضمونة"
+      name: isRTL ? "فاطمة عبدالله" : "Fatima Abdullah", 
+      role: isRTL ? "مديرة شركة" : "Company Manager",
+      content: isRTL ? "منصة ممتازة للتواصل مع الشركات السودانية وإقامة شراكات تجارية" : "Excellent platform for connecting with Sudanese companies and establishing business partnerships",
+      rating: 5
     },
     {
-      icon: <MapPin className="w-6 h-6 text-primary-600" />,
-      title: "توصيل سريع",
-      description: "خدمة توصيل سريعة لجميع دول الخليج"
-    },
-    {
-      icon: <Users className="w-6 h-6 text-secondary-600" />,
-      title: "مجتمع متصل",
-      description: "شبكة واسعة من السودانيين في الخليج والعالم"
-    },
+      name: isRTL ? "عمر الحسن" : "Omar Al-Hassan",
+      role: isRTL ? "باحث عن عمل" : "Job Seeker", 
+      content: isRTL ? "وجدت وظيفة أحلامي من ��لال البيت السوداني في وقت قياسي" : "I found my dream job through Sudan House in record time",
+      rating: 5
+    }
   ];
+
+  const ArrowIcon = isRTL ? ArrowLeft : ArrowRight;
 
   return (
     <Layout>
-                  {/* Hero Section */}
-      <section className="relative text-white py-32 overflow-hidden min-h-[600px] flex items-center">
-        {/* Background Image */}
-        <div
+      {/* Hero Section */}
+      <section className="relative">
+        {/* Background Image with Overlay */}
+        <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url('https://cdn.builder.io/api/v1/image/assets%2Fb1a0c751ea8f428fb17cf787dc4c95b1%2Fada8ce46064846e687a3341dd0ab9c15?format=webp&width=1200')`
           }}
-        ></div>
-                {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/30"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-900/50 to-secondary-900/40"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-                                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 arabic text-white drop-shadow-2xl">
-              البيت السوداني
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/80 via-primary-800/70 to-secondary-800/80 dark:from-primary-950/90 dark:via-primary-900/80 dark:to-secondary-900/90" />
+        
+        {/* Content */}
+        <div className="relative container mx-auto px-4 py-16 md:py-24 lg:py-32">
+          <div className={`max-w-4xl mx-auto text-center ${isRTL ? 'text-right' : 'text-center'}`}>
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 arabic animate-fade-in">
+              {t('brand.name')}
             </h1>
-                        <p className="text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 arabic text-white drop-shadow-lg">
-              سوق وخدمات وشركات السودان في الخليج والعالم
+            <p className="text-lg md:text-xl lg:text-2xl text-white/90 mb-8 arabic leading-relaxed animate-slide-up">
+              {t('brand.description')}
             </p>
-            <p className="text-sm md:text-lg mb-8 md:mb-10 arabic text-white/90 max-w-3xl mx-auto leading-relaxed drop-shadow-md px-4">
-              انضم واشترك لتحصل على أفضل العروض والخدمات من البيت السوداني، شبكة التواصل التجاري الأولى للسودانيين في الخليج
-            </p>
-                                                <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center px-4">
-              <Link to="/marketplace" className="w-full sm:w-auto">
-                <Button size="lg" className="bg-white text-primary-600 hover:bg-gray-100 hover:shadow-xl px-6 md:px-10 py-3 md:py-4 text-base md:text-lg arabic w-full rounded-xl font-semibold">
-                  🛍️ تصفح السوق
+            
+            {/* CTA Buttons */}
+            <div className={`flex flex-col sm:flex-row gap-4 justify-center mb-12 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+              <Link to="/marketplace">
+                <Button size="lg" className="button-cultural px-8 py-4 text-lg arabic">
+                  {isRTL ? "استكشف السوق" : "Explore Marketplace"}
+                  <ArrowIcon className={`w-5 h-5 ${isRTL ? 'mr-2' : 'ml-2'}`} />
                 </Button>
               </Link>
-              <Link to="/register" className="w-full sm:w-auto">
-                <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-6 md:px-10 py-3 md:py-4 text-base md:text-lg arabic w-full rounded-xl font-semibold">
-                  📞 سجل دخولك الآن
+              <Link to="/register">
+                <Button variant="outline" size="lg" className="px-8 py-4 text-lg bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white hover:text-primary-700 arabic">
+                  {isRTL ? "انضم إلينا" : "Join Us"}
                 </Button>
               </Link>
             </div>
-          </div>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-gray-50 to-transparent"></div>
-      </section>
 
-      {/* Statistics Section */}
-            <section className="py-12 md:py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {stats.map((stat, index) => (
-              <Card key={index} className={`${stat.color} text-white border-0 shadow-lg hover:shadow-xl transition-shadow`}>
-                <CardContent className="p-4 md:p-6 text-center">
-                  <div className="text-2xl md:text-4xl mb-2">{stat.icon}</div>
-                  <div className="text-xl md:text-3xl font-bold mb-1">{stat.value}</div>
-                  <div className="text-xs md:text-sm opacity-90 arabic">{stat.label}</div>
-                </CardContent>
-              </Card>
-            ))}
+            {/* Hero Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+              {heroStats.map((stat, index) => (
+                <div key={index} className="text-center animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                  <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-white/20 backdrop-blur-sm rounded-xl mb-3">
+                    <stat.icon className="w-6 h-6 md:w-8 md:h-8 text-white" />
+                  </div>
+                  <div className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.number}</div>
+                  <div className="text-sm md:text-base text-white/80 arabic">{stat.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Main Services Section */}
-      <section className="py-20">
+      {/* Services Section */}
+      <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4 arabic">لماذا البيت ال��وداني؟</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto arabic">
-              نقدم لك أفضل الخدمات السودانية مع ضمان الجودة والأمان
+          <div className={`text-center mb-16 ${isRTL ? 'text-right' : 'text-center'}`}>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 arabic">
+              {isRTL ? "خدماتنا" : "Our Services"}
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground arabic max-w-3xl mx-auto">
+              {isRTL ? "مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج والعالم" : "A comprehensive range of services designed specifically for the Sudanese community in the Gulf and worldwide"}
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-                            <Card key={index} className="group hover:shadow-2xl transition-all duration-300 border-0 shadow-lg hover:-translate-y-3 rounded-2xl bg-white">
-                <CardContent className="p-8 text-center">
-                                    <div className="mb-6 flex justify-center">
-                    <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-50 to-secondary-50 flex items-center justify-center group-hover:from-primary-100 group-hover:to-secondary-100 transition-all duration-300 shadow-lg">
-                      {service.icon}
-                    </div>
+              <Card key={index} className="card-dark hover:shadow-xl transition-all duration-300 hover:scale-105 group animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                <CardHeader className="text-center">
+                  <div className={`w-16 h-16 mx-auto ${service.bgColor} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                    <service.icon className={`w-8 h-8 bg-gradient-to-br ${service.color} bg-clip-text text-transparent`} />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 arabic text-gray-800">{service.title}</h3>
-                  <p className="text-gray-600 mb-6 arabic leading-relaxed">{service.description}</p>
-                                                      <Link to={service.href}>
-                    <Button className="w-full arabic rounded-xl font-semibold">
-                      اكتشف المزيد →
+                  <CardTitle className={`text-xl font-bold arabic ${isRTL ? 'text-right' : 'text-center'}`}>
+                    {service.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className={isRTL ? 'text-right' : 'text-center'}>
+                  <p className="text-muted-foreground arabic mb-6 leading-relaxed">
+                    {service.description}
+                  </p>
+                  <Link to={service.href}>
+                    <Button className={`w-full bg-gradient-to-r ${service.color} hover:opacity-90 transition-opacity arabic`}>
+                      {isRTL ? "اكتشف المزيد" : "Discover More"}
+                      <ArrowIcon className={`w-4 h-4 ${isRTL ? 'mr-2' : 'ml-2'}`} />
                     </Button>
                   </Link>
                 </CardContent>
@@ -178,66 +221,70 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
+      {/* Testimonials Section */}
+      <section className="py-16 md:py-24 bg-muted/50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-bold text-gray-800 mb-6 arabic">
-                مميزات البيت السوداني
-              </h2>
-              <p className="text-lg text-gray-600 mb-8 arabic leading-relaxed">
-                انضم إلى أكبر مجتمع سوداني في ا��خليج واحصل على أفضل الخدمات والعروض
-              </p>
-              <div className="space-y-6">
-                {features.map((feature, index) => (
-                  <div key={index} className="flex items-start gap-4">
-                    <div className="flex-shrink-0">
-                      {feature.icon}
+          <div className={`text-center mb-16 ${isRTL ? 'text-right' : 'text-center'}`}>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 arabic">
+              {isRTL ? "آراء عملائنا" : "Customer Testimonials"}
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground arabic">
+              {isRTL ? "ماذا يقول عملاؤنا عن تجربتهم معنا" : "What our customers say about their experience with us"}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="card-dark animate-fade-in" style={{ animationDelay: `${index * 0.2}s` }}>
+                <CardContent className="p-6">
+                  <div className={`flex items-center gap-1 mb-4 ${isRTL ? 'flex-row-reverse justify-end' : 'justify-start'}`}>
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className={`text-muted-foreground arabic mb-6 leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}>
+                    "{testimonial.content}"
+                  </p>
+                  <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold">
+                        {testimonial.name.charAt(0)}
+                      </span>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-2 arabic">{feature.title}</h3>
-                      <p className="text-gray-600 arabic">{feature.description}</p>
+                    <div className={isRTL ? 'text-right' : 'text-left'}>
+                      <div className="font-semibold text-foreground arabic">{testimonial.name}</div>
+                      <div className="text-sm text-muted-foreground arabic">{testimonial.role}</div>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
-            <div className="relative">
-                                          <div className="bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 rounded-3xl p-8 text-white shadow-2xl">
-                <h3 className="text-2xl font-bold mb-4 arabic">ابدأ رحلتك معنا اليوم</h3>
-                <p className="mb-6 arabic opacity-90">
-                  انضم إلى آلاف العملاء الراض��ن في البيت السوداني
-                </p>
-                                                <Link to="/register">
-                  <Button size="lg" className="w-full bg-white text-primary-600 hover:bg-gray-100 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic rounded-xl font-semibold">
-                    سجل دخولك الآن →
-                  </Button>
-                </Link>
-              </div>
-            </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
-            {/* CTA Section */}
-            <section className="py-24 bg-gradient-to-r from-primary-800 via-primary-700 to-secondary-700 text-white relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-80 h-80 bg-secondary-500/20 rounded-full blur-3xl"></div>
-        </div>
+      {/* CTA Section */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 dark:from-primary-800 dark:via-primary-900 dark:to-secondary-800">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6 arabic">
-            ابدأ رحلتك معنا اليوم
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 arabic">
+            {isRTL ? "ابدأ رحلتك معنا اليوم" : "Start Your Journey With Us Today"}
           </h2>
-          <p className="text-xl mb-8 arabic opacity-90 max-w-2xl mx-auto">
-            انضم إلى الآلاف من العمل��ء الراضين في البيت السوداني
+          <p className="text-lg md:text-xl text-white/90 mb-8 arabic max-w-2xl mx-auto">
+            {isRTL ? "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم" : "Join thousands of Sudanese who use Sudan House to grow their businesses and services"}
           </p>
-                              <Link to="/register">
-            <Button size="lg" className="bg-white text-secondary-700 hover:bg-gray-100 px-12 py-4 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic rounded-xl font-semibold">
-              سجل دخولك الآن →
-            </Button>
-          </Link>
+          <div className={`flex flex-col sm:flex-row gap-4 justify-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
+            <Link to="/register">
+              <Button size="lg" variant="secondary" className="px-8 py-4 text-lg arabic bg-white text-primary-700 hover:bg-white/90">
+                {isRTL ? "إنشاء حساب مجاني" : "Create Free Account"}
+                <ArrowIcon className={`w-5 h-5 ${isRTL ? 'mr-2' : 'ml-2'}`} />
+              </Button>
+            </Link>
+            <Link to="/login">
+              <Button size="lg" variant="outline" className="px-8 py-4 text-lg border-white/20 text-white hover:bg-white/10 arabic">
+                {isRTL ? "تسجيل الدخول" : "Sign In"}
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
     </Layout>
