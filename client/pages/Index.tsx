@@ -18,6 +18,11 @@ import {
   Megaphone,
   ArrowLeft,
   ArrowRight,
+  Store,
+  Factory,
+  UserCheck,
+  Settings,
+  Volume2,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 
