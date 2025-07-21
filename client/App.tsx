@@ -13,6 +13,7 @@ import Unauthorized from "./pages/Unauthorized";
 import ThemeShowcase from "./pages/ThemeShowcase";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminSettings from "./pages/admin/Settings";
+import AdminStores from "./pages/admin/Stores";
 import MerchantDashboard from "./pages/merchant/Dashboard";
 import MerchantProducts from "./pages/merchant/Products";
 import NewProduct from "./pages/merchant/NewProduct";
@@ -43,6 +44,11 @@ function App() {
             <Route path="/admin/settings" element={
               <SuperAdminRoute>
                 <AdminSettings />
+              </SuperAdminRoute>
+            } />
+            <Route path="/admin/stores" element={
+              <SuperAdminRoute>
+                <AdminStores />
               </SuperAdminRoute>
             } />
             
