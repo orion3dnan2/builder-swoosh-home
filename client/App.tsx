@@ -14,6 +14,10 @@ import ThemeShowcase from "./pages/ThemeShowcase";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminSettings from "./pages/admin/Settings";
 import AdminStores from "./pages/admin/Stores";
+import AdminUsers from "./pages/admin/Users";
+import AdminAppearance from "./pages/admin/Appearance";
+import AdminSystem from "./pages/admin/System";
+import AdminContent from "./pages/admin/Content";
 import MerchantDashboard from "./pages/merchant/Dashboard";
 import MerchantProducts from "./pages/merchant/Products";
 import NewProduct from "./pages/merchant/NewProduct";
@@ -49,6 +53,26 @@ function App() {
             <Route path="/admin/stores" element={
               <SuperAdminRoute>
                 <AdminStores />
+              </SuperAdminRoute>
+            } />
+            <Route path="/admin/users" element={
+              <SuperAdminRoute>
+                <AdminUsers />
+              </SuperAdminRoute>
+            } />
+            <Route path="/admin/appearance" element={
+              <SuperAdminRoute>
+                <AdminAppearance />
+              </SuperAdminRoute>
+            } />
+            <Route path="/admin/system" element={
+              <SuperAdminRoute>
+                <AdminSystem />
+              </SuperAdminRoute>
+            } />
+            <Route path="/admin/content" element={
+              <SuperAdminRoute>
+                <AdminContent />
               </SuperAdminRoute>
             } />
             
