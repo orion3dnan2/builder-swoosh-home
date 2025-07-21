@@ -240,7 +240,7 @@ export default function Index() {
                     <Button
                       className={`w-full bg-gradient-to-r ${service.color} hover:opacity-90 transition-opacity arabic text-sm md:text-base`}
                     >
-                      اكتشف المزيد
+                      {t("home.services.discover")}
                       <ArrowIcon
                         className={`w-4 h-4 ${isRTL ? "mr-2" : "ml-2"}`}
                       />
