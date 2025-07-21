@@ -159,7 +159,7 @@ const translations = {
     "stores.status_suspended": "معلق",
     "stores.category": "الفئة",
     "stores.join_date": "تاريخ الانضمام",
-    "stores.last_active": "آ��ر نشاط",
+    "stores.last_active": "آخر نشاط",
     "stores.rating": "التقييم",
     "stores.products": "منتج",
     "stores.orders": "طلب",
@@ -182,7 +182,7 @@ const translations = {
     "stores.location": "الموقع",
     "stores.status": "الحالة",
     "stores.total_products": "إج��الي المنتجات",
-    "stores.total_orders": "إجمالي ��لطلبات",
+    "stores.total_orders": "إجمالي ال��لبات",
     "stores.revenues": "الإيرادات",
     "stores.confirm_action": "تأكيد الإجراء",
     "stores.confirm_approve": "هل أنت متأكد من اعتماد هذا المتجر؟",
@@ -268,7 +268,7 @@ const translations = {
     "common.back_to_dashboard": "العودة للوحة الرئيسية",
     "users.coming_soon_desc": "صفحة إدارة المستخدمين ستكون متاحة قريباً بميزات شاملة لإدارة حسابات المستخدمين",
     "appearance.coming_soon_desc": "صفحة تخصيص المظهر ستكون متاحة قريباً لتغيير الألوان والصور والخلفيات",
-    "system.coming_soon_desc": "صفحة إعدادات النظام ستكون متاحة قريبا�� لإدارة الصلاحيات وإعدادات الأمان",
+    "system.coming_soon_desc": "صفحة إعدادات النظام ستكون متاحة قريباً لإدارة الصلاحيات وإعدادات الأمان",
     "content.coming_soon_desc": "صفحة إدارة المحتوى ستكون متاحة قريباً لإدارة النصوص والصور والترجمات",
     "settings.current_settings": "إعدادات التطبيق الحالية",
 
@@ -637,7 +637,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       "nav.products": "المنتجات",
       "nav.companies": "الشركات",
       "nav.jobs": "الوظائف",
-      "nav.services": "الخدما��",
+      "nav.services": "الخدمات",
       "nav.ads": "الإعلانات",
 
       // Common
@@ -691,7 +691,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
       // Theme Settings
       "theme.light": "الوضع النهاري",
-      "theme.dark": "الوضع الليلي",
+      "theme.dark": "الوضع ��لليلي",
       "theme.toggle": "تبديل الثيم",
       "language.toggle": "تبديل اللغة",
 
@@ -736,7 +736,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       // More Dashboard translations
       "dashboard.app_settings": "إعدادات التطبيق",
       "dashboard.user_management": "إدارة المستخدمين",
-      "dashboard.store_management": "إدارة ��لمتاجر",
+      "dashboard.store_management": "إدارة ال��تاجر",
       "dashboard.appearance": "تخصيص المظهر",
       "dashboard.system_settings": "إعدادات النظام",
       "dashboard.content_management": "إدارة المحتوى",
@@ -773,6 +773,18 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       "settings.features": "الميزات",
       "settings.content": "المحتوى",
       "settings.advanced": "متقدم",
+
+      // Home page testimonials and CTA
+      "home.testimonials.title": "آراء عملائنا",
+      "home.testimonials.subtitle": "ماذا يقول عملاؤنا عن تجربتهم معنا",
+      "home.cta.title": "ابدأ رحلتك معنا اليوم",
+      "home.cta.subtitle": "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم",
+      "home.cta.create_account": "إنشاء حساب مجاني",
+
+      // Error messages
+      "error.404": "الصفحة غير موجودة",
+      "error.unauthorized": "غير مسموح بالوصول",
+      "error.general": "حدث خطأ غير متوقع",
     };
 
     return arabicTranslations[key] || key;
