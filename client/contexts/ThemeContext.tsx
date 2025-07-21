@@ -90,7 +90,7 @@ const translations = {
     "home.cta.title": "ابدأ رحلتك معنا اليوم",
     "home.cta.subtitle":
       "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم",
-    "home.cta.create_account": "إنشاء حساب مجاني",
+    "home.cta.create_account": "إنشاء حساب ��جاني",
     "home.stats.users": "مستخدم نشط",
     "home.stats.companies": "شركة مسجلة",
     "home.stats.products": "منتج متوفر",
@@ -137,9 +137,9 @@ const translations = {
     "dashboard.store_management": "إدارة المتاجر",
     "dashboard.store_management_desc": "مراجعة وإدارة المتاجر المسجلة",
     "dashboard.appearance": "تخصيص المظهر",
-    "dashboard.appearance_desc": "تغيير الألوان والصور والخلفيات",
+    "dashboard.appearance_desc": "تغيير الأ��وان والصور والخلفيات",
     "dashboard.system_settings": "إعدادات النظام",
-    "dashboard.system_settings_desc": "صلاحيات وإعدادا�� الأمان",
+    "dashboard.system_settings_desc": "صلاحيات وإعدادات الأمان",
     "dashboard.content_management": "إدارة المحتوى",
     "dashboard.content_management_desc": "النصوص والصور والترجمات",
     "dashboard.view_site": "عرض الموقع",
@@ -165,7 +165,7 @@ const translations = {
     "stores.products": "منتج",
     "stores.orders": "طلب",
     "stores.revenue": "إيراد",
-    "stores.view_details": "عرض التفاصي��",
+    "stores.view_details": "عرض التفاصيل",
     "stores.approve_store": "اعتماد المتجر",
     "stores.suspend_store": "تعليق المتجر",
     "stores.reactivate_store": "إعادة تفعيل",
@@ -184,7 +184,7 @@ const translations = {
     "stores.status": "الحالة",
     "stores.total_products": "إجمالي المنتجات",
     "stores.total_orders": "إجمالي الطلبات",
-    "stores.revenues": "الإيرادات",
+    "stores.revenues": "ال��يرادات",
     "stores.confirm_action": "تأكيد الإجراء",
     "stores.confirm_approve": "هل أنت متأكد من اعتماد هذا المتجر؟",
     "stores.confirm_suspend": "هل أنت متأكد من تعليق هذا المتجر؟",
@@ -204,7 +204,7 @@ const translations = {
     "login.password": "كلمة المرور",
     "login.remember_me": "تذكرني",
     "login.forgot_password": "نسيت كلمة المرور؟",
-    "login.no_account": "ليس لديك حساب؟",
+    "login.no_account": "ليس لديك حساب��",
     "login.create_account": "إنشاء حساب جديد",
     "login.or_continue_with": "أو تابع باستخدام",
     "login.error.username_required": "يرجى إدخال اسم المستخدم",
@@ -251,7 +251,7 @@ const translations = {
     // Dashboard Activities
     "dashboard.activity.new_store": "تسجيل متجر جديد",
     "dashboard.activity.product_approval": "طلب اعتماد منتج",
-    "dashboard.activity.negative_review": "مراج��ة سلبية",
+    "dashboard.activity.negative_review": "مراجعة سلبية",
     "dashboard.activity.support_request": "طلب دعم فني",
     "dashboard.user.ahmed_mohamed": "أحمد محمد",
     "dashboard.user.fatima_abdullah": "فاطمة عبدالله",
@@ -553,7 +553,7 @@ const STORAGE_KEYS = {
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>("light");
-  const [language, setLanguage] = useState<Language>("ar");
+  const [language] = useState<Language>("ar"); // Fixed to Arabic only
   const [arabicFont, setArabicFontState] = useState<ArabicFontFamily>("amiri");
   const [englishFont, setEnglishFontState] = useState<EnglishFontFamily>("inter");
 
@@ -693,7 +693,7 @@ export const arabicFonts = [
   },
   {
     id: "cairo" as ArabicFontFamily,
-    name: "القاهرة",
+    name: "��لقاهرة",
     englishName: "Cairo",
     preview: "أهلاً وسهلاً بكم في البيت السوداني",
     url: "https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap",
