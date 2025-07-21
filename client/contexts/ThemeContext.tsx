@@ -190,14 +190,14 @@ const translations = {
     "stores.confirm_reactivate": "هل أنت متأكد من إعادة تفعيل هذا المتجر؟",
     "stores.action_approve": "اعتماد",
     "stores.action_suspend": "تعليق",
-    "stores.action_reactivate": "إ��ادة تفعيل",
+    "stores.action_reactivate": "إعادة تفعيل",
     "stores.success_approve": "تم اعتماد المتجر بنجاح! ✅",
     "stores.success_suspend": "تم تعليق المتجر بنجاح! ⚠️",
     "stores.success_reactivate": "تم إعادة تفعيل المتجر بنجاح! ✅",
     "stores.reviews_count": "تقييم",
 
     // Login & Register
-    "login.title": "تسجيل الدخول",
+    "login.title": "تسجيل الدخو��",
     "login.subtitle": "أدخل بياناتك للوصول إلى حسابك",
     "login.username": "اسم المستخدم أو البريد الإلكتروني",
     "login.password": "كلمة المرور",
@@ -210,13 +210,13 @@ const translations = {
     "login.error.password_required": "يرجى إدخال كلمة المرور",
     "login.error.invalid_credentials": "بيانات الدخول غير صحيحة",
     "register.title": "إنشاء حساب جديد",
-    "register.subtitle": "انضم إلى البيت السو��اني اليوم",
+    "register.subtitle": "انضم إلى البيت السوداني اليوم",
     "register.full_name": "الاسم الكامل",
     "register.email": "البريد الإلكتروني",
     "register.phone": "رقم الهاتف",
     "register.confirm_password": "تأكيد كلمة المرور",
     "register.agree_terms": "أوافق على الشروط والأحكام",
-    "register.already_have_account": "لديك حساب بالفعل؟",
+    "register.already_have_account": "لديك حسا�� بالفعل؟",
     "register.login_here": "سجل دخولك هنا",
     "login.demo_accounts": "حسابات التجربة",
     "login.demo.super_admin": "مدير التطبيق (Super Admin)",
@@ -235,7 +235,7 @@ const translations = {
 
     // Font Settings
     "font_settings.title": "إعدادات الخطوط",
-    "font_settings.subtitle": "اختر الخطوط المنا��بة للنصوص العربية والإنجليزية",
+    "font_settings.subtitle": "اختر الخطوط المناسبة للنصوص العربية والإنجليزية",
     "font_settings.reset": "إعادة تعيين",
     "font_settings.current_settings": "الإعدادات الحالية",
     "font_settings.arabic_font": "الخط العربي",
@@ -629,35 +629,112 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   // Translation function - Arabic only
   const t = (key: string): string => {
-    try {
-      const keys = key.split(".");
-      let value: any = translations["ar"]; // Always use Arabic translations
+    // Direct Arabic translations mapping
+    const arabicTranslations: { [key: string]: string } = {
+      // Navigation
+      "nav.home": "الرئيسية",
+      "nav.marketplace": "السوق",
+      "nav.products": "المنتجات",
+      "nav.companies": "الشركات",
+      "nav.jobs": "الوظائف",
+      "nav.services": "الخدمات",
+      "nav.ads": "الإعلانات",
 
-      // Debug logging
-      if (key === "common.welcome" || key === "common.users_count") {
-        console.log(`Translating key: ${key}`, {
-          hasTranslations: !!translations,
-          hasArabic: !!translations["ar"],
-          hasKey: !!translations["ar"]?.[keys[0]],
-          value: translations["ar"]?.[keys[0]]?.[keys[1]]
-        });
-      }
+      // Common
+      "common.search": "ابحث في البيت السوداني...",
+      "common.login": "تسجيل الدخول",
+      "common.logout": "تسجيل الخروج",
+      "common.register": "تسجيل",
+      "common.welcome": "مرحباً بكم في البيت السوداني",
+      "common.users_count": "+100 ألف سوداني في البيت",
+      "common.notifications": "الإشعارات",
+      "common.messages": "الرسائل",
+      "common.back": "العودة",
+      "common.close": "إغلاق",
+      "common.cancel": "إلغاء",
+      "common.confirm": "تأكيد",
+      "common.save": "حفظ",
+      "common.edit": "تعديل",
+      "common.delete": "حذف",
+      "common.view": "عرض",
+      "common.details": "التفاصيل",
+      "common.more": "المزيد",
+      "common.loading": "جاري التحميل...",
+      "common.success": "تم بنجاح",
+      "common.error": "حدث خطأ",
 
-      for (const k of keys) {
-        if (value && typeof value === 'object' && k in value) {
-          value = value[k];
-        } else {
-          // If key is not found, return a fallback or the key itself
-          console.warn(`Translation key not found: ${key}`);
-          return key;
-        }
-      }
+      // Branding
+      "brand.name": "البيت السوداني",
+      "brand.tagline": "سوق وخدمات السودان",
+      "brand.description": "منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم",
 
-      return typeof value === 'string' ? value : key;
-    } catch (error) {
-      console.error(`Translation error for key: ${key}`, error);
-      return key;
-    }
+      // Homepage
+      "home.hero.title": "البيت السوداني",
+      "home.hero.subtitle": "سوق وخدمات وشركات السودان في الخليج والعالم",
+      "home.hero.explore_market": "استكشف السوق",
+      "home.hero.join_us": "انضم إلينا",
+      "home.services.title": "خدماتنا",
+      "home.services.subtitle": "مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج والعالم",
+      "home.services.discover": "اكتشف المزيد",
+      "home.stats.users": "مستخدم نشط",
+      "home.stats.companies": "شركة مسجلة",
+      "home.stats.products": "منتج متوفر",
+      "home.stats.jobs": "فرصة عمل",
+
+      // Footer
+      "footer.services": "الخدمات",
+      "footer.business": "الأعمال",
+      "footer.contact": "تواصل معنا",
+      "footer.email": "البريد الإلكتروني",
+      "footer.phone": "الهاتف",
+      "footer.rights": "جميع الحقوق محفوظة",
+
+      // Theme Settings
+      "theme.light": "الوضع النهاري",
+      "theme.dark": "الوضع الليلي",
+      "theme.toggle": "تبديل الثيم",
+      "language.toggle": "تبديل اللغة",
+
+      // Dashboard
+      "dashboard.admin": "لوحة إدارة التطبيق",
+      "dashboard.merchant": "لوحة إدارة المتجر",
+      "dashboard.welcome": "مرحباً",
+      "dashboard.overview": "نظرة عامة",
+      "dashboard.analytics": "الإحصائيات",
+      "dashboard.settings": "الإعدادات",
+      "dashboard.quick_actions": "الإجراءات السريعة",
+      "dashboard.recent_activity": "النشاط الأخير",
+      "dashboard.quick_stats": "إحصائيات سريعة",
+      "dashboard.view_all_activities": "عرض جميع الأنشطة",
+      "dashboard.view_detailed_reports": "عرض التقارير التفصيلية",
+      "dashboard.total_users": "إجمالي المستخدمين",
+      "dashboard.registered_stores": "المتاجر المسجلة",
+      "dashboard.total_products": "إجمالي المنتجات",
+      "dashboard.monthly_revenue": "إيرادات الشهر",
+      "dashboard.active_stores": "المتاجر النشطة",
+      "dashboard.pending_approvals": "طلبات الاعتماد",
+      "dashboard.new_registrations": "تسجيلات جديدة",
+      "dashboard.total_orders": "إجمالي الطلبات",
+      "dashboard.super_admin": "مدير أعلى",
+      "dashboard.urgent": "عاجل",
+
+      // Dashboard Activities
+      "dashboard.activity.new_store": "تسجيل متجر جديد",
+      "dashboard.activity.product_approval": "طلب اعتماد منتج",
+      "dashboard.activity.negative_review": "مراجعة سلبية",
+      "dashboard.activity.support_request": "طلب دعم فني",
+      "dashboard.user.ahmed_mohamed": "أحمد محمد",
+      "dashboard.user.fatima_abdullah": "فاطمة عبدالله",
+      "dashboard.user.mohamed_ali": "محمد علي",
+      "dashboard.user.aisha_ahmed": "عا��شة أحمد",
+      "dashboard.time.15_minutes_ago": "منذ 15 دقيقة",
+      "dashboard.time.30_minutes_ago": "منذ 30 دقيقة",
+      "dashboard.time.1_hour_ago": "منذ ساعة",
+      "dashboard.time.2_hours_ago": "منذ ساعتين",
+      "dashboard.by": "بواسطة",
+    };
+
+    return arabicTranslations[key] || key;
   };
 
   const isRTL = language === "ar";
