@@ -202,11 +202,10 @@ export default function Index() {
             className={`text-center mb-12 md:mb-16 ${isRTL ? "text-right" : "text-center"}`}
           >
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 md:mb-4 arabic">
-              خدماتنا
+              {t("home.services.title")}
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-muted-foreground arabic max-w-3xl mx-auto px-4">
-              مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج
-              والعالم
+              {t("home.services.subtitle")}
             </p>
           </div>
 
