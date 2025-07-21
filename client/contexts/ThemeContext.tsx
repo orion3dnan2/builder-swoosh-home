@@ -89,8 +89,8 @@ const translations = {
     "home.testimonials.subtitle": "ماذا يقول عملاؤنا عن تجربتهم معنا",
     "home.cta.title": "ابدأ رحلتك معنا اليوم",
     "home.cta.subtitle":
-      "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم",
-    "home.cta.create_account": "إنشاء حساب ��جاني",
+      "انضم إلى آلاف السودانيين الذين يستخدمون البيت ال��وداني لتنمية أعمالهم وخدماتهم",
+    "home.cta.create_account": "إنشاء حساب مجاني",
     "home.stats.users": "مستخدم نشط",
     "home.stats.companies": "شركة مسجلة",
     "home.stats.products": "منتج متوفر",
@@ -137,7 +137,7 @@ const translations = {
     "dashboard.store_management": "إدارة المتاجر",
     "dashboard.store_management_desc": "مراجعة وإدارة المتاجر المسجلة",
     "dashboard.appearance": "تخصيص المظهر",
-    "dashboard.appearance_desc": "تغيير الأ��وان والصور والخلفيات",
+    "dashboard.appearance_desc": "تغيير الألوان والصور والخلفيات",
     "dashboard.system_settings": "إعدادات النظام",
     "dashboard.system_settings_desc": "صلاحيات وإعدادات الأمان",
     "dashboard.content_management": "إدارة المحتوى",
@@ -184,7 +184,7 @@ const translations = {
     "stores.status": "الحالة",
     "stores.total_products": "إجمالي المنتجات",
     "stores.total_orders": "إجمالي الطلبات",
-    "stores.revenues": "ال��يرادات",
+    "stores.revenues": "الإيرادات",
     "stores.confirm_action": "تأكيد الإجراء",
     "stores.confirm_approve": "هل أنت متأكد من اعتماد هذا المتجر؟",
     "stores.confirm_suspend": "هل أنت متأكد من تعليق هذا المتجر؟",
@@ -204,7 +204,7 @@ const translations = {
     "login.password": "كلمة المرور",
     "login.remember_me": "تذكرني",
     "login.forgot_password": "نسيت كلمة المرور؟",
-    "login.no_account": "ليس لديك حساب��",
+    "login.no_account": "ليس لديك حساب؟",
     "login.create_account": "إنشاء حساب جديد",
     "login.or_continue_with": "أو تابع باستخدام",
     "login.error.username_required": "يرجى إدخال اسم المستخدم",
@@ -560,12 +560,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   // Load preferences from localStorage on mount
   useEffect(() => {
     const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as Theme;
-    const savedLanguage = localStorage.getItem(STORAGE_KEYS.LANGUAGE) as Language;
     const savedArabicFont = localStorage.getItem(STORAGE_KEYS.ARABIC_FONT) as ArabicFontFamily;
     const savedEnglishFont = localStorage.getItem(STORAGE_KEYS.ENGLISH_FONT) as EnglishFontFamily;
 
     if (savedTheme) setTheme(savedTheme);
-    if (savedLanguage) setLanguage(savedLanguage);
     if (savedArabicFont) setArabicFontState(savedArabicFont);
     if (savedEnglishFont) setEnglishFontState(savedEnglishFont);
   }, []);
@@ -693,7 +691,7 @@ export const arabicFonts = [
   },
   {
     id: "cairo" as ArabicFontFamily,
-    name: "��لقاهرة",
+    name: "القاهرة",
     englishName: "Cairo",
     preview: "أهلاً وسهلاً بكم في البيت السوداني",
     url: "https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap",
@@ -723,7 +721,7 @@ export const arabicFonts = [
     id: "lateef" as ArabicFontFamily,
     name: "لطيف",
     englishName: "Lateef",
-    preview: "أهلاً وسهلاً بكم في البيت السوداني",
+    preview: "أهلاً وس��لاً بكم في البيت السوداني",
     url: "https://fonts.googleapis.com/css2?family=Lateef:wght@200;300;400;500;600;700;800&display=swap",
   },
   {
