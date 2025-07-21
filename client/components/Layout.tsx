@@ -43,6 +43,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </Button>
               </Link>
             </div>
+                    </div>
+
+          {/* Mobile Top Bar */}
+          <div className="md:hidden flex items-center justify-between py-2 text-sm">
+            <div className="flex items-center gap-2">
+              <span className="text-xs truncate">مرحباً بكم في البيت السوداني</span>
+              <div className="flex items-center gap-1">
+                <Bell className="w-3 h-3" />
+                <span className="bg-secondary-600 text-white rounded-full px-1.5 py-0.5 text-xs">3</span>
+                <MessageCircle className="w-3 h-3 ml-1" />
+                <span className="bg-secondary-600 text-white rounded-full px-1.5 py-0.5 text-xs">5</span>
+              </div>
+            </div>
+            <Link to="/login">
+              <Button variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-primary-600 text-xs px-2 py-1">
+                دخول
+              </Button>
+            </Link>
           </div>
 
           {/* Main Header */}
