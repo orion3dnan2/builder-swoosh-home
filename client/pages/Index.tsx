@@ -17,46 +17,46 @@ import {
 } from "lucide-react";
 
 export default function Index() {
-  const stats = [
-    { icon: "🛍️", value: "+50", label: "متجر متوفر", color: "bg-gradient-to-br from-sudan-blue to-blue-600" },
-    { icon: "📦", value: "+1000", label: "منتج متاح", color: "bg-gradient-to-br from-sudan-red to-red-600" },
-    { icon: "👤", value: "+25", label: "أيام فعلي", color: "bg-gradient-to-br from-sudan-orange to-orange-600" },
-    { icon: "🏪", value: "+200", label: "خدمة متوفرة", color: "bg-gradient-to-br from-sudan-green to-green-600" },
+    const stats = [
+    { icon: "🛍️", value: "+50", label: "متجر متوفر", color: "bg-gradient-to-br from-primary-600 to-primary-800" },
+    { icon: "📦", value: "+1000", label: "منتج متاح", color: "bg-gradient-to-br from-secondary-600 to-secondary-800" },
+    { icon: "👤", value: "+25", label: "أيام فعلي", color: "bg-gradient-to-br from-primary-500 to-primary-700" },
+    { icon: "🏪", value: "+200", label: "خدمة متوفرة", color: "bg-gradient-to-br from-secondary-500 to-secondary-700" },
   ];
 
   const services = [
-    {
-      icon: <ShoppingBag className="w-8 h-8 text-sudan-blue" />,
+        {
+      icon: <ShoppingBag className="w-8 h-8 text-primary-600" />,
       title: "السوق التجاري",
       description: "تسوق آمن من المتاجر السودانية المعتمدة",
       href: "/marketplace"
     },
     {
-      icon: <Package className="w-8 h-8 text-sudan-red" />,
+      icon: <Package className="w-8 h-8 text-secondary-600" />,
       title: "المنتجات السودانية",
       description: "أفضل المنتجات التقليدية والحديثة من السودان",
       href: "/products"
     },
     {
-      icon: <Building className="w-8 h-8 text-sudan-orange" />,
+      icon: <Building className="w-8 h-8 text-primary-600" />,
       title: "دليل الشركات",
       description: "دليل شامل للشركات والأعمال السودانية",
       href: "/companies"
     },
     {
-      icon: <Briefcase className="w-8 h-8 text-sudan-green" />,
+      icon: <Briefcase className="w-8 h-8 text-secondary-600" />,
       title: "فرص العمل",
       description: "وظائف متنوعة للمهنيين السودانيين",
       href: "/jobs"
     },
     {
-      icon: <Megaphone className="w-8 h-8 text-purple-600" />,
+      icon: <Megaphone className="w-8 h-8 text-primary-600" />,
       title: "الإعلانات والعروض",
       description: "أحدث العروض والإعلانات التجارية",
       href: "/ads"
     },
     {
-      icon: <Wrench className="w-8 h-8 text-sudan-brown" />,
+      icon: <Wrench className="w-8 h-8 text-secondary-600" />,
       title: "الخدمات المهنية",
       description: "مقدمو خدمات ومهنيون ماهرون",
       href: "/services"
@@ -64,23 +64,23 @@ export default function Index() {
   ];
 
   const features = [
-    {
-      icon: <CheckCircle className="w-6 h-6 text-sudan-green" />,
+        {
+      icon: <CheckCircle className="w-6 h-6 text-primary-600" />,
       title: "خدمة عملاء مميزة",
       description: "دعم فني على مدار 24/7 للمستخدمين"
     },
     {
-      icon: <Star className="w-6 h-6 text-sudan-gold" />,
+      icon: <Star className="w-6 h-6 text-secondary-600" />,
       title: "جودة مضمونة",
       description: "جميع الخدمات والمنتجات معتمدة ومضمونة"
     },
     {
-      icon: <MapPin className="w-6 h-6 text-sudan-blue" />,
+      icon: <MapPin className="w-6 h-6 text-primary-600" />,
       title: "توصيل سريع",
       description: "خدمة توصيل سريعة لجميع دول الخليج"
     },
     {
-      icon: <Users className="w-6 h-6 text-sudan-orange" />,
+      icon: <Users className="w-6 h-6 text-secondary-600" />,
       title: "مجتمع متصل",
       description: "شبكة واسعة من السودانيين في الخليج والعالم"
     },
@@ -88,9 +88,13 @@ export default function Index() {
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-sudan-red via-sudan-orange to-sudan-gold text-white py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
+            {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white py-24 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
+        </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 arabic">
@@ -102,14 +106,14 @@ export default function Index() {
             <p className="text-lg mb-10 arabic opacity-90 max-w-3xl mx-auto leading-relaxed">
               انضم واشترك لتحصل على أفضل العروض والخدمات من البيت السوداني، شبكة التواصل التجاري الأولى للسودانيين في الخليج
             </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                    <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link to="/marketplace">
-                <Button size="lg" className="bg-white text-sudan-blue hover:bg-gray-100 px-8 py-4 text-lg arabic w-full sm:w-auto">
+                <Button size="lg" className="bg-white text-primary-600 hover:bg-gray-100 hover:shadow-xl px-10 py-4 text-lg arabic w-full sm:w-auto rounded-xl font-semibold">
                   🛍️ تصفح السوق
                 </Button>
               </Link>
               <Link to="/register">
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-sudan-blue px-8 py-4 text-lg arabic w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-10 py-4 text-lg arabic w-full sm:w-auto rounded-xl font-semibold">
                   📞 سجل دخولك الآن
                 </Button>
               </Link>
@@ -148,17 +152,17 @@ export default function Index() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg hover:-translate-y-2">
+                            <Card key={index} className="group hover:shadow-2xl transition-all duration-300 border-0 shadow-lg hover:-translate-y-3 rounded-2xl bg-white">
                 <CardContent className="p-8 text-center">
-                  <div className="mb-6 flex justify-center">
-                    <div className="w-20 h-20 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-gray-100 transition-colors">
+                                    <div className="mb-6 flex justify-center">
+                    <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-50 to-secondary-50 flex items-center justify-center group-hover:from-primary-100 group-hover:to-secondary-100 transition-all duration-300 shadow-lg">
                       {service.icon}
                     </div>
                   </div>
                   <h3 className="text-xl font-bold mb-3 arabic text-gray-800">{service.title}</h3>
                   <p className="text-gray-600 mb-6 arabic leading-relaxed">{service.description}</p>
-                                    <Link to={service.href}>
-                    <Button variant="sudan" className="w-full arabic">
+                                                      <Link to={service.href}>
+                    <Button className="w-full arabic rounded-xl font-semibold">
                       اكتشف المزيد →
                     </Button>
                   </Link>
@@ -195,13 +199,13 @@ export default function Index() {
               </div>
             </div>
             <div className="relative">
-              <div className="bg-gradient-to-br from-sudan-blue to-sudan-red rounded-2xl p-8 text-white">
+                            <div className="bg-gradient-to-br from-primary-600 to-primary-800 rounded-3xl p-8 text-white shadow-2xl">
                 <h3 className="text-2xl font-bold mb-4 arabic">ابدأ رحلتك معنا اليوم</h3>
                 <p className="mb-6 arabic opacity-90">
                   انضم إلى آلاف العملاء الراضين في البيت السوداني
                 </p>
-                                <Link to="/register">
-                  <Button size="lg" className="w-full bg-white text-sudan-blue hover:bg-gray-100 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic">
+                                                <Link to="/register">
+                  <Button size="lg" className="w-full bg-white text-primary-600 hover:bg-gray-100 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic rounded-xl font-semibold">
                     سجل دخولك الآن →
                   </Button>
                 </Link>
@@ -211,8 +215,12 @@ export default function Index() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-sudan-blue to-blue-700 text-white">
+            {/* CTA Section */}
+      <section className="py-24 bg-gradient-to-r from-secondary-700 to-secondary-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl"></div>
+        </div>
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-6 arabic">
             ابدأ رحلتك معنا اليوم
@@ -220,8 +228,8 @@ export default function Index() {
           <p className="text-xl mb-8 arabic opacity-90 max-w-2xl mx-auto">
             انضم إلى الآلاف من العملاء الراضين في البيت السوداني
           </p>
-                    <Link to="/register">
-            <Button size="lg" className="bg-white text-sudan-blue hover:bg-gray-100 px-12 py-4 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic">
+                              <Link to="/register">
+            <Button size="lg" className="bg-white text-secondary-700 hover:bg-gray-100 px-12 py-4 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic rounded-xl font-semibold">
               سجل دخولك الآن →
             </Button>
           </Link>
