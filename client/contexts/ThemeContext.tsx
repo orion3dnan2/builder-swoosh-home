@@ -182,7 +182,7 @@ const translations = {
     "stores.total_orders": "إجمالي الطلبات",
     "stores.revenues": "الإيرادات",
     "stores.confirm_action": "تأكيد الإجراء",
-    "stores.confirm_approve": "هل أنت متأكد من اعتماد هذا المتجر؟",
+    "stores.confirm_approve": "هل أنت متأكد من اعتماد هذ�� المتجر؟",
     "stores.confirm_suspend": "هل أنت متأكد من تعليق هذا المتجر؟",
     "stores.confirm_reactivate": "هل أنت متأكد من إعادة تفعيل هذا المتجر؟",
     "stores.action_approve": "اعتماد",
@@ -506,7 +506,17 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 export function useTheme() {
   const context = useContext(ThemeContext);
   if (context === undefined) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+    // Provide a safe fallback during initial render
+    return {
+      theme: 'light' as Theme,
+      language: 'ar' as Language,
+      fontFamily: 'cairo' as FontFamily,
+      toggleTheme: () => {},
+      toggleLanguage: () => {},
+      setFontFamily: () => {},
+      t: (key: string) => key,
+      isRTL: true
+    };
   }
   return context;
 }
