@@ -100,9 +100,11 @@ export default function Login() {
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-sudan-blue hover:bg-sudan-blue/90 text-lg py-3 arabic"
+                  variant="sudan"
+                  size="lg"
+                  className="w-full text-lg py-3 arabic"
                 >
-                  تسجيل الدخ��ل
+                  تسجيل الدخول →
                 </Button>
 
                 <div className="text-center">
