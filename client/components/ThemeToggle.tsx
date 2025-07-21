@@ -49,30 +49,21 @@ export function LanguageToggle() {
 }
 
 export function FontFamilySelector() {
-  const { fontFamily, setFontFamily, t, language } = useTheme();
+  const { arabicFont, englishFont, setArabicFont, setEnglishFont, t, language, getCurrentFont } = useTheme();
+  const { arabicFonts, englishFonts } = require("../contexts/ThemeContext");
 
-  const fonts = [
-    {
-      id: "cairo",
-      name: language === "ar" ? "القاهرة" : "Cairo",
-      preview: "أبجد Abcd",
-    },
-    {
-      id: "tajawal",
-      name: language === "ar" ? "تجول" : "Tajawal",
-      preview: "أبجد Abcd",
-    },
-    {
-      id: "noto-kufi",
-      name: language === "ar" ? "نوتو كوفي" : "Noto Kufi",
-      preview: "أبجد Abcd",
-    },
-    {
-      id: "amiri",
-      name: language === "ar" ? "أميري" : "Amiri",
-      preview: "أبجد Abcd",
-    },
-  ];
+  const currentFonts = language === "ar" ? arabicFonts : englishFonts;
+  const currentFontId = language === "ar" ? arabicFont : englishFont;
+  const currentFontName = currentFonts.find((f: any) => f.id === currentFontId)?.name ||
+                         (language === "ar" ? "أميري" : "Inter");
+
+  const handleFontChange = (fontId: string) => {
+    if (language === "ar") {
+      setArabicFont(fontId as any);
+    } else {
+      setEnglishFont(fontId as any);
+    }
+  };
 
   return (
     <DropdownMenu>
@@ -84,7 +75,7 @@ export function FontFamilySelector() {
         >
           <Globe className="w-4 h-4 mr-2" />
           <span className="text-xs">
-            {fonts.find((f) => f.id === fontFamily)?.name}
+            {currentFontName}
           </span>
         </Button>
       </DropdownMenuTrigger>
@@ -92,21 +83,22 @@ export function FontFamilySelector() {
         align={language === "ar" ? "start" : "end"}
         className="w-56 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
       >
-        {fonts.map((font) => (
+        {currentFonts.map((font: any) => (
           <DropdownMenuItem
             key={font.id}
-            onClick={() => setFontFamily(font.id as any)}
-            className={`cursor-pointer ${fontFamily === font.id ? "bg-primary-50 dark:bg-primary-900/20" : ""}`}
+            onClick={() => handleFontChange(font.id)}
+            className={`cursor-pointer ${currentFontId === font.id ? "bg-primary-50 dark:bg-primary-900/20" : ""}`}
           >
             <div className="flex flex-col w-full">
               <div className="flex items-center justify-between">
                 <span className="font-medium">{font.name}</span>
-                {fontFamily === font.id && (
+                {currentFontId === font.id && (
                   <div className="w-2 h-2 bg-primary-600 rounded-full"></div>
                 )}
               </div>
               <span
-                className={`text-sm text-gray-600 dark:text-gray-400 font-${font.id}`}
+                className={`text-sm text-gray-600 dark:text-gray-400 ${language === 'ar' ? 'arabic' : 'english'}`}
+                style={{ fontFamily: `var(--font-${font.id})` }}
               >
                 {font.preview}
               </span>
