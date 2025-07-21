@@ -67,7 +67,7 @@ export default function Login() {
 
   return (
     <Layout>
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 py-12 px-4">
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 py-8 md:py-12 px-4">
         <div className="w-full max-w-md">
           {/* Login Form */}
           <Card className="shadow-2xl border-0 rounded-3xl bg-white backdrop-blur-sm">
@@ -91,7 +91,7 @@ export default function Login() {
                     <Input
                       id="username"
                       type="text"
-                      placeholder="أدخل اسم المستخدم"
+                      placeholder="أدخل ��سم المستخدم"
                       value={formData.username}
                       onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
                       className="text-right arabic rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600"
@@ -197,7 +197,7 @@ export default function Login() {
             <CardContent className="p-4">
               <h3 className="font-semibold text-secondary-800 mb-2 arabic">بيانات تسجيل الدخول</h3>
               <p className="text-sm text-secondary-700 arabic mb-2">
-                استخدم بيانات تسجيل الدخول التالية:
+                استخدم بيانات تسجيل الدخول ال��الية:
               </p>
               <div className="space-y-1 text-sm text-secondary-800 arabic font-semibold">
                 <div>اسم المستخدم: <code className="bg-secondary-200 px-2 py-1 rounded-lg">admin</code></div>
