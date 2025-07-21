@@ -4,6 +4,8 @@ import { Search, Bell, MessageCircle, User, Menu } from "lucide-react";
 import { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { LanguageAndThemeControls } from "./ThemeToggle";
+import { AdminFontSelector } from "./AdminFontSelector";
+import { useLocation } from "react-router-dom";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
