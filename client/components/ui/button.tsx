@@ -9,19 +9,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg transform hover:-translate-y-0.5",
+                default: "bg-primary text-primary-foreground hover:bg-primary-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-md hover:shadow-lg",
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-lg hover:shadow-xl transition-all duration-200",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground shadow-sm hover:shadow-md",
+          "border-2 border-primary bg-background text-primary hover:bg-primary hover:text-primary-foreground shadow-md hover:shadow-lg transition-all duration-200",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm hover:shadow-md",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-        sudan: "bg-gradient-to-r from-sudan-blue to-blue-600 text-white hover:from-sudan-blue/90 hover:to-blue-600/90 shadow-lg hover:shadow-xl transform hover:-translate-y-1",
-        "sudan-red": "bg-gradient-to-r from-sudan-red to-red-600 text-white hover:from-sudan-red/90 hover:to-red-600/90 shadow-lg hover:shadow-xl transform hover:-translate-y-1",
-        "sudan-orange": "bg-gradient-to-r from-sudan-orange to-orange-600 text-white hover:from-sudan-orange/90 hover:to-orange-600/90 shadow-lg hover:shadow-xl transform hover:-translate-y-1",
-        "sudan-green": "bg-gradient-to-r from-sudan-green to-green-600 text-white hover:from-sudan-green/90 hover:to-green-600/90 shadow-lg hover:shadow-xl transform hover:-translate-y-1",
+          "bg-secondary text-secondary-foreground hover:bg-secondary-600 shadow-md hover:shadow-lg transition-all duration-200",
+        ghost: "hover:bg-secondary-100 hover:text-secondary-800 transition-all duration-200",
+        link: "text-primary underline-offset-4 hover:underline transition-all duration-200",
       },
       size: {
         default: "h-10 px-4 py-2",
