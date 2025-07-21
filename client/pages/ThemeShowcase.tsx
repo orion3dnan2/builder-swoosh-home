@@ -288,7 +288,7 @@ export default function ThemeShowcase() {
                 className={`flex items-center gap-2 arabic ${isRTL ? "flex-row-reverse" : "flex-row"}`}
               >
                 <Eye className="w-6 h-6" />
-                {isRTL ? "عرض المكونات" : "Component Showcase"}
+عرض المكونات
               </CardTitle>
             </CardHeader>
             <CardContent>
