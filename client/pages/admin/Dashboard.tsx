@@ -310,7 +310,7 @@ export default function AdminDashboard() {
                         {activity.action}
                       </p>
                       <p className="text-xs text-gray-600 arabic">
-                        بواسطة {activity.user} • {activity.time}
+                                                بواسطة {activity.user} • {activity.time}
                       </p>
                     </div>
                   </div>
@@ -319,7 +319,7 @@ export default function AdminDashboard() {
               <div className="mt-4 pt-4 border-t">
                 <Link to="/admin/activity">
                   <Button variant="outline" size="sm" className="w-full arabic">
-                    عرض جميع الأنشطة
+                                        {t("dashboard.view_all_activities")}
                   </Button>
                 </Link>
               </div>
@@ -338,7 +338,7 @@ export default function AdminDashboard() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                   <span className="text-sm font-medium text-blue-900 arabic">
-                    المتاجر ��لنشطة
+                                        {t("dashboard.active_stores")}
                   </span>
                   <span className="text-lg font-bold text-blue-600">
                     {stats.activeStores}
@@ -346,7 +346,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
                   <span className="text-sm font-medium text-yellow-900 arabic">
-                    طلبات الاعتماد
+                                        {t("dashboard.pending_approvals")}
                   </span>
                   <span className="text-lg font-bold text-yellow-600">
                     {stats.pendingApprovals}
@@ -354,7 +354,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                   <span className="text-sm font-medium text-green-900 arabic">
-                    تسجيلات جديدة
+                                        {t("dashboard.new_registrations")}
                   </span>
                   <span className="text-lg font-bold text-green-600">
                     {stats.newRegistrations}
@@ -362,7 +362,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
                   <span className="text-sm font-medium text-purple-900 arabic">
-                    إجمالي الطلبات
+                                        {t("dashboard.total_orders")}
                   </span>
                   <span className="text-lg font-bold text-purple-600">
                     {stats.totalOrders}
@@ -372,7 +372,7 @@ export default function AdminDashboard() {
               <div className="mt-4 pt-4 border-t">
                 <Link to="/admin/analytics">
                   <Button variant="outline" size="sm" className="w-full arabic">
-                    عرض التقارير التفصيلية
+                                        {t("dashboard.view_detailed_reports")}
                   </Button>
                 </Link>
               </div>
