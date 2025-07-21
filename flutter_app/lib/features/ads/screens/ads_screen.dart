@@ -6,7 +6,7 @@ import '../../../core/localization/app_localizations.dart';
 import '../../../shared/widgets/app_bar.dart';
 
 class AdsScreen extends ConsumerWidget {
-  const AdsScreen({super.key};
+  const AdsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
