@@ -61,6 +61,10 @@ export class AppSettingsService {
 
   static getSettings(): AppSettings {
     try {
+      if (!this.STORAGE_KEY) {
+        console.warn("STORAGE_KEY is not defined, using default settings");
+        return this.defaultSettings;
+      }
       const settingsStr = localStorage.getItem(this.STORAGE_KEY);
       if (settingsStr) {
         const saved = JSON.parse(settingsStr);
@@ -68,7 +72,8 @@ export class AppSettingsService {
         return { ...this.defaultSettings, ...saved };
       }
       return this.defaultSettings;
-    } catch {
+    } catch (error) {
+      console.error("Failed to load app settings:", error);
       return this.defaultSettings;
     }
   }
