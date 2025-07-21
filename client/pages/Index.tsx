@@ -63,7 +63,7 @@ export default function Index() {
     {
       icon: Building2,
       title: "دليل الشركات", 
-      description: "تواصل مع الشركات والمؤسسات السودانية في الخليج",
+      description: "تواص�� مع الشركات والمؤسسات السودانية في الخليج",
       href: "/companies",
       color: "from-green-500 to-green-600",
       bgColor: "bg-green-50 dark:bg-green-900/20"
@@ -97,7 +97,7 @@ export default function Index() {
   const testimonials = [
     {
       name: "أحمد محمد",
-      role: "صاحب مت��ر",
+      role: "صاحب متجر",
       content: "البيت السوداني ساعدني في الوصول لعملاء جدد وتنمية تجارتي بشكل كبير",
       rating: 5
     },
@@ -266,7 +266,7 @@ export default function Index() {
           <div className={`flex flex-col xs:flex-row gap-3 md:gap-4 justify-center px-4 ${isRTL ? 'xs:flex-row-reverse' : ''}`}>
             <Link to="/register" className="w-full xs:w-auto">
               <Button size="lg" variant="secondary" className="w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg arabic bg-white text-primary-700 hover:bg-white/90">
-                إنشاء حساب مجاني
+                {t('home.cta.create_account')}
                 <ArrowIcon className={`w-4 h-4 md:w-5 md:h-5 ${isRTL ? 'mr-2' : 'ml-2'}`} />
               </Button>
             </Link>
