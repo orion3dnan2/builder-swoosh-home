@@ -62,6 +62,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 {t("common.users_count")}
               </span>
               <LanguageAndThemeControls />
+              {isAdminOrMerchant && (
+                <div className="hidden md:block">
+                  <AdminFontSelector />
+                </div>
+              )}
               <Link to="/login">
                 <Button
                   variant="outline"
