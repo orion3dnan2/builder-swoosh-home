@@ -17,11 +17,11 @@ import {
 } from "lucide-react";
 
 export default function Index() {
-    const stats = [
+      const stats = [
     { icon: "🛍️", value: "+50", label: "متجر متوفر", color: "bg-gradient-to-br from-primary-600 to-primary-800" },
-    { icon: "📦", value: "+1000", label: "منتج متاح", color: "bg-gradient-to-br from-secondary-600 to-secondary-800" },
+    { icon: "📦", value: "+1000", label: "منتج متاح", color: "bg-gradient-to-br from-secondary-500 to-secondary-700" },
     { icon: "👤", value: "+25", label: "أيام فعلي", color: "bg-gradient-to-br from-primary-500 to-primary-700" },
-    { icon: "🏪", value: "+200", label: "خدمة متوفرة", color: "bg-gradient-to-br from-secondary-500 to-secondary-700" },
+    { icon: "🏪", value: "+200", label: "خدمة متوفرة", color: "bg-gradient-to-br from-secondary-400 to-secondary-600" },
   ];
 
   const services = [
@@ -77,7 +77,7 @@ export default function Index() {
     {
       icon: <MapPin className="w-6 h-6 text-primary-600" />,
       title: "توصيل سريع",
-      description: "خدمة توصيل سريعة لجم��ع دول الخليج"
+      description: "خدمة توصيل سريعة لجميع دول الخليج"
     },
     {
       icon: <Users className="w-6 h-6 text-secondary-600" />,
@@ -106,7 +106,7 @@ export default function Index() {
               البيت السوداني
             </h1>
             <p className="text-xl md:text-2xl mb-8 arabic opacity-95">
-              سوق وخدمات وشركات السودان في الخليج والعالم
+              سوق وخدمات وشركات ا��سودان في الخليج والعالم
             </p>
             <p className="text-lg mb-10 arabic opacity-90 max-w-3xl mx-auto leading-relaxed">
               انضم واشترك لتحصل على أفضل العروض والخدمات من البيت السوداني، شبكة التواصل التجاري الأولى للسودانيين في الخليج
@@ -151,7 +151,7 @@ export default function Index() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-800 mb-4 arabic">لماذا البيت السوداني؟</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto arabic">
-              نقدم لك أفضل الخدمات السوداني�� مع ضمان الجودة والأمان
+              نقدم لك أفضل الخدمات السودانية مع ضمان الجودة والأمان
             </p>
           </div>
           
@@ -204,7 +204,7 @@ export default function Index() {
               </div>
             </div>
             <div className="relative">
-                            <div className="bg-gradient-to-br from-primary-600 to-primary-800 rounded-3xl p-8 text-white shadow-2xl">
+                                          <div className="bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 rounded-3xl p-8 text-white shadow-2xl">
                 <h3 className="text-2xl font-bold mb-4 arabic">ابدأ رحلتك معنا اليوم</h3>
                 <p className="mb-6 arabic opacity-90">
                   انضم إلى آلاف العملاء الراضين في البيت السوداني
@@ -221,10 +221,10 @@ export default function Index() {
       </section>
 
             {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-secondary-700 to-secondary-900 text-white relative overflow-hidden">
+            <section className="py-24 bg-gradient-to-r from-primary-800 via-primary-700 to-secondary-700 text-white relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-80 h-80 bg-secondary-500/20 rounded-full blur-3xl"></div>
         </div>
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-6 arabic">
