@@ -14,6 +14,7 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
+  const { t, isRTL } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
