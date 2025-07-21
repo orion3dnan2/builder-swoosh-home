@@ -3,7 +3,8 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 // Types for theme and language
 export type Theme = "light" | "dark";
 export type Language = "ar" | "en";
-export type FontFamily = "cairo" | "tajawal" | "noto-kufi" | "amiri";
+export type ArabicFontFamily = "amiri" | "cairo" | "tajawal" | "noto-kufi" | "ibm-plex" | "lateef" | "almarai" | "markazi" | "kufi-standard";
+export type EnglishFontFamily = "inter" | "roboto" | "poppins" | "montserrat" | "open-sans";
 
 interface ThemeContextType {
   theme: Theme;
@@ -75,13 +76,13 @@ const translations = {
       "تواصل مع الشركات والمؤسسات السودانية في الخليج",
     "home.services.jobs": "لوحة الوظائف",
     "home.services.jobs_desc": "ابحث عن فرص عمل مناسبة أو أعلن عن وظائف شاغرة",
-    "home.services.professional": "الخدمات ا��مهنية",
+    "home.services.professional": "الخدمات ا��مهن��ة",
     "home.services.professional_desc":
       "احصل على خدمات مهنية متخصصة من خبراء سودانيين",
     "home.services.ads": "الإعلانات",
     "home.services.ads_desc": "روج لأعمالك وخدماتك للمجتمع السوداني",
     "home.services.discover": "اكتشف المزيد",
-    "home.testimonials.title": "آراء عملائ��ا",
+    "home.testimonials.title": "آراء عملائنا",
     "home.testimonials.subtitle": "ماذا يقول عملاؤنا عن تجربتهم معنا",
     "home.cta.title": "ابدأ رحلتك معنا اليوم",
     "home.cta.subtitle":
@@ -149,7 +150,7 @@ const translations = {
     "stores.active_stores": "مت��جر نشطة",
     "stores.pending_stores": "في الانتظار",
     "stores.suspended_stores": "معلقة",
-    "stores.search_placeholder": "ا��بحث في المتاجر...",
+    "stores.search_placeholder": "البحث في المتاجر...",
     "stores.all_statuses": "جميع الحالات",
     "stores.status_active": "نشط",
     "stores.status_pending": "في الانتظار",
@@ -166,7 +167,7 @@ const translations = {
     "stores.suspend_store": "تعليق المتجر",
     "stores.reactivate_store": "إعادة تفعيل",
     "stores.no_stores_found": "لا توجد متاجر",
-    "stores.no_stores_match": "لم يتم العثور على متاجر تطابق معايير البحث",
+    "stores.no_stores_match": "لم يتم العثور ع��ى متاجر تطابق معايير البحث",
     "stores.filter_results": "من",
     "stores.store_details": "تفاصيل المتجر",
     "stores.store_details_desc": "معلومات شاملة عن المتجر ونشاطه",
