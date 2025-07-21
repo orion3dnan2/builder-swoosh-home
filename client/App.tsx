@@ -10,6 +10,7 @@ import Services from "./pages/Services";
 import Ads from "./pages/Ads";
 import NotFound from "./pages/NotFound";
 import Unauthorized from "./pages/Unauthorized";
+import ThemeShowcase from "./pages/ThemeShowcase";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminSettings from "./pages/admin/Settings";
 import MerchantDashboard from "./pages/merchant/Dashboard";
@@ -29,6 +30,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/theme-showcase" element={<ThemeShowcase />} />
           
           {/* Admin Routes */}
           <Route path="/admin/dashboard" element={
