@@ -28,10 +28,15 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
-        {/* Admin Routes */}
+                {/* Admin Routes */}
         <Route path="/admin/dashboard" element={
           <SuperAdminRoute>
             <AdminDashboard />
+          </SuperAdminRoute>
+        } />
+        <Route path="/admin/settings" element={
+          <SuperAdminRoute>
+            <AdminSettings />
           </SuperAdminRoute>
         } />
 
@@ -39,6 +44,21 @@ function App() {
         <Route path="/merchant/dashboard" element={
           <MerchantRoute>
             <MerchantDashboard />
+          </MerchantRoute>
+        } />
+        <Route path="/merchant/products" element={
+          <MerchantRoute>
+            <MerchantProducts />
+          </MerchantRoute>
+        } />
+        <Route path="/merchant/products/new" element={
+          <MerchantRoute>
+            <NewProduct />
+          </MerchantRoute>
+        } />
+        <Route path="/merchant/analytics" element={
+          <MerchantRoute>
+            <MerchantAnalytics />
           </MerchantRoute>
         } />
 
