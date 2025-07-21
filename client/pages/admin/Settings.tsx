@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { useAppSettings } from "@/lib/appSettings";
 import { useAuth } from "@/lib/auth";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function AdminSettings() {
   const { user } = useAuth();
