@@ -9,12 +9,15 @@ export type EnglishFontFamily = "inter" | "roboto" | "poppins" | "montserrat" | 
 interface ThemeContextType {
   theme: Theme;
   language: Language;
-  fontFamily: FontFamily;
+  arabicFont: ArabicFontFamily;
+  englishFont: EnglishFontFamily;
   toggleTheme: () => void;
   toggleLanguage: () => void;
-  setFontFamily: (font: FontFamily) => void;
+  setArabicFont: (font: ArabicFontFamily) => void;
+  setEnglishFont: (font: EnglishFontFamily) => void;
   t: (key: string) => string;
   isRTL: boolean;
+  getCurrentFont: () => string;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -76,7 +79,7 @@ const translations = {
       "تواصل مع الشركات والمؤسسات السودانية في الخليج",
     "home.services.jobs": "لوحة الوظائف",
     "home.services.jobs_desc": "ابحث عن فرص عمل مناسبة أو أعلن عن وظائف شاغرة",
-    "home.services.professional": "الخدمات ا��مهن��ة",
+    "home.services.professional": "الخدمات ا��مهنية",
     "home.services.professional_desc":
       "احصل على خدمات مهنية متخصصة من خبراء سودانيين",
     "home.services.ads": "الإعلانات",
@@ -167,7 +170,7 @@ const translations = {
     "stores.suspend_store": "تعليق المتجر",
     "stores.reactivate_store": "إعادة تفعيل",
     "stores.no_stores_found": "لا توجد متاجر",
-    "stores.no_stores_match": "لم يتم العثور ع��ى متاجر تطابق معايير البحث",
+    "stores.no_stores_match": "لم يتم العثور على متاجر تطابق معايير البحث",
     "stores.filter_results": "من",
     "stores.store_details": "تفاصيل المتجر",
     "stores.store_details_desc": "معلومات شاملة عن المتجر ونشاطه",
@@ -207,7 +210,7 @@ const translations = {
     "login.error.username_required": "يرجى إدخال اسم المستخدم",
     "login.error.password_required": "يرجى إدخال كلمة المرور",
     "login.error.invalid_credentials": "بيانات الدخول غير صحيحة",
-    "register.title": "إنشاء حساب جديد",
+    "register.title": "إنشاء ��ساب جديد",
     "register.subtitle": "انضم إلى البيت السوداني اليوم",
     "register.full_name": "الاسم الكامل",
     "register.email": "البريد الإلكتروني",
