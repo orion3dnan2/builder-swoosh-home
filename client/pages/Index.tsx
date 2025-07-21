@@ -33,7 +33,7 @@ export default function Index() {
     },
     {
       icon: <Package className="w-8 h-8 text-secondary-600" />,
-      title: "المنتجات ال��ودانية",
+      title: "المنتجات السودانية",
       description: "أفضل المنتجات التقليدية والحديثة من السودان",
       href: "/products"
     },
@@ -46,7 +46,7 @@ export default function Index() {
     {
       icon: <Briefcase className="w-8 h-8 text-secondary-600" />,
       title: "فرص العمل",
-      description: "وظائف متنوعة للمهنيين السودانيين",
+      description: "وظائف متنوعة للمه��يين السودانيين",
       href: "/jobs"
     },
     {
@@ -67,7 +67,7 @@ export default function Index() {
         {
       icon: <CheckCircle className="w-6 h-6 text-primary-600" />,
       title: "خدمة عملاء مميزة",
-      description: "دعم فني على مدار 24/7 للمستخد��ين"
+      description: "دعم فني على مدار 24/7 للمستخدمين"
     },
     {
       icon: <Star className="w-6 h-6 text-secondary-600" />,
@@ -105,10 +105,10 @@ export default function Index() {
                                     <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 arabic text-white drop-shadow-2xl">
               البيت السوداني
             </h1>
-            <p className="text-xl md:text-2xl mb-8 arabic text-white drop-shadow-lg">
+                        <p className="text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 arabic text-white drop-shadow-lg">
               سوق وخدمات وشركات السودان في الخليج والعالم
             </p>
-            <p className="text-lg mb-10 arabic text-white/90 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
+            <p className="text-sm md:text-lg mb-8 md:mb-10 arabic text-white/90 max-w-3xl mx-auto leading-relaxed drop-shadow-md px-4">
               انضم واشترك لتحصل على أفضل العروض والخدمات من البيت السوداني، شبكة التواصل التجاري الأولى للسودانيين في الخليج
             </p>
                                     <div className="flex flex-col sm:flex-row gap-6 justify-center">
