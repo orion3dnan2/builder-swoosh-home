@@ -16,7 +16,7 @@ export default function Ads() {
           </div>
           <h1 className="text-4xl font-bold text-gray-800 mb-4 arabic">الإعلانات والعروض</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto arabic">
-            أحدث العروض وال��علانات التجارية من المتاجر السودانية
+            أحدث العروض والإعلانات التجارية من المتاجر السودانية
           </p>
         </div>
 
@@ -47,8 +47,8 @@ export default function Ads() {
           <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
             نعمل على جمع أفضل العروض والإعلانات من التجار السودانيين.
           </p>
-          <Button className="bg-purple-600 hover:bg-purple-700 arabic">
-            كن أول من يعلم عند الإطلاق
+                    <Button size="lg" className="bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-600/90 hover:to-purple-700/90 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic px-8">
+            كن أول من يعلم عند الإطلاق 🔔
           </Button>
         </div>
       </div>
