@@ -89,27 +89,27 @@ export default function AdminDashboard() {
 
   const recentActivity = [
     {
-      action: "تسجيل متجر جديد",
-      user: "أحمد محمد",
-      time: "منذ 15 دقيقة",
+      actionKey: "dashboard.activity.new_store",
+      userKey: "dashboard.user.ahmed_mohamed",
+      timeKey: "dashboard.time.15_minutes_ago",
       type: "store",
     },
     {
-      action: "طلب اعتماد منتج",
-      user: "فاطمة عبدالله",
-      time: "منذ 30 دقيقة",
+      actionKey: "dashboard.activity.product_approval",
+      userKey: "dashboard.user.fatima_abdullah",
+      timeKey: "dashboard.time.30_minutes_ago",
       type: "product",
     },
     {
-      action: "مراجعة سلب��ة",
-      user: "محمد علي",
-      time: "منذ ساعة",
+      actionKey: "dashboard.activity.negative_review",
+      userKey: "dashboard.user.mohamed_ali",
+      timeKey: "dashboard.time.1_hour_ago",
       type: "review",
     },
     {
-      action: "طلب دعم فني",
-      user: "عائشة أحمد",
-      time: "منذ ساعتين",
+      actionKey: "dashboard.activity.support_request",
+      userKey: "dashboard.user.aisha_ahmed",
+      timeKey: "dashboard.time.2_hours_ago",
       type: "support",
     },
   ];
