@@ -250,7 +250,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           >
             <div>
               <h3 className="text-xl font-bold mb-4 arabic text-foreground">
-                البيت السوداني
+                {t("brand.name")}
               </h3>
               <p className="text-muted-foreground arabic">
                 {t("brand.description")}
