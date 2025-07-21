@@ -29,66 +29,7 @@ export function ThemeToggle() {
 
 // Language toggle removed - Arabic only app
 
-export function FontFamilySelector() {
-  const { arabicFont, englishFont, setArabicFont, setEnglishFont, t, language, getCurrentFont } = useTheme();
-
-  const currentFonts = language === "ar" ? arabicFonts : englishFonts;
-  const currentFontId = language === "ar" ? arabicFont : englishFont;
-  const currentFontName = currentFonts.find((f: any) => f.id === currentFontId)?.name ||
-                         (language === "ar" ? "أميري" : "Inter");
-
-  const handleFontChange = (fontId: string) => {
-    if (language === "ar") {
-      setArabicFont(fontId as any);
-    } else {
-      setEnglishFont(fontId as any);
-    }
-  };
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="text-current hover:bg-white/10"
-        >
-          <Globe className="w-4 h-4 mr-2" />
-          <span className="text-xs">
-            {currentFontName}
-          </span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align={language === "ar" ? "start" : "end"}
-        className="w-56 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
-      >
-        {currentFonts.map((font: any) => (
-          <DropdownMenuItem
-            key={font.id}
-            onClick={() => handleFontChange(font.id)}
-            className={`cursor-pointer ${currentFontId === font.id ? "bg-primary-50 dark:bg-primary-900/20" : ""}`}
-          >
-            <div className="flex flex-col w-full">
-              <div className="flex items-center justify-between">
-                <span className="font-medium">{font.name}</span>
-                {currentFontId === font.id && (
-                  <div className="w-2 h-2 bg-primary-600 rounded-full"></div>
-                )}
-              </div>
-              <span
-                className={`text-sm text-gray-600 dark:text-gray-400 ${language === 'ar' ? 'arabic' : 'english'}`}
-                style={{ fontFamily: `var(--font-${font.id})` }}
-              >
-                {font.preview}
-              </span>
-            </div>
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
+// FontFamilySelector moved to AdminFontSelector for admin/merchant areas only
 
 export function LanguageAndThemeControls() {
   const { isRTL } = useTheme();
