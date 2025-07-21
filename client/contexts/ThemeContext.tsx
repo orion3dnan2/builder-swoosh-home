@@ -159,7 +159,7 @@ const translations = {
     "stores.status_suspended": "معلق",
     "stores.category": "الفئة",
     "stores.join_date": "تاريخ الانضمام",
-    "stores.last_active": "آخر نشاط",
+    "stores.last_active": "آ��ر نشاط",
     "stores.rating": "التقييم",
     "stores.products": "منتج",
     "stores.orders": "طلب",
@@ -182,7 +182,7 @@ const translations = {
     "stores.location": "الموقع",
     "stores.status": "الحالة",
     "stores.total_products": "إج��الي المنتجات",
-    "stores.total_orders": "إجمالي الطلبات",
+    "stores.total_orders": "إجمالي ��لطلبات",
     "stores.revenues": "الإيرادات",
     "stores.confirm_action": "تأكيد الإجراء",
     "stores.confirm_approve": "هل أنت متأكد من اعتماد هذا المتجر؟",
@@ -197,7 +197,7 @@ const translations = {
     "stores.reviews_count": "تقييم",
 
     // Login & Register
-    "login.title": "تسجيل الدخو��",
+    "login.title": "تسجيل الدخول",
     "login.subtitle": "أدخل بياناتك للوصول إلى حسابك",
     "login.username": "اسم المستخدم أو البريد الإلكتروني",
     "login.password": "كلمة المرور",
@@ -216,7 +216,7 @@ const translations = {
     "register.phone": "رقم الهاتف",
     "register.confirm_password": "تأكيد كلمة المرور",
     "register.agree_terms": "أوافق على الشروط والأحكام",
-    "register.already_have_account": "لديك حسا�� بالفعل؟",
+    "register.already_have_account": "لديك حساب بالفعل؟",
     "register.login_here": "سجل دخولك هنا",
     "login.demo_accounts": "حسابات التجربة",
     "login.demo.super_admin": "مدير التطبيق (Super Admin)",
@@ -268,7 +268,7 @@ const translations = {
     "common.back_to_dashboard": "العودة للوحة الرئيسية",
     "users.coming_soon_desc": "صفحة إدارة المستخدمين ستكون متاحة قريباً بميزات شاملة لإدارة حسابات المستخدمين",
     "appearance.coming_soon_desc": "صفحة تخصيص المظهر ستكون متاحة قريباً لتغيير الألوان والصور والخلفيات",
-    "system.coming_soon_desc": "صفحة إعدادات النظام ستكون متاحة قريباً لإدارة الصلاحيات وإعدادات الأمان",
+    "system.coming_soon_desc": "صفحة إعدادات النظام ستكون متاحة قريبا�� لإدارة الصلاحيات وإعدادات الأمان",
     "content.coming_soon_desc": "صفحة إدارة المحتوى ستكون متاحة قريباً لإدارة النصوص والصور والترجمات",
     "settings.current_settings": "إعدادات التطبيق الحالية",
 
@@ -637,7 +637,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       "nav.products": "المنتجات",
       "nav.companies": "الشركات",
       "nav.jobs": "الوظائف",
-      "nav.services": "الخدمات",
+      "nav.services": "الخدما��",
       "nav.ads": "الإعلانات",
 
       // Common
@@ -726,12 +726,53 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       "dashboard.user.ahmed_mohamed": "أحمد محمد",
       "dashboard.user.fatima_abdullah": "فاطمة عبدالله",
       "dashboard.user.mohamed_ali": "محمد علي",
-      "dashboard.user.aisha_ahmed": "عا��شة أحمد",
+      "dashboard.user.aisha_ahmed": "عائشة أحمد",
       "dashboard.time.15_minutes_ago": "منذ 15 دقيقة",
       "dashboard.time.30_minutes_ago": "منذ 30 دقيقة",
       "dashboard.time.1_hour_ago": "منذ ساعة",
       "dashboard.time.2_hours_ago": "منذ ساعتين",
       "dashboard.by": "بواسطة",
+
+      // More Dashboard translations
+      "dashboard.app_settings": "إعدادات التطبيق",
+      "dashboard.user_management": "إدارة المستخدمين",
+      "dashboard.store_management": "إدارة ��لمتاجر",
+      "dashboard.appearance": "تخصيص المظهر",
+      "dashboard.system_settings": "إعدادات النظام",
+      "dashboard.content_management": "إدارة المحتوى",
+      "dashboard.view_site": "عرض الموقع",
+
+      // Store Management
+      "stores.title": "إدارة المتاجر",
+      "stores.subtitle": "متجر مسجل",
+      "stores.total_stores": "إجمالي المتاجر",
+      "stores.active_stores": "متاجر نشطة",
+
+      // Common pages
+      "common.coming_soon": "قريباً - قيد التطوير",
+      "common.under_development": "صفحة قيد التطوير",
+      "common.back_to_dashboard": "العودة للوحة الرئيسية",
+
+      // Login & Register
+      "login.title": "تسجيل الدخول",
+      "login.subtitle": "أدخل بياناتك للوصول إلى حسابك",
+      "login.username": "اسم المستخدم أو البريد الإلكتروني",
+      "login.password": "كلمة المرور",
+      "login.remember_me": "تذكرني",
+      "login.forgot_password": "نسيت كلمة المرور؟",
+      "login.no_account": "ليس لديك حساب؟",
+      "login.create_account": "إنشاء حساب جديد",
+      "login.error.username_required": "يرجى إدخال اسم المستخدم",
+      "login.error.password_required": "يرجى إدخال كلمة المرور",
+      "login.error.invalid_credentials": "بيانات الدخول غير صحيحة",
+
+      // Settings
+      "settings.theme": "المظهر",
+      "settings.fonts": "الخطوط",
+      "settings.branding": "العلامة التجارية",
+      "settings.features": "الميزات",
+      "settings.content": "المحتوى",
+      "settings.advanced": "متقدم",
     };
 
     return arabicTranslations[key] || key;
