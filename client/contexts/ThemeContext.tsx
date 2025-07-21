@@ -67,7 +67,7 @@ const translations = {
     "home.hero.title": "البيت السوداني",
     "home.hero.subtitle": "سوق وخدمات وشركات السودان في الخليج والعالم",
     "home.hero.explore_market": "استكشف السوق",
-    "home.hero.join_us": "انضم ��لينا",
+    "home.hero.join_us": "انضم إلينا",
     "home.services.title": "خدماتنا",
     "home.services.subtitle":
       "مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج والعالم",
@@ -132,7 +132,7 @@ const translations = {
     "dashboard.total_orders": "إجمالي الطلبات",
     "dashboard.app_settings": "إعدادات التطبيق",
     "dashboard.app_settings_desc": "تخصيص المظهر والألوان والخطوط",
-    "dashboard.user_management": "إدارة المستخدم��ن",
+    "dashboard.user_management": "إدارة المستخدمين",
     "dashboard.user_management_desc": "عرض وإدارة حسابات المستخدمين",
     "dashboard.store_management": "إدارة المتاجر",
     "dashboard.store_management_desc": "مراجعة وإدارة المتاجر المسجلة",
@@ -183,7 +183,7 @@ const translations = {
     "stores.location": "الموقع",
     "stores.status": "الحالة",
     "stores.total_products": "إجمالي المنتجات",
-    "stores.total_orders": "إجمالي الطلبات",
+    "stores.total_orders": "إجمالي الطل��ات",
     "stores.revenues": "الإيرادات",
     "stores.confirm_action": "تأكيد الإجراء",
     "stores.confirm_approve": "هل أنت متأكد من اعتماد هذا المتجر؟",
@@ -217,7 +217,7 @@ const translations = {
     "register.phone": "رقم الهاتف",
     "register.confirm_password": "تأكيد كلمة المرور",
     "register.agree_terms": "أوافق على الشروط والأحكام",
-    "register.already_have_account": "لديك حساب بالف��ل؟",
+    "register.already_have_account": "لديك حساب بالفعل؟",
     "register.login_here": "سجل دخولك هنا",
     "login.demo_accounts": "حسابات التجربة",
     "login.demo.super_admin": "مدير التطبيق (Super Admin)",
@@ -461,6 +461,28 @@ const translations = {
     "login.demo.password": "Password",
     "login.demo.use_account": "Use this account",
 
+    // Settings
+    "settings.theme": "Theme",
+    "settings.fonts": "Fonts",
+    "settings.branding": "Branding",
+    "settings.features": "Features",
+    "settings.content": "Content",
+    "settings.advanced": "Advanced",
+
+    // Font Settings
+    "font_settings.title": "Font Settings",
+    "font_settings.subtitle": "Choose appropriate fonts for Arabic and English content",
+    "font_settings.reset": "Reset",
+    "font_settings.current_settings": "Current Settings",
+    "font_settings.arabic_font": "Arabic Font",
+    "font_settings.english_font": "English Font",
+    "font_settings.arabic_fonts": "Arabic Fonts",
+    "font_settings.english_fonts": "English Fonts",
+    "font_settings.custom_preview": "Custom Preview",
+    "font_settings.arabic_preview_text": "Arabic Preview Text",
+    "font_settings.english_preview_text": "English Preview Text",
+    "common.selected": "Selected",
+
     // Error messages
     "error.404": "Page Not Found",
     "error.unauthorized": "Access Denied",
@@ -651,7 +673,7 @@ export const arabicFonts = [
     id: "lateef" as ArabicFontFamily,
     name: "لطيف",
     englishName: "Lateef",
-    preview: "أهلاً وسهلاً بكم في ال��يت السوداني",
+    preview: "أهلاً وسهلاً بكم في البيت السوداني",
     url: "https://fonts.googleapis.com/css2?family=Lateef:wght@200;300;400;500;600;700;800&display=swap",
   },
   {
