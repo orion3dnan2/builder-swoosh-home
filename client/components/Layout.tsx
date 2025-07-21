@@ -2,91 +2,100 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Search, Bell, MessageCircle, User, Menu } from "lucide-react";
 import { useState } from "react";
+import { useTheme } from "../contexts/ThemeContext";
+import { LanguageAndThemeControls } from "./ThemeToggle";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
+  const { t, isRTL } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigation = [
-    { name: "الرئيسية", href: "/", icon: "🏠" },
-    { name: "السوق", href: "/marketplace", icon: "🛍️" },
-    { name: "المنتجات", href: "/products", icon: "📦" },
-    { name: "الشركات", href: "/companies", icon: "🏢" },
-    { name: "الوظائف", href: "/jobs", icon: "💼" },
-    { name: "الخدمات", href: "/services", icon: "🛠️" },
-    { name: "الإعلانات", href: "/ads", icon: "📢" },
+    { name: t('nav.home'), href: "/", icon: "🏠" },
+    { name: t('nav.marketplace'), href: "/marketplace", icon: "🛍️" },
+    { name: t('nav.products'), href: "/products", icon: "📦" },
+    { name: t('nav.companies'), href: "/companies", icon: "🏢" },
+    { name: t('nav.jobs'), href: "/jobs", icon: "💼" },
+    { name: t('nav.services'), href: "/services", icon: "🛠️" },
+    { name: t('nav.ads'), href: "/ads", icon: "📢" },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50" dir="rtl">
-            {/* Header */}
-            <header className="bg-gradient-to-r from-primary-700 via-primary-600 to-secondary-600 text-white shadow-xl border-b border-primary-900">
+    <div className="min-h-screen bg-background transition-colors duration-300 sudanese-pattern">
+      {/* Header */}
+      <header className="header-glass sticky top-0 z-50 shadow-cultural">
         <div className="container mx-auto px-4">
           {/* Top Bar */}
-                    <div className="hidden md:flex items-center justify-between py-2 text-sm">
-            <div className="flex items-center gap-4">
-              <span>مرحباً بكم في البيت السوداني</span>
-                            <div className="flex items-center gap-2">
-                <Bell className="w-4 h-4" />
+          <div className="hidden md:flex items-center justify-between py-2 text-sm">
+            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+              <span className="text-muted-foreground">{t('common.welcome')}</span>
+              <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                <Bell className="w-4 h-4 text-muted-foreground" />
                 <span className="bg-secondary-600 text-white rounded-full px-2 py-0.5 text-xs">3</span>
               </div>
-              <div className="flex items-center gap-2">
-                <MessageCircle className="w-4 h-4" />
+              <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                <MessageCircle className="w-4 h-4 text-muted-foreground" />
                 <span className="bg-secondary-600 text-white rounded-full px-2 py-0.5 text-xs">5</span>
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <span>+100 الف سوداني في البيت</span>
-                                          <Link to="/login">
-                <Button variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-primary-600">
-                  تسجيل الدخول
+            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+              <span className="text-muted-foreground">{t('common.users_count')}</span>
+              <LanguageAndThemeControls />
+              <Link to="/login">
+                <Button variant="outline" size="sm" className="hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20">
+                  {t('common.login')}
                 </Button>
               </Link>
             </div>
-                    </div>
+          </div>
 
           {/* Mobile Top Bar */}
-          <div className="md:hidden flex items-center justify-between py-2 text-sm">
-            <div className="flex items-center gap-2">
-              <span className="text-xs truncate">مرحباً بكم في البيت السوداني</span>
-              <div className="flex items-center gap-1">
-                <Bell className="w-3 h-3" />
+          <div className={`md:hidden flex items-center justify-between py-2 text-sm ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+            <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+              <span className="text-xs truncate text-muted-foreground">{t('common.welcome')}</span>
+              <div className={`flex items-center gap-1 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                <Bell className="w-3 h-3 text-muted-foreground" />
                 <span className="bg-secondary-600 text-white rounded-full px-1.5 py-0.5 text-xs">3</span>
-                <MessageCircle className="w-3 h-3 ml-1" />
+                <MessageCircle className={`w-3 h-3 text-muted-foreground ${isRTL ? 'mr-1' : 'ml-1'}`} />
                 <span className="bg-secondary-600 text-white rounded-full px-1.5 py-0.5 text-xs">5</span>
               </div>
             </div>
-            <Link to="/login">
-              <Button variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-primary-600 text-xs px-2 py-1">
-                دخول
-              </Button>
-            </Link>
+            <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+              <LanguageAndThemeControls />
+              <Link to="/login">
+                <Button variant="outline" size="sm" className="text-xs px-2 py-1 hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20">
+                  {t('common.login')}
+                </Button>
+              </Link>
+            </div>
           </div>
 
           {/* Main Header */}
-                    <div className="flex items-center justify-between py-3 md:py-4">
-                        <div className="flex items-center gap-4 md:gap-8">
+          <div className={`flex items-center justify-between py-3 md:py-4 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+            <div className={`flex items-center gap-4 md:gap-8 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
               {/* Logo */}
-              <Link to="/" className="flex items-center gap-3">
-                                                <div className="w-8 h-8 md:w-12 md:h-12 bg-white rounded-xl flex items-center justify-center shadow-lg">
-                  <span className="text-primary-600 text-lg md:text-xl font-bold">🇸🇩</span>
+              <Link to="/" className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                <div className="w-8 h-8 md:w-12 md:h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center shadow-cultural">
+                  <span className="text-white text-lg md:text-xl font-bold">🇸🇩</span>
                 </div>
-                <div>
-                  <h1 className="text-lg md:text-2xl font-bold arabic">البيت السوداني</h1>
-                  <p className="text-xs md:text-sm opacity-90 hidden sm:block">سوق وخدمات السودان</p>
+                <div className={isRTL ? 'text-right' : 'text-left'}>
+                  <h1 className="text-lg md:text-2xl font-bold arabic text-foreground">{t('brand.name')}</h1>
+                  <p className="text-xs md:text-sm text-muted-foreground hidden sm:block">{t('brand.tagline')}</p>
                 </div>
               </Link>
 
               {/* Navigation - Desktop */}
-              <nav className="hidden lg:flex items-center gap-6">
+              <nav className={`hidden lg:flex items-center gap-6 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                 {navigation.map((item) => (
                   <Link
                     key={item.href}
                     to={item.href}
-                                        className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-200 arabic ${
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-200 arabic ${
+                      isRTL ? 'flex-row-reverse' : 'flex-row'
+                    } ${
                       location.pathname === item.href
-                        ? "bg-white text-primary-600 shadow-lg"
-                        : "hover:bg-white/10"
+                        ? "bg-primary-100 text-primary-700 shadow-md dark:bg-primary-900/30 dark:text-primary-300"
+                        : "text-foreground hover:bg-muted hover:text-primary-700 dark:hover:bg-muted dark:hover:text-primary-300"
                     }`}
                   >
                     <span>{item.icon}</span>
@@ -97,25 +106,27 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </div>
 
             {/* Search and User Actions */}
-            <div className="flex items-center gap-4">
+            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
               <div className="relative hidden md:block">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                                <input
+                <Search className={`absolute top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground ${
+                  isRTL ? 'right-3' : 'left-3'
+                }`} />
+                <input
                   type="text"
-                  placeholder="ابحث في البيت السوداني..."
-                  className="pl-10 pr-4 py-2 w-80 rounded-xl text-gray-800 placeholder:text-gray-500 arabic border-0 shadow-md focus:shadow-lg transition-all duration-200"
+                  placeholder={t('common.search')}
+                  className={`${isRTL ? 'pr-10 pl-4' : 'pl-10 pr-4'} py-2 w-80 rounded-xl input-dark arabic border shadow-sm focus:shadow-md transition-all duration-200 focus:ring-2 focus:ring-primary-500`}
                 />
               </div>
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden text-white"
+                className="lg:hidden text-foreground hover:bg-muted"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 <Menu className="w-6 h-6" />
               </Button>
-                            <Link to="/login">
-                <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
+              <Link to="/login">
+                <Button variant="ghost" size="icon" className="text-foreground hover:bg-muted">
                   <User className="w-6 h-6" />
                 </Button>
               </Link>
@@ -124,16 +135,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <div className="lg:hidden pb-4">
+            <div className="lg:hidden pb-4 animate-slide-up">
               <nav className="grid grid-cols-2 gap-2">
                 {navigation.map((item) => (
                   <Link
                     key={item.href}
                     to={item.href}
-                                        className={`flex items-center gap-2 px-4 py-3 rounded-xl transition-all duration-200 arabic ${
+                    className={`flex items-center gap-2 px-4 py-3 rounded-xl transition-all duration-200 arabic ${
+                      isRTL ? 'flex-row-reverse' : 'flex-row'
+                    } ${
                       location.pathname === item.href
-                        ? "bg-white text-primary-600 shadow-lg"
-                        : "hover:bg-white/10"
+                        ? "bg-primary-100 text-primary-700 shadow-md dark:bg-primary-900/30 dark:text-primary-300"
+                        : "text-foreground hover:bg-muted hover:text-primary-700 dark:hover:bg-muted dark:hover:text-primary-300"
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -142,48 +155,66 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   </Link>
                 ))}
               </nav>
+              
+              {/* Mobile search */}
+              <div className="mt-4 relative">
+                <Search className={`absolute top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground ${
+                  isRTL ? 'right-3' : 'left-3'
+                }`} />
+                <input
+                  type="text"
+                  placeholder={t('common.search')}
+                  className={`${isRTL ? 'pr-10 pl-4' : 'pl-10 pr-4'} py-2 w-full rounded-xl input-dark arabic border shadow-sm focus:shadow-md transition-all duration-200 focus:ring-2 focus:ring-primary-500`}
+                />
+              </div>
             </div>
           )}
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="arabic">{children}</main>
+      <main className="arabic animate-fade-in">{children}</main>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-12 mt-20">
+      <footer className="bg-card border-t border-border py-12 mt-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className={`grid grid-cols-1 md:grid-cols-4 gap-8 ${isRTL ? 'text-right' : 'text-left'}`}>
             <div>
-              <h3 className="text-xl font-bold mb-4 arabic">البيت السوداني</h3>
-              <p className="text-gray-300 arabic">
-                م��صة شاملة للخدمات والتجا��ة السودانية في الخليج والعالم
+              <h3 className="text-xl font-bold mb-4 arabic text-foreground">{t('brand.name')}</h3>
+              <p className="text-muted-foreground arabic">
+                {t('brand.description')}
               </p>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4 arabic">الخدمات</h4>
+              <h4 className="text-lg font-semibold mb-4 arabic text-foreground">{t('footer.services')}</h4>
               <ul className="space-y-2 arabic">
-                <li><Link to="/marketplace" className="text-gray-300 hover:text-white">السوق</Link></li>
-                <li><Link to="/products" className="text-gray-300 hover:text-white">المنتجات</Link></li>
-                <li><Link to="/services" className="text-gray-300 hover:text-white">الخدمات</Link></li>
+                <li><Link to="/marketplace" className="text-muted-foreground hover:text-primary-600 transition-colors">{t('nav.marketplace')}</Link></li>
+                <li><Link to="/products" className="text-muted-foreground hover:text-primary-600 transition-colors">{t('nav.products')}</Link></li>
+                <li><Link to="/services" className="text-muted-foreground hover:text-primary-600 transition-colors">{t('nav.services')}</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4 arabic">الأعمال</h4>
+              <h4 className="text-lg font-semibold mb-4 arabic text-foreground">{t('footer.business')}</h4>
               <ul className="space-y-2 arabic">
-                <li><Link to="/companies" className="text-gray-300 hover:text-white">الشركات</Link></li>
-                <li><Link to="/jobs" className="text-gray-300 hover:text-white">��لوظا��ف</Link></li>
-                <li><Link to="/ads" className="text-gray-300 hover:text-white">الإعلانات</Link></li>
+                <li><Link to="/companies" className="text-muted-foreground hover:text-primary-600 transition-colors">{t('nav.companies')}</Link></li>
+                <li><Link to="/jobs" className="text-muted-foreground hover:text-primary-600 transition-colors">{t('nav.jobs')}</Link></li>
+                <li><Link to="/ads" className="text-muted-foreground hover:text-primary-600 transition-colors">{t('nav.ads')}</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-lg font-semibold mb-4 arabic">تواصل معنا</h4>
-              <p className="text-gray-300 arabic">البريد الإلكتروني: info@sudan-house.com</p>
-              <p className="text-gray-300 arabic">الهاتف: +966 50 123 4567</p>
+              <h4 className="text-lg font-semibold mb-4 arabic text-foreground">{t('footer.contact')}</h4>
+              <p className="text-muted-foreground arabic mb-2">
+                {t('footer.email')}: info@sudan-house.com
+              </p>
+              <p className="text-muted-foreground arabic">
+                {t('footer.phone')}: +966 50 123 4567
+              </p>
             </div>
           </div>
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center arabic">
-            <p className="text-gray-300">© 2024 البيت السوداني. جميع الحقوق محفوظة.</p>
+          <div className={`border-t border-border mt-8 pt-8 text-center arabic ${isRTL ? 'text-right' : 'text-center'}`}>
+            <p className="text-muted-foreground">
+              © 2024 {t('brand.name')}. {t('footer.rights')}.
+            </p>
           </div>
         </div>
       </footer>
