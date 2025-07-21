@@ -70,7 +70,7 @@ const translations = {
     "home.hero.join_us": "انضم إلينا",
     "home.services.title": "خدماتنا",
     "home.services.subtitle":
-      "مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج والعالم",
+      "مجموعة شاملة من الخدمات المص��مة خصيصاً للمجتمع السوداني في الخليج والعالم",
     "home.services.marketplace": "السوق التجاري",
     "home.services.marketplace_desc":
       "اكتشف منتجات سودانية أصيلة من تجار موثوقين",
@@ -89,7 +89,7 @@ const translations = {
     "home.testimonials.subtitle": "ماذا يقول عملاؤنا عن تجربتهم معنا",
     "home.cta.title": "ابدأ رحلتك معنا اليوم",
     "home.cta.subtitle":
-      "انضم إلى آلاف السودانيين الذين يستخدمون ��لبيت السوداني لتنمية أعمالهم وخدماتهم",
+      "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم",
     "home.cta.create_account": "إنشاء حساب مجاني",
     "home.stats.users": "مستخدم نشط",
     "home.stats.companies": "شركة مسجلة",
@@ -134,7 +134,7 @@ const translations = {
     "dashboard.app_settings_desc": "تخصيص المظهر والألوان والخطوط",
     "dashboard.user_management": "إدارة المستخدمين",
     "dashboard.user_management_desc": "عرض وإدارة حسابات المستخدمين",
-    "dashboard.store_management": "إدارة المتاجر",
+    "dashboard.store_management": "إدارة ��لمتاجر",
     "dashboard.store_management_desc": "مراجعة وإدارة المتاجر المسجلة",
     "dashboard.appearance": "تخصيص المظهر",
     "dashboard.appearance_desc": "تغيير الألوان والصور والخلفيات",
@@ -533,8 +533,16 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     setLanguage((prevLang) => (prevLang === "ar" ? "en" : "ar"));
   };
 
-  const setFontFamily = (font: FontFamily) => {
-    setFontFamilyState(font);
+  const setArabicFont = (font: ArabicFontFamily) => {
+    setArabicFontState(font);
+  };
+
+  const setEnglishFont = (font: EnglishFontFamily) => {
+    setEnglishFontState(font);
+  };
+
+  const getCurrentFont = () => {
+    return language === 'ar' ? arabicFont : englishFont;
   };
 
   // Translation function
@@ -554,10 +562,13 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   const contextValue: ThemeContextType = {
     theme,
     language,
-    fontFamily,
+    arabicFont,
+    englishFont,
     toggleTheme,
     toggleLanguage,
-    setFontFamily,
+    setArabicFont,
+    setEnglishFont,
+    getCurrentFont,
     t,
     isRTL,
   };
