@@ -77,7 +77,7 @@ export default function Index() {
     {
       icon: <MapPin className="w-6 h-6 text-primary-600" />,
       title: "توصيل سريع",
-      description: "خدمة توصيل سريعة لجميع دول الخليج"
+      description: "خدمة توصيل سريعة لجم��ع دول الخليج"
     },
     {
       icon: <Users className="w-6 h-6 text-secondary-600" />,
@@ -88,13 +88,18 @@ export default function Index() {
 
   return (
     <Layout>
-            {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white py-24 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-        <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
-        </div>
+                  {/* Hero Section */}
+      <section className="relative text-white py-32 overflow-hidden min-h-[600px] flex items-center">
+        {/* Background Image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('https://cdn.builder.io/api/v1/image/assets%2Fb1a0c751ea8f428fb17cf787dc4c95b1%2Fada8ce46064846e687a3341dd0ab9c15?format=webp&width=1200')`
+          }}
+        ></div>
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/40 to-orange-900/30"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 arabic">
@@ -146,7 +151,7 @@ export default function Index() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-800 mb-4 arabic">لماذا البيت السوداني؟</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto arabic">
-              نقدم لك أفضل الخدمات السودانية مع ضمان الجودة والأمان
+              نقدم لك أفضل الخدمات السوداني�� مع ضمان الجودة والأمان
             </p>
           </div>
           
