@@ -8,7 +8,7 @@
    * tailwind.config.ts expects the following color variables to be expressed as HSL values.
    * A different format will require also updating the theme in tailwind.config.ts.
   */
-  :root {
+    :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -18,8 +18,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 210 100% 40%;
     --primary-foreground: 210 40% 98%;
+
+    /* Sudanese Traditional Colors */
+    --sudan-blue: 210 100% 40%;
+    --sudan-red: 0 84% 60%;
+    --sudan-orange: 25 95% 53%;
+    --sudan-green: 120 45% 40%;
+    --sudan-brown: 30 30% 40%;
+    --sudan-gold: 45 100% 50%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -100,7 +108,17 @@
     @apply border-border;
   }
 
-  body {
+    body {
     @apply bg-background text-foreground;
+  }
+
+  /* RTL Support */
+  [dir="rtl"] {
+    text-align: right;
+  }
+
+  /* Arabic Font Support */
+  .arabic {
+    font-family: 'Cairo', 'Amiri', 'Noto Sans Arabic', sans-serif;
   }
 }
