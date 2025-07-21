@@ -128,7 +128,7 @@ const translations = {
     "dashboard.active_stores": "المتاجر النشطة",
     "dashboard.pending_approvals": "طلبات الاعتماد",
     "dashboard.new_registrations": "تسجيلات جديدة",
-    "dashboard.total_orders": "إج��الي الطلبات",
+    "dashboard.total_orders": "إجمالي الطلبات",
     "dashboard.app_settings": "إعدادات التطبيق",
     "dashboard.app_settings_desc": "تخصيص المظهر والألوان والخطوط",
     "dashboard.user_management": "إدارة المستخدمين",
@@ -235,7 +235,7 @@ const translations = {
 
     // Font Settings
     "font_settings.title": "إعدادات الخطوط",
-    "font_settings.subtitle": "اختر الخطوط المناسبة للنصوص العربية والإنجليزية",
+    "font_settings.subtitle": "اختر الخطوط المناسبة للنصوص العربية و��لإنجليزية",
     "font_settings.reset": "إعادة تعيين",
     "font_settings.current_settings": "الإعدادات الحالية",
     "font_settings.arabic_font": "الخط العربي",
@@ -629,10 +629,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     return language === 'ar' ? arabicFont : englishFont;
   };
 
-  // Translation function
+  // Translation function - Arabic only
   const t = (key: string): string => {
     const keys = key.split(".");
-    let value: any = translations[language];
+    let value: any = translations["ar"]; // Always use Arabic translations
 
     for (const k of keys) {
       value = value?.[k];
