@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { useTheme } from "@/contexts/ThemeContext";
-import { TranslationTest } from "@/components/TranslationTest";
 
 export default function AdminDashboard() {
   const { user } = useAuth();
