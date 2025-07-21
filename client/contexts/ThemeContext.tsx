@@ -26,7 +26,7 @@ const translations = {
   ar: {
     // Navigation
     "nav.home": "الرئيسية",
-    "nav.marketplace": "السوق",
+    "nav.marketplace": "الس��ق",
     "nav.products": "المنتجات",
     "nav.companies": "الشركات",
     "nav.jobs": "الوظائف",
@@ -152,7 +152,7 @@ const translations = {
     "stores.active_stores": "مت��جر نشطة",
     "stores.pending_stores": "في الانتظار",
     "stores.suspended_stores": "معلقة",
-    "stores.search_placeholder": "البحث في الم��اجر...",
+    "stores.search_placeholder": "البحث في المتاجر...",
     "stores.all_statuses": "جميع الحالات",
     "stores.status_active": "نشط",
     "stores.status_pending": "في الانتظار",
@@ -175,7 +175,7 @@ const translations = {
     "stores.store_details_desc": "معلومات شاملة عن المتجر ونشاطه",
     "stores.basic_info": "المعلومات الأساسية",
     "stores.performance_stats": "إحصائيات الأداء",
-    "stores.store_name": "اسم المتج��",
+    "stores.store_name": "اسم المتجر",
     "stores.owner": "المالك",
     "stores.email": "البريد الإلكتروني",
     "stores.phone": "رقم الهاتف",
@@ -197,7 +197,7 @@ const translations = {
     "stores.reviews_count": "تقييم",
 
     // Login & Register
-    "login.title": "تسجيل الدخو��",
+    "login.title": "تسجيل الدخول",
     "login.subtitle": "أدخل بياناتك للوصول إلى حسابك",
     "login.username": "اسم المستخدم أو البريد الإلكتروني",
     "login.password": "كلمة المرور",
@@ -216,7 +216,7 @@ const translations = {
     "register.phone": "رقم الهاتف",
     "register.confirm_password": "تأكيد كلمة المرور",
     "register.agree_terms": "أوافق على الشروط والأحكام",
-    "register.already_have_account": "لديك حسا�� بالفعل؟",
+    "register.already_have_account": "لديك حساب بالفعل؟",
     "register.login_here": "سجل دخولك هنا",
     "login.demo_accounts": "حسابات التجربة",
     "login.demo.super_admin": "مدير التطبيق (Super Admin)",
