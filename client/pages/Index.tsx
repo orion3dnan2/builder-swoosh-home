@@ -34,7 +34,7 @@ export default function Index() {
     {
       icon: <Package className="w-8 h-8 text-secondary-600" />,
       title: "المنتجات السودانية",
-      description: "أفضل المنتجات التقليدية والحديثة من السودان",
+      description: "أفضل المنتجات ال��قليدية والحديثة من السودان",
       href: "/products"
     },
     {
@@ -46,7 +46,7 @@ export default function Index() {
     {
       icon: <Briefcase className="w-8 h-8 text-secondary-600" />,
       title: "فرص العمل",
-      description: "وظائف متنوعة للمه��يين السودانيين",
+      description: "وظائف متنوعة للمهنيين السودانيين",
       href: "/jobs"
     },
     {
@@ -111,14 +111,14 @@ export default function Index() {
             <p className="text-sm md:text-lg mb-8 md:mb-10 arabic text-white/90 max-w-3xl mx-auto leading-relaxed drop-shadow-md px-4">
               انضم واشترك لتحصل على أفضل العروض والخدمات من البيت السوداني، شبكة التواصل التجاري الأولى للسودانيين في الخليج
             </p>
-                                    <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link to="/marketplace">
-                <Button size="lg" className="bg-white text-primary-600 hover:bg-gray-100 hover:shadow-xl px-10 py-4 text-lg arabic w-full sm:w-auto rounded-xl font-semibold">
+                                                <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center px-4">
+              <Link to="/marketplace" className="w-full sm:w-auto">
+                <Button size="lg" className="bg-white text-primary-600 hover:bg-gray-100 hover:shadow-xl px-6 md:px-10 py-3 md:py-4 text-base md:text-lg arabic w-full rounded-xl font-semibold">
                   🛍️ تصفح السوق
                 </Button>
               </Link>
-              <Link to="/register">
-                <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-10 py-4 text-lg arabic w-full sm:w-auto rounded-xl font-semibold">
+              <Link to="/register" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-6 md:px-10 py-3 md:py-4 text-base md:text-lg arabic w-full rounded-xl font-semibold">
                   📞 سجل دخولك الآن
                 </Button>
               </Link>
@@ -187,7 +187,7 @@ export default function Index() {
                 مميزات البيت السوداني
               </h2>
               <p className="text-lg text-gray-600 mb-8 arabic leading-relaxed">
-                انضم إلى أكبر مجتمع سوداني في الخليج واحصل على أفضل الخدمات والعروض
+                انضم إلى أكبر مجتمع سوداني في ا��خليج واحصل على أفضل الخدمات والعروض
               </p>
               <div className="space-y-6">
                 {features.map((feature, index) => (
