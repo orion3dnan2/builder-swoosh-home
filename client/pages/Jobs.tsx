@@ -45,10 +45,10 @@ export default function Jobs() {
           <Briefcase className="w-24 h-24 text-gray-300 mx-auto mb-6" />
           <h2 className="text-2xl font-bold text-gray-400 mb-4 arabic">قريباً...</h2>
           <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
-            نعمل على ��بط المهنيين السودانيين بأفضل الفرص الوظيفية.
+            نعمل على ربط المهنيين السودانيين بأفضل الفرص الوظيفية.
           </p>
-          <Button className="bg-sudan-green hover:bg-sudan-green/90 arabic">
-            كن أول من يعلم عند الإطلاق
+                    <Button variant="sudan-green" size="lg" className="arabic px-8">
+            كن أول من يعلم عند الإطلاق 🔔
           </Button>
         </div>
       </div>
