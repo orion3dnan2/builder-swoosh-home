@@ -253,7 +253,7 @@ const translations = {
     "dashboard.activity.product_approval": "طلب اعتماد منتج",
     "dashboard.activity.negative_review": "مراجعة سلبية",
     "dashboard.activity.support_request": "طلب دعم فني",
-    "dashboard.user.ahmed_mohamed": "أحمد مح��د",
+    "dashboard.user.ahmed_mohamed": "أحمد محمد",
     "dashboard.user.fatima_abdullah": "فاطمة عبدالله",
     "dashboard.user.mohamed_ali": "محمد علي",
     "dashboard.user.aisha_ahmed": "عائشة أحمد",
@@ -616,10 +616,6 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
-
-  const toggleLanguage = () => {
-    setLanguage((prevLang) => (prevLang === "ar" ? "en" : "ar"));
   };
 
   const setArabicFont = (font: ArabicFontFamily) => {
