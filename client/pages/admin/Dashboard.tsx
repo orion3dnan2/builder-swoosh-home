@@ -238,7 +238,7 @@ export default function AdminDashboard() {
                             <action.icon className="w-6 h-6 text-white" />
                           </div>
                           <div>
-                                                        <h3 className="font-semibold text-gray-900 arabic flex items-center">
+                            <h3 className="font-semibold text-gray-900 arabic flex items-center">
                               {t(action.titleKey)}
                               {action.urgent && (
                                 <Badge
@@ -310,7 +310,8 @@ export default function AdminDashboard() {
                         {t(activity.actionKey)}
                       </p>
                       <p className="text-xs text-gray-600 arabic">
-                        {t("dashboard.by")} {t(activity.userKey)} • {t(activity.timeKey)}
+                        {t("dashboard.by")} {t(activity.userKey)} •{" "}
+                        {t(activity.timeKey)}
                       </p>
                     </div>
                   </div>
@@ -319,7 +320,7 @@ export default function AdminDashboard() {
               <div className="mt-4 pt-4 border-t">
                 <Link to="/admin/activity">
                   <Button variant="outline" size="sm" className="w-full arabic">
-                                        {t("dashboard.view_all_activities")}
+                    {t("dashboard.view_all_activities")}
                   </Button>
                 </Link>
               </div>
@@ -330,7 +331,7 @@ export default function AdminDashboard() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center arabic">
-                                <BarChart3 className="w-5 h-5 ml-2" />
+                <BarChart3 className="w-5 h-5 ml-2" />
                 {t("dashboard.quick_stats")}
               </CardTitle>
             </CardHeader>
@@ -338,7 +339,7 @@ export default function AdminDashboard() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                   <span className="text-sm font-medium text-blue-900 arabic">
-                                        {t("dashboard.active_stores")}
+                    {t("dashboard.active_stores")}
                   </span>
                   <span className="text-lg font-bold text-blue-600">
                     {stats.activeStores}
@@ -346,7 +347,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
                   <span className="text-sm font-medium text-yellow-900 arabic">
-                                        {t("dashboard.pending_approvals")}
+                    {t("dashboard.pending_approvals")}
                   </span>
                   <span className="text-lg font-bold text-yellow-600">
                     {stats.pendingApprovals}
@@ -354,7 +355,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                   <span className="text-sm font-medium text-green-900 arabic">
-                                        {t("dashboard.new_registrations")}
+                    {t("dashboard.new_registrations")}
                   </span>
                   <span className="text-lg font-bold text-green-600">
                     {stats.newRegistrations}
@@ -362,7 +363,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
                   <span className="text-sm font-medium text-purple-900 arabic">
-                                        {t("dashboard.total_orders")}
+                    {t("dashboard.total_orders")}
                   </span>
                   <span className="text-lg font-bold text-purple-600">
                     {stats.totalOrders}
@@ -372,7 +373,7 @@ export default function AdminDashboard() {
               <div className="mt-4 pt-4 border-t">
                 <Link to="/admin/analytics">
                   <Button variant="outline" size="sm" className="w-full arabic">
-                                        {t("dashboard.view_detailed_reports")}
+                    {t("dashboard.view_detailed_reports")}
                   </Button>
                 </Link>
               </div>

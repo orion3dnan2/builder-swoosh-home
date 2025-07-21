@@ -12,7 +12,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Check if current page is admin or merchant area
-  const isAdminOrMerchant = location.pathname.startsWith('/admin/') || location.pathname.startsWith('/merchant/');
+  const isAdminOrMerchant =
+    location.pathname.startsWith("/admin/") ||
+    location.pathname.startsWith("/merchant/");
 
   const navigation = [
     { name: t("nav.home"), href: "/", icon: "🏠" },
@@ -107,16 +109,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <LanguageAndThemeControls />
-              {isAdminOrMerchant && (
-                <AdminFontSelector />
-              )}
+              {isAdminOrMerchant && <AdminFontSelector />}
               <Link to="/login">
                 <Button
                   variant="outline"
                   size="sm"
                   className="text-xs px-2 py-1 hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
                 >
-{t("common.login")}
+                  {t("common.login")}
                 </Button>
               </Link>
             </div>

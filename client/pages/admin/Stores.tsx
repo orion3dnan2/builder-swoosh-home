@@ -318,7 +318,9 @@ export default function AdminStores() {
                   <p className="text-2xl font-bold text-blue-800">
                     {totalStores}
                   </p>
-                  <p className="text-blue-600 text-sm arabic">{t("stores.total_stores")}</p>
+                  <p className="text-blue-600 text-sm arabic">
+                    {t("stores.total_stores")}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -332,7 +334,9 @@ export default function AdminStores() {
                   <p className="text-2xl font-bold text-green-800">
                     {activeStores}
                   </p>
-                  <p className="text-green-600 text-sm arabic">{t("stores.active_stores")}</p>
+                  <p className="text-green-600 text-sm arabic">
+                    {t("stores.active_stores")}
+                  </p>
                 </div>
               </div>
             </CardContent>

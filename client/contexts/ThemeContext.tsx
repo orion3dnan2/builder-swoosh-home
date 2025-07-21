@@ -3,8 +3,22 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 // Types for theme and language
 export type Theme = "light" | "dark";
 export type Language = "ar" | "en";
-export type ArabicFontFamily = "amiri" | "cairo" | "tajawal" | "noto-kufi" | "ibm-plex" | "lateef" | "almarai" | "markazi" | "kufi-standard";
-export type EnglishFontFamily = "inter" | "roboto" | "poppins" | "montserrat" | "open-sans";
+export type ArabicFontFamily =
+  | "amiri"
+  | "cairo"
+  | "tajawal"
+  | "noto-kufi"
+  | "ibm-plex"
+  | "lateef"
+  | "almarai"
+  | "markazi"
+  | "kufi-standard";
+export type EnglishFontFamily =
+  | "inter"
+  | "roboto"
+  | "poppins"
+  | "montserrat"
+  | "open-sans";
 
 interface ThemeContextType {
   theme: Theme;
@@ -266,10 +280,14 @@ const translations = {
     "common.coming_soon": "قريباً - قيد التطوير",
     "common.under_development": "صفحة قيد التطوير",
     "common.back_to_dashboard": "العودة للوحة الرئيسية",
-    "users.coming_soon_desc": "صفحة إدارة المستخدمين ستكون متاحة قريباً بميزات شاملة لإدارة حسابات المستخدمين",
-    "appearance.coming_soon_desc": "صفحة تخصيص المظهر ستكون متاحة قريباً لتغيير الألوان والصور والخلفيات",
-    "system.coming_soon_desc": "صفحة إعدادات النظام ستكون متاحة قريباً لإدارة الصلاحيات وإعدادات الأمان",
-    "content.coming_soon_desc": "صفحة إدارة المحتوى ستكون متاحة قريباً لإدارة النصوص والصور والترجمات",
+    "users.coming_soon_desc":
+      "صفحة إدارة المستخدمين ستكون متاحة قريباً بميزات شاملة لإدارة حسابات المستخدمين",
+    "appearance.coming_soon_desc":
+      "صفحة تخصيص المظهر ستكون متاحة قريباً لتغيير الألوان والصور والخلفيات",
+    "system.coming_soon_desc":
+      "صفحة إعدادات النظام ستكون متاحة قريباً لإدارة الصلاحيات وإعدادات الأمان",
+    "content.coming_soon_desc":
+      "صفحة إدارة المحتوى ستكون متاحة قريباً لإدارة النصوص والصور والترجمات",
     "settings.current_settings": "إعدادات التطبيق الحالية",
 
     // Error messages
@@ -495,7 +513,8 @@ const translations = {
 
     // Font Settings
     "font_settings.title": "Font Settings",
-    "font_settings.subtitle": "Choose appropriate fonts for Arabic and English content",
+    "font_settings.subtitle":
+      "Choose appropriate fonts for Arabic and English content",
     "font_settings.reset": "Reset",
     "font_settings.current_settings": "Current Settings",
     "font_settings.arabic_font": "Arabic Font",
@@ -526,10 +545,14 @@ const translations = {
     "common.coming_soon": "Coming Soon - Under Development",
     "common.under_development": "Page Under Development",
     "common.back_to_dashboard": "Back to Dashboard",
-    "users.coming_soon_desc": "User management page will be available soon with comprehensive features for managing user accounts",
-    "appearance.coming_soon_desc": "Appearance customization page will be available soon to change colors, images and backgrounds",
-    "system.coming_soon_desc": "System settings page will be available soon for managing permissions and security settings",
-    "content.coming_soon_desc": "Content management page will be available soon for managing text, images and translations",
+    "users.coming_soon_desc":
+      "User management page will be available soon with comprehensive features for managing user accounts",
+    "appearance.coming_soon_desc":
+      "Appearance customization page will be available soon to change colors, images and backgrounds",
+    "system.coming_soon_desc":
+      "System settings page will be available soon for managing permissions and security settings",
+    "content.coming_soon_desc":
+      "Content management page will be available soon for managing text, images and translations",
     "settings.current_settings": "Current App Settings",
 
     // Error messages
@@ -554,13 +577,18 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>("light");
   const [language] = useState<Language>("ar"); // Fixed to Arabic only
   const [arabicFont, setArabicFontState] = useState<ArabicFontFamily>("amiri");
-  const [englishFont, setEnglishFontState] = useState<EnglishFontFamily>("inter");
+  const [englishFont, setEnglishFontState] =
+    useState<EnglishFontFamily>("inter");
 
   // Load preferences from localStorage on mount
   useEffect(() => {
     const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as Theme;
-    const savedArabicFont = localStorage.getItem(STORAGE_KEYS.ARABIC_FONT) as ArabicFontFamily;
-    const savedEnglishFont = localStorage.getItem(STORAGE_KEYS.ENGLISH_FONT) as EnglishFontFamily;
+    const savedArabicFont = localStorage.getItem(
+      STORAGE_KEYS.ARABIC_FONT,
+    ) as ArabicFontFamily;
+    const savedEnglishFont = localStorage.getItem(
+      STORAGE_KEYS.ENGLISH_FONT,
+    ) as EnglishFontFamily;
 
     if (savedTheme) setTheme(savedTheme);
     if (savedArabicFont) setArabicFontState(savedArabicFont);
@@ -598,9 +626,20 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
     // Remove all font classes
     const allFontClasses = [
-      'font-amiri', 'font-cairo', 'font-tajawal', 'font-noto-kufi',
-      'font-ibm-plex', 'font-lateef', 'font-almarai', 'font-markazi', 'font-kufi-standard',
-      'font-inter', 'font-roboto', 'font-poppins', 'font-montserrat', 'font-open-sans'
+      "font-amiri",
+      "font-cairo",
+      "font-tajawal",
+      "font-noto-kufi",
+      "font-ibm-plex",
+      "font-lateef",
+      "font-almarai",
+      "font-markazi",
+      "font-kufi-standard",
+      "font-inter",
+      "font-roboto",
+      "font-poppins",
+      "font-montserrat",
+      "font-open-sans",
     ];
     root.classList.remove(...allFontClasses);
 
@@ -666,7 +705,8 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       // Branding
       "brand.name": "البيت السوداني",
       "brand.tagline": "سوق وخدمات السودان",
-      "brand.description": "منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم",
+      "brand.description":
+        "منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم",
 
       // Homepage
       "home.hero.title": "البيت السوداني",
@@ -674,7 +714,8 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       "home.hero.explore_market": "استكشف السوق",
       "home.hero.join_us": "انضم إلينا",
       "home.services.title": "خدماتنا",
-      "home.services.subtitle": "مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج والعالم",
+      "home.services.subtitle":
+        "مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج والعالم",
       "home.services.discover": "اكتشف المزيد",
       "home.stats.users": "مستخدم نشط",
       "home.stats.companies": "شركة مسجلة",
@@ -778,7 +819,8 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       "home.testimonials.title": "آراء عملائنا",
       "home.testimonials.subtitle": "ماذا يقول عملاؤنا عن تجربتهم معنا",
       "home.cta.title": "ابدأ رحلتك معنا اليوم",
-      "home.cta.subtitle": "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم",
+      "home.cta.subtitle":
+        "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم",
       "home.cta.create_account": "إنشاء حساب مجاني",
 
       // Error messages

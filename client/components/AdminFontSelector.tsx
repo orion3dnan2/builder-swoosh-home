@@ -11,7 +11,8 @@ import {
 export function AdminFontSelector() {
   const { arabicFont, setArabicFont, t } = useTheme();
 
-  const currentFontName = arabicFonts.find((f) => f.id === arabicFont)?.name || "أميري";
+  const currentFontName =
+    arabicFonts.find((f) => f.id === arabicFont)?.name || "أميري";
 
   const handleFontChange = (fontId: string) => {
     setArabicFont(fontId as any);
@@ -26,9 +27,7 @@ export function AdminFontSelector() {
           className="text-current hover:bg-white/10"
         >
           <Globe className="w-4 h-4 mr-2" />
-          <span className="text-xs">
-            {currentFontName}
-          </span>
+          <span className="text-xs">{currentFontName}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

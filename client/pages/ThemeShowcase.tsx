@@ -6,9 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/contexts/ThemeContext";
-import {
-  ThemeToggle,
-} from "@/components/ThemeToggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { AdminFontSelector } from "@/components/AdminFontSelector";
 import {
   Palette,
@@ -144,12 +142,8 @@ export default function ThemeShowcase() {
                 </div>
 
                 {/* Language Toggle */}
-                <div
-                  className={`space-y-3 text-right`}
-                >
-                  <Label className="text-sm font-medium arabic">
-                    اللغة
-                  </Label>
+                <div className={`space-y-3 text-right`}>
+                  <Label className="text-sm font-medium arabic">اللغة</Label>
                   <div className="flex items-center gap-3 flex-row-reverse">
                     <span className="text-sm text-muted-foreground arabic">
                       العربية (ثابت)
@@ -211,7 +205,7 @@ export default function ThemeShowcase() {
                 className={`flex items-center gap-2 arabic ${isRTL ? "flex-row-reverse" : "flex-row"}`}
               >
                 <Type className="w-6 h-6" />
-عرض الخطوط
+                عرض الخطوط
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -288,7 +282,7 @@ export default function ThemeShowcase() {
                 className={`flex items-center gap-2 arabic ${isRTL ? "flex-row-reverse" : "flex-row"}`}
               >
                 <Eye className="w-6 h-6" />
-عرض المكونات
+                عرض المكونات
               </CardTitle>
             </CardHeader>
             <CardContent>

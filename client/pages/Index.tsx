@@ -52,7 +52,7 @@ export default function Index() {
     },
   ];
 
-    const services = [
+  const services = [
     {
       icon: Store,
       title: "السوق التجاري",

@@ -79,10 +79,14 @@ export default function Login() {
                     <LogIn className="w-8 h-8 text-white" />
                   </div>
                 </div>
-                <h1 className={`text-2xl font-bold text-secondary-800 arabic ${isRTL ? 'text-right' : 'text-center'}`}>
+                <h1
+                  className={`text-2xl font-bold text-secondary-800 arabic ${isRTL ? "text-right" : "text-center"}`}
+                >
                   {t("login.title")}
                 </h1>
-                <p className={`text-secondary-600 arabic ${isRTL ? 'text-right' : 'text-center'}`}>
+                <p
+                  className={`text-secondary-600 arabic ${isRTL ? "text-right" : "text-center"}`}
+                >
                   {t("login.subtitle")}
                 </p>
               </CardHeader>
@@ -93,7 +97,7 @@ export default function Login() {
                     <div>
                       <Label
                         htmlFor="username"
-                        className={`block mb-2 arabic text-secondary-700 font-semibold ${isRTL ? 'text-right' : 'text-left'}`}
+                        className={`block mb-2 arabic text-secondary-700 font-semibold ${isRTL ? "text-right" : "text-left"}`}
                       >
                         🧑 {t("login.username")}
                       </Label>
@@ -108,7 +112,7 @@ export default function Login() {
                             username: e.target.value,
                           }))
                         }
-                        className={`arabic rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600 ${isRTL ? 'text-right' : 'text-left'}`}
+                        className={`arabic rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600 ${isRTL ? "text-right" : "text-left"}`}
                         required
                       />
                     </div>
@@ -116,7 +120,7 @@ export default function Login() {
                     <div>
                       <Label
                         htmlFor="password"
-                        className={`block mb-2 arabic text-secondary-700 font-semibold ${isRTL ? 'text-right' : 'text-left'}`}
+                        className={`block mb-2 arabic text-secondary-700 font-semibold ${isRTL ? "text-right" : "text-left"}`}
                       >
                         🔐 {t("login.password")}
                       </Label>
@@ -132,13 +136,13 @@ export default function Login() {
                               password: e.target.value,
                             }))
                           }
-                          className={`arabic ${isRTL ? 'pr-12 text-right' : 'pl-12 text-left'} rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600`}
+                          className={`arabic ${isRTL ? "pr-12 text-right" : "pl-12 text-left"} rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600`}
                           required
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className={`absolute top-1/2 transform -translate-y-1/2 text-secondary-400 hover:text-secondary-600 ${isRTL ? 'left-3' : 'right-3'}`}
+                          className={`absolute top-1/2 transform -translate-y-1/2 text-secondary-400 hover:text-secondary-600 ${isRTL ? "left-3" : "right-3"}`}
                         >
                           {showPassword ? (
                             <EyeOff className="w-5 h-5" />
@@ -150,8 +154,12 @@ export default function Login() {
                     </div>
                   </div>
 
-                  <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-                    <div className={`flex items-center space-x-2 ${isRTL ? 'space-x-reverse flex-row-reverse' : 'flex-row'}`}>
+                  <div
+                    className={`flex items-center justify-between ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                  >
+                    <div
+                      className={`flex items-center space-x-2 ${isRTL ? "space-x-reverse flex-row-reverse" : "flex-row"}`}
+                    >
                       <Checkbox
                         id="remember"
                         checked={formData.rememberMe}
@@ -178,7 +186,9 @@ export default function Login() {
                   </div>
 
                   {error && (
-                    <div className={`bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl arabic ${isRTL ? 'text-right' : 'text-center'}`}>
+                    <div
+                      className={`bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl arabic ${isRTL ? "text-right" : "text-center"}`}
+                    >
                       ⚠️ {error}
                     </div>
                   )}
@@ -200,7 +210,9 @@ export default function Login() {
                   </Button>
                 </form>
 
-                <div className={`text-center ${isRTL ? 'text-right' : 'text-center'}`}>
+                <div
+                  className={`text-center ${isRTL ? "text-right" : "text-center"}`}
+                >
                   <span className="text-secondary-600 arabic">
                     {t("login.no_account")}{" "}
                     <Link
@@ -217,19 +229,32 @@ export default function Login() {
             {/* Demo Accounts Card */}
             <Card className="card-dark shadow-lg">
               <CardContent className="p-6">
-                <h3 className={`font-semibold text-primary-800 mb-3 arabic ${isRTL ? 'text-right' : 'text-left'}`}>
+                <h3
+                  className={`font-semibold text-primary-800 mb-3 arabic ${isRTL ? "text-right" : "text-left"}`}
+                >
                   {t("login.demo_accounts", "حسابات التجربة")}
                 </h3>
                 <div className="space-y-3">
                   <div className="bg-white p-3 rounded-lg border">
-                    <h4 className={`font-bold text-primary-700 arabic mb-1 ${isRTL ? 'text-right' : 'text-left'}`}>
-                      {t("login.demo.super_admin", "مدير التطبيق (Super Admin)")}
+                    <h4
+                      className={`font-bold text-primary-700 arabic mb-1 ${isRTL ? "text-right" : "text-left"}`}
+                    >
+                      {t(
+                        "login.demo.super_admin",
+                        "مدير التطبيق (Super Admin)",
+                      )}
                     </h4>
-                    <p className={`text-sm text-gray-600 arabic ${isRTL ? 'text-right' : 'text-left'}`}>
-                      {t("login.demo.username", "اسم المستخدم")}: <strong>admin</strong>
+                    <p
+                      className={`text-sm text-gray-600 arabic ${isRTL ? "text-right" : "text-left"}`}
+                    >
+                      {t("login.demo.username", "اسم المستخدم")}:{" "}
+                      <strong>admin</strong>
                     </p>
-                    <p className={`text-sm text-gray-600 arabic ${isRTL ? 'text-right' : 'text-left'}`}>
-                      {t("login.demo.password", "كلمة المرور")}: <strong>admin123</strong>
+                    <p
+                      className={`text-sm text-gray-600 arabic ${isRTL ? "text-right" : "text-left"}`}
+                    >
+                      {t("login.demo.password", "كلمة المرور")}:{" "}
+                      <strong>admin123</strong>
                     </p>
                     <Button
                       variant="outline"
@@ -247,14 +272,22 @@ export default function Login() {
                     </Button>
                   </div>
                   <div className="bg-white p-3 rounded-lg border">
-                    <h4 className={`font-bold text-secondary-700 arabic mb-1 ${isRTL ? 'text-right' : 'text-left'}`}>
+                    <h4
+                      className={`font-bold text-secondary-700 arabic mb-1 ${isRTL ? "text-right" : "text-left"}`}
+                    >
                       {t("login.demo.merchant", "صاحب متجر (Merchant)")}
                     </h4>
-                    <p className={`text-sm text-gray-600 arabic ${isRTL ? 'text-right' : 'text-left'}`}>
-                      {t("login.demo.username", "اسم المستخدم")}: <strong>merchant</strong>
+                    <p
+                      className={`text-sm text-gray-600 arabic ${isRTL ? "text-right" : "text-left"}`}
+                    >
+                      {t("login.demo.username", "اسم المستخدم")}:{" "}
+                      <strong>merchant</strong>
                     </p>
-                    <p className={`text-sm text-gray-600 arabic ${isRTL ? 'text-right' : 'text-left'}`}>
-                      {t("login.demo.password", "كلمة المرور")}: <strong>merchant123</strong>
+                    <p
+                      className={`text-sm text-gray-600 arabic ${isRTL ? "text-right" : "text-left"}`}
+                    >
+                      {t("login.demo.password", "كلمة المرور")}:{" "}
+                      <strong>merchant123</strong>
                     </p>
                     <Button
                       variant="outline"
