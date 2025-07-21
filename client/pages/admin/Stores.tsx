@@ -206,7 +206,7 @@ export default function AdminStores() {
     );
 
     // Show success message
-    alert("تم اعتماد المتجر بنجاح! ✅");
+    alert(t("stores.success_approve"));
   };
 
   // Suspend store
@@ -220,7 +220,7 @@ export default function AdminStores() {
     );
 
     // Show success message
-    alert("تم تعليق المتجر بنجاح! ⚠️");
+    alert(t("stores.success_suspend"));
   };
 
   // Reactivate store
@@ -234,7 +234,7 @@ export default function AdminStores() {
     );
 
     // Show success message
-    alert("تم إعادة تفعيل المتجر بنجاح! ✅");
+    alert(t("stores.success_reactivate"));
   };
 
   // Confirm action modal
@@ -301,7 +301,7 @@ export default function AdminStores() {
               </div>
             </div>
             <Badge variant="secondary" className="arabic">
-              مدير أعلى
+              {t("dashboard.super_admin")}
             </Badge>
           </div>
         </div>
@@ -318,7 +318,7 @@ export default function AdminStores() {
                   <p className="text-2xl font-bold text-blue-800">
                     {totalStores}
                   </p>
-                  <p className="text-blue-600 text-sm arabic">إجمالي المتاجر</p>
+                  <p className="text-blue-600 text-sm arabic">{t("stores.total_stores")}</p>
                 </div>
               </div>
             </CardContent>
@@ -332,7 +332,7 @@ export default function AdminStores() {
                   <p className="text-2xl font-bold text-green-800">
                     {activeStores}
                   </p>
-                  <p className="text-green-600 text-sm arabic">متاجر نشطة</p>
+                  <p className="text-green-600 text-sm arabic">{t("stores.active_stores")}</p>
                 </div>
               </div>
             </CardContent>
