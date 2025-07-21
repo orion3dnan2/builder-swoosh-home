@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  BarChart3, 
-  TrendingUp, 
+import {
+  BarChart3,
+  TrendingUp,
   TrendingDown,
   Eye,
   ShoppingCart,
@@ -18,15 +18,25 @@ import {
   Award,
   Activity,
   PieChart,
-  LineChart
+  LineChart,
 } from "lucide-react";
 import { useAnalytics } from "@/lib/analytics";
 import { useAuth } from "@/lib/auth";
 
 export default function MerchantAnalytics() {
   const { user } = useAuth();
-  const { analytics, formatCurrency, formatPercentage, calculateGrowth, getMonthName, exportToCSV, generateInsights } = useAnalytics('store-001');
-  const [selectedPeriod, setSelectedPeriod] = useState<'week' | 'month' | 'quarter' | 'year'>('month');
+  const {
+    analytics,
+    formatCurrency,
+    formatPercentage,
+    calculateGrowth,
+    getMonthName,
+    exportToCSV,
+    generateInsights,
+  } = useAnalytics("store-001");
+  const [selectedPeriod, setSelectedPeriod] = useState<
+    "week" | "month" | "quarter" | "year"
+  >("month");
 
   const insights = generateInsights(analytics);
 
@@ -37,19 +47,19 @@ export default function MerchantAnalytics() {
   };
 
   const getGrowthColor = (growth: number) => {
-    if (growth > 0) return 'text-green-600';
-    if (growth < 0) return 'text-red-600';
-    return 'text-gray-600';
+    if (growth > 0) return "text-green-600";
+    if (growth < 0) return "text-red-600";
+    return "text-gray-600";
   };
 
   const handleExportCSV = () => {
     const csvData = exportToCSV(analytics);
-    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
+    const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
     const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', `analytics-${Date.now()}.csv`);
-    link.style.visibility = 'hidden';
+    link.setAttribute("href", url);
+    link.setAttribute("download", `analytics-${Date.now()}.csv`);
+    link.style.visibility = "hidden";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -58,10 +68,16 @@ export default function MerchantAnalytics() {
   // Calculate growth for previous month comparison
   const currentMonth = analytics.monthly[analytics.monthly.length - 1];
   const previousMonth = analytics.monthly[analytics.monthly.length - 2];
-  
-  const viewsGrowth = previousMonth ? calculateGrowth(currentMonth?.views || 0, previousMonth.views) : 0;
-  const ordersGrowth = previousMonth ? calculateGrowth(currentMonth?.orders || 0, previousMonth.orders) : 0;
-  const revenueGrowth = previousMonth ? calculateGrowth(currentMonth?.revenue || 0, previousMonth.revenue) : 0;
+
+  const viewsGrowth = previousMonth
+    ? calculateGrowth(currentMonth?.views || 0, previousMonth.views)
+    : 0;
+  const ordersGrowth = previousMonth
+    ? calculateGrowth(currentMonth?.orders || 0, previousMonth.orders)
+    : 0;
+  const revenueGrowth = previousMonth
+    ? calculateGrowth(currentMonth?.revenue || 0, previousMonth.revenue)
+    : 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-green-50">
@@ -80,12 +96,18 @@ export default function MerchantAnalytics() {
                 <BarChart3 className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 arabic">إحصائيات المتجر</h1>
+                <h1 className="text-2xl font-bold text-gray-900 arabic">
+                  إحصائيات المتجر
+                </h1>
                 <p className="text-gray-600 arabic">تحليل شامل لأداء متجرك</p>
               </div>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
-              <Button variant="outline" onClick={handleExportCSV} className="arabic">
+              <Button
+                variant="outline"
+                onClick={handleExportCSV}
+                className="arabic"
+              >
                 <Download className="w-4 h-4 ml-2" />
                 تصدير البيانات
               </Button>
@@ -101,11 +123,17 @@ export default function MerchantAnalytics() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-blue-600 text-sm arabic font-medium">إجمالي المشاهدات</p>
-                  <p className="text-2xl font-bold text-blue-800">{analytics.overview.totalViews.toLocaleString()}</p>
+                  <p className="text-blue-600 text-sm arabic font-medium">
+                    إجمالي المشاهدات
+                  </p>
+                  <p className="text-2xl font-bold text-blue-800">
+                    {analytics.overview.totalViews.toLocaleString()}
+                  </p>
                   <div className="flex items-center mt-1">
                     {getGrowthIcon(viewsGrowth)}
-                    <span className={`text-sm mr-1 ${getGrowthColor(viewsGrowth)}`}>
+                    <span
+                      className={`text-sm mr-1 ${getGrowthColor(viewsGrowth)}`}
+                    >
                       {Math.abs(viewsGrowth).toFixed(1)}%
                     </span>
                   </div>
@@ -119,11 +147,17 @@ export default function MerchantAnalytics() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-green-600 text-sm arabic font-medium">إجمالي الطلبات</p>
-                  <p className="text-2xl font-bold text-green-800">{analytics.overview.totalOrders}</p>
+                  <p className="text-green-600 text-sm arabic font-medium">
+                    إجمالي الطلبات
+                  </p>
+                  <p className="text-2xl font-bold text-green-800">
+                    {analytics.overview.totalOrders}
+                  </p>
                   <div className="flex items-center mt-1">
                     {getGrowthIcon(ordersGrowth)}
-                    <span className={`text-sm mr-1 ${getGrowthColor(ordersGrowth)}`}>
+                    <span
+                      className={`text-sm mr-1 ${getGrowthColor(ordersGrowth)}`}
+                    >
                       {Math.abs(ordersGrowth).toFixed(1)}%
                     </span>
                   </div>
@@ -137,11 +171,17 @@ export default function MerchantAnalytics() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-purple-600 text-sm arabic font-medium">إجمالي الإيرادات</p>
-                  <p className="text-2xl font-bold text-purple-800">{formatCurrency(analytics.overview.totalRevenue)}</p>
+                  <p className="text-purple-600 text-sm arabic font-medium">
+                    إجمالي الإيرادات
+                  </p>
+                  <p className="text-2xl font-bold text-purple-800">
+                    {formatCurrency(analytics.overview.totalRevenue)}
+                  </p>
                   <div className="flex items-center mt-1">
                     {getGrowthIcon(revenueGrowth)}
-                    <span className={`text-sm mr-1 ${getGrowthColor(revenueGrowth)}`}>
+                    <span
+                      className={`text-sm mr-1 ${getGrowthColor(revenueGrowth)}`}
+                    >
                       {Math.abs(revenueGrowth).toFixed(1)}%
                     </span>
                   </div>
@@ -155,9 +195,15 @@ export default function MerchantAnalytics() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-orange-600 text-sm arabic font-medium">معدل التحويل</p>
-                  <p className="text-2xl font-bold text-orange-800">{analytics.overview.conversionRate.toFixed(2)}%</p>
-                  <p className="text-xs text-orange-600 arabic">من المشاهدات للطلبات</p>
+                  <p className="text-orange-600 text-sm arabic font-medium">
+                    معدل التحويل
+                  </p>
+                  <p className="text-2xl font-bold text-orange-800">
+                    {analytics.overview.conversionRate.toFixed(2)}%
+                  </p>
+                  <p className="text-xs text-orange-600 arabic">
+                    من المشاهدات للطلبات
+                  </p>
                 </div>
                 <Target className="w-8 h-8 text-orange-600" />
               </div>
@@ -179,9 +225,14 @@ export default function MerchantAnalytics() {
               <CardContent>
                 <div className="space-y-4">
                   {insights.map((insight, index) => (
-                    <div key={index} className="flex items-start space-x-3 space-x-reverse p-3 bg-blue-50 rounded-lg">
+                    <div
+                      key={index}
+                      className="flex items-start space-x-3 space-x-reverse p-3 bg-blue-50 rounded-lg"
+                    >
                       <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-white text-xs font-bold">{index + 1}</span>
+                        <span className="text-white text-xs font-bold">
+                          {index + 1}
+                        </span>
                       </div>
                       <p className="text-blue-800 arabic text-sm">{insight}</p>
                     </div>
@@ -202,19 +253,27 @@ export default function MerchantAnalytics() {
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <span className="text-sm arabic">متوسط قيمة الطلب</span>
-                <span className="font-bold">{formatCurrency(analytics.overview.averageOrderValue)}</span>
+                <span className="font-bold">
+                  {formatCurrency(analytics.overview.averageOrderValue)}
+                </span>
               </div>
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <span className="text-sm arabic">العملاء المتكررون</span>
-                <span className="font-bold">{analytics.overview.returningCustomers}</span>
+                <span className="font-bold">
+                  {analytics.overview.returningCustomers}
+                </span>
               </div>
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <span className="text-sm arabic">معدل الاحتفاظ</span>
-                <span className="font-bold">{analytics.customerMetrics.customerRetentionRate.toFixed(1)}%</span>
+                <span className="font-bold">
+                  {analytics.customerMetrics.customerRetentionRate.toFixed(1)}%
+                </span>
               </div>
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <span className="text-sm arabic">إجمالي العملاء</span>
-                <span className="font-bold">{analytics.customerMetrics.totalCustomers}</span>
+                <span className="font-bold">
+                  {analytics.customerMetrics.totalCustomers}
+                </span>
               </div>
             </CardContent>
           </Card>
@@ -233,13 +292,22 @@ export default function MerchantAnalytics() {
             <CardContent>
               <div className="space-y-4">
                 {analytics.monthly.slice(-6).map((month) => (
-                  <div key={month.month} className="flex items-center justify-between p-3 border rounded-lg">
+                  <div
+                    key={month.month}
+                    className="flex items-center justify-between p-3 border rounded-lg"
+                  >
                     <div>
-                      <p className="font-medium arabic">{getMonthName(month.month)}</p>
-                      <p className="text-sm text-gray-600">{month.views} مشاهدة • {month.orders} طلب</p>
+                      <p className="font-medium arabic">
+                        {getMonthName(month.month)}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        {month.views} مشاهدة • {month.orders} طلب
+                      </p>
                     </div>
                     <div className="text-left">
-                      <p className="font-bold">{formatCurrency(month.revenue)}</p>
+                      <p className="font-bold">
+                        {formatCurrency(month.revenue)}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -258,20 +326,31 @@ export default function MerchantAnalytics() {
             <CardContent>
               <div className="space-y-4">
                 {analytics.topProducts.map((product, index) => (
-                  <div key={product.id} className="flex items-center space-x-3 space-x-reverse p-3 border rounded-lg">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                      index === 0 ? 'bg-yellow-100 text-yellow-800' :
-                      index === 1 ? 'bg-gray-100 text-gray-800' :
-                      'bg-orange-100 text-orange-800'
-                    }`}>
+                  <div
+                    key={product.id}
+                    className="flex items-center space-x-3 space-x-reverse p-3 border rounded-lg"
+                  >
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                        index === 0
+                          ? "bg-yellow-100 text-yellow-800"
+                          : index === 1
+                            ? "bg-gray-100 text-gray-800"
+                            : "bg-orange-100 text-orange-800"
+                      }`}
+                    >
                       <span className="text-sm font-bold">#{index + 1}</span>
                     </div>
                     <div className="flex-1">
                       <p className="font-medium arabic">{product.name}</p>
-                      <p className="text-sm text-gray-600">{product.views} مشاهدة • {product.orders} طلب</p>
+                      <p className="text-sm text-gray-600">
+                        {product.views} مشاهدة • {product.orders} طلب
+                      </p>
                     </div>
                     <div className="text-left">
-                      <p className="font-bold">{formatCurrency(product.revenue)}</p>
+                      <p className="font-bold">
+                        {formatCurrency(product.revenue)}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -295,12 +374,16 @@ export default function MerchantAnalytics() {
                 {analytics.salesByCategory.map((category) => (
                   <div key={category.category} className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm arabic">{category.category}</span>
-                      <span className="text-sm font-medium">{category.percentage.toFixed(1)}%</span>
+                      <span className="text-sm arabic">
+                        {category.category}
+                      </span>
+                      <span className="text-sm font-medium">
+                        {category.percentage.toFixed(1)}%
+                      </span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div 
-                        className="bg-blue-600 h-2 rounded-full" 
+                      <div
+                        className="bg-blue-600 h-2 rounded-full"
                         style={{ width: `${category.percentage}%` }}
                       ></div>
                     </div>
@@ -325,26 +408,45 @@ export default function MerchantAnalytics() {
             <CardContent>
               <div className="space-y-4">
                 {analytics.recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-center space-x-3 space-x-reverse p-3 bg-gray-50 rounded-lg">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                      activity.type === 'order' ? 'bg-green-100 text-green-600' :
-                      activity.type === 'view' ? 'bg-blue-100 text-blue-600' :
-                      'bg-yellow-100 text-yellow-600'
-                    }`}>
-                      {activity.type === 'order' && <ShoppingCart className="w-4 h-4" />}
-                      {activity.type === 'view' && <Eye className="w-4 h-4" />}
-                      {activity.type === 'review' && <Award className="w-4 h-4" />}
+                  <div
+                    key={index}
+                    className="flex items-center space-x-3 space-x-reverse p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                        activity.type === "order"
+                          ? "bg-green-100 text-green-600"
+                          : activity.type === "view"
+                            ? "bg-blue-100 text-blue-600"
+                            : "bg-yellow-100 text-yellow-600"
+                      }`}
+                    >
+                      {activity.type === "order" && (
+                        <ShoppingCart className="w-4 h-4" />
+                      )}
+                      {activity.type === "view" && <Eye className="w-4 h-4" />}
+                      {activity.type === "review" && (
+                        <Award className="w-4 h-4" />
+                      )}
                     </div>
                     <div className="flex-1">
                       <p className="text-sm arabic">{activity.description}</p>
                       <p className="text-xs text-gray-500">
-                        {new Date(activity.timestamp).toLocaleDateString('ar-SA')} • 
-                        {new Date(activity.timestamp).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' })}
+                        {new Date(activity.timestamp).toLocaleDateString(
+                          "ar-SA",
+                        )}{" "}
+                        •
+                        {new Date(activity.timestamp).toLocaleTimeString(
+                          "ar-SA",
+                          { hour: "2-digit", minute: "2-digit" },
+                        )}
                       </p>
                     </div>
                     {activity.value && (
                       <div className="text-left">
-                        <p className="font-bold text-sm">{formatCurrency(activity.value)}</p>
+                        <p className="font-bold text-sm">
+                          {formatCurrency(activity.value)}
+                        </p>
                       </div>
                     )}
                   </div>

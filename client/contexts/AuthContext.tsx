@@ -1,6 +1,12 @@
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { User, UserRole } from '../../shared/types';
-import { AuthService } from '../lib/auth';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
+import { User, UserRole } from "../../shared/types";
+import { AuthService } from "../lib/auth";
 
 interface AuthContextType {
   user: User | null;
@@ -32,7 +38,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const currentUser = AuthService.getCurrentUser();
       setUser(currentUser);
     } catch (error) {
-      console.error('Error initializing auth:', error);
+      console.error("Error initializing auth:", error);
       setUser(null);
     } finally {
       setIsLoading(false);
@@ -44,19 +50,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const currentUser = AuthService.getCurrentUser();
       setUser(currentUser);
     } catch (error) {
-      console.error('Error refreshing auth:', error);
+      console.error("Error refreshing auth:", error);
       setUser(null);
     }
   };
 
-  const login = async (credentials: { username: string; password: string }): Promise<User> => {
+  const login = async (credentials: {
+    username: string;
+    password: string;
+  }): Promise<User> => {
     try {
       setIsLoading(true);
       const loggedInUser = await AuthService.login(credentials);
       setUser(loggedInUser);
       return loggedInUser;
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -68,7 +77,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       AuthService.logout();
       setUser(null);
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
       setUser(null);
     }
   };
@@ -77,7 +86,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       return user?.role === role || false;
     } catch (error) {
-      console.error('Error checking role:', error);
+      console.error("Error checking role:", error);
       return false;
     }
   };
@@ -87,15 +96,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (!user) return false;
 
       // Super admin has all permissions
-      if (user.role === 'super_admin') return true;
+      if (user.role === "super_admin") return true;
 
-      return user.permissions.some(permission => {
-        const hasResource = permission.resource === '*' || permission.resource === resource;
-        const hasAction = permission.actions.includes('*') || permission.actions.includes(action);
+      return user.permissions.some((permission) => {
+        const hasResource =
+          permission.resource === "*" || permission.resource === resource;
+        const hasAction =
+          permission.actions.includes("*") ||
+          permission.actions.includes(action);
         return hasResource && hasAction;
       });
     } catch (error) {
-      console.error('Error checking permission:', error);
+      console.error("Error checking permission:", error);
       return false;
     }
   };
@@ -104,27 +116,25 @@ export function AuthProvider({ children }: AuthProviderProps) {
     user,
     isAuthenticated: user !== null,
     isLoading,
-    isSuperAdmin: hasRole('super_admin'),
-    isMerchant: hasRole('merchant'),
-    isCustomer: hasRole('customer'),
+    isSuperAdmin: hasRole("super_admin"),
+    isMerchant: hasRole("merchant"),
+    isCustomer: hasRole("customer"),
     hasRole,
     hasPermission,
     login,
     logout,
-    refreshAuth
+    refreshAuth,
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 }
 
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }

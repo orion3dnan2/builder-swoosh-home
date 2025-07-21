@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { 
+import {
   ArrowLeft,
   Save,
   Upload,
@@ -16,7 +16,7 @@ import {
   Image as ImageIcon,
   Tag,
   DollarSign,
-  Warehouse
+  Warehouse,
 } from "lucide-react";
 import { useProducts } from "@/lib/products";
 import { useAuth } from "@/lib/auth";
@@ -25,104 +25,108 @@ import { Product } from "../../../shared/types";
 export default function NewProduct() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { saveProduct, generateSKU, validateProduct, categories } = useProducts();
-  
+  const { saveProduct, generateSKU, validateProduct, categories } =
+    useProducts();
+
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [currentImageUrl, setCurrentImageUrl] = useState("");
-  
+
   const [formData, setFormData] = useState<Partial<Product>>({
-    storeId: 'store-001', // Replace with actual store ID from user context
-    name: '',
-    description: '',
+    storeId: "store-001", // Replace with actual store ID from user context
+    name: "",
+    description: "",
     price: 0,
     salePrice: undefined,
     images: [],
-    category: '',
+    category: "",
     tags: [],
     inventory: {
       quantity: 0,
-      sku: '',
-      lowStockThreshold: 5
+      sku: "",
+      lowStockThreshold: 5,
     },
     specifications: {},
-    status: 'active'
+    status: "active",
   });
 
   const handleInputChange = (field: string, value: any) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleInventoryChange = (field: string, value: any) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       inventory: {
         ...prev.inventory!,
-        [field]: value
-      }
+        [field]: value,
+      },
     }));
   };
 
   const handleAddImage = () => {
     if (currentImageUrl.trim()) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        images: [...(prev.images || []), currentImageUrl.trim()]
+        images: [...(prev.images || []), currentImageUrl.trim()],
       }));
-      setCurrentImageUrl('');
+      setCurrentImageUrl("");
     }
   };
 
   const handleRemoveImage = (index: number) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      images: prev.images?.filter((_, i) => i !== index) || []
+      images: prev.images?.filter((_, i) => i !== index) || [],
     }));
   };
 
   const handleAddTag = (tagInput: string) => {
-    const newTags = tagInput.split(',').map(tag => tag.trim()).filter(tag => tag);
-    setFormData(prev => ({
+    const newTags = tagInput
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter((tag) => tag);
+    setFormData((prev) => ({
       ...prev,
-      tags: [...new Set([...(prev.tags || []), ...newTags])]
+      tags: [...new Set([...(prev.tags || []), ...newTags])],
     }));
   };
 
   const handleRemoveTag = (tagToRemove: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      tags: prev.tags?.filter(tag => tag !== tagToRemove) || []
+      tags: prev.tags?.filter((tag) => tag !== tagToRemove) || [],
     }));
   };
 
   const handleSpecificationAdd = (key: string, value: string) => {
     if (key.trim() && value.trim()) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         specifications: {
           ...prev.specifications,
-          [key.trim()]: value.trim()
-        }
+          [key.trim()]: value.trim(),
+        },
       }));
     }
   };
 
   const handleSpecificationRemove = (key: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       specifications: Object.fromEntries(
-        Object.entries(prev.specifications || {}).filter(([k]) => k !== key)
-      )
+        Object.entries(prev.specifications || {}).filter(([k]) => k !== key),
+      ),
     }));
   };
 
   const generateAutoSKU = () => {
     if (formData.category && formData.name) {
       const sku = generateSKU(formData.category, formData.name);
-      handleInventoryChange('sku', sku);
+      handleInventoryChange("sku", sku);
     }
   };
 
@@ -142,7 +146,9 @@ export default function NewProduct() {
     try {
       // Generate ID and SKU if not provided
       const productId = `prod-${Date.now()}`;
-      const finalSKU = formData.inventory?.sku || generateSKU(formData.category!, formData.name!);
+      const finalSKU =
+        formData.inventory?.sku ||
+        generateSKU(formData.category!, formData.name!);
 
       const newProduct: Product = {
         id: productId,
@@ -157,18 +163,18 @@ export default function NewProduct() {
         inventory: {
           quantity: formData.inventory?.quantity || 0,
           sku: finalSKU,
-          lowStockThreshold: formData.inventory?.lowStockThreshold || 5
+          lowStockThreshold: formData.inventory?.lowStockThreshold || 5,
         },
         specifications: formData.specifications || {},
-        status: formData.status as Product['status'],
+        status: formData.status as Product["status"],
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
       };
 
       saveProduct(newProduct);
-      navigate('/merchant/products');
+      navigate("/merchant/products");
     } catch (error) {
-      setErrors(['حدث خطأ في حفظ الم��تج. يرجى المحاولة مرة أخرى.']);
+      setErrors(["حدث خطأ في حفظ الم��تج. يرجى المحاولة مرة أخرى."]);
     } finally {
       setIsLoading(false);
     }
@@ -191,8 +197,12 @@ export default function NewProduct() {
                 <Plus className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 arabic">إضافة منتج جديد</h1>
-                <p className="text-gray-600 arabic">أدخل معلومات المنتج الجديد</p>
+                <h1 className="text-2xl font-bold text-gray-900 arabic">
+                  إضافة منتج جديد
+                </h1>
+                <p className="text-gray-600 arabic">
+                  أدخل معلومات المنتج الجديد
+                </p>
               </div>
             </div>
           </div>
@@ -207,11 +217,15 @@ export default function NewProduct() {
               <CardContent className="p-4">
                 <div className="flex items-center text-red-800 mb-2">
                   <X className="w-5 h-5 ml-2" />
-                  <span className="font-semibold arabic">يرجى تصحيح الأخطاء التالية:</span>
+                  <span className="font-semibold arabic">
+                    يرجى تصحيح الأخطاء التالية:
+                  </span>
                 </div>
                 <ul className="space-y-1">
                   {errors.map((error, index) => (
-                    <li key={index} className="text-red-700 text-sm arabic">• {error}</li>
+                    <li key={index} className="text-red-700 text-sm arabic">
+                      • {error}
+                    </li>
                   ))}
                 </ul>
               </CardContent>
@@ -232,7 +246,7 @@ export default function NewProduct() {
                   <Label className="arabic">اسم المنتج *</Label>
                   <Input
                     value={formData.name}
-                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
                     className="mt-2 arabic text-right"
                     placeholder="مثال: عطر صندل سوداني أصلي"
                     required
@@ -243,21 +257,27 @@ export default function NewProduct() {
                   <Label className="arabic">الفئة *</Label>
                   <select
                     value={formData.category}
-                    onChange={(e) => handleInputChange('category', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("category", e.target.value)
+                    }
                     className="w-full mt-2 p-2 border border-gray-300 rounded-lg arabic text-right"
                     required
                   >
                     <option value="">اختر الفئة</option>
-                    {categories.map(cat => (
-                      <option key={cat} value={cat}>{cat}</option>
+                    {categories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
                     ))}
                     <option value="new">فئة جديدة</option>
                   </select>
-                  {formData.category === 'new' && (
+                  {formData.category === "new" && (
                     <Input
                       placeholder="أدخل اسم الفئة الجديدة"
                       className="mt-2 arabic text-right"
-                      onChange={(e) => handleInputChange('category', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("category", e.target.value)
+                      }
                     />
                   )}
                 </div>
@@ -267,7 +287,9 @@ export default function NewProduct() {
                 <Label className="arabic">وصف المنتج *</Label>
                 <Textarea
                   value={formData.description}
-                  onChange={(e) => handleInputChange('description', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("description", e.target.value)
+                  }
                   className="mt-2 arabic text-right"
                   rows={4}
                   placeholder="وصف مفصل للمنتج، خصائصه، وفوائده..."
@@ -293,7 +315,12 @@ export default function NewProduct() {
                     type="number"
                     step="0.01"
                     value={formData.price}
-                    onChange={(e) => handleInputChange('price', parseFloat(e.target.value) || 0)}
+                    onChange={(e) =>
+                      handleInputChange(
+                        "price",
+                        parseFloat(e.target.value) || 0,
+                      )
+                    }
                     className="mt-2"
                     placeholder="0.00"
                     required
@@ -305,16 +332,29 @@ export default function NewProduct() {
                   <Input
                     type="number"
                     step="0.01"
-                    value={formData.salePrice || ''}
-                    onChange={(e) => handleInputChange('salePrice', e.target.value ? parseFloat(e.target.value) : undefined)}
+                    value={formData.salePrice || ""}
+                    onChange={(e) =>
+                      handleInputChange(
+                        "salePrice",
+                        e.target.value ? parseFloat(e.target.value) : undefined,
+                      )
+                    }
                     className="mt-2"
                     placeholder="0.00"
                   />
-                  {formData.salePrice && formData.price && formData.salePrice < formData.price && (
-                    <p className="text-sm text-green-600 mt-1 arabic">
-                      خصم {Math.round(((formData.price - formData.salePrice) / formData.price) * 100)}%
-                    </p>
-                  )}
+                  {formData.salePrice &&
+                    formData.price &&
+                    formData.salePrice < formData.price && (
+                      <p className="text-sm text-green-600 mt-1 arabic">
+                        خصم{" "}
+                        {Math.round(
+                          ((formData.price - formData.salePrice) /
+                            formData.price) *
+                            100,
+                        )}
+                        %
+                      </p>
+                    )}
                 </div>
               </div>
             </CardContent>
@@ -336,7 +376,11 @@ export default function NewProduct() {
                   placeholder="رابط الصورة (https://...)"
                   className="flex-1"
                 />
-                <Button type="button" onClick={handleAddImage} disabled={!currentImageUrl.trim()}>
+                <Button
+                  type="button"
+                  onClick={handleAddImage}
+                  disabled={!currentImageUrl.trim()}
+                >
                   <Plus className="w-4 h-4" />
                 </Button>
               </div>
@@ -374,7 +418,9 @@ export default function NewProduct() {
                   <Upload className="w-4 h-4 ml-2" />
                   رفع صورة من الجهاز
                 </Button>
-                <p className="text-sm text-gray-600 arabic">أو أدخل رابط الصورة أعلاه</p>
+                <p className="text-sm text-gray-600 arabic">
+                  أو أدخل رابط الصورة أعلاه
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -394,7 +440,12 @@ export default function NewProduct() {
                   <Input
                     type="number"
                     value={formData.inventory?.quantity}
-                    onChange={(e) => handleInventoryChange('quantity', parseInt(e.target.value) || 0)}
+                    onChange={(e) =>
+                      handleInventoryChange(
+                        "quantity",
+                        parseInt(e.target.value) || 0,
+                      )
+                    }
                     className="mt-2"
                     min="0"
                     required
@@ -406,7 +457,12 @@ export default function NewProduct() {
                   <Input
                     type="number"
                     value={formData.inventory?.lowStockThreshold}
-                    onChange={(e) => handleInventoryChange('lowStockThreshold', parseInt(e.target.value) || 5)}
+                    onChange={(e) =>
+                      handleInventoryChange(
+                        "lowStockThreshold",
+                        parseInt(e.target.value) || 5,
+                      )
+                    }
                     className="mt-2"
                     min="0"
                   />
@@ -417,10 +473,16 @@ export default function NewProduct() {
                   <div className="flex items-center space-x-2 space-x-reverse mt-2">
                     <Input
                       value={formData.inventory?.sku}
-                      onChange={(e) => handleInventoryChange('sku', e.target.value)}
+                      onChange={(e) =>
+                        handleInventoryChange("sku", e.target.value)
+                      }
                       placeholder="AUTO-GENERATED"
                     />
-                    <Button type="button" variant="outline" onClick={generateAutoSKU}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={generateAutoSKU}
+                    >
                       توليد
                     </Button>
                   </div>
@@ -444,10 +506,10 @@ export default function NewProduct() {
                   placeholder="مثال: عطر, صندل, سوداني, طبيعي"
                   className="mt-2 arabic text-right"
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === "Enter") {
                       e.preventDefault();
                       handleAddTag(e.currentTarget.value);
-                      e.currentTarget.value = '';
+                      e.currentTarget.value = "";
                     }
                   }}
                 />
@@ -474,33 +536,41 @@ export default function NewProduct() {
               <div>
                 <Label className="arabic">المواصفات الفنية</Label>
                 <div className="space-y-3 mt-2">
-                  {Object.entries(formData.specifications || {}).map(([key, value]) => (
-                    <div key={key} className="flex items-center space-x-2 space-x-reverse">
-                      <Input value={key} readOnly className="flex-1" />
-                      <Input value={value} readOnly className="flex-1" />
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleSpecificationRemove(key)}
+                  {Object.entries(formData.specifications || {}).map(
+                    ([key, value]) => (
+                      <div
+                        key={key}
+                        className="flex items-center space-x-2 space-x-reverse"
                       >
-                        <X className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  ))}
+                        <Input value={key} readOnly className="flex-1" />
+                        <Input value={value} readOnly className="flex-1" />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleSpecificationRemove(key)}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ),
+                  )}
                   <div className="flex items-center space-x-2 space-x-reverse">
                     <Input
                       placeholder="اسم المواصفة"
                       className="flex-1 arabic text-right"
                       onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
+                        if (e.key === "Enter") {
                           e.preventDefault();
                           const key = e.currentTarget.value;
-                          const valueInput = e.currentTarget.parentElement?.querySelector('input:last-child') as HTMLInputElement;
+                          const valueInput =
+                            e.currentTarget.parentElement?.querySelector(
+                              "input:last-child",
+                            ) as HTMLInputElement;
                           if (key && valueInput?.value) {
                             handleSpecificationAdd(key, valueInput.value);
-                            e.currentTarget.value = '';
-                            valueInput.value = '';
+                            e.currentTarget.value = "";
+                            valueInput.value = "";
                           }
                         }
                       }}
@@ -509,20 +579,25 @@ export default function NewProduct() {
                       placeholder="القيمة"
                       className="flex-1 arabic text-right"
                       onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
+                        if (e.key === "Enter") {
                           e.preventDefault();
                           const value = e.currentTarget.value;
-                          const keyInput = e.currentTarget.parentElement?.querySelector('input:first-child') as HTMLInputElement;
+                          const keyInput =
+                            e.currentTarget.parentElement?.querySelector(
+                              "input:first-child",
+                            ) as HTMLInputElement;
                           if (keyInput?.value && value) {
                             handleSpecificationAdd(keyInput.value, value);
-                            keyInput.value = '';
-                            e.currentTarget.value = '';
+                            keyInput.value = "";
+                            e.currentTarget.value = "";
                           }
                         }
                       }}
                     />
                   </div>
-                  <p className="text-sm text-gray-600 arabic">اضغط Enter لإضافة مواصفة جديدة</p>
+                  <p className="text-sm text-gray-600 arabic">
+                    اضغط Enter لإضافة مواصفة جديدة
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -539,10 +614,15 @@ export default function NewProduct() {
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => handleInputChange('status', formData.status === 'active' ? 'inactive' : 'active')}
+                onClick={() =>
+                  handleInputChange(
+                    "status",
+                    formData.status === "active" ? "inactive" : "active",
+                  )
+                }
                 className="arabic"
               >
-                {formData.status === 'active' ? 'حفظ كمسودة' : 'تفعيل المنتج'}
+                {formData.status === "active" ? "حفظ كمسودة" : "تفعيل المنتج"}
               </Button>
               <Button type="submit" disabled={isLoading} className="arabic">
                 {isLoading ? (

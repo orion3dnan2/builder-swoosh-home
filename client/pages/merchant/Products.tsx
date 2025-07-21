@@ -4,10 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Package, 
-  Plus, 
-  Search, 
+import {
+  Package,
+  Plus,
+  Search,
   Filter,
   Edit,
   Trash2,
@@ -17,7 +17,7 @@ import {
   Grid3x3,
   List,
   SortAsc,
-  SortDesc
+  SortDesc,
 } from "lucide-react";
 import { useProducts } from "@/lib/products";
 import { useAuth } from "@/lib/auth";
@@ -25,68 +25,82 @@ import { Product } from "../../../shared/types";
 
 export default function MerchantProducts() {
   const { user } = useAuth();
-  const { products, deleteProduct, updateStock } = useProducts('store-001'); // Replace with actual store ID
+  const { products, deleteProduct, updateStock } = useProducts("store-001"); // Replace with actual store ID
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [sortBy, setSortBy] = useState<'name' | 'price' | 'stock' | 'updated'>('updated');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [sortBy, setSortBy] = useState<"name" | "price" | "stock" | "updated">(
+    "updated",
+  );
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   // Filter and sort products
   const filteredProducts = products
-    .filter(product => {
-      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           product.description.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-      const matchesStatus = selectedStatus === 'all' || product.status === selectedStatus;
+    .filter((product) => {
+      const matchesSearch =
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory =
+        selectedCategory === "all" || product.category === selectedCategory;
+      const matchesStatus =
+        selectedStatus === "all" || product.status === selectedStatus;
       return matchesSearch && matchesCategory && matchesStatus;
     })
     .sort((a, b) => {
       let comparison = 0;
       switch (sortBy) {
-        case 'name':
+        case "name":
           comparison = a.name.localeCompare(b.name);
           break;
-        case 'price':
+        case "price":
           comparison = a.price - b.price;
           break;
-        case 'stock':
+        case "stock":
           comparison = a.inventory.quantity - b.inventory.quantity;
           break;
-        case 'updated':
-          comparison = new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
+        case "updated":
+          comparison =
+            new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
           break;
       }
-      return sortOrder === 'asc' ? comparison : -comparison;
+      return sortOrder === "asc" ? comparison : -comparison;
     });
 
-  const categories = [...new Set(products.map(p => p.category))];
+  const categories = [...new Set(products.map((p) => p.category))];
 
-  const getStatusColor = (status: Product['status']) => {
+  const getStatusColor = (status: Product["status"]) => {
     switch (status) {
-      case 'active': return 'bg-green-100 text-green-800';
-      case 'inactive': return 'bg-gray-100 text-gray-800';
-      case 'out_of_stock': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case "active":
+        return "bg-green-100 text-green-800";
+      case "inactive":
+        return "bg-gray-100 text-gray-800";
+      case "out_of_stock":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
-  const getStatusText = (status: Product['status']) => {
+  const getStatusText = (status: Product["status"]) => {
     switch (status) {
-      case 'active': return 'نشط';
-      case 'inactive': return 'غير نشط';
-      case 'out_of_stock': return 'نفد المخزون';
-      default: return status;
+      case "active":
+        return "نشط";
+      case "inactive":
+        return "غير نشط";
+      case "out_of_stock":
+        return "نفد المخزون";
+      default:
+        return status;
     }
   };
 
   const handleDeleteProduct = async (id: string) => {
-    if (window.confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+    if (window.confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
       try {
         deleteProduct(id);
       } catch (error) {
-        console.error('Error deleting product:', error);
+        console.error("Error deleting product:", error);
       }
     }
   };
@@ -95,7 +109,7 @@ export default function MerchantProducts() {
     try {
       updateStock(id, newQuantity);
     } catch (error) {
-      console.error('Error updating stock:', error);
+      console.error("Error updating stock:", error);
     }
   };
 
@@ -116,8 +130,12 @@ export default function MerchantProducts() {
                 <Package className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 arabic">إدارة المنتجات</h1>
-                <p className="text-gray-600 arabic">{filteredProducts.length} منتج</p>
+                <h1 className="text-2xl font-bold text-gray-900 arabic">
+                  إدارة المنتجات
+                </h1>
+                <p className="text-gray-600 arabic">
+                  {filteredProducts.length} منتج
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
@@ -155,8 +173,10 @@ export default function MerchantProducts() {
                 className="border border-gray-300 rounded-lg px-3 py-2 arabic text-right"
               >
                 <option value="all">جميع الفئات</option>
-                {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
                 ))}
               </select>
 
@@ -176,7 +196,7 @@ export default function MerchantProducts() {
               <select
                 value={`${sortBy}-${sortOrder}`}
                 onChange={(e) => {
-                  const [field, order] = e.target.value.split('-');
+                  const [field, order] = e.target.value.split("-");
                   setSortBy(field as any);
                   setSortOrder(order as any);
                 }}
@@ -195,16 +215,16 @@ export default function MerchantProducts() {
               {/* View Mode */}
               <div className="flex items-center space-x-2 space-x-reverse">
                 <Button
-                  variant={viewMode === 'grid' ? 'default' : 'outline'}
+                  variant={viewMode === "grid" ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setViewMode('grid')}
+                  onClick={() => setViewMode("grid")}
                 >
                   <Grid3x3 className="w-4 h-4" />
                 </Button>
                 <Button
-                  variant={viewMode === 'list' ? 'default' : 'outline'}
+                  variant={viewMode === "list" ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setViewMode('list')}
+                  onClick={() => setViewMode("list")}
                 >
                   <List className="w-4 h-4" />
                 </Button>
@@ -214,39 +234,59 @@ export default function MerchantProducts() {
         </Card>
 
         {/* Products Grid/List */}
-        {viewMode === 'grid' ? (
+        {viewMode === "grid" ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProducts.map((product) => (
-              <Card key={product.id} className="hover:shadow-lg transition-shadow">
+              <Card
+                key={product.id}
+                className="hover:shadow-lg transition-shadow"
+              >
                 <div className="relative">
                   <img
-                    src={product.images[0] || '/placeholder.svg'}
+                    src={product.images[0] || "/placeholder.svg"}
                     alt={product.name}
                     className="w-full h-48 object-cover rounded-t-lg"
                   />
                   {product.salePrice && (
                     <Badge className="absolute top-2 right-2 bg-red-500 text-white">
-                      خصم {Math.round(((product.price - product.salePrice) / product.price) * 100)}%
+                      خصم{" "}
+                      {Math.round(
+                        ((product.price - product.salePrice) / product.price) *
+                          100,
+                      )}
+                      %
                     </Badge>
                   )}
-                  <Badge className={`absolute top-2 left-2 ${getStatusColor(product.status)}`}>
+                  <Badge
+                    className={`absolute top-2 left-2 ${getStatusColor(product.status)}`}
+                  >
                     {getStatusText(product.status)}
                   </Badge>
                 </div>
-                
+
                 <CardContent className="p-4">
-                  <h3 className="font-semibold text-lg mb-2 arabic">{product.name}</h3>
-                  <p className="text-gray-600 text-sm mb-3 arabic line-clamp-2">{product.description}</p>
-                  
+                  <h3 className="font-semibold text-lg mb-2 arabic">
+                    {product.name}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-3 arabic line-clamp-2">
+                    {product.description}
+                  </p>
+
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center space-x-2 space-x-reverse">
                       {product.salePrice ? (
                         <>
-                          <span className="font-bold text-green-600">${product.salePrice}</span>
-                          <span className="text-gray-400 line-through text-sm">${product.price}</span>
+                          <span className="font-bold text-green-600">
+                            ${product.salePrice}
+                          </span>
+                          <span className="text-gray-400 line-through text-sm">
+                            ${product.price}
+                          </span>
                         </>
                       ) : (
-                        <span className="font-bold text-gray-900">${product.price}</span>
+                        <span className="font-bold text-gray-900">
+                          ${product.price}
+                        </span>
                       )}
                     </div>
                     <Badge variant="outline" className="arabic">
@@ -254,7 +294,8 @@ export default function MerchantProducts() {
                     </Badge>
                   </div>
 
-                  {product.inventory.quantity <= product.inventory.lowStockThreshold && (
+                  {product.inventory.quantity <=
+                    product.inventory.lowStockThreshold && (
                     <div className="flex items-center text-orange-600 text-sm mb-3">
                       <AlertTriangle className="w-4 h-4 ml-1" />
                       <span className="arabic">مخزون منخفض</span>
@@ -268,8 +309,8 @@ export default function MerchantProducts() {
                           <Edit className="w-4 h-4" />
                         </Button>
                       </Link>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         onClick={() => handleDeleteProduct(product.id)}
                       >
@@ -292,12 +333,24 @@ export default function MerchantProducts() {
                 <table className="w-full">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">المنتج</th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">الفئة</th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">السعر</th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">المخزون</th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">الحالة</th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">الإجراءات</th>
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
+                        المنتج
+                      </th>
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
+                        الفئة
+                      </th>
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
+                        السعر
+                      </th>
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
+                        المخزون
+                      </th>
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
+                        الحالة
+                      </th>
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
+                        الإجراءات
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
@@ -306,28 +359,40 @@ export default function MerchantProducts() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center space-x-3 space-x-reverse">
                             <img
-                              src={product.images[0] || '/placeholder.svg'}
+                              src={product.images[0] || "/placeholder.svg"}
                               alt={product.name}
                               className="w-12 h-12 object-cover rounded-lg"
                             />
                             <div>
-                              <div className="text-sm font-medium text-gray-900 arabic">{product.name}</div>
-                              <div className="text-sm text-gray-500">{product.inventory.sku}</div>
+                              <div className="text-sm font-medium text-gray-900 arabic">
+                                {product.name}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {product.inventory.sku}
+                              </div>
                             </div>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <Badge variant="outline" className="arabic">{product.category}</Badge>
+                          <Badge variant="outline" className="arabic">
+                            {product.category}
+                          </Badge>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center space-x-2 space-x-reverse">
                             {product.salePrice ? (
                               <>
-                                <span className="font-bold text-green-600">${product.salePrice}</span>
-                                <span className="text-gray-400 line-through text-sm">${product.price}</span>
+                                <span className="font-bold text-green-600">
+                                  ${product.salePrice}
+                                </span>
+                                <span className="text-gray-400 line-through text-sm">
+                                  ${product.price}
+                                </span>
                               </>
                             ) : (
-                              <span className="font-bold text-gray-900">${product.price}</span>
+                              <span className="font-bold text-gray-900">
+                                ${product.price}
+                              </span>
                             )}
                           </div>
                         </td>
@@ -336,11 +401,17 @@ export default function MerchantProducts() {
                             <Input
                               type="number"
                               value={product.inventory.quantity}
-                              onChange={(e) => handleStockUpdate(product.id, parseInt(e.target.value) || 0)}
+                              onChange={(e) =>
+                                handleStockUpdate(
+                                  product.id,
+                                  parseInt(e.target.value) || 0,
+                                )
+                              }
                               className="w-20 h-8 text-center"
                               min="0"
                             />
-                            {product.inventory.quantity <= product.inventory.lowStockThreshold && (
+                            {product.inventory.quantity <=
+                              product.inventory.lowStockThreshold && (
                               <AlertTriangle className="w-4 h-4 text-orange-500" />
                             )}
                           </div>
@@ -357,8 +428,8 @@ export default function MerchantProducts() {
                                 <Edit className="w-4 h-4" />
                               </Button>
                             </Link>
-                            <Button 
-                              variant="outline" 
+                            <Button
+                              variant="outline"
                               size="sm"
                               onClick={() => handleDeleteProduct(product.id)}
                             >
@@ -381,8 +452,12 @@ export default function MerchantProducts() {
         {filteredProducts.length === 0 && (
           <div className="text-center py-12">
             <Package className="w-24 h-24 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2 arabic">لا توجد منتجات</h3>
-            <p className="text-gray-600 arabic mb-4">لم يتم العثور على منتجات تطابق معايير البحث</p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2 arabic">
+              لا توجد منتجات
+            </h3>
+            <p className="text-gray-600 arabic mb-4">
+              لم يتم العثور على منتجات تطابق معايير البحث
+            </p>
             <Link to="/merchant/products/new">
               <Button className="arabic">
                 <Plus className="w-4 h-4 ml-2" />

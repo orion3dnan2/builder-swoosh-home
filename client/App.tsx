@@ -38,66 +38,99 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/theme-showcase" element={<ThemeShowcase />} />
-            
+
             {/* Admin Routes */}
-            <Route path="/admin/dashboard" element={
-              <SuperAdminRoute>
-                <AdminDashboard />
-              </SuperAdminRoute>
-            } />
-            <Route path="/admin/settings" element={
-              <SuperAdminRoute>
-                <AdminSettings />
-              </SuperAdminRoute>
-            } />
-            <Route path="/admin/stores" element={
-              <SuperAdminRoute>
-                <AdminStores />
-              </SuperAdminRoute>
-            } />
-            <Route path="/admin/users" element={
-              <SuperAdminRoute>
-                <AdminUsers />
-              </SuperAdminRoute>
-            } />
-            <Route path="/admin/appearance" element={
-              <SuperAdminRoute>
-                <AdminAppearance />
-              </SuperAdminRoute>
-            } />
-            <Route path="/admin/system" element={
-              <SuperAdminRoute>
-                <AdminSystem />
-              </SuperAdminRoute>
-            } />
-            <Route path="/admin/content" element={
-              <SuperAdminRoute>
-                <AdminContent />
-              </SuperAdminRoute>
-            } />
-            
+            <Route
+              path="/admin/dashboard"
+              element={
+                <SuperAdminRoute>
+                  <AdminDashboard />
+                </SuperAdminRoute>
+              }
+            />
+            <Route
+              path="/admin/settings"
+              element={
+                <SuperAdminRoute>
+                  <AdminSettings />
+                </SuperAdminRoute>
+              }
+            />
+            <Route
+              path="/admin/stores"
+              element={
+                <SuperAdminRoute>
+                  <AdminStores />
+                </SuperAdminRoute>
+              }
+            />
+            <Route
+              path="/admin/users"
+              element={
+                <SuperAdminRoute>
+                  <AdminUsers />
+                </SuperAdminRoute>
+              }
+            />
+            <Route
+              path="/admin/appearance"
+              element={
+                <SuperAdminRoute>
+                  <AdminAppearance />
+                </SuperAdminRoute>
+              }
+            />
+            <Route
+              path="/admin/system"
+              element={
+                <SuperAdminRoute>
+                  <AdminSystem />
+                </SuperAdminRoute>
+              }
+            />
+            <Route
+              path="/admin/content"
+              element={
+                <SuperAdminRoute>
+                  <AdminContent />
+                </SuperAdminRoute>
+              }
+            />
+
             {/* Merchant Routes */}
-            <Route path="/merchant/dashboard" element={
-              <MerchantRoute>
-                <MerchantDashboard />
-              </MerchantRoute>
-            } />
-            <Route path="/merchant/products" element={
-              <MerchantRoute>
-                <MerchantProducts />
-              </MerchantRoute>
-            } />
-            <Route path="/merchant/products/new" element={
-              <MerchantRoute>
-                <NewProduct />
-              </MerchantRoute>
-            } />
-            <Route path="/merchant/analytics" element={
-              <MerchantRoute>
-                <MerchantAnalytics />
-              </MerchantRoute>
-            } />
-            
+            <Route
+              path="/merchant/dashboard"
+              element={
+                <MerchantRoute>
+                  <MerchantDashboard />
+                </MerchantRoute>
+              }
+            />
+            <Route
+              path="/merchant/products"
+              element={
+                <MerchantRoute>
+                  <MerchantProducts />
+                </MerchantRoute>
+              }
+            />
+            <Route
+              path="/merchant/products/new"
+              element={
+                <MerchantRoute>
+                  <NewProduct />
+                </MerchantRoute>
+              }
+            />
+            <Route
+              path="/merchant/analytics"
+              element={
+                <MerchantRoute>
+                  <MerchantAnalytics />
+                </MerchantRoute>
+              }
+            />
+
             {/* Public Routes */}
             <Route path="/marketplace" element={<Marketplace />} />
             <Route path="/products" element={<Products />} />
@@ -105,7 +138,7 @@ function App() {
             <Route path="/jobs" element={<Jobs />} />
             <Route path="/services" element={<Services />} />
             <Route path="/ads" element={<Ads />} />
-            
+
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

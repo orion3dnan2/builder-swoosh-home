@@ -21,7 +21,9 @@ export default function AdminUsers() {
                 <Users className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 arabic">إدارة المستخدمين</h1>
+                <h1 className="text-2xl font-bold text-gray-900 arabic">
+                  إدارة المستخدمين
+                </h1>
                 <p className="text-gray-600 arabic">قريباً - قيد التطوير</p>
               </div>
             </div>
@@ -33,14 +35,15 @@ export default function AdminUsers() {
         <Card className="text-center">
           <CardContent className="p-12">
             <ConstructionIcon className="w-24 h-24 text-gray-300 mx-auto mb-6" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 arabic">صفحة قيد التطوير</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 arabic">
+              صفحة قيد التطوير
+            </h2>
             <p className="text-gray-600 arabic mb-6">
-              صفحة إدارة المستخدمين ستكون متاحة قريباً بميزات شاملة لإدارة حسابات المستخدمين
+              صفحة إدارة المستخدمين ستكون متاحة قريباً بميزات شاملة لإدارة
+              حسابات المستخدمين
             </p>
             <Link to="/admin/dashboard">
-              <Button className="arabic">
-                العودة للوحة الرئيسية
-              </Button>
+              <Button className="arabic">العودة للوحة الرئيسية</Button>
             </Link>
           </CardContent>
         </Card>

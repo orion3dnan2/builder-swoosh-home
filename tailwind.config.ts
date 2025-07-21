@@ -20,12 +20,23 @@ export default {
     },
     extend: {
       fontFamily: {
-        cairo: ['Cairo', 'Noto Sans Arabic', 'sans-serif'],
-        tajawal: ['Tajawal', 'Noto Sans Arabic', 'sans-serif'],
-        'noto-kufi': ['Noto Kufi Arabic', 'Cairo', 'sans-serif'],
-        amiri: ['Amiri', 'Noto Sans Arabic', 'serif'],
-        arabic: ['var(--arabic-font)', 'Cairo', 'Noto Sans Arabic', 'sans-serif'],
-        english: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        cairo: ["Cairo", "Noto Sans Arabic", "sans-serif"],
+        tajawal: ["Tajawal", "Noto Sans Arabic", "sans-serif"],
+        "noto-kufi": ["Noto Kufi Arabic", "Cairo", "sans-serif"],
+        amiri: ["Amiri", "Noto Sans Arabic", "serif"],
+        arabic: [
+          "var(--arabic-font)",
+          "Cairo",
+          "Noto Sans Arabic",
+          "sans-serif",
+        ],
+        english: [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -93,11 +104,11 @@ export default {
         },
         // Cultural colors inspired by Sudan
         cultural: {
-          'nile-blue': "hsl(var(--nile-blue))",
-          'desert-gold': "hsl(var(--desert-gold))",
-          'sunset-orange': "hsl(var(--sunset-orange))",
-          'palm-green': "hsl(var(--palm-green))",
-        }
+          "nile-blue": "hsl(var(--nile-blue))",
+          "desert-gold": "hsl(var(--desert-gold))",
+          "sunset-orange": "hsl(var(--sunset-orange))",
+          "palm-green": "hsl(var(--palm-green))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -118,43 +129,43 @@ export default {
           to: { opacity: "1" },
         },
         slideUp: {
-          from: { 
-            opacity: "0", 
-            transform: "translateY(10px)" 
+          from: {
+            opacity: "0",
+            transform: "translateY(10px)",
           },
-          to: { 
-            opacity: "1", 
-            transform: "translateY(0)" 
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
           },
         },
         slideDown: {
-          from: { 
-            opacity: "0", 
-            transform: "translateY(-10px)" 
+          from: {
+            opacity: "0",
+            transform: "translateY(-10px)",
           },
-          to: { 
-            opacity: "1", 
-            transform: "translateY(0)" 
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
           },
         },
         slideInLeft: {
-          from: { 
-            opacity: "0", 
-            transform: "translateX(-20px)" 
+          from: {
+            opacity: "0",
+            transform: "translateX(-20px)",
           },
-          to: { 
-            opacity: "1", 
-            transform: "translateX(0)" 
+          to: {
+            opacity: "1",
+            transform: "translateX(0)",
           },
         },
         slideInRight: {
-          from: { 
-            opacity: "0", 
-            transform: "translateX(20px)" 
+          from: {
+            opacity: "0",
+            transform: "translateX(20px)",
           },
-          to: { 
-            opacity: "1", 
-            transform: "translateX(0)" 
+          to: {
+            opacity: "1",
+            transform: "translateX(0)",
           },
         },
         pulse: {
@@ -180,80 +191,85 @@ export default {
         "slide-down": "slideDown 0.3s ease-out",
         "slide-in-left": "slideInLeft 0.3s ease-out",
         "slide-in-right": "slideInRight 0.3s ease-out",
-        "pulse": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "bounce": "bounce 1s infinite",
+        pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        bounce: "bounce 1s infinite",
       },
       backdropBlur: {
         xs: "2px",
       },
       spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
-        '128': '32rem',
+        "18": "4.5rem",
+        "88": "22rem",
+        "128": "32rem",
       },
       lineHeight: {
-        'extra-loose': '2.5',
-        '12': '3rem',
+        "extra-loose": "2.5",
+        "12": "3rem",
       },
       letterSpacing: {
-        'extra-wide': '0.1em',
+        "extra-wide": "0.1em",
       },
       boxShadow: {
-        'cultural': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(59, 130, 246, 0.05)',
-        'cultural-lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(59, 130, 246, 0.05)',
-        'cultural-xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(59, 130, 246, 0.05)',
-        'inner-cultural': 'inset 0 2px 4px 0 rgba(59, 130, 246, 0.06)',
+        cultural:
+          "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(59, 130, 246, 0.05)",
+        "cultural-lg":
+          "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(59, 130, 246, 0.05)",
+        "cultural-xl":
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(59, 130, 246, 0.05)",
+        "inner-cultural": "inset 0 2px 4px 0 rgba(59, 130, 246, 0.06)",
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'sudanese-pattern': 'radial-gradient(circle at 25% 25%, hsl(var(--primary) / 0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, hsl(var(--secondary) / 0.1) 0%, transparent 50%)',
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "sudanese-pattern":
+          "radial-gradient(circle at 25% 25%, hsl(var(--primary) / 0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, hsl(var(--secondary) / 0.1) 0%, transparent 50%)",
       },
       screens: {
-        'xs': '475px',
-        '3xl': '1600px',
+        xs: "475px",
+        "3xl": "1600px",
       },
       transitionProperty: {
-        'height': 'height',
-        'spacing': 'margin, padding',
+        height: "height",
+        spacing: "margin, padding",
       },
       zIndex: {
-        '60': '60',
-        '70': '70',
-        '80': '80',
-        '90': '90',
-        '100': '100',
-      }
+        "60": "60",
+        "70": "70",
+        "80": "80",
+        "90": "90",
+        "100": "100",
+      },
     },
   },
   plugins: [
     require("tailwindcss-animate"),
     // Plugin for RTL support
-    function({ addUtilities }: { addUtilities: any }) {
+    function ({ addUtilities }: { addUtilities: any }) {
       const newUtilities = {
-        '.rtl': {
-          direction: 'rtl',
+        ".rtl": {
+          direction: "rtl",
         },
-        '.ltr': {
-          direction: 'ltr',
+        ".ltr": {
+          direction: "ltr",
         },
-        '.flip-horizontal': {
-          transform: 'scaleX(-1)',
+        ".flip-horizontal": {
+          transform: "scaleX(-1)",
         },
-        '.text-shadow-sm': {
-          textShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
+        ".text-shadow-sm": {
+          textShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
         },
-        '.text-shadow': {
-          textShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+        ".text-shadow": {
+          textShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
         },
-        '.text-shadow-lg': {
-          textShadow: '0 4px 8px rgba(0, 0, 0, 0.12)',
+        ".text-shadow-lg": {
+          textShadow: "0 4px 8px rgba(0, 0, 0, 0.12)",
         },
-        '.text-shadow-none': {
-          textShadow: 'none',
+        ".text-shadow-none": {
+          textShadow: "none",
         },
-      }
-      addUtilities(newUtilities, ['responsive', 'hover'])
-    }
+      };
+      addUtilities(newUtilities, ["responsive", "hover"]);
+    },
   ],
 } satisfies Config;

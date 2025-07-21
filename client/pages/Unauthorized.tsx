@@ -10,7 +10,7 @@ export default function Unauthorized() {
 
   const handleLogout = () => {
     logout();
-    window.location.href = '/login';
+    window.location.href = "/login";
   };
 
   return (
@@ -24,22 +24,27 @@ export default function Unauthorized() {
                   <ShieldX className="w-8 h-8 text-white" />
                 </div>
               </div>
-              <h1 className="text-2xl font-bold text-red-800 arabic">غير مسموح بالوصول</h1>
-              <p className="text-red-600 arabic">ليس لديك صلاحية للوصول إلى هذه الصفحة</p>
+              <h1 className="text-2xl font-bold text-red-800 arabic">
+                غير مسموح بالوصول
+              </h1>
+              <p className="text-red-600 arabic">
+                ليس لديك صلاحية للوصول إلى هذه الصفحة
+              </p>
             </CardHeader>
-            
+
             <CardContent className="space-y-6">
               <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-4 rounded-xl text-center arabic">
                 <p className="mb-2">🚫 الوصول مرفوض</p>
                 {user && (
                   <p className="text-sm">
-                    مرحباً {user.profile.name}، صلاحيتك الحالية: <strong>{user.role}</strong>
+                    مرحباً {user.profile.name}، صلاحيتك الحالية:{" "}
+                    <strong>{user.role}</strong>
                   </p>
                 )}
               </div>
 
               <div className="space-y-3">
-                <Button 
+                <Button
                   asChild
                   size="lg"
                   className="w-full text-lg py-4 arabic rounded-xl font-semibold"
@@ -50,7 +55,7 @@ export default function Unauthorized() {
                   </Link>
                 </Button>
 
-                <Button 
+                <Button
                   variant="outline"
                   size="lg"
                   onClick={handleLogout}

@@ -3,21 +3,21 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Settings, 
-  Users, 
-  Store, 
-  Package, 
-  TrendingUp, 
-  Shield, 
-  Palette, 
+import {
+  Settings,
+  Users,
+  Store,
+  Package,
+  TrendingUp,
+  Shield,
+  Palette,
   Globe,
   Eye,
   Activity,
   MessageSquare,
   Star,
   ChevronRight,
-  BarChart3
+  BarChart3,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -33,7 +33,7 @@ export default function AdminDashboard() {
     monthlyRevenue: 125670,
     activeStores: 67,
     pendingApprovals: 12,
-    newRegistrations: 23
+    newRegistrations: 23,
   });
 
   const quickActions = [
@@ -43,7 +43,7 @@ export default function AdminDashboard() {
       icon: Settings,
       href: "/admin/settings",
       color: "from-blue-500 to-blue-600",
-      urgent: false
+      urgent: false,
     },
     {
       titleKey: "dashboard.user_management",
@@ -51,7 +51,7 @@ export default function AdminDashboard() {
       icon: Users,
       href: "/admin/users",
       color: "from-green-500 to-green-600",
-      urgent: false
+      urgent: false,
     },
     {
       titleKey: "dashboard.store_management",
@@ -59,7 +59,7 @@ export default function AdminDashboard() {
       icon: Store,
       href: "/admin/stores",
       color: "from-purple-500 to-purple-600",
-      urgent: stats.pendingApprovals > 0
+      urgent: stats.pendingApprovals > 0,
     },
     {
       titleKey: "dashboard.appearance",
@@ -67,7 +67,7 @@ export default function AdminDashboard() {
       icon: Palette,
       href: "/admin/appearance",
       color: "from-pink-500 to-pink-600",
-      urgent: false
+      urgent: false,
     },
     {
       titleKey: "dashboard.system_settings",
@@ -75,7 +75,7 @@ export default function AdminDashboard() {
       icon: Shield,
       href: "/admin/system",
       color: "from-red-500 to-red-600",
-      urgent: false
+      urgent: false,
     },
     {
       titleKey: "dashboard.content_management",
@@ -83,15 +83,35 @@ export default function AdminDashboard() {
       icon: Globe,
       href: "/admin/content",
       color: "from-orange-500 to-orange-600",
-      urgent: false
-    }
+      urgent: false,
+    },
   ];
 
   const recentActivity = [
-    { action: "تسجيل متجر جديد", user: "أحمد محمد", time: "منذ 15 دقيقة", type: "store" },
-    { action: "طلب اعتماد منتج", user: "فاطمة عبدالله", time: "منذ 30 دقيقة", type: "product" },
-    { action: "مراجعة سلبية", user: "محمد علي", time: "منذ ساعة", type: "review" },
-    { action: "طلب دعم فني", user: "عائشة أحمد", time: "منذ ساعتين", type: "support" }
+    {
+      action: "تسجيل متجر جديد",
+      user: "أحمد محمد",
+      time: "منذ 15 دقيقة",
+      type: "store",
+    },
+    {
+      action: "طلب اعتماد منتج",
+      user: "فاطمة عبدالله",
+      time: "منذ 30 دقيقة",
+      type: "product",
+    },
+    {
+      action: "مراجعة سلبية",
+      user: "محمد علي",
+      time: "منذ ساعة",
+      type: "review",
+    },
+    {
+      action: "طلب دعم فني",
+      user: "عائشة أحمد",
+      time: "منذ ساعتين",
+      type: "support",
+    },
   ];
 
   return (
@@ -105,16 +125,22 @@ export default function AdminDashboard() {
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 arabic">{t('dashboard.admin')}</h1>
-                <p className="text-gray-600 arabic">{t('dashboard.welcome')} {user?.profile.name}</p>
+                <h1 className="text-2xl font-bold text-gray-900 arabic">
+                  {t("dashboard.admin")}
+                </h1>
+                <p className="text-gray-600 arabic">
+                  {t("dashboard.welcome")} {user?.profile.name}
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
-              <Badge variant="secondary" className="arabic">{t('dashboard.super_admin')}</Badge>
+              <Badge variant="secondary" className="arabic">
+                {t("dashboard.super_admin")}
+              </Badge>
               <Link to="/">
                 <Button variant="outline" size="sm" className="arabic">
                   <Eye className="w-4 h-4 ml-2" />
-                  {t('dashboard.view_site')}
+                  {t("dashboard.view_site")}
                 </Button>
               </Link>
             </div>
@@ -130,8 +156,12 @@ export default function AdminDashboard() {
               <div className="flex items-center">
                 <Users className="w-8 h-8 text-blue-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-blue-800">{stats.totalUsers.toLocaleString()}</p>
-                  <p className="text-blue-600 text-sm arabic">{t('dashboard.total_users')}</p>
+                  <p className="text-2xl font-bold text-blue-800">
+                    {stats.totalUsers.toLocaleString()}
+                  </p>
+                  <p className="text-blue-600 text-sm arabic">
+                    {t("dashboard.total_users")}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -142,8 +172,12 @@ export default function AdminDashboard() {
               <div className="flex items-center">
                 <Store className="w-8 h-8 text-green-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-green-800">{stats.totalMerchants}</p>
-                  <p className="text-green-600 text-sm arabic">{t('dashboard.registered_stores')}</p>
+                  <p className="text-2xl font-bold text-green-800">
+                    {stats.totalMerchants}
+                  </p>
+                  <p className="text-green-600 text-sm arabic">
+                    {t("dashboard.registered_stores")}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -154,8 +188,12 @@ export default function AdminDashboard() {
               <div className="flex items-center">
                 <Package className="w-8 h-8 text-purple-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-purple-800">{stats.totalProducts.toLocaleString()}</p>
-                  <p className="text-purple-600 text-sm arabic">{t('dashboard.total_products')}</p>
+                  <p className="text-2xl font-bold text-purple-800">
+                    {stats.totalProducts.toLocaleString()}
+                  </p>
+                  <p className="text-purple-600 text-sm arabic">
+                    {t("dashboard.total_products")}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -166,8 +204,12 @@ export default function AdminDashboard() {
               <div className="flex items-center">
                 <TrendingUp className="w-8 h-8 text-orange-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-orange-800">${stats.monthlyRevenue.toLocaleString()}</p>
-                  <p className="text-orange-600 text-sm arabic">{t('dashboard.monthly_revenue')}</p>
+                  <p className="text-2xl font-bold text-orange-800">
+                    ${stats.monthlyRevenue.toLocaleString()}
+                  </p>
+                  <p className="text-orange-600 text-sm arabic">
+                    {t("dashboard.monthly_revenue")}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -190,15 +232,26 @@ export default function AdminDashboard() {
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between">
                         <div className="flex items-center space-x-3 space-x-reverse">
-                          <div className={`w-12 h-12 bg-gradient-to-br ${action.color} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                          <div
+                            className={`w-12 h-12 bg-gradient-to-br ${action.color} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform`}
+                          >
                             <action.icon className="w-6 h-6 text-white" />
                           </div>
                           <div>
                             <h3 className="font-semibold text-gray-900 arabic flex items-center">
                               {action.title}
-                              {action.urgent && <Badge variant="destructive" className="mr-2 text-xs">عاجل</Badge>}
+                              {action.urgent && (
+                                <Badge
+                                  variant="destructive"
+                                  className="mr-2 text-xs"
+                                >
+                                  عاجل
+                                </Badge>
+                              )}
                             </h3>
-                            <p className="text-sm text-gray-600 arabic mt-1">{action.description}</p>
+                            <p className="text-sm text-gray-600 arabic mt-1">
+                              {action.description}
+                            </p>
                           </div>
                         </div>
                         <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
@@ -218,27 +271,47 @@ export default function AdminDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center arabic">
                 <MessageSquare className="w-5 h-5 ml-2" />
-                {t('dashboard.recent_activity')}
+                {t("dashboard.recent_activity")}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-center space-x-3 space-x-reverse p-3 bg-gray-50 rounded-lg">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                      activity.type === 'store' ? 'bg-blue-100 text-blue-600' :
-                      activity.type === 'product' ? 'bg-green-100 text-green-600' :
-                      activity.type === 'review' ? 'bg-red-100 text-red-600' :
-                      'bg-yellow-100 text-yellow-600'
-                    }`}>
-                      {activity.type === 'store' && <Store className="w-4 h-4" />}
-                      {activity.type === 'product' && <Package className="w-4 h-4" />}
-                      {activity.type === 'review' && <Star className="w-4 h-4" />}
-                      {activity.type === 'support' && <MessageSquare className="w-4 h-4" />}
+                  <div
+                    key={index}
+                    className="flex items-center space-x-3 space-x-reverse p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                        activity.type === "store"
+                          ? "bg-blue-100 text-blue-600"
+                          : activity.type === "product"
+                            ? "bg-green-100 text-green-600"
+                            : activity.type === "review"
+                              ? "bg-red-100 text-red-600"
+                              : "bg-yellow-100 text-yellow-600"
+                      }`}
+                    >
+                      {activity.type === "store" && (
+                        <Store className="w-4 h-4" />
+                      )}
+                      {activity.type === "product" && (
+                        <Package className="w-4 h-4" />
+                      )}
+                      {activity.type === "review" && (
+                        <Star className="w-4 h-4" />
+                      )}
+                      {activity.type === "support" && (
+                        <MessageSquare className="w-4 h-4" />
+                      )}
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900 arabic">{activity.action}</p>
-                      <p className="text-xs text-gray-600 arabic">بواسطة {activity.user} • {activity.time}</p>
+                      <p className="text-sm font-medium text-gray-900 arabic">
+                        {activity.action}
+                      </p>
+                      <p className="text-xs text-gray-600 arabic">
+                        بواسطة {activity.user} • {activity.time}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -264,20 +337,36 @@ export default function AdminDashboard() {
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                  <span className="text-sm font-medium text-blue-900 arabic">المتاجر ��لنشطة</span>
-                  <span className="text-lg font-bold text-blue-600">{stats.activeStores}</span>
+                  <span className="text-sm font-medium text-blue-900 arabic">
+                    المتاجر ��لنشطة
+                  </span>
+                  <span className="text-lg font-bold text-blue-600">
+                    {stats.activeStores}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
-                  <span className="text-sm font-medium text-yellow-900 arabic">طلبات الاعتماد</span>
-                  <span className="text-lg font-bold text-yellow-600">{stats.pendingApprovals}</span>
+                  <span className="text-sm font-medium text-yellow-900 arabic">
+                    طلبات الاعتماد
+                  </span>
+                  <span className="text-lg font-bold text-yellow-600">
+                    {stats.pendingApprovals}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
-                  <span className="text-sm font-medium text-green-900 arabic">تسجيلات جديدة</span>
-                  <span className="text-lg font-bold text-green-600">{stats.newRegistrations}</span>
+                  <span className="text-sm font-medium text-green-900 arabic">
+                    تسجيلات جديدة
+                  </span>
+                  <span className="text-lg font-bold text-green-600">
+                    {stats.newRegistrations}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
-                  <span className="text-sm font-medium text-purple-900 arabic">إجمالي الطلبات</span>
-                  <span className="text-lg font-bold text-purple-600">{stats.totalOrders}</span>
+                  <span className="text-sm font-medium text-purple-900 arabic">
+                    إجمالي الطلبات
+                  </span>
+                  <span className="text-lg font-bold text-purple-600">
+                    {stats.totalOrders}
+                  </span>
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t">

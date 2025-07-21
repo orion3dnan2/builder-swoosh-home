@@ -5,7 +5,13 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Layout } from "@/components/Layout";
 import { UserPlus, Eye, EyeOff } from "lucide-react";
 
@@ -21,11 +27,20 @@ export default function Register() {
     country: "",
     city: "",
     acceptTerms: false,
-    newsletter: false
+    newsletter: false,
   });
 
   const countries = [
-    "السعودية", "الإمارات", "الكويت", "قطر", "البحرين", "عمان", "مصر", "الأردن", "لبنان", "العراق"
+    "السعودية",
+    "الإمارات",
+    "الكويت",
+    "قطر",
+    "البحرين",
+    "عمان",
+    "مصر",
+    "الأردن",
+    "لبنان",
+    "العراق",
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -49,15 +64,22 @@ export default function Register() {
                   <UserPlus className="w-8 h-8 text-white" />
                 </div>
               </div>
-              <h1 className="text-2xl font-bold text-gray-800 arabic">إنشاء حساب جديد</h1>
-              <p className="text-gray-600 arabic">انض�� إلى البيت السوداني اليوم</p>
+              <h1 className="text-2xl font-bold text-gray-800 arabic">
+                إنشاء حساب جديد
+              </h1>
+              <p className="text-gray-600 arabic">
+                انض�� إلى البيت السوداني اليوم
+              </p>
             </CardHeader>
-            
+
             <CardContent className="space-y-6">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="fullName" className="text-right block mb-2 arabic text-gray-700">
+                    <Label
+                      htmlFor="fullName"
+                      className="text-right block mb-2 arabic text-gray-700"
+                    >
                       👤 الاسم الكامل
                     </Label>
                     <Input
@@ -65,14 +87,22 @@ export default function Register() {
                       type="text"
                       placeholder="أدخل اسمك الكامل"
                       value={formData.fullName}
-                      onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          fullName: e.target.value,
+                        }))
+                      }
                       className="text-right arabic"
                       required
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="email" className="text-right block mb-2 arabic text-gray-700">
+                    <Label
+                      htmlFor="email"
+                      className="text-right block mb-2 arabic text-gray-700"
+                    >
                       📧 البريد الإلكتروني
                     </Label>
                     <Input
@@ -80,7 +110,12 @@ export default function Register() {
                       type="email"
                       placeholder="example@email.com"
                       value={formData.email}
-                      onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          email: e.target.value,
+                        }))
+                      }
                       className="text-right"
                       required
                     />
@@ -89,7 +124,10 @@ export default function Register() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="phone" className="text-right block mb-2 arabic text-gray-700">
+                    <Label
+                      htmlFor="phone"
+                      className="text-right block mb-2 arabic text-gray-700"
+                    >
                       📱 رقم الهاتف
                     </Label>
                     <Input
@@ -97,23 +135,39 @@ export default function Register() {
                       type="tel"
                       placeholder="+966 50 123 4567"
                       value={formData.phone}
-                      onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          phone: e.target.value,
+                        }))
+                      }
                       className="text-right"
                       required
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="country" className="text-right block mb-2 arabic text-gray-700">
+                    <Label
+                      htmlFor="country"
+                      className="text-right block mb-2 arabic text-gray-700"
+                    >
                       🌍 الدولة
                     </Label>
-                    <Select onValueChange={(value) => setFormData(prev => ({ ...prev, country: value }))}>
+                    <Select
+                      onValueChange={(value) =>
+                        setFormData((prev) => ({ ...prev, country: value }))
+                      }
+                    >
                       <SelectTrigger className="text-right arabic">
                         <SelectValue placeholder="اختر الدولة" />
                       </SelectTrigger>
                       <SelectContent>
                         {countries.map((country) => (
-                          <SelectItem key={country} value={country} className="arabic">
+                          <SelectItem
+                            key={country}
+                            value={country}
+                            className="arabic"
+                          >
                             {country}
                           </SelectItem>
                         ))}
@@ -123,7 +177,10 @@ export default function Register() {
                 </div>
 
                 <div>
-                  <Label htmlFor="city" className="text-right block mb-2 arabic text-gray-700">
+                  <Label
+                    htmlFor="city"
+                    className="text-right block mb-2 arabic text-gray-700"
+                  >
                     🏘️ المدينة
                   </Label>
                   <Input
@@ -131,7 +188,9 @@ export default function Register() {
                     type="text"
                     placeholder="أدخل اسم المدينة"
                     value={formData.city}
-                    onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, city: e.target.value }))
+                    }
                     className="text-right arabic"
                     required
                   />
@@ -139,7 +198,10 @@ export default function Register() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="password" className="text-right block mb-2 arabic text-gray-700">
+                    <Label
+                      htmlFor="password"
+                      className="text-right block mb-2 arabic text-gray-700"
+                    >
                       🔐 كلمة المرور
                     </Label>
                     <div className="relative">
@@ -148,7 +210,12 @@ export default function Register() {
                         type={showPassword ? "text" : "password"}
                         placeholder="أدخل كلمة المرور"
                         value={formData.password}
-                        onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            password: e.target.value,
+                          }))
+                        }
                         className="text-right arabic pr-12"
                         required
                       />
@@ -157,13 +224,20 @@ export default function Register() {
                         onClick={() => setShowPassword(!showPassword)}
                         className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                       >
-                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        {showPassword ? (
+                          <EyeOff className="w-4 h-4" />
+                        ) : (
+                          <Eye className="w-4 h-4" />
+                        )}
                       </button>
                     </div>
                   </div>
 
                   <div>
-                    <Label htmlFor="confirmPassword" className="text-right block mb-2 arabic text-gray-700">
+                    <Label
+                      htmlFor="confirmPassword"
+                      className="text-right block mb-2 arabic text-gray-700"
+                    >
                       🔐 تأكيد كلمة المرور
                     </Label>
                     <div className="relative">
@@ -172,16 +246,27 @@ export default function Register() {
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="أعد إدخال كلمة المرور"
                         value={formData.confirmPassword}
-                        onChange={(e) => setFormData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            confirmPassword: e.target.value,
+                          }))
+                        }
                         className="text-right arabic pr-12"
                         required
                       />
                       <button
                         type="button"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
                         className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                       >
-                        {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        {showConfirmPassword ? (
+                          <EyeOff className="w-4 h-4" />
+                        ) : (
+                          <Eye className="w-4 h-4" />
+                        )}
                       </button>
                     </div>
                   </div>
@@ -192,13 +277,25 @@ export default function Register() {
                     <Checkbox
                       id="terms"
                       checked={formData.acceptTerms}
-                      onCheckedChange={(checked) => 
-                        setFormData(prev => ({ ...prev, acceptTerms: checked as boolean }))
+                      onCheckedChange={(checked) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          acceptTerms: checked as boolean,
+                        }))
                       }
                       required
                     />
-                    <Label htmlFor="terms" className="text-sm arabic text-gray-600">
-                      أوافق على <Link to="/terms" className="text-sudan-blue hover:underline">الشروط والأحكام</Link>
+                    <Label
+                      htmlFor="terms"
+                      className="text-sm arabic text-gray-600"
+                    >
+                      أوافق على{" "}
+                      <Link
+                        to="/terms"
+                        className="text-sudan-blue hover:underline"
+                      >
+                        الشروط والأحكام
+                      </Link>
                     </Label>
                   </div>
 
@@ -206,29 +303,40 @@ export default function Register() {
                     <Checkbox
                       id="newsletter"
                       checked={formData.newsletter}
-                      onCheckedChange={(checked) => 
-                        setFormData(prev => ({ ...prev, newsletter: checked as boolean }))
+                      onCheckedChange={(checked) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          newsletter: checked as boolean,
+                        }))
                       }
                     />
-                    <Label htmlFor="newsletter" className="text-sm arabic text-gray-600">
+                    <Label
+                      htmlFor="newsletter"
+                      className="text-sm arabic text-gray-600"
+                    >
                       أريد تلقي النشرة الإخبارية والعروض الخاصة
                     </Label>
                   </div>
                 </div>
 
-                <Button 
-                  type="submit" 
-                                    variant="sudan-green"
+                <Button
+                  type="submit"
+                  variant="sudan-green"
                   size="lg"
                   className="w-full text-lg py-3 arabic"
                   disabled={!formData.acceptTerms}
                 >
-                                    إنشاء الحساب →
+                  إنشاء الحساب →
                 </Button>
 
                 <div className="text-center">
-                  <span className="text-gray-600 arabic">لديك حساب بالفعل؟ </span>
-                  <Link to="/login" className="text-sudan-blue hover:underline arabic">
+                  <span className="text-gray-600 arabic">
+                    لديك حساب بالفعل؟{" "}
+                  </span>
+                  <Link
+                    to="/login"
+                    className="text-sudan-blue hover:underline arabic"
+                  >
                     سجل الدخول
                   </Link>
                 </div>

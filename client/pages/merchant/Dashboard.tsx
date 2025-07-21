@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Store, 
-  Package, 
-  ShoppingCart, 
-  TrendingUp, 
-  Eye, 
+import {
+  Store,
+  Package,
+  ShoppingCart,
+  TrendingUp,
+  Eye,
   Plus,
   BarChart3,
   Users,
@@ -16,7 +16,7 @@ import {
   Clock,
   AlertCircle,
   Settings,
-  Image as ImageIcon
+  Image as ImageIcon,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 
@@ -32,39 +32,77 @@ export default function MerchantDashboard() {
     pendingOrders: 7,
     completedOrders: 121,
     averageRating: 4.6,
-    totalReviews: 89
+    totalReviews: 89,
   });
 
   const recentOrders = [
-    { id: "ORD-001", customer: "أحمد محمد", items: 3, total: 125.50, status: "pending", time: "منذ 15 دقيقة" },
-    { id: "ORD-002", customer: "فاطمة علي", items: 1, total: 45.00, status: "confirmed", time: "منذ ساعة" },
-    { id: "ORD-003", customer: "محمد سعد", items: 2, total: 89.99, status: "shipped", time: "منذ 3 ساعات" },
-    { id: "ORD-004", customer: "عائشة أحمد", items: 4, total: 234.75, status: "delivered", time: "اليوم" }
+    {
+      id: "ORD-001",
+      customer: "أحمد محمد",
+      items: 3,
+      total: 125.5,
+      status: "pending",
+      time: "منذ 15 دقيقة",
+    },
+    {
+      id: "ORD-002",
+      customer: "فاطمة علي",
+      items: 1,
+      total: 45.0,
+      status: "confirmed",
+      time: "منذ ساعة",
+    },
+    {
+      id: "ORD-003",
+      customer: "محمد سعد",
+      items: 2,
+      total: 89.99,
+      status: "shipped",
+      time: "منذ 3 ساعات",
+    },
+    {
+      id: "ORD-004",
+      customer: "عائشة أحمد",
+      items: 4,
+      total: 234.75,
+      status: "delivered",
+      time: "اليوم",
+    },
   ];
 
   const lowStockProducts = [
     { name: "عطر صندل سوداني", stock: 2, sku: "PER-001" },
     { name: "كركديه طبيعي", stock: 1, sku: "TEA-003" },
-    { name: "حقيبة سودانية", stock: 0, sku: "BAG-012" }
+    { name: "حقيبة سودانية", stock: 0, sku: "BAG-012" },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-yellow-100 text-yellow-800';
-      case 'confirmed': return 'bg-blue-100 text-blue-800';
-      case 'shipped': return 'bg-purple-100 text-purple-800';
-      case 'delivered': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case "pending":
+        return "bg-yellow-100 text-yellow-800";
+      case "confirmed":
+        return "bg-blue-100 text-blue-800";
+      case "shipped":
+        return "bg-purple-100 text-purple-800";
+      case "delivered":
+        return "bg-green-100 text-green-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'pending': return 'في الانتظار';
-      case 'confirmed': return 'مؤكد';
-      case 'shipped': return 'تم الشحن';
-      case 'delivered': return 'تم التسليم';
-      default: return status;
+      case "pending":
+        return "في الانتظار";
+      case "confirmed":
+        return "مؤكد";
+      case "shipped":
+        return "تم الشحن";
+      case "delivered":
+        return "تم التسليم";
+      default:
+        return status;
     }
   };
 
@@ -79,12 +117,19 @@ export default function MerchantDashboard() {
                 <Store className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 arabic">لوحة إدارة المتجر</h1>
-                <p className="text-gray-600 arabic">مرحباً {user?.profile.name} - {user?.profile.businessInfo?.businessName}</p>
+                <h1 className="text-2xl font-bold text-gray-900 arabic">
+                  لوحة إدارة المتجر
+                </h1>
+                <p className="text-gray-600 arabic">
+                  مرحباً {user?.profile.name} -{" "}
+                  {user?.profile.businessInfo?.businessName}
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
-              <Badge variant="secondary" className="arabic">صاحب متجر</Badge>
+              <Badge variant="secondary" className="arabic">
+                صاحب متجر
+              </Badge>
               <Link to="/">
                 <Button variant="outline" size="sm" className="arabic">
                   <Eye className="w-4 h-4 ml-2" />
@@ -104,8 +149,12 @@ export default function MerchantDashboard() {
               <div className="flex items-center">
                 <Package className="w-8 h-8 text-blue-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-blue-800">{storeStats.totalProducts}</p>
-                  <p className="text-blue-600 text-sm arabic">إجمالي المنتجات</p>
+                  <p className="text-2xl font-bold text-blue-800">
+                    {storeStats.totalProducts}
+                  </p>
+                  <p className="text-blue-600 text-sm arabic">
+                    إجمالي المنتجات
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -116,8 +165,12 @@ export default function MerchantDashboard() {
               <div className="flex items-center">
                 <ShoppingCart className="w-8 h-8 text-green-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-green-800">{storeStats.totalOrders}</p>
-                  <p className="text-green-600 text-sm arabic">إجمالي الطلبات</p>
+                  <p className="text-2xl font-bold text-green-800">
+                    {storeStats.totalOrders}
+                  </p>
+                  <p className="text-green-600 text-sm arabic">
+                    إجمالي الطلبات
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -128,8 +181,12 @@ export default function MerchantDashboard() {
               <div className="flex items-center">
                 <TrendingUp className="w-8 h-8 text-purple-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-purple-800">${storeStats.monthlyRevenue.toLocaleString()}</p>
-                  <p className="text-purple-600 text-sm arabic">إيرادات الشهر</p>
+                  <p className="text-2xl font-bold text-purple-800">
+                    ${storeStats.monthlyRevenue.toLocaleString()}
+                  </p>
+                  <p className="text-purple-600 text-sm arabic">
+                    إيرادات الشهر
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -140,8 +197,12 @@ export default function MerchantDashboard() {
               <div className="flex items-center">
                 <Eye className="w-8 h-8 text-orange-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-orange-800">{storeStats.storeViews.toLocaleString()}</p>
-                  <p className="text-orange-600 text-sm arabic">مشاهدات المتجر</p>
+                  <p className="text-2xl font-bold text-orange-800">
+                    {storeStats.storeViews.toLocaleString()}
+                  </p>
+                  <p className="text-orange-600 text-sm arabic">
+                    مشاهدات المتجر
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -160,7 +221,10 @@ export default function MerchantDashboard() {
           </Link>
 
           <Link to="/merchant/products">
-            <Button variant="outline" className="w-full h-24 rounded-xl border-2 hover:bg-blue-50">
+            <Button
+              variant="outline"
+              className="w-full h-24 rounded-xl border-2 hover:bg-blue-50"
+            >
               <div className="text-center">
                 <Package className="w-6 h-6 mx-auto mb-2" />
                 <span className="text-sm arabic">إدارة المنتجات</span>
@@ -169,7 +233,10 @@ export default function MerchantDashboard() {
           </Link>
 
           <Link to="/merchant/orders">
-            <Button variant="outline" className="w-full h-24 rounded-xl border-2 hover:bg-purple-50">
+            <Button
+              variant="outline"
+              className="w-full h-24 rounded-xl border-2 hover:bg-purple-50"
+            >
               <div className="text-center">
                 <ShoppingCart className="w-6 h-6 mx-auto mb-2" />
                 <span className="text-sm arabic">إدارة الطلبات</span>
@@ -178,7 +245,10 @@ export default function MerchantDashboard() {
           </Link>
 
           <Link to="/merchant/settings">
-            <Button variant="outline" className="w-full h-24 rounded-xl border-2 hover:bg-gray-50">
+            <Button
+              variant="outline"
+              className="w-full h-24 rounded-xl border-2 hover:bg-gray-50"
+            >
               <div className="text-center">
                 <Settings className="w-6 h-6 mx-auto mb-2" />
                 <span className="text-sm arabic">إعدادات المتجر</span>
@@ -198,26 +268,41 @@ export default function MerchantDashboard() {
                   الطلبات الأخيرة
                 </CardTitle>
                 <Link to="/merchant/orders">
-                  <Button variant="outline" size="sm" className="arabic">عرض الكل</Button>
+                  <Button variant="outline" size="sm" className="arabic">
+                    عرض الكل
+                  </Button>
                 </Link>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {recentOrders.map((order) => (
-                    <div key={order.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div
+                      key={order.id}
+                      className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                    >
                       <div className="flex items-center space-x-3 space-x-reverse">
                         <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
                           <ShoppingCart className="w-5 h-5 text-gray-600" />
                         </div>
                         <div>
-                          <p className="font-medium text-gray-900 arabic">{order.customer}</p>
-                          <p className="text-sm text-gray-600 arabic">{order.id} • {order.items} منتجات</p>
-                          <p className="text-xs text-gray-500 arabic">{order.time}</p>
+                          <p className="font-medium text-gray-900 arabic">
+                            {order.customer}
+                          </p>
+                          <p className="text-sm text-gray-600 arabic">
+                            {order.id} • {order.items} منتجات
+                          </p>
+                          <p className="text-xs text-gray-500 arabic">
+                            {order.time}
+                          </p>
                         </div>
                       </div>
                       <div className="text-left">
-                        <p className="font-bold text-gray-900">${order.total}</p>
-                        <span className={`inline-block px-2 py-1 rounded-full text-xs arabic ${getStatusColor(order.status)}`}>
+                        <p className="font-bold text-gray-900">
+                          ${order.total}
+                        </p>
+                        <span
+                          className={`inline-block px-2 py-1 rounded-full text-xs arabic ${getStatusColor(order.status)}`}
+                        >
                           {getStatusText(order.status)}
                         </span>
                       </div>
@@ -241,22 +326,30 @@ export default function MerchantDashboard() {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-sm arabic">المنتجات النشطة</span>
-                  <span className="font-bold text-green-600">{storeStats.activeProducts}</span>
+                  <span className="font-bold text-green-600">
+                    {storeStats.activeProducts}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm arabic">طلبات معلقة</span>
-                  <span className="font-bold text-yellow-600">{storeStats.pendingOrders}</span>
+                  <span className="font-bold text-yellow-600">
+                    {storeStats.pendingOrders}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm arabic">متوسط التقييم</span>
                   <div className="flex items-center">
                     <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                    <span className="font-bold text-gray-900 mr-1">{storeStats.averageRating}</span>
+                    <span className="font-bold text-gray-900 mr-1">
+                      {storeStats.averageRating}
+                    </span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm arabic">إجمالي المراجعات</span>
-                  <span className="font-bold text-blue-600">{storeStats.totalReviews}</span>
+                  <span className="font-bold text-blue-600">
+                    {storeStats.totalReviews}
+                  </span>
                 </div>
               </CardContent>
             </Card>
@@ -273,20 +366,36 @@ export default function MerchantDashboard() {
                 <CardContent>
                   <div className="space-y-3">
                     {lowStockProducts.map((product, index) => (
-                      <div key={index} className="flex items-center justify-between p-2 bg-white rounded-lg">
+                      <div
+                        key={index}
+                        className="flex items-center justify-between p-2 bg-white rounded-lg"
+                      >
                         <div>
-                          <p className="text-sm font-medium text-gray-900 arabic">{product.name}</p>
+                          <p className="text-sm font-medium text-gray-900 arabic">
+                            {product.name}
+                          </p>
                           <p className="text-xs text-gray-600">{product.sku}</p>
                         </div>
-                        <Badge variant={product.stock === 0 ? "destructive" : "secondary"} className="arabic">
-                          {product.stock === 0 ? 'نفد المخزون' : `${product.stock} متبقي`}
+                        <Badge
+                          variant={
+                            product.stock === 0 ? "destructive" : "secondary"
+                          }
+                          className="arabic"
+                        >
+                          {product.stock === 0
+                            ? "نفد المخزون"
+                            : `${product.stock} متبقي`}
                         </Badge>
                       </div>
                     ))}
                   </div>
                   <div className="mt-4">
                     <Link to="/merchant/products?filter=low-stock">
-                      <Button variant="outline" size="sm" className="w-full arabic">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full arabic"
+                      >
                         إدارة المخزون
                       </Button>
                     </Link>

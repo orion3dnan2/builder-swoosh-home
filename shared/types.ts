@@ -10,13 +10,13 @@ export interface User {
   isActive: boolean;
 }
 
-export type UserRole = 'super_admin' | 'merchant' | 'customer';
+export type UserRole = "super_admin" | "merchant" | "customer";
 
 export interface UserProfile {
   name: string;
   phone?: string;
   avatar?: string;
-  language: 'ar' | 'en';
+  language: "ar" | "en";
   address?: Address;
   businessInfo?: BusinessInfo;
 }
@@ -57,7 +57,7 @@ export interface Store {
   logo?: string;
   coverImage?: string;
   category: string;
-  status: 'active' | 'inactive' | 'pending' | 'suspended';
+  status: "active" | "inactive" | "pending" | "suspended";
   settings: StoreSettings;
   analytics: StoreAnalytics;
   createdAt: string;
@@ -68,7 +68,7 @@ export interface StoreSettings {
   theme: {
     primaryColor: string;
     secondaryColor: string;
-    layout: 'grid' | 'list';
+    layout: "grid" | "list";
   };
   notifications: {
     newOrders: boolean;
@@ -117,7 +117,7 @@ export interface Product {
     lowStockThreshold: number;
   };
   specifications?: Record<string, string>;
-  status: 'active' | 'inactive' | 'out_of_stock';
+  status: "active" | "inactive" | "out_of_stock";
   createdAt: string;
   updatedAt: string;
 }
@@ -131,7 +131,13 @@ export interface Order {
   shipping: number;
   tax: number;
   total: number;
-  status: 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  status:
+    | "pending"
+    | "confirmed"
+    | "processing"
+    | "shipped"
+    | "delivered"
+    | "cancelled";
   shippingAddress: Address;
   billingAddress: Address;
   paymentMethod: string;
@@ -154,7 +160,7 @@ export interface AppSettings {
     primaryColor: string;
     secondaryColor: string;
     fontFamily: string;
-    layout: 'modern' | 'classic' | 'minimal';
+    layout: "modern" | "classic" | "minimal";
   };
   branding: {
     appName: string;
@@ -178,7 +184,7 @@ export interface AppSettings {
     customOrder: string[];
   };
   localization: {
-    defaultLanguage: 'ar' | 'en';
+    defaultLanguage: "ar" | "en";
     supportedLanguages: string[];
     rtlSupport: boolean;
   };

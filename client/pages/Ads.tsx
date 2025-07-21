@@ -14,7 +14,9 @@ export default function Ads() {
               <Megaphone className="w-10 h-10 text-white" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-800 mb-4 arabic">الإعلانات والعروض</h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-4 arabic">
+            الإعلانات والعروض
+          </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto arabic">
             أحدث العروض والإعلانات التجارية من المتاجر السودانية
           </p>
@@ -32,7 +34,10 @@ export default function Ads() {
                   className="w-full pr-12 pl-4 py-3 border border-gray-300 rounded-lg text-right arabic"
                 />
               </div>
-              <Button variant="outline" className="flex items-center gap-2 arabic">
+              <Button
+                variant="outline"
+                className="flex items-center gap-2 arabic"
+              >
                 <Filter className="w-4 h-4" />
                 تصفية النتائج
               </Button>
@@ -43,11 +48,16 @@ export default function Ads() {
         {/* Placeholder Content */}
         <div className="text-center py-20">
           <Megaphone className="w-24 h-24 text-gray-300 mx-auto mb-6" />
-          <h2 className="text-2xl font-bold text-gray-400 mb-4 arabic">قريباً...</h2>
+          <h2 className="text-2xl font-bold text-gray-400 mb-4 arabic">
+            قريباً...
+          </h2>
           <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
             نعمل على جمع أفضل العروض والإعلانات من التجار السودانيين.
           </p>
-                    <Button size="lg" className="bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-600/90 hover:to-purple-700/90 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic px-8">
+          <Button
+            size="lg"
+            className="bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-600/90 hover:to-purple-700/90 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic px-8"
+          >
             كن أول من يعلم عند الإطلاق 🔔
           </Button>
         </div>

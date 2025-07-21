@@ -14,7 +14,9 @@ export default function Jobs() {
               <Briefcase className="w-10 h-10 text-white" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-800 mb-4 arabic">لوحة الوظائف</h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-4 arabic">
+            لوحة الوظائف
+          </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto arabic">
             فرص عمل متنوعة للمهنيين السودانيين في الخليج والعالم
           </p>
@@ -32,7 +34,10 @@ export default function Jobs() {
                   className="w-full pr-12 pl-4 py-3 border border-gray-300 rounded-lg text-right arabic"
                 />
               </div>
-              <Button variant="outline" className="flex items-center gap-2 arabic">
+              <Button
+                variant="outline"
+                className="flex items-center gap-2 arabic"
+              >
                 <Filter className="w-4 h-4" />
                 تصفية النتائج
               </Button>
@@ -43,11 +48,13 @@ export default function Jobs() {
         {/* Placeholder Content */}
         <div className="text-center py-20">
           <Briefcase className="w-24 h-24 text-gray-300 mx-auto mb-6" />
-          <h2 className="text-2xl font-bold text-gray-400 mb-4 arabic">قريباً...</h2>
+          <h2 className="text-2xl font-bold text-gray-400 mb-4 arabic">
+            قريباً...
+          </h2>
           <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
             نعمل على ربط المهنيين السودانيين بأفضل الفرص الوظيفية.
           </p>
-                    <Button variant="sudan-green" size="lg" className="arabic px-8">
+          <Button variant="sudan-green" size="lg" className="arabic px-8">
             كن أول من يعلم عند الإطلاق 🔔
           </Button>
         </div>

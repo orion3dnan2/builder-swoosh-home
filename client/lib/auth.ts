@@ -1,59 +1,60 @@
-import { User, UserRole } from '../../shared/types';
+import { User, UserRole } from "../../shared/types";
 
 export class AuthService {
   private static readonly STORAGE_KEYS = {
-    USER: 'bayt_al_sudani_user',
-    TOKEN: 'bayt_al_sudani_token',
-    PERMISSIONS: 'bayt_al_sudani_permissions'
+    USER: "bayt_al_sudani_user",
+    TOKEN: "bayt_al_sudani_token",
+    PERMISSIONS: "bayt_al_sudani_permissions",
   };
 
-  static login(credentials: { username: string; password: string }): Promise<User> {
+  static login(credentials: {
+    username: string;
+    password: string;
+  }): Promise<User> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         // Demo users for development
         const demoUsers: Record<string, User> = {
-          'admin': {
-            id: 'admin-001',
-            username: 'admin',
-            email: 'admin@baytsudani.com',
-            role: 'super_admin',
+          admin: {
+            id: "admin-001",
+            username: "admin",
+            email: "admin@baytsudani.com",
+            role: "super_admin",
             profile: {
-              name: 'مدير التطبيق',
-              language: 'ar',
-              avatar: '/placeholder.svg'
+              name: "مدير التطبيق",
+              language: "ar",
+              avatar: "/placeholder.svg",
             },
-            permissions: [
-              { resource: '*', actions: ['*'] }
-            ],
+            permissions: [{ resource: "*", actions: ["*"] }],
             createdAt: new Date().toISOString(),
             lastLogin: new Date().toISOString(),
-            isActive: true
+            isActive: true,
           },
-          'merchant': {
-            id: 'merchant-001',
-            username: 'merchant',
-            email: 'merchant@example.com',
-            role: 'merchant',
+          merchant: {
+            id: "merchant-001",
+            username: "merchant",
+            email: "merchant@example.com",
+            role: "merchant",
             profile: {
-              name: 'صاحب متجر',
-              language: 'ar',
-              avatar: '/placeholder.svg',
+              name: "صاحب متجر",
+              language: "ar",
+              avatar: "/placeholder.svg",
               businessInfo: {
-                businessName: 'متجر الخير',
-                businessType: 'retail',
-                description: 'متجر لبيع المنتجات السودانية الأصيلة'
-              }
+                businessName: "متجر الخير",
+                businessType: "retail",
+                description: "متجر لبيع المنتجات السودانية الأصيلة",
+              },
             },
             permissions: [
-              { resource: 'store', actions: ['read', 'write', 'delete'] },
-              { resource: 'products', actions: ['read', 'write', 'delete'] },
-              { resource: 'orders', actions: ['read', 'write'] },
-              { resource: 'analytics', actions: ['read'] }
+              { resource: "store", actions: ["read", "write", "delete"] },
+              { resource: "products", actions: ["read", "write", "delete"] },
+              { resource: "orders", actions: ["read", "write"] },
+              { resource: "analytics", actions: ["read"] },
             ],
             createdAt: new Date().toISOString(),
             lastLogin: new Date().toISOString(),
-            isActive: true
-          }
+            isActive: true,
+          },
         };
 
         const user = demoUsers[credentials.username];
@@ -61,7 +62,7 @@ export class AuthService {
           AuthService.setCurrentUser(user);
           resolve(user);
         } else {
-          reject(new Error('اسم المستخدم أو كلمة المرور غير صحيحة'));
+          reject(new Error("اسم المستخدم أو كلمة المرور غير صحيحة"));
         }
       }, 1000);
     });
@@ -73,33 +74,39 @@ export class AuthService {
       localStorage.removeItem(AuthService.STORAGE_KEYS.TOKEN);
       localStorage.removeItem(AuthService.STORAGE_KEYS.PERMISSIONS);
     } catch (error) {
-      console.error('Error during logout:', error);
+      console.error("Error during logout:", error);
     }
   }
 
   static getCurrentUser(): User | null {
     try {
-      if (typeof window === 'undefined' || !window.localStorage) {
+      if (typeof window === "undefined" || !window.localStorage) {
         return null;
       }
       const userStr = localStorage.getItem(AuthService.STORAGE_KEYS.USER);
       return userStr ? JSON.parse(userStr) : null;
     } catch (error) {
-      console.error('Error getting current user:', error);
+      console.error("Error getting current user:", error);
       return null;
     }
   }
 
   static setCurrentUser(user: User): void {
     try {
-      if (typeof window === 'undefined' || !window.localStorage) {
+      if (typeof window === "undefined" || !window.localStorage) {
         return;
       }
       localStorage.setItem(AuthService.STORAGE_KEYS.USER, JSON.stringify(user));
-      localStorage.setItem(AuthService.STORAGE_KEYS.TOKEN, `token_${user.id}_${Date.now()}`);
-      localStorage.setItem(AuthService.STORAGE_KEYS.PERMISSIONS, JSON.stringify(user.permissions));
+      localStorage.setItem(
+        AuthService.STORAGE_KEYS.TOKEN,
+        `token_${user.id}_${Date.now()}`,
+      );
+      localStorage.setItem(
+        AuthService.STORAGE_KEYS.PERMISSIONS,
+        JSON.stringify(user.permissions),
+      );
     } catch (error) {
-      console.error('Error setting current user:', error);
+      console.error("Error setting current user:", error);
     }
   }
 
@@ -107,7 +114,7 @@ export class AuthService {
     try {
       return AuthService.getCurrentUser() !== null;
     } catch (error) {
-      console.error('Error checking authentication:', error);
+      console.error("Error checking authentication:", error);
       return false;
     }
   }
@@ -117,7 +124,7 @@ export class AuthService {
       const user = AuthService.getCurrentUser();
       return user?.role === role;
     } catch (error) {
-      console.error('Error checking role:', error);
+      console.error("Error checking role:", error);
       return false;
     }
   }
@@ -128,15 +135,18 @@ export class AuthService {
       if (!user) return false;
 
       // Super admin has all permissions
-      if (user.role === 'super_admin') return true;
+      if (user.role === "super_admin") return true;
 
-      return user.permissions.some(permission => {
-        const hasResource = permission.resource === '*' || permission.resource === resource;
-        const hasAction = permission.actions.includes('*') || permission.actions.includes(action);
+      return user.permissions.some((permission) => {
+        const hasResource =
+          permission.resource === "*" || permission.resource === resource;
+        const hasAction =
+          permission.actions.includes("*") ||
+          permission.actions.includes(action);
         return hasResource && hasAction;
       });
     } catch (error) {
-      console.error('Error checking permission:', error);
+      console.error("Error checking permission:", error);
       return false;
     }
   }
@@ -145,34 +155,34 @@ export class AuthService {
     try {
       return AuthService.getCurrentUser()?.role || null;
     } catch (error) {
-      console.error('Error getting user role:', error);
+      console.error("Error getting user role:", error);
       return null;
     }
   }
 
   static isSuperAdmin(): boolean {
     try {
-      return AuthService.hasRole('super_admin');
+      return AuthService.hasRole("super_admin");
     } catch (error) {
-      console.error('Error checking super admin role:', error);
+      console.error("Error checking super admin role:", error);
       return false;
     }
   }
 
   static isMerchant(): boolean {
     try {
-      return AuthService.hasRole('merchant');
+      return AuthService.hasRole("merchant");
     } catch (error) {
-      console.error('Error checking merchant role:', error);
+      console.error("Error checking merchant role:", error);
       return false;
     }
   }
 
   static isCustomer(): boolean {
     try {
-      return AuthService.hasRole('customer');
+      return AuthService.hasRole("customer");
     } catch (error) {
-      console.error('Error checking customer role:', error);
+      console.error("Error checking customer role:", error);
       return false;
     }
   }
@@ -183,7 +193,7 @@ const safeGetCurrentUser = (): User | null => {
   try {
     return AuthService.getCurrentUser();
   } catch (error) {
-    console.error('Safe getCurrentUser error:', error);
+    console.error("Safe getCurrentUser error:", error);
     return null;
   }
 };
@@ -192,7 +202,7 @@ const safeIsAuthenticated = (): boolean => {
   try {
     return AuthService.isAuthenticated();
   } catch (error) {
-    console.error('Safe isAuthenticated error:', error);
+    console.error("Safe isAuthenticated error:", error);
     return false;
   }
 };
@@ -201,7 +211,7 @@ const safeHasRole = (role: UserRole): boolean => {
   try {
     return AuthService.hasRole(role);
   } catch (error) {
-    console.error('Safe hasRole error:', error);
+    console.error("Safe hasRole error:", error);
     return false;
   }
 };
@@ -210,7 +220,7 @@ const safeHasPermission = (resource: string, action: string): boolean => {
   try {
     return AuthService.hasPermission(resource, action);
   } catch (error) {
-    console.error('Safe hasPermission error:', error);
+    console.error("Safe hasPermission error:", error);
     return false;
   }
 };
@@ -219,7 +229,7 @@ const safeIsSuperAdmin = (): boolean => {
   try {
     return AuthService.isSuperAdmin();
   } catch (error) {
-    console.error('Safe isSuperAdmin error:', error);
+    console.error("Safe isSuperAdmin error:", error);
     return false;
   }
 };
@@ -228,7 +238,7 @@ const safeIsMerchant = (): boolean => {
   try {
     return AuthService.isMerchant();
   } catch (error) {
-    console.error('Safe isMerchant error:', error);
+    console.error("Safe isMerchant error:", error);
     return false;
   }
 };
@@ -237,16 +247,19 @@ const safeIsCustomer = (): boolean => {
   try {
     return AuthService.isCustomer();
   } catch (error) {
-    console.error('Safe isCustomer error:', error);
+    console.error("Safe isCustomer error:", error);
     return false;
   }
 };
 
-const safeLogin = async (credentials: { username: string; password: string }): Promise<User> => {
+const safeLogin = async (credentials: {
+  username: string;
+  password: string;
+}): Promise<User> => {
   try {
     return await AuthService.login(credentials);
   } catch (error) {
-    console.error('Safe login error:', error);
+    console.error("Safe login error:", error);
     throw error;
   }
 };
@@ -255,14 +268,14 @@ const safeLogout = (): void => {
   try {
     AuthService.logout();
   } catch (error) {
-    console.error('Safe logout error:', error);
+    console.error("Safe logout error:", error);
   }
 };
 
 // React hook for authentication with error handling
 export const useAuth = () => {
   const user = safeGetCurrentUser();
-  
+
   return {
     user,
     isAuthenticated: safeIsAuthenticated(),
@@ -272,6 +285,6 @@ export const useAuth = () => {
     hasPermission: safeHasPermission,
     hasRole: safeHasRole,
     login: safeLogin,
-    logout: safeLogout
+    logout: safeLogout,
   };
 };
