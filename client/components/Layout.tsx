@@ -20,7 +20,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-gray-50" dir="rtl">
             {/* Header */}
-      <header className="bg-gradient-to-r from-primary-600 to-primary-800 text-white shadow-xl border-b border-primary-900">
+            <header className="bg-gradient-to-r from-primary-700 via-primary-600 to-secondary-600 text-white shadow-xl border-b border-primary-900">
         <div className="container mx-auto px-4">
           {/* Top Bar */}
           <div className="flex items-center justify-between py-2 text-sm">
@@ -139,7 +139,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h3 className="text-xl font-bold mb-4 arabic">البيت السوداني</h3>
               <p className="text-gray-300 arabic">
-                م��صة شاملة للخدمات والتجارة السودانية في الخليج والعالم
+                م��صة شاملة للخدمات والتجا��ة السودانية في الخليج والعالم
               </p>
             </div>
             <div>
