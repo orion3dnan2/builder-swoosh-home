@@ -143,10 +143,10 @@ export default function Index() {
           >
             {/* Main Title - Fixed Arabic Name */}
             <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 md:mb-6 arabic animate-fade-in leading-tight">
-              البيت السوداني
+              {t("home.hero.title")}
             </h1>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 md:mb-8 arabic leading-relaxed animate-slide-up px-4 md:px-0">
-              سوق وخدمات وشركات السودان في الخليج والعالم
+              {t("home.hero.subtitle")}
             </p>
 
             {/* CTA Buttons */}
