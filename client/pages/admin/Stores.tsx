@@ -216,7 +216,7 @@ export default function AdminStores() {
     );
     
     // Show success message
-    alert('تم إعادة تفعيل المتجر بنجاح! ✅');
+    alert('تم إعادة تفعيل المتجر بنجاح! ���');
   };
 
   // Confirm action modal
@@ -266,8 +266,8 @@ export default function AdminStores() {
                 <Store className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 arabic">إدارة المتاجر</h1>
-                <p className="text-gray-600 arabic">{totalStores} متجر مسجل</p>
+                <h1 className="text-2xl font-bold text-gray-900 arabic">{t('stores.title')}</h1>
+                <p className="text-gray-600 arabic">{totalStores} {t('stores.subtitle')}</p>
               </div>
             </div>
             <Badge variant="secondary" className="arabic">مدير أعلى</Badge>
