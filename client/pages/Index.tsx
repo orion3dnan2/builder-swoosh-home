@@ -63,7 +63,7 @@ export default function Index() {
     {
       icon: Building2,
       title: "دليل الشركات", 
-      description: "تواص�� مع الشركات والمؤسسات السودانية في الخليج",
+      description: "تواصل مع الشركات والمؤسسات السودانية في الخليج",
       href: "/companies",
       color: "from-green-500 to-green-600",
       bgColor: "bg-green-50 dark:bg-green-900/20"
@@ -98,7 +98,7 @@ export default function Index() {
     {
       name: "أحمد محمد",
       role: "صاحب متجر",
-      content: "البيت السوداني ساعدني في الوصول لعملاء جدد وتنمية تجارتي بشكل كبير",
+      content: "البيت السوداني ساعدني في الوصول لعملاء جدد وتنمية تجارت�� بشكل كبير",
       rating: 5
     },
     {
@@ -272,7 +272,7 @@ export default function Index() {
             </Link>
             <Link to="/login" className="w-full xs:w-auto">
               <Button size="lg" variant="outline" className="w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg border-white/20 text-white hover:bg-white/10 arabic">
-                تسجيل الدخول
+                {t('common.login')}
               </Button>
             </Link>
           </div>
