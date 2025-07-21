@@ -47,8 +47,8 @@ export default function Products() {
           <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
             نعمل على إضافة مجموعة واسعة من المنتجات السودانية الأصيلة.
           </p>
-          <Button className="bg-sudan-red hover:bg-sudan-red/90 arabic">
-            كن أول من يعلم عند الإطلاق
+                    <Button variant="sudan-red" size="lg" className="arabic px-8">
+            كن أول من يعلم عند الإطلاق 🔔
           </Button>
         </div>
       </div>
