@@ -108,6 +108,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <LanguageAndThemeControls />
+              {isAdminOrMerchant && (
+                <AdminFontSelector />
+              )}
               <Link to="/login">
                 <Button
                   variant="outline"
