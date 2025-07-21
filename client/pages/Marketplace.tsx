@@ -10,7 +10,7 @@ export default function Marketplace() {
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex justify-center mb-4">
-            <div className="w-20 h-20 bg-gradient-to-br from-sudan-blue to-blue-600 rounded-full flex items-center justify-center">
+                        <div className="w-20 h-20 bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl flex items-center justify-center shadow-lg">
               <ShoppingBag className="w-10 h-10 text-white" />
             </div>
           </div>
@@ -47,7 +47,7 @@ export default function Marketplace() {
           <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
             نعمل على إضافة المتاجر السودانية المميزة. تابعونا للحصول على أحدث التحديثات.
           </p>
-                    <Button variant="sudan" size="lg" className="arabic px-8">
+                              <Button size="lg" className="arabic px-8 rounded-xl font-semibold">
             كن أول من يعلم عند الإطلاق 🔔
           </Button>
         </div>
