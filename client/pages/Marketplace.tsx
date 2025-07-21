@@ -47,8 +47,8 @@ export default function Marketplace() {
           <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
             نعمل على إضافة المتاجر السودانية المميزة. تابعونا للحصول على أحدث التحديثات.
           </p>
-          <Button className="bg-sudan-blue hover:bg-sudan-blue/90 arabic">
-            كن أول من يعلم عند الإطلاق
+                    <Button variant="sudan" size="lg" className="arabic px-8">
+            كن أول من يعلم عند الإطلاق 🔔
           </Button>
         </div>
       </div>
