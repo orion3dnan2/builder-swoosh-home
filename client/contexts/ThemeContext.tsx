@@ -110,7 +110,7 @@ const translations = {
     "language.toggle": "تبديل اللغة",
 
     // Dashboard
-    "dashboard.admin": "لوحة إدارة التطبيق",
+    "dashboard.admin": "لوحة إدارة ��لتطبيق",
     "dashboard.merchant": "لوحة إدارة المتجر",
     "dashboard.welcome": "مرحباً",
     "dashboard.overview": "نظرة عامة",
@@ -130,7 +130,7 @@ const translations = {
     "dashboard.new_registrations": "تسجيلات جديدة",
     "dashboard.total_orders": "إجمالي الطلبات",
     "dashboard.app_settings": "إعدادات التطبيق",
-    "dashboard.app_settings_desc": "تخصيص المظهر والألوان والخطوط",
+    "dashboard.app_settings_desc": "تخصيص المظه�� والألوان والخطوط",
     "dashboard.user_management": "إدارة المستخدمين",
     "dashboard.user_management_desc": "عرض وإدارة حسابات المستخدمين",
     "dashboard.store_management": "إدارة المتاجر",
@@ -235,14 +235,14 @@ const translations = {
 
     // Font Settings
     "font_settings.title": "إعدادات الخطوط",
-    "font_settings.subtitle": "اختر الخطوط المناسبة للنصوص العربية و��لإنجليزية",
+    "font_settings.subtitle": "اختر الخطوط المناسبة للنصوص العربية والإنجليزية",
     "font_settings.reset": "إعادة تعيين",
     "font_settings.current_settings": "الإعدادات الحالية",
     "font_settings.arabic_font": "الخط العربي",
     "font_settings.english_font": "الخط الإنجليزي",
     "font_settings.arabic_fonts": "الخطوط العربية",
     "font_settings.english_fonts": "الخطوط الإنجليزية",
-    "font_settings.custom_preview": "معاينة مخصصة",
+    "font_settings.custom_preview": "معاي��ة مخصصة",
     "font_settings.arabic_preview_text": "نص المعاينة العربي",
     "font_settings.english_preview_text": "نص المعاينة الإنجليزي",
     "common.selected": "محدد",
@@ -592,7 +592,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     root.lang = "ar";
   }, []);
 
-  // Apply fonts based on current language
+  // Apply Arabic font only
   useEffect(() => {
     const root = document.documentElement;
 
@@ -604,14 +604,12 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     ];
     root.classList.remove(...allFontClasses);
 
-    // Apply current language font
-    const currentFont = language === 'ar' ? arabicFont : englishFont;
-    root.classList.add(`font-${currentFont}`);
+    // Apply Arabic font only
+    root.classList.add(`font-${arabicFont}`);
 
     // Store in localStorage
     localStorage.setItem(STORAGE_KEYS.ARABIC_FONT, arabicFont);
-    localStorage.setItem(STORAGE_KEYS.ENGLISH_FONT, englishFont);
-  }, [arabicFont, englishFont, language]);
+  }, [arabicFont]);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
