@@ -72,7 +72,7 @@ export default function Index() {
     {
       icon: <Star className="w-6 h-6 text-secondary-600" />,
       title: "جودة مضمونة",
-      description: "جميع الخدمات والمنتجات معتمدة ومضمونة"
+      description: "جميع الخدمات ��المنتجات معتمدة ومضمونة"
     },
     {
       icon: <MapPin className="w-6 h-6 text-primary-600" />,
@@ -129,15 +129,15 @@ export default function Index() {
       </section>
 
       {/* Statistics Section */}
-      <section className="py-16 bg-gray-50">
+            <section className="py-12 md:py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {stats.map((stat, index) => (
               <Card key={index} className={`${stat.color} text-white border-0 shadow-lg hover:shadow-xl transition-shadow`}>
-                <CardContent className="p-6 text-center">
-                  <div className="text-4xl mb-2">{stat.icon}</div>
-                  <div className="text-3xl font-bold mb-1">{stat.value}</div>
-                  <div className="text-sm opacity-90 arabic">{stat.label}</div>
+                <CardContent className="p-4 md:p-6 text-center">
+                  <div className="text-2xl md:text-4xl mb-2">{stat.icon}</div>
+                  <div className="text-xl md:text-3xl font-bold mb-1">{stat.value}</div>
+                  <div className="text-xs md:text-sm opacity-90 arabic">{stat.label}</div>
                 </CardContent>
               </Card>
             ))}
