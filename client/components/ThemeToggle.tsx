@@ -1,6 +1,6 @@
 import { Moon, Sun, Languages, Globe } from "lucide-react";
 import { Button } from "./ui/button";
-import { useTheme } from "../contexts/ThemeContext";
+import { useTheme, arabicFonts, englishFonts } from "../contexts/ThemeContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
