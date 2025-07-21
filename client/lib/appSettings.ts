@@ -75,11 +75,15 @@ export class AppSettingsService {
 
   static saveSettings(settings: AppSettings): void {
     try {
+      if (!this.STORAGE_KEY) {
+        throw new Error("STORAGE_KEY is not defined");
+      }
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(settings));
       // Apply settings to the document
       this.applySettings(settings);
     } catch (error) {
       console.error("Failed to save app settings:", error);
+      throw error;
     }
   }
 
