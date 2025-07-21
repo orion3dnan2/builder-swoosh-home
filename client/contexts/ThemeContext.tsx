@@ -73,7 +73,7 @@ const translations = {
       "مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج والعالم",
     "home.services.marketplace": "السوق التجاري",
     "home.services.marketplace_desc":
-      "اكتشف منتجات سودانية أصيلة من تجار موثوقين",
+      "اكتشف م��تجات سودانية أصيلة من تجار موثوقين",
     "home.services.companies": "دليل الشركات",
     "home.services.companies_desc":
       "تواصل مع الشركات والمؤسسات السودانية في الخليج",
@@ -90,7 +90,7 @@ const translations = {
     "home.cta.title": "ابدأ رحلتك معنا اليوم",
     "home.cta.subtitle":
       "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم",
-    "home.cta.create_account": "إنشاء حساب مجاني",
+    "home.cta.create_account": "إ��شاء حساب مجاني",
     "home.stats.users": "مستخدم نشط",
     "home.stats.companies": "شركة مسجلة",
     "home.stats.products": "منتج متوفر",
@@ -183,7 +183,7 @@ const translations = {
     "stores.location": "الموقع",
     "stores.status": "الحالة",
     "stores.total_products": "إجمالي المنتجات",
-    "stores.total_orders": "إجمالي الطل��ات",
+    "stores.total_orders": "إجمالي الطلبات",
     "stores.revenues": "الإيرادات",
     "stores.confirm_action": "تأكيد الإجراء",
     "stores.confirm_approve": "هل أنت متأكد من اعتماد هذا المتجر؟",
@@ -247,6 +247,21 @@ const translations = {
     "font_settings.arabic_preview_text": "نص المعاينة العربي",
     "font_settings.english_preview_text": "نص المعاينة الإنجليزي",
     "common.selected": "محدد",
+
+    // Dashboard Activities
+    "dashboard.activity.new_store": "تسجيل متجر جديد",
+    "dashboard.activity.product_approval": "طلب اعتماد منتج",
+    "dashboard.activity.negative_review": "مراجعة سلبية",
+    "dashboard.activity.support_request": "طلب دعم فني",
+    "dashboard.user.ahmed_mohamed": "أحمد محمد",
+    "dashboard.user.fatima_abdullah": "فاطمة عبدالله",
+    "dashboard.user.mohamed_ali": "محمد علي",
+    "dashboard.user.aisha_ahmed": "عائشة أحمد",
+    "dashboard.time.15_minutes_ago": "منذ 15 دقيقة",
+    "dashboard.time.30_minutes_ago": "منذ 30 دقيقة",
+    "dashboard.time.1_hour_ago": "منذ ساعة",
+    "dashboard.time.2_hours_ago": "منذ ساعتين",
+    "dashboard.by": "بواسطة",
 
     // Error messages
     "error.404": "الصفحة غير موجودة",
