@@ -131,10 +131,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   className={`${isRTL ? "text-right" : "text-left"} min-w-0`}
                 >
                   <h1 className="text-lg md:text-2xl lg:text-3xl font-bold arabic text-foreground leading-tight">
-                    البيت السوداني
+                    {t("brand.name")}
                   </h1>
                   <p className="text-xs md:text-sm text-muted-foreground hidden sm:block leading-tight">
-                    سوق وخدمات السودان
+                    {t("brand.tagline")}
                   </p>
                 </div>
               </Link>
