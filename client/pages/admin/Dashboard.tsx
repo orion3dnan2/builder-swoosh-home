@@ -238,19 +238,19 @@ export default function AdminDashboard() {
                             <action.icon className="w-6 h-6 text-white" />
                           </div>
                           <div>
-                            <h3 className="font-semibold text-gray-900 arabic flex items-center">
-                              {action.title}
+                                                        <h3 className="font-semibold text-gray-900 arabic flex items-center">
+                              {t(action.titleKey)}
                               {action.urgent && (
                                 <Badge
                                   variant="destructive"
                                   className="mr-2 text-xs"
                                 >
-                                  عاجل
+                                  {t("dashboard.urgent")}
                                 </Badge>
                               )}
                             </h3>
                             <p className="text-sm text-gray-600 arabic mt-1">
-                              {action.description}
+                              {t(action.descriptionKey)}
                             </p>
                           </div>
                         </div>
