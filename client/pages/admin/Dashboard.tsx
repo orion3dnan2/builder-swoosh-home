@@ -101,7 +101,7 @@ export default function AdminDashboard() {
       type: "product",
     },
     {
-      action: "مراجعة س��بية",
+      action: "مراجعة سلب��ة",
       user: "محمد علي",
       time: "منذ ساعة",
       type: "review",
@@ -330,8 +330,8 @@ export default function AdminDashboard() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center arabic">
-                <BarChart3 className="w-5 h-5 ml-2" />
-                إحصائيات سريعة
+                                <BarChart3 className="w-5 h-5 ml-2" />
+                {t("dashboard.quick_stats")}
               </CardTitle>
             </CardHeader>
             <CardContent>
