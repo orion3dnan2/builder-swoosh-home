@@ -160,7 +160,7 @@ const translations = {
     "stores.status_suspended": "معلق",
     "stores.category": "الفئة",
     "stores.join_date": "تاريخ الانضمام",
-    "stores.last_active": "آخر نشاط",
+    "stores.last_active": "آخر نش��ط",
     "stores.rating": "التقييم",
     "stores.products": "منتج",
     "stores.orders": "طلب",
@@ -211,7 +211,7 @@ const translations = {
     "login.error.password_required": "يرجى إدخال كلمة المرور",
     "login.error.invalid_credentials": "بيانات الدخول غير صحيحة",
     "register.title": "إنشاء حساب جديد",
-    "register.subtitle": "انضم ��لى البيت السوداني اليوم",
+    "register.subtitle": "انضم إلى البيت السوداني اليوم",
     "register.full_name": "الاسم الكامل",
     "register.email": "البريد الإلكتروني",
     "register.phone": "رقم الهاتف",
@@ -466,16 +466,14 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   // Load preferences from localStorage on mount
   useEffect(() => {
     const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as Theme;
-    const savedLanguage = localStorage.getItem(
-      STORAGE_KEYS.LANGUAGE,
-    ) as Language;
-    const savedFont = localStorage.getItem(
-      STORAGE_KEYS.FONT_FAMILY,
-    ) as FontFamily;
+    const savedLanguage = localStorage.getItem(STORAGE_KEYS.LANGUAGE) as Language;
+    const savedArabicFont = localStorage.getItem(STORAGE_KEYS.ARABIC_FONT) as ArabicFontFamily;
+    const savedEnglishFont = localStorage.getItem(STORAGE_KEYS.ENGLISH_FONT) as EnglishFontFamily;
 
     if (savedTheme) setTheme(savedTheme);
     if (savedLanguage) setLanguage(savedLanguage);
-    if (savedFont) setFontFamilyState(savedFont);
+    if (savedArabicFont) setArabicFontState(savedArabicFont);
+    if (savedEnglishFont) setEnglishFontState(savedEnglishFont);
   }, []);
 
   // Apply theme to document root
