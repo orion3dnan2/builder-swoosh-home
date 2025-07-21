@@ -11,6 +11,7 @@ import { AuthService } from "@/lib/auth";
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -42,7 +43,7 @@ export default function Login() {
       // محاكاة عملية تسجيل الدخول
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // التحقق من بيانات تسجيل الدخول المحددة
+      // التحقق من بيانات تسجيل الدخول ��لمحددة
       if (formData.username === "admin" && formData.password === "admin") {
         console.log("Login successful:", formData);
         
