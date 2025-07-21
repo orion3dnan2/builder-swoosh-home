@@ -37,9 +37,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </div>
             <div className="flex items-center gap-4">
               <span>+100 الف سوداني في البيت</span>
-              <Button variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-sudan-blue">
-                تسجيل الدخول
-              </Button>
+                            <Link to="/login">
+                <Button variant="outline" size="sm" className="text-white border-white hover:bg-white hover:text-sudan-blue">
+                  تسجيل الدخول
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -94,9 +96,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
               >
                 <Menu className="w-6 h-6" />
               </Button>
-              <Button variant="ghost" size="icon" className="text-white">
-                <User className="w-6 h-6" />
-              </Button>
+                            <Link to="/login">
+                <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
+                  <User className="w-6 h-6" />
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -150,7 +154,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <h4 className="text-lg font-semibold mb-4 arabic">الأعمال</h4>
               <ul className="space-y-2 arabic">
                 <li><Link to="/companies" className="text-gray-300 hover:text-white">الشركات</Link></li>
-                <li><Link to="/jobs" className="text-gray-300 hover:text-white">الوظائف</Link></li>
+                <li><Link to="/jobs" className="text-gray-300 hover:text-white">الوظا��ف</Link></li>
                 <li><Link to="/ads" className="text-gray-300 hover:text-white">الإعلانات</Link></li>
               </ul>
             </div>
