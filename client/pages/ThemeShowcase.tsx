@@ -125,7 +125,7 @@ export default function ThemeShowcase() {
                   className={`space-y-3 ${isRTL ? "text-right" : "text-left"}`}
                 >
                   <Label className="text-sm font-medium arabic">
-                    {isRTL ? "نمط العرض" : "Display Mode"}
+                    {isRTL ? "نمط الع��ض" : "Display Mode"}
                   </Label>
                   <div
                     className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
@@ -229,7 +229,7 @@ export default function ThemeShowcase() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <Label className="text-sm font-medium arabic">
-                        {isRTL ? "نص قصير" : "Short Text"}
+                        نص قصير
                       </Label>
                       <p className="text-foreground arabic">
                         {sampleText[language].short}
