@@ -23,7 +23,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <header className="bg-gradient-to-r from-primary-700 via-primary-600 to-secondary-600 text-white shadow-xl border-b border-primary-900">
         <div className="container mx-auto px-4">
           {/* Top Bar */}
-          <div className="flex items-center justify-between py-2 text-sm">
+                    <div className="hidden md:flex items-center justify-between py-2 text-sm">
             <div className="flex items-center gap-4">
               <span>مرحباً بكم في البيت السوداني</span>
                             <div className="flex items-center gap-2">
