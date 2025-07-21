@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,16 +9,61 @@ import { Layout } from "@/components/Layout";
 import { LogIn, Eye, EyeOff } from "lucide-react";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     rememberMe: false
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login attempt:", formData);
+    setError("");
+    setIsLoading(true);
+
+    // تحقق من البيانات
+    if (!formData.username.trim()) {
+      setError("يرجى إدخال اسم المستخدم");
+      setIsLoading(false);
+      return;
+    }
+
+    if (!formData.password.trim()) {
+      setError("يرجى إدخال كلمة المرور");
+      setIsLoading(false);
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError("كلمة المرور يجب أن تكون على الأقل 6 أحرف");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      // محاكاة عملية تسجيل الدخول
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      // في التطبيق الحقيقي، ستتم عملية المصادقة هنا
+      console.log("Login successful:", formData);
+
+      // حفظ بيانات المستخدم (محاكاة)
+      localStorage.setItem('user', JSON.stringify({
+        username: formData.username,
+        loginTime: new Date().toISOString()
+      }));
+
+      // توجه إلى الصفحة الرئيسية
+      navigate('/');
+
+    } catch (err) {
+      setError("حدث خطأ في تسجيل الدخول. يرجى المحاولة مرة أخرى.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
