@@ -9,6 +9,10 @@ import Jobs from "./pages/Jobs";
 import Services from "./pages/Services";
 import Ads from "./pages/Ads";
 import NotFound from "./pages/NotFound";
+import Unauthorized from "./pages/Unauthorized";
+import AdminDashboard from "./pages/admin/Dashboard";
+import MerchantDashboard from "./pages/merchant/Dashboard";
+import { SuperAdminRoute, MerchantRoute } from "./components/ProtectedRoute";
 import "./global.css";
 
 function App() {
