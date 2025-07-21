@@ -407,6 +407,11 @@ export default function AdminSettings() {
             </Card>
           </TabsContent>
 
+          {/* Font Settings */}
+          <TabsContent value="fonts" className="space-y-6">
+            <FontSettings />
+          </TabsContent>
+
           {/* Branding Settings */}
           <TabsContent value="branding" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -414,7 +419,7 @@ export default function AdminSettings() {
                 <CardHeader>
                   <CardTitle className="flex items-center arabic">
                     <Image className="w-5 h-5 ml-2" />
-                    المعلومات الأساسية
+                    المعلوم��ت الأساسية
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -551,7 +556,7 @@ export default function AdminSettings() {
                             {key === "enableJobs" && "تفعيل لوحة الوظائف"}
                             {key === "enableServices" && "تفعيل قائمة الخدمات"}
                             {key === "enableAds" && "تفعيل الإعلانات المدفوعة"}
-                            {key === "enableReviews" && "تفعيل نظام التقييمات"}
+                            {key === "enableReviews" && "تفعيل نظا�� التقييمات"}
                             {key === "enableChat" && "تفعيل الدردشة المباشرة"}
                           </p>
                         </div>
