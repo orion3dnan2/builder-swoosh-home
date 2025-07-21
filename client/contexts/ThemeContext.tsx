@@ -67,7 +67,7 @@ const translations = {
     "home.hero.title": "البيت السوداني",
     "home.hero.subtitle": "سوق وخدمات وشركات السودان في الخليج والعالم",
     "home.hero.explore_market": "استكشف السوق",
-    "home.hero.join_us": "انضم إلينا",
+    "home.hero.join_us": "انضم ��لينا",
     "home.services.title": "خدماتنا",
     "home.services.subtitle":
       "مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج والعالم",
@@ -132,7 +132,7 @@ const translations = {
     "dashboard.total_orders": "إجمالي الطلبات",
     "dashboard.app_settings": "إعدادات التطبيق",
     "dashboard.app_settings_desc": "تخصيص المظهر والألوان والخطوط",
-    "dashboard.user_management": "إدارة المستخدمين",
+    "dashboard.user_management": "إدارة المستخدم��ن",
     "dashboard.user_management_desc": "عرض وإدارة حسابات المستخدمين",
     "dashboard.store_management": "إدارة المتاجر",
     "dashboard.store_management_desc": "مراجعة وإدارة المتاجر المسجلة",
@@ -142,7 +142,7 @@ const translations = {
     "dashboard.system_settings_desc": "صلاحيات وإعدادات الأمان",
     "dashboard.content_management": "إدارة المحتوى",
     "dashboard.content_management_desc": "النصوص والصور والترجمات",
-    "dashboard.view_site": "عرض ا��موقع",
+    "dashboard.view_site": "عرض الموقع",
     "dashboard.super_admin": "مدير أعلى",
     "dashboard.urgent": "عاجل",
 
@@ -169,7 +169,7 @@ const translations = {
     "stores.approve_store": "اعتماد المتجر",
     "stores.suspend_store": "تعليق المتجر",
     "stores.reactivate_store": "إعادة تفعيل",
-    "stores.no_stores_found": "��ا توجد متاجر",
+    "stores.no_stores_found": "لا توجد متاجر",
     "stores.no_stores_match": "لم يتم العثور على متاجر تطابق معايير البحث",
     "stores.filter_results": "من",
     "stores.store_details": "تفاصيل المتجر",
@@ -217,7 +217,7 @@ const translations = {
     "register.phone": "رقم الهاتف",
     "register.confirm_password": "تأكيد كلمة المرور",
     "register.agree_terms": "أوافق على الشروط والأحكام",
-    "register.already_have_account": "لديك حساب بالفعل؟",
+    "register.already_have_account": "لديك حساب بالف��ل؟",
     "register.login_here": "سجل دخولك هنا",
     "login.demo_accounts": "حسابات التجربة",
     "login.demo.super_admin": "مدير التطبيق (Super Admin)",
@@ -225,6 +225,28 @@ const translations = {
     "login.demo.username": "اسم المستخدم",
     "login.demo.password": "كلمة المرور",
     "login.demo.use_account": "استخدام هذا الحساب",
+
+    // Settings
+    "settings.theme": "المظهر",
+    "settings.fonts": "الخطوط",
+    "settings.branding": "العلامة التجارية",
+    "settings.features": "الميزات",
+    "settings.content": "المحتوى",
+    "settings.advanced": "متقدم",
+
+    // Font Settings
+    "font_settings.title": "إعدادات الخطوط",
+    "font_settings.subtitle": "اختر الخطوط المناسبة للنصوص العربية والإنجليزية",
+    "font_settings.reset": "إعادة تعيين",
+    "font_settings.current_settings": "الإعدادات الحالية",
+    "font_settings.arabic_font": "الخط العربي",
+    "font_settings.english_font": "الخط الإنجليزي",
+    "font_settings.arabic_fonts": "الخطوط العربية",
+    "font_settings.english_fonts": "الخطوط الإنجليزية",
+    "font_settings.custom_preview": "معاينة مخصصة",
+    "font_settings.arabic_preview_text": "نص المعاينة العربي",
+    "font_settings.english_preview_text": "نص المعاينة الإنجليزي",
+    "common.selected": "محدد",
 
     // Error messages
     "error.404": "الصفحة غير موجودة",
@@ -615,7 +637,7 @@ export const arabicFonts = [
     id: "noto-kufi" as ArabicFontFamily,
     name: "نوتو كوفي",
     englishName: "Noto Kufi Arabic",
-    preview: "أهلاً وسهلاً بكم في البيت السودا��ي",
+    preview: "أهلاً وسهلاً بكم في البيت السوداني",
     url: "https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap",
   },
   {
@@ -629,7 +651,7 @@ export const arabicFonts = [
     id: "lateef" as ArabicFontFamily,
     name: "لطيف",
     englishName: "Lateef",
-    preview: "أهلاً وسهلاً بكم في البيت السوداني",
+    preview: "أهلاً وسهلاً بكم في ال��يت السوداني",
     url: "https://fonts.googleapis.com/css2?family=Lateef:wght@200;300;400;500;600;700;800&display=swap",
   },
   {
