@@ -190,7 +190,7 @@ const translations = {
     "stores.confirm_reactivate": "هل أنت متأكد من إعادة تفعيل هذا المتجر؟",
     "stores.action_approve": "اعتماد",
     "stores.action_suspend": "تعليق",
-    "stores.action_reactivate": "إعادة تفعيل",
+    "stores.action_reactivate": "إ��ادة تفعيل",
     "stores.success_approve": "تم اعتماد المتجر بنجاح! ✅",
     "stores.success_suspend": "تم تعليق المتجر بنجاح! ⚠️",
     "stores.success_reactivate": "تم إعادة تفعيل المتجر بنجاح! ✅",
@@ -210,7 +210,7 @@ const translations = {
     "login.error.password_required": "يرجى إدخال كلمة المرور",
     "login.error.invalid_credentials": "بيانات الدخول غير صحيحة",
     "register.title": "إنشاء حساب جديد",
-    "register.subtitle": "انضم إلى البيت السوداني اليوم",
+    "register.subtitle": "انضم إلى البيت السو��اني اليوم",
     "register.full_name": "الاسم الكامل",
     "register.email": "البريد الإلكتروني",
     "register.phone": "رقم الهاتف",
@@ -235,7 +235,7 @@ const translations = {
 
     // Font Settings
     "font_settings.title": "إعدادات الخطوط",
-    "font_settings.subtitle": "اختر الخطوط المناسبة للنصوص العربية والإنجليزية",
+    "font_settings.subtitle": "اختر الخطوط المنا��بة للنصوص العربية والإنجليزية",
     "font_settings.reset": "إعادة تعيين",
     "font_settings.current_settings": "الإعدادات الحالية",
     "font_settings.arabic_font": "الخط العربي",
@@ -632,6 +632,16 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     try {
       const keys = key.split(".");
       let value: any = translations["ar"]; // Always use Arabic translations
+
+      // Debug logging
+      if (key === "common.welcome" || key === "common.users_count") {
+        console.log(`Translating key: ${key}`, {
+          hasTranslations: !!translations,
+          hasArabic: !!translations["ar"],
+          hasKey: !!translations["ar"]?.[keys[0]],
+          value: translations["ar"]?.[keys[0]]?.[keys[1]]
+        });
+      }
 
       for (const k of keys) {
         if (value && typeof value === 'object' && k in value) {
