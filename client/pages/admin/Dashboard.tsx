@@ -307,10 +307,10 @@ export default function AdminDashboard() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-gray-900 arabic">
-                        {activity.action}
+                        {t(activity.actionKey)}
                       </p>
                       <p className="text-xs text-gray-600 arabic">
-                                                بواسطة {activity.user} • {activity.time}
+                        {t("dashboard.by")} {t(activity.userKey)} • {t(activity.timeKey)}
                       </p>
                     </div>
                   </div>
