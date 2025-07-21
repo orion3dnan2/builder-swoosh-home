@@ -40,28 +40,25 @@ export default function Login() {
     }
 
     try {
-      // محاكاة عملية تسجيل الدخول
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const user = await AuthService.login({
+        username: formData.username,
+        password: formData.password
+      });
+
+      console.log("Login successful:", user);
       
-      // التحقق من بيانات تسجيل الدخول ��لمحددة
-      if (formData.username === "admin" && formData.password === "admin") {
-        console.log("Login successful:", formData);
-        
-        // حفظ بيانات المستخدم
-        localStorage.setItem('user', JSON.stringify({
-          username: formData.username,
-          loginTime: new Date().toISOString(),
-          role: 'admin'
-        }));
-        
-        // توجه إلى الصفحة الرئيسية
-        navigate('/');
+      // Redirect based on user role
+      const from = location.state?.from?.pathname || '/';
+      if (user.role === 'super_admin') {
+        navigate('/admin/dashboard');
+      } else if (user.role === 'merchant') {
+        navigate('/merchant/dashboard');
       } else {
-        setError("اسم المستخدم أو كلمة المرور غير صحيحة. استخدم admin/admin");
+        navigate(from);
       }
       
     } catch (err) {
-      setError("حدث خطأ في تسجيل الدخول. يرجى المحاولة مرة أخرى.");
+      setError(err instanceof Error ? err.message : "حدث خطأ في تسجيل الدخول. يرجى المحاولة مرة أخرى.");
     } finally {
       setIsLoading(false);
     }
@@ -80,7 +77,7 @@ export default function Login() {
                 </div>
               </div>
               <h1 className="text-2xl font-bold text-secondary-800 arabic">تسجيل الدخول</h1>
-              <p className="text-secondary-600 arabic">أدخل بيانات تسجيل دخول��</p>
+              <p className="text-secondary-600 arabic">أدخل بيانات تسجيل دخولك</p>
             </CardHeader>
             
             <CardContent className="space-y-6">
@@ -93,7 +90,7 @@ export default function Login() {
                     <Input
                       id="username"
                       type="text"
-                      placeholder="أدخل ��سم المستخدم"
+                      placeholder="أدخل اسم المستخدم"
                       value={formData.username}
                       onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
                       className="text-right arabic rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600"
@@ -182,28 +179,25 @@ export default function Login() {
             </CardContent>
           </Card>
 
-          {/* Additional Info */}
+          {/* Demo Instructions */}
           <Card className="mt-6 bg-gradient-to-br from-primary-50 to-primary-100 border-primary-200 rounded-2xl">
             <CardContent className="p-6">
-              <h3 className="font-semibold text-primary-800 mb-3 arabic">معلومات مهمة</h3>
-              <ul className="space-y-2 text-sm text-primary-700 arabic">
-                <li>📧 مدير الموقع: admin@example.com</li>
-                <li>📞 تاجر / زبون: merchant@example.com</li>
-                <li>👥 خدمة الزبائن: customer@example.com</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          {/* Demo Instructions */}
-          <Card className="mt-4 bg-gradient-to-br from-secondary-50 to-secondary-100 border-secondary-200 rounded-2xl">
-            <CardContent className="p-4">
-              <h3 className="font-semibold text-secondary-800 mb-2 arabic">بيانات تسجيل الدخول</h3>
-              <p className="text-sm text-secondary-700 arabic mb-2">
-                استخدم بيانات تسجيل الدخول ال��الية:
-              </p>
-              <div className="space-y-1 text-sm text-secondary-800 arabic font-semibold">
-                <div>اسم المستخدم: <code className="bg-secondary-200 px-2 py-1 rounded-lg">admin</code></div>
-                <div>كلمة المرور: <code className="bg-secondary-200 px-2 py-1 rounded-lg">admin</code></div>
+              <h3 className="font-semibold text-primary-800 mb-3 arabic">حسابات التجربة</h3>
+              <div className="space-y-3">
+                <div className="bg-white p-3 rounded-lg border">
+                  <h4 className="font-bold text-primary-700 arabic mb-1">مدير التطبيق (Super Admin)</h4>
+                  <div className="text-sm space-y-1">
+                    <div>اسم المستخدم: <code className="bg-primary-200 px-2 py-1 rounded-lg">admin</code></div>
+                    <div>كلمة المرور: <code className="bg-primary-200 px-2 py-1 rounded-lg">admin</code></div>
+                  </div>
+                </div>
+                <div className="bg-white p-3 rounded-lg border">
+                  <h4 className="font-bold text-secondary-700 arabic mb-1">صاحب متجر (Merchant)</h4>
+                  <div className="text-sm space-y-1">
+                    <div>اسم المستخدم: <code className="bg-secondary-200 px-2 py-1 rounded-lg">merchant</code></div>
+                    <div>كلمة المرور: <code className="bg-secondary-200 px-2 py-1 rounded-lg">merchant</code></div>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
