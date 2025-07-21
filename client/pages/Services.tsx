@@ -9,9 +9,9 @@ export default function Services() {
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="flex justify-center mb-4">
-            <div className="w-20 h-20 bg-gradient-to-br from-sudan-brown to-amber-700 rounded-full flex items-center justify-center">
-              <Wrench className="w-10 h-10 text-white" />
+                    <div className="flex justify-center mb-4">
+            <div className="w-20 h-20 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-full flex items-center justify-center shadow-lg">
+              <Settings className="w-10 h-10 text-white" />
             </div>
           </div>
           <h1 className="text-4xl font-bold text-gray-800 mb-4 arabic">
