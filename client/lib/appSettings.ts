@@ -221,11 +221,11 @@ export const useAppSettings = () => {
 
   return {
     settings,
-    updateTheme: AppSettingsService.updateTheme,
-    updateBranding: AppSettingsService.updateBranding,
-    updateFeatures: AppSettingsService.updateFeatures,
-    saveSettings: AppSettingsService.saveSettings,
-    resetToDefaults: AppSettingsService.resetToDefaults,
+    updateTheme: (theme: Partial<AppSettings["theme"]>) => AppSettingsService.updateTheme(theme),
+    updateBranding: (branding: Partial<AppSettings["branding"]>) => AppSettingsService.updateBranding(branding),
+    updateFeatures: (features: Partial<AppSettings["features"]>) => AppSettingsService.updateFeatures(features),
+    saveSettings: (settings: AppSettings) => AppSettingsService.saveSettings(settings),
+    resetToDefaults: () => AppSettingsService.resetToDefaults(),
     colorPalettes: AppSettingsService.getColorPalettes(),
     fontFamilies: AppSettingsService.getFontFamilies(),
   };
