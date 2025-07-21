@@ -19,15 +19,33 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Index />} />
+                <Route path="/" element={<Index />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+
+        {/* Admin Routes */}
+        <Route path="/admin/dashboard" element={
+          <SuperAdminRoute>
+            <AdminDashboard />
+          </SuperAdminRoute>
+        } />
+
+        {/* Merchant Routes */}
+        <Route path="/merchant/dashboard" element={
+          <MerchantRoute>
+            <MerchantDashboard />
+          </MerchantRoute>
+        } />
+
+        {/* Public Routes */}
         <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/products" element={<Products />} />
         <Route path="/companies" element={<Companies />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/services" element={<Services />} />
         <Route path="/ads" element={<Ads />} />
+
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
