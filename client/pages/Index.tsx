@@ -79,7 +79,7 @@ export default function Index() {
     },
     {
       icon: Settings,
-      title: "الخ��مات المهنية",
+      title: "الخدمات المهنية",
       description: "احصل على خدمات مهنية متخصصة من خبراء سودانيين",
       href: "/services",
       color: "from-orange-500 to-orange-600",
@@ -186,7 +186,7 @@ export default function Index() {
                     {stat.number}
                   </div>
                   <div className="text-xs md:text-sm lg:text-base text-white/80 arabic px-1">
-                    {stat.label}
+                    {t(stat.labelKey)}
                   </div>
                 </div>
               ))}
