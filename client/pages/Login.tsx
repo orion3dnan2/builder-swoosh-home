@@ -31,13 +31,13 @@ export default function Login() {
 
     // تحقق من البيانات
     if (!formData.username.trim()) {
-      setError("يرجى إدخال اسم المستخدم");
+      setError(t("login.error.username_required"));
       setIsLoading(false);
       return;
     }
 
     if (!formData.password.trim()) {
-      setError("يرجى إدخال كلمة المرور");
+      setError(t("login.error.password_required"));
       setIsLoading(false);
       return;
     }
