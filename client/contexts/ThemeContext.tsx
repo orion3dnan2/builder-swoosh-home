@@ -130,7 +130,7 @@ const translations = {
     "dashboard.pending_approvals": "طلبات الاعتماد",
     "dashboard.new_registrations": "تسجيلات جديدة",
     "dashboard.total_orders": "إجمالي الطلبات",
-    "dashboard.app_settings": "إعدا��ات التطبيق",
+    "dashboard.app_settings": "إعدادات التطبيق",
     "dashboard.app_settings_desc": "تخصيص المظهر والألوان والخطوط",
     "dashboard.user_management": "إدارة المستخدمين",
     "dashboard.user_management_desc": "عرض وإدارة حسابات المستخدمين",
@@ -194,7 +194,7 @@ const translations = {
     "stores.action_reactivate": "إعادة تفعيل",
     "stores.success_approve": "تم اعتماد المتجر بنجاح! ✅",
     "stores.success_suspend": "تم تعليق المتجر بنجاح! ⚠️",
-    "stores.success_reactivate": "��م إعادة تفعيل المتجر بنجاح! ✅",
+    "stores.success_reactivate": "تم إعادة تفعيل المتجر بنجاح! ✅",
     "stores.reviews_count": "تقييم",
 
     // Login & Register
@@ -211,7 +211,7 @@ const translations = {
     "login.error.password_required": "يرجى إدخال كلمة المرور",
     "login.error.invalid_credentials": "بيانات الدخول غير صحيحة",
     "register.title": "إنشاء حساب جديد",
-    "register.subtitle": "انضم إلى البيت السوداني اليوم",
+    "register.subtitle": "انضم ��لى البيت السوداني اليوم",
     "register.full_name": "الاسم الكامل",
     "register.email": "البريد الإلكتروني",
     "register.phone": "رقم الهاتف",
@@ -460,7 +460,8 @@ const STORAGE_KEYS = {
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>("light");
   const [language, setLanguage] = useState<Language>("ar");
-  const [fontFamily, setFontFamilyState] = useState<FontFamily>("cairo");
+  const [arabicFont, setArabicFontState] = useState<ArabicFontFamily>("amiri");
+  const [englishFont, setEnglishFontState] = useState<EnglishFontFamily>("inter");
 
   // Load preferences from localStorage on mount
   useEffect(() => {
