@@ -97,7 +97,7 @@ export default function Index() {
   const testimonials = [
     {
       name: "أحمد محمد",
-      role: "صاحب متجر",
+      role: "صاحب مت��ر",
       content: "البيت السوداني ساعدني في الوصول لعملاء جدد وتنمية تجارتي بشكل كبير",
       rating: 5
     },
@@ -261,7 +261,7 @@ export default function Index() {
             {t('home.cta.title')}
           </h2>
           <p className="text-base md:text-lg lg:text-xl text-white/90 mb-6 md:mb-8 arabic max-w-2xl mx-auto px-4">
-            انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم
+            {t('home.cta.subtitle')}
           </p>
           <div className={`flex flex-col xs:flex-row gap-3 md:gap-4 justify-center px-4 ${isRTL ? 'xs:flex-row-reverse' : ''}`}>
             <Link to="/register" className="w-full xs:w-auto">
