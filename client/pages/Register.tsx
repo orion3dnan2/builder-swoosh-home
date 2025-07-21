@@ -31,7 +31,7 @@ export default function Register() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      alert("كلمات ا��مرور غير متطابقة");
+      alert("كلمات المرور غير متطابقة");
       return;
     }
     console.log("Registration attempt:", formData);
@@ -223,7 +223,7 @@ export default function Register() {
                   className="w-full text-lg py-3 arabic"
                   disabled={!formData.acceptTerms}
                 >
-                  إنشاء الحساب
+                                    إنشاء الحساب →
                 </Button>
 
                 <div className="text-center">
