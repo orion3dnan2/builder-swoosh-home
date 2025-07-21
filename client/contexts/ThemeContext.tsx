@@ -130,7 +130,7 @@ const translations = {
     "dashboard.pending_approvals": "طلبات الاعتماد",
     "dashboard.new_registrations": "تسجيلات جديدة",
     "dashboard.total_orders": "إجمالي الطلبات",
-    "dashboard.app_settings": "إعدادات التطبيق",
+    "dashboard.app_settings": "إعدا��ات التطبيق",
     "dashboard.app_settings_desc": "تخصيص المظهر والألوان والخطوط",
     "dashboard.user_management": "إدارة المستخدمين",
     "dashboard.user_management_desc": "عرض وإدارة حسابات المستخدمين",
@@ -194,7 +194,7 @@ const translations = {
     "stores.action_reactivate": "إعادة تفعيل",
     "stores.success_approve": "تم اعتماد المتجر بنجاح! ✅",
     "stores.success_suspend": "تم تعليق المتجر بنجاح! ⚠️",
-    "stores.success_reactivate": "تم إعادة تفعيل المتجر بنجاح! ✅",
+    "stores.success_reactivate": "��م إعادة تفعيل المتجر بنجاح! ✅",
     "stores.reviews_count": "تقييم",
 
     // Login & Register
@@ -210,7 +210,7 @@ const translations = {
     "login.error.username_required": "يرجى إدخال اسم المستخدم",
     "login.error.password_required": "يرجى إدخال كلمة المرور",
     "login.error.invalid_credentials": "بيانات الدخول غير صحيحة",
-    "register.title": "إنشاء ��ساب جديد",
+    "register.title": "إنشاء حساب جديد",
     "register.subtitle": "انضم إلى البيت السوداني اليوم",
     "register.full_name": "الاسم الكامل",
     "register.email": "البريد الإلكتروني",
@@ -453,7 +453,8 @@ interface ThemeProviderProps {
 const STORAGE_KEYS = {
   THEME: "bayt-al-sudani-theme",
   LANGUAGE: "bayt-al-sudani-language",
-  FONT_FAMILY: "bayt-al-sudani-font-family",
+  ARABIC_FONT: "bayt-al-sudani-arabic-font",
+  ENGLISH_FONT: "bayt-al-sudani-english-font",
 };
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
