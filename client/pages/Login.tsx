@@ -29,7 +29,6 @@ export default function Login() {
     setError("");
     setIsLoading(true);
 
-    // تحقق من البيانات
     if (!formData.username.trim()) {
       setError(t("login.error.username_required"));
       setIsLoading(false);
@@ -59,12 +58,9 @@ export default function Login() {
       } else {
         navigate(from);
       }
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "حدث خطأ في تسجيل الدخول. يرجى المحاولة مرة أخرى.",
-      );
+    } catch (error: any) {
+      console.error("Login error:", error);
+      setError(t("login.error.invalid_credentials"));
     } finally {
       setIsLoading(false);
     }
@@ -72,208 +68,213 @@ export default function Login() {
 
   return (
     <Layout>
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 py-8 md:py-12 px-4">
-        <div className="w-full max-w-md">
-          {/* Login Form */}
-          <Card className="shadow-2xl border-0 rounded-3xl bg-white backdrop-blur-sm">
-            <CardHeader className="text-center pb-6">
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl flex items-center justify-center shadow-lg">
-                  <LogIn className="w-8 h-8 text-white" />
-                </div>
-              </div>
-              <h1 className="text-2xl font-bold text-secondary-800 arabic">
-                تسجيل الدخول
-              </h1>
-              <p className="text-secondary-600 arabic">
-                أدخل بيانات تسجيل دخولك
-              </p>
-            </CardHeader>
-
-            <CardContent className="space-y-6">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-4">
-                  <div>
-                    <Label
-                      htmlFor="username"
-                      className="text-right block mb-2 arabic text-secondary-700 font-semibold"
-                    >
-                      🧑 اسم المستخدم
-                    </Label>
-                    <Input
-                      id="username"
-                      type="text"
-                      placeholder="أدخل اسم المستخدم"
-                      value={formData.username}
-                      onChange={(e) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          username: e.target.value,
-                        }))
-                      }
-                      className="text-right arabic rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600"
-                      required
-                    />
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            {/* Login Form */}
+            <Card className="card-dark shadow-2xl">
+              <CardHeader className="text-center space-y-4">
+                <div className="flex justify-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl flex items-center justify-center shadow-lg">
+                    <LogIn className="w-8 h-8 text-white" />
                   </div>
+                </div>
+                <h1 className={`text-2xl font-bold text-secondary-800 arabic ${isRTL ? 'text-right' : 'text-center'}`}>
+                  {t("login.title")}
+                </h1>
+                <p className={`text-secondary-600 arabic ${isRTL ? 'text-right' : 'text-center'}`}>
+                  {t("login.subtitle")}
+                </p>
+              </CardHeader>
 
-                  <div>
-                    <Label
-                      htmlFor="password"
-                      className="text-right block mb-2 arabic text-secondary-700 font-semibold"
-                    >
-                      🔐 كلمة المرور
-                    </Label>
-                    <div className="relative">
+              <CardContent className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="space-y-4">
+                    <div>
+                      <Label
+                        htmlFor="username"
+                        className={`block mb-2 arabic text-secondary-700 font-semibold ${isRTL ? 'text-right' : 'text-left'}`}
+                      >
+                        🧑 {t("login.username")}
+                      </Label>
                       <Input
-                        id="password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="أدخل كلمة المرور"
-                        value={formData.password}
+                        id="username"
+                        type="text"
+                        placeholder={t("login.username")}
+                        value={formData.username}
                         onChange={(e) =>
                           setFormData((prev) => ({
                             ...prev,
-                            password: e.target.value,
+                            username: e.target.value,
                           }))
                         }
-                        className="text-right arabic pr-12 rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600"
+                        className={`arabic rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600 ${isRTL ? 'text-right' : 'text-left'}`}
                         required
                       />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-secondary-400 hover:text-secondary-600"
+                    </div>
+
+                    <div>
+                      <Label
+                        htmlFor="password"
+                        className={`block mb-2 arabic text-secondary-700 font-semibold ${isRTL ? 'text-right' : 'text-left'}`}
                       >
-                        {showPassword ? (
-                          <EyeOff className="w-4 h-4" />
-                        ) : (
-                          <Eye className="w-4 h-4" />
-                        )}
-                      </button>
+                        🔐 {t("login.password")}
+                      </Label>
+                      <div className="relative">
+                        <Input
+                          id="password"
+                          type={showPassword ? "text" : "password"}
+                          placeholder={t("login.password")}
+                          value={formData.password}
+                          onChange={(e) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              password: e.target.value,
+                            }))
+                          }
+                          className={`arabic ${isRTL ? 'pr-12 text-right' : 'pl-12 text-left'} rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600`}
+                          required
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className={`absolute top-1/2 transform -translate-y-1/2 text-secondary-400 hover:text-secondary-600 ${isRTL ? 'left-3' : 'right-3'}`}
+                        >
+                          {showPassword ? (
+                            <EyeOff className="w-5 h-5" />
+                          ) : (
+                            <Eye className="w-5 h-5" />
+                          )}
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2 space-x-reverse">
-                    <Checkbox
-                      id="remember"
-                      checked={formData.rememberMe}
-                      onCheckedChange={(checked) =>
-                        setFormData((prev) => ({
-                          ...prev,
-                          rememberMe: checked as boolean,
-                        }))
-                      }
-                    />
-                    <Label
-                      htmlFor="remember"
-                      className="text-sm arabic text-secondary-600"
+                  <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                    <div className={`flex items-center space-x-2 ${isRTL ? 'space-x-reverse flex-row-reverse' : 'flex-row'}`}>
+                      <Checkbox
+                        id="remember"
+                        checked={formData.rememberMe}
+                        onCheckedChange={(checked) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            rememberMe: checked as boolean,
+                          }))
+                        }
+                      />
+                      <Label
+                        htmlFor="remember"
+                        className="text-sm arabic text-secondary-600"
+                      >
+                        {t("login.remember_me")}
+                      </Label>
+                    </div>
+                    <Link
+                      to="/forgot-password"
+                      className="text-sm text-primary-600 hover:underline arabic font-semibold"
                     >
-                      تذكرني
-                    </Label>
+                      {t("login.forgot_password")}
+                    </Link>
                   </div>
-                  <Link
-                    to="/forgot-password"
-                    className="text-sm text-primary-600 hover:underline arabic font-semibold"
-                  >
-                    نسيت كل��ة المرور؟
-                  </Link>
-                </div>
 
-                {error && (
-                  <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl text-center arabic">
-                    ⚠️ {error}
-                  </div>
-                )}
-
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="w-full text-lg py-4 arabic rounded-xl font-semibold"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white ml-2"></div>
-                      جاري تسجيل الدخول...
-                    </>
-                  ) : (
-                    "تسجيل الدخول →"
+                  {error && (
+                    <div className={`bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl arabic ${isRTL ? 'text-right' : 'text-center'}`}>
+                      ⚠️ {error}
+                    </div>
                   )}
-                </Button>
 
-                <div className="text-center">
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full text-lg py-4 arabic rounded-xl font-semibold"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <div className="flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                        {t("common.loading")}
+                      </div>
+                    ) : (
+                      t("login.title")
+                    )}
+                  </Button>
+                </form>
+
+                <div className={`text-center ${isRTL ? 'text-right' : 'text-center'}`}>
                   <span className="text-secondary-600 arabic">
-                    ليس لديك حساب؟{" "}
+                    {t("login.no_account")}{" "}
+                    <Link
+                      to="/register"
+                      className="text-primary-600 hover:underline arabic font-semibold"
+                    >
+                      {t("login.create_account")}
+                    </Link>
                   </span>
-                  <Link
-                    to="/register"
-                    className="text-primary-600 hover:underline arabic font-semibold"
-                  >
-                    انشئ حساب جديد
-                  </Link>
                 </div>
+              </CardContent>
+            </Card>
 
-                <div className="text-center">
-                  <Link
-                    to="/company-register"
-                    className="text-secondary-600 hover:underline arabic text-sm"
-                  >
-                    🏢 تسجيل للشركات والمؤسسات
-                  </Link>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-
-          {/* Demo Instructions */}
-          <Card className="mt-6 bg-gradient-to-br from-primary-50 to-primary-100 border-primary-200 rounded-2xl">
-            <CardContent className="p-6">
-              <h3 className="font-semibold text-primary-800 mb-3 arabic">
-                حسابات التجربة
-              </h3>
-              <div className="space-y-3">
-                <div className="bg-white p-3 rounded-lg border">
-                  <h4 className="font-bold text-primary-700 arabic mb-1">
-                    مدير التطبيق (Super Admin)
-                  </h4>
-                  <div className="text-sm space-y-1">
-                    <div>
-                      اسم المستخدم:{" "}
-                      <code className="bg-primary-200 px-2 py-1 rounded-lg">
-                        admin
-                      </code>
-                    </div>
-                    <div>
-                      كلمة المرور:{" "}
-                      <code className="bg-primary-200 px-2 py-1 rounded-lg">
-                        admin
-                      </code>
-                    </div>
+            {/* Demo Accounts Card */}
+            <Card className="card-dark shadow-lg">
+              <CardContent className="p-6">
+                <h3 className={`font-semibold text-primary-800 mb-3 arabic ${isRTL ? 'text-right' : 'text-left'}`}>
+                  {t("login.demo_accounts", "حسابات التجربة")}
+                </h3>
+                <div className="space-y-3">
+                  <div className="bg-white p-3 rounded-lg border">
+                    <h4 className={`font-bold text-primary-700 arabic mb-1 ${isRTL ? 'text-right' : 'text-left'}`}>
+                      {t("login.demo.super_admin", "مدير التطبيق (Super Admin)")}
+                    </h4>
+                    <p className={`text-sm text-gray-600 arabic ${isRTL ? 'text-right' : 'text-left'}`}>
+                      {t("login.demo.username", "اسم المستخدم")}: <strong>admin</strong>
+                    </p>
+                    <p className={`text-sm text-gray-600 arabic ${isRTL ? 'text-right' : 'text-left'}`}>
+                      {t("login.demo.password", "كلمة المرور")}: <strong>admin123</strong>
+                    </p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-2 w-full"
+                      onClick={() =>
+                        setFormData({
+                          username: "admin",
+                          password: "admin123",
+                          rememberMe: false,
+                        })
+                      }
+                    >
+                      {t("login.demo.use_account", "استخدام هذا الحساب")}
+                    </Button>
+                  </div>
+                  <div className="bg-white p-3 rounded-lg border">
+                    <h4 className={`font-bold text-secondary-700 arabic mb-1 ${isRTL ? 'text-right' : 'text-left'}`}>
+                      {t("login.demo.merchant", "صاحب متجر (Merchant)")}
+                    </h4>
+                    <p className={`text-sm text-gray-600 arabic ${isRTL ? 'text-right' : 'text-left'}`}>
+                      {t("login.demo.username", "اسم المستخدم")}: <strong>merchant</strong>
+                    </p>
+                    <p className={`text-sm text-gray-600 arabic ${isRTL ? 'text-right' : 'text-left'}`}>
+                      {t("login.demo.password", "كلمة المرور")}: <strong>merchant123</strong>
+                    </p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-2 w-full"
+                      onClick={() =>
+                        setFormData({
+                          username: "merchant",
+                          password: "merchant123",
+                          rememberMe: false,
+                        })
+                      }
+                    >
+                      {t("login.demo.use_account", "استخدام هذا الحساب")}
+                    </Button>
                   </div>
                 </div>
-                <div className="bg-white p-3 rounded-lg border">
-                  <h4 className="font-bold text-secondary-700 arabic mb-1">
-                    صاحب متجر (Merchant)
-                  </h4>
-                  <div className="text-sm space-y-1">
-                    <div>
-                      اسم المستخدم:{" "}
-                      <code className="bg-secondary-200 px-2 py-1 rounded-lg">
-                        merchant
-                      </code>
-                    </div>
-                    <div>
-                      كلمة المرور:{" "}
-                      <code className="bg-secondary-200 px-2 py-1 rounded-lg">
-                        merchant
-                      </code>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </Layout>
