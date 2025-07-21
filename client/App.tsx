@@ -11,7 +11,11 @@ import Ads from "./pages/Ads";
 import NotFound from "./pages/NotFound";
 import Unauthorized from "./pages/Unauthorized";
 import AdminDashboard from "./pages/admin/Dashboard";
+import AdminSettings from "./pages/admin/Settings";
 import MerchantDashboard from "./pages/merchant/Dashboard";
+import MerchantProducts from "./pages/merchant/Products";
+import NewProduct from "./pages/merchant/NewProduct";
+import MerchantAnalytics from "./pages/merchant/Analytics";
 import { SuperAdminRoute, MerchantRoute } from "./components/ProtectedRoute";
 import "./global.css";
 
