@@ -175,7 +175,11 @@
     text-align: left;
   }
 
-  /* Typography System */
+  /* Arabic Font Classes */
+  .font-amiri {
+    font-family: "Amiri", "Noto Sans Arabic", serif !important;
+  }
+
   .font-cairo {
     font-family: "Cairo", "Noto Sans Arabic", sans-serif !important;
   }
@@ -188,8 +192,45 @@
     font-family: "Noto Kufi Arabic", "Cairo", sans-serif !important;
   }
 
-  .font-amiri {
-    font-family: "Amiri", "Noto Sans Arabic", serif !important;
+  .font-ibm-plex {
+    font-family: "IBM Plex Sans Arabic", "Cairo", sans-serif !important;
+  }
+
+  .font-lateef {
+    font-family: "Lateef", "Amiri", serif !important;
+  }
+
+  .font-almarai {
+    font-family: "Almarai", "Cairo", sans-serif !important;
+  }
+
+  .font-markazi {
+    font-family: "Markazi Text", "Amiri", serif !important;
+  }
+
+  .font-kufi-standard {
+    font-family: "Amiri", "Noto Sans Arabic", serif !important; /* Fallback */
+  }
+
+  /* English Font Classes */
+  .font-inter {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  }
+
+  .font-roboto {
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  }
+
+  .font-poppins {
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  }
+
+  .font-montserrat {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  }
+
+  .font-open-sans {
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
   }
 
   /* Arabic Text Styling */
