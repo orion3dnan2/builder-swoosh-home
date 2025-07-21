@@ -233,17 +233,34 @@
     font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
   }
 
-  /* Arabic Text Styling */
+  /* Language-specific text styling */
   .arabic {
-    font-family: var(--arabic-font, "Cairo"), "Noto Sans Arabic", sans-serif;
     line-height: 1.7;
     letter-spacing: 0.025em;
   }
 
   .english {
-    font-family:
-      -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
     line-height: 1.5;
+    letter-spacing: normal;
+  }
+
+  /* Apply fonts conditionally based on language selection */
+  [dir="rtl"] .arabic {
+    font-family: inherit; /* Uses the current Arabic font class */
+  }
+
+  [dir="ltr"] .english {
+    font-family: inherit; /* Uses the current English font class */
+  }
+
+  /* When Arabic is selected, English text uses system fonts */
+  [dir="rtl"] .english {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+  }
+
+  /* When English is selected, Arabic text uses fallback */
+  [dir="ltr"] .arabic {
+    font-family: "Amiri", "Noto Sans Arabic", serif;
   }
 
   /* Enhanced scroll bars for dark mode */
