@@ -217,7 +217,7 @@ export default function Index() {
         <div className="container mx-auto px-4">
           <div className={`text-center mb-12 md:mb-16 ${isRTL ? 'text-right' : 'text-center'}`}>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 md:mb-4 arabic">
-              آراء عملائنا
+              {t('home.testimonials.title')}
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-muted-foreground arabic">
               ماذا يقول عملاؤنا عن تجربتهم معنا
