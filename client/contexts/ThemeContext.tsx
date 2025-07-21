@@ -70,7 +70,7 @@ const translations = {
     "home.hero.join_us": "انضم إلينا",
     "home.services.title": "خدماتنا",
     "home.services.subtitle":
-      "مجموعة شاملة من الخدمات المص��مة خصيصاً للمجتمع السوداني في الخليج والعالم",
+      "مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج والعالم",
     "home.services.marketplace": "السوق التجاري",
     "home.services.marketplace_desc":
       "اكتشف منتجات سودانية أصيلة من تجار موثوقين",
@@ -134,7 +134,7 @@ const translations = {
     "dashboard.app_settings_desc": "تخصيص المظهر والألوان والخطوط",
     "dashboard.user_management": "إدارة المستخدمين",
     "dashboard.user_management_desc": "عرض وإدارة حسابات المستخدمين",
-    "dashboard.store_management": "إدارة ��لمتاجر",
+    "dashboard.store_management": "إدارة المتاجر",
     "dashboard.store_management_desc": "مراجعة وإدارة المتاجر المسجلة",
     "dashboard.appearance": "تخصيص المظهر",
     "dashboard.appearance_desc": "تغيير الألوان والصور والخلفيات",
@@ -142,7 +142,7 @@ const translations = {
     "dashboard.system_settings_desc": "صلاحيات وإعدادات الأمان",
     "dashboard.content_management": "إدارة المحتوى",
     "dashboard.content_management_desc": "النصوص والصور والترجمات",
-    "dashboard.view_site": "عرض الموقع",
+    "dashboard.view_site": "عرض ا��موقع",
     "dashboard.super_admin": "مدير أعلى",
     "dashboard.urgent": "عاجل",
 
@@ -169,7 +169,7 @@ const translations = {
     "stores.approve_store": "اعتماد المتجر",
     "stores.suspend_store": "تعليق المتجر",
     "stores.reactivate_store": "إعادة تفعيل",
-    "stores.no_stores_found": "لا توجد متاجر",
+    "stores.no_stores_found": "��ا توجد متاجر",
     "stores.no_stores_match": "لم يتم العثور على متاجر تطابق معايير البحث",
     "stores.filter_results": "من",
     "stores.store_details": "تفاصيل المتجر",
@@ -588,36 +588,119 @@ export function useTheme() {
   return context;
 }
 
+// Font definitions with preview text
+export const arabicFonts = [
+  {
+    id: "amiri" as ArabicFontFamily,
+    name: "أميري",
+    englishName: "Amiri",
+    preview: "أهلاً وسهلاً بكم في البيت السوداني",
+    url: "https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap",
+  },
+  {
+    id: "cairo" as ArabicFontFamily,
+    name: "القاهرة",
+    englishName: "Cairo",
+    preview: "أهلاً وسهلاً بكم في البيت السوداني",
+    url: "https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap",
+  },
+  {
+    id: "tajawal" as ArabicFontFamily,
+    name: "تجول",
+    englishName: "Tajawal",
+    preview: "أهلاً وسهلاً بكم في البيت السوداني",
+    url: "https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap",
+  },
+  {
+    id: "noto-kufi" as ArabicFontFamily,
+    name: "نوتو كوفي",
+    englishName: "Noto Kufi Arabic",
+    preview: "أهلاً وسهلاً بكم في البيت السودا��ي",
+    url: "https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap",
+  },
+  {
+    id: "ibm-plex" as ArabicFontFamily,
+    name: "آي بي إم بلكس",
+    englishName: "IBM Plex Sans Arabic",
+    preview: "أهلاً وسهلاً بكم في البيت السوداني",
+    url: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap",
+  },
+  {
+    id: "lateef" as ArabicFontFamily,
+    name: "لطيف",
+    englishName: "Lateef",
+    preview: "أهلاً وسهلاً بكم في البيت السوداني",
+    url: "https://fonts.googleapis.com/css2?family=Lateef:wght@200;300;400;500;600;700;800&display=swap",
+  },
+  {
+    id: "almarai" as ArabicFontFamily,
+    name: "المرائي",
+    englishName: "Almarai",
+    preview: "أهلاً وسهلاً بكم في البيت السوداني",
+    url: "https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap",
+  },
+  {
+    id: "markazi" as ArabicFontFamily,
+    name: "مرکزی",
+    englishName: "Markazi Text",
+    preview: "أهلاً وسهلاً بكم في البيت السوداني",
+    url: "https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400;500;600;700&display=swap",
+  },
+  {
+    id: "kufi-standard" as ArabicFontFamily,
+    name: "كوفي ستاندرد",
+    englishName: "Kufi Standard GK",
+    preview: "أهلاً وسهلاً بكم في البيت السوداني",
+    url: "https://fonts.googleapis.com/css2?family=Amiri&display=swap", // Fallback to Amiri for now
+  },
+];
+
+export const englishFonts = [
+  {
+    id: "inter" as EnglishFontFamily,
+    name: "Inter",
+    preview: "Welcome to Sudan House - Your Digital Home",
+    url: "https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap",
+  },
+  {
+    id: "roboto" as EnglishFontFamily,
+    name: "Roboto",
+    preview: "Welcome to Sudan House - Your Digital Home",
+    url: "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap",
+  },
+  {
+    id: "poppins" as EnglishFontFamily,
+    name: "Poppins",
+    preview: "Welcome to Sudan House - Your Digital Home",
+    url: "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap",
+  },
+  {
+    id: "montserrat" as EnglishFontFamily,
+    name: "Montserrat",
+    preview: "Welcome to Sudan House - Your Digital Home",
+    url: "https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap",
+  },
+  {
+    id: "open-sans" as EnglishFontFamily,
+    name: "Open Sans",
+    preview: "Welcome to Sudan House - Your Digital Home",
+    url: "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap",
+  },
+];
+
 // Font loading utilities
 export const loadFonts = () => {
-  const fonts = [
-    {
-      family: "Cairo",
-      weights: ["300", "400", "500", "600", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap",
-    },
-    {
-      family: "Tajawal",
-      weights: ["300", "400", "500", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap",
-    },
-    {
-      family: "Noto Kufi Arabic",
-      weights: ["400", "500", "600", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap",
-    },
-    {
-      family: "Amiri",
-      weights: ["400", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap",
-    },
-  ];
+  const allFonts = [...arabicFonts, ...englishFonts];
 
-  fonts.forEach((font) => {
-    const link = document.createElement("link");
-    link.href = font.url;
-    link.rel = "stylesheet";
-    link.type = "text/css";
-    document.head.appendChild(link);
+  allFonts.forEach((font) => {
+    // Check if font is already loaded
+    const existingLink = document.querySelector(`link[href="${font.url}"]`);
+    if (!existingLink) {
+      const link = document.createElement("link");
+      link.href = font.url;
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      document.head.appendChild(link);
+    }
   });
 };
