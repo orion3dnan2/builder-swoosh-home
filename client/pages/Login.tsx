@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Layout } from "@/components/Layout";
 import { LogIn, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Login() {
   const navigate = useNavigate();
