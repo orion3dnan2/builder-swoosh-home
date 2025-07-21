@@ -1,7 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Wrench, Search, Filter } from "lucide-react";
+import { Settings, Search, Filter, Hammer, PaintBrush, Car, Home, Laptop, Heart, GraduationCap, Camera } from "lucide-react";
 
 export default function Services() {
   return (
