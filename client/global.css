@@ -248,34 +248,22 @@
     font-family: var(--font-open-sans) !important;
   }
 
-  /* Language-specific text styling */
+  /* Arabic-only text styling */
   .arabic {
     line-height: 1.7;
     letter-spacing: 0.025em;
+    font-family: inherit; /* Uses the current Arabic font class */
   }
 
   .english {
     line-height: 1.5;
     letter-spacing: normal;
+    font-family: inherit; /* Also uses Arabic font for consistency */
   }
 
-  /* Apply fonts conditionally based on language selection */
-  [dir="rtl"] .arabic {
-    font-family: inherit; /* Uses the current Arabic font class */
-  }
-
-  [dir="ltr"] .english {
-    font-family: inherit; /* Uses the current English font class */
-  }
-
-  /* When Arabic is selected, English text uses system fonts */
-  [dir="rtl"] .english {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
-  }
-
-  /* When English is selected, Arabic text uses fallback */
-  [dir="ltr"] .arabic {
-    font-family: "Amiri", "Noto Sans Arabic", serif;
+  /* All text uses the selected Arabic font */
+  body {
+    font-family: inherit;
   }
 
   /* Enhanced scroll bars for dark mode */
