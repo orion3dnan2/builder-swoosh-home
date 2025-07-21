@@ -192,60 +192,60 @@
 
   /* Arabic Font Classes */
   .font-amiri {
-    font-family: "Amiri", "Noto Sans Arabic", serif !important;
+    font-family: var(--font-amiri) !important;
   }
 
   .font-cairo {
-    font-family: "Cairo", "Noto Sans Arabic", sans-serif !important;
+    font-family: var(--font-cairo) !important;
   }
 
   .font-tajawal {
-    font-family: "Tajawal", "Noto Sans Arabic", sans-serif !important;
+    font-family: var(--font-tajawal) !important;
   }
 
   .font-noto-kufi {
-    font-family: "Noto Kufi Arabic", "Cairo", sans-serif !important;
+    font-family: var(--font-noto-kufi) !important;
   }
 
   .font-ibm-plex {
-    font-family: "IBM Plex Sans Arabic", "Cairo", sans-serif !important;
+    font-family: var(--font-ibm-plex) !important;
   }
 
   .font-lateef {
-    font-family: "Lateef", "Amiri", serif !important;
+    font-family: var(--font-lateef) !important;
   }
 
   .font-almarai {
-    font-family: "Almarai", "Cairo", sans-serif !important;
+    font-family: var(--font-almarai) !important;
   }
 
   .font-markazi {
-    font-family: "Markazi Text", "Amiri", serif !important;
+    font-family: var(--font-markazi) !important;
   }
 
   .font-kufi-standard {
-    font-family: "Amiri", "Noto Sans Arabic", serif !important; /* Fallback */
+    font-family: var(--font-kufi-standard) !important;
   }
 
   /* English Font Classes */
   .font-inter {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    font-family: var(--font-inter) !important;
   }
 
   .font-roboto {
-    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    font-family: var(--font-roboto) !important;
   }
 
   .font-poppins {
-    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    font-family: var(--font-poppins) !important;
   }
 
   .font-montserrat {
-    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    font-family: var(--font-montserrat) !important;
   }
 
   .font-open-sans {
-    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    font-family: var(--font-open-sans) !important;
   }
 
   /* Language-specific text styling */
