@@ -97,16 +97,16 @@ export default function Index() {
             backgroundImage: `url('https://cdn.builder.io/api/v1/image/assets%2Fb1a0c751ea8f428fb17cf787dc4c95b1%2Fada8ce46064846e687a3341dd0ab9c15?format=webp&width=1200')`
           }}
         ></div>
-        {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-black/20"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/40 to-orange-900/30"></div>
+                {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/30"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-900/50 to-secondary-900/40"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 arabic">
               البيت السوداني
             </h1>
             <p className="text-xl md:text-2xl mb-8 arabic opacity-95">
-              سوق وخدمات وشركات ا��سودان في الخليج والعالم
+              سوق وخدمات وشركات السودان في الخليج والعالم
             </p>
             <p className="text-lg mb-10 arabic opacity-90 max-w-3xl mx-auto leading-relaxed">
               انضم واشترك لتحصل على أفضل العروض والخدمات من البيت السوداني، شبكة التواصل التجاري الأولى للسودانيين في الخليج
@@ -207,7 +207,7 @@ export default function Index() {
                                           <div className="bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 rounded-3xl p-8 text-white shadow-2xl">
                 <h3 className="text-2xl font-bold mb-4 arabic">ابدأ رحلتك معنا اليوم</h3>
                 <p className="mb-6 arabic opacity-90">
-                  انضم إلى آلاف العملاء الراضين في البيت السوداني
+                  انضم إلى آلاف العملاء الراض��ن في البيت السوداني
                 </p>
                                                 <Link to="/register">
                   <Button size="lg" className="w-full bg-white text-primary-600 hover:bg-gray-100 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic rounded-xl font-semibold">
@@ -231,7 +231,7 @@ export default function Index() {
             ابدأ رحلتك معنا اليوم
           </h2>
           <p className="text-xl mb-8 arabic opacity-90 max-w-2xl mx-auto">
-            انضم إلى الآلاف من العملاء الراضين في البيت السوداني
+            انضم إلى الآلاف من العمل��ء الراضين في البيت السوداني
           </p>
                               <Link to="/register">
             <Button size="lg" className="bg-white text-secondary-700 hover:bg-gray-100 px-12 py-4 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic rounded-xl font-semibold">
