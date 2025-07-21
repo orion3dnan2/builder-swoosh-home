@@ -37,23 +37,26 @@ export default function Login() {
       return;
     }
 
-    
-
     try {
       // محاكاة عملية تسجيل الدخول
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // في التطبيق الحقيقي، ستتم عملية المصادقة هنا
-      console.log("Login successful:", formData);
-      
-      // حفظ بيانات المستخدم (محاكاة)
-      localStorage.setItem('user', JSON.stringify({
-        username: formData.username,
-        loginTime: new Date().toISOString()
-      }));
-      
-      // توجه إلى الصفحة الرئيسية
-      navigate('/');
+      // التحقق من بيانات تسجيل الدخول المحددة
+      if (formData.username === "admin" && formData.password === "admin") {
+        console.log("Login successful:", formData);
+        
+        // حفظ بيانات المستخدم
+        localStorage.setItem('user', JSON.stringify({
+          username: formData.username,
+          loginTime: new Date().toISOString(),
+          role: 'admin'
+        }));
+        
+        // توجه إلى الصفحة الرئيسية
+        navigate('/');
+      } else {
+        setError("اسم المستخدم أو كلمة المرور غير صحيح��. استخدم admin/admin");
+      }
       
     } catch (err) {
       setError("حدث خطأ في تسجيل الدخول. يرجى المحاولة مرة أخرى.");
@@ -193,11 +196,14 @@ export default function Login() {
           {/* Demo Instructions */}
           <Card className="mt-4 bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
             <CardContent className="p-4">
-              <h3 className="font-semibold text-green-800 mb-2 arabic">للتجربة</h3>
-              <p className="text-sm text-green-700 arabic">
-                يمكنك استخدام أي اسم مستخدم وكلمة مرور (على الأقل 6 أحرف) للتجربة. 
-                سيتم توجيهك للصفحة الرئيسية بعد نجاح العملية.
+              <h3 className="font-semibold text-green-800 mb-2 arabic">بيانات تسجيل الدخول</h3>
+              <p className="text-sm text-green-700 arabic mb-2">
+                استخدم بيانات تسجيل الدخول التالية:
               </p>
+              <div className="space-y-1 text-sm text-green-800 arabic font-semibold">
+                <div>اسم المستخدم: <code className="bg-green-100 px-2 py-1 rounded">admin</code></div>
+                <div>كلمة المرور: <code className="bg-green-100 px-2 py-1 rounded">admin</code></div>
+              </div>
             </CardContent>
           </Card>
         </div>
