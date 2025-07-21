@@ -47,8 +47,8 @@ export default function Services() {
           <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
             نعمل على جمع أفضل مقدمي الخدمات السودانيين في مكان واحد.
           </p>
-          <Button className="bg-sudan-brown hover:bg-sudan-brown/90 arabic">
-            كن أول من يعلم عند الإطلاق
+                    <Button size="lg" className="bg-gradient-to-r from-sudan-brown to-amber-700 text-white hover:from-sudan-brown/90 hover:to-amber-700/90 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic px-8">
+            كن أول من يعلم عند الإطلاق 🔔
           </Button>
         </div>
       </div>
