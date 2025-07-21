@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Layout } from "@/components/Layout";
 import { LogIn, Eye, EyeOff } from "lucide-react";
+import { AuthService } from "@/lib/auth";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ export default function Login() {
                 </div>
               </div>
               <h1 className="text-2xl font-bold text-secondary-800 arabic">تسجيل الدخول</h1>
-              <p className="text-secondary-600 arabic">أدخل بيانات تسجيل دخولك</p>
+              <p className="text-secondary-600 arabic">أدخل بيانات تسجيل دخول��</p>
             </CardHeader>
             
             <CardContent className="space-y-6">
