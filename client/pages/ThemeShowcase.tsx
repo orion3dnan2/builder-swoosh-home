@@ -211,7 +211,7 @@ export default function ThemeShowcase() {
                 className={`flex items-center gap-2 arabic ${isRTL ? "flex-row-reverse" : "flex-row"}`}
               >
                 <Type className="w-6 h-6" />
-                {isRTL ? "عرض الخطوط" : "Typography Showcase"}
+عرض الخطوط
               </CardTitle>
             </CardHeader>
             <CardContent>
