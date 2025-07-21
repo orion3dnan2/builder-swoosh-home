@@ -216,7 +216,7 @@ export default function AdminStores() {
     );
     
     // Show success message
-    alert('تم إعادة تفعيل المتجر بنجاح! ���');
+    alert('تم إعادة تفعيل المتجر بنجاح! ✅');
   };
 
   // Confirm action modal
@@ -259,7 +259,7 @@ export default function AdminStores() {
               <Link to="/admin/dashboard">
                 <Button variant="outline" size="sm">
                   <ArrowLeft className="w-4 h-4 ml-2" />
-                  العودة
+                  {t('common.back')}
                 </Button>
               </Link>
               <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl flex items-center justify-center">
