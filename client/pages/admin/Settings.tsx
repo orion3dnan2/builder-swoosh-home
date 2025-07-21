@@ -111,7 +111,7 @@ export default function AdminSettings() {
                   إعدادات التطبيق
                 </h1>
                 <p className="text-gray-600 arabic">
-                  تخصيص المظهر والإعدادات العامة
+                  تخصيص المظهر والإ��دادات العامة
                 </p>
               </div>
             </div>
@@ -144,21 +144,24 @@ export default function AdminSettings() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs defaultValue="theme" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="theme" className="arabic">
-              المظهر
+              {t("settings.theme", "المظهر")}
+            </TabsTrigger>
+            <TabsTrigger value="fonts" className="arabic">
+              {t("settings.fonts", "الخطوط")}
             </TabsTrigger>
             <TabsTrigger value="branding" className="arabic">
-              العلامة التجارية
+              {t("settings.branding", "العلامة التجارية")}
             </TabsTrigger>
             <TabsTrigger value="features" className="arabic">
-              الميزات
+              {t("settings.features", "الميزات")}
             </TabsTrigger>
             <TabsTrigger value="content" className="arabic">
-              المحتوى
+              {t("settings.content", "المحتوى")}
             </TabsTrigger>
             <TabsTrigger value="advanced" className="arabic">
-              متقدم
+              {t("settings.advanced", "متقدم")}
             </TabsTrigger>
           </TabsList>
 
@@ -578,7 +581,7 @@ export default function AdminSettings() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <Label className="arabic">الشر��ط والأحكام</Label>
+                    <Label className="arabic">الشر��ط والأح��ام</Label>
                     <Textarea
                       value={localSettings.policies.termsOfService}
                       onChange={(e) =>
