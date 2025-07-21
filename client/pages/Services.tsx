@@ -1,7 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Settings, Search, Filter, Hammer, PaintBrush, Car, Home, Laptop, Heart, GraduationCap, Camera } from "lucide-react";
+import { Settings, Search, Filter, Hammer, Paintbrush, Car, Home, Laptop, Heart, GraduationCap, Camera } from "lucide-react";
 
 export default function Services() {
   return (
@@ -71,7 +71,7 @@ export default function Services() {
               <Car className="w-8 h-8 text-blue-600" />
             </div>
             <h3 className="text-lg font-semibold mb-2 arabic">السيارات</h3>
-            <p className="text-sm text-gray-600 arabic">صيانة وإصلاح المركبات</p>
+            <p className="text-sm text-gray-600 arabic">صيانة وإصلاح الم��كبات</p>
           </Card>
 
           {/* Home Services */}
@@ -115,7 +115,7 @@ export default function Services() {
             size="lg"
             className="bg-gradient-to-r from-primary-600 to-secondary-600 text-white hover:from-primary-700 hover:to-secondary-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic px-8"
           >
-            كن أول من يعلم عند الإطلاق 🔔
+            كن أول من يعلم عند الإطلاق ����
           </Button>
         </div>
       </div>
