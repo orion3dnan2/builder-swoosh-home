@@ -55,7 +55,7 @@ export default function Login() {
         // توجه إلى الصفحة الرئيسية
         navigate('/');
       } else {
-        setError("اسم المستخدم أو كلمة المرور غير صحيح��. استخدم admin/admin");
+        setError("اسم المستخدم أو كلمة المرور غير صحيحة. استخدم admin/admin");
       }
       
     } catch (err) {
@@ -67,25 +67,25 @@ export default function Login() {
 
   return (
     <Layout>
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 py-12 px-4">
         <div className="w-full max-w-md">
           {/* Login Form */}
-          <Card className="shadow-xl border-0">
+          <Card className="shadow-2xl border-0 rounded-3xl bg-white backdrop-blur-sm">
             <CardHeader className="text-center pb-6">
               <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-sudan-blue to-blue-600 rounded-full flex items-center justify-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl flex items-center justify-center shadow-lg">
                   <LogIn className="w-8 h-8 text-white" />
                 </div>
               </div>
-              <h1 className="text-2xl font-bold text-gray-800 arabic">تسجيل الدخول</h1>
-              <p className="text-gray-600 arabic">أدخل بيانات تسجيل دخولك</p>
+              <h1 className="text-2xl font-bold text-secondary-800 arabic">تسجيل الدخول</h1>
+              <p className="text-secondary-600 arabic">أدخل بيانات تسجيل دخولك</p>
             </CardHeader>
             
             <CardContent className="space-y-6">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="username" className="text-right block mb-2 arabic text-gray-700">
+                    <Label htmlFor="username" className="text-right block mb-2 arabic text-secondary-700 font-semibold">
                       🧑 اسم المستخدم
                     </Label>
                     <Input
@@ -94,13 +94,13 @@ export default function Login() {
                       placeholder="أدخل اسم المستخدم"
                       value={formData.username}
                       onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
-                      className="text-right arabic"
+                      className="text-right arabic rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600"
                       required
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="password" className="text-right block mb-2 arabic text-gray-700">
+                    <Label htmlFor="password" className="text-right block mb-2 arabic text-secondary-700 font-semibold">
                       🔐 كلمة المرور
                     </Label>
                     <div className="relative">
@@ -110,13 +110,13 @@ export default function Login() {
                         placeholder="أدخل كلمة المرور"
                         value={formData.password}
                         onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
-                        className="text-right arabic pr-12"
+                        className="text-right arabic pr-12 rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600"
                         required
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-secondary-400 hover:text-secondary-600"
                       >
                         {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>
@@ -133,26 +133,25 @@ export default function Login() {
                         setFormData(prev => ({ ...prev, rememberMe: checked as boolean }))
                       }
                     />
-                    <Label htmlFor="remember" className="text-sm arabic text-gray-600">
+                    <Label htmlFor="remember" className="text-sm arabic text-secondary-600">
                       تذكرني
                     </Label>
                   </div>
-                  <Link to="/forgot-password" className="text-sm text-sudan-blue hover:underline arabic">
+                  <Link to="/forgot-password" className="text-sm text-primary-600 hover:underline arabic font-semibold">
                     نسيت كلمة المرور؟
                   </Link>
                 </div>
 
                 {error && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-center arabic">
+                  <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl text-center arabic">
                     ⚠️ {error}
                   </div>
                 )}
 
                 <Button 
                   type="submit" 
-                  variant="sudan"
                   size="lg"
-                  className="w-full text-lg py-3 arabic"
+                  className="w-full text-lg py-4 arabic rounded-xl font-semibold"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -166,14 +165,14 @@ export default function Login() {
                 </Button>
 
                 <div className="text-center">
-                  <span className="text-gray-600 arabic">ليس لديك حساب؟ </span>
-                  <Link to="/register" className="text-sudan-blue hover:underline arabic">
+                  <span className="text-secondary-600 arabic">ليس لديك حساب؟ </span>
+                  <Link to="/register" className="text-primary-600 hover:underline arabic font-semibold">
                     انشئ حساب جديد
                   </Link>
                 </div>
 
                 <div className="text-center">
-                  <Link to="/company-register" className="text-sudan-orange hover:underline arabic text-sm">
+                  <Link to="/company-register" className="text-secondary-600 hover:underline arabic text-sm">
                     🏢 تسجيل للشركات والمؤسسات
                   </Link>
                 </div>
@@ -182,10 +181,10 @@ export default function Login() {
           </Card>
 
           {/* Additional Info */}
-          <Card className="mt-6 bg-gradient-to-br from-sudan-blue/5 to-blue-50 border-sudan-blue/20">
+          <Card className="mt-6 bg-gradient-to-br from-primary-50 to-primary-100 border-primary-200 rounded-2xl">
             <CardContent className="p-6">
-              <h3 className="font-semibold text-gray-800 mb-3 arabic">معلومات مهمة</h3>
-              <ul className="space-y-2 text-sm text-gray-600 arabic">
+              <h3 className="font-semibold text-primary-800 mb-3 arabic">معلومات مهمة</h3>
+              <ul className="space-y-2 text-sm text-primary-700 arabic">
                 <li>📧 مدير الموقع: admin@example.com</li>
                 <li>📞 تاجر / زبون: merchant@example.com</li>
                 <li>👥 خدمة الزبائن: customer@example.com</li>
@@ -194,15 +193,15 @@ export default function Login() {
           </Card>
 
           {/* Demo Instructions */}
-          <Card className="mt-4 bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+          <Card className="mt-4 bg-gradient-to-br from-secondary-50 to-secondary-100 border-secondary-200 rounded-2xl">
             <CardContent className="p-4">
-              <h3 className="font-semibold text-green-800 mb-2 arabic">بيانات تسجيل الدخول</h3>
-              <p className="text-sm text-green-700 arabic mb-2">
+              <h3 className="font-semibold text-secondary-800 mb-2 arabic">بيانات تسجيل الدخول</h3>
+              <p className="text-sm text-secondary-700 arabic mb-2">
                 استخدم بيانات تسجيل الدخول التالية:
               </p>
-              <div className="space-y-1 text-sm text-green-800 arabic font-semibold">
-                <div>اسم المستخدم: <code className="bg-green-100 px-2 py-1 rounded">admin</code></div>
-                <div>كلمة المرور: <code className="bg-green-100 px-2 py-1 rounded">admin</code></div>
+              <div className="space-y-1 text-sm text-secondary-800 arabic font-semibold">
+                <div>اسم المستخدم: <code className="bg-secondary-200 px-2 py-1 rounded-lg">admin</code></div>
+                <div>كلمة المرور: <code className="bg-secondary-200 px-2 py-1 rounded-lg">admin</code></div>
               </div>
             </CardContent>
           </Card>
