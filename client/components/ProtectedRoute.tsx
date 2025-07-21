@@ -19,50 +19,73 @@ export function ProtectedRoute({
   requiredPermission,
   fallbackPath = '/login' 
 }: ProtectedRouteProps) {
-  const { isAuthenticated, hasRole, hasPermission } = useAuth();
   const location = useLocation();
+  
+  // Use try-catch to handle any potential errors
+  try {
+    const { isAuthenticated, hasRole, hasPermission } = useAuth();
 
-  // Check if user is authenticated
-  if (!isAuthenticated) {
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      return <Navigate to={fallbackPath} state={{ from: location }} replace />;
+    }
+
+    // Check role requirement
+    if (requiredRole && !hasRole(requiredRole)) {
+      return <Navigate to="/unauthorized" replace />;
+    }
+
+    // Check permission requirement
+    if (requiredPermission && !hasPermission(requiredPermission.resource, requiredPermission.action)) {
+      return <Navigate to="/unauthorized" replace />;
+    }
+
+    return <>{children}</>;
+  } catch (error) {
+    console.error('ProtectedRoute error:', error);
+    // If there's an error, redirect to login
     return <Navigate to={fallbackPath} state={{ from: location }} replace />;
   }
-
-  // Check role requirement
-  if (requiredRole && !hasRole(requiredRole)) {
-    return <Navigate to="/unauthorized" replace />;
-  }
-
-  // Check permission requirement
-  if (requiredPermission && !hasPermission(requiredPermission.resource, requiredPermission.action)) {
-    return <Navigate to="/unauthorized" replace />;
-  }
-
-  return <>{children}</>;
 }
 
-// Helper components for specific roles
+// Helper components for specific roles with error handling
 export function SuperAdminRoute({ children }: { children: ReactNode }) {
-  return (
-    <ProtectedRoute requiredRole="super_admin">
-      {children}
-    </ProtectedRoute>
-  );
+  try {
+    return (
+      <ProtectedRoute requiredRole="super_admin">
+        {children}
+      </ProtectedRoute>
+    );
+  } catch (error) {
+    console.error('SuperAdminRoute error:', error);
+    return <Navigate to="/login" replace />;
+  }
 }
 
 export function MerchantRoute({ children }: { children: ReactNode }) {
-  return (
-    <ProtectedRoute requiredRole="merchant">
-      {children}
-    </ProtectedRoute>
-  );
+  try {
+    return (
+      <ProtectedRoute requiredRole="merchant">
+        {children}
+      </ProtectedRoute>
+    );
+  } catch (error) {
+    console.error('MerchantRoute error:', error);
+    return <Navigate to="/login" replace />;
+  }
 }
 
 export function AdminOrMerchantRoute({ children }: { children: ReactNode }) {
-  const { isSuperAdmin, isMerchant } = useAuth();
-  
-  if (!isSuperAdmin && !isMerchant) {
-    return <Navigate to="/unauthorized" replace />;
+  try {
+    const { isSuperAdmin, isMerchant } = useAuth();
+    
+    if (!isSuperAdmin && !isMerchant) {
+      return <Navigate to="/unauthorized" replace />;
+    }
+    
+    return <>{children}</>;
+  } catch (error) {
+    console.error('AdminOrMerchantRoute error:', error);
+    return <Navigate to="/login" replace />;
   }
-  
-  return <>{children}</>;
 }
