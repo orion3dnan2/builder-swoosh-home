@@ -20,9 +20,11 @@ import {
   BarChart3
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function AdminDashboard() {
   const { user } = useAuth();
+  const { t, isRTL } = useTheme();
   const [stats] = useState({
     totalUsers: 1247,
     totalMerchants: 89,
@@ -36,48 +38,48 @@ export default function AdminDashboard() {
 
   const quickActions = [
     {
-      title: "إعدادات التطبيق",
-      description: "تخصيص المظهر والألوان والخطوط",
+      titleKey: "dashboard.app_settings",
+      descriptionKey: "dashboard.app_settings_desc",
       icon: Settings,
       href: "/admin/settings",
       color: "from-blue-500 to-blue-600",
       urgent: false
     },
     {
-      title: "إدارة المستخدمين",
-      description: "عرض وإدارة حسابات المستخدمين",
+      titleKey: "dashboard.user_management",
+      descriptionKey: "dashboard.user_management_desc",
       icon: Users,
       href: "/admin/users",
       color: "from-green-500 to-green-600",
       urgent: false
     },
     {
-      title: "إدارة المتاجر",
-      description: "مراجعة وإدارة المتاجر المسجلة",
+      titleKey: "dashboard.store_management",
+      descriptionKey: "dashboard.store_management_desc",
       icon: Store,
       href: "/admin/stores",
       color: "from-purple-500 to-purple-600",
       urgent: stats.pendingApprovals > 0
     },
     {
-      title: "تخصيص المظهر",
-      description: "تغيير الألوان والصور والخلفيات",
+      titleKey: "dashboard.appearance",
+      descriptionKey: "dashboard.appearance_desc",
       icon: Palette,
       href: "/admin/appearance",
       color: "from-pink-500 to-pink-600",
       urgent: false
     },
     {
-      title: "إعدادات النظام",
-      description: "صلاحيات وإعدادات الأمان",
+      titleKey: "dashboard.system_settings",
+      descriptionKey: "dashboard.system_settings_desc",
       icon: Shield,
       href: "/admin/system",
       color: "from-red-500 to-red-600",
       urgent: false
     },
     {
-      title: "إدارة المحتوى",
-      description: "النصوص والصور والترجمات",
+      titleKey: "dashboard.content_management",
+      descriptionKey: "dashboard.content_management_desc",
       icon: Globe,
       href: "/admin/content",
       color: "from-orange-500 to-orange-600",
@@ -103,16 +105,16 @@ export default function AdminDashboard() {
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 arabic">لوحة إدارة التطبيق</h1>
-                <p className="text-gray-600 arabic">مرحباً {user?.profile.name}</p>
+                <h1 className="text-2xl font-bold text-gray-900 arabic">{t('dashboard.admin')}</h1>
+                <p className="text-gray-600 arabic">{t('dashboard.welcome')} {user?.profile.name}</p>
               </div>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
-              <Badge variant="secondary" className="arabic">مدير أعلى</Badge>
+              <Badge variant="secondary" className="arabic">{t('dashboard.super_admin')}</Badge>
               <Link to="/">
                 <Button variant="outline" size="sm" className="arabic">
                   <Eye className="w-4 h-4 ml-2" />
-                  عرض الموقع
+                  {t('dashboard.view_site')}
                 </Button>
               </Link>
             </div>
@@ -129,7 +131,7 @@ export default function AdminDashboard() {
                 <Users className="w-8 h-8 text-blue-600" />
                 <div className="mr-4">
                   <p className="text-2xl font-bold text-blue-800">{stats.totalUsers.toLocaleString()}</p>
-                  <p className="text-blue-600 text-sm arabic">إجمالي المستخدمين</p>
+                  <p className="text-blue-600 text-sm arabic">{t('dashboard.total_users')}</p>
                 </div>
               </div>
             </CardContent>
@@ -141,7 +143,7 @@ export default function AdminDashboard() {
                 <Store className="w-8 h-8 text-green-600" />
                 <div className="mr-4">
                   <p className="text-2xl font-bold text-green-800">{stats.totalMerchants}</p>
-                  <p className="text-green-600 text-sm arabic">المتاجر المسجلة</p>
+                  <p className="text-green-600 text-sm arabic">{t('dashboard.registered_stores')}</p>
                 </div>
               </div>
             </CardContent>
@@ -153,7 +155,7 @@ export default function AdminDashboard() {
                 <Package className="w-8 h-8 text-purple-600" />
                 <div className="mr-4">
                   <p className="text-2xl font-bold text-purple-800">{stats.totalProducts.toLocaleString()}</p>
-                  <p className="text-purple-600 text-sm arabic">إجمالي المنتجات</p>
+                  <p className="text-purple-600 text-sm arabic">{t('dashboard.total_products')}</p>
                 </div>
               </div>
             </CardContent>
@@ -165,7 +167,7 @@ export default function AdminDashboard() {
                 <TrendingUp className="w-8 h-8 text-orange-600" />
                 <div className="mr-4">
                   <p className="text-2xl font-bold text-orange-800">${stats.monthlyRevenue.toLocaleString()}</p>
-                  <p className="text-orange-600 text-sm arabic">إيرادات الشهر</p>
+                  <p className="text-orange-600 text-sm arabic">{t('dashboard.monthly_revenue')}</p>
                 </div>
               </div>
             </CardContent>
@@ -262,7 +264,7 @@ export default function AdminDashboard() {
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                  <span className="text-sm font-medium text-blue-900 arabic">المتاجر النشطة</span>
+                  <span className="text-sm font-medium text-blue-900 arabic">المتاجر ��لنشطة</span>
                   <span className="text-lg font-bold text-blue-600">{stats.activeStores}</span>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
