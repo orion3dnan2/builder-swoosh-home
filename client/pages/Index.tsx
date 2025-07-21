@@ -76,7 +76,7 @@ export default function Index() {
     },
     {
       icon: <MapPin className="w-6 h-6 text-sudan-blue" />,
-      title: "توصيل سريع",
+      title: "توصي�� سريع",
       description: "خدمة توصيل سريعة لجميع دول الخليج"
     },
     {
@@ -102,13 +102,17 @@ export default function Index() {
             <p className="text-lg mb-10 arabic opacity-90 max-w-3xl mx-auto leading-relaxed">
               انضم واشترك لتحصل على أفضل العروض والخدمات من البيت السوداني، شبكة التواصل التجاري الأولى للسودانيين في الخليج
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-sudan-blue hover:bg-gray-100 px-8 py-4 text-lg arabic">
-                🛍️ تصفح السوق
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-sudan-blue px-8 py-4 text-lg arabic">
-                📞 سجل دخولك الآن
-              </Button>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/marketplace">
+                <Button size="lg" className="bg-white text-sudan-blue hover:bg-gray-100 px-8 py-4 text-lg arabic w-full sm:w-auto">
+                  🛍️ تصفح السوق
+                </Button>
+              </Link>
+              <Link to="/register">
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-sudan-blue px-8 py-4 text-lg arabic w-full sm:w-auto">
+                  📞 سجل دخولك الآن
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -198,7 +202,7 @@ export default function Index() {
                 </p>
                 <Link to="/register">
                   <Button size="lg" className="w-full bg-white text-sudan-blue hover:bg-gray-100 arabic">
-                    سجل دخولك الآن →
+                    سجل دخ��لك الآن →
                   </Button>
                 </Link>
               </div>
