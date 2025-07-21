@@ -29,6 +29,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 
 export default function AdminSettings() {
   const { user } = useAuth();
+  const { t, isRTL } = useTheme();
   const {
     settings,
     updateTheme,
@@ -539,7 +540,7 @@ export default function AdminSettings() {
                           </Label>
                           <p className="text-sm text-gray-600 arabic">
                             {key === "enableMarketplace" &&
-                              "تفعيل قسم السوق التجاري"}
+                              "تفعيل قسم السوق ال��جاري"}
                             {key === "enableProducts" &&
                               "تفعيل قسم بيع المنتجات"}
                             {key === "enableCompanies" && "تفعيل دليل الشركات"}
