@@ -97,11 +97,7 @@ export function LanguageAndThemeControls() {
     <div
       className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
     >
-      <LanguageToggle />
       <ThemeToggle />
-      <div className="hidden md:block">
-        <FontFamilySelector />
-      </div>
     </div>
   );
 }
