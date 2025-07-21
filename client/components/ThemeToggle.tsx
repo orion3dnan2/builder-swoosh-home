@@ -50,7 +50,6 @@ export function LanguageToggle() {
 
 export function FontFamilySelector() {
   const { arabicFont, englishFont, setArabicFont, setEnglishFont, t, language, getCurrentFont } = useTheme();
-  const { arabicFonts, englishFonts } = require("../contexts/ThemeContext");
 
   const currentFonts = language === "ar" ? arabicFonts : englishFonts;
   const currentFontId = language === "ar" ? arabicFont : englishFont;
