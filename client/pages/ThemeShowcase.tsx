@@ -171,9 +171,9 @@ export default function ThemeShowcase() {
                   className={`space-y-3 ${isRTL ? "text-right" : "text-left"}`}
                 >
                   <Label className="text-sm font-medium arabic">
-                    {isRTL ? "نوع الخط" : "Font Family"}
+                    نوع الخط العربي
                   </Label>
-                  <FontFamilySelector />
+                  <AdminFontSelector />
                 </div>
               </div>
             </CardContent>
