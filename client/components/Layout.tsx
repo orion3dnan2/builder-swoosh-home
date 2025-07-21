@@ -50,9 +50,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
 
           {/* Mobile Top Bar */}
-          <div className={`md:hidden flex items-center justify-between py-2 text-sm ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+          <div className={`md:hidden flex items-center justify-between py-2 text-xs ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
             <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-              <span className="text-xs truncate text-muted-foreground">{t('common.welcome')}</span>
+              <span className="text-xs truncate text-muted-foreground max-w-[120px]">{t('common.welcome')}</span>
               <div className={`flex items-center gap-1 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                 <Bell className="w-3 h-3 text-muted-foreground" />
                 <span className="bg-secondary-600 text-white rounded-full px-1.5 py-0.5 text-xs">3</span>
@@ -64,7 +64,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <LanguageAndThemeControls />
               <Link to="/login">
                 <Button variant="outline" size="sm" className="text-xs px-2 py-1 hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20">
-                  {t('common.login')}
+                  دخول
                 </Button>
               </Link>
             </div>
@@ -72,25 +72,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Main Header */}
           <div className={`flex items-center justify-between py-3 md:py-4 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-            <div className={`flex items-center gap-4 md:gap-8 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+            <div className={`flex items-center gap-3 md:gap-6 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
               {/* Logo */}
-              <Link to="/" className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-                <div className="w-8 h-8 md:w-12 md:h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center shadow-cultural">
-                  <span className="text-white text-lg md:text-xl font-bold">🇸🇩</span>
+              <Link to="/" className={`flex items-center gap-2 md:gap-3 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center shadow-cultural">
+                  <span className="text-white text-lg md:text-2xl font-bold">🇸🇩</span>
                 </div>
-                <div className={isRTL ? 'text-right' : 'text-left'}>
-                  <h1 className="text-lg md:text-2xl font-bold arabic text-foreground">{t('brand.name')}</h1>
-                  <p className="text-xs md:text-sm text-muted-foreground hidden sm:block">{t('brand.tagline')}</p>
+                <div className={`${isRTL ? 'text-right' : 'text-left'} min-w-0`}>
+                  <h1 className="text-lg md:text-2xl lg:text-3xl font-bold arabic text-foreground leading-tight">
+                    البيت السوداني
+                  </h1>
+                  <p className="text-xs md:text-sm text-muted-foreground hidden sm:block leading-tight">
+                    سوق وخدمات السودان
+                  </p>
                 </div>
               </Link>
 
               {/* Navigation - Desktop */}
-              <nav className={`hidden lg:flex items-center gap-6 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+              <nav className={`hidden xl:flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                 {navigation.map((item) => (
                   <Link
                     key={item.href}
                     to={item.href}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-200 arabic ${
+                    className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-200 arabic text-sm ${
                       isRTL ? 'flex-row-reverse' : 'flex-row'
                     } ${
                       location.pathname === item.href
@@ -106,28 +110,28 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </div>
 
             {/* Search and User Actions */}
-            <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-              <div className="relative hidden md:block">
+            <div className={`flex items-center gap-2 md:gap-4 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+              <div className="relative hidden lg:block">
                 <Search className={`absolute top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground ${
                   isRTL ? 'right-3' : 'left-3'
                 }`} />
                 <input
                   type="text"
                   placeholder={t('common.search')}
-                  className={`${isRTL ? 'pr-10 pl-4' : 'pl-10 pr-4'} py-2 w-80 rounded-xl input-dark arabic border shadow-sm focus:shadow-md transition-all duration-200 focus:ring-2 focus:ring-primary-500`}
+                  className={`${isRTL ? 'pr-10 pl-4 text-right' : 'pl-10 pr-4'} py-2 w-64 xl:w-80 rounded-xl input-dark arabic border shadow-sm focus:shadow-md transition-all duration-200 focus:ring-2 focus:ring-primary-500`}
                 />
               </div>
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden text-foreground hover:bg-muted"
+                className="xl:hidden text-foreground hover:bg-muted p-2"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                <Menu className="w-6 h-6" />
+                <Menu className="w-5 h-5" />
               </Button>
               <Link to="/login">
-                <Button variant="ghost" size="icon" className="text-foreground hover:bg-muted">
-                  <User className="w-6 h-6" />
+                <Button variant="ghost" size="icon" className="text-foreground hover:bg-muted p-2">
+                  <User className="w-5 h-5" />
                 </Button>
               </Link>
             </div>
@@ -135,13 +139,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <div className="lg:hidden pb-4 animate-slide-up">
-              <nav className="grid grid-cols-2 gap-2">
+            <div className="xl:hidden pb-4 animate-slide-up">
+              <nav className="grid grid-cols-2 gap-2 mb-4">
                 {navigation.map((item) => (
                   <Link
                     key={item.href}
                     to={item.href}
-                    className={`flex items-center gap-2 px-4 py-3 rounded-xl transition-all duration-200 arabic ${
+                    className={`flex items-center gap-2 px-3 py-3 rounded-xl transition-all duration-200 arabic text-sm ${
                       isRTL ? 'flex-row-reverse' : 'flex-row'
                     } ${
                       location.pathname === item.href
@@ -157,14 +161,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
               </nav>
               
               {/* Mobile search */}
-              <div className="mt-4 relative">
+              <div className="relative">
                 <Search className={`absolute top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground ${
                   isRTL ? 'right-3' : 'left-3'
                 }`} />
                 <input
                   type="text"
                   placeholder={t('common.search')}
-                  className={`${isRTL ? 'pr-10 pl-4' : 'pl-10 pr-4'} py-2 w-full rounded-xl input-dark arabic border shadow-sm focus:shadow-md transition-all duration-200 focus:ring-2 focus:ring-primary-500`}
+                  className={`${isRTL ? 'pr-10 pl-4 text-right' : 'pl-10 pr-4'} py-3 w-full rounded-xl input-dark arabic border shadow-sm focus:shadow-md transition-all duration-200 focus:ring-2 focus:ring-primary-500`}
                 />
               </div>
             </div>
@@ -180,7 +184,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="container mx-auto px-4">
           <div className={`grid grid-cols-1 md:grid-cols-4 gap-8 ${isRTL ? 'text-right' : 'text-left'}`}>
             <div>
-              <h3 className="text-xl font-bold mb-4 arabic text-foreground">{t('brand.name')}</h3>
+              <h3 className="text-xl font-bold mb-4 arabic text-foreground">البيت السوداني</h3>
               <p className="text-muted-foreground arabic">
                 {t('brand.description')}
               </p>
@@ -204,7 +208,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h4 className="text-lg font-semibold mb-4 arabic text-foreground">{t('footer.contact')}</h4>
               <p className="text-muted-foreground arabic mb-2">
-                {t('footer.email')}: info@sudan-house.com
+                {t('footer.email')}: info@bayt-sudani.com
               </p>
               <p className="text-muted-foreground arabic">
                 {t('footer.phone')}: +966 50 123 4567
@@ -213,7 +217,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
           <div className={`border-t border-border mt-8 pt-8 text-center arabic ${isRTL ? 'text-right' : 'text-center'}`}>
             <p className="text-muted-foreground">
-              © 2024 {t('brand.name')}. {t('footer.rights')}.
+              © 2024 البيت السوداني. {t('footer.rights')}.
             </p>
           </div>
         </div>
