@@ -145,23 +145,14 @@ export default function ThemeShowcase() {
 
                 {/* Language Toggle */}
                 <div
-                  className={`space-y-3 ${isRTL ? "text-right" : "text-left"}`}
+                  className={`space-y-3 text-right`}
                 >
                   <Label className="text-sm font-medium arabic">
-                    {isRTL ? "اللغة" : "Language"}
+                    اللغة
                   </Label>
-                  <div
-                    className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
-                  >
-                    <LanguageToggle />
+                  <div className="flex items-center gap-3 flex-row-reverse">
                     <span className="text-sm text-muted-foreground arabic">
-                      {language === "ar"
-                        ? isRTL
-                          ? "العربية"
-                          : "Arabic"
-                        : isRTL
-                          ? "الإنجليزية"
-                          : "English"}
+                      العربية (ثابت)
                     </span>
                   </div>
                 </div>
