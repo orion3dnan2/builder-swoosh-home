@@ -27,26 +27,7 @@ export function ThemeToggle() {
   );
 }
 
-export function LanguageToggle() {
-  const { language, toggleLanguage, t, isRTL } = useTheme();
-
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={toggleLanguage}
-      className="relative text-current hover:bg-white/10 transition-colors"
-      title={t("language.toggle")}
-    >
-      <div className="flex items-center justify-center">
-        <span className="text-sm font-bold">
-          {language === "ar" ? "ع" : "En"}
-        </span>
-      </div>
-      <span className="sr-only">{t("language.toggle")}</span>
-    </Button>
-  );
-}
+// Language toggle removed - Arabic only app
 
 export function FontFamilySelector() {
   const { arabicFont, englishFont, setArabicFont, setEnglishFont, t, language, getCurrentFont } = useTheme();
