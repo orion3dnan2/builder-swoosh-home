@@ -58,8 +58,8 @@ export default function Services() {
 
           {/* Design & Arts */}
           <Card className="text-center p-6 border-2 border-dashed border-gray-300 hover:border-primary-400 transition-colors">
-            <div className="w-16 h-16 mx-auto mb-4 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center">
-              <PaintBrush className="w-8 h-8 text-purple-600" />
+                        <div className="w-16 h-16 mx-auto mb-4 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center">
+              <Paintbrush className="w-8 h-8 text-purple-600" />
             </div>
             <h3 className="text-lg font-semibold mb-2 arabic">التصميم والفنون</h3>
             <p className="text-sm text-gray-600 arabic">مصممون وفنانون متخصصون</p>
@@ -71,7 +71,7 @@ export default function Services() {
               <Car className="w-8 h-8 text-blue-600" />
             </div>
             <h3 className="text-lg font-semibold mb-2 arabic">السيارات</h3>
-            <p className="text-sm text-gray-600 arabic">صيانة وإصلاح الم��كبات</p>
+            <p className="text-sm text-gray-600 arabic">صيانة وإصلاح المركبات</p>
           </Card>
 
           {/* Home Services */}
@@ -115,7 +115,7 @@ export default function Services() {
             size="lg"
             className="bg-gradient-to-r from-primary-600 to-secondary-600 text-white hover:from-primary-700 hover:to-secondary-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200 arabic px-8"
           >
-            كن أول من يعلم عند الإطلاق ����
+            كن أول من يعلم عند الإطلاق 🔔
           </Button>
         </div>
       </div>
