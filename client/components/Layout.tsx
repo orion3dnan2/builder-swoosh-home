@@ -12,6 +12,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { t, isRTL } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Check if current page is admin or merchant area
+  const isAdminOrMerchant = location.pathname.startsWith('/admin/') || location.pathname.startsWith('/merchant/');
+
   const navigation = [
     { name: t("nav.home"), href: "/", icon: "🏠" },
     { name: t("nav.marketplace"), href: "/marketplace", icon: "🛍️" },
