@@ -65,7 +65,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Main Header */}
                     <div className="flex items-center justify-between py-3 md:py-4">
-            <div className="flex items-center gap-8">
+                        <div className="flex items-center gap-4 md:gap-8">
               {/* Logo */}
               <Link to="/" className="flex items-center gap-3">
                                 <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg">
