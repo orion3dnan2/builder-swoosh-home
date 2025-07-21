@@ -7,10 +7,9 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/contexts/ThemeContext";
 import {
-  FontFamilySelector,
   ThemeToggle,
-  LanguageToggle,
 } from "@/components/ThemeToggle";
+import { AdminFontSelector } from "@/components/AdminFontSelector";
 import {
   Palette,
   Type,
