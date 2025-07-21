@@ -37,11 +37,7 @@ export default function Login() {
       return;
     }
 
-    if (formData.password.length < 6) {
-      setError("كلمة المرور يجب أن تكون على الأقل 6 أحرف");
-      setIsLoading(false);
-      return;
-    }
+    
 
     try {
       // محاكاة عملية تسجيل الدخول
