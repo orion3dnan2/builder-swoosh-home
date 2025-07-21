@@ -33,7 +33,7 @@ export default function Index() {
     },
     {
       icon: <Package className="w-8 h-8 text-secondary-600" />,
-      title: "المنتجات السودانية",
+      title: "المنتجات ال��ودانية",
       description: "أفضل المنتجات التقليدية والحديثة من السودان",
       href: "/products"
     },
@@ -67,7 +67,7 @@ export default function Index() {
         {
       icon: <CheckCircle className="w-6 h-6 text-primary-600" />,
       title: "خدمة عملاء مميزة",
-      description: "دعم فني على مدار 24/7 للمستخدمين"
+      description: "دعم فني على مدار 24/7 للمستخد��ين"
     },
     {
       icon: <Star className="w-6 h-6 text-secondary-600" />,
@@ -102,7 +102,7 @@ export default function Index() {
         <div className="absolute inset-0 bg-gradient-to-r from-primary-900/50 to-secondary-900/40"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6 arabic text-white drop-shadow-2xl">
+                                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 arabic text-white drop-shadow-2xl">
               البيت السوداني
             </h1>
             <p className="text-xl md:text-2xl mb-8 arabic text-white drop-shadow-lg">
