@@ -89,7 +89,7 @@ const translations = {
     "home.testimonials.subtitle": "ماذا يقول عملاؤنا عن تجربتهم معنا",
     "home.cta.title": "ابدأ رحلتك معنا اليوم",
     "home.cta.subtitle":
-      "انضم إلى آلاف السودانيين الذين يستخدمون البيت ال��وداني لتنمية أعمالهم وخدماتهم",
+      "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم",
     "home.cta.create_account": "إنشاء حساب مجاني",
     "home.stats.users": "مستخدم نشط",
     "home.stats.companies": "شركة مسجلة",
@@ -253,7 +253,7 @@ const translations = {
     "dashboard.activity.product_approval": "طلب اعتماد منتج",
     "dashboard.activity.negative_review": "مراجعة سلبية",
     "dashboard.activity.support_request": "طلب دعم فني",
-    "dashboard.user.ahmed_mohamed": "أحمد محمد",
+    "dashboard.user.ahmed_mohamed": "أحمد مح��د",
     "dashboard.user.fatima_abdullah": "فاطمة عبدالله",
     "dashboard.user.mohamed_ali": "محمد علي",
     "dashboard.user.aisha_ahmed": "عائشة أحمد",
@@ -580,21 +580,18 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     localStorage.setItem(STORAGE_KEYS.THEME, theme);
   }, [theme]);
 
-  // Apply language and direction to document
+  // Apply Arabic direction to document
   useEffect(() => {
     const root = document.documentElement;
     const body = document.body;
 
-    // Set direction
-    root.dir = language === "ar" ? "rtl" : "ltr";
-    body.dir = language === "ar" ? "rtl" : "ltr";
+    // Set direction to RTL for Arabic
+    root.dir = "rtl";
+    body.dir = "rtl";
 
-    // Set language attribute
-    root.lang = language;
-
-    // Store in localStorage
-    localStorage.setItem(STORAGE_KEYS.LANGUAGE, language);
-  }, [language]);
+    // Set language attribute to Arabic
+    root.lang = "ar";
+  }, []);
 
   // Apply fonts based on current language
   useEffect(() => {
@@ -721,7 +718,7 @@ export const arabicFonts = [
     id: "lateef" as ArabicFontFamily,
     name: "لطيف",
     englishName: "Lateef",
-    preview: "أهلاً وس��لاً بكم في البيت السوداني",
+    preview: "أهلاً وسهلاً بكم في البيت السوداني",
     url: "https://fonts.googleapis.com/css2?family=Lateef:wght@200;300;400;500;600;700;800&display=swap",
   },
   {
