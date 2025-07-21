@@ -51,7 +51,7 @@ const translations = {
     "common.edit": "تعديل",
     "common.delete": "حذف",
     "common.view": "عرض",
-    "common.details": "التفاصيل",
+    "common.details": "التف��صيل",
     "common.more": "المزيد",
     "common.loading": "جاري التحميل...",
     "common.success": "تم بنجاح",
@@ -73,10 +73,10 @@ const translations = {
       "مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج والعالم",
     "home.services.marketplace": "السوق التجاري",
     "home.services.marketplace_desc":
-      "اكتشف م��تجات سودانية أصيلة من تجار موثوقين",
+      "اكتشف منتجات سودانية أصيلة من تجار موثوقين",
     "home.services.companies": "دليل الشركات",
     "home.services.companies_desc":
-      "تواصل مع الشركات والمؤسسات السودانية في الخليج",
+      "تواصل مع ��لشركات والمؤسسات السودانية في الخليج",
     "home.services.jobs": "لوحة الوظائف",
     "home.services.jobs_desc": "ابحث عن فرص عمل مناسبة أو أعلن عن وظائف شاغرة",
     "home.services.professional": "الخدمات ا��مهنية",
@@ -90,7 +90,7 @@ const translations = {
     "home.cta.title": "ابدأ رحلتك معنا اليوم",
     "home.cta.subtitle":
       "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم",
-    "home.cta.create_account": "إ��شاء حساب مجاني",
+    "home.cta.create_account": "إنشاء حساب مجاني",
     "home.stats.users": "مستخدم نشط",
     "home.stats.companies": "شركة مسجلة",
     "home.stats.products": "منتج متوفر",
@@ -497,6 +497,21 @@ const translations = {
     "font_settings.arabic_preview_text": "Arabic Preview Text",
     "font_settings.english_preview_text": "English Preview Text",
     "common.selected": "Selected",
+
+    // Dashboard Activities
+    "dashboard.activity.new_store": "New store registration",
+    "dashboard.activity.product_approval": "Product approval request",
+    "dashboard.activity.negative_review": "Negative review",
+    "dashboard.activity.support_request": "Support request",
+    "dashboard.user.ahmed_mohamed": "Ahmed Mohamed",
+    "dashboard.user.fatima_abdullah": "Fatima Abdullah",
+    "dashboard.user.mohamed_ali": "Mohamed Ali",
+    "dashboard.user.aisha_ahmed": "Aisha Ahmed",
+    "dashboard.time.15_minutes_ago": "15 minutes ago",
+    "dashboard.time.30_minutes_ago": "30 minutes ago",
+    "dashboard.time.1_hour_ago": "1 hour ago",
+    "dashboard.time.2_hours_ago": "2 hours ago",
+    "dashboard.by": "by",
 
     // Error messages
     "error.404": "Page Not Found",
