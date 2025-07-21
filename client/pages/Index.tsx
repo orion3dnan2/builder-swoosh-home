@@ -98,7 +98,7 @@ export default function Index() {
     {
       name: "أحمد محمد",
       role: "صاحب متجر",
-      content: "البيت السوداني ساعدني في الوصول لعملاء جدد وتنمية تجارتي بشكل كبير",
+      content: "البيت السوداني ساعدني في ا��وصول لعملاء جدد وتنمية تجارتي بشكل كبير",
       rating: 5
     },
     {
@@ -220,7 +220,7 @@ export default function Index() {
               {t('home.testimonials.title')}
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-muted-foreground arabic">
-              ماذا يقول عملاؤنا عن تجربتهم معنا
+              {t('home.testimonials.subtitle')}
             </p>
           </div>
 
