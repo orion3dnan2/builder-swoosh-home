@@ -58,7 +58,7 @@ export class AuthService {
 
         const user = demoUsers[credentials.username];
         if (user && credentials.password === credentials.username) {
-          this.setCurrentUser(user);
+          AuthService.setCurrentUser(user);
           resolve(user);
         } else {
           reject(new Error('اسم المستخدم أو كلمة المرور غير صحيحة'));
@@ -68,79 +68,210 @@ export class AuthService {
   }
 
   static logout(): void {
-    localStorage.removeItem(this.STORAGE_KEYS.USER);
-    localStorage.removeItem(this.STORAGE_KEYS.TOKEN);
-    localStorage.removeItem(this.STORAGE_KEYS.PERMISSIONS);
+    try {
+      localStorage.removeItem(AuthService.STORAGE_KEYS.USER);
+      localStorage.removeItem(AuthService.STORAGE_KEYS.TOKEN);
+      localStorage.removeItem(AuthService.STORAGE_KEYS.PERMISSIONS);
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   }
 
   static getCurrentUser(): User | null {
     try {
-      const userStr = localStorage.getItem(this.STORAGE_KEYS.USER);
+      if (typeof window === 'undefined' || !window.localStorage) {
+        return null;
+      }
+      const userStr = localStorage.getItem(AuthService.STORAGE_KEYS.USER);
       return userStr ? JSON.parse(userStr) : null;
-    } catch {
+    } catch (error) {
+      console.error('Error getting current user:', error);
       return null;
     }
   }
 
   static setCurrentUser(user: User): void {
-    localStorage.setItem(this.STORAGE_KEYS.USER, JSON.stringify(user));
-    localStorage.setItem(this.STORAGE_KEYS.TOKEN, `token_${user.id}_${Date.now()}`);
-    localStorage.setItem(this.STORAGE_KEYS.PERMISSIONS, JSON.stringify(user.permissions));
+    try {
+      if (typeof window === 'undefined' || !window.localStorage) {
+        return;
+      }
+      localStorage.setItem(AuthService.STORAGE_KEYS.USER, JSON.stringify(user));
+      localStorage.setItem(AuthService.STORAGE_KEYS.TOKEN, `token_${user.id}_${Date.now()}`);
+      localStorage.setItem(AuthService.STORAGE_KEYS.PERMISSIONS, JSON.stringify(user.permissions));
+    } catch (error) {
+      console.error('Error setting current user:', error);
+    }
   }
 
   static isAuthenticated(): boolean {
-    return this.getCurrentUser() !== null;
+    try {
+      return AuthService.getCurrentUser() !== null;
+    } catch (error) {
+      console.error('Error checking authentication:', error);
+      return false;
+    }
   }
 
   static hasRole(role: UserRole): boolean {
-    const user = this.getCurrentUser();
-    return user?.role === role;
+    try {
+      const user = AuthService.getCurrentUser();
+      return user?.role === role;
+    } catch (error) {
+      console.error('Error checking role:', error);
+      return false;
+    }
   }
 
   static hasPermission(resource: string, action: string): boolean {
-    const user = this.getCurrentUser();
-    if (!user) return false;
+    try {
+      const user = AuthService.getCurrentUser();
+      if (!user) return false;
 
-    // Super admin has all permissions
-    if (user.role === 'super_admin') return true;
+      // Super admin has all permissions
+      if (user.role === 'super_admin') return true;
 
-    return user.permissions.some(permission => {
-      const hasResource = permission.resource === '*' || permission.resource === resource;
-      const hasAction = permission.actions.includes('*') || permission.actions.includes(action);
-      return hasResource && hasAction;
-    });
+      return user.permissions.some(permission => {
+        const hasResource = permission.resource === '*' || permission.resource === resource;
+        const hasAction = permission.actions.includes('*') || permission.actions.includes(action);
+        return hasResource && hasAction;
+      });
+    } catch (error) {
+      console.error('Error checking permission:', error);
+      return false;
+    }
   }
 
   static getUserRole(): UserRole | null {
-    return this.getCurrentUser()?.role || null;
+    try {
+      return AuthService.getCurrentUser()?.role || null;
+    } catch (error) {
+      console.error('Error getting user role:', error);
+      return null;
+    }
   }
 
   static isSuperAdmin(): boolean {
-    return this.hasRole('super_admin');
+    try {
+      return AuthService.hasRole('super_admin');
+    } catch (error) {
+      console.error('Error checking super admin role:', error);
+      return false;
+    }
   }
 
   static isMerchant(): boolean {
-    return this.hasRole('merchant');
+    try {
+      return AuthService.hasRole('merchant');
+    } catch (error) {
+      console.error('Error checking merchant role:', error);
+      return false;
+    }
   }
 
   static isCustomer(): boolean {
-    return this.hasRole('customer');
+    try {
+      return AuthService.hasRole('customer');
+    } catch (error) {
+      console.error('Error checking customer role:', error);
+      return false;
+    }
   }
 }
 
-// React hook for authentication
+// Create safe wrapper functions
+const safeGetCurrentUser = (): User | null => {
+  try {
+    return AuthService.getCurrentUser();
+  } catch (error) {
+    console.error('Safe getCurrentUser error:', error);
+    return null;
+  }
+};
+
+const safeIsAuthenticated = (): boolean => {
+  try {
+    return AuthService.isAuthenticated();
+  } catch (error) {
+    console.error('Safe isAuthenticated error:', error);
+    return false;
+  }
+};
+
+const safeHasRole = (role: UserRole): boolean => {
+  try {
+    return AuthService.hasRole(role);
+  } catch (error) {
+    console.error('Safe hasRole error:', error);
+    return false;
+  }
+};
+
+const safeHasPermission = (resource: string, action: string): boolean => {
+  try {
+    return AuthService.hasPermission(resource, action);
+  } catch (error) {
+    console.error('Safe hasPermission error:', error);
+    return false;
+  }
+};
+
+const safeIsSuperAdmin = (): boolean => {
+  try {
+    return AuthService.isSuperAdmin();
+  } catch (error) {
+    console.error('Safe isSuperAdmin error:', error);
+    return false;
+  }
+};
+
+const safeIsMerchant = (): boolean => {
+  try {
+    return AuthService.isMerchant();
+  } catch (error) {
+    console.error('Safe isMerchant error:', error);
+    return false;
+  }
+};
+
+const safeIsCustomer = (): boolean => {
+  try {
+    return AuthService.isCustomer();
+  } catch (error) {
+    console.error('Safe isCustomer error:', error);
+    return false;
+  }
+};
+
+const safeLogin = async (credentials: { username: string; password: string }): Promise<User> => {
+  try {
+    return await AuthService.login(credentials);
+  } catch (error) {
+    console.error('Safe login error:', error);
+    throw error;
+  }
+};
+
+const safeLogout = (): void => {
+  try {
+    AuthService.logout();
+  } catch (error) {
+    console.error('Safe logout error:', error);
+  }
+};
+
+// React hook for authentication with error handling
 export const useAuth = () => {
-  const user = AuthService.getCurrentUser();
+  const user = safeGetCurrentUser();
   
   return {
     user,
-    isAuthenticated: AuthService.isAuthenticated(),
-    isSuperAdmin: AuthService.isSuperAdmin(),
-    isMerchant: AuthService.isMerchant(),
-    isCustomer: AuthService.isCustomer(),
-    hasPermission: AuthService.hasPermission,
-    hasRole: AuthService.hasRole,
-    login: AuthService.login,
-    logout: AuthService.logout
+    isAuthenticated: safeIsAuthenticated(),
+    isSuperAdmin: safeIsSuperAdmin(),
+    isMerchant: safeIsMerchant(),
+    isCustomer: safeIsCustomer(),
+    hasPermission: safeHasPermission,
+    hasRole: safeHasRole,
+    login: safeLogin,
+    logout: safeLogout
   };
 };
