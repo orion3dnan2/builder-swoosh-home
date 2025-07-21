@@ -218,7 +218,7 @@ export default function AdminDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center arabic">
                 <MessageSquare className="w-5 h-5 ml-2" />
-                النشاط الأخير
+                {t('dashboard.recent_activity')}
               </CardTitle>
             </CardHeader>
             <CardContent>
