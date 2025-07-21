@@ -158,7 +158,7 @@ export default function Index() {
                   size="lg"
                   className="button-cultural w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg arabic"
                 >
-                  استكشف السوق
+                  {t("home.hero.explore_market")}
                   <ArrowIcon
                     className={`w-4 h-4 md:w-5 md:h-5 ${isRTL ? "mr-2" : "ml-2"}`}
                   />
@@ -170,7 +170,7 @@ export default function Index() {
                   size="lg"
                   className="w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white hover:text-primary-700 arabic"
                 >
-                  انضم إلينا
+                  {t("home.hero.join_us")}
                 </Button>
               </Link>
             </div>
