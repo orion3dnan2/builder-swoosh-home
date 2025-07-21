@@ -10,13 +10,13 @@ export default function Products() {
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex justify-center mb-4">
-            <div className="w-20 h-20 bg-gradient-to-br from-sudan-red to-red-600 rounded-full flex items-center justify-center">
+                        <div className="w-20 h-20 bg-gradient-to-br from-secondary-600 to-secondary-800 rounded-2xl flex items-center justify-center shadow-lg">
               <Package className="w-10 h-10 text-white" />
             </div>
           </div>
           <h1 className="text-4xl font-bold text-gray-800 mb-4 arabic">المنتجات السودانية</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto arabic">
-            أفضل المنتجات التقليدية والحديثة من السودان
+            أفضل المنتجات ال��قليدية والحديثة من السودان
           </p>
         </div>
 
@@ -47,7 +47,7 @@ export default function Products() {
           <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
             نعمل على إضافة مجموعة واسعة من المنتجات السودانية الأصيلة.
           </p>
-                    <Button variant="sudan-red" size="lg" className="arabic px-8">
+                              <Button variant="secondary" size="lg" className="arabic px-8 rounded-xl font-semibold">
             كن أول من يعلم عند الإطلاق 🔔
           </Button>
         </div>
