@@ -18,6 +18,7 @@ import AdminUsers from "./pages/admin/Users";
 import AdminAppearance from "./pages/admin/Appearance";
 import AdminSystem from "./pages/admin/System";
 import AdminContent from "./pages/admin/Content";
+import AdminActivity from "./pages/admin/Activity";
 import MerchantDashboard from "./pages/merchant/Dashboard";
 import MerchantProducts from "./pages/merchant/Products";
 import NewProduct from "./pages/merchant/NewProduct";
