@@ -97,6 +97,14 @@ function App() {
                 </SuperAdminRoute>
               }
             />
+            <Route
+              path="/admin/activity"
+              element={
+                <SuperAdminRoute>
+                  <AdminActivity />
+                </SuperAdminRoute>
+              }
+            />
 
             {/* Merchant Routes */}
             <Route
