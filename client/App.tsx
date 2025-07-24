@@ -149,6 +149,14 @@ function App() {
                 </MerchantRoute>
               }
             />
+            <Route
+              path="/merchant/settings"
+              element={
+                <MerchantRoute>
+                  <MerchantSettings />
+                </MerchantRoute>
+              }
+            />
 
             {/* Public Routes */}
             <Route path="/marketplace" element={<Marketplace />} />
