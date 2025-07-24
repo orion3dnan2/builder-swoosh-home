@@ -24,6 +24,7 @@ import MerchantProducts from "./pages/merchant/Products";
 import NewProduct from "./pages/merchant/NewProduct";
 import MerchantAnalytics from "./pages/merchant/Analytics";
 import MerchantOrders from "./pages/merchant/Orders";
+import MerchantSettings from "./pages/merchant/Settings";
 import { SuperAdminRoute, MerchantRoute } from "./components/ProtectedRoute";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
