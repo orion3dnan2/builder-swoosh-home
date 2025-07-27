@@ -45,7 +45,7 @@ export default function AdminDashboard() {
     },
     {
       title: "إدارة المستخدمين",
-      description: "إضافة وتعديل و��ذف المستخدمين والأذونات",
+      description: "إضافة وتعديل وحذف المستخدمين والأذونات",
       icon: Users,
       href: "/admin/users",
       color: "from-green-500 to-green-600",
@@ -149,64 +149,64 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-blue-200 dark:border-blue-700">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Users className="w-8 h-8 text-blue-600" />
+                <Users className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-blue-800">
-                    {stats.totalUsers.toLocaleString()}
+                  <p className="text-2xl font-bold text-blue-800 dark:text-blue-200">
+                    {stats.totalUsers.toLocaleString('ar-SA')}
                   </p>
-                  <p className="text-blue-600 text-sm arabic">
-                    {t("dashboard.total_users")}
+                  <p className="text-blue-600 dark:text-blue-400 text-sm arabic">
+                    إجمالي المستخدمين
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+          <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border-green-200 dark:border-green-700">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Store className="w-8 h-8 text-green-600" />
+                <Store className="w-8 h-8 text-green-600 dark:text-green-400" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-green-800">
-                    {stats.totalMerchants}
+                  <p className="text-2xl font-bold text-green-800 dark:text-green-200">
+                    {stats.totalMerchants.toLocaleString('ar-SA')}
                   </p>
-                  <p className="text-green-600 text-sm arabic">
-                    {t("dashboard.registered_stores")}
+                  <p className="text-green-600 dark:text-green-400 text-sm arabic">
+                    المتاجر المسجلة
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 border-purple-200 dark:border-purple-700">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Package className="w-8 h-8 text-purple-600" />
+                <Package className="w-8 h-8 text-purple-600 dark:text-purple-400" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-purple-800">
-                    {stats.totalProducts.toLocaleString()}
+                  <p className="text-2xl font-bold text-purple-800 dark:text-purple-200">
+                    {stats.totalProducts.toLocaleString('ar-SA')}
                   </p>
-                  <p className="text-purple-600 text-sm arabic">
-                    {t("dashboard.total_products")}
+                  <p className="text-purple-600 dark:text-purple-400 text-sm arabic">
+                    إجمالي المنتجات
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
+          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 border-orange-200 dark:border-orange-700">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <TrendingUp className="w-8 h-8 text-orange-600" />
+                <TrendingUp className="w-8 h-8 text-orange-600 dark:text-orange-400" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-orange-800">
-                    ${stats.monthlyRevenue.toLocaleString()}
+                  <p className="text-2xl font-bold text-orange-800 dark:text-orange-200">
+                    {stats.monthlyRevenue.toLocaleString('ar-SA')} ج.س
                   </p>
-                  <p className="text-orange-600 text-sm arabic">
-                    {t("dashboard.monthly_revenue")}
+                  <p className="text-orange-600 dark:text-orange-400 text-sm arabic">
+                    الإيرادات الشهرية
                   </p>
                 </div>
               </div>
