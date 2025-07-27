@@ -17,7 +17,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { name: "الشركات", href: "/companies", icon: "🏢" },
     { name: "الوظائف", href: "/jobs", icon: "💼" },
     { name: "الخدمات", href: "/services", icon: "🛠️" },
-    { name: "��لإعلانات", href: "/ads", icon: "📢" },
+    { name: "الإعلانات", href: "/ads", icon: "📢" },
   ];
 
   return (
@@ -77,7 +77,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <span className="text-xs truncate text-muted-foreground max-w-[120px]">
-                مرحباً بكم في البيت السودا��ي
+                مرحباً بكم في البيت ��لسوداني
               </span>
               <div
                 className={`flex items-center gap-1 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
@@ -230,7 +230,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 />
                 <input
                   type="text"
-                  placeholder={t("common.search")}
+                  placeholder="ابحث في البيت السوداني..."
                   className={`${isRTL ? "pr-10 pl-4 text-right" : "pl-10 pr-4"} py-3 w-full rounded-xl input-dark arabic border shadow-sm focus:shadow-md transition-all duration-200 focus:ring-2 focus:ring-primary-500`}
                 />
               </div>
