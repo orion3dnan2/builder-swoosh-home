@@ -60,12 +60,13 @@ export default function AdminContent() {
   const [menus, setMenus] = useState<MenuType[]>([]);
   const [templates, setTemplates] = useState<ContentTemplate[]>([]);
   const [settings, setSettings] = useState<ContentSettings | null>(null);
-  
+  const [settingsData, setSettingsData] = useState<ContentSettings | null>(null);
+
   const [loading, setLoading] = useState(true);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [filterStatus, setFilterStatus] = useState("all");
@@ -254,7 +255,7 @@ export default function AdminContent() {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-300 arabic">جاري تحميل بيانات المحتوى...</p>
+          <p className="text-gray-600 dark:text-gray-300 arabic">جاري تحميل بيانات ��لمحتوى...</p>
         </div>
       </div>
     );
@@ -281,7 +282,7 @@ export default function AdminContent() {
                   إدارة المحتوى
                 </h1>
                 <p className="text-gray-600 dark:text-gray-300 arabic">
-                  إدارة الصفحات والمقالات والوسائط
+                  إدارة الصفحات والمقالات والو��ائط
                 </p>
               </div>
             </div>
