@@ -363,3 +363,156 @@ export interface SystemLog {
   userAgent?: string;
   timestamp: string;
 }
+
+// Content Management Types
+export interface ContentPage {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt?: string;
+  status: "published" | "draft" | "private";
+  type: "page" | "post" | "news";
+  language: "ar" | "en";
+  seo: {
+    metaTitle: string;
+    metaDescription: string;
+    keywords: string[];
+    ogImage?: string;
+  };
+  author: {
+    id: string;
+    name: string;
+  };
+  categories: Category[];
+  tags: string[];
+  featuredImage?: string;
+  publishedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  parentId?: string;
+  color?: string;
+  icon?: string;
+  count: number;
+}
+
+export interface Media {
+  id: string;
+  filename: string;
+  originalName: string;
+  mimeType: string;
+  size: number;
+  url: string;
+  thumbnailUrl?: string;
+  alt?: string;
+  caption?: string;
+  description?: string;
+  uploadedBy: {
+    id: string;
+    name: string;
+  };
+  createdAt: string;
+}
+
+export interface Translation {
+  id: string;
+  key: string;
+  language: "ar" | "en";
+  value: string;
+  category: string;
+  context?: string;
+  isPlural?: boolean;
+  pluralForms?: Record<string, string>;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Menu {
+  id: string;
+  name: string;
+  location: "header" | "footer" | "sidebar" | "custom";
+  items: MenuItem[];
+  language: "ar" | "en";
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface MenuItem {
+  id: string;
+  label: string;
+  url: string;
+  type: "page" | "category" | "custom" | "external";
+  target: "_self" | "_blank";
+  icon?: string;
+  order: number;
+  parentId?: string;
+  children?: MenuItem[];
+}
+
+export interface ContentTemplate {
+  id: string;
+  name: string;
+  description?: string;
+  type: "page" | "post" | "email";
+  content: string;
+  variables: TemplateVariable[];
+  preview?: string;
+  isDefault: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TemplateVariable {
+  key: string;
+  label: string;
+  type: "text" | "image" | "date" | "number" | "boolean";
+  required: boolean;
+  defaultValue?: any;
+}
+
+export interface ContentSettings {
+  general: {
+    siteName: string;
+    tagline: string;
+    description: string;
+    logo: string;
+    favicon: string;
+    language: "ar" | "en";
+    timezone: string;
+  };
+  seo: {
+    defaultMetaTitle: string;
+    defaultMetaDescription: string;
+    defaultKeywords: string[];
+    googleAnalyticsId?: string;
+    googleSearchConsoleId?: string;
+    facebookPixelId?: string;
+  };
+  social: {
+    facebookUrl?: string;
+    twitterUrl?: string;
+    instagramUrl?: string;
+    linkedinUrl?: string;
+    youtubeUrl?: string;
+  };
+  comments: {
+    enabled: boolean;
+    requireApproval: boolean;
+    allowGuests: boolean;
+    notifyOnNewComment: boolean;
+  };
+  editor: {
+    allowHtml: boolean;
+    allowScripts: boolean;
+    uploadMaxSize: number;
+    allowedFileTypes: string[];
+  };
+}
