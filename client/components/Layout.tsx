@@ -63,7 +63,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   size="sm"
                   className="hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
                 >
-                  {t("common.login")}
+                  تسجيل الدخول
                 </Button>
               </Link>
             </div>
