@@ -325,49 +325,49 @@ export default function AdminDashboard() {
           </Card>
 
           {/* Quick Stats */}
-          <Card>
+          <Card className="dark:bg-gray-800 dark:border-gray-700">
             <CardHeader>
-              <CardTitle className="flex items-center arabic">
+              <CardTitle className="flex items-center arabic text-gray-900 dark:text-white">
                 <BarChart3 className="w-5 h-5 ml-2" />
                 إحصائيات سريعة
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                  <span className="text-sm font-medium text-blue-900 arabic">
+                <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <span className="text-sm font-medium text-blue-900 dark:text-blue-200 arabic">
                     المتاجر ��لنشطة
                   </span>
-                  <span className="text-lg font-bold text-blue-600">
-                    {stats.activeStores}
+                  <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                    {stats.activeStores.toLocaleString('ar-SA')}
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
-                  <span className="text-sm font-medium text-yellow-900 arabic">
+                <div className="flex items-center justify-between p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                  <span className="text-sm font-medium text-yellow-900 dark:text-yellow-200 arabic">
                     طلبات الاعتماد
                   </span>
-                  <span className="text-lg font-bold text-yellow-600">
-                    {stats.pendingApprovals}
+                  <span className="text-lg font-bold text-yellow-600 dark:text-yellow-400">
+                    {stats.pendingApprovals.toLocaleString('ar-SA')}
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
-                  <span className="text-sm font-medium text-green-900 arabic">
+                <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                  <span className="text-sm font-medium text-green-900 dark:text-green-200 arabic">
                     تسجيلات جديدة
                   </span>
-                  <span className="text-lg font-bold text-green-600">
-                    {stats.newRegistrations}
+                  <span className="text-lg font-bold text-green-600 dark:text-green-400">
+                    {stats.newRegistrations.toLocaleString('ar-SA')}
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
-                  <span className="text-sm font-medium text-purple-900 arabic">
+                <div className="flex items-center justify-between p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                  <span className="text-sm font-medium text-purple-900 dark:text-purple-200 arabic">
                     إجمالي الطلبات
                   </span>
-                  <span className="text-lg font-bold text-purple-600">
-                    {stats.totalOrders}
+                  <span className="text-lg font-bold text-purple-600 dark:text-purple-400">
+                    {stats.totalOrders.toLocaleString('ar-SA')}
                   </span>
                 </div>
               </div>
-              <div className="mt-4 pt-4 border-t">
+              <div className="mt-4 pt-4 border-t dark:border-gray-600">
                 <Link to="/admin/analytics">
                   <Button variant="outline" size="sm" className="w-full arabic">
                     عرض التقارير التفصيلية
