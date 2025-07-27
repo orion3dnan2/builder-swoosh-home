@@ -11,6 +11,28 @@ import {
   backupDatabase,
   clearCache
 } from "./routes/system";
+import {
+  getPages,
+  getPage,
+  createPage,
+  updatePage,
+  deletePage,
+  getCategories,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  getMedia,
+  uploadMedia,
+  deleteMedia,
+  getTranslations,
+  updateTranslation,
+  getMenus,
+  updateMenu,
+  getTemplates,
+  createTemplate,
+  getContentSettings,
+  updateContentSettings
+} from "./routes/content";
 
 export function createServer() {
   const app = express();
