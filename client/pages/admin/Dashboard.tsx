@@ -45,7 +45,7 @@ export default function AdminDashboard() {
     },
     {
       title: "إدارة المستخدمين",
-      description: "إضافة وتعديل وحذف المستخدمين والأذونات",
+      description: "إضافة وتعديل و��ذف المستخدمين والأذونات",
       icon: Users,
       href: "/admin/users",
       color: "from-green-500 to-green-600",
@@ -113,9 +113,9 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-4 space-x-reverse">
@@ -123,22 +123,22 @@ export default function AdminDashboard() {
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 arabic">
-                  {t("dashboard.admin")}
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white arabic">
+                  لوحة التحكم الإدارية
                 </h1>
-                <p className="text-gray-600 arabic">
-                  {t("dashboard.welcome")} {user?.profile.name}
+                <p className="text-gray-600 dark:text-gray-300 arabic">
+                  أهلاً وسهلاً {user?.profile.name || "المدير"}
                 </p>
               </div>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
               <Badge variant="secondary" className="arabic">
-                {t("dashboard.super_admin")}
+                مدير عام
               </Badge>
               <Link to="/">
                 <Button variant="outline" size="sm" className="arabic">
                   <Eye className="w-4 h-4 ml-2" />
-                  {t("dashboard.view_site")}
+                  عرض الموقع
                 </Button>
               </Link>
             </div>
