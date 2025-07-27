@@ -194,3 +194,172 @@ export interface AppSettings {
     refundPolicy: string;
   };
 }
+
+export interface SystemSettings {
+  security: {
+    enableTwoFactor: boolean;
+    sessionTimeout: number;
+    maxLoginAttempts: number;
+    passwordMinLength: number;
+    passwordRequireSpecialChars: boolean;
+    enableEmailVerification: boolean;
+    enableSMSVerification: boolean;
+  };
+  api: {
+    rateLimit: {
+      enabled: boolean;
+      requestsPerMinute: number;
+      burstLimit: number;
+    };
+    cors: {
+      enabled: boolean;
+      allowedOrigins: string[];
+      allowCredentials: boolean;
+    };
+    authentication: {
+      jwtSecret: string;
+      jwtExpiresIn: string;
+      refreshTokenExpiresIn: string;
+    };
+    webhooks: {
+      enabled: boolean;
+      endpoints: WebhookEndpoint[];
+    };
+  };
+  database: {
+    backupFrequency: "daily" | "weekly" | "monthly";
+    maxConnections: number;
+    queryTimeout: number;
+    enableSlowQueryLog: boolean;
+  };
+  notifications: {
+    email: {
+      enabled: boolean;
+      smtpHost: string;
+      smtpPort: number;
+      smtpUser: string;
+      smtpPassword: string;
+      fromEmail: string;
+      fromName: string;
+    };
+    sms: {
+      enabled: boolean;
+      provider: "twilio" | "nexmo" | "custom";
+      apiKey: string;
+      apiSecret: string;
+      fromNumber: string;
+    };
+    push: {
+      enabled: boolean;
+      fcmServerKey: string;
+      apnsCertificate: string;
+    };
+  };
+  integrations: {
+    payment: {
+      enabled: boolean;
+      providers: PaymentProvider[];
+    };
+    analytics: {
+      googleAnalytics: {
+        enabled: boolean;
+        trackingId: string;
+      };
+      facebookPixel: {
+        enabled: boolean;
+        pixelId: string;
+      };
+    };
+    social: {
+      facebook: {
+        enabled: boolean;
+        appId: string;
+        appSecret: string;
+      };
+      google: {
+        enabled: boolean;
+        clientId: string;
+        clientSecret: string;
+      };
+      twitter: {
+        enabled: boolean;
+        apiKey: string;
+        apiSecret: string;
+      };
+    };
+  };
+  maintenance: {
+    enabled: boolean;
+    message: string;
+    allowedIPs: string[];
+    scheduledDowntime?: {
+      startTime: string;
+      endTime: string;
+      reason: string;
+    };
+  };
+  logging: {
+    level: "error" | "warn" | "info" | "debug";
+    enableFileLogging: boolean;
+    enableDatabaseLogging: boolean;
+    maxLogFileSize: number;
+    logRetentionDays: number;
+  };
+}
+
+export interface WebhookEndpoint {
+  id: string;
+  name: string;
+  url: string;
+  events: string[];
+  enabled: boolean;
+  secret: string;
+  headers?: Record<string, string>;
+}
+
+export interface PaymentProvider {
+  id: string;
+  name: string;
+  enabled: boolean;
+  testMode: boolean;
+  credentials: Record<string, string>;
+  supportedCurrencies: string[];
+}
+
+export interface SystemHealth {
+  status: "healthy" | "warning" | "critical";
+  services: {
+    database: ServiceStatus;
+    redis: ServiceStatus;
+    email: ServiceStatus;
+    storage: ServiceStatus;
+    api: ServiceStatus;
+  };
+  metrics: {
+    uptime: number;
+    memoryUsage: number;
+    cpuUsage: number;
+    diskUsage: number;
+    activeConnections: number;
+    responseTime: number;
+  };
+  lastChecked: string;
+}
+
+export interface ServiceStatus {
+  status: "online" | "offline" | "degraded";
+  responseTime?: number;
+  lastChecked: string;
+  error?: string;
+}
+
+export interface SystemLog {
+  id: string;
+  level: "error" | "warn" | "info" | "debug";
+  message: string;
+  metadata?: Record<string, any>;
+  userId?: string;
+  ipAddress?: string;
+  userAgent?: string;
+  timestamp: string;
+}
