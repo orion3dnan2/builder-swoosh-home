@@ -77,7 +77,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <span className="text-xs truncate text-muted-foreground max-w-[120px]">
-                مرحباً بكم في البيت ��لسوداني
+                مرحباً بكم في البيت السوداني
               </span>
               <div
                 className={`flex items-center gap-1 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
@@ -253,12 +253,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 البيت السوداني
               </h3>
               <p className="text-muted-foreground arabic">
-                {t("brand.description")}
+                منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم
               </p>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4 arabic text-foreground">
-                {t("footer.services")}
+                الخدمات
               </h4>
               <ul className="space-y-2 arabic">
                 <li>
@@ -266,7 +266,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/marketplace"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    {t("nav.marketplace")}
+                    السوق
                   </Link>
                 </li>
                 <li>
@@ -274,7 +274,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/products"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    {t("nav.products")}
+                    المنتجات
                   </Link>
                 </li>
                 <li>
@@ -282,14 +282,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/services"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    {t("nav.services")}
+                    الخدمات
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4 arabic text-foreground">
-                {t("footer.business")}
+                الأعمال
               </h4>
               <ul className="space-y-2 arabic">
                 <li>
@@ -297,7 +297,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/companies"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    {t("nav.companies")}
+                    الشركات
                   </Link>
                 </li>
                 <li>
@@ -305,7 +305,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/jobs"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    {t("nav.jobs")}
+                    الوظائف
                   </Link>
                 </li>
                 <li>
@@ -313,20 +313,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/ads"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    {t("nav.ads")}
+                    الإعلانات
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4 arabic text-foreground">
-                {t("footer.contact")}
+                تواصل معنا
               </h4>
               <p className="text-muted-foreground arabic mb-2">
-                {t("footer.email")}: info@bayt-sudani.com
+                البريد الإلكتروني: info@bayt-sudani.com
               </p>
               <p className="text-muted-foreground arabic">
-                {t("footer.phone")}: +966 50 123 4567
+                الهاتف: +966 50 123 4567
               </p>
             </div>
           </div>
