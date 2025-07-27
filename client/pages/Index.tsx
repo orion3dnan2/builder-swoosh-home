@@ -328,7 +328,7 @@ export default function Index() {
                 variant="secondary"
                 className="w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg arabic bg-white text-primary-700 hover:bg-white/90"
               >
-                {t("home.cta.create_account")}
+                إنشاء حساب مجاني
                 <ArrowIcon
                   className={`w-4 h-4 md:w-5 md:h-5 ${isRTL ? "mr-2" : "ml-2"}`}
                 />
@@ -340,7 +340,7 @@ export default function Index() {
                 variant="outline"
                 className="w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg border-white/20 text-white hover:bg-white/10 arabic"
               >
-                {t("common.login")}
+                تسجيل الدخول
               </Button>
             </Link>
           </div>
