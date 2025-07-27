@@ -39,7 +39,7 @@ export default function Register() {
     "الإمارات",
     "الكويت",
     "قطر",
-    "البح��ين",
+    "البحرين",
     "عمان",
     "مصر",
     "الأردن",
@@ -53,6 +53,19 @@ export default function Register() {
       alert("كلمات المرور غير متطابقة");
       return;
     }
+    
+    // التحقق من حقول التاجر إذا كان نوع الحساب تاجر
+    if (formData.accountType === "merchant") {
+      if (!formData.businessName.trim()) {
+        alert("يرجى إدخال اسم العمل التجاري");
+        return;
+      }
+      if (!formData.businessType) {
+        alert("يرجى اختيار نوع النشاط التجاري");
+        return;
+      }
+    }
+    
     console.log("Registration attempt:", formData);
   };
 
@@ -65,8 +78,8 @@ export default function Register() {
             <CardHeader className="text-center pb-6">
               <div className="flex justify-center mb-4">
                 <div className={`w-16 h-16 rounded-full flex items-center justify-center ${
-                  formData.accountType === "merchant"
-                    ? "bg-gradient-to-br from-green-500 to-green-700"
+                  formData.accountType === "merchant" 
+                    ? "bg-gradient-to-br from-green-500 to-green-700" 
                     : "bg-gradient-to-br from-blue-500 to-blue-700"
                 }`}>
                   {formData.accountType === "merchant" ? (
@@ -77,12 +90,14 @@ export default function Register() {
                 </div>
               </div>
               <h1 className="text-2xl font-bold text-gray-800 arabic">
-{formData.accountType === "merchant"
-                  ? "إنشاء حساب صاحب عمل"
+                {formData.accountType === "merchant" 
+                  ? "إنشاء حساب صاحب عمل" 
                   : "إنشاء حساب جديد"}
               </h1>
               <p className="text-gray-600 arabic">
-                انض�� إلى البيت السوداني اليوم
+                {formData.accountType === "merchant" 
+                  ? "انشئ متجرك الإلكتروني وابدأ البيع اليوم" 
+                  : "انضم إلى منصة التسوق الإلكتروني"}
               </p>
             </CardHeader>
 
@@ -116,7 +131,7 @@ export default function Register() {
                         </div>
                       </div>
                     </div>
-
+                    
                     <div className="flex items-center space-x-3 space-x-reverse p-4 border-2 border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
                       <RadioGroupItem value="merchant" id="merchant" />
                       <div className="flex items-center space-x-3 space-x-reverse flex-1">
@@ -221,7 +236,7 @@ export default function Register() {
                       }
                     >
                       <SelectTrigger className="text-right arabic">
-                        <SelectValue placeholder="اختر ال��ولة" />
+                        <SelectValue placeholder="اختر الدولة" />
                       </SelectTrigger>
                       <SelectContent>
                         {countries.map((country) => (
@@ -258,13 +273,13 @@ export default function Register() {
                   />
                 </div>
 
-                {/* ح��ول خ��صة بصاحب العمل */}
+                {/* حقول خاصة بصاحب العمل */}
                 {formData.accountType === "merchant" && (
                   <div className="space-y-4 p-4 bg-green-50 rounded-xl border border-green-200">
                     <h3 className="font-semibold text-green-800 arabic mb-3">
                       🏪 بيانات العمل التجاري
                     </h3>
-
+                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <Label
@@ -306,7 +321,7 @@ export default function Register() {
                             <SelectItem value="wholesale" className="arabic">تجارة جملة</SelectItem>
                             <SelectItem value="services" className="arabic">خدمات</SelectItem>
                             <SelectItem value="food" className="arabic">مطاعم وأغذية</SelectItem>
-                            <SelectItem value="fashion" className="arabic">أزياء وملابس</SelectItem>
+                            <SelectItem value="fashion" className="arabic">أزي��ء وملابس</SelectItem>
                             <SelectItem value="electronics" className="arabic">إلكترونيات</SelectItem>
                             <SelectItem value="handmade" className="arabic">منتجات يدوية</SelectItem>
                             <SelectItem value="other" className="arabic">أخرى</SelectItem>
@@ -413,7 +428,7 @@ export default function Register() {
                       أوافق على{" "}
                       <Link
                         to="/terms"
-                        className="text-sudan-blue hover:underline"
+                        className="text-blue-600 hover:underline"
                       >
                         الشروط والأحكام
                       </Link>
@@ -442,12 +457,15 @@ export default function Register() {
 
                 <Button
                   type="submit"
-                  variant="sudan-green"
+                  className={`w-full text-lg py-3 arabic ${
+                    formData.accountType === "merchant" 
+                      ? "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800" 
+                      : "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
+                  }`}
                   size="lg"
-                  className="w-full text-lg py-3 arabic"
                   disabled={!formData.acceptTerms}
                 >
-                  إنشاء الحساب →
+                  {formData.accountType === "merchant" ? "إنشاء حساب تاجر →" : "إنشاء الحساب →"}
                 </Button>
 
                 <div className="text-center">
@@ -456,7 +474,7 @@ export default function Register() {
                   </span>
                   <Link
                     to="/login"
-                    className="text-sudan-blue hover:underline arabic"
+                    className="text-blue-600 hover:underline arabic"
                   >
                     سجل الدخول
                   </Link>
