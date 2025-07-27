@@ -7,17 +7,17 @@ import { LanguageAndThemeControls } from "./ThemeToggle";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  const { t, isRTL } = useTheme();
+  const { isRTL } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigation = [
-    { name: t("nav.home"), href: "/", icon: "🏠" },
-    { name: t("nav.marketplace"), href: "/marketplace", icon: "🛍️" },
-    { name: t("nav.products"), href: "/products", icon: "📦" },
-    { name: t("nav.companies"), href: "/companies", icon: "🏢" },
-    { name: t("nav.jobs"), href: "/jobs", icon: "💼" },
-    { name: t("nav.services"), href: "/services", icon: "🛠️" },
-    { name: t("nav.ads"), href: "/ads", icon: "📢" },
+    { name: "الرئيسية", href: "/", icon: "🏠" },
+    { name: "السوق", href: "/marketplace", icon: "🛍️" },
+    { name: "المنتجات", href: "/products", icon: "📦" },
+    { name: "الشركات", href: "/companies", icon: "🏢" },
+    { name: "الوظائف", href: "/jobs", icon: "💼" },
+    { name: "الخدمات", href: "/services", icon: "🛠️" },
+    { name: "الإعلانات", href: "/ads", icon: "📢" },
   ];
 
   return (
