@@ -39,7 +39,7 @@ export default function Register() {
     "الإمارات",
     "الكويت",
     "قطر",
-    "البحرين",
+    "البح��ين",
     "عمان",
     "مصر",
     "الأردن",
@@ -77,7 +77,9 @@ export default function Register() {
                 </div>
               </div>
               <h1 className="text-2xl font-bold text-gray-800 arabic">
-                إنشاء حساب جديد
+{formData.accountType === "merchant"
+                  ? "إنشاء حساب صاحب عمل"
+                  : "إنشاء حساب جديد"}
               </h1>
               <p className="text-gray-600 arabic">
                 انض�� إلى البيت السوداني اليوم
@@ -256,7 +258,7 @@ export default function Register() {
                   />
                 </div>
 
-                {/* ح��ول خاصة بصاحب العمل */}
+                {/* ح��ول خ��صة بصاحب العمل */}
                 {formData.accountType === "merchant" && (
                   <div className="space-y-4 p-4 bg-green-50 rounded-xl border border-green-200">
                     <h3 className="font-semibold text-green-800 arabic mb-3">
