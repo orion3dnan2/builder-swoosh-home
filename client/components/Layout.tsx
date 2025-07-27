@@ -54,7 +54,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <span className="text-muted-foreground">
-                {t("common.users_count")}
+                +100 ألف سوداني في البيت
               </span>
               <LanguageAndThemeControls />
               <Link to="/login">
