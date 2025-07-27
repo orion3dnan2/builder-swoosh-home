@@ -107,7 +107,7 @@ export default function Index() {
     {
       name: "عمر الحسن",
       role: "باحث عن عمل",
-      content: "وجدت و��يفة أحلامي من خلال البيت السوداني في وقت قياسي",
+      content: "وجدت وظيفة أحلامي من خلال البيت السوداني في وقت قياسي",
       rating: 5,
     },
   ];
@@ -256,10 +256,10 @@ export default function Index() {
             className={`text-center mb-12 md:mb-16 ${isRTL ? "text-right" : "text-center"}`}
           >
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 md:mb-4 arabic">
-              {t("home.testimonials.title")}
+              آراء عملائنا
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-muted-foreground arabic">
-              {t("home.testimonials.subtitle")}
+              ماذا يقول عملاؤنا عن تجربتهم معنا
             </p>
           </div>
 
