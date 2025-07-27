@@ -23,7 +23,6 @@ import { useAuth } from "@/lib/auth";
 
 export default function AdminDashboard() {
   const { user } = useAuth();
-  const { t, isRTL } = useTheme();
   const [stats] = useState({
     totalUsers: 1247,
     totalMerchants: 89,
@@ -37,48 +36,48 @@ export default function AdminDashboard() {
 
   const quickActions = [
     {
-      titleKey: "dashboard.app_settings",
-      descriptionKey: "dashboard.app_settings_desc",
+      title: "إعدادات التطبيق",
+      description: "إدارة الإعدادات العامة والتكوينات الأساسية",
       icon: Settings,
       href: "/admin/settings",
       color: "from-blue-500 to-blue-600",
       urgent: false,
     },
     {
-      titleKey: "dashboard.user_management",
-      descriptionKey: "dashboard.user_management_desc",
+      title: "إدارة المستخدمين",
+      description: "إضافة وتعديل وحذف المستخدمين والأذونات",
       icon: Users,
       href: "/admin/users",
       color: "from-green-500 to-green-600",
       urgent: false,
     },
     {
-      titleKey: "dashboard.store_management",
-      descriptionKey: "dashboard.store_management_desc",
+      title: "إدارة المتاجر",
+      description: "مراجعة واعتماد المتاجر الجديدة",
       icon: Store,
       href: "/admin/stores",
       color: "from-purple-500 to-purple-600",
       urgent: stats.pendingApprovals > 0,
     },
     {
-      titleKey: "dashboard.appearance",
-      descriptionKey: "dashboard.appearance_desc",
+      title: "المظهر والثيمات",
+      description: "تخصيص ألوان وثيمات الموقع",
       icon: Palette,
       href: "/admin/appearance",
       color: "from-pink-500 to-pink-600",
       urgent: false,
     },
     {
-      titleKey: "dashboard.system_settings",
-      descriptionKey: "dashboard.system_settings_desc",
+      title: "إعدادات النظام",
+      description: "إعدادات الأمان والأذونات المتقدمة",
       icon: Shield,
       href: "/admin/system",
       color: "from-red-500 to-red-600",
       urgent: false,
     },
     {
-      titleKey: "dashboard.content_management",
-      descriptionKey: "dashboard.content_management_desc",
+      title: "إدارة المحتوى",
+      description: "إدارة الصفحات والمحتوى الثابت",
       icon: Globe,
       href: "/admin/content",
       color: "from-orange-500 to-orange-600",
