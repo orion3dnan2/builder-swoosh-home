@@ -215,9 +215,9 @@ export default function AdminDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <Card className="mb-8">
+        <Card className="mb-8 dark:bg-gray-800 dark:border-gray-700">
           <CardHeader>
-            <CardTitle className="flex items-center arabic">
+            <CardTitle className="flex items-center arabic text-gray-900 dark:text-white">
               <Activity className="w-5 h-5 ml-2" />
               الإجراءات السريعة
             </CardTitle>
@@ -226,7 +226,7 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {quickActions.map((action, index) => (
                 <Link key={index} to={action.href}>
-                  <Card className="hover:shadow-lg transition-all duration-200 hover:scale-105 group cursor-pointer">
+                  <Card className="hover:shadow-lg dark:hover:shadow-gray-900/50 transition-all duration-200 hover:scale-105 group cursor-pointer dark:bg-gray-700 dark:border-gray-600">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between">
                         <div className="flex items-center space-x-3 space-x-reverse">
@@ -236,7 +236,7 @@ export default function AdminDashboard() {
                             <action.icon className="w-6 h-6 text-white" />
                           </div>
                           <div>
-                            <h3 className="font-semibold text-gray-900 arabic flex items-center">
+                            <h3 className="font-semibold text-gray-900 dark:text-white arabic flex items-center">
                               {action.title}
                               {action.urgent && (
                                 <Badge
@@ -247,12 +247,12 @@ export default function AdminDashboard() {
                                 </Badge>
                               )}
                             </h3>
-                            <p className="text-sm text-gray-600 arabic mt-1">
+                            <p className="text-sm text-gray-600 dark:text-gray-300 arabic mt-1">
                               {action.description}
                             </p>
                           </div>
                         </div>
-                        <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                        <ChevronRight className="w-5 h-5 text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors" />
                       </div>
                     </CardContent>
                   </Card>
