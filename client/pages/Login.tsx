@@ -211,15 +211,6 @@ export default function Login() {
                     انشئ حساب جديد
                   </Link>
                 </div>
-
-                <div className="text-center">
-                  <Link
-                    to="/company-register"
-                    className="text-secondary-600 hover:underline arabic text-sm"
-                  >
-                    🏢 تسجيل للشركات والمؤسسات
-                  </Link>
-                </div>
               </form>
             </CardContent>
           </Card>
