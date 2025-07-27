@@ -54,7 +54,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <span className="text-muted-foreground">
-                +100 ألف سوداني في البيت
+                +100 ألف سوداني في البي��
               </span>
               <LanguageAndThemeControls />
               <Link to="/login">
@@ -77,7 +77,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <span className="text-xs truncate text-muted-foreground max-w-[120px]">
-                {t("common.welcome")}
+                مرحباً بكم في البيت السوداني
               </span>
               <div
                 className={`flex items-center gap-1 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
