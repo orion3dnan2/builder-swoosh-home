@@ -28,25 +28,21 @@ export default function Index() {
     {
       icon: Users,
       number: "100K+",
-      labelKey: "stats.users",
       label: "مستخدم نشط",
     },
     {
       icon: Building2,
       number: "5K+",
-      labelKey: "stats.companies",
       label: "شركة مسجلة",
     },
     {
       icon: ShoppingBag,
       number: "50K+",
-      labelKey: "stats.products",
       label: "منتج متوفر",
     },
     {
       icon: Briefcase,
       number: "2K+",
-      labelKey: "stats.jobs",
       label: "فرصة عمل",
     },
   ];
@@ -54,7 +50,7 @@ export default function Index() {
   const services = [
     {
       icon: ShoppingBag,
-      title: "السوق الت��اري",
+      title: "السوق التجاري",
       description: "اكتشف منتجات سودانية أصيلة من تجار موثوقين",
       href: "/marketplace",
       color: "from-blue-500 to-blue-600",
@@ -87,7 +83,7 @@ export default function Index() {
     {
       icon: Megaphone,
       title: "الإعلانات",
-      description: "روج لأعمالك وخدمات�� للمجتمع السوداني",
+      description: "روج لأعمالك وخدماتك للمجتمع السوداني",
       href: "/ads",
       color: "from-red-500 to-red-600",
       bgColor: "bg-red-50 dark:bg-red-900/20",
@@ -111,7 +107,7 @@ export default function Index() {
     {
       name: "عمر الحسن",
       role: "باحث عن عمل",
-      content: "وجدت وظيفة أحلامي من خلال البيت السوداني في وقت قياسي",
+      content: "وجدت و��يفة أحلامي من خلال البيت السوداني في وقت قياسي",
       rating: 5,
     },
   ];
@@ -204,7 +200,7 @@ export default function Index() {
               خدماتنا
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-muted-foreground arabic max-w-3xl mx-auto px-4">
-              مجموعة شاملة من الخدمات المصممة خص��صاً للمجتمع السوداني في الخليج
+              مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج
               والعالم
             </p>
           </div>
