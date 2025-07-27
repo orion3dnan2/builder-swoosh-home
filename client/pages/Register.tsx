@@ -78,6 +78,54 @@ export default function Register() {
 
             <CardContent className="space-y-6">
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* نوع الحساب */}
+                <div className="space-y-4">
+                  <Label className="text-right block mb-3 arabic text-gray-700 font-semibold">
+                    🔰 نوع الحساب
+                  </Label>
+                  <RadioGroup
+                    value={formData.accountType}
+                    onValueChange={(value) =>
+                      setFormData((prev) => ({ ...prev, accountType: value }))
+                    }
+                    className="space-y-3"
+                  >
+                    <div className="flex items-center space-x-3 space-x-reverse p-4 border-2 border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
+                      <RadioGroupItem value="customer" id="customer" />
+                      <div className="flex items-center space-x-3 space-x-reverse flex-1">
+                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                          <User className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <div>
+                          <Label htmlFor="customer" className="arabic font-medium text-gray-800 cursor-pointer">
+                            مستخدم عادي
+                          </Label>
+                          <p className="text-sm text-gray-600 arabic">
+                            للتسوق والشراء من المتاجر المختلفة
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center space-x-3 space-x-reverse p-4 border-2 border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
+                      <RadioGroupItem value="merchant" id="merchant" />
+                      <div className="flex items-center space-x-3 space-x-reverse flex-1">
+                        <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                          <Briefcase className="w-5 h-5 text-green-600" />
+                        </div>
+                        <div>
+                          <Label htmlFor="merchant" className="arabic font-medium text-gray-800 cursor-pointer">
+                            صاحب عمل
+                          </Label>
+                          <p className="text-sm text-gray-600 arabic">
+                            لإنشاء متجر وبيع المنتجات
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </RadioGroup>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label
@@ -242,7 +290,7 @@ export default function Register() {
                       htmlFor="confirmPassword"
                       className="text-right block mb-2 arabic text-gray-700"
                     >
-                      🔐 تأكيد كلمة المرور
+                      🔐 تأكيد كلم�� المرور
                     </Label>
                     <div className="relative">
                       <Input
