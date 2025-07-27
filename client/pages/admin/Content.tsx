@@ -171,7 +171,7 @@ export default function AdminContent() {
         setSettings(settingsData);
         toast({
           title: "نجح الحفظ",
-          description: "تم حفظ الإعد��دات بنجاح",
+          description: "تم حفظ الإعدادات بنجاح",
         });
       }
     } catch (error) {
@@ -270,7 +270,7 @@ export default function AdminContent() {
       if (response.ok) {
         await loadMedia();
         toast({
-          title: "نجح ��لرفع",
+          title: "نجح الرفع",
           description: "تم رفع الملف بنجاح",
         });
       }
@@ -756,7 +756,7 @@ export default function AdminContent() {
           <TabsContent value="menus">
             <Card className="dark:bg-gray-800 dark:border-gray-700">
               <CardHeader>
-                <CardTitle className="arabic text-gray-900 dark:text-white">إدارة القوا��م</CardTitle>
+                <CardTitle className="arabic text-gray-900 dark:text-white">إدارة القوائم</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
@@ -800,25 +800,40 @@ export default function AdminContent() {
 
           {/* Content Settings */}
           <TabsContent value="settings">
-            {settings && (
+            {settingsData && (
               <div className="space-y-6">
                 <Card className="dark:bg-gray-800 dark:border-gray-700">
                   <CardHeader>
-                    <CardTitle className="arabic text-gray-900 dark:text-white">الإعدادات العامة</CardTitle>
+                    <CardTitle className="flex items-center justify-between arabic text-gray-900 dark:text-white">
+                      <span>الإعدادات العامة</span>
+                      <Button onClick={saveSettings} className="arabic">
+                        <Save className="w-4 h-4 ml-2" />
+                        حفظ الإعدادات
+                      </Button>
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label className="arabic">اسم الموقع</Label>
-                        <Input value={settings.general.siteName} />
+                        <Input
+                          value={settingsData.general.siteName}
+                          onChange={(e) => updateSettingsData('general.siteName', e.target.value)}
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label className="arabic">الشعار</Label>
-                        <Input value={settings.general.tagline} />
+                        <Input
+                          value={settingsData.general.tagline}
+                          onChange={(e) => updateSettingsData('general.tagline', e.target.value)}
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label className="arabic">اللغة الافتراضية</Label>
-                        <Select value={settings.general.language}>
+                        <Select
+                          value={settingsData.general.language}
+                          onValueChange={(value) => updateSettingsData('general.language', value)}
+                        >
                           <SelectTrigger>
                             <SelectValue />
                           </SelectTrigger>
@@ -830,12 +845,19 @@ export default function AdminContent() {
                       </div>
                       <div className="space-y-2">
                         <Label className="arabic">المنطقة الزمنية</Label>
-                        <Input value={settings.general.timezone} />
+                        <Input
+                          value={settingsData.general.timezone}
+                          onChange={(e) => updateSettingsData('general.timezone', e.target.value)}
+                        />
                       </div>
                     </div>
                     <div className="space-y-2">
                       <Label className="arabic">وصف الموقع</Label>
-                      <Textarea value={settings.general.description} rows={3} />
+                      <Textarea
+                        value={settingsData.general.description}
+                        onChange={(e) => updateSettingsData('general.description', e.target.value)}
+                        rows={3}
+                      />
                     </div>
                   </CardContent>
                 </Card>
