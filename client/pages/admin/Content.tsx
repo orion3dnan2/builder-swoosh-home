@@ -139,6 +139,48 @@ export default function AdminContent() {
     const response = await fetch('/api/content/settings');
     const data = await response.json();
     setSettings(data);
+    setSettingsData(data);
+  };
+
+  const updateSettingsData = (path: string, value: any) => {
+    if (!settingsData) return;
+
+    const keys = path.split('.');
+    const newSettings = { ...settingsData };
+    let current: any = newSettings;
+
+    for (let i = 0; i < keys.length - 1; i++) {
+      current = current[keys[i]];
+    }
+
+    current[keys[keys.length - 1]] = value;
+    setSettingsData(newSettings);
+  };
+
+  const saveSettings = async () => {
+    if (!settingsData) return;
+
+    try {
+      const response = await fetch('/api/content/settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(settingsData),
+      });
+
+      if (response.ok) {
+        setSettings(settingsData);
+        toast({
+          title: "نجح الحفظ",
+          description: "تم حفظ الإعد��دات بنجاح",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "خطأ",
+        description: "فشل في حفظ الإعدادات",
+        variant: "destructive",
+      });
+    }
   };
 
   const createPage = async (pageData: Partial<ContentPage>) => {
@@ -228,7 +270,7 @@ export default function AdminContent() {
       if (response.ok) {
         await loadMedia();
         toast({
-          title: "نجح الرفع",
+          title: "نجح ��لرفع",
           description: "تم رفع الملف بنجاح",
         });
       }
@@ -255,7 +297,7 @@ export default function AdminContent() {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-300 arabic">جاري تحميل بيانات ��لمحتوى...</p>
+          <p className="text-gray-600 dark:text-gray-300 arabic">جاري تحميل بيانات المحتوى...</p>
         </div>
       </div>
     );
@@ -282,7 +324,7 @@ export default function AdminContent() {
                   إدارة المحتوى
                 </h1>
                 <p className="text-gray-600 dark:text-gray-300 arabic">
-                  إدارة الصفحات والمقالات والو��ائط
+                  إدارة الصفحات والمقالات والوسائط
                 </p>
               </div>
             </div>
@@ -714,7 +756,7 @@ export default function AdminContent() {
           <TabsContent value="menus">
             <Card className="dark:bg-gray-800 dark:border-gray-700">
               <CardHeader>
-                <CardTitle className="arabic text-gray-900 dark:text-white">إدارة القوائم</CardTitle>
+                <CardTitle className="arabic text-gray-900 dark:text-white">إدارة القوا��م</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
