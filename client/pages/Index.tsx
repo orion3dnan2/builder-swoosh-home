@@ -95,7 +95,7 @@ export default function Index() {
       name: "أحمد محمد",
       role: "صاحب متجر",
       content:
-        "البيت السوداني ساعدني في الوصول لعملاء جدد وتنمية تجارت�� بشكل كبير",
+        "البيت السوداني ساعدني في الوصول لعملاء جدد وتنمية تجارتي بشكل كبير",
       rating: 5,
     },
     {
@@ -317,7 +317,7 @@ export default function Index() {
             ابدأ رحلتك معنا اليوم
           </h2>
           <p className="text-base md:text-lg lg:text-xl text-white/90 mb-6 md:mb-8 arabic max-w-2xl mx-auto px-4">
-            انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم
+            ��نضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم
           </p>
           <div
             className={`flex flex-col xs:flex-row gap-3 md:gap-4 justify-center px-4 ${isRTL ? "xs:flex-row-reverse" : ""}`}
