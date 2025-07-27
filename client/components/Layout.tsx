@@ -334,7 +334,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             className={`border-t border-border mt-8 pt-8 text-center arabic ${isRTL ? "text-right" : "text-center"}`}
           >
             <p className="text-muted-foreground">
-              © 2024 البيت السوداني. {t("footer.rights")}.
+              © 2024 البيت السوداني. جميع الحقوق محفوظة.
             </p>
           </div>
         </div>
