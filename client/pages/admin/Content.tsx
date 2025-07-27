@@ -869,15 +869,25 @@ export default function AdminContent() {
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
                       <Label className="arabic">العنوان الافتراضي</Label>
-                      <Input value={settings.seo.defaultMetaTitle} />
+                      <Input
+                        value={settingsData.seo.defaultMetaTitle}
+                        onChange={(e) => updateSettingsData('seo.defaultMetaTitle', e.target.value)}
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label className="arabic">الوصف الافتراضي</Label>
-                      <Textarea value={settings.seo.defaultMetaDescription} rows={2} />
+                      <Textarea
+                        value={settingsData.seo.defaultMetaDescription}
+                        onChange={(e) => updateSettingsData('seo.defaultMetaDescription', e.target.value)}
+                        rows={2}
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label className="arabic">الكلمات المفتاحية</Label>
-                      <Input value={settings.seo.defaultKeywords.join(', ')} />
+                      <Input
+                        value={settingsData.seo.defaultKeywords.join(', ')}
+                        onChange={(e) => updateSettingsData('seo.defaultKeywords', e.target.value.split(', ').filter(Boolean))}
+                      />
                     </div>
                   </CardContent>
                 </Card>
