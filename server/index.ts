@@ -59,5 +59,40 @@ export function createServer() {
   app.post("/api/system/backup", backupDatabase);
   app.post("/api/system/clear-cache", clearCache);
 
+  // Content Management API routes
+  // Pages
+  app.get("/api/content/pages", getPages);
+  app.get("/api/content/pages/:id", getPage);
+  app.post("/api/content/pages", createPage);
+  app.put("/api/content/pages/:id", updatePage);
+  app.delete("/api/content/pages/:id", deletePage);
+
+  // Categories
+  app.get("/api/content/categories", getCategories);
+  app.post("/api/content/categories", createCategory);
+  app.put("/api/content/categories/:id", updateCategory);
+  app.delete("/api/content/categories/:id", deleteCategory);
+
+  // Media
+  app.get("/api/content/media", getMedia);
+  app.post("/api/content/media", uploadMedia);
+  app.delete("/api/content/media/:id", deleteMedia);
+
+  // Translations
+  app.get("/api/content/translations", getTranslations);
+  app.put("/api/content/translations/:id", updateTranslation);
+
+  // Menus
+  app.get("/api/content/menus", getMenus);
+  app.put("/api/content/menus/:id", updateMenu);
+
+  // Templates
+  app.get("/api/content/templates", getTemplates);
+  app.post("/api/content/templates", createTemplate);
+
+  // Content Settings
+  app.get("/api/content/settings", getContentSettings);
+  app.put("/api/content/settings", updateContentSettings);
+
   return app;
 }
