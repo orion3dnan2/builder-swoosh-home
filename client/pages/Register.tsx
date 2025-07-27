@@ -211,7 +211,7 @@ export default function Register() {
                       }
                     >
                       <SelectTrigger className="text-right arabic">
-                        <SelectValue placeholder="اختر الدولة" />
+                        <SelectValue placeholder="اختر ال��ولة" />
                       </SelectTrigger>
                       <SelectContent>
                         {countries.map((country) => (
@@ -247,6 +247,65 @@ export default function Register() {
                     required
                   />
                 </div>
+
+                {/* ح��ول خاصة بصاحب العمل */}
+                {formData.accountType === "merchant" && (
+                  <div className="space-y-4 p-4 bg-green-50 rounded-xl border border-green-200">
+                    <h3 className="font-semibold text-green-800 arabic mb-3">
+                      🏪 بيانات العمل التجاري
+                    </h3>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label
+                          htmlFor="businessName"
+                          className="text-right block mb-2 arabic text-gray-700"
+                        >
+                          🏢 اسم العمل التجاري
+                        </Label>
+                        <Input
+                          id="businessName"
+                          type="text"
+                          placeholder="أدخل اسم متجرك أو شركتك"
+                          value={formData.businessName}
+                          onChange={(e) =>
+                            setFormData((prev) => ({ ...prev, businessName: e.target.value }))
+                          }
+                          className="text-right arabic"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <Label
+                          htmlFor="businessType"
+                          className="text-right block mb-2 arabic text-gray-700"
+                        >
+                          🏭 نوع النشاط التجاري
+                        </Label>
+                        <Select
+                          onValueChange={(value) =>
+                            setFormData((prev) => ({ ...prev, businessType: value }))
+                          }
+                        >
+                          <SelectTrigger className="text-right arabic">
+                            <SelectValue placeholder="اختر نوع النشاط" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="retail" className="arabic">تجارة تجزئة</SelectItem>
+                            <SelectItem value="wholesale" className="arabic">تجارة جملة</SelectItem>
+                            <SelectItem value="services" className="arabic">خدمات</SelectItem>
+                            <SelectItem value="food" className="arabic">مطاعم وأغذية</SelectItem>
+                            <SelectItem value="fashion" className="arabic">أزياء وملابس</SelectItem>
+                            <SelectItem value="electronics" className="arabic">إلكترونيات</SelectItem>
+                            <SelectItem value="handmade" className="arabic">منتجات يدوية</SelectItem>
+                            <SelectItem value="other" className="arabic">أخرى</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -290,7 +349,7 @@ export default function Register() {
                       htmlFor="confirmPassword"
                       className="text-right block mb-2 arabic text-gray-700"
                     >
-                      🔐 تأكيد كلم�� المرور
+                      🔐 تأكيد كلمة المرور
                     </Label>
                     <div className="relative">
                       <Input
