@@ -64,8 +64,16 @@ export default function Register() {
           <Card className="shadow-xl border-0">
             <CardHeader className="text-center pb-6">
               <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-sudan-green to-green-600 rounded-full flex items-center justify-center">
-                  <UserPlus className="w-8 h-8 text-white" />
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center ${
+                  formData.accountType === "merchant"
+                    ? "bg-gradient-to-br from-green-500 to-green-700"
+                    : "bg-gradient-to-br from-blue-500 to-blue-700"
+                }`}>
+                  {formData.accountType === "merchant" ? (
+                    <Briefcase className="w-8 h-8 text-white" />
+                  ) : (
+                    <UserPlus className="w-8 h-8 text-white" />
+                  )}
                 </div>
               </div>
               <h1 className="text-2xl font-bold text-gray-800 arabic">
