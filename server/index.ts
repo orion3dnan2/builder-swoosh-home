@@ -1,6 +1,16 @@
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
+import {
+  getSystemSettings,
+  updateSystemSettings,
+  getSystemHealth,
+  getSystemLogs,
+  testEmailConfig,
+  testSMSConfig,
+  backupDatabase,
+  clearCache
+} from "./routes/system";
 
 export function createServer() {
   const app = express();
