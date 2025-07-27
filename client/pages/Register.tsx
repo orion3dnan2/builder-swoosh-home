@@ -20,6 +20,7 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
+    accountType: "customer", // customer or merchant
     fullName: "",
     email: "",
     phone: "",
@@ -27,6 +28,8 @@ export default function Register() {
     confirmPassword: "",
     country: "",
     city: "",
+    businessName: "", // للتجار فقط
+    businessType: "", // للتجار فقط
     acceptTerms: false,
     newsletter: false,
   });
@@ -315,7 +318,7 @@ export default function Register() {
                       htmlFor="newsletter"
                       className="text-sm arabic text-gray-600"
                     >
-                      أريد تلقي النشرة الإخبارية والعروض ا��خاصة
+                      أريد تلقي النشرة الإخبارية والعروض الخاصة
                     </Label>
                   </div>
                 </div>
