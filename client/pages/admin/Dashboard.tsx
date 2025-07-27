@@ -265,11 +265,11 @@ export default function AdminDashboard() {
         {/* Recent Activity & Analytics */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Recent Activity */}
-          <Card>
+          <Card className="dark:bg-gray-800 dark:border-gray-700">
             <CardHeader>
-              <CardTitle className="flex items-center arabic">
+              <CardTitle className="flex items-center arabic text-gray-900 dark:text-white">
                 <MessageSquare className="w-5 h-5 ml-2" />
-                {t("dashboard.recent_activity")}
+                الأنشطة الحديثة
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -370,7 +370,7 @@ export default function AdminDashboard() {
               <div className="mt-4 pt-4 border-t">
                 <Link to="/admin/analytics">
                   <Button variant="outline" size="sm" className="w-full arabic">
-                    عرض التقارير التفصيلية
+                    عرض ��لتقارير التفصيلية
                   </Button>
                 </Link>
               </div>
