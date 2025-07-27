@@ -22,7 +22,7 @@ import {
 import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Index() {
-  const { t, isRTL } = useTheme();
+  const { isRTL } = useTheme();
 
   const heroStats = [
     {
@@ -54,7 +54,7 @@ export default function Index() {
   const services = [
     {
       icon: ShoppingBag,
-      title: "السوق التجاري",
+      title: "السوق الت��اري",
       description: "اكتشف منتجات سودانية أصيلة من تجار موثوقين",
       href: "/marketplace",
       color: "from-blue-500 to-blue-600",
@@ -87,7 +87,7 @@ export default function Index() {
     {
       icon: Megaphone,
       title: "الإعلانات",
-      description: "روج لأعمالك وخدماتك للمجتمع السوداني",
+      description: "روج لأعمالك وخدمات�� للمجتمع السوداني",
       href: "/ads",
       color: "from-red-500 to-red-600",
       bgColor: "bg-red-50 dark:bg-red-900/20",
@@ -204,7 +204,7 @@ export default function Index() {
               خدماتنا
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-muted-foreground arabic max-w-3xl mx-auto px-4">
-              مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج
+              مجموعة شاملة من الخدمات المصممة خص��صاً للمجتمع السوداني في الخليج
               والعالم
             </p>
           </div>
