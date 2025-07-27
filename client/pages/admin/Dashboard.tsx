@@ -20,7 +20,6 @@ import {
   BarChart3,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
-import { useTheme } from "@/contexts/ThemeContext";
 
 export default function AdminDashboard() {
   const { user } = useAuth();
