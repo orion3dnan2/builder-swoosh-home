@@ -12,8 +12,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Layout } from "@/components/Layout";
-import { UserPlus, Eye, EyeOff } from "lucide-react";
+import { UserPlus, Eye, EyeOff, User, Briefcase } from "lucide-react";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -314,7 +315,7 @@ export default function Register() {
                       htmlFor="newsletter"
                       className="text-sm arabic text-gray-600"
                     >
-                      أريد تلقي النشرة الإخبارية والعروض الخاصة
+                      أريد تلقي النشرة الإخبارية والعروض ا��خاصة
                     </Label>
                   </div>
                 </div>
