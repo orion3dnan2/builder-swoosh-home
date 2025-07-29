@@ -178,6 +178,31 @@ export default function Register() {
 
                   <div>
                     <Label
+                      htmlFor="username"
+                      className="text-right block mb-2 arabic text-gray-700"
+                    >
+                      👨‍💼 اسم المستخدم
+                    </Label>
+                    <Input
+                      id="username"
+                      type="text"
+                      placeholder="أدخل اسم المستخدم"
+                      value={formData.username}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          username: e.target.value,
+                        }))
+                      }
+                      className="text-right arabic"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label
                       htmlFor="email"
                       className="text-right block mb-2 arabic text-gray-700"
                     >
@@ -206,7 +231,7 @@ export default function Register() {
                       htmlFor="phone"
                       className="text-right block mb-2 arabic text-gray-700"
                     >
-                      �� رقم الهاتف
+                      📱 رقم الهاتف
                     </Label>
                     <Input
                       id="phone"
@@ -451,7 +476,7 @@ export default function Register() {
                       htmlFor="newsletter"
                       className="text-sm arabic text-gray-600"
                     >
-                      أريد تل��ي النشرة الإخبارية والعروض الخاصة
+                      أريد تلقي النشرة الإخبارية والعروض الخاصة
                     </Label>
                   </div>
                 </div>
