@@ -85,7 +85,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <span className="text-xs truncate text-muted-foreground max-w-[120px]">
-                مرحباً بكم في البيت السوداني
+                مرحباً بكم في البيت ا��سوداني
               </span>
               <div
                 className={`flex items-center gap-1 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
@@ -106,15 +106,30 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <LanguageAndThemeControls />
-              <Link to="/login">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="text-xs px-2 py-1 hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
-                >
-                  دخول
-                </Button>
-              </Link>
+              {isAuthenticated ? (
+                <div className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}>
+                  <span className="text-xs text-gray-600 arabic">أهلاً {user?.profile.name}</span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleLogout}
+                    className="text-xs px-2 py-1 hover:bg-red-50 hover:text-red-700"
+                  >
+                    <LogOut className="w-3 h-3 ml-1" />
+                    خروج
+                  </Button>
+                </div>
+              ) : (
+                <Link to="/login">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-xs px-2 py-1 hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
+                  >
+                    دخول
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
 
