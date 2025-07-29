@@ -165,6 +165,7 @@ function App() {
             <Route path="/companies" element={<Companies />} />
             <Route path="/jobs" element={<Jobs />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/restaurants" element={<Restaurants />} />
             <Route path="/ads" element={<Ads />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
