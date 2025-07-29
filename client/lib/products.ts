@@ -40,7 +40,7 @@ export class ProductService {
       price: 15.5,
       images: ["/placeholder.svg"],
       category: "أطعمة ومشروبات",
-      tags: ["كركديه", "طبيعي", "صحي", "سوداني"],
+      tags: ["كرك��يه", "طبيعي", "صحي", "سوداني"],
       inventory: {
         quantity: 50,
         sku: "BEV-HIB-002",
@@ -463,6 +463,68 @@ export class ProductService {
     }
 
     return errors;
+  }
+
+  // Get products with store information
+  static getProductsWithStore(): Array<Product & { storeName?: string; storeCategory?: string }> {
+    const products = this.getProducts();
+
+    // Store information mapping
+    const storeInfo: Record<string, { name: string; category: string }> = {
+      "store-001": { name: "متجر التراث السوداني", category: "traditional" },
+      "store-002": { name: "عطور الشرق", category: "perfumes" },
+      "store-003": { name: "مطعم أم درمان", category: "food" },
+      "store-004": { name: "خدمات التقنية السودانية", category: "services" },
+      "store-005": { name: "أزياء النيل", category: "fashion" },
+      "store-006": { name: "سوبر ماركت الخرطوم", category: "grocery" }
+    };
+
+    return products.map(product => ({
+      ...product,
+      storeName: storeInfo[product.storeId]?.name || "متجر غير معروف",
+      storeCategory: storeInfo[product.storeId]?.category || "other"
+    }));
+  }
+
+  static getStoreNameById(storeId: string): string {
+    const storeNames: Record<string, string> = {
+      "store-001": "متجر التراث السوداني",
+      "store-002": "عطور الشرق",
+      "store-003": "مطعم أم درمان",
+      "store-004": "خدمات التقنية السودانية",
+      "store-005": "أزياء النيل",
+      "store-006": "سوبر ماركت الخرطوم"
+    };
+    return storeNames[storeId] || "متجر غير معروف";
+  }
+
+  static getCategoryIcon(category: string): string {
+    const icons: Record<string, string> = {
+      "عطور ومستحضرات": "🌹",
+      "أطعمة ومشروبات": "🍯",
+      "إكسسوارات": "👜",
+      "أزياء وملابس": "👗",
+      "خدمات تقنية": "💻"
+    };
+    return icons[category] || "📦";
+  }
+
+  static getStatusBadgeColor(status: Product["status"]): string {
+    const colors: Record<string, string> = {
+      "active": "bg-green-500",
+      "inactive": "bg-gray-500",
+      "out_of_stock": "bg-red-500"
+    };
+    return colors[status] || "bg-gray-500";
+  }
+
+  static getStatusText(status: Product["status"]): string {
+    const texts: Record<string, string> = {
+      "active": "متوفر",
+      "inactive": "غير نشط",
+      "out_of_stock": "نفد ا��مخزون"
+    };
+    return texts[status] || status;
   }
 }
 
