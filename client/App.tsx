@@ -7,6 +7,7 @@ import Products from "./pages/Products";
 import Companies from "./pages/Companies";
 import Jobs from "./pages/Jobs";
 import Services from "./pages/Services";
+import Restaurants from "./pages/Restaurants";
 import Ads from "./pages/Ads";
 import NotFound from "./pages/NotFound";
 import Unauthorized from "./pages/Unauthorized";
