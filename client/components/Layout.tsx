@@ -9,7 +9,13 @@ import { LanguageAndThemeControls } from "./ThemeToggle";
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const { isRTL } = useTheme();
+  const { user, isAuthenticated, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    window.location.href = "/";
+  };
 
   const navigation = [
     { name: "الرئيسية", href: "/", icon: "🏠" },
