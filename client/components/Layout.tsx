@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
 import { LanguageAndThemeControls } from "./ThemeToggle";
+import { AppPromoBanner, SyncIndicator } from "./MobileIntegration";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
