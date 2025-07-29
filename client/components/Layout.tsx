@@ -65,15 +65,30 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 +100 ألف سوداني في البيت
               </span>
               <LanguageAndThemeControls />
-              <Link to="/login">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
-                >
-                  تسجيل الدخول
-                </Button>
-              </Link>
+              {isAuthenticated ? (
+                <div className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : "flex-row"}`}>
+                  <span className="text-sm text-gray-600 arabic">أهلاً {user?.profile.name}</span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleLogout}
+                    className="hover:bg-red-50 hover:text-red-700"
+                  >
+                    <LogOut className="w-4 h-4 ml-1" />
+                    تسجيل الخروج
+                  </Button>
+                </div>
+              ) : (
+                <Link to="/login">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
+                  >
+                    تسجيل الدخول
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
 
