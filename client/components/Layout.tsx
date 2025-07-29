@@ -395,6 +395,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </footer>
+
+      {/* Mobile App Promo Banner */}
+      <AppPromoBanner />
     </div>
   );
 }
