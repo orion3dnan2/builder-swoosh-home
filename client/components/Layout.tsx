@@ -1,8 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Search, Bell, MessageCircle, User, Menu } from "lucide-react";
+import { Search, Bell, MessageCircle, User, Menu, LogOut } from "lucide-react";
 import { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
 import { LanguageAndThemeControls } from "./ThemeToggle";
 
 export function Layout({ children }: { children: React.ReactNode }) {
