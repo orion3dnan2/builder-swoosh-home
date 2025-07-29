@@ -50,11 +50,23 @@ export default function Register() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // التحقق من الحقول المطلوبة
+    if (!formData.username.trim()) {
+      alert("يرجى إدخال اسم المستخدم");
+      return;
+    }
+
+    if (formData.username.length < 3) {
+      alert("اسم المستخدم يجب أن يكون 3 أحرف على الأقل");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       alert("كلمات المرور غير متطابقة");
       return;
     }
-    
+
     // التحقق من حقول التاجر إذا كان نوع الحساب تاجر
     if (formData.accountType === "merchant") {
       if (!formData.businessName.trim()) {
@@ -66,7 +78,7 @@ export default function Register() {
         return;
       }
     }
-    
+
     console.log("Registration attempt:", formData);
   };
 
