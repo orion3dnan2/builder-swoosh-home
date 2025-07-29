@@ -22,6 +22,7 @@ export default function Register() {
   const [formData, setFormData] = useState({
     accountType: "customer", // customer or merchant
     fullName: "",
+    username: "",
     email: "",
     phone: "",
     password: "",
@@ -205,7 +206,7 @@ export default function Register() {
                       htmlFor="phone"
                       className="text-right block mb-2 arabic text-gray-700"
                     >
-                      📱 رقم الهاتف
+                      �� رقم الهاتف
                     </Label>
                     <Input
                       id="phone"
@@ -450,7 +451,7 @@ export default function Register() {
                       htmlFor="newsletter"
                       className="text-sm arabic text-gray-600"
                     >
-                      أريد تلقي النشرة الإخبارية والعروض الخاصة
+                      أريد تل��ي النشرة الإخبارية والعروض الخاصة
                     </Label>
                   </div>
                 </div>
