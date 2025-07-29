@@ -13,10 +13,7 @@ export class ProductService {
         "عطر صندل طبيعي من السودان بأجود الخامات. رائحة فواحة تدوم طويلاً مع خليط من الورود السودانية الأصيلة.",
       price: 45.0,
       salePrice: 39.99,
-      images: [
-        "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400",
-        "https://images.unsplash.com/photo-1588405748880-12d1d2a59d32?w=400",
-      ],
+      images: ["/placeholder.svg"],
       category: "عطور ومستحضرات",
       tags: ["عطر", "صندل", "سوداني", "طبيعي"],
       inventory: {
@@ -41,9 +38,7 @@ export class ProductService {
       description:
         "كركديه طبيعي من أجود أنواع الكركديه السوداني. غني بالفيتامينات ومضادات الأكسدة.",
       price: 15.5,
-      images: [
-        "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400",
-      ],
+      images: ["/placeholder.svg"],
       category: "أطعمة ومشروبات",
       tags: ["كركديه", "طبيعي", "صحي", "سوداني"],
       inventory: {
@@ -68,9 +63,7 @@ export class ProductService {
       description:
         "حقيبة يد نسائية من الجلد السوداني الأصلي. تصميم عصري مع لمسة تراثية سودانية.",
       price: 89.99,
-      images: [
-        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
-      ],
+      images: ["/placeholder.svg"],
       category: "إكسسوارات",
       tags: ["حقيبة", "جلد", "نسائي", "سوداني"],
       inventory: {
@@ -88,6 +81,234 @@ export class ProductService {
       createdAt: "2024-01-05T12:00:00Z",
       updatedAt: "2024-01-25T09:15:00Z",
     },
+    {
+      id: "prod-004",
+      storeId: "store-002",
+      name: "بخور لبان ذكر أصلي",
+      description:
+        "بخور لبان ذكر من أجود الأنواع السودانية. رائحة عطرة تملأ المكان بالعبق الأصيل.",
+      price: 32.50,
+      salePrice: 27.99,
+      images: ["/placeholder.svg"],
+      category: "عطور ومستحضرات",
+      tags: ["بخور", "لبان", "ذكر", "سوداني"],
+      inventory: {
+        quantity: 18,
+        sku: "INC-LBN-004",
+        lowStockThreshold: 5,
+      },
+      specifications: {
+        الوزن: "100 جرام",
+        النوع: "لبان ذكر خالص",
+        المنشأ: "شرق السودان",
+        الدرجة: "فاخر",
+      },
+      status: "active",
+      createdAt: "2024-02-01T10:00:00Z",
+      updatedAt: "2024-02-10T14:30:00Z",
+    },
+    {
+      id: "prod-005",
+      storeId: "store-002",
+      name: "عطر زهر الياسمين",
+      description:
+        "عطر طبيعي من زهر الياسمين السوداني. رائحة ناعمة ومنعشة تدوم لساعات طويلة.",
+      price: 52.00,
+      images: ["/placeholder.svg"],
+      category: "عطور ومستحضرات",
+      tags: ["عطر", "ياسمين", "طبيعي", "نسائي"],
+      inventory: {
+        quantity: 22,
+        sku: "PER-JAS-005",
+        lowStockThreshold: 3,
+      },
+      specifications: {
+        الحجم: "30 مل",
+        النوع: "عطر طبيعي",
+        المنشأ: "السودان",
+        التركيز: "15%",
+      },
+      status: "active",
+      createdAt: "2024-02-05T09:00:00Z",
+      updatedAt: "2024-02-15T11:45:00Z",
+    },
+    {
+      id: "prod-006",
+      storeId: "store-003",
+      name: "ملوخية سودانية مجففة",
+      description:
+        "ملوخية سودانية مجففة من أجود الأنواع. طبق تقليدي شهي ومغذي من المطبخ السوداني.",
+      price: 12.75,
+      images: ["/placeholder.svg"],
+      category: "أطعمة ومشروبات",
+      tags: ["ملوخية", "مجففة", "سودانية", "تقليدية"],
+      inventory: {
+        quantity: 35,
+        sku: "FOOD-MLK-006",
+        lowStockThreshold: 8,
+      },
+      specifications: {
+        الوزن: "250 جرام",
+        النوع: "مجففة طبيعياً",
+        المنشأ: "وسط السودان",
+        الصلاحية: "18 شهر",
+      },
+      status: "active",
+      createdAt: "2024-02-10T08:00:00Z",
+      updatedAt: "2024-02-20T16:30:00Z",
+    },
+    {
+      id: "prod-007",
+      storeId: "store-003",
+      name: "توابل دقة سودانية",
+      description:
+        "خلطة توابل الدقة السودانية الأصيلة. تضفي نكهة مميزة على الأطباق التقليدية.",
+      price: 8.50,
+      images: ["/placeholder.svg"],
+      category: "أطعمة ومشروبات",
+      tags: ["توابل", "دقة", "سودانية", "خلطة"],
+      inventory: {
+        quantity: 42,
+        sku: "SPICE-DQA-007",
+        lowStockThreshold: 10,
+      },
+      specifications: {
+        الوزن: "150 جرام",
+        النوع: "خلطة توابل طبيعية",
+        المنشأ: "السودان",
+        الصلاحية: "سنة واحدة",
+      },
+      status: "active",
+      createdAt: "2024-02-12T10:30:00Z",
+      updatedAt: "2024-02-22T14:15:00Z",
+    },
+    {
+      id: "prod-008",
+      storeId: "store-005",
+      name: "فستان سوداني تقليدي",
+      description:
+        "فستان نسائي بالطراز السوداني التقليدي. قماش عالي الجودة وتطريز يدوي أنيق.",
+      price: 125.00,
+      salePrice: 99.99,
+      images: ["/placeholder.svg"],
+      category: "أزياء وملابس",
+      tags: ["فستان", "تقليدي", "سوداني", "نسائي"],
+      inventory: {
+        quantity: 8,
+        sku: "DRESS-TRD-008",
+        lowStockThreshold: 2,
+      },
+      specifications: {
+        المقاس: "متوسط (M)",
+        المادة: "قطن طبيعي",
+        اللون: "أزرق مع تطريز ذهبي",
+        النوع: "فستان تقليدي",
+      },
+      status: "active",
+      createdAt: "2024-02-15T12:00:00Z",
+      updatedAt: "2024-02-25T10:45:00Z",
+    },
+    {
+      id: "prod-009",
+      storeId: "store-005",
+      name: "شماغ سوداني أصلي",
+      description:
+        "شماغ سوداني تقليدي بنقوش أصيلة. قماش ناعم ومريح مناسب لجميع المناسبات.",
+      price: 35.00,
+      images: ["/placeholder.svg"],
+      category: "أزياء وملابس",
+      tags: ["شماغ", "سوداني", "تقليدي", "رجالي"],
+      inventory: {
+        quantity: 15,
+        sku: "SHMG-TRD-009",
+        lowStockThreshold: 3,
+      },
+      specifications: {
+        المقاس: "120x120 سم",
+        المادة: "قطن خالص",
+        اللون: "أبيض وأحمر",
+        النوع: "شماغ تقليدي",
+      },
+      status: "active",
+      createdAt: "2024-02-18T09:30:00Z",
+      updatedAt: "2024-02-28T15:20:00Z",
+    },
+    {
+      id: "prod-010",
+      storeId: "store-006",
+      name: "عدس أحمر سوداني",
+      description:
+        "عدس أحمر من أجود الأنواع السودانية. غني بالبروتين والألياف الطبيعية.",
+      price: 6.25,
+      images: ["/placeholder.svg"],
+      category: "أطعمة ومشروبات",
+      tags: ["عدس", "أحمر", "سوداني", "بقوليات"],
+      inventory: {
+        quantity: 60,
+        sku: "LENTIL-RED-010",
+        lowStockThreshold: 15,
+      },
+      specifications: {
+        الوزن: "1 كيلو",
+        النوع: "عدس أحمر خالص",
+        المنشأ: "شمال السودان",
+        الصلاحية: "سنتان",
+      },
+      status: "active",
+      createdAt: "2024-02-20T11:00:00Z",
+      updatedAt: "2024-03-01T09:30:00Z",
+    },
+    {
+      id: "prod-011",
+      storeId: "store-006",
+      name: "فول سوداني محمص",
+      description:
+        "فول سوداني محمص بطريقة تقليدية. وجبة خفيفة صحية ولذيذة من المكسرات السودانية.",
+      price: 4.50,
+      images: ["/placeholder.svg"],
+      category: "أطعمة ومشروبات",
+      tags: ["فول سوداني", "محمص", "مكسرات", "وجبة خفيفة"],
+      inventory: {
+        quantity: 75,
+        sku: "PEANUT-RST-011",
+        lowStockThreshold: 20,
+      },
+      specifications: {
+        الوزن: "500 جرام",
+        النوع: "محمص طبيعياً",
+        المنشأ: "غرب السودان",
+        الصلاحية: "6 أشهر",
+      },
+      status: "active",
+      createdAt: "2024-02-22T14:00:00Z",
+      updatedAt: "2024-03-02T16:45:00Z",
+    },
+    {
+      id: "prod-012",
+      storeId: "store-004",
+      name: "خدمة تصميم موقع إلكتروني",
+      description:
+        "خدمة تصميم وتطوير موقع إلكتروني احترافي بأحدث التقنيات والمعايير العالمية.",
+      price: 850.00,
+      salePrice: 699.99,
+      images: ["/placeholder.svg"],
+      category: "خدمات تقنية",
+      tags: ["تصميم", "موقع", "تطوير", "تقنية"],
+      inventory: {
+        quantity: 999,
+        sku: "SERV-WEB-012",
+        lowStockThreshold: 1,
+      },
+      specifications: {
+        النوع: "خدمة تقنية",
+        المدة: "2-4 أسابيع",
+        التقنيات: "React, Node.js",
+        الضمان: "سنة واحدة",
+      },
+      status: "active",
+      createdAt: "2024-02-25T10:00:00Z",
+      updatedAt: "2024-03-05T12:30:00Z",
+    }
   ];
 
   static getProducts(storeId?: string): Product[] {
@@ -238,7 +459,7 @@ export class ProductService {
     }
 
     if (!product.inventory?.quantity || product.inventory.quantity < 0) {
-      errors.push("كمية المخزون يجب أن تكون صفر أو أكثر");
+      errors.push("كمية المخزون يجب أن تكون صفر أ�� أكثر");
     }
 
     return errors;
