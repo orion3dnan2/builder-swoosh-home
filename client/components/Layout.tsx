@@ -209,15 +209,32 @@ export function Layout({ children }: { children: React.ReactNode }) {
               >
                 <Menu className="w-5 h-5" />
               </Button>
-              <Link to="/login">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-foreground hover:bg-muted p-2"
-                >
-                  <User className="w-5 h-5" />
-                </Button>
-              </Link>
+              {isAuthenticated ? (
+                <div className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}>
+                  <div className="hidden md:flex items-center gap-2">
+                    <span className="text-sm text-gray-600 arabic">أهلاً {user?.profile.name}</span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={handleLogout}
+                    className="text-foreground hover:bg-red-50 hover:text-red-600 p-2"
+                    title="تسجيل الخروج"
+                  >
+                    <LogOut className="w-5 h-5" />
+                  </Button>
+                </div>
+              ) : (
+                <Link to="/login">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-foreground hover:bg-muted p-2"
+                  >
+                    <User className="w-5 h-5" />
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
 
@@ -357,7 +374,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             className={`border-t border-border mt-8 pt-8 text-center arabic ${isRTL ? "text-right" : "text-center"}`}
           >
             <p className="text-muted-foreground">
-              © 2024 البيت السوداني. جميع الحقوق محفوظة.
+              © 2024 البيت ��لسوداني. جميع الحقوق محفوظة.
             </p>
           </div>
         </div>
