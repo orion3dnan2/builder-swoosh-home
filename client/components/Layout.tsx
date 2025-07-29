@@ -16,6 +16,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { name: "المنتجات", href: "/products", icon: "📦" },
     { name: "الشركات", href: "/companies", icon: "🏢" },
     { name: "الوظائف", href: "/jobs", icon: "💼" },
+    { name: "المطاعم", href: "/restaurants", icon: "🍽️" },
     { name: "الخدمات", href: "/services", icon: "🛠️" },
     { name: "الإعلانات", href: "/ads", icon: "📢" },
   ];
