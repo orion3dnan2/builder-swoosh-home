@@ -1,13 +1,13 @@
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
-import { authRoutes } from "./api/routes/auth";
+import { authDevRoutes } from "./api/routes/auth-dev";
 import { companiesRoutes } from "./api/routes/companies";
 import { productsRoutes } from "./api/routes/products";
 import { jobsRoutes } from "./api/routes/jobs";
 import { storesRoutes } from "./api/routes/stores";
 import { servicesRoutes } from "./api/routes/services";
-import { userRoutes } from "./api/routes/users";
+import { userDevRoutes } from "./api/routes/users-dev";
 import { mobileRoutes } from "./api/routes/mobile";
 import {
   getSystemSettings,
