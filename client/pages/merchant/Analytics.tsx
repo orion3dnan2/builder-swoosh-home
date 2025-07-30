@@ -190,6 +190,46 @@ export default function MerchantAnalytics() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Welcome Message for New Merchants */}
+        {isNewMerchant && (
+          <Card className="mb-8 bg-gradient-to-r from-blue-50 to-green-50 border-blue-200">
+            <CardContent className="p-6">
+              <div className="flex items-start space-x-4 space-x-reverse">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center">
+                  <Sparkles className="w-6 h-6 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-xl font-bold text-gray-900 mb-2 arabic">
+                    تحليلاتك ستظهر هنا قريباً! 📊
+                  </h2>
+                  <p className="text-gray-700 mb-4 arabic">
+                    مرحباً {user?.profile?.name}! بمجرد أن تبدأ في بيع منتجاتك،
+                    ستحصل على تحليلات مفصلة لأداء متجرك ومبيعاتك هنا.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Link to="/merchant/products/new">
+                      <Button className="w-full arabic bg-blue-600 hover:bg-blue-700">
+                        <Plus className="w-4 h-4 ml-2" />
+                        أضف منتجات
+                      </Button>
+                    </Link>
+                    <Link to="/merchant/settings">
+                      <Button variant="outline" className="w-full arabic">
+                        إعداد المتجر
+                      </Button>
+                    </Link>
+                    <Link to="/merchant/dashboard">
+                      <Button variant="outline" className="w-full arabic">
+                        العودة للوحة التحكم
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Overview Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
