@@ -124,7 +124,7 @@ export default function MerchantSettings() {
     standardShippingCost: isNewMerchant ? 15 : 25,
     expressShippingCost: isNewMerchant ? 30 : 50,
     processingTime: isNewMerchant ? "1-3 أيام عمل" : "1-2 أيام عمل",
-    shippingAreas: isNewMerchant ? [] : ["الرياض", "جدة", "الدمام", "مكة المكرمة", "ا��مدينة المنورة"]
+    shippingAreas: isNewMerchant ? [] : ["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة"]
   });
 
   const [accountSettings, setAccountSettings] = useState({
@@ -164,7 +164,7 @@ export default function MerchantSettings() {
     }
   };
 
-  // ��عالجة تغيير الغلاف
+  // معالجة تغيير الغلاف
   const handleBannerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -232,6 +232,16 @@ export default function MerchantSettings() {
       return;
     }
 
+    if (!selectedCountry) {
+      alert("يرجى اختيار الدولة");
+      return;
+    }
+
+    if (!storeSettings.city) {
+      alert("يرجى اختيار المدينة");
+      return;
+    }
+
     if (storeSettings.workingHours.days.length === 0) {
       alert("يرجى اختيار أيام العمل");
       return;
@@ -281,7 +291,7 @@ export default function MerchantSettings() {
   ];
 
   const cities = [
-    "الرياض، المملكة العربية السعودية",
+    "الري��ض، المملكة العربية السعودية",
     "جدة، المملكة العربية السع��دية", 
     "الدمام، المملكة العربية السعودية",
     "مكة المكرمة، المملكة العربية السعودية",
@@ -301,7 +311,7 @@ export default function MerchantSettings() {
       "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة",
       "الطائف", "الخبر", "الأحساء", "تبوك", "أبها", "جازان", "نجران"
     ],
-    "ال��مارات العربية المتح��ة": [
+    "الإمارات العربية المتح��ة": [
       "دبي", "أبوظبي", "الشارقة", "عجمان", "رأس الخيمة", "الفجيرة", "أم القيوين"
     ],
     "دولة الكويت": [
@@ -326,7 +336,7 @@ export default function MerchantSettings() {
 
   // إضافة حالات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
-    isNewMerchant ? "" : "��لمملكة العربية السعودية"
+    isNewMerchant ? "" : "المملكة العربية السعودية"
   );
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
@@ -806,7 +816,7 @@ export default function MerchantSettings() {
                     <h3 className="font-semibold text-gray-900 mb-4 arabic">تكاليف الشحن</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
-                        <Label htmlFor="freeShipping" className="arabic">الشحن المجاني عند</Label>
+                        <Label htmlFor="freeShipping" className="arabic">الشحن المج��ني عند</Label>
                         <div className="mt-1 relative">
                           <Input
                             id="freeShipping"
