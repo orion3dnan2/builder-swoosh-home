@@ -108,6 +108,7 @@ export default function MerchantSettings() {
             storeName: existingStore.name || "",
             description: existingStore.description || "",
             category: existingStore.category || "",
+            storeType: existingStore.storeType || "",
             phone: existingStore.phone || "",
             email: existingStore.email || "",
             address: existingStore.address || "",
@@ -387,7 +388,7 @@ export default function MerchantSettings() {
         shippingSettings: shipping,
       };
 
-      // البحث عن متجر موجود للمستخدم أولاً
+      // البحث عن متجر موجود ��لمستخدم أولاً
       try {
         const userStores = await ApiService.getStores();
         const existingStore = userStores.find(
@@ -426,7 +427,7 @@ export default function MerchantSettings() {
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ الإعدادات.\n\nيرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ الإعدادات.\n\nيرجى التحقق م�� اتصال الإنترنت والمحاولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
@@ -512,7 +513,7 @@ export default function MerchantSettings() {
       "الفروانية",
       "حولي",
     ],
-    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"],
+    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشما��"],
     "مملكة البحرين": ["المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
@@ -900,7 +901,7 @@ export default function MerchantSettings() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                       <Label htmlFor="country" className="arabic">
-                        الدولة
+                        ا��دولة
                       </Label>
                       <select
                         id="country"
@@ -1169,7 +1170,7 @@ export default function MerchantSettings() {
                         },
                         {
                           key: "emailNotifications",
-                          label: "البريد الإلكتروني",
+                          label: "ال��ريد الإلكتروني",
                           desc: "استقبال الإشعارات عبر البريد الإلكتروني",
                         },
                       ].map((item) => (
@@ -1435,7 +1436,7 @@ export default function MerchantSettings() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="newPassword" className="arabic">
-                            كلمة المرور الجديدة
+                            كلمة ا��مرور الجديدة
                           </Label>
                           <Input
                             id="newPassword"
