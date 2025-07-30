@@ -91,7 +91,7 @@ export default function MerchantSettings() {
   // Store Settings State - فارغة للتجار الجدد
   const [storeSettings, setStoreSettings] = useState<StoreSettings>({
     storeName: isNewMerchant ? (user?.profile?.businessName || "") : "متجر الخير السوداني",
-    description: isNewMerchant ? "" : "متجر ��تخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
+    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
     phone: isNewMerchant ? (user?.profile?.phone || "") : "+966501234567",
     email: isNewMerchant ? (user?.email || "") : "store@alkhair-sudani.com",
@@ -106,25 +106,25 @@ export default function MerchantSettings() {
     banner: "/placeholder.svg"
   });
 
-  // Notification Settings State  
+  // Notification Settings State - إعدادات افتراضية للتجار الجدد
   const [notifications, setNotifications] = useState<NotificationSettings>({
     newOrders: true,
     orderUpdates: true,
     paymentReceived: true,
     lowStock: true,
-    reviews: false,
-    promotions: true,
-    smsNotifications: true,
+    reviews: true,
+    promotions: false,
+    smsNotifications: isNewMerchant ? false : true,
     emailNotifications: true
   });
 
-  // Shipping Settings State
+  // Shipping Settings State - قيم افتراضية للت��ار الجدد
   const [shipping, setShipping] = useState<ShippingSettings>({
-    freeShippingThreshold: 200,
-    standardShippingCost: 25,
-    expressShippingCost: 50,
-    processingTime: "1-2 أيام عمل",
-    shippingAreas: ["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة"]
+    freeShippingThreshold: isNewMerchant ? 100 : 200,
+    standardShippingCost: isNewMerchant ? 15 : 25,
+    expressShippingCost: isNewMerchant ? 30 : 50,
+    processingTime: isNewMerchant ? "1-3 أيام عمل" : "1-2 أيام عمل",
+    shippingAreas: isNewMerchant ? [] : ["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة"]
   });
 
   const [accountSettings, setAccountSettings] = useState({
@@ -238,7 +238,7 @@ export default function MerchantSettings() {
                 <CardHeader>
                   <CardTitle className="arabic text-right flex items-center">
                     <Store className="w-5 h-5 ml-2" />
-                    معلومات المتجر
+                    معلوما�� المتجر
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
