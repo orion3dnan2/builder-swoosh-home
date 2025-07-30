@@ -91,7 +91,7 @@ export default function MerchantSettings() {
   // Store Settings State - فارغة للتجار الجدد
   const [storeSettings, setStoreSettings] = useState<StoreSettings>({
     storeName: isNewMerchant ? (user?.profile?.businessName || "") : "متجر الخير السوداني",
-    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطع��ة وحرف يدوية",
+    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
     phone: isNewMerchant ? (user?.profile?.phone || "") : "+966501234567",
     email: isNewMerchant ? (user?.email || "") : "store@alkhair-sudani.com",
@@ -139,7 +139,7 @@ export default function MerchantSettings() {
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // التحقق من نوع الملف
+      // التحق�� من نوع الملف
       if (!file.type.startsWith('image/')) {
         alert('يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG)');
         return;
@@ -155,6 +155,10 @@ export default function MerchantSettings() {
       reader.onload = (e) => {
         const logoUrl = e.target?.result as string;
         setStoreSettings({...storeSettings, logo: logoUrl});
+        alert('تم تحديث شعار المتجر بنجاح! 🎉');
+      };
+      reader.onerror = () => {
+        alert('فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.');
       };
       reader.readAsDataURL(file);
     }
@@ -254,7 +258,7 @@ export default function MerchantSettings() {
 
   const cities = [
     "الرياض، المملكة العربية السعودية",
-    "جدة، المملكة العربية السعودية", 
+    "جدة، المملكة العربية السع��دية", 
     "الدمام، المملكة العربية السعودية",
     "مكة المكرمة، المملكة العربية السعودية",
     "المدينة المنورة، المملكة العربية السعودية",
@@ -402,7 +406,7 @@ export default function MerchantSettings() {
                             تغيير الغلاف
                           </Button>
                           <p className="text-xs text-gray-500 arabic">
-                            PNG, JPG أ�� JPEG (أقل من 10 ميجا)
+                            PNG, JPG أو JPEG (أقل من 10 ميجا)
                           </p>
                         </div>
                       </div>
