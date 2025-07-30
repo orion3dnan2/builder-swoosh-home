@@ -1,30 +1,12 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { UserDatabase } from "../../lib/database";
 
 const router = Router();
 
 // JWT secret - في الإنتاج يجب أن يكون في متغيرات البيئة
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
-
-// Demo users database (للتطوير فقط)
-const users = [
-  {
-    id: "admin-001",
-    username: "admin",
-    email: "admin@baytsudani.com",
-    password: "$2b$10$hashed_password", // استخدم bcrypt للتشفير
-    role: "super_admin",
-    profile: {
-      name: "مدير التطبيق",
-      language: "ar",
-      avatar: "/placeholder.svg",
-    },
-    permissions: [{ resource: "*", actions: ["*"] }],
-    createdAt: new Date().toISOString(),
-    isActive: true,
-  },
-];
 
 // Middleware للتحقق من صحة الرمز المميز
 export const authenticateToken = (req: any, res: any, next: any) => {
@@ -49,20 +31,43 @@ router.post("/login", async (req, res) => {
   try {
     const { username, password, platform = "web" } = req.body;
 
-    // البحث عن المستخدم
-    const user = users.find((u) => u.username === username);
+    // البحث عن المستخدم في قاعدة البيانات
+    const user = UserDatabase.findUser(
+      (u) => u.username === username || u.email === username
+    );
+
     if (!user) {
       return res
         .status(401)
         .json({ error: "اسم المستخدم أو كلمة المرور غير صحيحة" });
     }
 
-    // التحقق من كلمة المرور (في هذا المثال نستخدم كلمة مرور بسيطة)
-    if (password !== username) {
+    // التحقق من حالة المستخدم
+    if (!user.isActive) {
       return res
         .status(401)
-        .json({ error: "اسم المستخدم ��و كلمة المرور غير صحيحة" });
+        .json({ error: "تم إيقاف الحساب، تواصل مع الإدارة" });
     }
+
+    // التحقق من كلمة المرور
+    let isPasswordValid = false;
+    try {
+      isPasswordValid = await bcrypt.compare(password, user.password);
+    } catch (bcryptError) {
+      // للمستخدم الافتراضي admin (كلمة مرور بسيطة)
+      isPasswordValid = password === username;
+    }
+
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ error: "اسم المست��دم أو كلمة المرور غير صحيحة" });
+    }
+
+    // تحديث آخر تسجيل دخول
+    UserDatabase.updateUser(user.id, { 
+      lastLogin: new Date().toISOString() 
+    });
 
     // إنشاء رمز الوصول
     const token = jwt.sign(
@@ -85,6 +90,7 @@ router.post("/login", async (req, res) => {
       expiresIn: platform === "mobile" ? "30d" : "7d",
     });
   } catch (error) {
+    console.error("Login error:", error);
     res.status(500).json({ error: "خطأ في الخادم" });
   }
 });
@@ -112,7 +118,7 @@ router.post("/register", async (req, res) => {
     }
 
     // التحقق من وجود المستخدم
-    const existingUser = users.find(
+    const existingUser = UserDatabase.findUser(
       (u) => u.email === email || u.username === username,
     );
     if (existingUser) {
@@ -127,9 +133,9 @@ router.post("/register", async (req, res) => {
     }
 
     // إنشاء مستخدم جديد
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 12);
     const newUser = {
-      id: `user-${Date.now()}`,
+      id: `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       username: username,
       email,
       password: hashedPassword,
@@ -137,8 +143,8 @@ router.post("/register", async (req, res) => {
       profile: {
         name: fullName,
         phone,
-        country,
-        city,
+        country: country || "السودان",
+        city: city || "",
         language: "ar",
         avatar: "/placeholder.svg",
         ...(accountType === "merchant" && {
@@ -157,25 +163,29 @@ router.post("/register", async (req, res) => {
       isActive: true,
     };
 
-    users.push(newUser);
+    // حفظ المستخدم في قاعدة البيانات الدائمة
+    const savedUser = UserDatabase.addUser(newUser);
+
+    console.log(`✅ تم إنشاء مستخدم جديد: ${username} (${accountType})`);
 
     // إنشاء رمز الوصول
     const token = jwt.sign(
       {
-        id: newUser.id,
-        username: newUser.username,
-        role: newUser.role,
+        id: savedUser.id,
+        username: savedUser.username,
+        role: savedUser.role,
         platform,
       },
       JWT_SECRET,
       { expiresIn: platform === "mobile" ? "30d" : "7d" },
     );
 
-    const { password: _, ...userWithoutPassword } = newUser;
+    const { password: _, ...userWithoutPassword } = savedUser;
     res.status(201).json({
       user: userWithoutPassword,
       token,
       platform,
+      message: "تم إنشاء الحساب بنجاح وحفظه في قاعدة البيانات"
     });
   } catch (error) {
     console.error("Registration error:", error);
@@ -183,22 +193,74 @@ router.post("/register", async (req, res) => {
   }
 });
 
+// تحديث الرمز المميز
 router.post("/refresh", authenticateToken, (req: any, res) => {
-  res.json({ token: "dev-token" });
+  const { user } = req;
+  const platform = req.headers["x-platform"] || "web";
+
+  const newToken = jwt.sign(
+    {
+      id: user.id,
+      username: user.username,
+      role: user.role,
+      platform,
+    },
+    JWT_SECRET,
+    { expiresIn: platform === "mobile" ? "30d" : "7d" },
+  );
+
+  res.json({ token: newToken });
 });
 
-router.get("/me", authenticateToken, (req: any, res) => {
-  const user = users.find((u) => u.id === req.user.id);
-  if (!user) {
-    return res.status(404).json({ error: "المستخدم غير موجود" });
+// الحصول على بيانات المستخدم الحالي
+router.get("/me", authenticateToken, async (req: any, res) => {
+  try {
+    const user = UserDatabase.findUser((u) => u.id === req.user.id);
+    
+    if (!user) {
+      return res.status(404).json({ error: "المستخدم غير موجود" });
+    }
+
+    const { password: _, ...userWithoutPassword } = user;
+    res.json(userWithoutPassword);
+  } catch (error) {
+    console.error("Get user error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
   }
-
-  const { password: _, ...userWithoutPassword } = user;
-  res.json(userWithoutPassword);
 });
 
+// تسجيل الخروج
 router.post("/logout", authenticateToken, (req: any, res) => {
+  // في التطبيق الحقيقي، يمكن إضافة الرمز إلى قائمة سوداء
   res.json({ message: "تم تسجيل الخروج بنجاح" });
+});
+
+// إحصائيات المستخدمين (للمديرين فقط)
+router.get("/stats", authenticateToken, (req: any, res) => {
+  try {
+    if (req.user.role !== "super_admin") {
+      return res.status(403).json({ error: "غير مصرح لك بالوصول" });
+    }
+
+    const allUsers = UserDatabase.getAllUsers();
+    const stats = {
+      total: allUsers.length,
+      active: allUsers.filter(u => u.isActive).length,
+      merchants: allUsers.filter(u => u.role === "merchant").length,
+      customers: allUsers.filter(u => u.role === "customer").length,
+      admins: allUsers.filter(u => u.role === "super_admin").length,
+      recentRegistrations: allUsers.filter(u => {
+        const registrationDate = new Date(u.createdAt);
+        const daysSince = (Date.now() - registrationDate.getTime()) / (1000 * 60 * 60 * 24);
+        return daysSince <= 7;
+      }).length
+    };
+
+    res.json(stats);
+  } catch (error) {
+    console.error("Get stats error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
+  }
 });
 
 export { router as authDevRoutes };
