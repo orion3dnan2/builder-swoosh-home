@@ -3,7 +3,7 @@
     "id": "admin-001",
     "username": "admin",
     "email": "admin@baytsudani.com",
-    "password": "$2b$10$hashed_password",
+    "password": "admin",
     "role": "super_admin",
     "profile": {
       "name": "مدير التطبيق",
