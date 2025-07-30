@@ -51,6 +51,60 @@ export default function MerchantDashboard() {
   const [userStore, setUserStore] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // جلب بيانات المتجر من API
+  useEffect(() => {
+    const fetchStoreData = async () => {
+      try {
+        setLoading(true);
+
+        // جلب المتجر الخاص بالمستخدم
+        const storesResponse = await fetch('/api/stores', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (storesResponse.ok) {
+          const stores = await storesResponse.json();
+          const currentStore = stores[0]; // أول متجر للمستخدم
+          setUserStore(currentStore);
+
+          if (currentStore) {
+            // تحديث الإحصائيات من بيانات المتجر
+            setStoreStats({
+              totalProducts: currentStore.analytics?.totalProducts || 0,
+              totalOrders: currentStore.analytics?.totalOrders || 0,
+              monthlyRevenue: currentStore.analytics?.totalRevenue || 0,
+              storeViews: currentStore.analytics?.totalViews || 0,
+              activeProducts: currentStore.analytics?.activeProducts || 0,
+              outOfStock: currentStore.analytics?.outOfStock || 0,
+              pendingOrders: currentStore.analytics?.pendingOrders || 0,
+              completedOrders: currentStore.analytics?.completedOrders || 0,
+              averageRating: currentStore.analytics?.averageRating || 0,
+              totalReviews: currentStore.analytics?.totalReviews || 0,
+            });
+
+            // تحديث حالة التاجر الجديد
+            const accountAge = Date.now() - new Date(currentStore.createdAt).getTime();
+            const daysSinceCreation = accountAge / (1000 * 60 * 60 * 24);
+            setIsNewMerchant(daysSinceCreation < 7 && currentStore.analytics?.totalProducts === 0);
+          }
+        }
+      } catch (error) {
+        console.error('خطأ في جلب بيانات المتجر:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user && user.role === 'merchant') {
+      fetchStoreData();
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
+
   const recentOrders = isNewMerchant
     ? []
     : [
