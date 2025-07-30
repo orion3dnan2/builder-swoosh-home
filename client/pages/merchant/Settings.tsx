@@ -77,20 +77,30 @@ export default function MerchantSettings() {
   const [activeTab, setActiveTab] = useState("store");
   const [showPassword, setShowPassword] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isNewMerchant, setIsNewMerchant] = useState(true);
 
-  // Store Settings State
+  // تحديد إذا كان التاجر جديد
+  useEffect(() => {
+    if (user?.createdAt) {
+      const accountAge = Date.now() - new Date(user.createdAt).getTime();
+      const daysSinceCreation = accountAge / (1000 * 60 * 60 * 24);
+      setIsNewMerchant(daysSinceCreation < 7);
+    }
+  }, [user]);
+
+  // Store Settings State - فارغة للتجار الجدد
   const [storeSettings, setStoreSettings] = useState<StoreSettings>({
-    storeName: "متجر الخير السوداني",
-    description: "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
-    category: "مواد غذائية وعطور",
-    phone: "+966501234567",
-    email: "store@alkhair-sudani.com",
-    address: "شارع الملك فهد، حي النرجس",
-    city: "الرياض، المملكة العربية السعودية",
+    storeName: isNewMerchant ? (user?.profile?.businessName || "") : "متجر الخير السوداني",
+    description: isNewMerchant ? "" : "متجر ��تخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
+    category: isNewMerchant ? "" : "مواد غذائية وعطور",
+    phone: isNewMerchant ? (user?.profile?.phone || "") : "+966501234567",
+    email: isNewMerchant ? (user?.email || "") : "store@alkhair-sudani.com",
+    address: isNewMerchant ? "" : "شارع الملك فهد، حي النرجس",
+    city: isNewMerchant ? (user?.profile?.city || "") : "الرياض، المملكة العربية السعودية",
     workingHours: {
-      start: "09:00",
-      end: "22:00",
-      days: ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"]
+      start: isNewMerchant ? "09:00" : "09:00",
+      end: isNewMerchant ? "17:00" : "22:00",
+      days: isNewMerchant ? [] : ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"]
     },
     logo: "/placeholder.svg",
     banner: "/placeholder.svg"
