@@ -70,6 +70,9 @@ export default function Companies() {
   const countries = [...new Set(companies.map(c => c.country))];
   const sizes = ["صغيرة", "متوسطة", "كبيرة"];
 
+  // الشركات المميزة (أول 3 شركات نشطة)
+  const featuredCompanies = companies.filter(c => c.status === "active").slice(0, 3);
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-12">
