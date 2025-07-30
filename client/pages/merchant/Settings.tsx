@@ -124,7 +124,7 @@ export default function MerchantSettings() {
     standardShippingCost: isNewMerchant ? 15 : 25,
     expressShippingCost: isNewMerchant ? 30 : 50,
     processingTime: isNewMerchant ? "1-3 أيام عمل" : "1-2 أيام عمل",
-    shippingAreas: isNewMerchant ? [] : ["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة"]
+    shippingAreas: isNewMerchant ? [] : ["الرياض", "جدة", "الدمام", "مكة المكرمة", "ا��مدينة المنورة"]
   });
 
   const [accountSettings, setAccountSettings] = useState({
@@ -164,7 +164,7 @@ export default function MerchantSettings() {
     }
   };
 
-  // معالجة تغيير الغلاف
+  // ��عالجة تغيير الغلاف
   const handleBannerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -301,7 +301,7 @@ export default function MerchantSettings() {
       "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة",
       "الطائف", "الخبر", "الأحساء", "تبوك", "أبها", "جازان", "نجران"
     ],
-    "الإمارات العربية المتح��ة": [
+    "ال��مارات العربية المتح��ة": [
       "دبي", "أبوظبي", "الشارقة", "عجمان", "رأس الخيمة", "الفجيرة", "أم القيوين"
     ],
     "دولة الكويت": [
@@ -326,7 +326,7 @@ export default function MerchantSettings() {
 
   // إضافة حالات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
-    isNewMerchant ? "" : "المملكة العربية السعودية"
+    isNewMerchant ? "" : "��لمملكة العربية السعودية"
   );
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
@@ -599,7 +599,36 @@ export default function MerchantSettings() {
                   </div>
 
                   {/* Address Information */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                      <Label htmlFor="country" className="arabic">الدولة</Label>
+                      <select
+                        id="country"
+                        value={selectedCountry}
+                        onChange={(e) => handleCountryChange(e.target.value)}
+                        className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
+                      >
+                        <option value="">اختر الدولة</option>
+                        {Object.keys(countriesWithCities).map((country) => (
+                          <option key={country} value={country}>{country}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <Label htmlFor="city" className="arabic">المدينة</Label>
+                      <select
+                        id="city"
+                        value={storeSettings.city}
+                        onChange={(e) => setStoreSettings({...storeSettings, city: e.target.value})}
+                        className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
+                        disabled={!selectedCountry}
+                      >
+                        <option value="">اختر المدينة</option>
+                        {selectedCountry && countriesWithCities[selectedCountry]?.map((city) => (
+                          <option key={city} value={city}>{city}</option>
+                        ))}
+                      </select>
+                    </div>
                     <div>
                       <Label htmlFor="address" className="arabic">عنوان المتجر</Label>
                       <Input
@@ -609,19 +638,6 @@ export default function MerchantSettings() {
                         className="mt-1 text-right arabic"
                         placeholder="شارع الملك فهد، حي النرجس"
                       />
-                    </div>
-                    <div>
-                      <Label htmlFor="city" className="arabic">المدينة</Label>
-                      <select
-                        id="city"
-                        value={storeSettings.city}
-                        onChange={(e) => setStoreSettings({...storeSettings, city: e.target.value})}
-                        className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
-                      >
-                        {cities.map((city) => (
-                          <option key={city} value={city}>{city}</option>
-                        ))}
-                      </select>
                     </div>
                   </div>
 
