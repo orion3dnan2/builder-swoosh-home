@@ -334,7 +334,7 @@ export default function MerchantDashboard() {
                       لا توجد طلبات بعد
                     </h3>
                     <p className="text-gray-600 mb-4 arabic">
-                      عندما يبدأ العملاء في الطلب من متجرك، ستظهر الطلبات هنا
+                      عندما يبدأ العملاء في الطلب من متجرك، ست��هر الطلبات هنا
                     </p>
                     <Link to="/merchant/products/new">
                       <Button className="arabic">
@@ -442,7 +442,7 @@ export default function MerchantDashboard() {
             </Card>
 
             {/* Low Stock Alert */}
-            {lowStockProducts.length > 0 && (
+            {!isNewMerchant && lowStockProducts.length > 0 && (
               <Card className="border-red-200 bg-red-50">
                 <CardHeader>
                   <CardTitle className="flex items-center text-red-800 arabic">
