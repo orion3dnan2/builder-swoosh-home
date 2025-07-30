@@ -9,13 +9,13 @@ router.get("/", authenticateToken, async (req: any, res) => {
   try {
     // إذا كان المستخدم تاجر، أرجع متاجره فقط
     if (req.user.role === "merchant") {
-      const userStores = stores.filter(store => store.merchantId === req.user.id);
+      const userStores = StoreDatabase.findStores(store => store.merchantId === req.user.id);
       return res.json(userStores);
     }
-    
+
     // إذا كان مدير، أرجع جميع المتاجر
     if (req.user.role === "super_admin") {
-      return res.json(stores);
+      return res.json(StoreDatabase.getAllStores());
     }
 
     res.status(403).json({ error: "غير مصرح لك بالوصول" });
@@ -149,7 +149,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
     const storeIndex = stores.findIndex(s => s.id === storeId);
 
     if (storeIndex === -1) {
-      return res.status(404).json({ error: "المتجر غير موجود" });
+      return res.status(404).json({ error: "المتج�� غير موجود" });
     }
 
     const store = stores[storeIndex];
@@ -175,7 +175,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
       shippingSettings
     } = req.body;
 
-    // تحد��ث بيانات المتجر
+    // تحديث بيانات المتجر
     const updatedStore = {
       ...store,
       name: name || store.name,
