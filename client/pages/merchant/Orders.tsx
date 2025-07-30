@@ -70,13 +70,24 @@ interface Order {
 
 export default function MerchantOrders() {
   const { t, isRTL } = useTheme();
+  const { user } = useAuth();
+  const [isNewMerchant, setIsNewMerchant] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
-  // Mock orders data
-  const [orders, setOrders] = useState<Order[]>([
+  // تحديد إذا كان التاجر جديد
+  useEffect(() => {
+    if (user?.createdAt) {
+      const accountAge = Date.now() - new Date(user.createdAt).getTime();
+      const daysSinceCreation = accountAge / (1000 * 60 * 60 * 24);
+      setIsNewMerchant(daysSinceCreation < 7);
+    }
+  }, [user]);
+
+  // Mock orders data - فارغة للتجار الجدد
+  const [orders, setOrders] = useState<Order[]>(isNewMerchant ? [] : [
     {
       id: "ORD-001",
       customerName: "أحمد محمد",
