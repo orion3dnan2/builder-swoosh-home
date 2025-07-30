@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,7 +14,9 @@ import {
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Layout } from "@/components/Layout";
-import { UserPlus, Eye, EyeOff, User, Briefcase } from "lucide-react";
+import { UserPlus, Eye, EyeOff, User, Briefcase, Loader2 } from "lucide-react";
+import { ApiService, useApi } from "@/lib/apiService";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
