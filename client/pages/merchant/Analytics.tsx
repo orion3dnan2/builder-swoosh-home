@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,9 +19,10 @@ import {
   Activity,
   PieChart,
   LineChart,
+  Sparkles,
+  Plus,
 } from "lucide-react";
-import { useAnalytics } from "@/lib/analytics";
-import { useAuth } from "@/lib/auth";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function MerchantAnalytics() {
   const { user } = useAuth();
@@ -402,7 +403,7 @@ export default function MerchantAnalytics() {
             <CardHeader>
               <CardTitle className="flex items-center arabic">
                 <Activity className="w-5 h-5 ml-2" />
-                النشاط الأخير
+                النش��ط الأخير
               </CardTitle>
             </CardHeader>
             <CardContent>
