@@ -224,9 +224,11 @@ export default function StoreDetails() {
                                   </span>
                                 )}
                               </div>
-                              <Button size="sm" variant="outline" className="text-xs arabic">
-                                عرض
-                              </Button>
+                              <Link to={`/products/${product.id}`}>
+                                <Button size="sm" variant="outline" className="text-xs arabic">
+                                  عرض
+                                </Button>
+                              </Link>
                             </div>
                           </div>
                         </div>
