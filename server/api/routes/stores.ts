@@ -34,7 +34,7 @@ router.get("/:id", authenticateToken, async (req: any, res) => {
     const store = StoreDatabase.findStore((s) => s.id === storeId);
 
     if (!store) {
-      return res.status(404).json({ error: "ال��تجر غير موجود" });
+      return res.status(404).json({ error: "المتجر غير موجود" });
     }
 
     // التحقق من الصلاحيات
@@ -79,7 +79,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
       return res.status(400).json({ error: "جميع الحقول الأساسية مطلوبة" });
     }
 
-    // التحقق من عدم وجود متجر بنفس الاسم للتاجر
+    // التحقق من عدم و��ود متجر بنفس الاسم للتاجر
     const existingStore = StoreDatabase.findStore(
       (s) =>
         s.merchantId === req.user.id &&
@@ -162,7 +162,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
 
     // التحقق من الصلاحيات
     if (req.user.role !== "super_admin" && store.merchantId !== req.user.id) {
-      return res.status(403).json({ error: "غير مصرح لك بتعديل هذا المتجر" });
+      return res.status(403).json({ error: "غير مصرح ل�� بتعديل هذا المتجر" });
     }
 
     const {
@@ -394,6 +394,52 @@ router.get("/:id/orders", authenticateToken, async (req: any, res) => {
     res.json(recentOrders);
   } catch (error) {
     console.error("Get store orders error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
+  }
+});
+
+// Get restaurants (stores with type "restaurant")
+router.get("/restaurants", async (req, res) => {
+  try {
+    const stores = StoreDatabase.getAllStores();
+    const restaurants = stores.filter(
+      (store: any) => store.storeType === "restaurant" && store.status === "active"
+    );
+    res.json(restaurants);
+  } catch (error) {
+    console.error("Get restaurants error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
+  }
+});
+
+// Get companies (stores with type "company")
+router.get("/companies", async (req, res) => {
+  try {
+    const stores = StoreDatabase.getAllStores();
+    const companies = stores.filter(
+      (store: any) => store.storeType === "company" && store.status === "active"
+    );
+    res.json(companies);
+  } catch (error) {
+    console.error("Get companies error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
+  }
+});
+
+// Get general stores (stores with type "store" or other types)
+router.get("/general", async (req, res) => {
+  try {
+    const stores = StoreDatabase.getAllStores();
+    const generalStores = stores.filter(
+      (store: any) =>
+        store.status === "active" &&
+        (!store.storeType ||
+         store.storeType === "store" ||
+         !["restaurant", "company"].includes(store.storeType))
+    );
+    res.json(generalStores);
+  } catch (error) {
+    console.error("Get general stores error:", error);
     res.status(500).json({ error: "خطأ في الخادم" });
   }
 });
