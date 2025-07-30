@@ -7,7 +7,7 @@ const router = Router();
 // Get all stores (للمديرين وأصحاب المتاجر)
 router.get("/", authenticateToken, async (req: any, res) => {
   try {
-    // إذا كان المستخدم تاجر، أرجع متاجره فقط
+    // إذا كان المستخدم تا��ر، أرجع متاجره فقط
     if (req.user.role === "merchant") {
       const userStores = StoreDatabase.findStores(store => store.merchantId === req.user.id);
       return res.json(userStores);
@@ -135,7 +135,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
     console.log(`✅ تم إنشاء متجر جديد: ${name} للتاجر ${req.user.username}`);
 
     res.status(201).json({
-      message: "تم إنشاء المتجر بنجاح وحفظه في قاعدة البيانات",
+      message: "تم إنشاء ال��تجر بنجاح وحفظه في قاعدة البيانات",
       store: savedStore
     });
   } catch (error) {
@@ -237,7 +237,7 @@ router.delete("/:id", authenticateToken, async (req: any, res) => {
 router.get("/:id/analytics", authenticateToken, async (req: any, res) => {
   try {
     const storeId = req.params.id;
-    const store = stores.find(s => s.id === storeId);
+    const store = StoreDatabase.findStore(s => s.id === storeId);
 
     if (!store) {
       return res.status(404).json({ error: "المتجر غير موجود" });
@@ -254,7 +254,7 @@ router.get("/:id/analytics", authenticateToken, async (req: any, res) => {
       totalRevenue: store.analytics?.totalRevenue || 0,
       monthlyStats: store.analytics?.monthlyStats || [],
       // إحصائيات إضافية
-      conversionRate: store.analytics?.totalViews > 0 
+      conversionRate: store.analytics?.totalViews > 0
         ? ((store.analytics?.totalOrders || 0) / store.analytics.totalViews * 100).toFixed(2)
         : "0.00",
       averageOrderValue: store.analytics?.totalOrders > 0
