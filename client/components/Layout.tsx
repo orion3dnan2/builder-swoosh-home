@@ -1,6 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Search, Bell, MessageCircle, User, Menu, LogOut } from "lucide-react";
+import { Search, Bell, MessageCircle, User, Menu, LogOut, Settings, BarChart3 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
