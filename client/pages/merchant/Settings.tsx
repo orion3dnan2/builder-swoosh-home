@@ -141,7 +141,7 @@ export default function MerchantSettings() {
     if (file) {
       // التحق�� من نوع الملف
       if (!file.type.startsWith('image/')) {
-        alert('يرجى ا��تيار ملف صورة صالح (PNG, JPG, JPEG)');
+        alert('يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG)');
         return;
       }
 
@@ -429,15 +429,27 @@ export default function MerchantSettings() {
                             onChange={handleBannerChange}
                             className="hidden"
                           />
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="arabic"
-                            onClick={() => document.getElementById('banner-upload')?.click()}
-                          >
-                            <Camera className="w-4 h-4 ml-2" />
-                            تغيير الغلاف
-                          </Button>
+                          <div className="flex gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="arabic"
+                              onClick={() => document.getElementById('banner-upload')?.click()}
+                            >
+                              <Camera className="w-4 h-4 ml-2" />
+                              تغيير الغلاف
+                            </Button>
+                            {storeSettings.banner !== '/placeholder.svg' && (
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="arabic text-red-600 hover:bg-red-50"
+                                onClick={handleRemoveBanner}
+                              >
+                                حذف
+                              </Button>
+                            )}
+                          </div>
                           <p className="text-xs text-gray-500 arabic">
                             PNG, JPG أو JPEG (أقل من 10 ميجا)
                           </p>
@@ -561,7 +573,7 @@ export default function MerchantSettings() {
                         />
                       </div>
                       <div>
-                        <Label className="arabic text-sm">إلى ا��ساعة</Label>
+                        <Label className="arabic text-sm">إلى الساعة</Label>
                         <Input
                           type="time"
                           value={storeSettings.workingHours.end}
@@ -830,7 +842,7 @@ export default function MerchantSettings() {
                     <h3 className="font-semibold text-gray-900 mb-4 arabic">تغيير كلمة المرور</h3>
                     <div className="space-y-4">
                       <div>
-                        <Label htmlFor="currentPassword" className="arabic">كلمة المرور الحالية</Label>
+                        <Label htmlFor="currentPassword" className="arabic">كلمة الم��ور الحالية</Label>
                         <div className="mt-1 relative">
                           <Input
                             id="currentPassword"
