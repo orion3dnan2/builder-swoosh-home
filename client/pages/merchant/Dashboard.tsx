@@ -335,7 +335,7 @@ export default function MerchantDashboard() {
             >
               <div className="text-center">
                 <Package className="w-6 h-6 mx-auto mb-2" />
-                <span className="text-sm arabic">إدارة المنت��ات</span>
+                <span className="text-sm arabic">إدارة المنتجات</span>
               </div>
             </Button>
           </Link>
