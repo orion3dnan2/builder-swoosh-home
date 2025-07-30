@@ -134,6 +134,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     hasRole,
     hasPermission,
     login,
+    setAuthenticatedUser,
     logout,
     refreshAuth,
   };
