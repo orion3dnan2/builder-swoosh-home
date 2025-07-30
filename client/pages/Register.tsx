@@ -73,7 +73,7 @@ export default function Register() {
     }
 
     if (!formData.email.trim()) {
-      alert("يرجى إدخال البريد الإلكتروني");
+      alert("يرجى إدخال البريد ال��لكتروني");
       return;
     }
 
@@ -131,7 +131,7 @@ export default function Register() {
 
     if (result) {
       // تسجيل دخول المستخدم تلقائياً وتوجيهه للصفحة المناسبة
-      login(result.user, result.token);
+      setAuthenticatedUser(result.user, result.token);
 
       if (result.user.role === 'merchant') {
         navigate('/merchant/dashboard');
@@ -420,7 +420,7 @@ export default function Register() {
                             <SelectItem value="food" className="arabic">مطاعم وأغذية</SelectItem>
                             <SelectItem value="fashion" className="arabic">أزي��ء وملابس</SelectItem>
                             <SelectItem value="electronics" className="arabic">إلكترونيات</SelectItem>
-                            <SelectItem value="handmade" className="arabic">منت��ات يدوية</SelectItem>
+                            <SelectItem value="handmade" className="arabic">منتجات يدوية</SelectItem>
                             <SelectItem value="other" className="arabic">أخرى</SelectItem>
                           </SelectContent>
                         </Select>
@@ -574,7 +574,7 @@ export default function Register() {
                       جاري إنشاء الحساب...
                     </>
                   ) : (
-                    formData.accountType === "merchant" ? "إنشاء حساب تاجر →" : "إنشاء الحس��ب →"
+                    formData.accountType === "merchant" ? "إنشاء حساب تاجر →" : "إنشاء الحساب →"
                   )}
                 </Button>
 
