@@ -185,7 +185,7 @@ export default function MerchantSettings() {
       reader.onload = (e) => {
         const bannerUrl = e.target?.result as string;
         setStoreSettings({...storeSettings, banner: bannerUrl});
-        alert('تم تحدي�� غلاف المتجر بنجاح! 🎨');
+        alert('تم تحديث غلاف المتجر بنجاح! 🎨');
       };
       reader.onerror = () => {
         alert('فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.');
@@ -275,7 +275,7 @@ export default function MerchantSettings() {
     "منتجات منزلية",
     "كتب ومواد تعليمية",
     "صحة ورياضة",
-    "حرف يدوية وتقليدية",
+    "حرف يدوية وت��ليدية",
     "خدمات عامة",
     "أخرى (حدد النوع)"
   ];
@@ -301,7 +301,7 @@ export default function MerchantSettings() {
       "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة",
       "الطائف", "الخبر", "الأحساء", "تبوك", "أبها", "جازان", "نجران"
     ],
-    "الإمارات العربية المتحدة": [
+    "الإمارات العربية المتح��ة": [
       "دبي", "أبوظبي", "الشارقة", "عجمان", "رأس الخيمة", "الفجيرة", "أم القيوين"
     ],
     "دولة الكويت": [
@@ -545,6 +545,16 @@ export default function MerchantSettings() {
                           <option key={cat} value={cat}>{cat}</option>
                         ))}
                       </select>
+                      {showCustomCategory && (
+                        <div className="mt-2">
+                          <Input
+                            value={storeSettings.category}
+                            onChange={(e) => setStoreSettings({...storeSettings, category: e.target.value})}
+                            className="text-right arabic"
+                            placeholder="حدد نوع متجرك (مثال: صيدلية، محل حلويات، ورشة تصليح)"
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -646,7 +656,7 @@ export default function MerchantSettings() {
                         />
                       </div>
                       <div>
-                        <Label className="arabic text-sm">أيام ��لعم��</Label>
+                        <Label className="arabic text-sm">أيام العم��</Label>
                         <div className="mt-1 space-y-1">
                           {workingDays.map((day) => (
                             <label key={day} className={`flex items-center space-x-2 space-x-reverse ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
@@ -744,7 +754,7 @@ export default function MerchantSettings() {
                     <div className="space-y-4">
                       {[
                         { key: 'smsNotifications', label: 'رسائل SMS', desc: 'استقبال الإشعارات عبر الرسائل النصية' },
-                        { key: 'emailNotifications', label: 'البريد الإلكتروني', desc: 'استقبال الإش���ارات عبر البريد الإلكتروني' }
+                        { key: 'emailNotifications', label: 'البريد الإلكتروني', desc: 'استقبال الإش���ارات عبر البريد الإلكترو��ي' }
                       ].map((item) => (
                         <div key={item.key} className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                           <div className={isRTL ? 'text-right' : 'text-left'}>
