@@ -106,7 +106,7 @@ export default function MerchantSettings() {
     banner: "/placeholder.svg"
   });
 
-  // Notification Settings State - إعداد��ت افتراضية للتجار الجدد
+  // Notification Settings State - إعدادات افتراضية للتجار الجدد
   const [notifications, setNotifications] = useState<NotificationSettings>({
     newOrders: true,
     orderUpdates: true,
@@ -194,6 +194,22 @@ export default function MerchantSettings() {
     }
   };
 
+  // حذف الشعار
+  const handleRemoveLogo = () => {
+    if (window.confirm('هل أنت متأكد من حذف شعار المتجر؟')) {
+      setStoreSettings({...storeSettings, logo: '/placeholder.svg'});
+      alert('تم حذف الشعار بنجاح');
+    }
+  };
+
+  // حذف الغلاف
+  const handleRemoveBanner = () => {
+    if (window.confirm('هل أنت متأكد من حذف غلاف المتجر؟')) {
+      setStoreSettings({...storeSettings, banner: '/placeholder.svg'});
+      alert('تم حذف الغلاف بنجاح');
+    }
+  };
+
   const handleSaveSettings = async () => {
     // التحقق من صحة البيانات
     if (!storeSettings.storeName.trim()) {
@@ -236,7 +252,7 @@ export default function MerchantSettings() {
       // - تحديث حالة المستخدم
 
     } catch (error) {
-      alert("حدث خطأ أثناء حفظ الإعدادات. يرجى المحاولة مرة أخرى.");
+      alert("حدث خ��أ أثناء حفظ الإعدادات. يرجى المحاولة مرة أخرى.");
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
       setIsSaving(false);
@@ -254,7 +270,7 @@ export default function MerchantSettings() {
     "مواد غذائية وعطور",
     "ملابس وأقمشة",
     "حرف يدوية",
-    "مستحضرات تجم��ل",
+    "مستحضرات تجميل",
     "أدوات منزلية",
     "كتب ومواد ثقافية",
     "إلكترونيات",
@@ -267,7 +283,7 @@ export default function MerchantSettings() {
     "الدمام، المملكة العربية السعودية",
     "مكة المكرمة، المملكة العربية السعودية",
     "المدينة المنورة، المملكة العربية السعودية",
-    "الطا��ف، المملكة العربية السعودية",
+    "الطا��ف، المملكة العربية السعودي��",
     "الخبر، المملكة العربية السعودية",
     "الأحساء، المملكة العربية السعودية"
   ];
@@ -343,7 +359,7 @@ export default function MerchantSettings() {
                   {/* Store Logo & Banner */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <Label className="arabic">��عار المتجر</Label>
+                      <Label className="arabic">شعار المتجر</Label>
                       <div className="mt-2 flex items-center space-x-4 space-x-reverse">
                         <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                           {storeSettings.logo && storeSettings.logo !== "/placeholder.svg" ? (
@@ -380,7 +396,7 @@ export default function MerchantSettings() {
                       </div>
                     </div>
                     <div>
-                      <Label className="arabic">غلاف المتجر</Label>
+                      <Label className="arabic">غلاف ا��متجر</Label>
                       <div className="mt-2 flex items-center space-x-4 space-x-reverse">
                         <div className="w-32 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                           {storeSettings.banner && storeSettings.banner !== "/placeholder.svg" ? (
