@@ -58,7 +58,7 @@ export default function Register() {
 
     // التحقق من الحقول المطلوبة
     if (!formData.username.trim()) {
-      alert("يرجى إدخ��ل اسم المستخدم");
+      alert("يرجى إدخال اسم المستخدم");
       return;
     }
 
@@ -415,7 +415,7 @@ export default function Register() {
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="retail" className="arabic">تجارة تجزئة</SelectItem>
-                            <SelectItem value="wholesale" className="arabic">��جارة جملة</SelectItem>
+                            <SelectItem value="wholesale" className="arabic">تجارة جملة</SelectItem>
                             <SelectItem value="services" className="arabic">خدمات</SelectItem>
                             <SelectItem value="food" className="arabic">مطاعم وأغذية</SelectItem>
                             <SelectItem value="fashion" className="arabic">أزي��ء وملابس</SelectItem>
@@ -552,17 +552,30 @@ export default function Register() {
                   </div>
                 </div>
 
+                {error && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-center">
+                    <p className="text-red-600 arabic text-sm">{error}</p>
+                  </div>
+                )}
+
                 <Button
                   type="submit"
                   className={`w-full text-lg py-3 arabic ${
-                    formData.accountType === "merchant" 
-                      ? "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800" 
+                    formData.accountType === "merchant"
+                      ? "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
                       : "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
                   }`}
                   size="lg"
-                  disabled={!formData.acceptTerms}
+                  disabled={!formData.acceptTerms || loading}
                 >
-                  {formData.accountType === "merchant" ? "إنشاء حساب تاجر →" : "إنشاء الحساب →"}
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      جاري إنشاء الحساب...
+                    </>
+                  ) : (
+                    formData.accountType === "merchant" ? "إنشاء حساب تاجر →" : "إنشاء الحساب →"
+                  )}
                 </Button>
 
                 <div className="text-center">
