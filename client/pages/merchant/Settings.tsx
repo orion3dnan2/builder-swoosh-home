@@ -286,7 +286,7 @@ export default function MerchantSettings() {
     "الدمام، المملكة العربية السعودية",
     "مكة المكرمة، المملكة العربية السعودية",
     "المدينة المنورة، المملكة العربية السعودية",
-    "الطا��ف، المملكة العربية السعودية",
+    "الطا��ف، الم��لكة العربية السعودية",
     "الخبر، المملكة العربية السعودية",
     "الأحساء، المملكة العربية السعودية"
   ];
@@ -294,6 +294,63 @@ export default function MerchantSettings() {
   const workingDays = [
     "السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"
   ];
+
+  // قائمة الدول والمدن التابعة لها
+  const countriesWithCities = {
+    "المملكة العربية السعودية": [
+      "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة",
+      "الطائف", "الخبر", "الأحساء", "تبوك", "أبها", "جازان", "نجران"
+    ],
+    "الإمارات العربية المتحدة": [
+      "دبي", "أبوظبي", "الشارقة", "عجمان", "رأس الخيمة", "الفجيرة", "أم القيوين"
+    ],
+    "دولة الكويت": [
+      "مدينة الكويت", "الأحمدي", "الجهراء", "مبارك الكبير", "الفروانية", "حولي"
+    ],
+    "دولة قطر": [
+      "الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"
+    ],
+    "مملكة البحرين": [
+      "المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"
+    ],
+    "سلطنة عمان": [
+      "مسقط", "صلالة", "نزوى", "صور", "ا��رستاق", "صحار"
+    ],
+    "جمهورية مصر العربية": [
+      "القاهرة", "الإسكندرية", "الجيزة", "الأقصر", "أسوان", "بورسعيد", "السويس"
+    ],
+    "المملكة الأردنية الهاشمية": [
+      "عمان", "إربد", "الزرقاء", "العقبة", "السلط", "مادبا"
+    ]
+  };
+
+  // إضافة حالات جديدة
+  const [selectedCountry, setSelectedCountry] = useState<string>(
+    isNewMerchant ? "" : "المملكة العربية السعودية"
+  );
+  const [customCategory, setCustomCategory] = useState<string>("");
+  const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
+
+  // دالة لمعالجة تغيير نوع المتجر
+  const handleCategoryChange = (value: string) => {
+    if (value === "أخرى (حدد النوع)") {
+      setShowCustomCategory(true);
+      setStoreSettings({...storeSettings, category: ""});
+    } else {
+      setShowCustomCategory(false);
+      setStoreSettings({...storeSettings, category: value});
+    }
+  };
+
+  // دالة لمعالجة تغيير الدولة
+  const handleCountryChange = (country: string) => {
+    setSelectedCountry(country);
+    // إعادة تعيين المدينة عند تغيير الدولة
+    setStoreSettings({
+      ...storeSettings,
+      city: ""
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
