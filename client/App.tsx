@@ -169,6 +169,8 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/restaurants" element={<Restaurants />} />
             <Route path="/ads" element={<Ads />} />
+            <Route path="/store/:id" element={<StoreDetails />} />
+            <Route path="/store/:id/visit" element={<StoreVisit />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
