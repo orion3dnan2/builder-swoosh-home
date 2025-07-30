@@ -185,7 +185,7 @@ export default function MerchantSettings() {
       reader.onload = (e) => {
         const bannerUrl = e.target?.result as string;
         setStoreSettings({...storeSettings, banner: bannerUrl});
-        alert('تم تحديث غلاف المتجر بنجاح! 🎨');
+        alert('تم تحدي�� غلاف المتجر بنجاح! 🎨');
       };
       reader.onerror = () => {
         alert('فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.');
@@ -310,7 +310,7 @@ export default function MerchantSettings() {
     "دولة قطر": [
       "الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"
     ],
-    "مملكة ��لبحرين": [
+    "مملكة البحرين": [
       "المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"
     ],
     "سلطنة عمان": [
@@ -537,7 +537,7 @@ export default function MerchantSettings() {
                       <select
                         id="category"
                         value={storeSettings.category}
-                        onChange={(e) => setStoreSettings({...storeSettings, category: e.target.value})}
+                        onChange={(e) => handleCategoryChange(e.target.value)}
                         className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
                       >
                         <option value="">اختر نوع المتجر</option>
@@ -646,7 +646,7 @@ export default function MerchantSettings() {
                         />
                       </div>
                       <div>
-                        <Label className="arabic text-sm">أيام العم��</Label>
+                        <Label className="arabic text-sm">أيام ��لعم��</Label>
                         <div className="mt-1 space-y-1">
                           {workingDays.map((day) => (
                             <label key={day} className={`flex items-center space-x-2 space-x-reverse ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
@@ -743,7 +743,7 @@ export default function MerchantSettings() {
                     <h3 className="font-semibold text-gray-900 mb-4 arabic">طرق الإشعار</h3>
                     <div className="space-y-4">
                       {[
-                        { key: 'smsNotifications', label: 'رسائ�� SMS', desc: 'استقبال الإشعارات عبر الرسائل النصية' },
+                        { key: 'smsNotifications', label: 'رسائل SMS', desc: 'استقبال الإشعارات عبر الرسائل النصية' },
                         { key: 'emailNotifications', label: 'البريد الإلكتروني', desc: 'استقبال الإش���ارات عبر البريد الإلكتروني' }
                       ].map((item) => (
                         <div key={item.key} className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
