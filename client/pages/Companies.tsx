@@ -151,8 +151,8 @@ export default function Companies() {
               >
                 <option value="all">جميع الأحجام</option>
                 {sizes.map((size) => (
-                  <option key={size.value} value={size.value}>
-                    {CompaniesService.getSizeIcon(size.value)} {size.label}
+                  <option key={size} value={size}>
+                    📏 {size}
                   </option>
                 ))}
               </select>
