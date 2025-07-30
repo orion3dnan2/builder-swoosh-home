@@ -342,6 +342,11 @@ export default function MerchantSettings() {
       return;
     }
 
+    if (!storeSettings.storeType) {
+      alert("يرجى اختيار نوع المتجر");
+      return;
+    }
+
     if (!storeSettings.phone.trim()) {
       alert("يرجى إدخال رقم الهاتف");
       return;
@@ -423,7 +428,7 @@ export default function MerchantSettings() {
 
       // عرض رسالة نجاح
       alert(
-        "🎉 تم حفظ إعدادات المتجر بنج��ح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.",
+        "🎉 تم حفظ إعدادات المتجر بنج��ح!\n\nتم تحديث جميع البيانات والإعدادات ال��اصة بمتجرك.",
       );
     } catch (error) {
       alert(
@@ -468,7 +473,7 @@ export default function MerchantSettings() {
 
   // قائمة الدول والمدن التابعة لها
   const countriesWithCities = {
-    السودان: [
+    الس��دان: [
       "الخرطوم",
       "أمدرمان",
       "بحري",
@@ -1047,7 +1052,7 @@ export default function MerchantSettings() {
                 <CardHeader>
                   <CardTitle className="arabic text-right flex items-center">
                     <Bell className="w-5 h-5 ml-2" />
-                    إعدادات الإشعارات
+                    ��عدادات الإشعارات
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
