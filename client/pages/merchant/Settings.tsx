@@ -40,6 +40,7 @@ interface StoreSettings {
   storeName: string;
   description: string;
   category: string;
+  storeType: string;
   phone: string;
   email: string;
   address: string;
@@ -259,7 +260,7 @@ export default function MerchantSettings() {
 
       // التحقق من حجم الملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
-        alert("حجم الصورة يجب أن يكون أقل من 5 ميجابايت");
+        alert("حجم الصورة يجب أن يكون أقل من 5 م��جابايت");
         return;
       }
 
@@ -335,7 +336,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.category) {
-      alert("يرجى اختيار نوع المتجر");
+      alert("يرجى اختيار نوع المتج��");
       return;
     }
 
@@ -384,7 +385,7 @@ export default function MerchantSettings() {
         shippingSettings: shipping,
       };
 
-      // البحث عن متجر موجود للمستخدم أولاً
+      // البحث عن متجر ��وجود للمستخدم أولاً
       try {
         const userStores = await ApiService.getStores();
         const existingStore = userStores.find(
@@ -462,7 +463,7 @@ export default function MerchantSettings() {
     "الجمعة",
   ];
 
-  // قائمة الدول والمدن التابعة لها
+  // قائمة الدول والمدن ��لتابعة لها
   const countriesWithCities = {
     السودان: [
       "الخرطوم",
@@ -842,7 +843,7 @@ export default function MerchantSettings() {
                     </div>
                     <div>
                       <Label htmlFor="email" className="arabic">
-                        البريد الإلكتروني
+                        ��لبريد الإلكتروني
                       </Label>
                       <Input
                         id="email"
