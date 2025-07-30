@@ -52,7 +52,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
   try {
     // التأكد أن المستخدم تاجر
     if (req.user.role !== "merchant") {
-      return res.status(403).json({ error: "يجب أن تكون تاجراً لإنشا�� متجر" });
+      return res.status(403).json({ error: "يجب أن تكون تاجراً لإنشاء متجر" });
     }
 
     const {
@@ -148,13 +148,11 @@ router.post("/", authenticateToken, async (req: any, res) => {
 router.put("/:id", authenticateToken, async (req: any, res) => {
   try {
     const storeId = req.params.id;
-    const storeIndex = stores.findIndex(s => s.id === storeId);
+    const store = StoreDatabase.findStore(s => s.id === storeId);
 
-    if (storeIndex === -1) {
+    if (!store) {
       return res.status(404).json({ error: "المتجر غير موجود" });
     }
-
-    const store = stores[storeIndex];
 
     // التحقق من الصلاحيات
     if (req.user.role !== "super_admin" && store.merchantId !== req.user.id) {
@@ -178,8 +176,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
     } = req.body;
 
     // تحديث بيانات المتجر
-    const updatedStore = {
-      ...store,
+    const updates = {
       name: name || store.name,
       description: description !== undefined ? description : store.description,
       category: category || store.category,
@@ -196,7 +193,9 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
       updatedAt: new Date().toISOString(),
     };
 
-    stores[storeIndex] = updatedStore;
+    const updatedStore = StoreDatabase.updateStore(storeId, updates);
+
+    console.log(`✅ تم تحديث متجر: ${updatedStore.name}`);
 
     res.json({
       message: "تم تحديث بيانات المتجر بنجاح",
