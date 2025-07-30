@@ -24,7 +24,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export default function MerchantProducts() {
   const { user } = useAuth();
-  const { products, deleteProduct, updateStock } = useProducts("store-001"); // Replace with actual store ID
+  const [isNewMerchant, setIsNewMerchant] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
@@ -33,6 +33,18 @@ export default function MerchantProducts() {
     "updated",
   );
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
+  // تحديد إذا كان التاجر جديد
+  useEffect(() => {
+    if (user?.createdAt) {
+      const accountAge = Date.now() - new Date(user.createdAt).getTime();
+      const daysSinceCreation = accountAge / (1000 * 60 * 60 * 24);
+      setIsNewMerchant(daysSinceCreation < 7);
+    }
+  }, [user]);
+
+  // قائمة المنتجات - فارغة للتجار الجدد
+  const products: any[] = isNewMerchant ? [] : [];
 
   // Filter and sort products
   const filteredProducts = products
@@ -339,7 +351,7 @@ export default function MerchantProducts() {
                         الفئة
                       </th>
                       <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
-                        السع��
+                        السعر
                       </th>
                       <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
                         المخزون
@@ -455,7 +467,7 @@ export default function MerchantProducts() {
               لا توجد منتجات
             </h3>
             <p className="text-gray-600 arabic mb-4">
-              لم يتم العثور على منتجات تطابق معايير البحث
+              لم يتم العثور على م��تجات تطابق معايير البحث
             </p>
             <Link to="/merchant/products/new">
               <Button className="arabic">
