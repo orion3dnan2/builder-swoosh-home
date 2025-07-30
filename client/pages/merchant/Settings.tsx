@@ -202,7 +202,7 @@ export default function MerchantSettings() {
     description: isNewMerchant
       ? ""
       : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
-    category: isNewMerchant ? "" : "مواد غذائية وعطور",
+    category: isNewMerchant ? "" : "مواد ��ذائية وعطور",
     storeType: isNewMerchant ? "" : "restaurant",
     phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
     email: isNewMerchant ? user?.email || "" : "store@example.com",
@@ -314,7 +314,7 @@ export default function MerchantSettings() {
     }
   };
 
-  // حذف الشع��ر
+  // حذف الشعار
   const handleRemoveLogo = () => {
     if (window.confirm("هل أنت متأكد ��ن حذف شعار المتجر؟")) {
       setStoreSettings({ ...storeSettings, logo: "/placeholder.svg" });
@@ -338,7 +338,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.category) {
-      alert("ي��جى اختيار نوع المتجر");
+      alert("يرجى اختيار فئة المتجر");
       return;
     }
 
@@ -393,7 +393,7 @@ export default function MerchantSettings() {
         shippingSettings: shipping,
       };
 
-      // البحث عن متجر موجود ��لمستخدم أولاً
+      // البحث عن متجر موجود ���لمستخدم أولاً
       try {
         const userStores = await ApiService.getStores();
         const existingStore = userStores.find(
@@ -401,7 +401,7 @@ export default function MerchantSettings() {
         );
 
         if (existingStore) {
-          // تحدي�� متجر موجود
+          // تحديث متجر موجود
           await ApiService.updateStore(existingStore.id, storeData);
         } else {
           // إنشاء متجر جديد
@@ -428,7 +428,7 @@ export default function MerchantSettings() {
 
       // عرض رسالة نجاح
       alert(
-        "🎉 تم حفظ إعدادات المتجر بنج��ح!\n\nتم تحديث جميع البيانات والإعدادات ال��اصة بمتجرك.",
+        "🎉 تم حفظ إعدادات المتجر بنج��ح!\n\nتم تحديث جميع البي��نات والإعدادات ال��اصة بمتجرك.",
       );
     } catch (error) {
       alert(
@@ -677,7 +677,7 @@ export default function MerchantSettings() {
                               }
                             >
                               <Camera className="w-4 h-4 ml-2" />
-                              تغيير الش��ار
+                              تغيير الشعار
                             </Button>
                             {storeSettings.logo !== "/placeholder.svg" && (
                               <Button
@@ -1441,7 +1441,7 @@ export default function MerchantSettings() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="newPassword" className="arabic">
-                            كلمة ا��مرور الجديدة
+                            كلمة ا���مرور الجديدة
                           </Label>
                           <Input
                             id="newPassword"
