@@ -7,7 +7,7 @@ const router = Router();
 // Get all stores (للمديرين وأصحاب المتاجر)
 router.get("/", authenticateToken, async (req: any, res) => {
   try {
-    // إذا كان المستخدم تا��ر، أرجع متاجره فقط
+    // إذا كان المستخدم تاجر، أرجع متاجره فقط
     if (req.user.role === "merchant") {
       const userStores = StoreDatabase.findStores(store => store.merchantId === req.user.id);
       return res.json(userStores);
@@ -135,7 +135,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
     console.log(`✅ تم إنشاء متجر جديد: ${name} للتاجر ${req.user.username}`);
 
     res.status(201).json({
-      message: "تم إنشاء ال��تجر بنجاح وحفظه في قاعدة البيانات",
+      message: "تم إنشاء المتجر بنجاح وحفظه في قاعدة البيانات",
       store: savedStore
     });
   } catch (error) {
@@ -278,9 +278,9 @@ router.patch("/:id/status", authenticateToken, async (req: any, res) => {
 
     const storeId = req.params.id;
     const { status } = req.body;
-    const storeIndex = stores.findIndex(s => s.id === storeId);
+    const store = StoreDatabase.findStore(s => s.id === storeId);
 
-    if (storeIndex === -1) {
+    if (!store) {
       return res.status(404).json({ error: "المتجر غير موجود" });
     }
 
@@ -288,12 +288,16 @@ router.patch("/:id/status", authenticateToken, async (req: any, res) => {
       return res.status(400).json({ error: "حالة المتجر غير صحيحة" });
     }
 
-    stores[storeIndex].status = status;
-    stores[storeIndex].updatedAt = new Date().toISOString();
+    const updatedStore = StoreDatabase.updateStore(storeId, {
+      status,
+      updatedAt: new Date().toISOString()
+    });
+
+    console.log(`✅ تم تحديث حالة متجر ${updatedStore.name} إلى: ${status}`);
 
     res.json({
       message: "تم تحديث حالة المتجر بنجاح",
-      store: stores[storeIndex]
+      store: updatedStore
     });
   } catch (error) {
     console.error("Update store status error:", error);
