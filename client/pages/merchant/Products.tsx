@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,10 +18,9 @@ import {
   List,
   SortAsc,
   SortDesc,
+  Sparkles,
 } from "lucide-react";
-import { useProducts } from "@/lib/products";
-import { useAuth } from "@/lib/auth";
-import { Product } from "../../../shared/types";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function MerchantProducts() {
   const { user } = useAuth();
@@ -340,7 +339,7 @@ export default function MerchantProducts() {
                         الفئة
                       </th>
                       <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
-                        السعر
+                        السع��
                       </th>
                       <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
                         المخزون
