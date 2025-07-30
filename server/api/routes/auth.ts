@@ -89,13 +89,18 @@ router.post('/login', async (req, res) => {
 // تسجيل مستخدم جديد
 router.post('/register', async (req, res) => {
   try {
-    const { 
-      fullName, 
-      email, 
-      phone, 
-      password, 
+    const {
+      fullName,
+      username,
+      email,
+      phone,
+      password,
       accountType = 'customer',
-      platform = 'web'
+      platform = 'web',
+      country,
+      city,
+      businessName,
+      businessType
     } = req.body;
 
     // التحقق من البيانات
