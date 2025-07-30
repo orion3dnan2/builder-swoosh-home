@@ -462,6 +462,7 @@ export default function MerchantSettings() {
                         value={storeSettings.phone}
                         onChange={(e) => setStoreSettings({...storeSettings, phone: e.target.value})}
                         className="mt-1 text-right"
+                        placeholder="+966 50 123 4567"
                       />
                     </div>
                     <div>
@@ -728,7 +729,7 @@ export default function MerchantSettings() {
                   <div>
                     <Label className="arabic">مناطق التوصيل</Label>
                     <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة", "الطائف", "الخ��ر", "الأحساء", "تبوك", "أبها"].map((area) => (
+                      {["الرياض", "جدة", "الدمام", "مك�� المكرمة", "المدينة المنورة", "الطائف", "الخ��ر", "الأحساء", "تبوك", "أبها"].map((area) => (
                         <label key={area} className={`flex items-center space-x-2 space-x-reverse p-2 border rounded-lg hover:bg-gray-50 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                           <input
                             type="checkbox"
