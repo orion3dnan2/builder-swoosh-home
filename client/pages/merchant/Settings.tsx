@@ -141,7 +141,7 @@ export default function MerchantSettings() {
     if (file) {
       // التحق�� من نوع الملف
       if (!file.type.startsWith('image/')) {
-        alert('يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG)');
+        alert('يرجى ا��تيار ملف صورة صالح (PNG, JPG, JPEG)');
         return;
       }
 
@@ -252,7 +252,7 @@ export default function MerchantSettings() {
       // - تحديث حالة المستخدم
 
     } catch (error) {
-      alert("حدث خ��أ أثناء حفظ الإعدادات. يرجى المحاولة مرة أخرى.");
+      alert("حدث خطأ أثناء حفظ الإعدادات. يرجى المحاولة مرة أخرى.");
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
       setIsSaving(false);
@@ -283,7 +283,7 @@ export default function MerchantSettings() {
     "الدمام، المملكة العربية السعودية",
     "مكة المكرمة، المملكة العربية السعودية",
     "المدينة المنورة، المملكة العربية السعودية",
-    "الطا��ف، المملكة العربية السعودي��",
+    "الطا��ف، المملكة العربية السعودية",
     "الخبر، المملكة العربية السعودية",
     "الأحساء، المملكة العربية السعودية"
   ];
@@ -380,15 +380,27 @@ export default function MerchantSettings() {
                             onChange={handleLogoChange}
                             className="hidden"
                           />
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="arabic"
-                            onClick={() => document.getElementById('logo-upload')?.click()}
-                          >
-                            <Camera className="w-4 h-4 ml-2" />
-                            تغيير الشعار
-                          </Button>
+                          <div className="flex gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="arabic"
+                              onClick={() => document.getElementById('logo-upload')?.click()}
+                            >
+                              <Camera className="w-4 h-4 ml-2" />
+                              تغيير الشعار
+                            </Button>
+                            {storeSettings.logo !== '/placeholder.svg' && (
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="arabic text-red-600 hover:bg-red-50"
+                                onClick={handleRemoveLogo}
+                              >
+                                حذف
+                              </Button>
+                            )}
+                          </div>
                           <p className="text-xs text-gray-500 arabic">
                             PNG, JPG أو JPEG (أقل من 5 ميجا)
                           </p>
@@ -396,7 +408,7 @@ export default function MerchantSettings() {
                       </div>
                     </div>
                     <div>
-                      <Label className="arabic">غلاف ا��متجر</Label>
+                      <Label className="arabic">غلاف المتجر</Label>
                       <div className="mt-2 flex items-center space-x-4 space-x-reverse">
                         <div className="w-32 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                           {storeSettings.banner && storeSettings.banner !== "/placeholder.svg" ? (
@@ -549,7 +561,7 @@ export default function MerchantSettings() {
                         />
                       </div>
                       <div>
-                        <Label className="arabic text-sm">إلى الساعة</Label>
+                        <Label className="arabic text-sm">إلى ا��ساعة</Label>
                         <Input
                           type="time"
                           value={storeSettings.workingHours.end}
