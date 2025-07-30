@@ -21,8 +21,29 @@ import {
 import { useState, useEffect } from "react";
 
 export default function Companies() {
-  const { companies, featuredCompanies } = useCompanies();
+  const [companies, setCompanies] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // جلب الشركات من API
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/stores/companies');
+        if (response.ok) {
+          const data = await response.json();
+          setCompanies(data);
+        }
+      } catch (error) {
+        console.error('خطأ في جلب الشركات:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCompanies();
+  }, []);
   const [selectedIndustry, setSelectedIndustry] = useState<string>("all");
   const [selectedCountry, setSelectedCountry] = useState<string>("all");
   const [selectedSize, setSelectedSize] = useState<string>("all");
