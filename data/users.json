@@ -25,7 +25,7 @@
     "id": "user-1753865301240-efsqj09s0",
     "username": "orion",
     "email": "oriontvinetwork@gmail.com",
-    "password": "$2b$12$SqQFJ49GZ5oMlxiyH0CdkOcEckJcQp2rY/fkEw9w.ccnq7rYLgL/6",
+    "password": "user123",
     "role": "merchant",
     "profile": {
       "name": "Mohamed Adnan",
@@ -56,6 +56,43 @@
       }
     ],
     "createdAt": "2025-07-30T08:48:21.241Z",
+    "isActive": true
+  },
+  {
+    "id": "merchant-001",
+    "username": "merchant",
+    "email": "merchant@baytsudani.com",
+    "password": "merchant",
+    "role": "merchant",
+    "profile": {
+      "name": "تاجر تجريبي",
+      "phone": "+249123456789",
+      "country": "السودان",
+      "city": "الخرطوم",
+      "language": "ar",
+      "avatar": "/placeholder.svg",
+      "businessName": "متجر تجريبي",
+      "businessType": "general"
+    },
+    "permissions": [
+      {
+        "resource": "store",
+        "actions": [
+          "read",
+          "write",
+          "delete"
+        ]
+      },
+      {
+        "resource": "products",
+        "actions": [
+          "read",
+          "write",
+          "delete"
+        ]
+      }
+    ],
+    "createdAt": "2025-07-30T08:45:22.015Z",
     "isActive": true
   }
 ]
