@@ -2,6 +2,7 @@ import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 import { ShoppingBag, Filter, Search, MapPin, Star, Eye, ShoppingCart } from "lucide-react";
 import { useStores, StoresService } from "@/lib/stores";
 import { useState } from "react";
@@ -136,7 +137,7 @@ export default function Marketplace() {
                 <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                   <div className="flex items-center gap-2">
                     <Eye className="w-4 h-4" />
-                    <span className="arabic">{store.analytics.totalViews.toLocaleString()} مشاهدة</span>
+                    <span className="arabic">{store.analytics.totalViews.toLocaleString()} ��شاهدة</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <ShoppingCart className="w-4 h-4" />
