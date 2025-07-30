@@ -238,7 +238,7 @@ export default function MerchantSettings() {
                 <CardHeader>
                   <CardTitle className="arabic text-right flex items-center">
                     <Store className="w-5 h-5 ml-2" />
-                    معلومات المتجر
+                    بيانات المتجر
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -284,7 +284,7 @@ export default function MerchantSettings() {
                       />
                     </div>
                     <div>
-                      <Label htmlFor="category" className="arabic">فئة المتجر</Label>
+                      <Label htmlFor="category" className="arabic">��ئة المتجر</Label>
                       <select
                         id="category"
                         value={storeSettings.category}
@@ -491,7 +491,7 @@ export default function MerchantSettings() {
                     <div className="space-y-4">
                       {[
                         { key: 'smsNotifications', label: 'رسائل SMS', desc: 'استقبال الإشعارات عبر الرسائل النصية' },
-                        { key: 'emailNotifications', label: 'البريد الإلكتروني', desc: 'استقبال الإش��ارات عبر البريد الإلكتروني' }
+                        { key: 'emailNotifications', label: 'البريد الإلكتروني', desc: 'استقبال الإش���ارات عبر البريد الإلكتروني' }
                       ].map((item) => (
                         <div key={item.key} className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                           <div className={isRTL ? 'text-right' : 'text-left'}>
@@ -518,7 +518,7 @@ export default function MerchantSettings() {
                 <CardHeader>
                   <CardTitle className="arabic text-right flex items-center">
                     <Truck className="w-5 h-5 ml-2" />
-                    إ��دادات الشحن والتوصيل
+                    إ����دادات الشحن والتوصيل
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
