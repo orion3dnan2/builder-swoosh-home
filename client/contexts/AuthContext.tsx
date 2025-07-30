@@ -73,6 +73,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
+  const setAuthenticatedUser = (userData: User, token: string) => {
+    try {
+      // حفظ الرمز المميز
+      localStorage.setItem('auth_token', token);
+      // تعيين المستخدم
+      setUser(userData);
+    } catch (error) {
+      console.error("Error setting authenticated user:", error);
+    }
+  };
+
   const logout = () => {
     try {
       AuthService.logout();
