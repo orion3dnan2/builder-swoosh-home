@@ -9,6 +9,8 @@ import Jobs from "./pages/Jobs";
 import Services from "./pages/Services";
 import Restaurants from "./pages/Restaurants";
 import Ads from "./pages/Ads";
+import StoreDetails from "./pages/StoreDetails";
+import StoreVisit from "./pages/StoreVisit";
 import NotFound from "./pages/NotFound";
 import Unauthorized from "./pages/Unauthorized";
 import ThemeShowcase from "./pages/ThemeShowcase";
