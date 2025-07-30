@@ -169,6 +169,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
       name,
       description,
       category,
+      storeType,
       phone,
       email,
       address,
