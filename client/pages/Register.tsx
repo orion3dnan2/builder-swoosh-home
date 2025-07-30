@@ -20,7 +20,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export default function Register() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { setAuthenticatedUser } = useAuth();
   const { loading, error, callApi } = useApi();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -420,7 +420,7 @@ export default function Register() {
                             <SelectItem value="food" className="arabic">مطاعم وأغذية</SelectItem>
                             <SelectItem value="fashion" className="arabic">أزي��ء وملابس</SelectItem>
                             <SelectItem value="electronics" className="arabic">إلكترونيات</SelectItem>
-                            <SelectItem value="handmade" className="arabic">منتجات يدوية</SelectItem>
+                            <SelectItem value="handmade" className="arabic">منت��ات يدوية</SelectItem>
                             <SelectItem value="other" className="arabic">أخرى</SelectItem>
                           </SelectContent>
                         </Select>
@@ -574,7 +574,7 @@ export default function Register() {
                       جاري إنشاء الحساب...
                     </>
                   ) : (
-                    formData.accountType === "merchant" ? "إنشاء حساب تاجر →" : "إنشاء الحساب →"
+                    formData.accountType === "merchant" ? "إنشاء حساب تاجر →" : "إنشاء الحس��ب →"
                   )}
                 </Button>
 
