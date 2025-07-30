@@ -125,17 +125,23 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = {
       id: `user-${Date.now()}`,
-      username: email,
+      username: username,
       email,
       password: hashedPassword,
       role: accountType === 'merchant' ? 'merchant' : 'customer',
       profile: {
         name: fullName,
         phone,
+        country,
+        city,
         language: 'ar',
         avatar: '/placeholder.svg',
+        ...(accountType === 'merchant' && {
+          businessName,
+          businessType,
+        }),
       },
-      permissions: accountType === 'merchant' 
+      permissions: accountType === 'merchant'
         ? [
             { resource: 'store', actions: ['read', 'write', 'delete'] },
             { resource: 'products', actions: ['read', 'write', 'delete'] },
