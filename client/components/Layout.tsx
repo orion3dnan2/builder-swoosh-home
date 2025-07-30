@@ -81,15 +81,60 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   <span className="text-sm text-gray-600 arabic">
                     أهلاً {user?.profile.name}
                   </span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleLogout}
-                    className="hover:bg-red-50 hover:text-red-700"
-                  >
-                    <LogOut className="w-4 h-4 ml-1" />
-                    تسجيل الخروج
-                  </Button>
+
+                  {/* قائمة المستخدم المنسدلة */}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <User className="w-4 h-4" />
+                        حسابي
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-56">
+                      <DropdownMenuLabel className="arabic">
+                        مرحباً {user?.profile.name}
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+
+                      {/* لوحة التحكم حسب نوع المستخدم */}
+                      {user?.role === "super_admin" && (
+                        <DropdownMenuItem asChild>
+                          <Link to="/admin/dashboard" className="cursor-pointer arabic">
+                            <Settings className="w-4 h-4 ml-2" />
+                            لوحة تحكم المدير
+                          </Link>
+                        </DropdownMenuItem>
+                      )}
+
+                      {user?.role === "merchant" && (
+                        <DropdownMenuItem asChild>
+                          <Link to="/merchant/dashboard" className="cursor-pointer arabic">
+                            <BarChart3 className="w-4 h-4 ml-2" />
+                            لوحة التحكم التجارية
+                          </Link>
+                        </DropdownMenuItem>
+                      )}
+
+                      {/* الملف الشخصي */}
+                      <DropdownMenuItem asChild>
+                        <Link to="/profile" className="cursor-pointer arabic">
+                          <User className="w-4 h-4 ml-2" />
+                          الملف الشخصي
+                        </Link>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuSeparator />
+
+                      {/* تسجيل الخروج */}
+                      <DropdownMenuItem
+                        onClick={handleLogout}
+                        className="cursor-pointer arabic text-red-600 focus:text-red-600"
+                      >
+                        <LogOut className="w-4 h-4 ml-2" />
+                        تسجيل الخروج
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               ) : (
                 <Link to="/login">
