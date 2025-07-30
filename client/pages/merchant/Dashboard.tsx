@@ -89,7 +89,7 @@ export default function MerchantDashboard() {
             // تحديث حالة التاجر الجديد
             const accountAge = Date.now() - new Date(currentStore.createdAt).getTime();
             const daysSinceCreation = accountAge / (1000 * 60 * 60 * 24);
-            setIsNewMerchant(daysSinceCreation < 7 && currentStore.analytics?.totalProducts === 0);
+            setIsNewMerchant(daysSinceCreation < 7 && (currentStore.analytics?.totalProducts === 0 || currentStore.analytics?.totalOrders === 0));
 
             // جلب الطلبات الأخيرة
             const ordersResponse = await fetch(`/api/stores/${currentStore.id}/orders`, {
@@ -293,7 +293,7 @@ export default function MerchantDashboard() {
                     ${storeStats.monthlyRevenue.toLocaleString()}
                   </p>
                   <p className="text-purple-600 text-sm arabic">
-                    إيرادات الشهر
+                    إيراد��ت الشهر
                   </p>
                 </div>
               </div>
