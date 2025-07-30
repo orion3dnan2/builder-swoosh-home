@@ -90,6 +90,19 @@ export default function MerchantDashboard() {
             const accountAge = Date.now() - new Date(currentStore.createdAt).getTime();
             const daysSinceCreation = accountAge / (1000 * 60 * 60 * 24);
             setIsNewMerchant(daysSinceCreation < 7 && currentStore.analytics?.totalProducts === 0);
+
+            // جلب الطلبات الأخيرة
+            const ordersResponse = await fetch(`/api/stores/${currentStore.id}/orders`, {
+              headers: {
+                'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
+                'Content-Type': 'application/json',
+              },
+            });
+
+            if (ordersResponse.ok) {
+              const orders = await ordersResponse.json();
+              setRecentOrders(orders);
+            }
           }
         }
       } catch (error) {
@@ -548,7 +561,7 @@ export default function MerchantDashboard() {
                         >
                           {product.stock === 0
                             ? "نفد المخزون"
-                            : `${product.stock} متب��ي`}
+                            : `${product.stock} متبقي`}
                         </Badge>
                       </div>
                     ))}
