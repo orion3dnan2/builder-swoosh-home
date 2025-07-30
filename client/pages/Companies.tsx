@@ -335,8 +335,7 @@ export default function Companies() {
                     </span>
                   </div>
                   <Badge variant="outline" className="text-xs arabic">
-                    {CompaniesService.getSizeIcon(company.size)}{" "}
-                    {sizes.find((s) => s.value === company.size)?.label}
+                    📏 شركة كبيرة
                   </Badge>
                 </div>
 
