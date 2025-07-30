@@ -214,7 +214,7 @@ export default function MerchantSettings() {
   ];
 
   const cities = [
-    "الرياض�� المملكة العربية السعودية",
+    "الرياض، المملكة العربية السعودية",
     "جدة، المملكة العربية السعودية", 
     "الدمام، المملكة العربية السعودية",
     "مكة المكرمة، المملكة العربية السعودية",
@@ -297,25 +297,75 @@ export default function MerchantSettings() {
                     <div>
                       <Label className="arabic">شعار المتجر</Label>
                       <div className="mt-2 flex items-center space-x-4 space-x-reverse">
-                        <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center">
-                          <Store className="w-8 h-8 text-gray-400" />
+                        <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                          {storeSettings.logo && storeSettings.logo !== "/placeholder.svg" ? (
+                            <img
+                              src={storeSettings.logo}
+                              alt="شعار المتجر"
+                              className="w-full h-full object-cover rounded-lg"
+                            />
+                          ) : (
+                            <Store className="w-8 h-8 text-gray-400" />
+                          )}
                         </div>
-                        <Button variant="outline" size="sm" className="arabic">
-                          <Camera className="w-4 h-4 ml-2" />
-                          تغيير الشعار
-                        </Button>
+                        <div className="flex flex-col gap-2">
+                          <input
+                            type="file"
+                            id="logo-upload"
+                            accept="image/*"
+                            onChange={handleLogoChange}
+                            className="hidden"
+                          />
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="arabic"
+                            onClick={() => document.getElementById('logo-upload')?.click()}
+                          >
+                            <Camera className="w-4 h-4 ml-2" />
+                            تغيير الشعار
+                          </Button>
+                          <p className="text-xs text-gray-500 arabic">
+                            PNG, JPG أو JPEG (أقل من 5 ميجا)
+                          </p>
+                        </div>
                       </div>
                     </div>
                     <div>
                       <Label className="arabic">غلاف المتجر</Label>
                       <div className="mt-2 flex items-center space-x-4 space-x-reverse">
-                        <div className="w-32 h-20 bg-gray-100 rounded-lg flex items-center justify-center">
-                          <Package className="w-8 h-8 text-gray-400" />
+                        <div className="w-32 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                          {storeSettings.banner && storeSettings.banner !== "/placeholder.svg" ? (
+                            <img
+                              src={storeSettings.banner}
+                              alt="غلاف المتجر"
+                              className="w-full h-full object-cover rounded-lg"
+                            />
+                          ) : (
+                            <Package className="w-8 h-8 text-gray-400" />
+                          )}
                         </div>
-                        <Button variant="outline" size="sm" className="arabic">
-                          <Camera className="w-4 h-4 ml-2" />
-                          تغيير الغلاف
-                        </Button>
+                        <div className="flex flex-col gap-2">
+                          <input
+                            type="file"
+                            id="banner-upload"
+                            accept="image/*"
+                            onChange={handleBannerChange}
+                            className="hidden"
+                          />
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="arabic"
+                            onClick={() => document.getElementById('banner-upload')?.click()}
+                          >
+                            <Camera className="w-4 h-4 ml-2" />
+                            تغيير الغلاف
+                          </Button>
+                          <p className="text-xs text-gray-500 arabic">
+                            PNG, JPG أو JPEG (أقل من 10 ميجا)
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
