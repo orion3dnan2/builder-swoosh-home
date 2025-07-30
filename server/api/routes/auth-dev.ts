@@ -31,16 +31,22 @@ router.post("/login", async (req, res) => {
   try {
     const { username, password, platform = "web" } = req.body;
 
+    console.log(`🔐 محاولة تسجيل دخول: ${username}`);
+
     // البحث عن المستخدم في قاعدة البيانات
     const user = UserDatabase.findUser(
       (u) => u.username === username || u.email === username,
     );
 
     if (!user) {
+      console.log(`❌ المستخدم غير موجود: ${username}`);
       return res
         .status(401)
         .json({ error: "اسم المستخدم أو كلمة المرور غير صحيحة" });
     }
+
+    console.log(`��� المستخدم موجود: ${user.username}, كلمة المرور المحفوظة: ${user.password}`);
+    console.log(`🔑 كلمة المرور المدخلة: ${password}`);
 
     // التحقق من حالة المستخدم
     if (!user.isActive) {
@@ -139,7 +145,7 @@ router.post("/register", async (req, res) => {
       }
     }
 
-    // إنشا�� مستخدم جديد
+    // إنشاء مستخدم جديد
     const hashedPassword = await bcrypt.hash(password, 12);
     const newUser = {
       id: `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
