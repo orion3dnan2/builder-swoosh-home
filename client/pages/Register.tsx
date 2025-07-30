@@ -53,12 +53,12 @@ export default function Register() {
     "العراق",
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // التحقق من الحقول المطلوبة
     if (!formData.username.trim()) {
-      alert("يرجى إدخال اسم المستخدم");
+      alert("يرجى إدخ��ل اسم المستخدم");
       return;
     }
 
@@ -67,8 +67,33 @@ export default function Register() {
       return;
     }
 
+    if (!formData.fullName.trim()) {
+      alert("يرجى إدخال الاسم الكامل");
+      return;
+    }
+
+    if (!formData.email.trim()) {
+      alert("يرجى إدخال البريد الإلكتروني");
+      return;
+    }
+
+    if (!formData.phone.trim()) {
+      alert("يرجى إدخال رقم الهاتف");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       alert("كلمات المرور غير متطابقة");
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      alert("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
+      return;
+    }
+
+    if (!formData.acceptTerms) {
+      alert("يجب الموافقة على الشروط والأحكام");
       return;
     }
 
@@ -84,7 +109,36 @@ export default function Register() {
       }
     }
 
-    console.log("Registration attempt:", formData);
+    // إرسال البيانات للخادم
+    const result = await callApi(async () => {
+      const registrationData = {
+        fullName: formData.fullName,
+        username: formData.username,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password,
+        accountType: formData.accountType,
+        country: formData.country,
+        city: formData.city,
+        ...(formData.accountType === "merchant" && {
+          businessName: formData.businessName,
+          businessType: formData.businessType,
+        }),
+      };
+
+      return await ApiService.register(registrationData);
+    });
+
+    if (result) {
+      // تسجيل دخول المستخدم تلقائياً وتوجيهه للصفحة المناسبة
+      login(result.user, result.token);
+
+      if (result.user.role === 'merchant') {
+        navigate('/merchant/dashboard');
+      } else {
+        navigate('/');
+      }
+    }
   };
 
   return (
@@ -361,7 +415,7 @@ export default function Register() {
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="retail" className="arabic">تجارة تجزئة</SelectItem>
-                            <SelectItem value="wholesale" className="arabic">تجارة جملة</SelectItem>
+                            <SelectItem value="wholesale" className="arabic">��جارة جملة</SelectItem>
                             <SelectItem value="services" className="arabic">خدمات</SelectItem>
                             <SelectItem value="food" className="arabic">مطاعم وأغذية</SelectItem>
                             <SelectItem value="fashion" className="arabic">أزي��ء وملابس</SelectItem>
