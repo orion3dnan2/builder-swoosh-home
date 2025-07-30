@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
+import { authRoutes } from "./api/routes/auth";
 import {
   getSystemSettings,
   updateSystemSettings,
