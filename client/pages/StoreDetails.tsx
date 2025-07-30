@@ -200,40 +200,45 @@ export default function StoreDetails() {
               {activeTab === 'products' && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {storeProducts.map((product) => (
-                    <Card key={product.id} className="hover:shadow-md transition-shadow">
-                      <CardContent className="p-4">
-                        <div className="flex gap-3">
-                          <img
-                            src={product.images[0] || "/placeholder.svg"}
-                            alt={product.name}
-                            className="w-16 h-16 object-cover rounded-lg"
-                          />
-                          <div className="flex-1">
-                            <h3 className="font-semibold arabic text-sm mb-1">{product.name}</h3>
-                            <p className="text-xs text-gray-600 arabic line-clamp-2">
-                              {product.description}
-                            </p>
-                            <div className="flex items-center justify-between mt-2">
-                              <div className="flex items-center gap-1">
-                                <span className="text-green-600 font-bold text-sm">
-                                  {product.salePrice || product.price} ريال
-                                </span>
-                                {product.salePrice && (
-                                  <span className="text-gray-400 line-through text-xs">
-                                    {product.price}
+                    <Link key={product.id} to={`/products/${product.id}`} className="block">
+                      <Card className="hover:shadow-md transition-shadow cursor-pointer">
+                        <CardContent className="p-4">
+                          <div className="flex gap-3">
+                            <img
+                              src={product.images[0] || "/placeholder.svg"}
+                              alt={product.name}
+                              className="w-16 h-16 object-cover rounded-lg"
+                            />
+                            <div className="flex-1">
+                              <h3 className="font-semibold arabic text-sm mb-1">{product.name}</h3>
+                              <p className="text-xs text-gray-600 arabic line-clamp-2">
+                                {product.description}
+                              </p>
+                              <div className="flex items-center justify-between mt-2">
+                                <div className="flex items-center gap-1">
+                                  <span className="text-green-600 font-bold text-sm">
+                                    {product.salePrice || product.price} ريال
                                   </span>
-                                )}
-                              </div>
-                              <Link to={`/products/${product.id}`}>
-                                <Button size="sm" variant="outline" className="text-xs arabic">
+                                  {product.salePrice && (
+                                    <span className="text-gray-400 line-through text-xs">
+                                      {product.price}
+                                    </span>
+                                  )}
+                                </div>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="text-xs arabic"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
                                   عرض
                                 </Button>
-                              </Link>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                        </CardContent>
+                      </Card>
+                    </Link>
                   ))}
                   <div className="md:col-span-2 text-center mt-4">
                     <Link to={`/store/${store.id}/visit`}>
