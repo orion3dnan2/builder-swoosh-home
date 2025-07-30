@@ -141,7 +141,7 @@ export default function MerchantSettings() {
     if (file) {
       // التحقق من نوع الملف
       if (!file.type.startsWith('image/')) {
-        alert('يرجى اختيار ملف صورة صالح');
+        alert('يرجى اخ��يار ملف صورة صالح');
         return;
       }
 
@@ -487,6 +487,7 @@ export default function MerchantSettings() {
                         value={storeSettings.address}
                         onChange={(e) => setStoreSettings({...storeSettings, address: e.target.value})}
                         className="mt-1 text-right arabic"
+                        placeholder="شارع الملك فهد، حي النرجس"
                       />
                     </div>
                     <div>
