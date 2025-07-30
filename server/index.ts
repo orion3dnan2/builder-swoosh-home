@@ -50,6 +50,9 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  // Authentication routes
+  app.use("/api/auth", authRoutes);
+
   // System Settings API routes
   app.get("/api/system/settings", getSystemSettings);
   app.put("/api/system/settings", updateSystemSettings);
