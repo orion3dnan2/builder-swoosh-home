@@ -7,6 +7,7 @@ import { jobsRoutes } from "./routes/jobs";
 import { storesRoutes } from "./routes/stores";
 import { servicesRoutes } from "./routes/services";
 import { userRoutes } from "./routes/users";
+import { ordersRoutes } from "./routes/orders";
 
 const app = express();
 
