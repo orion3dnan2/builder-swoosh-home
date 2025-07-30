@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import { connectDatabase } from "./lib/prisma";
 import { handleDemo } from "./routes/demo";
 import { authRoutes } from "./api/routes/auth";
 import { companiesRoutes } from "./api/routes/companies";
@@ -45,6 +46,11 @@ import {
 export function createServer() {
   const app = express();
 
+  // تهيئة قاعدة البيانات
+  connectDatabase().catch((error) => {
+    console.error("فشل في الاتصال بقاعدة البيانات:", error);
+  });
+
   // Middleware
   app.use(cors());
   app.use(express.json());
@@ -73,6 +79,7 @@ export function createServer() {
       status: "ok",
       timestamp: new Date().toISOString(),
       server: "express",
+      database: "postgresql"
     });
   });
 
