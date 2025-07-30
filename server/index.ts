@@ -57,8 +57,24 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
-  // Authentication routes
+  // API routes
   app.use("/api/auth", authRoutes);
+  app.use("/api/companies", companiesRoutes);
+  app.use("/api/products", productsRoutes);
+  app.use("/api/jobs", jobsRoutes);
+  app.use("/api/stores", storesRoutes);
+  app.use("/api/services", servicesRoutes);
+  app.use("/api/users", userRoutes);
+  app.use("/api/mobile", mobileRoutes);
+
+  // Health check endpoint
+  app.get("/api/health", (req, res) => {
+    res.json({
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+      server: 'express'
+    });
+  });
 
   // System Settings API routes
   app.get("/api/system/settings", getSystemSettings);
