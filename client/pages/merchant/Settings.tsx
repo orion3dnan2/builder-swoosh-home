@@ -374,6 +374,7 @@ export default function MerchantSettings() {
         name: storeSettings.storeName,
         description: storeSettings.description,
         category: storeSettings.category,
+        storeType: storeSettings.storeType,
         phone: storeSettings.phone,
         email: storeSettings.email,
         address: storeSettings.address,
@@ -907,7 +908,7 @@ export default function MerchantSettings() {
                         onChange={(e) => handleCountryChange(e.target.value)}
                         className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
                       >
-                        <option value="">اختر الدولة</option>
+                        <option value="">��ختر الدولة</option>
                         {Object.keys(countriesWithCities).map((country) => (
                           <option key={country} value={country}>
                             {country}
