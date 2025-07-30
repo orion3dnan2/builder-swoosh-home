@@ -35,18 +35,21 @@ export default function MerchantDashboard() {
     }
   }, [user]);
 
-  const [storeStats] = useState({
-    totalProducts: isNewMerchant ? 0 : 45,
-    totalOrders: isNewMerchant ? 0 : 128,
-    monthlyRevenue: isNewMerchant ? 0 : 15420,
-    storeViews: isNewMerchant ? 0 : 2340,
-    activeProducts: isNewMerchant ? 0 : 42,
-    outOfStock: isNewMerchant ? 0 : 3,
-    pendingOrders: isNewMerchant ? 0 : 7,
-    completedOrders: isNewMerchant ? 0 : 121,
-    averageRating: isNewMerchant ? 0 : 4.6,
-    totalReviews: isNewMerchant ? 0 : 89,
+  const [storeStats, setStoreStats] = useState({
+    totalProducts: 0,
+    totalOrders: 0,
+    monthlyRevenue: 0,
+    storeViews: 0,
+    activeProducts: 0,
+    outOfStock: 0,
+    pendingOrders: 0,
+    completedOrders: 0,
+    averageRating: 0,
+    totalReviews: 0,
   });
+
+  const [userStore, setUserStore] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const recentOrders = isNewMerchant
     ? []
