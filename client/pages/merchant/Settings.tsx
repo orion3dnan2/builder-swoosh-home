@@ -91,7 +91,7 @@ export default function MerchantSettings() {
   // Store Settings State - فارغة للتجار الجدد
   const [storeSettings, setStoreSettings] = useState<StoreSettings>({
     storeName: isNewMerchant ? (user?.profile?.businessName || "") : "متجر الخير السوداني",
-    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
+    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطع��ة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
     phone: isNewMerchant ? (user?.profile?.phone || "") : "+966501234567",
     email: isNewMerchant ? (user?.email || "") : "store@alkhair-sudani.com",
@@ -141,7 +141,7 @@ export default function MerchantSettings() {
     if (file) {
       // التحقق من نوع الملف
       if (!file.type.startsWith('image/')) {
-        alert('يرجى اخ��يار ملف صورة صالح');
+        alert('يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG)');
         return;
       }
 
@@ -402,7 +402,7 @@ export default function MerchantSettings() {
                             تغيير الغلاف
                           </Button>
                           <p className="text-xs text-gray-500 arabic">
-                            PNG, JPG أو JPEG (أقل من 10 ميجا)
+                            PNG, JPG أ�� JPEG (أقل من 10 ميجا)
                           </p>
                         </div>
                       </div>
