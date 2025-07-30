@@ -1,30 +1,12 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { prisma } from "../../lib/prisma";
 
 const router = Router();
 
 // JWT secret - في الإنتاج يجب أن يكون في متغيرات البيئة
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
-
-// Demo users database (في التطبيق الحقيقي استخدم قاعدة بيانات)
-const users = [
-  {
-    id: "admin-001",
-    username: "admin",
-    email: "admin@baytsudani.com",
-    password: "$2b$10$hashed_password", // استخدم bcrypt للتشفير
-    role: "super_admin",
-    profile: {
-      name: "مدير التطبيق",
-      language: "ar",
-      avatar: "/placeholder.svg",
-    },
-    permissions: [{ resource: "*", actions: ["*"] }],
-    createdAt: new Date().toISOString(),
-    isActive: true,
-  },
-];
 
 // Middleware للتحقق من صحة الرمز المميز
 export const authenticateToken = (req: any, res: any, next: any) => {
@@ -49,20 +31,46 @@ router.post("/login", async (req, res) => {
   try {
     const { username, password, platform = "web" } = req.body;
 
-    // البحث عن المستخدم
-    const user = users.find((u) => u.username === username);
+    // البحث عن المستخدم في قاعدة البيانات
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { username: username },
+          { email: username }
+        ]
+      },
+      include: {
+        profile: true,
+        permissions: true
+      }
+    });
+
     if (!user) {
       return res
         .status(401)
         .json({ error: "اسم المستخدم أو كلمة المرور غير صحيحة" });
     }
 
-    // التحقق من كلمة المرور (في هذا المثال نستخدم كلمة مرور بسيطة)
-    if (password !== username) {
+    // التحقق من حالة المستخدم
+    if (!user.isActive) {
+      return res
+        .status(401)
+        .json({ error: "تم إيقاف الحساب، تواصل مع الإدارة" });
+    }
+
+    // التحقق من كلمة المرور
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
       return res
         .status(401)
         .json({ error: "اسم المستخدم أو كلمة المرور غير صحيحة" });
     }
+
+    // تحديث آخر تسجيل دخول
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { lastLogin: new Date() }
+    });
 
     // إنشاء رمز الوصول
     const token = jwt.sign(
@@ -85,6 +93,7 @@ router.post("/login", async (req, res) => {
       expiresIn: platform === "mobile" ? "30d" : "7d",
     });
   } catch (error) {
+    console.error("Login error:", error);
     res.status(500).json({ error: "خطأ في الخادم" });
   }
 });
@@ -112,9 +121,15 @@ router.post("/register", async (req, res) => {
     }
 
     // التحقق من وجود المستخدم
-    const existingUser = users.find(
-      (u) => u.email === email || u.username === username,
-    );
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email: email },
+          { username: username }
+        ]
+      }
+    });
+
     if (existingUser) {
       return res.status(400).json({ error: "المستخدم موجود بالفعل" });
     }
@@ -126,38 +141,44 @@ router.post("/register", async (req, res) => {
       }
     }
 
-    // إنشاء مستخدم جديد
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = {
-      id: `user-${Date.now()}`,
-      username: username,
-      email,
-      password: hashedPassword,
-      role: accountType === "merchant" ? "merchant" : "customer",
-      profile: {
-        name: fullName,
-        phone,
-        country,
-        city,
-        language: "ar",
-        avatar: "/placeholder.svg",
-        ...(accountType === "merchant" && {
-          businessName,
-          businessType,
-        }),
-      },
-      permissions:
-        accountType === "merchant"
-          ? [
-              { resource: "store", actions: ["read", "write", "delete"] },
-              { resource: "products", actions: ["read", "write", "delete"] },
-            ]
-          : [{ resource: "profile", actions: ["read", "write"] }],
-      createdAt: new Date().toISOString(),
-      isActive: true,
-    };
+    // تشفير كلمة المرور
+    const hashedPassword = await bcrypt.hash(password, 12);
 
-    users.push(newUser);
+    // إنشاء مستخدم جديد في قاعدة البيانات
+    const newUser = await prisma.user.create({
+      data: {
+        username: username,
+        email,
+        password: hashedPassword,
+        role: accountType === "merchant" ? "MERCHANT" : "CUSTOMER",
+        profile: {
+          create: {
+            name: fullName,
+            phone,
+            language: "AR",
+            street: "",
+            city: city || "",
+            state: "",
+            country: country || "SD",
+            zipCode: "",
+            businessName: accountType === "merchant" ? businessName : undefined,
+            businessType: accountType === "merchant" ? businessType : undefined,
+          }
+        },
+        permissions: {
+          create: accountType === "merchant" 
+            ? [
+                { resource: "store", actions: ["read", "write", "delete"] },
+                { resource: "products", actions: ["read", "write", "delete"] },
+              ]
+            : [{ resource: "profile", actions: ["read", "write"] }]
+        }
+      },
+      include: {
+        profile: true,
+        permissions: true
+      }
+    });
 
     // إنشاء رمز الوصول
     const token = jwt.sign(
@@ -178,6 +199,7 @@ router.post("/register", async (req, res) => {
       platform,
     });
   } catch (error) {
+    console.error("Registration error:", error);
     res.status(500).json({ error: "خطأ في الخادم" });
   }
 });
@@ -202,14 +224,26 @@ router.post("/refresh", authenticateToken, (req: any, res) => {
 });
 
 // الحصول على بيانات المستخدم الحالي
-router.get("/me", authenticateToken, (req: any, res) => {
-  const user = users.find((u) => u.id === req.user.id);
-  if (!user) {
-    return res.status(404).json({ error: "المستخدم غير موجود" });
-  }
+router.get("/me", authenticateToken, async (req: any, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      include: {
+        profile: true,
+        permissions: true
+      }
+    });
 
-  const { password: _, ...userWithoutPassword } = user;
-  res.json(userWithoutPassword);
+    if (!user) {
+      return res.status(404).json({ error: "المستخدم غير موجود" });
+    }
+
+    const { password: _, ...userWithoutPassword } = user;
+    res.json(userWithoutPassword);
+  } catch (error) {
+    console.error("Get user error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
+  }
 });
 
 // تسجيل الخروج
