@@ -46,6 +46,12 @@ import {
 export function createServer() {
   const app = express();
 
+  // تهيئة قواعد البيانات
+  console.log("🗄️ تهيئة قواعد البيانات...");
+  UserDatabase.loadUsers();
+  StoreDatabase.loadStores();
+  console.log("✅ تم تحميل قواعد البيانات بنجاح");
+
   // تهيئة قاعدة البيانات في production فقط
   if (process.env.NODE_ENV === 'production') {
     import("./lib/prisma").then(({ connectDatabase }) => {
