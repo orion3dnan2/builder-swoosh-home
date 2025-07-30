@@ -65,9 +65,10 @@ export default function Companies() {
     return matchesSearch && matchesIndustry && matchesCountry;
   });
 
-  const industries = CompaniesService.getIndustries();
-  const countries = CompaniesService.getCountries();
-  const sizes = CompaniesService.getSizes();
+  // استخراج القطاعات والدول من البيانات
+  const industries = [...new Set(companies.map(c => c.category))];
+  const countries = [...new Set(companies.map(c => c.country))];
+  const sizes = ["صغيرة", "متوسطة", "كبيرة"];
 
   return (
     <Layout>
