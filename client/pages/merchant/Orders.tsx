@@ -639,7 +639,7 @@ export default function MerchantOrders() {
                     </Link>
                     <Link to="/merchant/settings">
                       <Button variant="outline" className="arabic">
-                        إعداد معلومات المتجر
+                        إعداد بيانات المتجر
                       </Button>
                     </Link>
                   </div>
