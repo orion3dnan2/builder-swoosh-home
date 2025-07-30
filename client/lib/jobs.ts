@@ -123,7 +123,7 @@ export class JobsService {
       title: "مدرس لغة إنجليزية",
       company: "مدارس النيل الدولية",
       companyLogo: "/placeholder.svg",
-      location: "الدوحة، ق��ر",
+      location: "الدوحة، قطر",
       type: "full-time",
       category: "education",
       salary: {
@@ -186,7 +186,7 @@ export class JobsService {
         "بكالوريوس هندسة طبية أو إلكترونيات",
         "خبرة 2+ سنوات في صيانة الأجهزة الطبية",
         "معرفة بأنظمة الجودة الطبية",
-        "رخصة مز��ولة مهنة",
+        "رخصة مزاولة مهنة",
         "إجادة اللغة الإنجليزية",
       ],
       benefits: [
@@ -384,8 +384,8 @@ export class JobsService {
 
   static getCategoryName(category: string): string {
     const names: Record<string, string> = {
-      technology: "تقنية الم��لومات",
-      finance: "المالية والمحاسبة",
+      technology: "تقنية المعلومات",
+      finance: "المالية والمحاسب��",
       education: "التعليم والتدريب",
       healthcare: "الصحة والطب",
       marketing: "التسويق والإعلان",
