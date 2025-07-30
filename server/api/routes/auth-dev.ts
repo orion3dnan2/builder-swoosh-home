@@ -51,11 +51,18 @@ router.post("/login", async (req, res) => {
 
     // التحقق من كلمة المرور
     let isPasswordValid = false;
-    try {
-      isPasswordValid = await bcrypt.compare(password, user.password);
-    } catch (bcryptError) {
-      // للمستخدم الافتراضي admin (كلمة مرور بسيطة)
-      isPasswordValid = password === username;
+
+    // إذا كانت كلمة المرور تبدأ بـ $2b$ فهي مشفرة، وإلا فهي بسيطة
+    if (user.password.startsWith('$2b$')) {
+      try {
+        isPasswordValid = await bcrypt.compare(password, user.password);
+      } catch (bcryptError) {
+        console.error('خطأ في فك تشفير كلمة المرور:', bcryptError);
+        isPasswordValid = false;
+      }
+    } else {
+      // كلمة مرور بسيطة للتجربة
+      isPasswordValid = password === user.password;
     }
 
     if (!isPasswordValid) {
@@ -132,7 +139,7 @@ router.post("/register", async (req, res) => {
       }
     }
 
-    // إنشاء مستخدم جديد
+    // إنشا�� مستخدم جديد
     const hashedPassword = await bcrypt.hash(password, 12);
     const newUser = {
       id: `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
