@@ -1,12 +1,13 @@
 import express from "express";
 import cors from "cors";
-import { authRoutes } from "./routes/auth";
+import { authDevRoutes } from "./routes/auth-dev";
 import { companiesRoutes } from "./routes/companies";
 import { productsRoutes } from "./routes/products";
 import { jobsRoutes } from "./routes/jobs";
 import { storesRoutes } from "./routes/stores";
 import { servicesRoutes } from "./routes/services";
 import { userRoutes } from "./routes/users";
+import { ordersRoutes } from "./routes/orders";
 
 const app = express();
 
@@ -37,13 +38,14 @@ app.use((req, res, next) => {
 });
 
 // API Routes
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authDevRoutes);
 app.use("/api/companies", companiesRoutes);
 app.use("/api/products", productsRoutes);
 app.use("/api/jobs", jobsRoutes);
 app.use("/api/stores", storesRoutes);
 app.use("/api/services", servicesRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/orders", ordersRoutes);
 
 // Mobile-specific routes
 app.use("/api/mobile", require("./routes/mobile"));

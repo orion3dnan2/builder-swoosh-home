@@ -40,6 +40,7 @@ interface StoreSettings {
   storeName: string;
   description: string;
   category: string;
+  storeType: string;
   phone: string;
   email: string;
   address: string;
@@ -107,6 +108,7 @@ export default function MerchantSettings() {
             storeName: existingStore.name || "",
             description: existingStore.description || "",
             category: existingStore.category || "",
+            storeType: existingStore.storeType || "",
             phone: existingStore.phone || "",
             email: existingStore.email || "",
             address: existingStore.address || "",
@@ -200,7 +202,8 @@ export default function MerchantSettings() {
     description: isNewMerchant
       ? ""
       : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
-    category: isNewMerchant ? "" : "مواد غذائية وعطور",
+    category: isNewMerchant ? "" : "مواد ��ذائية وعطور",
+    storeType: isNewMerchant ? "" : "restaurant",
     phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
     email: isNewMerchant ? user?.email || "" : "store@example.com",
     address: isNewMerchant ? "" : "شارع النيل، الخرطوم",
@@ -251,7 +254,7 @@ export default function MerchantSettings() {
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // التحقق من نوع الملف
+      // التح��ق من نوع الملف
       if (!file.type.startsWith("image/")) {
         alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG)");
         return;
@@ -259,7 +262,7 @@ export default function MerchantSettings() {
 
       // التحقق من حجم الملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
-        alert("حجم الصورة يجب أن يكون أقل من 5 ميجابايت");
+        alert("حجم الصورة ��جب أن يكون أقل من 5 ميجابايت");
         return;
       }
 
@@ -288,7 +291,7 @@ export default function MerchantSettings() {
         "image/webp",
       ];
       if (!allowedTypes.includes(file.type)) {
-        alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG, أو WebP)");
+        alert("يرجى ا��تيار ملف صورة صالح (PNG, JPG, JPEG, أو WebP)");
         return;
       }
 
@@ -335,6 +338,11 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.category) {
+      alert("يرجى اختيار فئة المتجر");
+      return;
+    }
+
+    if (!storeSettings.storeType) {
       alert("يرجى اختيار نوع المتجر");
       return;
     }
@@ -372,6 +380,7 @@ export default function MerchantSettings() {
         name: storeSettings.storeName,
         description: storeSettings.description,
         category: storeSettings.category,
+        storeType: storeSettings.storeType,
         phone: storeSettings.phone,
         email: storeSettings.email,
         address: storeSettings.address,
@@ -384,7 +393,7 @@ export default function MerchantSettings() {
         shippingSettings: shipping,
       };
 
-      // البحث عن متجر موجود للمستخدم أولاً
+      // البحث عن متجر موجود ���لمستخدم أولاً
       try {
         const userStores = await ApiService.getStores();
         const existingStore = userStores.find(
@@ -419,11 +428,11 @@ export default function MerchantSettings() {
 
       // عرض رسالة نجاح
       alert(
-        "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.",
+        "🎉 تم حفظ إعدادات المتجر بنج��ح!\n\nتم تحديث جميع البي��نات والإعدادات ال��اصة بمتجرك.",
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ الإعدادات.\n\nيرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ الإعدادات.\n\nيرجى التحقق م�� اتصال الإنترنت والمحاولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
@@ -509,7 +518,7 @@ export default function MerchantSettings() {
       "الفروانية",
       "حولي",
     ],
-    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"],
+    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشما��"],
     "مملكة البحرين": ["المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
@@ -799,6 +808,40 @@ export default function MerchantSettings() {
                     </div>
                   </div>
 
+                  {/* Store Type */}
+                  <div>
+                    <Label htmlFor="storeType" className="arabic">
+                      نوع المتجر
+                    </Label>
+                    <select
+                      id="storeType"
+                      value={storeSettings.storeType}
+                      onChange={(e) =>
+                        setStoreSettings({
+                          ...storeSettings,
+                          storeType: e.target.value,
+                        })
+                      }
+                      className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
+                    >
+                      <option value="">اختر نوع المتجر</option>
+                      <option value="restaurant">مطعم</option>
+                      <option value="company">شركة</option>
+                      <option value="store">متجر عام</option>
+                      <option value="service">خدمات</option>
+                      <option value="pharmacy">صيدلية</option>
+                      <option value="supermarket">سوبر ماركت</option>
+                      <option value="bakery">مخبز/حلويات</option>
+                      <option value="electronics">إلكترونيات</option>
+                      <option value="clothing">ملابس</option>
+                      <option value="beauty">تجميل وعناية</option>
+                    </select>
+                    <p className="text-xs text-gray-500 mt-1 arabic">
+                      يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
+                      الشركات، أو المتاجر)
+                    </p>
+                  </div>
+
                   <div>
                     <Label htmlFor="description" className="arabic">
                       وصف المتجر
@@ -864,7 +907,7 @@ export default function MerchantSettings() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                       <Label htmlFor="country" className="arabic">
-                        الدولة
+                        ا��دولة
                       </Label>
                       <select
                         id="country"
@@ -872,7 +915,7 @@ export default function MerchantSettings() {
                         onChange={(e) => handleCountryChange(e.target.value)}
                         className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
                       >
-                        <option value="">اختر الدولة</option>
+                        <option value="">��ختر الدولة</option>
                         {Object.keys(countriesWithCities).map((country) => (
                           <option key={country} value={country}>
                             {country}
@@ -1010,7 +1053,7 @@ export default function MerchantSettings() {
                 <CardHeader>
                   <CardTitle className="arabic text-right flex items-center">
                     <Bell className="w-5 h-5 ml-2" />
-                    إعدادات الإشعارات
+                    ��عدادات الإشعارات
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -1029,7 +1072,7 @@ export default function MerchantSettings() {
                         {
                           key: "orderUpdates",
                           label: "تحديثات الطلبات",
-                          desc: "إشع��رات عند تغيير حالة الطلبات",
+                          desc: "��شع��رات عند تغيير حالة الطلبات",
                         },
                         {
                           key: "paymentReceived",
@@ -1133,7 +1176,7 @@ export default function MerchantSettings() {
                         },
                         {
                           key: "emailNotifications",
-                          label: "البريد الإلكتروني",
+                          label: "ال��ريد الإلكتروني",
                           desc: "استقبال الإشعارات عبر البريد الإلكتروني",
                         },
                       ].map((item) => (
@@ -1399,7 +1442,7 @@ export default function MerchantSettings() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="newPassword" className="arabic">
-                            كلمة المرور الجديدة
+                            كلمة ا���مرور الجديدة
                           </Label>
                           <Input
                             id="newPassword"

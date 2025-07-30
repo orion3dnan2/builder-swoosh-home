@@ -31,16 +31,25 @@ router.post("/login", async (req, res) => {
   try {
     const { username, password, platform = "web" } = req.body;
 
+    console.log(`🔐 محاولة تسجيل دخول: ${username}`);
+
     // البحث عن المستخدم في قاعدة البيانات
     const user = UserDatabase.findUser(
       (u) => u.username === username || u.email === username,
     );
 
     if (!user) {
+      console.log(`❌ المستخدم غير موجود: ${username}`);
       return res
         .status(401)
         .json({ error: "اسم المستخدم أو كلمة المرور غير صحيحة" });
     }
+
+    console.log(
+      `✅ المستخدم موجود: ${user.username}, كلمة المرور المحفوظة: ${user.password}`,
+    );
+    console.log(`🔑 كلمة المرور المدخلة: ${password}`);
+    console.log(`🔍 البحث في قاعدة البيانات...`);
 
     // التحقق من حالة المستخدم
     if (!user.isActive) {
@@ -51,11 +60,18 @@ router.post("/login", async (req, res) => {
 
     // التحقق من كلمة المرور
     let isPasswordValid = false;
-    try {
-      isPasswordValid = await bcrypt.compare(password, user.password);
-    } catch (bcryptError) {
-      // للمستخدم الافتراضي admin (كلمة مرور بسيطة)
-      isPasswordValid = password === username;
+
+    // إذا كانت كلمة المرور تبدأ بـ $2b$ فهي مشفرة، وإلا فهي بسيطة
+    if (user.password.startsWith("$2b$")) {
+      try {
+        isPasswordValid = await bcrypt.compare(password, user.password);
+      } catch (bcryptError) {
+        console.error("خطأ في فك تشفير كلمة المرور:", bcryptError);
+        isPasswordValid = false;
+      }
+    } else {
+      // كلمة مرور بسيطة للتجربة
+      isPasswordValid = password === user.password;
     }
 
     if (!isPasswordValid) {
@@ -231,7 +247,7 @@ router.get("/me", authenticateToken, async (req: any, res) => {
 
 // تسجيل الخروج
 router.post("/logout", authenticateToken, (req: any, res) => {
-  // في التطبيق الحقيقي، يمكن إضافة الرمز إلى قائمة سوداء
+  // في التطبيق الحقيقي، يمكن إضافة الرمز إلى ق��ئمة سوداء
   res.json({ message: "تم تسجيل الخروج بنجاح" });
 });
 

@@ -28,6 +28,7 @@ import NewProduct from "./pages/merchant/NewProduct";
 import MerchantAnalytics from "./pages/merchant/Analytics";
 import MerchantOrders from "./pages/merchant/Orders";
 import MerchantSettings from "./pages/merchant/Settings";
+import Profile from "./pages/Profile";
 import { SuperAdminRoute, MerchantRoute } from "./components/ProtectedRoute";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -43,6 +44,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/theme-showcase" element={<ThemeShowcase />} />
 
             {/* Admin Routes */}

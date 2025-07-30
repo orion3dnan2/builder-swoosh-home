@@ -40,7 +40,7 @@ export class ProductService {
       price: 15.5,
       images: ["/placeholder.svg"],
       category: "أطعمة ومشروبات",
-      tags: ["كرك��يه", "طبيعي", "صحي", "سوداني"],
+      tags: ["كركديه", "طبيعي", "صحي", "سوداني"],
       inventory: {
         quantity: 50,
         sku: "BEV-HIB-002",
@@ -211,7 +211,7 @@ export class ProductService {
     {
       id: "prod-009",
       storeId: "store-005",
-      name: "شماغ سوداني أصلي",
+      name: "شم��غ سوداني أصلي",
       description:
         "شماغ سوداني تقليدي بنقوش أصيلة. قماش ناعم ومريح مناسب لجميع المناسبات.",
       price: 35.0,
@@ -459,7 +459,7 @@ export class ProductService {
     }
 
     if (!product.inventory?.quantity || product.inventory.quantity < 0) {
-      errors.push("كمية المخزون يجب أن تكون صفر أ�� أكثر");
+      errors.push("كمية المخزون يجب أن تكون صفر أو أكثر");
     }
 
     return errors;
@@ -524,7 +524,7 @@ export class ProductService {
     const texts: Record<string, string> = {
       active: "متوفر",
       inactive: "غير نشط",
-      out_of_stock: "نفد ا��مخزون",
+      out_of_stock: "نفد المخزون",
     };
     return texts[status] || status;
   }

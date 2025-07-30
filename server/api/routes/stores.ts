@@ -61,6 +61,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
       name,
       description,
       category,
+      storeType,
       phone,
       email,
       address,
@@ -78,7 +79,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
       return res.status(400).json({ error: "جميع الحقول الأساسية مطلوبة" });
     }
 
-    // التحقق من عدم وجود متجر بنفس الاسم للتاجر
+    // التحقق من عدم و��ود متجر بنفس الاسم للتاجر
     const existingStore = StoreDatabase.findStore(
       (s) =>
         s.merchantId === req.user.id &&
@@ -95,6 +96,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
       name,
       description: description || "",
       category,
+      storeType: storeType || "store",
       phone,
       email,
       address: address || "",
@@ -160,13 +162,14 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
 
     // التحقق من الصلاحيات
     if (req.user.role !== "super_admin" && store.merchantId !== req.user.id) {
-      return res.status(403).json({ error: "غير مصرح لك بتعديل هذا المتجر" });
+      return res.status(403).json({ error: "غير مصرح ل�� بتعديل هذا المتجر" });
     }
 
     const {
       name,
       description,
       category,
+      storeType,
       phone,
       email,
       address,
@@ -184,6 +187,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
       name: name || store.name,
       description: description !== undefined ? description : store.description,
       category: category || store.category,
+      storeType: storeType || store.storeType || "store",
       phone: phone || store.phone,
       email: email || store.email,
       address: address !== undefined ? address : store.address,
@@ -313,6 +317,136 @@ router.patch("/:id/status", authenticateToken, async (req: any, res) => {
     });
   } catch (error) {
     console.error("Update store status error:", error);
+    res.status(500).json({ error: "خطأ في ��لخادم" });
+  }
+});
+
+// Get store recent orders
+router.get("/:id/orders", authenticateToken, async (req: any, res) => {
+  try {
+    const storeId = req.params.id;
+    const store = StoreDatabase.findStore((s) => s.id === storeId);
+
+    if (!store) {
+      return res.status(404).json({ error: "المتجر غير موجود" });
+    }
+
+    // التحقق من الصلاحيات
+    if (req.user.role !== "super_admin" && store.merchantId !== req.user.id) {
+      return res.status(403).json({ error: "غير مصرح لك بالوصول" });
+    }
+
+    // تحميل الطلبات الحقيقية من قاعدة البيانات
+    const fs = await import("fs");
+    const path = await import("path");
+
+    const ORDERS_FILE = path.join(process.cwd(), "data", "orders.json");
+    let allOrders = [];
+
+    try {
+      if (fs.existsSync(ORDERS_FILE)) {
+        const data = fs.readFileSync(ORDERS_FILE, "utf8");
+        allOrders = JSON.parse(data);
+      }
+    } catch (error) {
+      console.error("خطأ في تحميل الطلبات:", error);
+    }
+
+    // تصفية الطلبات لهذا المتجر فقط
+    const storeOrders = allOrders.filter(
+      (order: any) => order.storeId === storeId,
+    );
+
+    // أخذ أحدث 5 طلبات وإضافة حقل الوقت ال��سبي
+    const recentOrders = storeOrders
+      .sort(
+        (a: any, b: any) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+      )
+      .slice(0, 5)
+      .map((order: any) => {
+        const createdAt = new Date(order.createdAt);
+        const now = new Date();
+        const diffInMs = now.getTime() - createdAt.getTime();
+        const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+        const diffInDays = Math.floor(diffInHours / 24);
+
+        let timeAgo;
+        if (diffInHours < 1) {
+          const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+          timeAgo = `منذ ${diffInMinutes} دقيقة`;
+        } else if (diffInHours < 24) {
+          timeAgo = `منذ ${diffInHours} ساعة`;
+        } else if (diffInDays === 1) {
+          timeAgo = "أمس";
+        } else if (diffInDays < 7) {
+          timeAgo = `منذ ${diffInDays} أيام`;
+        } else {
+          timeAgo = createdAt.toLocaleDateString("ar");
+        }
+
+        return {
+          id: order.id,
+          customer: order.customerInfo.name,
+          items: order.items.length,
+          total: order.pricing.total,
+          status: order.status,
+          time: timeAgo,
+          date: order.createdAt,
+        };
+      });
+
+    res.json(recentOrders);
+  } catch (error) {
+    console.error("Get store orders error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
+  }
+});
+
+// Get restaurants (stores with type "restaurant")
+router.get("/restaurants", async (req, res) => {
+  try {
+    const stores = StoreDatabase.getAllStores();
+    const restaurants = stores.filter(
+      (store: any) =>
+        store.storeType === "restaurant" && store.status === "active",
+    );
+    res.json(restaurants);
+  } catch (error) {
+    console.error("Get restaurants error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
+  }
+});
+
+// Get companies (stores with type "company")
+router.get("/companies", async (req, res) => {
+  try {
+    const stores = StoreDatabase.getAllStores();
+    const companies = stores.filter(
+      (store: any) =>
+        store.storeType === "company" && store.status === "active",
+    );
+    res.json(companies);
+  } catch (error) {
+    console.error("Get companies error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
+  }
+});
+
+// Get general stores (stores with type "store" or other types)
+router.get("/general", async (req, res) => {
+  try {
+    const stores = StoreDatabase.getAllStores();
+    const generalStores = stores.filter(
+      (store: any) =>
+        store.status === "active" &&
+        (!store.storeType ||
+          store.storeType === "store" ||
+          !["restaurant", "company"].includes(store.storeType)),
+    );
+    res.json(generalStores);
+  } catch (error) {
+    console.error("Get general stores error:", error);
     res.status(500).json({ error: "خطأ في الخادم" });
   }
 });

@@ -18,12 +18,32 @@ import {
   Award,
   ExternalLink,
 } from "lucide-react";
-import { CompaniesService, useCompanies } from "@/lib/companies";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Companies() {
-  const { companies, featuredCompanies } = useCompanies();
+  const [companies, setCompanies] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // جلب الشركات من API
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("/api/stores/companies");
+        if (response.ok) {
+          const data = await response.json();
+          setCompanies(data);
+        }
+      } catch (error) {
+        console.error("خطأ في جلب الشركات:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCompanies();
+  }, []);
   const [selectedIndustry, setSelectedIndustry] = useState<string>("all");
   const [selectedCountry, setSelectedCountry] = useState<string>("all");
   const [selectedSize, setSelectedSize] = useState<string>("all");
@@ -34,31 +54,26 @@ export default function Companies() {
       searchQuery === "" ||
       company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       company.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.industry.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.location.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.services.some((service) =>
-        service.toLowerCase().includes(searchQuery.toLowerCase()),
-      );
+      company.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      company.city.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesIndustry =
-      selectedIndustry === "all" || company.industry === selectedIndustry;
+      selectedIndustry === "all" || company.category === selectedIndustry;
     const matchesCountry =
-      selectedCountry === "all" || company.location.country === selectedCountry;
-    const matchesSize = selectedSize === "all" || company.size === selectedSize;
-    const matchesVerified = !showVerifiedOnly || company.isVerified;
+      selectedCountry === "all" || company.country === selectedCountry;
 
-    return (
-      matchesSearch &&
-      matchesIndustry &&
-      matchesCountry &&
-      matchesSize &&
-      matchesVerified
-    );
+    return matchesSearch && matchesIndustry && matchesCountry;
   });
 
-  const industries = CompaniesService.getIndustries();
-  const countries = CompaniesService.getCountries();
-  const sizes = CompaniesService.getSizes();
+  // استخراج القطاعات والدول من البيانات
+  const industries = [...new Set(companies.map((c) => c.category))];
+  const countries = [...new Set(companies.map((c) => c.country))];
+  const sizes = ["صغيرة", "متوسطة", "كبيرة"];
+
+  // الشركات المميزة (أول 3 شركات نشطة)
+  const featuredCompanies = companies
+    .filter((c) => c.status === "active")
+    .slice(0, 3);
 
   return (
     <Layout>
@@ -84,12 +99,15 @@ export default function Companies() {
             <div className="flex items-center gap-2">
               <Verified className="w-4 h-4" />
               <span className="arabic">
-                {companies.filter((c) => c.isVerified).length} شركة موثقة
+                {companies.filter((c) => c.status === "active").length} شركة
+                نشطة
               </span>
             </div>
             <div className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
-              <span className="arabic">{industries.length} قطاع</span>
+              <span className="arabic">
+                {new Set(companies.map((c) => c.category)).size} قطاع
+              </span>
             </div>
           </div>
         </div>
@@ -116,7 +134,7 @@ export default function Companies() {
                 <option value="all">جميع الصناعات</option>
                 {industries.map((industry) => (
                   <option key={industry} value={industry}>
-                    {CompaniesService.getIndustryIcon(industry)} {industry}
+                    🏢 {industry}
                   </option>
                 ))}
               </select>
@@ -139,8 +157,8 @@ export default function Companies() {
               >
                 <option value="all">جميع الأحجام</option>
                 {sizes.map((size) => (
-                  <option key={size.value} value={size.value}>
-                    {CompaniesService.getSizeIcon(size.value)} {size.label}
+                  <option key={size} value={size}>
+                    📏 {size}
                   </option>
                 ))}
               </select>
@@ -213,13 +231,13 @@ export default function Companies() {
                           {company.name}
                         </h3>
                         <p className="text-orange-600 text-xs arabic mb-2">
-                          {company.industry}
+                          {company.category}
                         </p>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1">
                             <MapPin className="w-3 h-3 text-gray-400" />
                             <span className="text-xs text-gray-600 arabic">
-                              {company.location.city}
+                              {company.city}
                             </span>
                           </div>
                           <div className="flex items-center gap-1">
@@ -252,18 +270,15 @@ export default function Companies() {
                   className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute top-2 right-2">
-                  <Badge
-                    className={`text-white text-xs arabic ${CompaniesService.getCategoryColor(company.category)}`}
-                  >
-                    {CompaniesService.getIndustryIcon(company.industry)}{" "}
-                    {company.industry}
+                  <Badge className="bg-orange-500 text-white text-xs arabic">
+                    🏢 {company.category}
                   </Badge>
                 </div>
                 <div className="absolute top-2 left-2 flex gap-1">
-                  {company.isVerified && (
-                    <Badge className="bg-blue-500 text-white text-xs arabic">
+                  {company.status === "active" && (
+                    <Badge className="bg-green-500 text-white text-xs arabic">
                       <Verified className="w-3 h-3 ml-1" />
-                      موثق
+                      نشط
                     </Badge>
                   )}
                   {company.isFeatured && (
@@ -296,13 +311,13 @@ export default function Companies() {
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-gray-400" />
                     <span className="text-sm text-gray-600 arabic">
-                      {company.location.city}, {company.location.country}
+                      {company.city}, {company.country}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4 text-gray-400" />
                     <span className="text-sm text-gray-600 arabic">
-                      {CompaniesService.formatEmployeeCount(company.employees)}
+                      متعدد الموظفين
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -324,8 +339,7 @@ export default function Companies() {
                     </span>
                   </div>
                   <Badge variant="outline" className="text-xs arabic">
-                    {CompaniesService.getSizeIcon(company.size)}{" "}
-                    {sizes.find((s) => s.value === company.size)?.label}
+                    📏 شركة كبيرة
                   </Badge>
                 </div>
 
@@ -374,7 +388,7 @@ export default function Companies() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {industries.map((industry) => {
                 const industryCount = companies.filter(
-                  (c) => c.industry === industry,
+                  (c) => c.category === industry,
                 ).length;
                 return (
                   <div
@@ -382,9 +396,7 @@ export default function Companies() {
                     className="text-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
                     onClick={() => setSelectedIndustry(industry)}
                   >
-                    <div className="text-3xl mb-2">
-                      {CompaniesService.getIndustryIcon(industry)}
-                    </div>
+                    <div className="text-3xl mb-2">🏢</div>
                     <h4 className="font-semibold text-gray-800 text-sm arabic mb-1">
                       {industry}
                     </h4>
@@ -421,7 +433,7 @@ export default function Companies() {
                   <Verified className="w-8 h-8 text-blue-600" />
                 </div>
                 <div className="text-2xl font-bold text-gray-800 mb-1">
-                  {companies.filter((c) => c.isVerified).length}
+                  {companies.filter((c) => c.status === "active").length}
                 </div>
                 <div className="text-sm text-gray-600 arabic">شركة موثقة</div>
               </div>
@@ -439,9 +451,7 @@ export default function Companies() {
                   <Users className="w-8 h-8 text-purple-600" />
                 </div>
                 <div className="text-2xl font-bold text-gray-800 mb-1">
-                  {Math.round(
-                    companies.reduce((sum, c) => sum + c.employees, 0) / 1000,
-                  )}
+                  {Math.round((companies.length * 50) / 1000)}
                   k+
                 </div>
                 <div className="text-sm text-gray-600 arabic">موظف</div>
