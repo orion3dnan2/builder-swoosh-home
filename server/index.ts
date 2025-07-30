@@ -83,6 +83,7 @@ export function createServer() {
   app.use("/api/services", servicesRoutes);
   app.use("/api/users", userDevRoutes);
   app.use("/api/mobile", mobileRoutes);
+  app.use("/api/database", databaseInfoRoutes);
 
   // Health check endpoint
   app.get("/api/health", (req, res) => {
