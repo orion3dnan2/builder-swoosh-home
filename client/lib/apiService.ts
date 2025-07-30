@@ -1,6 +1,6 @@
-// خدمة API موحدة للويب والجوال
+// خدمة API موحد�� للويب والجوال
 export class ApiService {
-  private static baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+  private static baseURL = import.meta.env.VITE_API_URL || '/api';
   private static platform = 'web'; // سيتم تغييرها في التطبيق الجوال
 
   // تعيين منصة التطبيق
