@@ -128,7 +128,7 @@ export default function Companies() {
                 <option value="all">جميع الصناعات</option>
                 {industries.map((industry) => (
                   <option key={industry} value={industry}>
-                    {CompaniesService.getIndustryIcon(industry)} {industry}
+                    🏢 {industry}
                   </option>
                 ))}
               </select>
