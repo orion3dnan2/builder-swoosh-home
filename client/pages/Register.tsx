@@ -19,6 +19,9 @@ import { ApiService, useApi } from "@/lib/apiService";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function Register() {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const { loading, error, callApi } = useApi();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
