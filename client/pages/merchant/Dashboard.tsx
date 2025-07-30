@@ -216,8 +216,19 @@ export default function MerchantDashboard() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Message for New Merchants */}
-        {isNewMerchant && (
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+            <span className="ml-3 text-gray-600 arabic">جاري تحميل بيانات المتجر...</span>
+          </div>
+        )}
+
+        {/* Content - only show when not loading */}
+        {!loading && (
+          <>
+            {/* Welcome Message for New Merchants */}
+            {isNewMerchant && (
           <Card className="mb-8 bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
             <CardContent className="p-6">
               <div className="flex items-start space-x-4 space-x-reverse">
@@ -345,7 +356,7 @@ export default function MerchantDashboard() {
             >
               <div className="text-center">
                 <Package className="w-6 h-6 mx-auto mb-2" />
-                <span className="text-sm arabic">إدارة المنتجات</span>
+                <span className="text-sm arabic">إدارة المنت��ات</span>
               </div>
             </Button>
           </Link>
@@ -584,6 +595,8 @@ export default function MerchantDashboard() {
             </Card>
           </div>
         </div>
+          </>
+        )}
       </div>
     </div>
   );
