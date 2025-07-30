@@ -10,6 +10,7 @@ import { storesRoutes } from "./api/routes/stores";
 import { servicesRoutes } from "./api/routes/services";
 import { userDevRoutes } from "./api/routes/users-dev";
 import { mobileRoutes } from "./api/routes/mobile";
+import { databaseInfoRoutes } from "./api/routes/database-info";
 import {
   getSystemSettings,
   updateSystemSettings,
