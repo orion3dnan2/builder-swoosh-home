@@ -317,4 +317,66 @@ router.patch("/:id/status", authenticateToken, async (req: any, res) => {
   }
 });
 
+// Get store recent orders
+router.get("/:id/orders", authenticateToken, async (req: any, res) => {
+  try {
+    const storeId = req.params.id;
+    const store = StoreDatabase.findStore((s) => s.id === storeId);
+
+    if (!store) {
+      return res.status(404).json({ error: "المتجر غير موجود" });
+    }
+
+    // التحقق من الصلاحيات
+    if (req.user.role !== "super_admin" && store.merchantId !== req.user.id) {
+      return res.status(403).json({ error: "غير مصرح لك بالوصول" });
+    }
+
+    // بيانات طلبات تجريبية للمتجر
+    const recentOrders = store.analytics?.totalOrders > 0 ? [
+      {
+        id: "ORD-001",
+        customer: "أحمد محمد",
+        items: 3,
+        total: 125.5,
+        status: "pending",
+        time: "منذ 15 دقيقة",
+        date: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
+      },
+      {
+        id: "ORD-002",
+        customer: "فاطمة علي",
+        items: 1,
+        total: 45.0,
+        status: "confirmed",
+        time: "منذ ساعة",
+        date: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+      },
+      {
+        id: "ORD-003",
+        customer: "محمد سعد",
+        items: 2,
+        total: 89.99,
+        status: "shipped",
+        time: "منذ 3 ساعات",
+        date: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+      },
+      {
+        id: "ORD-004",
+        customer: "عائشة أحمد",
+        items: 4,
+        total: 234.75,
+        status: "delivered",
+        time: "اليوم",
+        date: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
+      },
+    ] : [];
+
+    res.json(recentOrders);
+  } catch (error) {
+    console.error("Get store orders error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
+  }
+});
+
 export { router as storesRoutes };
