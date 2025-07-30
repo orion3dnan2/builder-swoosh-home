@@ -89,9 +89,98 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// باقي الدوال...
+// تسجيل مستخدم جديد
 router.post("/register", async (req, res) => {
-  res.status(501).json({ error: "التسجيل غير متاح في وضع التطوير" });
+  try {
+    const {
+      fullName,
+      username,
+      email,
+      phone,
+      password,
+      accountType = "customer",
+      platform = "web",
+      country,
+      city,
+      businessName,
+      businessType,
+    } = req.body;
+
+    // التحقق من البيانات
+    if (!fullName || !username || !email || !password) {
+      return res.status(400).json({ error: "جميع الحقول مطلوبة" });
+    }
+
+    // التحقق من وجود المستخدم
+    const existingUser = users.find(
+      (u) => u.email === email || u.username === username,
+    );
+    if (existingUser) {
+      return res.status(400).json({ error: "المستخدم موجود بالفعل" });
+    }
+
+    // التحقق من حقول التاجر إذا كان نوع الحساب تاجر
+    if (accountType === "merchant") {
+      if (!businessName || !businessType) {
+        return res.status(400).json({ error: "بيانات العمل التجاري مطلوبة" });
+      }
+    }
+
+    // إنشاء مستخدم جديد
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = {
+      id: `user-${Date.now()}`,
+      username: username,
+      email,
+      password: hashedPassword,
+      role: accountType === "merchant" ? "merchant" : "customer",
+      profile: {
+        name: fullName,
+        phone,
+        country,
+        city,
+        language: "ar",
+        avatar: "/placeholder.svg",
+        ...(accountType === "merchant" && {
+          businessName,
+          businessType,
+        }),
+      },
+      permissions:
+        accountType === "merchant"
+          ? [
+              { resource: "store", actions: ["read", "write", "delete"] },
+              { resource: "products", actions: ["read", "write", "delete"] },
+            ]
+          : [{ resource: "profile", actions: ["read", "write"] }],
+      createdAt: new Date().toISOString(),
+      isActive: true,
+    };
+
+    users.push(newUser);
+
+    // إنشاء رمز الوصول
+    const token = jwt.sign(
+      {
+        id: newUser.id,
+        username: newUser.username,
+        role: newUser.role,
+        platform,
+      },
+      JWT_SECRET,
+      { expiresIn: platform === "mobile" ? "30d" : "7d" },
+    );
+
+    const { password: _, ...userWithoutPassword } = newUser;
+    res.status(201).json({
+      user: userWithoutPassword,
+      token,
+      platform,
+    });
+  } catch (error) {
+    console.error("Registration error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
+  }
 });
 
 router.post("/refresh", authenticateToken, (req: any, res) => {
