@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import { UserDatabase, StoreDatabase } from "./lib/database";
 import { handleDemo } from "./routes/demo";
 import { authDevRoutes } from "./api/routes/auth-dev";
 import { companiesRoutes } from "./api/routes/companies";
