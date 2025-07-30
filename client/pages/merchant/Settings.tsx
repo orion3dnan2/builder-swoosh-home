@@ -164,7 +164,7 @@ export default function MerchantSettings() {
       reader.onload = (e) => {
         const logoUrl = e.target?.result as string;
         setStoreSettings({ ...storeSettings, logo: logoUrl });
-        alert("تم تحديث ��عار المتجر بنجاح! 🎉");
+        alert("تم تحديث شعار المتجر بنجاح! 🎉");
       };
       reader.onerror = () => {
         alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
@@ -216,7 +216,7 @@ export default function MerchantSettings() {
     }
   };
 
-  // حذف الغلاف
+  // حذف الغ��اف
   const handleRemoveBanner = () => {
     if (window.confirm("هل أنت متأكد من حذف غلاف المتجر؟")) {
       setStoreSettings({ ...storeSettings, banner: "/placeholder.svg" });
@@ -281,27 +281,38 @@ export default function MerchantSettings() {
         shippingSettings: shipping,
       };
 
-      // استدعاء API لحفظ بيانات المتجر
-      // await ApiService.updateStore(storeData);
-      
-      // محاكاة استدعاء API للتطوير
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // البحث عن متجر موجود للمستخدم أولاً
+      try {
+        const userStores = await ApiService.getStores();
+        const existingStore = userStores.find(store => store.merchantId === user?.id);
+
+        if (existingStore) {
+          // تحديث متجر موجود
+          await ApiService.updateStore(existingStore.id, storeData);
+        } else {
+          // إنشاء متجر جديد
+          await ApiService.createStore(storeData);
+        }
+      } catch (apiError: any) {
+        // إذا فشل API، نستخدم التخزين المحلي كنسخة احتياطية
+        console.warn("فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:", apiError);
+
+        // حفظ البيانات محلياً
+        localStorage.setItem(
+          "storeSettings",
+          JSON.stringify({ ...storeSettings, selectedCountry }),
+        );
+        localStorage.setItem(
+          "notificationSettings",
+          JSON.stringify(notifications),
+        );
+        localStorage.setItem("shippingSettings", JSON.stringify(shipping));
+      }
 
       // عرض رسالة نجاح
       alert(
-        "�� تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.",
+        "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.",
       );
-
-      // حفظ البيانات محلياً كنسخة احتياطية
-      localStorage.setItem(
-        "storeSettings",
-        JSON.stringify({ ...storeSettings, selectedCountry }),
-      );
-      localStorage.setItem(
-        "notificationSettings",
-        JSON.stringify(notifications),
-      );
-      localStorage.setItem("shippingSettings", JSON.stringify(shipping));
     } catch (error) {
       alert(
         "❌ حدث خطأ أثناء حفظ الإعدادات.\n\nيرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
@@ -319,7 +330,7 @@ export default function MerchantSettings() {
     { id: "account", label: "الحساب والأمان", icon: Shield },
   ];
 
-  // أنواع المتاجر المحددة مسبقاً (يمكن تعديلها من قبل الإ��ارة)
+  // أنواع المتاجر المحددة مسبقاً (يمكن تعديلها من قبل الإدارة)
   const predefinedCategories = [
     "مواد غذائية وأطعمة",
     "عطور ومستحضرات تجميل",
@@ -891,7 +902,7 @@ export default function MerchantSettings() {
                 <CardHeader>
                   <CardTitle className="arabic text-right flex items-center">
                     <Bell className="w-5 h-5 ml-2" />
-                    إعدادات ا��إشعارات
+                    إعدادات الإشعارات
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -1010,7 +1021,7 @@ export default function MerchantSettings() {
                         {
                           key: "smsNotifications",
                           label: "رسائل SMS",
-                          desc: "استقبال الإشعارات عب�� الرسائل النصية",
+                          desc: "استقبال الإشعارات عبر الرسائل النصية",
                         },
                         {
                           key: "emailNotifications",
@@ -1164,7 +1175,7 @@ export default function MerchantSettings() {
                     <Label className="arabic">مناطق التوصيل</Label>
                     <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
                       {[
-                        "الخر��وم",
+                        "الخرطوم",
                         "أمدرمان", 
                         "بحري",
                         "مدني",
@@ -1280,7 +1291,7 @@ export default function MerchantSettings() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="newPassword" className="arabic">
-                            كلمة المرور الج��يدة
+                            كلمة المرور الجديدة
                           </Label>
                           <Input
                             id="newPassword"
