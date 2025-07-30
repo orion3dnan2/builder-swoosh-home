@@ -137,7 +137,7 @@ export default function Marketplace() {
                 <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                   <div className="flex items-center gap-2">
                     <Eye className="w-4 h-4" />
-                    <span className="arabic">{store.analytics.totalViews.toLocaleString()} ��شاهدة</span>
+                    <span className="arabic">{store.analytics.totalViews.toLocaleString()} مشاهدة</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <ShoppingCart className="w-4 h-4" />
@@ -146,8 +146,8 @@ export default function Marketplace() {
                 </div>
 
                 <div className="flex gap-2">
-                  <Link to={`/store/${store.id}/visit`}>
-                    <Button className="flex-1 arabic" size="sm">
+                  <Link to={`/store/${store.id}/visit`} className="flex-1">
+                    <Button className="w-full arabic" size="sm">
                       زيارة المتجر
                     </Button>
                   </Link>
