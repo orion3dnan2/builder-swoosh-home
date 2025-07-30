@@ -79,7 +79,7 @@ export default function MerchantSettings() {
   const [isSaving, setIsSaving] = useState(false);
   const [isNewMerchant, setIsNewMerchant] = useState(true);
 
-  // تحديد إذا كان التاج�� جديد
+  // تحديد إذا كان التاجر جديد
   useEffect(() => {
     if (user?.createdAt) {
       const accountAge = Date.now() - new Date(user.createdAt).getTime();
@@ -145,7 +145,7 @@ export default function MerchantSettings() {
         return;
       }
 
-      // التحقق من حجم الملف (أقل من 5 ميجابايت)
+      // ��لتحقق من حجم الملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
         alert('حجم الصورة يجب أن يكون أقل من 5 ميجابايت');
         return;
@@ -177,7 +177,7 @@ export default function MerchantSettings() {
 
       // التحقق من حجم الملف (أقل من 10 ميجابايت)
       if (file.size > 10 * 1024 * 1024) {
-        alert('حجم الصورة يجب أن يكون أقل من 10 ميجابايت');
+        alert('حجم الصورة يجب أن ��كون أقل من 10 ميجابايت');
         return;
       }
 
@@ -204,7 +204,7 @@ export default function MerchantSettings() {
 
   // حذف الغلاف
   const handleRemoveBanner = () => {
-    if (window.confirm('هل أنت متأكد من ح��ف غلاف المتجر؟')) {
+    if (window.confirm('هل أنت متأكد من حذف غلاف المتجر؟')) {
       setStoreSettings({...storeSettings, banner: '/placeholder.svg'});
       alert('تم حذف الغلاف بنجاح');
     }
@@ -246,13 +246,13 @@ export default function MerchantSettings() {
       // عرض رسالة نجاح
       alert("🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.");
 
-      // حفظ البيانات محلياً كنسخة احتياطي��
+      // حفظ البيانات محلياً كنسخة احتياطية
       localStorage.setItem('storeSettings', JSON.stringify(storeSettings));
       localStorage.setItem('notificationSettings', JSON.stringify(notifications));
       localStorage.setItem('shippingSettings', JSON.stringify(shipping));
 
     } catch (error) {
-      alert("حدث خطأ أثناء حفظ الإعدادات. يرجى المحاولة مرة أخرى.");
+      alert("❌ حدث خطأ أثناء حفظ الإعدادات.\n\nيرجى التحقق من اتصال الإنترنت و��لمحاولة مرة أخرى.");
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
       setIsSaving(false);
@@ -280,7 +280,7 @@ export default function MerchantSettings() {
   const cities = [
     "الرياض، المملكة العربية السعودية",
     "جدة، المملكة العربية السع��دية", 
-    "الدمام، ا��مملكة العربية السعودية",
+    "الدمام، المملكة العربية السعودية",
     "مكة المكرمة، المملكة العربية السعودية",
     "المدينة المنورة، المملكة العربية السعودية",
     "الطا��ف، المملكة العربية السعودية",
@@ -309,7 +309,7 @@ export default function MerchantSettings() {
                 <Settings className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 arabic">إعدادات المتجر</h1>
+                <h1 className="text-2xl font-bold text-gray-900 arabic">إعدادات ال��تجر</h1>
                 <p className="text-gray-600 arabic">إدارة معلومات وإعدادات متجرك</p>
               </div>
             </div>
@@ -495,7 +495,7 @@ export default function MerchantSettings() {
                       value={storeSettings.description}
                       onChange={(e) => setStoreSettings({...storeSettings, description: e.target.value})}
                       className="mt-1 text-right arabic"
-                      placeholder="اكتب وصفاً مختصراً عن ��تجرك ومن��جاتك..."
+                      placeholder="اكتب وصفاً مختصراً عن متجرك ومن��جاتك..."
                     />
                   </div>
 
@@ -585,7 +585,7 @@ export default function MerchantSettings() {
                         />
                       </div>
                       <div>
-                        <Label className="arabic text-sm">أيام العمل</Label>
+                        <Label className="arabic text-sm">أيام العم��</Label>
                         <div className="mt-1 space-y-1">
                           {workingDays.map((day) => (
                             <label key={day} className={`flex items-center space-x-2 space-x-reverse ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
@@ -905,7 +905,7 @@ export default function MerchantSettings() {
                       </div>
                       <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                         <div className={isRTL ? 'text-right' : 'text-left'}>
-                          <div className="font-medium arabic">إشعارات تسجيل الدخول</div>
+                          <div className="font-medium arabic">إشع��رات تسجيل الدخول</div>
                           <div className="text-sm text-gray-600 arabic">تنبيه عند تسجيل دخول جديد</div>
                         </div>
                         <Switch
