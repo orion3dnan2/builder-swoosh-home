@@ -1,10 +1,8 @@
 import { Router } from "express";
 import { authenticateToken } from "./auth-dev";
+import { StoreDatabase } from "../../lib/database";
 
 const router = Router();
-
-// Mock stores data للتطوير
-const stores: any[] = [];
 
 // Get all stores (للمديرين وأصحاب المتاجر)
 router.get("/", authenticateToken, async (req: any, res) => {
@@ -177,7 +175,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
       shippingSettings
     } = req.body;
 
-    // تحديث بيانات المتجر
+    // تحد��ث بيانات المتجر
     const updatedStore = {
       ...store,
       name: name || store.name,
@@ -199,7 +197,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
     stores[storeIndex] = updatedStore;
 
     res.json({
-      message: "تم تحديث بيانات المتج�� بنجاح",
+      message: "تم تحديث بيانات المتجر بنجاح",
       store: updatedStore
     });
   } catch (error) {
@@ -274,7 +272,7 @@ router.get("/:id/analytics", authenticateToken, async (req: any, res) => {
 router.patch("/:id/status", authenticateToken, async (req: any, res) => {
   try {
     if (req.user.role !== "super_admin") {
-      return res.status(403).json({ error: "غير مصرح لك بالوصو��" });
+      return res.status(403).json({ error: "غير مصرح لك بالوصول" });
     }
 
     const storeId = req.params.id;
