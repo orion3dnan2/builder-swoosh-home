@@ -34,7 +34,7 @@ router.get("/:id", authenticateToken, async (req: any, res) => {
     const store = StoreDatabase.findStore((s) => s.id === storeId);
 
     if (!store) {
-      return res.status(404).json({ error: "المتجر غير موجود" });
+      return res.status(404).json({ error: "ال��تجر غير موجود" });
     }
 
     // التحقق من الصلاحيات
@@ -187,6 +187,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
       name: name || store.name,
       description: description !== undefined ? description : store.description,
       category: category || store.category,
+      storeType: storeType || store.storeType || "store",
       phone: phone || store.phone,
       email: email || store.email,
       address: address !== undefined ? address : store.address,
