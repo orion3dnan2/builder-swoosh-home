@@ -20,5 +20,42 @@
     ],
     "createdAt": "2025-07-30T08:45:22.015Z",
     "isActive": true
+  },
+  {
+    "id": "user-1753865301240-efsqj09s0",
+    "username": "orion",
+    "email": "oriontvinetwork@gmail.com",
+    "password": "$2b$12$SqQFJ49GZ5oMlxiyH0CdkOcEckJcQp2rY/fkEw9w.ccnq7rYLgL/6",
+    "role": "merchant",
+    "profile": {
+      "name": "Mohamed Adnan",
+      "phone": "+96551325559",
+      "country": "الكويت",
+      "city": "kuwait",
+      "language": "ar",
+      "avatar": "/placeholder.svg",
+      "businessName": "زول اقاشي",
+      "businessType": "food"
+    },
+    "permissions": [
+      {
+        "resource": "store",
+        "actions": [
+          "read",
+          "write",
+          "delete"
+        ]
+      },
+      {
+        "resource": "products",
+        "actions": [
+          "read",
+          "write",
+          "delete"
+        ]
+      }
+    ],
+    "createdAt": "2025-07-30T08:48:21.241Z",
+    "isActive": true
   }
 ]
