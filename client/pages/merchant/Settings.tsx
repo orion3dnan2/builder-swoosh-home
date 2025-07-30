@@ -202,6 +202,7 @@ export default function MerchantSettings() {
       ? ""
       : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
+    storeType: isNewMerchant ? "" : "restaurant",
     phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
     email: isNewMerchant ? user?.email || "" : "store@example.com",
     address: isNewMerchant ? "" : "شارع النيل، الخرطوم",
@@ -260,7 +261,7 @@ export default function MerchantSettings() {
 
       // التحقق من حجم الملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
-        alert("حجم الصورة يجب أن يكون أقل من 5 م��جابايت");
+        alert("حجم الصورة ��جب أن يكون أقل من 5 ميجابايت");
         return;
       }
 
@@ -336,7 +337,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.category) {
-      alert("يرجى اختيار نوع المتج��");
+      alert("ي��جى اختيار نوع المتجر");
       return;
     }
 
@@ -385,7 +386,7 @@ export default function MerchantSettings() {
         shippingSettings: shipping,
       };
 
-      // البحث عن متجر ��وجود للمستخدم أولاً
+      // البحث عن متجر موجود للمستخدم أولاً
       try {
         const userStores = await ApiService.getStores();
         const existingStore = userStores.find(
@@ -420,7 +421,7 @@ export default function MerchantSettings() {
 
       // عرض رسالة نجاح
       alert(
-        "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.",
+        "🎉 تم حفظ إعدادات المتجر بنج��ح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.",
       );
     } catch (error) {
       alert(
@@ -463,7 +464,7 @@ export default function MerchantSettings() {
     "الجمعة",
   ];
 
-  // قائمة الدول والمدن ��لتابعة لها
+  // قائمة الدول والمدن التابعة لها
   const countriesWithCities = {
     السودان: [
       "الخرطوم",
@@ -843,7 +844,7 @@ export default function MerchantSettings() {
                     </div>
                     <div>
                       <Label htmlFor="email" className="arabic">
-                        ��لبريد الإلكتروني
+                        البريد الإلكتروني
                       </Label>
                       <Input
                         id="email"
