@@ -29,7 +29,7 @@ router.get("/", authenticateToken, async (req: any, res) => {
 router.get("/:id", authenticateToken, async (req: any, res) => {
   try {
     const storeId = req.params.id;
-    const store = stores.find(s => s.id === storeId);
+    const store = StoreDatabase.findStore(s => s.id === storeId);
 
     if (!store) {
       return res.status(404).json({ error: "المتجر غير موجود" });
@@ -149,7 +149,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
     const storeIndex = stores.findIndex(s => s.id === storeId);
 
     if (storeIndex === -1) {
-      return res.status(404).json({ error: "المتج�� غير موجود" });
+      return res.status(404).json({ error: "المتجر غير موجود" });
     }
 
     const store = stores[storeIndex];
