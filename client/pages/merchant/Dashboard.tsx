@@ -327,41 +327,59 @@ export default function MerchantDashboard() {
                 </Link>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {recentOrders.map((order) => (
-                    <div
-                      key={order.id}
-                      className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
-                    >
-                      <div className="flex items-center space-x-3 space-x-reverse">
-                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
-                          <ShoppingCart className="w-5 h-5 text-gray-600" />
+                {recentOrders.length === 0 ? (
+                  <div className="text-center py-12">
+                    <ShoppingCart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                    <h3 className="text-lg font-medium text-gray-900 mb-2 arabic">
+                      لا توجد طلبات بعد
+                    </h3>
+                    <p className="text-gray-600 mb-4 arabic">
+                      عندما يبدأ العملاء في الطلب من متجرك، ستظهر الطلبات هنا
+                    </p>
+                    <Link to="/merchant/products/new">
+                      <Button className="arabic">
+                        <Plus className="w-4 h-4 ml-2" />
+                        ابدأ بإضافة منتجات
+                      </Button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {recentOrders.map((order) => (
+                      <div
+                        key={order.id}
+                        className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                      >
+                        <div className="flex items-center space-x-3 space-x-reverse">
+                          <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                            <ShoppingCart className="w-5 h-5 text-gray-600" />
+                          </div>
+                          <div>
+                            <p className="font-medium text-gray-900 arabic">
+                              {order.customer}
+                            </p>
+                            <p className="text-sm text-gray-600 arabic">
+                              {order.id} • {order.items} منتجات
+                            </p>
+                            <p className="text-xs text-gray-500 arabic">
+                              {order.time}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-medium text-gray-900 arabic">
-                            {order.customer}
+                        <div className="text-left">
+                          <p className="font-bold text-gray-900">
+                            ${order.total}
                           </p>
-                          <p className="text-sm text-gray-600 arabic">
-                            {order.id} • {order.items} منتجات
-                          </p>
-                          <p className="text-xs text-gray-500 arabic">
-                            {order.time}
-                          </p>
+                          <span
+                            className={`inline-block px-2 py-1 rounded-full text-xs arabic ${getStatusColor(order.status)}`}
+                          >
+                            {getStatusText(order.status)}
+                          </span>
                         </div>
                       </div>
-                      <div className="text-left">
-                        <p className="font-bold text-gray-900">
-                          ${order.total}
-                        </p>
-                        <span
-                          className={`inline-block px-2 py-1 rounded-full text-xs arabic ${getStatusColor(order.status)}`}
-                        >
-                          {getStatusText(order.status)}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
