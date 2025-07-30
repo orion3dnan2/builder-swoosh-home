@@ -52,7 +52,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
   try {
     // التأكد أن المستخدم تاجر
     if (req.user.role !== "merchant") {
-      return res.status(403).json({ error: "يجب أن تكون تاجراً لإنشاء متجر" });
+      return res.status(403).json({ error: "يجب أن تكون تاجراً لإنشا�� متجر" });
     }
 
     const {
@@ -77,7 +77,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
     }
 
     // التحقق من عدم وجود متجر بنفس الاسم للتاجر
-    const existingStore = stores.find(s => 
+    const existingStore = StoreDatabase.findStore(s =>
       s.merchantId === req.user.id && s.name.toLowerCase() === name.toLowerCase()
     );
 
@@ -86,7 +86,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
     }
 
     const newStore = {
-      id: `store-${Date.now()}`,
+      id: `store-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       merchantId: req.user.id,
       name,
       description: description || "",
@@ -130,11 +130,13 @@ router.post("/", authenticateToken, async (req: any, res) => {
       updatedAt: new Date().toISOString(),
     };
 
-    stores.push(newStore);
+    const savedStore = StoreDatabase.addStore(newStore);
+
+    console.log(`✅ تم إنشاء متجر جديد: ${name} للتاجر ${req.user.username}`);
 
     res.status(201).json({
-      message: "تم إنشاء المتجر بنجاح",
-      store: newStore
+      message: "تم إنشاء المتجر بنجاح وحفظه في قاعدة البيانات",
+      store: savedStore
     });
   } catch (error) {
     console.error("Create store error:", error);
