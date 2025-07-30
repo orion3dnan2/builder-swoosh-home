@@ -395,33 +395,49 @@ export default function MerchantDashboard() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm arabic">المنتجات النشطة</span>
-                  <span className="font-bold text-green-600">
-                    {storeStats.activeProducts}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm arabic">طلبات معلقة</span>
-                  <span className="font-bold text-yellow-600">
-                    {storeStats.pendingOrders}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm arabic">متوسط التقييم</span>
-                  <div className="flex items-center">
-                    <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                    <span className="font-bold text-gray-900 mr-1">
-                      {storeStats.averageRating}
-                    </span>
+                {isNewMerchant ? (
+                  <div className="text-center py-8">
+                    <BarChart3 className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                    <p className="text-gray-600 text-sm arabic mb-4">
+                      بيانات الأداء ستظهر هنا بعد بدء النشاط
+                    </p>
+                    <Link to="/merchant/products/new">
+                      <Button size="sm" className="arabic">
+                        ابدأ الآن
+                      </Button>
+                    </Link>
                   </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm arabic">إجمالي المراجعات</span>
-                  <span className="font-bold text-blue-600">
-                    {storeStats.totalReviews}
-                  </span>
-                </div>
+                ) : (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm arabic">المنتجات النشطة</span>
+                      <span className="font-bold text-green-600">
+                        {storeStats.activeProducts}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm arabic">طلبات معلقة</span>
+                      <span className="font-bold text-yellow-600">
+                        {storeStats.pendingOrders}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm arabic">متوسط التقييم</span>
+                      <div className="flex items-center">
+                        <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                        <span className="font-bold text-gray-900 mr-1">
+                          {storeStats.averageRating}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm arabic">إجمالي المراجعات</span>
+                      <span className="font-bold text-blue-600">
+                        {storeStats.totalReviews}
+                      </span>
+                    </div>
+                  </>
+                )}
               </CardContent>
             </Card>
 
