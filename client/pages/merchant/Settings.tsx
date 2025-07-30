@@ -89,6 +89,103 @@ export default function MerchantSettings() {
     }
   }, [user]);
 
+  // تحميل بيانات المتجر عند تحميل الصفحة
+  useEffect(() => {
+    const loadStoreData = async () => {
+      if (!user?.id) return;
+
+      try {
+        // محاولة تحميل بيانات المتجر من الخادم
+        const userStores = await ApiService.getStores();
+        const existingStore = userStores.find(store => store.merchantId === user.id);
+
+        if (existingStore) {
+          // تحديث البيانات بناءً على المتجر الموجود
+          setStoreSettings({
+            storeName: existingStore.name || "",
+            description: existingStore.description || "",
+            category: existingStore.category || "",
+            phone: existingStore.phone || "",
+            email: existingStore.email || "",
+            address: existingStore.address || "",
+            city: existingStore.city || "",
+            workingHours: existingStore.workingHours || {
+              start: "09:00",
+              end: "17:00",
+              days: []
+            },
+            logo: existingStore.logo || "/placeholder.svg",
+            banner: existingStore.banner || "/placeholder.svg",
+          });
+
+          if (existingStore.country) {
+            setSelectedCountry(existingStore.country);
+          }
+
+          if (existingStore.notificationSettings) {
+            setNotifications(existingStore.notificationSettings);
+          }
+
+          if (existingStore.shippingSettings) {
+            setShipping(existingStore.shippingSettings);
+          }
+
+          setIsNewMerchant(false); // له متجر موجود
+        } else {
+          // محاولة تحميل البيانات المحفوظة محلياً
+          const savedStoreSettings = localStorage.getItem("storeSettings");
+          const savedNotifications = localStorage.getItem("notificationSettings");
+          const savedShipping = localStorage.getItem("shippingSettings");
+
+          if (savedStoreSettings) {
+            const parsed = JSON.parse(savedStoreSettings);
+            setStoreSettings(parsed);
+            if (parsed.selectedCountry) {
+              setSelectedCountry(parsed.selectedCountry);
+            }
+          }
+
+          if (savedNotifications) {
+            setNotifications(JSON.parse(savedNotifications));
+          }
+
+          if (savedShipping) {
+            setShipping(JSON.parse(savedShipping));
+          }
+        }
+      } catch (error) {
+        console.error("خطأ في تحميل بيانات المتجر:", error);
+
+        // الرجوع للبيانات المحفوظة محلياً في حالة الخطأ
+        try {
+          const savedStoreSettings = localStorage.getItem("storeSettings");
+          const savedNotifications = localStorage.getItem("notificationSettings");
+          const savedShipping = localStorage.getItem("shippingSettings");
+
+          if (savedStoreSettings) {
+            const parsed = JSON.parse(savedStoreSettings);
+            setStoreSettings(parsed);
+            if (parsed.selectedCountry) {
+              setSelectedCountry(parsed.selectedCountry);
+            }
+          }
+
+          if (savedNotifications) {
+            setNotifications(JSON.parse(savedNotifications));
+          }
+
+          if (savedShipping) {
+            setShipping(JSON.parse(savedShipping));
+          }
+        } catch (localError) {
+          console.error("خطأ في تحميل البيانات المحلية:", localError);
+        }
+      }
+    };
+
+    loadStoreData();
+  }, [user?.id]);
+
   // Store Settings State - فارغة للتجار الجدد
   const [storeSettings, setStoreSettings] = useState<StoreSettings>({
     storeName: isNewMerchant
@@ -202,7 +299,7 @@ export default function MerchantSettings() {
         alert("تم تحديث غلاف المتجر بنجاح! 🎨");
       };
       reader.onerror = () => {
-        alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
+        alert("فشل في قراءة الصورة. يرجى ��لمحاولة مرة أخرى.");
       };
       reader.readAsDataURL(file);
     }
@@ -210,13 +307,13 @@ export default function MerchantSettings() {
 
   // حذف الشعار
   const handleRemoveLogo = () => {
-    if (window.confirm("هل أنت متأكد من حذف شعار المتجر؟")) {
+    if (window.confirm("هل أنت متأكد ��ن حذف شعار المتجر؟")) {
       setStoreSettings({ ...storeSettings, logo: "/placeholder.svg" });
       alert("تم حذف الشعار بنجاح");
     }
   };
 
-  // حذف الغ��اف
+  // حذف الغلاف
   const handleRemoveBanner = () => {
     if (window.confirm("هل أنت متأكد من حذف غلاف المتجر؟")) {
       setStoreSettings({ ...storeSettings, banner: "/placeholder.svg" });
@@ -294,7 +391,7 @@ export default function MerchantSettings() {
           await ApiService.createStore(storeData);
         }
       } catch (apiError: any) {
-        // إذا فشل API، نستخدم التخزين المحلي كنسخة احتياطية
+        // إذا فشل API، نست��دم التخزين المحلي كنسخة احتياطية
         console.warn("فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:", apiError);
 
         // حفظ البيانات محلياً
@@ -407,7 +504,7 @@ export default function MerchantSettings() {
     "جمهورية مصر العربية": [
       "القاهرة",
       "الإسكندرية",
-      "الجيزة",
+      "ال��يزة",
       "الأقصر",
       "أسوان",
       "بورسعيد",
@@ -476,7 +573,7 @@ export default function MerchantSettings() {
                   إعدادات المتجر
                 </h1>
                 <p className="text-gray-600 arabic">
-                  إدارة معلومات وإعدادات متجرك
+                  إدارة معلومات وإعدادات متج��ك
                 </p>
               </div>
             </div>
@@ -921,7 +1018,7 @@ export default function MerchantSettings() {
                         {
                           key: "orderUpdates",
                           label: "تحديثات الطلبات",
-                          desc: "إشعارات عند تغيير حالة الطلبات",
+                          desc: "إشع��رات عند تغيير حالة الطلبات",
                         },
                         {
                           key: "paymentReceived",
@@ -1340,7 +1437,7 @@ export default function MerchantSettings() {
                       >
                         <div className={isRTL ? "text-right" : "text-left"}>
                           <div className="font-medium arabic">
-                            المصادقة الثنائية
+                            المصادقة الثن��ئية
                           </div>
                           <div className="text-sm text-gray-600 arabic">
                             حماية إضافية لحسابك
