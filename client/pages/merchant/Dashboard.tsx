@@ -50,6 +50,7 @@ export default function MerchantDashboard() {
 
   const [userStore, setUserStore] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [recentOrders, setRecentOrders] = useState([]);
 
   // جلب بيانات المتجر من API
   useEffect(() => {
@@ -547,7 +548,7 @@ export default function MerchantDashboard() {
                         >
                           {product.stock === 0
                             ? "نفد المخزون"
-                            : `${product.stock} متبقي`}
+                            : `${product.stock} متب��ي`}
                         </Badge>
                       </div>
                     ))}
