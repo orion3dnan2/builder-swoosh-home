@@ -41,77 +41,117 @@ export default function MerchantAnalytics() {
   }, [user]);
 
   // بيانات تحليلية فارغة للتجار الجدد
-  const analytics = isNewMerchant ? {
-    overview: {
-      totalViews: 0,
-      totalOrders: 0,
-      totalRevenue: 0,
-      conversionRate: 0,
-      averageOrderValue: 0,
-      returningCustomers: 0
-    },
-    monthly: [],
-    customerMetrics: {
-      totalCustomers: 0,
-      customerRetentionRate: 0
-    },
-    topProducts: [],
-    salesByCategory: [],
-    recentActivity: []
-  } : {
-    overview: {
-      totalViews: 2340,
-      totalOrders: 128,
-      totalRevenue: 15420,
-      conversionRate: 5.47,
-      averageOrderValue: 120.47,
-      returningCustomers: 45
-    },
-    monthly: [
-      { month: "2024-01", views: 1200, orders: 65, revenue: 7800 },
-      { month: "2024-02", views: 1500, orders: 85, revenue: 10200 },
-      { month: "2024-03", views: 2340, orders: 128, revenue: 15420 }
-    ],
-    customerMetrics: {
-      totalCustomers: 89,
-      customerRetentionRate: 67.8
-    },
-    topProducts: [
-      { id: "1", name: "عطر الورد السوداني", views: 450, orders: 25, revenue: 11250 },
-      { id: "2", name: "عسل السدر الطبيعي", views: 380, orders: 18, revenue: 7200 },
-      { id: "3", name: "تمر السكري", views: 320, orders: 15, revenue: 4500 }
-    ],
-    salesByCategory: [
-      { category: "عطور", orders: 45, revenue: 13500, percentage: 87.6 },
-      { category: "أغذية", orders: 25, revenue: 7500, percentage: 48.7 },
-      { category: "حرف يدوية", orders: 15, revenue: 4500, percentage: 29.2 }
-    ],
-    recentActivity: [
-      { type: "order", description: "طلب جديد من أحمد محمد", timestamp: new Date().toISOString(), value: 450 },
-      { type: "view", description: "زيارة جديدة للمتجر", timestamp: new Date().toISOString() },
-      { type: "review", description: "تقييم جديد للمنتج", timestamp: new Date().toISOString() }
-    ]
-  };
+  const analytics = isNewMerchant
+    ? {
+        overview: {
+          totalViews: 0,
+          totalOrders: 0,
+          totalRevenue: 0,
+          conversionRate: 0,
+          averageOrderValue: 0,
+          returningCustomers: 0,
+        },
+        monthly: [],
+        customerMetrics: {
+          totalCustomers: 0,
+          customerRetentionRate: 0,
+        },
+        topProducts: [],
+        salesByCategory: [],
+        recentActivity: [],
+      }
+    : {
+        overview: {
+          totalViews: 2340,
+          totalOrders: 128,
+          totalRevenue: 15420,
+          conversionRate: 5.47,
+          averageOrderValue: 120.47,
+          returningCustomers: 45,
+        },
+        monthly: [
+          { month: "2024-01", views: 1200, orders: 65, revenue: 7800 },
+          { month: "2024-02", views: 1500, orders: 85, revenue: 10200 },
+          { month: "2024-03", views: 2340, orders: 128, revenue: 15420 },
+        ],
+        customerMetrics: {
+          totalCustomers: 89,
+          customerRetentionRate: 67.8,
+        },
+        topProducts: [
+          {
+            id: "1",
+            name: "عطر الورد السوداني",
+            views: 450,
+            orders: 25,
+            revenue: 11250,
+          },
+          {
+            id: "2",
+            name: "عسل السدر الطبيعي",
+            views: 380,
+            orders: 18,
+            revenue: 7200,
+          },
+          {
+            id: "3",
+            name: "تمر السكري",
+            views: 320,
+            orders: 15,
+            revenue: 4500,
+          },
+        ],
+        salesByCategory: [
+          { category: "عطور", orders: 45, revenue: 13500, percentage: 87.6 },
+          { category: "أغذية", orders: 25, revenue: 7500, percentage: 48.7 },
+          {
+            category: "حرف يدوية",
+            orders: 15,
+            revenue: 4500,
+            percentage: 29.2,
+          },
+        ],
+        recentActivity: [
+          {
+            type: "order",
+            description: "طلب جديد من أحمد محمد",
+            timestamp: new Date().toISOString(),
+            value: 450,
+          },
+          {
+            type: "view",
+            description: "زيارة جديدة للمتجر",
+            timestamp: new Date().toISOString(),
+          },
+          {
+            type: "review",
+            description: "تقييم جديد للمنتج",
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      };
 
   const formatCurrency = (amount: number) => `${amount.toLocaleString()} ر.س`;
   const getMonthName = (month: string) => {
     const months: Record<string, string> = {
       "2024-01": "يناير 2024",
       "2024-02": "فبراير 2024",
-      "2024-03": "مارس 2024"
+      "2024-03": "مارس 2024",
     };
     return months[month] || month;
   };
 
-  const insights = isNewMerchant ? [
-    "ابدأ بإضافة منتجاتك الأولى لجذب العملاء",
-    "قم بتحسين وصف متجرك وإضافة صور جذابة",
-    "شارك رابط متجرك مع الأصدقاء والعائلة"
-  ] : [
-    "أداء ممتاز هذا الشهر مع نمو في المبيعات",
-    "معدل التحويل جيد، استمر في تحسين المنتجات",
-    "العملاء المتكررون يشكلون نسبة جيدة من المبيعات"
-  ];
+  const insights = isNewMerchant
+    ? [
+        "ابدأ بإضافة منتجاتك الأولى لجذب العملاء",
+        "قم بتحسين وصف متجرك وإضافة صور جذابة",
+        "شارك رابط متجرك مع الأصدقاء والعائلة",
+      ]
+    : [
+        "أداء ممتاز هذا الشهر مع نمو في المبيعات",
+        "معدل التحويل جيد، استمر في تحسين المنتجات",
+        "العملاء المتكررون يشكلون نسبة جيدة من المبيعات",
+      ];
 
   const getGrowthIcon = (growth: number) => {
     if (growth > 0) return <TrendingUp className="w-4 h-4 text-green-500" />;

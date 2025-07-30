@@ -87,7 +87,7 @@ export class ProductService {
       name: "بخور لبان ذكر أصلي",
       description:
         "بخور لبان ذكر من أجود الأنواع السودانية. رائحة عطرة تملأ المكان بالعبق الأصيل.",
-      price: 32.50,
+      price: 32.5,
       salePrice: 27.99,
       images: ["/placeholder.svg"],
       category: "عطور ومستحضرات",
@@ -113,7 +113,7 @@ export class ProductService {
       name: "عطر زهر الياسمين",
       description:
         "عطر طبيعي من زهر الياسمين السوداني. رائحة ناعمة ومنعشة تدوم لساعات طويلة.",
-      price: 52.00,
+      price: 52.0,
       images: ["/placeholder.svg"],
       category: "عطور ومستحضرات",
       tags: ["عطر", "ياسمين", "طبيعي", "نسائي"],
@@ -163,7 +163,7 @@ export class ProductService {
       name: "توابل دقة سودانية",
       description:
         "خلطة توابل الدقة السودانية الأصيلة. تضفي نكهة مميزة على الأطباق التقليدية.",
-      price: 8.50,
+      price: 8.5,
       images: ["/placeholder.svg"],
       category: "أطعمة ومشروبات",
       tags: ["توابل", "دقة", "سودانية", "خلطة"],
@@ -188,7 +188,7 @@ export class ProductService {
       name: "فستان سوداني تقليدي",
       description:
         "فستان نسائي بالطراز السوداني التقليدي. قماش عالي الجودة وتطريز يدوي أنيق.",
-      price: 125.00,
+      price: 125.0,
       salePrice: 99.99,
       images: ["/placeholder.svg"],
       category: "أزياء وملابس",
@@ -214,7 +214,7 @@ export class ProductService {
       name: "شماغ سوداني أصلي",
       description:
         "شماغ سوداني تقليدي بنقوش أصيلة. قماش ناعم ومريح مناسب لجميع المناسبات.",
-      price: 35.00,
+      price: 35.0,
       images: ["/placeholder.svg"],
       category: "أزياء وملابس",
       tags: ["شماغ", "سوداني", "تقليدي", "رجالي"],
@@ -264,7 +264,7 @@ export class ProductService {
       name: "فول سوداني محمص",
       description:
         "فول سوداني محمص بطريقة تقليدية. وجبة خفيفة صحية ولذيذة من المكسرات السودانية.",
-      price: 4.50,
+      price: 4.5,
       images: ["/placeholder.svg"],
       category: "أطعمة ومشروبات",
       tags: ["فول سوداني", "محمص", "مكسرات", "وجبة خفيفة"],
@@ -289,7 +289,7 @@ export class ProductService {
       name: "خدمة تصميم موقع إلكتروني",
       description:
         "خدمة تصميم وتطوير موقع إلكتروني احترافي بأحدث التقنيات والمعايير العالمية.",
-      price: 850.00,
+      price: 850.0,
       salePrice: 699.99,
       images: ["/placeholder.svg"],
       category: "خدمات تقنية",
@@ -308,7 +308,7 @@ export class ProductService {
       status: "active",
       createdAt: "2024-02-25T10:00:00Z",
       updatedAt: "2024-03-05T12:30:00Z",
-    }
+    },
   ];
 
   static getProducts(storeId?: string): Product[] {
@@ -466,7 +466,9 @@ export class ProductService {
   }
 
   // Get products with store information
-  static getProductsWithStore(): Array<Product & { storeName?: string; storeCategory?: string }> {
+  static getProductsWithStore(): Array<
+    Product & { storeName?: string; storeCategory?: string }
+  > {
     const products = this.getProducts();
 
     // Store information mapping
@@ -476,13 +478,13 @@ export class ProductService {
       "store-003": { name: "مطعم أم درمان", category: "food" },
       "store-004": { name: "خدمات التقنية السودانية", category: "services" },
       "store-005": { name: "أزياء النيل", category: "fashion" },
-      "store-006": { name: "سوبر ماركت الخرطوم", category: "grocery" }
+      "store-006": { name: "سوبر ماركت الخرطوم", category: "grocery" },
     };
 
-    return products.map(product => ({
+    return products.map((product) => ({
       ...product,
       storeName: storeInfo[product.storeId]?.name || "متجر غير معروف",
-      storeCategory: storeInfo[product.storeId]?.category || "other"
+      storeCategory: storeInfo[product.storeId]?.category || "other",
     }));
   }
 
@@ -493,7 +495,7 @@ export class ProductService {
       "store-003": "مطعم أم درمان",
       "store-004": "خدمات التقنية السودانية",
       "store-005": "أزياء النيل",
-      "store-006": "سوبر ماركت الخرطوم"
+      "store-006": "سوبر ماركت الخرطوم",
     };
     return storeNames[storeId] || "متجر غير معروف";
   }
@@ -502,27 +504,27 @@ export class ProductService {
     const icons: Record<string, string> = {
       "عطور ومستحضرات": "🌹",
       "أطعمة ومشروبات": "🍯",
-      "إكسسوارات": "👜",
+      إكسسوارات: "👜",
       "أزياء وملابس": "👗",
-      "خدمات تقنية": "💻"
+      "خدمات تقنية": "💻",
     };
     return icons[category] || "📦";
   }
 
   static getStatusBadgeColor(status: Product["status"]): string {
     const colors: Record<string, string> = {
-      "active": "bg-green-500",
-      "inactive": "bg-gray-500",
-      "out_of_stock": "bg-red-500"
+      active: "bg-green-500",
+      inactive: "bg-gray-500",
+      out_of_stock: "bg-red-500",
     };
     return colors[status] || "bg-gray-500";
   }
 
   static getStatusText(status: Product["status"]): string {
     const texts: Record<string, string> = {
-      "active": "متوفر",
-      "inactive": "غير نشط",
-      "out_of_stock": "نفد ا��مخزون"
+      active: "متوفر",
+      inactive: "غير نشط",
+      out_of_stock: "نفد ا��مخزون",
     };
     return texts[status] || status;
   }

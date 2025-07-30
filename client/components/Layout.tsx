@@ -67,8 +67,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
               </span>
               <LanguageAndThemeControls />
               {isAuthenticated ? (
-                <div className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : "flex-row"}`}>
-                  <span className="text-sm text-gray-600 arabic">أهلاً {user?.profile.name}</span>
+                <div
+                  className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                >
+                  <span className="text-sm text-gray-600 arabic">
+                    أهلاً {user?.profile.name}
+                  </span>
                   <Button
                     variant="outline"
                     size="sm"
@@ -123,8 +127,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
             >
               <LanguageAndThemeControls />
               {isAuthenticated ? (
-                <div className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}>
-                  <span className="text-xs text-gray-600 arabic">أهلاً {user?.profile.name}</span>
+                <div
+                  className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                >
+                  <span className="text-xs text-gray-600 arabic">
+                    أهلاً {user?.profile.name}
+                  </span>
                   <Button
                     variant="outline"
                     size="sm"
@@ -226,9 +234,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <Menu className="w-5 h-5" />
               </Button>
               {isAuthenticated ? (
-                <div className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}>
+                <div
+                  className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                >
                   <div className="hidden md:flex items-center gap-2">
-                    <span className="text-sm text-gray-600 arabic">أهلاً {user?.profile.name}</span>
+                    <span className="text-sm text-gray-600 arabic">
+                      أهلاً {user?.profile.name}
+                    </span>
                   </div>
                   <Button
                     variant="ghost"

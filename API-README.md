@@ -17,7 +17,7 @@ API شامل يخدم منصة البيت السوداني للويب والتط
 
 ### المتطلبات الأساسية
 
-- Node.js 18+ 
+- Node.js 18+
 - npm أو yarn
 - قاعدة بيانات (MongoDB أو PostgreSQL) - اختياري للمرحلة الحالية
 
@@ -150,6 +150,7 @@ X-Platform: web # أو mobile
 ```
 
 **الاستجابة:**
+
 ```json
 {
   "user": {
@@ -196,70 +197,70 @@ Content-Type: application/json
 
 ### المصادقة (`/api/auth`)
 
-| الطريقة | المسار | الوصف |
-|---------|-------|--------|
-| `POST` | `/login` | تسجيل الدخول |
-| `POST` | `/register` | تسجيل مستخدم جديد |
-| `GET` | `/me` | بيانات المستخدم الحالي |
-| `POST` | `/refresh` | تحديث الرمز المميز |
-| `POST` | `/logout` | تسجيل الخروج |
+| الطريقة | المسار      | الوصف                  |
+| ------- | ----------- | ---------------------- |
+| `POST`  | `/login`    | تسجيل الدخول           |
+| `POST`  | `/register` | تسجيل مستخدم جديد      |
+| `GET`   | `/me`       | بيانات المستخدم الحالي |
+| `POST`  | `/refresh`  | تحديث الرمز المميز     |
+| `POST`  | `/logout`   | تسجيل الخروج           |
 
 ### الشركات (`/api/companies`)
 
-| الطريقة | المسار | الوصف |
-|---------|-------|--------|
-| `GET` | `/` | قائمة الشركات |
-| `GET` | `/:id` | تفاصيل شركة |
-| `POST` | `/` | إضافة شركة جديدة* |
-| `PUT` | `/:id` | تحديث شركة* |
-| `DELETE` | `/:id` | حذف شركة* |
+| الطريقة  | المسار | الوصف              |
+| -------- | ------ | ------------------ |
+| `GET`    | `/`    | قائمة الشركات      |
+| `GET`    | `/:id` | تفاصيل شركة        |
+| `POST`   | `/`    | إضافة شركة جديدة\* |
+| `PUT`    | `/:id` | تحديث شركة\*       |
+| `DELETE` | `/:id` | حذف شركة\*         |
 
 ### المنتجات (`/api/products`)
 
-| الطريقة | المسار | الوصف |
-|---------|-------|--------|
-| `GET` | `/` | قائمة المنتجات |
-| `GET` | `/:id` | تفاصيل منتج |
-| `POST` | `/` | إضافة منتج جديد* |
-| `PUT` | `/:id` | تحديث منتج* |
-| `DELETE` | `/:id` | حذف منتج* |
+| الطريقة  | المسار | الوصف             |
+| -------- | ------ | ----------------- |
+| `GET`    | `/`    | قائمة المنتجات    |
+| `GET`    | `/:id` | تفاصيل منتج       |
+| `POST`   | `/`    | إضافة منتج جديد\* |
+| `PUT`    | `/:id` | تحديث منتج\*      |
+| `DELETE` | `/:id` | حذف منتج\*        |
 
 ### الوظائف (`/api/jobs`)
 
-| الطريقة | المسار | الوصف |
-|---------|-------|--------|
-| `GET` | `/` | قائمة الوظائف |
-| `GET` | `/:id` | تفاصيل وظيفة |
-| `POST` | `/` | إضافة وظيفة جديدة* |
-| `PUT` | `/:id` | تحديث وظيفة* |
-| `DELETE` | `/:id` | حذف وظيفة* |
+| الطريقة  | المسار | الوصف               |
+| -------- | ------ | ------------------- |
+| `GET`    | `/`    | قائمة الوظائف       |
+| `GET`    | `/:id` | تفاصيل وظيفة        |
+| `POST`   | `/`    | إضافة وظيفة جديدة\* |
+| `PUT`    | `/:id` | تحديث وظيفة\*       |
+| `DELETE` | `/:id` | حذف وظيفة\*         |
 
 ### المتاجر (`/api/stores`)
 
-| الطريقة | المسار | الوصف |
-|---------|-------|--------|
-| `GET` | `/` | قائمة المتاجر |
-| `GET` | `/:id` | تفاصيل متجر |
-| `POST` | `/` | إضافة متجر جديد* |
-| `PUT` | `/:id` | تحديث متجر* |
+| الطريقة | المسار | الوصف             |
+| ------- | ------ | ----------------- |
+| `GET`   | `/`    | قائمة المتاجر     |
+| `GET`   | `/:id` | تفاصيل متجر       |
+| `POST`  | `/`    | إضافة متجر جديد\* |
+| `PUT`   | `/:id` | تحديث متجر\*      |
 
 ### الخدمات (`/api/services`)
 
-| الطريقة | المسار | الوصف |
-|---------|-------|--------|
-| `GET` | `/` | قائمة الخدمات |
-| `GET` | `/:id` | تفاصيل خدمة |
-| `POST` | `/` | إضافة خدمة جديدة* |
+| الطريقة | المسار | الوصف              |
+| ------- | ------ | ------------------ |
+| `GET`   | `/`    | قائمة الخدمات      |
+| `GET`   | `/:id` | تفاصيل خدمة        |
+| `POST`  | `/`    | إضافة خدمة جديدة\* |
 
 ### خدمات الجوال (`/api/mobile`)
 
-| الطريقة | المسار | الوصف |
-|---------|-------|--------|
-| `GET` | `/config` | إعدادات التطبيق |
-| `POST` | `/sync` | مزامنة البيانات |
-| `POST` | `/register-token` | تسجيل رمز FCM |
+| الطريقة | المسار            | الوصف           |
+| ------- | ----------------- | --------------- |
+| `GET`   | `/config`         | إعدادات التطبيق |
+| `POST`  | `/sync`           | مزامنة البيانات |
+| `POST`  | `/register-token` | تسجيل رمز FCM   |
 
-**ملاحظة:** * تتطلب مصادقة وصلاحيات
+**ملاحظة:** \* تتطلب مصادقة وصلاحيات
 
 ## 📚 أمثلة الاستخدام
 
@@ -268,7 +269,7 @@ Content-Type: application/json
 ```typescript
 // إعداد خدمة API
 class BaytSudaniAPI {
-  private baseURL = 'http://localhost:3001/api';
+  private baseURL = "http://localhost:3001/api";
   private token: string | null = null;
 
   // تعيين الرمز المميز
@@ -280,13 +281,13 @@ class BaytSudaniAPI {
   private async request(endpoint: string, options: RequestInit = {}) {
     const url = `${this.baseURL}${endpoint}`;
     const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-      'X-Platform': 'web',
+      "Content-Type": "application/json",
+      "X-Platform": "web",
       ...options.headers,
     };
 
     if (this.token) {
-      headers['Authorization'] = `Bearer ${this.token}`;
+      headers["Authorization"] = `Bearer ${this.token}`;
     }
 
     const response = await fetch(url, {
@@ -303,11 +304,11 @@ class BaytSudaniAPI {
 
   // تسجيل الدخول
   async login(username: string, password: string) {
-    const response = await this.request('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ username, password, platform: 'web' }),
+    const response = await this.request("/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ username, password, platform: "web" }),
     });
-    
+
     this.setToken(response.token);
     return response;
   }
@@ -326,8 +327,8 @@ class BaytSudaniAPI {
 
   // إضافة منتج جديد
   async createProduct(productData: any) {
-    return this.request('/products', {
-      method: 'POST',
+    return this.request("/products", {
+      method: "POST",
       body: JSON.stringify(productData),
     });
   }
@@ -337,15 +338,15 @@ class BaytSudaniAPI {
 const api = new BaytSudaniAPI();
 
 // تسجيل الدخول
-await api.login('admin', 'admin');
+await api.login("admin", "admin");
 
 // الحصول على الشركات
 const companies = await api.getCompanies({
-  industry: 'تقنية المعلومات',
-  country: 'السعودية'
+  industry: "تقنية المعلومات",
+  country: "السعودية",
 });
 
-console.log('الشركات:', companies);
+console.log("الشركات:", companies);
 ```
 
 ### مثال React Hook
@@ -382,7 +383,7 @@ export const CompaniesPage = () => {
 
   useEffect(() => {
     const loadCompanies = async () => {
-      const result = await callAPI(() => 
+      const result = await callAPI(() =>
         fetch('/api/companies').then(res => res.json())
       );
       if (result) {
@@ -444,31 +445,31 @@ curl -X POST http://localhost:3001/api/products \
 
 ```typescript
 // services/ApiService.ts
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export class MobileApiService {
-  private static baseURL = 'http://your-api-domain.com/api';
-  
+  private static baseURL = "http://your-api-domain.com/api";
+
   // حفظ الرمز محلياً
   static async setToken(token: string) {
-    await AsyncStorage.setItem('auth_token', token);
+    await AsyncStorage.setItem("auth_token", token);
   }
 
   // استرجاع الرمز
   static async getToken(): Promise<string | null> {
-    return await AsyncStorage.getItem('auth_token');
+    return await AsyncStorage.getItem("auth_token");
   }
 
   // طلب مع المصادقة
   static async authenticatedRequest(endpoint: string, options: any = {}) {
     const token = await this.getToken();
-    
+
     return fetch(`${this.baseURL}${endpoint}`, {
       ...options,
       headers: {
-        'Content-Type': 'application/json',
-        'X-Platform': 'mobile',
-        'Authorization': token ? `Bearer ${token}` : '',
+        "Content-Type": "application/json",
+        "X-Platform": "mobile",
+        Authorization: token ? `Bearer ${token}` : "",
         ...options.headers,
       },
     });
@@ -477,19 +478,19 @@ export class MobileApiService {
   // تسجيل الدخول للجوال
   static async login(credentials: any) {
     const response = await fetch(`${this.baseURL}/auth/login`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'X-Platform': 'mobile',
+        "Content-Type": "application/json",
+        "X-Platform": "mobile",
       },
       body: JSON.stringify({
         ...credentials,
-        platform: 'mobile'
+        platform: "mobile",
       }),
     });
 
     const data = await response.json();
-    
+
     if (data.token) {
       await this.setToken(data.token);
     }
@@ -508,20 +509,20 @@ export class SyncService {
     try {
       // جلب جميع البيانات
       const [companies, products, jobs] = await Promise.all([
-        MobileApiService.authenticatedRequest('/companies'),
-        MobileApiService.authenticatedRequest('/products'),
-        MobileApiService.authenticatedRequest('/jobs'),
+        MobileApiService.authenticatedRequest("/companies"),
+        MobileApiService.authenticatedRequest("/products"),
+        MobileApiService.authenticatedRequest("/jobs"),
       ]);
 
       // حفظ البيانات محلياً
-      await AsyncStorage.setItem('companies', JSON.stringify(companies));
-      await AsyncStorage.setItem('products', JSON.stringify(products));
-      await AsyncStorage.setItem('jobs', JSON.stringify(jobs));
-      await AsyncStorage.setItem('last_sync', new Date().toISOString());
+      await AsyncStorage.setItem("companies", JSON.stringify(companies));
+      await AsyncStorage.setItem("products", JSON.stringify(products));
+      await AsyncStorage.setItem("jobs", JSON.stringify(jobs));
+      await AsyncStorage.setItem("last_sync", new Date().toISOString());
 
       return true;
     } catch (error) {
-      console.error('Sync failed:', error);
+      console.error("Sync failed:", error);
       return false;
     }
   }
@@ -529,9 +530,9 @@ export class SyncService {
   // تحميل البيانات المحفوظة محلياً
   static async loadCachedData() {
     const [companies, products, jobs] = await Promise.all([
-      AsyncStorage.getItem('companies'),
-      AsyncStorage.getItem('products'),
-      AsyncStorage.getItem('jobs'),
+      AsyncStorage.getItem("companies"),
+      AsyncStorage.getItem("products"),
+      AsyncStorage.getItem("jobs"),
     ]);
 
     return {
@@ -547,16 +548,16 @@ export class SyncService {
 
 ### أكواد الأخطاء المعيارية
 
-| الكود | المعنى | الوصف |
-|-------|--------|--------|
-| `200` | نجح | تم تنفيذ الطلب بنجاح |
-| `201` | تم إنشاؤه | تم إنشاء المورد بنجاح |
-| `400` | طلب خاطئ | بيانات الطلب غير صحيحة |
-| `401` | غير مصرح | مطلوب تسجيل دخول |
-| `403` | محظور | لا توجد صلاحية كافية |
-| `404` | غير موجود | المورد غير موجود |
+| الكود | المعنى           | الوصف                     |
+| ----- | ---------------- | ------------------------- |
+| `200` | نجح              | تم تنفيذ الطلب بنجاح      |
+| `201` | تم إنشاؤه        | تم إنشاء المورد بنجاح     |
+| `400` | طلب خاطئ         | بيانات الطلب غير صحيحة    |
+| `401` | غير مصرح         | مطلوب تسجيل دخول          |
+| `403` | محظور            | لا توجد صلاحية كافية      |
+| `404` | غير موجود        | المورد غير موجود          |
 | `422` | بيانات غير صالحة | فشل في التحقق من البيانات |
-| `500` | خطأ خادم | خطأ داخلي في الخادم |
+| `500` | خطأ خادم         | خطأ داخلي في الخادم       |
 
 ### تنسيق الأخطاء
 
@@ -580,16 +581,16 @@ export class SyncService {
 const handleAPIError = (error: any) => {
   if (error.status === 401) {
     // إعادة توجيه لصفحة تسجيل الدخول
-    window.location.href = '/login';
+    window.location.href = "/login";
   } else if (error.status === 403) {
     // عرض رسالة عدم الصلاحية
-    alert('ليس لديك صلاحية للوصول إلى هذا المورد');
+    alert("ليس لديك صلاحية للوصول إلى هذا المورد");
   } else if (error.status >= 500) {
     // خطأ خادم
-    alert('حدث خطأ في الخادم، يرجى المحاولة لاحقاً');
+    alert("حدث خطأ في الخادم، يرجى المحاولة لاحقاً");
   } else {
     // أخطاء أخرى
-    alert(error.message || 'حدث خطأ غير متوقع');
+    alert(error.message || "حدث خطأ غير متوقع");
   }
 };
 ```
@@ -722,35 +723,31 @@ npm install -D jest supertest @types/jest @types/supertest
 
 ```typescript
 // tests/auth.test.ts
-import request from 'supertest';
-import app from '../server/api/index';
+import request from "supertest";
+import app from "../server/api/index";
 
-describe('Auth API', () => {
-  test('تسجيل الدخول بنجاح', async () => {
-    const response = await request(app)
-      .post('/api/auth/login')
-      .send({
-        username: 'admin',
-        password: 'admin',
-        platform: 'web'
-      });
+describe("Auth API", () => {
+  test("تسجيل الدخول بنجاح", async () => {
+    const response = await request(app).post("/api/auth/login").send({
+      username: "admin",
+      password: "admin",
+      platform: "web",
+    });
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('token');
-    expect(response.body.user.username).toBe('admin');
+    expect(response.body).toHaveProperty("token");
+    expect(response.body.user.username).toBe("admin");
   });
 
-  test('فشل تسجيل الدخول - كلمة مرور خاطئة', async () => {
-    const response = await request(app)
-      .post('/api/auth/login')
-      .send({
-        username: 'admin',
-        password: 'wrong-password',
-        platform: 'web'
-      });
+  test("فشل تسجيل الدخول - كلمة مرور خاطئة", async () => {
+    const response = await request(app).post("/api/auth/login").send({
+      username: "admin",
+      password: "wrong-password",
+      platform: "web",
+    });
 
     expect(response.status).toBe(401);
-    expect(response.body).toHaveProperty('error');
+    expect(response.body).toHaveProperty("error");
   });
 });
 ```

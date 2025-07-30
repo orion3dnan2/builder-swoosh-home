@@ -2,7 +2,16 @@ import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Megaphone, Search, Filter, Calendar, MapPin, Tag, ExternalLink, Star } from "lucide-react";
+import {
+  Megaphone,
+  Search,
+  Filter,
+  Calendar,
+  MapPin,
+  Tag,
+  ExternalLink,
+  Star,
+} from "lucide-react";
 import { useAds } from "@/lib/stores";
 import { useState } from "react";
 
@@ -11,12 +20,13 @@ export default function Ads() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showFeaturedOnly, setShowFeaturedOnly] = useState(false);
 
-  const filteredAds = (showFeaturedOnly ? featuredAds : ads).filter(ad =>
-    searchQuery === "" ||
-    ad.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    ad.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    ad.advertiser.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    ad.category.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredAds = (showFeaturedOnly ? featuredAds : ads).filter(
+    (ad) =>
+      searchQuery === "" ||
+      ad.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      ad.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      ad.advertiser.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      ad.category.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const getCategoryIcon = (category: string) => {
@@ -24,7 +34,7 @@ export default function Ads() {
       perfumes: "🌹",
       food: "🍽️",
       services: "⚙️",
-      fashion: "👗"
+      fashion: "👗",
     };
     return icons[category] || "🏪";
   };
@@ -34,17 +44,17 @@ export default function Ads() {
       perfumes: "bg-purple-500",
       food: "bg-red-500",
       services: "bg-blue-500",
-      fashion: "bg-pink-500"
+      fashion: "bg-pink-500",
     };
     return colors[category] || "bg-gray-500";
   };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('ar-SA', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return date.toLocaleDateString("ar-SA", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -127,11 +137,16 @@ export default function Ads() {
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-4">
                 <Star className="w-5 h-5 text-purple-600" />
-                <h2 className="text-xl font-bold text-purple-800 arabic">العروض المميزة</h2>
+                <h2 className="text-xl font-bold text-purple-800 arabic">
+                  العروض المميزة
+                </h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {featuredAds.slice(0, 2).map((ad) => (
-                  <div key={ad.id} className="bg-white rounded-lg p-4 border border-purple-200">
+                  <div
+                    key={ad.id}
+                    className="bg-white rounded-lg p-4 border border-purple-200"
+                  >
                     <div className="flex items-start gap-3">
                       <img
                         src={ad.image}
@@ -139,8 +154,12 @@ export default function Ads() {
                         className="w-16 h-16 object-cover rounded-lg"
                       />
                       <div className="flex-1">
-                        <h3 className="font-bold text-gray-800 arabic text-sm">{ad.title}</h3>
-                        <p className="text-gray-600 text-xs arabic mt-1">{ad.advertiser}</p>
+                        <h3 className="font-bold text-gray-800 arabic text-sm">
+                          {ad.title}
+                        </h3>
+                        <p className="text-gray-600 text-xs arabic mt-1">
+                          {ad.advertiser}
+                        </p>
                         <div className="flex items-center justify-between mt-2">
                           <Badge className="bg-red-500 text-white text-xs arabic">
                             خصم {ad.discount}%
@@ -161,7 +180,10 @@ export default function Ads() {
         {/* Ads Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {filteredAds.map((ad) => (
-            <Card key={ad.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden">
+            <Card
+              key={ad.id}
+              className="group hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden"
+            >
               <div className="relative">
                 <img
                   src={ad.image}
@@ -169,7 +191,9 @@ export default function Ads() {
                   className="w-full h-48 object-cover"
                 />
                 <div className="absolute top-4 right-4">
-                  <Badge className={`arabic text-white ${getCategoryColor(ad.category)}`}>
+                  <Badge
+                    className={`arabic text-white ${getCategoryColor(ad.category)}`}
+                  >
                     {getCategoryIcon(ad.category)} إعلان
                   </Badge>
                 </div>
@@ -205,29 +229,46 @@ export default function Ads() {
 
                 <div className="border-t pt-4 mb-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-gray-600 arabic">السعر الأصلي</span>
-                    <span className="text-sm text-gray-500 line-through arabic">{ad.originalPrice} ريال</span>
+                    <span className="text-sm text-gray-600 arabic">
+                      السعر الأصلي
+                    </span>
+                    <span className="text-sm text-gray-500 line-through arabic">
+                      {ad.originalPrice} ريال
+                    </span>
                   </div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm text-gray-600 arabic">سعر العرض</span>
-                    <span className="text-lg font-bold text-green-600 arabic">{ad.salePrice} ريال</span>
+                    <span className="text-sm text-gray-600 arabic">
+                      سعر العرض
+                    </span>
+                    <span className="text-lg font-bold text-green-600 arabic">
+                      {ad.salePrice} ريال
+                    </span>
                   </div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm text-gray-600 arabic">ينتهي في</span>
+                    <span className="text-sm text-gray-600 arabic">
+                      ينتهي في
+                    </span>
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm text-red-600 arabic">{formatDate(ad.validUntil)}</span>
+                      <span className="text-sm text-red-600 arabic">
+                        {formatDate(ad.validUntil)}
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2 mb-4">
                   <MapPin className="w-4 h-4 text-gray-400" />
-                  <span className="text-sm text-gray-600 arabic">{ad.location}</span>
+                  <span className="text-sm text-gray-600 arabic">
+                    {ad.location}
+                  </span>
                 </div>
 
                 <div className="flex gap-2">
-                  <Button className="flex-1 arabic bg-purple-600 hover:bg-purple-700" size="sm">
+                  <Button
+                    className="flex-1 arabic bg-purple-600 hover:bg-purple-700"
+                    size="sm"
+                  >
                     استفد من العرض
                   </Button>
                   <Button variant="outline" size="sm" className="arabic">
@@ -243,20 +284,51 @@ export default function Ads() {
         {/* Discount Categories */}
         <Card className="mb-8">
           <CardContent className="p-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">تصفح حسب نوع الخصم</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">
+              تصفح حسب نوع الخصم
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { range: "خصم 50% فأكثر", icon: "🔥", count: "2 عرض", color: "bg-red-500" },
-                { range: "خصم 30-49%", icon: "💸", count: "3 عروض", color: "bg-orange-500" },
-                { range: "خصم 20-29%", icon: "💰", count: "5 عروض", color: "bg-yellow-500" },
-                { range: "خصم أقل من 20%", icon: "🏷️", count: "4 عروض", color: "bg-green-500" }
+                {
+                  range: "خصم 50% فأكثر",
+                  icon: "🔥",
+                  count: "2 عرض",
+                  color: "bg-red-500",
+                },
+                {
+                  range: "خصم 30-49%",
+                  icon: "💸",
+                  count: "3 عروض",
+                  color: "bg-orange-500",
+                },
+                {
+                  range: "خصم 20-29%",
+                  icon: "💰",
+                  count: "5 عروض",
+                  color: "bg-yellow-500",
+                },
+                {
+                  range: "خصم أقل من 20%",
+                  icon: "🏷️",
+                  count: "4 عروض",
+                  color: "bg-green-500",
+                },
               ].map((category, index) => (
-                <div key={index} className="text-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                  <div className={`w-12 h-12 ${category.color} rounded-full flex items-center justify-center mx-auto mb-2`}>
+                <div
+                  key={index}
+                  className="text-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                >
+                  <div
+                    className={`w-12 h-12 ${category.color} rounded-full flex items-center justify-center mx-auto mb-2`}
+                  >
                     <span className="text-xl">{category.icon}</span>
                   </div>
-                  <h4 className="font-semibold text-gray-800 text-sm arabic mb-1">{category.range}</h4>
-                  <p className="text-gray-500 text-xs arabic">{category.count}</p>
+                  <h4 className="font-semibold text-gray-800 text-sm arabic mb-1">
+                    {category.range}
+                  </h4>
+                  <p className="text-gray-500 text-xs arabic">
+                    {category.count}
+                  </p>
                 </div>
               ))}
             </div>

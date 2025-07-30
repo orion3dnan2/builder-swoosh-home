@@ -48,46 +48,50 @@ export default function MerchantDashboard() {
     totalReviews: isNewMerchant ? 0 : 89,
   });
 
-  const recentOrders = isNewMerchant ? [] : [
-    {
-      id: "ORD-001",
-      customer: "أحمد محمد",
-      items: 3,
-      total: 125.5,
-      status: "pending",
-      time: "منذ 15 دقيقة",
-    },
-    {
-      id: "ORD-002",
-      customer: "فاطمة علي",
-      items: 1,
-      total: 45.0,
-      status: "confirmed",
-      time: "منذ ساعة",
-    },
-    {
-      id: "ORD-003",
-      customer: "محمد سعد",
-      items: 2,
-      total: 89.99,
-      status: "shipped",
-      time: "منذ 3 ساعات",
-    },
-    {
-      id: "ORD-004",
-      customer: "عائشة أحمد",
-      items: 4,
-      total: 234.75,
-      status: "delivered",
-      time: "اليوم",
-    },
-  ];
+  const recentOrders = isNewMerchant
+    ? []
+    : [
+        {
+          id: "ORD-001",
+          customer: "أحمد محمد",
+          items: 3,
+          total: 125.5,
+          status: "pending",
+          time: "منذ 15 دقيقة",
+        },
+        {
+          id: "ORD-002",
+          customer: "فاطمة علي",
+          items: 1,
+          total: 45.0,
+          status: "confirmed",
+          time: "منذ ساعة",
+        },
+        {
+          id: "ORD-003",
+          customer: "محمد سعد",
+          items: 2,
+          total: 89.99,
+          status: "shipped",
+          time: "منذ 3 ساعات",
+        },
+        {
+          id: "ORD-004",
+          customer: "عائشة أحمد",
+          items: 4,
+          total: 234.75,
+          status: "delivered",
+          time: "اليوم",
+        },
+      ];
 
-  const lowStockProducts = isNewMerchant ? [] : [
-    { name: "عطر صندل سوداني", stock: 2, sku: "PER-001" },
-    { name: "كركديه طبيعي", stock: 1, sku: "TEA-003" },
-    { name: "حقيبة سودانية", stock: 0, sku: "BAG-012" },
-  ];
+  const lowStockProducts = isNewMerchant
+    ? []
+    : [
+        { name: "عطر صندل سوداني", stock: 2, sku: "PER-001" },
+        { name: "كركديه طبيعي", stock: 1, sku: "TEA-003" },
+        { name: "حقيبة سودانية", stock: 0, sku: "BAG-012" },
+      ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -184,7 +188,11 @@ export default function MerchantDashboard() {
                         إعداد المتجر
                       </Button>
                     </Link>
-                    <Button variant="outline" className="w-full arabic" onClick={() => setIsNewMerchant(false)}>
+                    <Button
+                      variant="outline"
+                      className="w-full arabic"
+                      onClick={() => setIsNewMerchant(false)}
+                    >
                       <Eye className="w-4 h-4 ml-2" />
                       جولة سريعة
                     </Button>

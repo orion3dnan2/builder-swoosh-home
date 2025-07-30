@@ -3,12 +3,14 @@
 ## 1. إعداد تطبيق React Native
 
 ### إنشاء مشروع جديد
+
 ```bash
 npx react-native init BaytAlSudaniApp
 cd BaytAlSudaniApp
 ```
 
 ### تثبيت المكتبات المطلوبة
+
 ```bash
 npm install @react-navigation/native @react-navigation/stack
 npm install react-native-screens react-native-safe-area-context
@@ -23,43 +25,46 @@ npm install react-native-push-notification
 
 ```typescript
 // services/ApiService.ts
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export class MobileApiService {
-  private static baseURL = 'https://your-api-domain.com/api';
-  
+  private static baseURL = "https://your-api-domain.com/api";
+
   static async setToken(token: string) {
-    await AsyncStorage.setItem('auth_token', token);
+    await AsyncStorage.setItem("auth_token", token);
   }
 
   static async getToken(): Promise<string | null> {
-    return await AsyncStorage.getItem('auth_token');
+    return await AsyncStorage.getItem("auth_token");
   }
 
   static async removeToken() {
-    await AsyncStorage.removeItem('auth_token');
+    await AsyncStorage.removeItem("auth_token");
   }
 
   private static async getHeaders(includeAuth = true): Promise<HeadersInit> {
     const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-      'X-Platform': 'mobile',
+      "Content-Type": "application/json",
+      "X-Platform": "mobile",
     };
 
     if (includeAuth) {
       const token = await this.getToken();
       if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
+        headers["Authorization"] = `Bearer ${token}`;
       }
     }
 
     return headers;
   }
 
-  static async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+  static async request<T>(
+    endpoint: string,
+    options: RequestInit = {},
+  ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
     const headers = await this.getHeaders();
-    
+
     const config: RequestInit = {
       ...options,
       headers: {
@@ -69,7 +74,7 @@ export class MobileApiService {
     };
 
     const response = await fetch(url, config);
-    
+
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(errorData.error || `HTTP ${response.status}`);
@@ -80,10 +85,10 @@ export class MobileApiService {
 
   // نفس الطرق الموجودة في ApiService ولكن معدلة للجوال
   static async login(credentials: any) {
-    const response = await this.request('/auth/login', {
-      method: 'POST',
+    const response = await this.request("/auth/login", {
+      method: "POST",
       headers: await this.getHeaders(false),
-      body: JSON.stringify({ ...credentials, platform: 'mobile' }),
+      body: JSON.stringify({ ...credentials, platform: "mobile" }),
     });
 
     if (response.token) {
@@ -110,9 +115,9 @@ interface Product {
   storeName: string;
 }
 
-export const ProductCard: React.FC<{ product: Product; onPress: () => void }> = ({ 
-  product, 
-  onPress 
+export const ProductCard: React.FC<{ product: Product; onPress: () => void }> = ({
+  product,
+  onPress
 }) => {
   return (
     <TouchableOpacity style={styles.card} onPress={onPress}>
@@ -191,7 +196,7 @@ export const HomeScreen: React.FC = () => {
         MobileApiService.request('/products?limit=10'),
         MobileApiService.request('/companies?featured=true'),
       ]);
-      
+
       setProducts(productsData);
       setCompanies(companiesData);
     } catch (error) {
@@ -213,10 +218,10 @@ export const HomeScreen: React.FC = () => {
     <ScrollView style={styles.container}>
       <Text style={styles.title}>البيت السوداني</Text>
       <Text style={styles.subtitle}>أحدث المنتجات</Text>
-      
+
       {products.map((product) => (
-        <ProductCard 
-          key={product.id} 
+        <ProductCard
+          key={product.id}
           product={product}
           onPress={() => {/* Navigate to product details */}}
         />
@@ -270,7 +275,7 @@ const Stack = createStackNavigator();
 export const AppNavigator: React.FC = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator 
+      <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
           headerStyle: {
@@ -282,24 +287,24 @@ export const AppNavigator: React.FC = () => {
           },
         }}
       >
-        <Stack.Screen 
-          name="Home" 
-          component={HomeScreen} 
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
           options={{ title: 'البيت السوداني' }}
         />
-        <Stack.Screen 
-          name="Login" 
-          component={LoginScreen} 
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
           options={{ title: 'تسجيل الدخول' }}
         />
-        <Stack.Screen 
-          name="Products" 
-          component={ProductsScreen} 
+        <Stack.Screen
+          name="Products"
+          component={ProductsScreen}
           options={{ title: 'المنتجات' }}
         />
-        <Stack.Screen 
-          name="Companies" 
-          component={CompaniesScreen} 
+        <Stack.Screen
+          name="Companies"
+          component={CompaniesScreen}
           options={{ title: 'الشركات' }}
         />
       </Stack.Navigator>
@@ -312,37 +317,48 @@ export const AppNavigator: React.FC = () => {
 
 ```typescript
 // services/SyncService.ts
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import NetInfo from '@react-native-netinfo/netinfo';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import NetInfo from "@react-native-netinfo/netinfo";
 
 export class SyncService {
   private static SYNC_KEYS = {
-    PRODUCTS: 'cached_products',
-    COMPANIES: 'cached_companies',
-    LAST_SYNC: 'last_sync',
+    PRODUCTS: "cached_products",
+    COMPANIES: "cached_companies",
+    LAST_SYNC: "last_sync",
   };
 
   static async syncData() {
-    const isConnected = await NetInfo.fetch().then(state => state.isConnected);
-    
+    const isConnected = await NetInfo.fetch().then(
+      (state) => state.isConnected,
+    );
+
     if (!isConnected) {
       return this.loadCachedData();
     }
 
     try {
       const [products, companies] = await Promise.all([
-        MobileApiService.request('/products'),
-        MobileApiService.request('/companies'),
+        MobileApiService.request("/products"),
+        MobileApiService.request("/companies"),
       ]);
 
       // حفظ البيانات محلياً
-      await AsyncStorage.setItem(this.SYNC_KEYS.PRODUCTS, JSON.stringify(products));
-      await AsyncStorage.setItem(this.SYNC_KEYS.COMPANIES, JSON.stringify(companies));
-      await AsyncStorage.setItem(this.SYNC_KEYS.LAST_SYNC, new Date().toISOString());
+      await AsyncStorage.setItem(
+        this.SYNC_KEYS.PRODUCTS,
+        JSON.stringify(products),
+      );
+      await AsyncStorage.setItem(
+        this.SYNC_KEYS.COMPANIES,
+        JSON.stringify(companies),
+      );
+      await AsyncStorage.setItem(
+        this.SYNC_KEYS.LAST_SYNC,
+        new Date().toISOString(),
+      );
 
       return { products, companies };
     } catch (error) {
-      console.error('Sync failed:', error);
+      console.error("Sync failed:", error);
       return this.loadCachedData();
     }
   }
@@ -365,22 +381,22 @@ export class SyncService {
 
 ```typescript
 // services/NotificationService.ts
-import PushNotification from 'react-native-push-notification';
+import PushNotification from "react-native-push-notification";
 
 export class NotificationService {
   static init() {
     PushNotification.configure({
       onRegister: function (token) {
-        console.log('TOKEN:', token);
+        console.log("TOKEN:", token);
         // إرسال الرمز إلى الخادم
-        MobileApiService.request('/mobile/register-token', {
-          method: 'POST',
+        MobileApiService.request("/mobile/register-token", {
+          method: "POST",
           body: JSON.stringify({ token: token.token }),
         });
       },
 
       onNotification: function (notification) {
-        console.log('NOTIFICATION:', notification);
+        console.log("NOTIFICATION:", notification);
         // معالجة الإشعار
       },
 
@@ -475,6 +491,7 @@ export const useAuth = () => {
 6. **دعم وضع عدم الاتصال**
 
 لتطبيق هذا النظام:
+
 1. ابدأ بإعداد API الخلفي
 2. أنشئ تطبيق React Native
 3. قم بتطبيق خدمات API

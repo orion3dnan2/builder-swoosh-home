@@ -2,19 +2,19 @@ import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Package, 
-  Search, 
-  Filter, 
-  Store, 
-  ShoppingCart, 
-  Eye, 
+import {
+  Package,
+  Search,
+  Filter,
+  Store,
+  ShoppingCart,
+  Eye,
   Star,
   Grid3X3,
   List,
   Tag,
   TrendingUp,
-  Heart
+  Heart,
 } from "lucide-react";
 import { ProductService, useProducts } from "@/lib/products";
 import { useState } from "react";
@@ -28,17 +28,22 @@ export default function Products() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   const productsWithStore = ProductService.getProductsWithStore();
-  
-  const filteredProducts = productsWithStore.filter(product => {
-    const matchesSearch = searchQuery === "" || 
+
+  const filteredProducts = productsWithStore.filter((product) => {
+    const matchesSearch =
+      searchQuery === "" ||
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      product.tags.some((tag) =>
+        tag.toLowerCase().includes(searchQuery.toLowerCase()),
+      ) ||
       product.storeName?.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
-    const matchesStore = selectedStore === "all" || product.storeId === selectedStore;
-    
+
+    const matchesCategory =
+      selectedCategory === "all" || product.category === selectedCategory;
+    const matchesStore =
+      selectedStore === "all" || product.storeId === selectedStore;
+
     let matchesPrice = true;
     if (priceRange !== "all") {
       const price = product.salePrice || product.price;
@@ -57,8 +62,14 @@ export default function Products() {
           break;
       }
     }
-    
-    return matchesSearch && matchesCategory && matchesStore && matchesPrice && product.status === "active";
+
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesStore &&
+      matchesPrice &&
+      product.status === "active"
+    );
   });
 
   const categories = ProductService.getCategories();
@@ -69,7 +80,7 @@ export default function Products() {
     { id: "store-003", name: "مطعم أم درمان" },
     { id: "store-004", name: "خدمات التقنية السودانية" },
     { id: "store-005", name: "أزياء النيل" },
-    { id: "store-006", name: "سوبر ماركت الخرطوم" }
+    { id: "store-006", name: "سوبر ماركت الخرطوم" },
   ];
 
   const priceRanges = [
@@ -77,7 +88,7 @@ export default function Products() {
     { value: "under-20", label: "أقل من 20 ريال" },
     { value: "20-50", label: "20 - 50 ريال" },
     { value: "50-100", label: "50 - 100 ريال" },
-    { value: "over-100", label: "أكثر من 100 ريال" }
+    { value: "over-100", label: "أكثر من 100 ريال" },
   ];
 
   const formatPrice = (price: number) => {
@@ -170,7 +181,10 @@ export default function Products() {
                 <span className="text-sm text-gray-600 arabic">
                   {filteredProducts.length} منتج
                 </span>
-                {(searchQuery || selectedCategory !== "all" || selectedStore !== "all" || priceRange !== "all") && (
+                {(searchQuery ||
+                  selectedCategory !== "all" ||
+                  selectedStore !== "all" ||
+                  priceRange !== "all") && (
                   <Button
                     variant="outline"
                     size="sm"
@@ -207,34 +221,49 @@ export default function Products() {
         </Card>
 
         {/* Products Grid/List */}
-        <div className={`${viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" : "space-y-4"} mb-8`}>
+        <div
+          className={`${viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" : "space-y-4"} mb-8`}
+        >
           {filteredProducts.map((product) => (
-            <Card key={product.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden">
+            <Card
+              key={product.id}
+              className="group hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden"
+            >
               {viewMode === "grid" ? (
                 <>
                   <div className="relative">
-                    <img 
-                      src={product.images[0] || "/placeholder.svg"} 
+                    <img
+                      src={product.images[0] || "/placeholder.svg"}
                       alt={product.name}
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-2 right-2">
-                      <Badge className={`text-white text-xs arabic ${ProductService.getStatusBadgeColor(product.status)}`}>
+                      <Badge
+                        className={`text-white text-xs arabic ${ProductService.getStatusBadgeColor(product.status)}`}
+                      >
                         {ProductService.getStatusText(product.status)}
                       </Badge>
                     </div>
                     <div className="absolute top-2 left-2">
-                      <Button variant="ghost" size="sm" className="bg-white/80 hover:bg-white p-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="bg-white/80 hover:bg-white p-2"
+                      >
                         <Heart className="w-4 h-4" />
                       </Button>
                     </div>
                     {product.salePrice && (
                       <div className="absolute bottom-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs arabic font-bold">
-                        خصم {Math.round((1 - product.salePrice / product.price) * 100)}%
+                        خصم{" "}
+                        {Math.round(
+                          (1 - product.salePrice / product.price) * 100,
+                        )}
+                        %
                       </div>
                     )}
                   </div>
-                  
+
                   <CardContent className="p-4">
                     <div className="mb-3">
                       <h3 className="text-lg font-bold text-gray-800 mb-1 arabic group-hover:text-blue-600 transition-colors line-clamp-2">
@@ -247,29 +276,40 @@ export default function Products() {
 
                     <div className="flex items-center gap-2 mb-3">
                       <Store className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm text-blue-600 arabic font-medium">{product.storeName}</span>
+                      <span className="text-sm text-blue-600 arabic font-medium">
+                        {product.storeName}
+                      </span>
                     </div>
 
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
                         <Badge variant="outline" className="text-xs arabic">
-                          {ProductService.getCategoryIcon(product.category)} {product.category}
+                          {ProductService.getCategoryIcon(product.category)}{" "}
+                          {product.category}
                         </Badge>
                       </div>
                       <div className="text-right">
                         {product.salePrice ? (
                           <div>
-                            <span className="text-lg font-bold text-green-600 arabic">{formatPrice(product.salePrice)}</span>
-                            <span className="text-sm text-gray-500 line-through arabic mr-2">{formatPrice(product.price)}</span>
+                            <span className="text-lg font-bold text-green-600 arabic">
+                              {formatPrice(product.salePrice)}
+                            </span>
+                            <span className="text-sm text-gray-500 line-through arabic mr-2">
+                              {formatPrice(product.price)}
+                            </span>
                           </div>
                         ) : (
-                          <span className="text-lg font-bold text-gray-800 arabic">{formatPrice(product.price)}</span>
+                          <span className="text-lg font-bold text-gray-800 arabic">
+                            {formatPrice(product.price)}
+                          </span>
                         )}
                       </div>
                     </div>
 
                     <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
-                      <span className="arabic">المخزون: {product.inventory.quantity}</span>
+                      <span className="arabic">
+                        المخزون: {product.inventory.quantity}
+                      </span>
                       <div className="flex items-center gap-1">
                         <Eye className="w-3 h-3" />
                         <span className="arabic">120 مشاهدة</span>
@@ -290,45 +330,62 @@ export default function Products() {
               ) : (
                 <CardContent className="p-6">
                   <div className="flex gap-4">
-                    <img 
-                      src={product.images[0] || "/placeholder.svg"} 
+                    <img
+                      src={product.images[0] || "/placeholder.svg"}
                       alt={product.name}
                       className="w-24 h-24 object-cover rounded-lg flex-shrink-0"
                     />
                     <div className="flex-1">
                       <div className="flex items-start justify-between mb-2">
                         <div>
-                          <h3 className="text-xl font-bold text-gray-800 arabic mb-1">{product.name}</h3>
-                          <p className="text-sm text-gray-600 arabic line-clamp-2">{product.description}</p>
+                          <h3 className="text-xl font-bold text-gray-800 arabic mb-1">
+                            {product.name}
+                          </h3>
+                          <p className="text-sm text-gray-600 arabic line-clamp-2">
+                            {product.description}
+                          </p>
                         </div>
                         <div className="text-right">
                           {product.salePrice ? (
                             <div>
-                              <span className="text-xl font-bold text-green-600 arabic">{formatPrice(product.salePrice)}</span>
-                              <span className="text-sm text-gray-500 line-through arabic mr-2">{formatPrice(product.price)}</span>
+                              <span className="text-xl font-bold text-green-600 arabic">
+                                {formatPrice(product.salePrice)}
+                              </span>
+                              <span className="text-sm text-gray-500 line-through arabic mr-2">
+                                {formatPrice(product.price)}
+                              </span>
                             </div>
                           ) : (
-                            <span className="text-xl font-bold text-gray-800 arabic">{formatPrice(product.price)}</span>
+                            <span className="text-xl font-bold text-gray-800 arabic">
+                              {formatPrice(product.price)}
+                            </span>
                           )}
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center gap-4 mb-3">
                         <div className="flex items-center gap-2">
                           <Store className="w-4 h-4 text-gray-400" />
-                          <span className="text-sm text-blue-600 arabic font-medium">{product.storeName}</span>
+                          <span className="text-sm text-blue-600 arabic font-medium">
+                            {product.storeName}
+                          </span>
                         </div>
                         <Badge variant="outline" className="text-xs arabic">
-                          {ProductService.getCategoryIcon(product.category)} {product.category}
+                          {ProductService.getCategoryIcon(product.category)}{" "}
+                          {product.category}
                         </Badge>
-                        <Badge className={`text-white text-xs arabic ${ProductService.getStatusBadgeColor(product.status)}`}>
+                        <Badge
+                          className={`text-white text-xs arabic ${ProductService.getStatusBadgeColor(product.status)}`}
+                        >
                           {ProductService.getStatusText(product.status)}
                         </Badge>
                       </div>
 
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4 text-sm text-gray-500">
-                          <span className="arabic">المخزون: {product.inventory.quantity}</span>
+                          <span className="arabic">
+                            المخزون: {product.inventory.quantity}
+                          </span>
                           <div className="flex items-center gap-1">
                             <Eye className="w-4 h-4" />
                             <span className="arabic">120 مشاهدة</span>
@@ -339,7 +396,11 @@ export default function Products() {
                             <ShoppingCart className="w-4 h-4 ml-1" />
                             أضف للسلة
                           </Button>
-                          <Button variant="outline" size="sm" className="arabic">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="arabic"
+                          >
                             تفاصيل
                           </Button>
                         </div>
@@ -355,13 +416,17 @@ export default function Products() {
         {/* Categories Section */}
         <Card className="mb-8">
           <CardContent className="p-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">تصفح حسب الفئة</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">
+              تصفح حسب الفئة
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {categories.map((category) => {
-                const categoryCount = productsWithStore.filter(p => p.category === category && p.status === "active").length;
+                const categoryCount = productsWithStore.filter(
+                  (p) => p.category === category && p.status === "active",
+                ).length;
                 return (
-                  <div 
-                    key={category} 
+                  <div
+                    key={category}
                     className="text-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
                     onClick={() => setSelectedCategory(category)}
                   >
@@ -391,8 +456,8 @@ export default function Products() {
             <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
               جرب تغيير كلمات البحث أو الفئات المختارة
             </p>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={() => {
                 setSearchQuery("");
                 setSelectedCategory("all");

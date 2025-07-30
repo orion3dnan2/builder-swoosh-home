@@ -133,10 +133,10 @@ export default function Register() {
       // تسجيل دخول المستخدم تلقائياً وتوجيهه للصفحة المناسبة
       setAuthenticatedUser(result.user, result.token);
 
-      if (result.user.role === 'merchant') {
-        navigate('/merchant/dashboard');
+      if (result.user.role === "merchant") {
+        navigate("/merchant/dashboard");
       } else {
-        navigate('/');
+        navigate("/");
       }
     }
   };
@@ -149,11 +149,13 @@ export default function Register() {
           <Card className="shadow-xl border-0">
             <CardHeader className="text-center pb-6">
               <div className="flex justify-center mb-4">
-                <div className={`w-16 h-16 rounded-full flex items-center justify-center ${
-                  formData.accountType === "merchant" 
-                    ? "bg-gradient-to-br from-green-500 to-green-700" 
-                    : "bg-gradient-to-br from-blue-500 to-blue-700"
-                }`}>
+                <div
+                  className={`w-16 h-16 rounded-full flex items-center justify-center ${
+                    formData.accountType === "merchant"
+                      ? "bg-gradient-to-br from-green-500 to-green-700"
+                      : "bg-gradient-to-br from-blue-500 to-blue-700"
+                  }`}
+                >
                   {formData.accountType === "merchant" ? (
                     <Briefcase className="w-8 h-8 text-white" />
                   ) : (
@@ -162,13 +164,13 @@ export default function Register() {
                 </div>
               </div>
               <h1 className="text-2xl font-bold text-gray-800 arabic">
-                {formData.accountType === "merchant" 
-                  ? "إنشاء حساب صاحب عمل" 
+                {formData.accountType === "merchant"
+                  ? "إنشاء حساب صاحب عمل"
                   : "إنشاء حساب جديد"}
               </h1>
               <p className="text-gray-600 arabic">
-                {formData.accountType === "merchant" 
-                  ? "انشئ متجرك الإلكتروني وابدأ البيع اليوم" 
+                {formData.accountType === "merchant"
+                  ? "انشئ متجرك الإلكتروني وابدأ البيع اليوم"
                   : "انضم إلى منصة التسوق الإلكتروني"}
               </p>
             </CardHeader>
@@ -194,7 +196,10 @@ export default function Register() {
                           <User className="w-5 h-5 text-blue-600" />
                         </div>
                         <div>
-                          <Label htmlFor="customer" className="arabic font-medium text-gray-800 cursor-pointer">
+                          <Label
+                            htmlFor="customer"
+                            className="arabic font-medium text-gray-800 cursor-pointer"
+                          >
                             مستخدم عادي
                           </Label>
                           <p className="text-sm text-gray-600 arabic">
@@ -203,7 +208,7 @@ export default function Register() {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center space-x-3 space-x-reverse p-4 border-2 border-gray-200 rounded-xl hover:border-primary-300 transition-colors">
                       <RadioGroupItem value="merchant" id="merchant" />
                       <div className="flex items-center space-x-3 space-x-reverse flex-1">
@@ -211,7 +216,10 @@ export default function Register() {
                           <Briefcase className="w-5 h-5 text-green-600" />
                         </div>
                         <div>
-                          <Label htmlFor="merchant" className="arabic font-medium text-gray-800 cursor-pointer">
+                          <Label
+                            htmlFor="merchant"
+                            className="arabic font-medium text-gray-800 cursor-pointer"
+                          >
                             صاحب عمل
                           </Label>
                           <p className="text-sm text-gray-600 arabic">
@@ -376,7 +384,7 @@ export default function Register() {
                     <h3 className="font-semibold text-green-800 arabic mb-3">
                       🏪 بيانات العمل التجاري
                     </h3>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <Label
@@ -391,7 +399,10 @@ export default function Register() {
                           placeholder="أدخل اسم متجرك أو شركتك"
                           value={formData.businessName}
                           onChange={(e) =>
-                            setFormData((prev) => ({ ...prev, businessName: e.target.value }))
+                            setFormData((prev) => ({
+                              ...prev,
+                              businessName: e.target.value,
+                            }))
                           }
                           className="text-right arabic"
                           required
@@ -407,21 +418,40 @@ export default function Register() {
                         </Label>
                         <Select
                           onValueChange={(value) =>
-                            setFormData((prev) => ({ ...prev, businessType: value }))
+                            setFormData((prev) => ({
+                              ...prev,
+                              businessType: value,
+                            }))
                           }
                         >
                           <SelectTrigger className="text-right arabic">
                             <SelectValue placeholder="اختر نوع النشاط" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="retail" className="arabic">تجارة تجزئة</SelectItem>
-                            <SelectItem value="wholesale" className="arabic">تجارة جملة</SelectItem>
-                            <SelectItem value="services" className="arabic">خدمات</SelectItem>
-                            <SelectItem value="food" className="arabic">مطاعم وأغذية</SelectItem>
-                            <SelectItem value="fashion" className="arabic">أزي��ء وملابس</SelectItem>
-                            <SelectItem value="electronics" className="arabic">إلكترونيات</SelectItem>
-                            <SelectItem value="handmade" className="arabic">منتجات يدوية</SelectItem>
-                            <SelectItem value="other" className="arabic">أخرى</SelectItem>
+                            <SelectItem value="retail" className="arabic">
+                              تجارة تجزئة
+                            </SelectItem>
+                            <SelectItem value="wholesale" className="arabic">
+                              تجارة جملة
+                            </SelectItem>
+                            <SelectItem value="services" className="arabic">
+                              خدمات
+                            </SelectItem>
+                            <SelectItem value="food" className="arabic">
+                              مطاعم وأغذية
+                            </SelectItem>
+                            <SelectItem value="fashion" className="arabic">
+                              أزي��ء وملابس
+                            </SelectItem>
+                            <SelectItem value="electronics" className="arabic">
+                              إلكترونيات
+                            </SelectItem>
+                            <SelectItem value="handmade" className="arabic">
+                              منتجات يدوية
+                            </SelectItem>
+                            <SelectItem value="other" className="arabic">
+                              أخرى
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
@@ -573,8 +603,10 @@ export default function Register() {
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                       جاري إنشاء الحساب...
                     </>
+                  ) : formData.accountType === "merchant" ? (
+                    "إنشاء حساب تاجر →"
                   ) : (
-                    formData.accountType === "merchant" ? "إنشاء حساب تاجر →" : "إنشاء الحساب →"
+                    "إنشاء الحساب →"
                   )}
                 </Button>
 

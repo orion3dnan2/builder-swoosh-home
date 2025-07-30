@@ -2,7 +2,16 @@ import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Wrench, Search, Filter, Star, MapPin, Clock, Phone, MessageCircle } from "lucide-react";
+import {
+  Wrench,
+  Search,
+  Filter,
+  Star,
+  MapPin,
+  Clock,
+  Phone,
+  MessageCircle,
+} from "lucide-react";
 import { useServices } from "@/lib/stores";
 import { useState } from "react";
 
@@ -10,12 +19,15 @@ export default function Services() {
   const { services } = useServices();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredServices = services.filter(service =>
-    searchQuery === "" ||
-    service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    service.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    service.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    service.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+  const filteredServices = services.filter(
+    (service) =>
+      searchQuery === "" ||
+      service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      service.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      service.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      service.tags.some((tag) =>
+        tag.toLowerCase().includes(searchQuery.toLowerCase()),
+      ),
   );
 
   const getCategoryIcon = (category: string) => {
@@ -23,7 +35,7 @@ export default function Services() {
       maintenance: "🔧",
       design: "🎨",
       cooking: "👩‍🍳",
-      education: "📚"
+      education: "📚",
     };
     return icons[category] || "⚙️";
   };
@@ -33,7 +45,7 @@ export default function Services() {
       maintenance: "bg-blue-500",
       design: "bg-purple-500",
       cooking: "bg-orange-500",
-      education: "bg-green-500"
+      education: "bg-green-500",
     };
     return colors[category] || "bg-gray-500";
   };
@@ -98,7 +110,10 @@ export default function Services() {
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {filteredServices.map((service) => (
-            <Card key={service.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer">
+            <Card
+              key={service.id}
+              className="group hover:shadow-lg transition-all duration-300 cursor-pointer"
+            >
               <div className="relative">
                 <img
                   src={service.image}
@@ -106,14 +121,14 @@ export default function Services() {
                   className="w-full h-48 object-cover rounded-t-lg"
                 />
                 <div className="absolute top-4 right-4">
-                  <Badge className={`arabic text-white ${getCategoryColor(service.category)}`}>
+                  <Badge
+                    className={`arabic text-white ${getCategoryColor(service.category)}`}
+                  >
                     {getCategoryIcon(service.category)} خدمة
                   </Badge>
                 </div>
                 <div className="absolute top-4 left-4">
-                  <Badge className="arabic bg-green-500 text-white">
-                    متاح
-                  </Badge>
+                  <Badge className="arabic bg-green-500 text-white">متاح</Badge>
                 </div>
               </div>
 
@@ -126,35 +141,48 @@ export default function Services() {
                     {service.description}
                   </p>
                   <p className="text-sm text-gray-500 arabic">
-                    مقدم الخدمة: <span className="font-semibold">{service.provider}</span>
+                    مقدم الخدمة:{" "}
+                    <span className="font-semibold">{service.provider}</span>
                   </p>
                 </div>
 
                 <div className="flex items-center justify-between text-sm mb-4">
                   <div className="flex items-center gap-2">
                     <Star className="w-4 h-4 text-yellow-500" />
-                    <span className="arabic">{service.rating} ({service.reviewsCount} تقييم)</span>
+                    <span className="arabic">
+                      {service.rating} ({service.reviewsCount} تقييم)
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-gray-400" />
-                    <span className="arabic text-gray-600">{service.location}</span>
+                    <span className="arabic text-gray-600">
+                      {service.location}
+                    </span>
                   </div>
                 </div>
 
                 <div className="border-t pt-4 mb-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm text-gray-600 arabic">السعر</span>
-                    <span className="text-lg font-bold text-green-600 arabic">{service.price}</span>
+                    <span className="text-lg font-bold text-green-600 arabic">
+                      {service.price}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-sm text-gray-600 arabic">التوفر</span>
-                    <span className="text-sm text-blue-600 arabic">{service.availability}</span>
+                    <span className="text-sm text-blue-600 arabic">
+                      {service.availability}
+                    </span>
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-1 mb-4">
                   {service.tags.slice(0, 3).map((tag, index) => (
-                    <Badge key={index} variant="outline" className="text-xs arabic">
+                    <Badge
+                      key={index}
+                      variant="outline"
+                      className="text-xs arabic"
+                    >
                       {tag}
                     </Badge>
                   ))}
@@ -185,18 +213,27 @@ export default function Services() {
         {/* Categories Section */}
         <Card className="mb-8">
           <CardContent className="p-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">الفئات الشائعة</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">
+              الفئات الشائعة
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
                 { name: "صيانة منزلية", icon: "🔧", count: "25 مقدم خدمة" },
                 { name: "تصميم جرافيكي", icon: "🎨", count: "18 مصمم" },
                 { name: "طبخ منز��ي", icon: "👩‍🍳", count: "12 طباخة" },
-                { name: "دروس خصوصية", icon: "📚", count: "30 معلم" }
+                { name: "دروس خصوصية", icon: "📚", count: "30 معلم" },
               ].map((category, index) => (
-                <div key={index} className="text-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                <div
+                  key={index}
+                  className="text-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                >
                   <div className="text-3xl mb-2">{category.icon}</div>
-                  <h4 className="font-semibold text-gray-800 text-sm arabic mb-1">{category.name}</h4>
-                  <p className="text-gray-500 text-xs arabic">{category.count}</p>
+                  <h4 className="font-semibold text-gray-800 text-sm arabic mb-1">
+                    {category.name}
+                  </h4>
+                  <p className="text-gray-500 text-xs arabic">
+                    {category.count}
+                  </p>
                 </div>
               ))}
             </div>

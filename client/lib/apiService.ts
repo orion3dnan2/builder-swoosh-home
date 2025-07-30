@@ -1,24 +1,24 @@
 // خدمة API موحد�� للويب والجوال
 export class ApiService {
-  private static baseURL = import.meta.env.VITE_API_URL || '/api';
-  private static platform = 'web'; // سيتم تغييرها في التطبيق الجوال
+  private static baseURL = import.meta.env.VITE_API_URL || "/api";
+  private static platform = "web"; // سيتم تغييرها في التطبيق الجوال
 
   // تعيين منصة التطبيق
-  static setPlatform(platform: 'web' | 'mobile') {
+  static setPlatform(platform: "web" | "mobile") {
     this.platform = platform;
   }
 
   // الحصول على العناوين الافتراضية
   private static getHeaders(includeAuth = true): HeadersInit {
     const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-      'X-Platform': this.platform,
+      "Content-Type": "application/json",
+      "X-Platform": this.platform,
     };
 
     if (includeAuth) {
       const token = this.getToken();
       if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
+        headers["Authorization"] = `Bearer ${token}`;
       }
     }
 
@@ -27,16 +27,16 @@ export class ApiService {
 
   // إدارة الرموز المميزة
   static setToken(token: string) {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('auth_token', token);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("auth_token", token);
     }
     // في React Native استخدم AsyncStorage
     // await AsyncStorage.setItem('auth_token', token);
   }
 
   static getToken(): string | null {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('auth_token');
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("auth_token");
     }
     return null;
     // في React Native:
@@ -44,8 +44,8 @@ export class ApiService {
   }
 
   static removeToken() {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('auth_token');
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("auth_token");
     }
     // في React Native:
     // await AsyncStorage.removeItem('auth_token');
@@ -53,11 +53,11 @@ export class ApiService {
 
   // طلب HTTP عام
   private static async request<T>(
-    endpoint: string, 
-    options: RequestInit = {}
+    endpoint: string,
+    options: RequestInit = {},
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
-    
+
     const config: RequestInit = {
       ...options,
       headers: {
@@ -68,7 +68,7 @@ export class ApiService {
 
     try {
       const response = await fetch(url, config);
-      
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.error || `HTTP ${response.status}`);
@@ -76,7 +76,7 @@ export class ApiService {
 
       return await response.json();
     } catch (error) {
-      console.error('API Request failed:', error);
+      console.error("API Request failed:", error);
       throw error;
     }
   }
@@ -86,12 +86,12 @@ export class ApiService {
     username: string;
     password: string;
   }): Promise<any> {
-    const response = await this.request<any>('/auth/login', {
-      method: 'POST',
+    const response = await this.request<any>("/auth/login", {
+      method: "POST",
       headers: this.getHeaders(false),
       body: JSON.stringify({
         ...credentials,
-        platform: this.platform
+        platform: this.platform,
       }),
     });
 
@@ -114,12 +114,12 @@ export class ApiService {
     businessName?: string;
     businessType?: string;
   }): Promise<any> {
-    const response = await this.request<any>('/auth/register', {
-      method: 'POST',
+    const response = await this.request<any>("/auth/register", {
+      method: "POST",
       headers: this.getHeaders(false),
       body: JSON.stringify({
         ...userData,
-        platform: this.platform
+        platform: this.platform,
       }),
     });
 
@@ -131,12 +131,12 @@ export class ApiService {
   }
 
   static async logout(): Promise<void> {
-    await this.request('/auth/logout', { method: 'POST' });
+    await this.request("/auth/logout", { method: "POST" });
     this.removeToken();
   }
 
   static async getCurrentUser(): Promise<any> {
-    return this.request('/auth/me');
+    return this.request("/auth/me");
   }
 
   // طلبات الشركات
@@ -152,8 +152,8 @@ export class ApiService {
         if (value) params.append(key, value);
       });
     }
-    
-    const endpoint = `/companies${params.toString() ? `?${params.toString()}` : ''}`;
+
+    const endpoint = `/companies${params.toString() ? `?${params.toString()}` : ""}`;
     return this.request(endpoint);
   }
 
@@ -174,8 +174,8 @@ export class ApiService {
         if (value) params.append(key, value);
       });
     }
-    
-    const endpoint = `/products${params.toString() ? `?${params.toString()}` : ''}`;
+
+    const endpoint = `/products${params.toString() ? `?${params.toString()}` : ""}`;
     return this.request(endpoint);
   }
 
@@ -196,8 +196,8 @@ export class ApiService {
         if (value) params.append(key, value);
       });
     }
-    
-    const endpoint = `/jobs${params.toString() ? `?${params.toString()}` : ''}`;
+
+    const endpoint = `/jobs${params.toString() ? `?${params.toString()}` : ""}`;
     return this.request(endpoint);
   }
 
@@ -217,8 +217,8 @@ export class ApiService {
         if (value) params.append(key, value);
       });
     }
-    
-    const endpoint = `/stores${params.toString() ? `?${params.toString()}` : ''}`;
+
+    const endpoint = `/stores${params.toString() ? `?${params.toString()}` : ""}`;
     return this.request(endpoint);
   }
 
@@ -234,43 +234,46 @@ export class ApiService {
         if (value) params.append(key, value);
       });
     }
-    
-    const endpoint = `/services${params.toString() ? `?${params.toString()}` : ''}`;
+
+    const endpoint = `/services${params.toString() ? `?${params.toString()}` : ""}`;
     return this.request(endpoint);
   }
 
   // طلبات خاصة بالجوال
   static async getMobileConfig(): Promise<any> {
-    return this.request('/mobile/config');
+    return this.request("/mobile/config");
   }
 
   static async syncData(): Promise<any> {
-    return this.request('/mobile/sync');
+    return this.request("/mobile/sync");
   }
 
   // رفع الملفات
-  static async uploadFile(file: File | Blob, type: 'avatar' | 'product' | 'company'): Promise<any> {
+  static async uploadFile(
+    file: File | Blob,
+    type: "avatar" | "product" | "company",
+  ): Promise<any> {
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('type', type);
+    formData.append("file", file);
+    formData.append("type", type);
 
     const headers: HeadersInit = {
-      'X-Platform': this.platform,
+      "X-Platform": this.platform,
     };
 
     const token = this.getToken();
     if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+      headers["Authorization"] = `Bearer ${token}`;
     }
 
     const response = await fetch(`${this.baseURL}/upload`, {
-      method: 'POST',
+      method: "POST",
       headers,
       body: formData,
     });
 
     if (!response.ok) {
-      throw new Error('فشل في رفع الملف');
+      throw new Error("فشل في رفع الملف");
     }
 
     return response.json();
@@ -278,7 +281,7 @@ export class ApiService {
 }
 
 // هوك React للاستخدام في المكونات
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export const useApi = () => {
   const [loading, setLoading] = useState(false);
@@ -291,7 +294,7 @@ export const useApi = () => {
       const result = await apiCall();
       return result;
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'حدث خطأ غير متوقع');
+      setError(err instanceof Error ? err.message : "حدث خطأ غير متوقع");
       return null;
     } finally {
       setLoading(false);

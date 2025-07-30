@@ -472,8 +472,8 @@ export default function MerchantProducts() {
                     ابدأ رحلتك التجارية! 🚀
                   </h3>
                   <p className="text-gray-700 mb-6 arabic">
-                    أهلاً وسهلاً {user?.profile?.name}! متجرك جاهز الآن.
-                    ابدأ بإضافة منتجاتك الأولى لتكون متاحة للعملاء.
+                    أهلاً وسهلاً {user?.profile?.name}! متجرك جاهز الآن. ابدأ
+                    بإضافة منتجاتك الأولى لتكون متاحة للعملاء.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link to="/merchant/products/new">

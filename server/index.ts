@@ -17,7 +17,7 @@ import {
   testEmailConfig,
   testSMSConfig,
   backupDatabase,
-  clearCache
+  clearCache,
 } from "./routes/system";
 import {
   getPages,
@@ -39,7 +39,7 @@ import {
   getTemplates,
   createTemplate,
   getContentSettings,
-  updateContentSettings
+  updateContentSettings,
 } from "./routes/content";
 
 export function createServer() {
@@ -70,9 +70,9 @@ export function createServer() {
   // Health check endpoint
   app.get("/api/health", (req, res) => {
     res.json({
-      status: 'ok',
+      status: "ok",
       timestamp: new Date().toISOString(),
-      server: 'express'
+      server: "express",
     });
   });
 

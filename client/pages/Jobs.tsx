@@ -14,7 +14,7 @@ import {
   Star,
   DollarSign,
   Calendar,
-  Zap
+  Zap,
 } from "lucide-react";
 import { useJobs, JobsService } from "@/lib/jobs";
 import { useState } from "react";
@@ -25,14 +25,18 @@ export default function Jobs() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedType, setSelectedType] = useState<string>("all");
 
-  const filteredJobs = jobs.filter(job => {
-    const matchesSearch = searchQuery === "" ||
+  const filteredJobs = jobs.filter((job) => {
+    const matchesSearch =
+      searchQuery === "" ||
       job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
       job.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase()));
+      job.skills.some((skill) =>
+        skill.toLowerCase().includes(searchQuery.toLowerCase()),
+      );
 
-    const matchesCategory = selectedCategory === "all" || job.category === selectedCategory;
+    const matchesCategory =
+      selectedCategory === "all" || job.category === selectedCategory;
     const matchesType = selectedType === "all" || job.type === selectedType;
 
     return matchesSearch && matchesCategory && matchesType;
@@ -45,7 +49,7 @@ export default function Jobs() {
     { value: "education", label: "التعليم" },
     { value: "healthcare", label: "الصحة والطب" },
     { value: "marketing", label: "التسويق" },
-    { value: "engineering", label: "الهندسة" }
+    { value: "engineering", label: "الهندسة" },
   ];
 
   const jobTypes = [
@@ -54,7 +58,7 @@ export default function Jobs() {
     { value: "part-time", label: "دوام جزئي" },
     { value: "remote", label: "عمل عن بُعد" },
     { value: "contract", label: "تعاقد" },
-    { value: "internship", label: "تدريب" }
+    { value: "internship", label: "تدريب" },
   ];
 
   return (
@@ -135,11 +139,16 @@ export default function Jobs() {
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-6">
                 <Star className="w-5 h-5 text-green-600" />
-                <h2 className="text-xl font-bold text-green-800 arabic">الوظائف المميزة</h2>
+                <h2 className="text-xl font-bold text-green-800 arabic">
+                  الوظائف المميزة
+                </h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {featuredJobs.slice(0, 2).map((job) => (
-                  <div key={job.id} className="bg-white rounded-lg p-4 border border-green-200">
+                  <div
+                    key={job.id}
+                    className="bg-white rounded-lg p-4 border border-green-200"
+                  >
                     <div className="flex items-start gap-3">
                       <img
                         src={job.companyLogo || "/placeholder.svg"}
@@ -147,11 +156,16 @@ export default function Jobs() {
                         className="w-12 h-12 object-cover rounded-lg"
                       />
                       <div className="flex-1">
-                        <h3 className="font-bold text-gray-800 arabic text-sm mb-1">{job.title}</h3>
-                        <p className="text-green-600 text-xs arabic mb-2">{job.company}</p>
+                        <h3 className="font-bold text-gray-800 arabic text-sm mb-1">
+                          {job.title}
+                        </h3>
+                        <p className="text-green-600 text-xs arabic mb-2">
+                          {job.company}
+                        </p>
                         <div className="flex items-center justify-between">
                           <Badge className="bg-green-500 text-white text-xs arabic">
-                            {JobsService.getCategoryIcon(job.category)} {JobsService.getCategoryName(job.category)}
+                            {JobsService.getCategoryIcon(job.category)}{" "}
+                            {JobsService.getCategoryName(job.category)}
                           </Badge>
                           <span className="text-green-600 font-bold text-sm arabic">
                             {JobsService.formatSalary(job.salary)}
@@ -169,7 +183,10 @@ export default function Jobs() {
         {/* Jobs List */}
         <div className="space-y-4 mb-8">
           {filteredJobs.map((job) => (
-            <Card key={job.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer">
+            <Card
+              key={job.id}
+              className="group hover:shadow-lg transition-all duration-300 cursor-pointer"
+            >
               <CardContent className="p-6">
                 <div className="flex flex-col md:flex-row gap-4">
                   {/* Company Logo */}
@@ -205,7 +222,9 @@ export default function Jobs() {
 
                         <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
                           <div className="flex items-center gap-1">
-                            <span className="font-semibold arabic">{job.company}</span>
+                            <span className="font-semibold arabic">
+                              {job.company}
+                            </span>
                           </div>
                           <div className="flex items-center gap-1">
                             <MapPin className="w-4 h-4" />
@@ -213,7 +232,9 @@ export default function Jobs() {
                           </div>
                           <div className="flex items-center gap-1">
                             <Clock className="w-4 h-4" />
-                            <span className="arabic">{JobsService.getTimeAgo(job.postedAt)}</span>
+                            <span className="arabic">
+                              {JobsService.getTimeAgo(job.postedAt)}
+                            </span>
                           </div>
                         </div>
 
@@ -223,10 +244,12 @@ export default function Jobs() {
 
                         <div className="flex flex-wrap gap-2 mb-3">
                           <Badge variant="outline" className="text-xs arabic">
-                            {JobsService.getTypeIcon(job.type)} {JobsService.getTypeName(job.type)}
+                            {JobsService.getTypeIcon(job.type)}{" "}
+                            {JobsService.getTypeName(job.type)}
                           </Badge>
                           <Badge variant="outline" className="text-xs arabic">
-                            {JobsService.getCategoryIcon(job.category)} {JobsService.getCategoryName(job.category)}
+                            {JobsService.getCategoryIcon(job.category)}{" "}
+                            {JobsService.getCategoryName(job.category)}
                           </Badge>
                           <Badge variant="outline" className="text-xs arabic">
                             {job.experience}
@@ -235,12 +258,19 @@ export default function Jobs() {
 
                         <div className="flex flex-wrap gap-1">
                           {job.skills.slice(0, 4).map((skill, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs arabic">
+                            <Badge
+                              key={index}
+                              variant="secondary"
+                              className="text-xs arabic"
+                            >
                               {skill}
                             </Badge>
                           ))}
                           {job.skills.length > 4 && (
-                            <Badge variant="secondary" className="text-xs arabic">
+                            <Badge
+                              variant="secondary"
+                              className="text-xs arabic"
+                            >
                               +{job.skills.length - 4}
                             </Badge>
                           )}
@@ -254,14 +284,21 @@ export default function Jobs() {
                             {JobsService.formatSalary(job.salary)}
                           </div>
                           <div className="text-sm text-gray-500 arabic">
-                            /{job.salary.period === "monthly" ? "شهرياً" : job.salary.period === "yearly" ? "سنوياً" : "بالساعة"}
+                            /
+                            {job.salary.period === "monthly"
+                              ? "شهرياً"
+                              : job.salary.period === "yearly"
+                                ? "سنوياً"
+                                : "بالساعة"}
                           </div>
                         </div>
 
                         <div className="flex items-center gap-4 text-sm text-gray-500">
                           <div className="flex items-center gap-1">
                             <Users className="w-4 h-4" />
-                            <span className="arabic">{job.applicationsCount} متقدم</span>
+                            <span className="arabic">
+                              {job.applicationsCount} متقدم
+                            </span>
                           </div>
                           <div className="flex items-center gap-1">
                             <Eye className="w-4 h-4" />
@@ -272,15 +309,23 @@ export default function Jobs() {
                         <div className="flex items-center gap-1 text-sm text-orange-600">
                           <Calendar className="w-4 h-4" />
                           <span className="arabic">
-                            ينتهي خلال {JobsService.getDaysUntilExpiry(job.expiresAt)} يوم
+                            ينتهي خلال{" "}
+                            {JobsService.getDaysUntilExpiry(job.expiresAt)} يوم
                           </span>
                         </div>
 
                         <div className="flex gap-2">
-                          <Button className="arabic bg-green-600 hover:bg-green-700" size="sm">
+                          <Button
+                            className="arabic bg-green-600 hover:bg-green-700"
+                            size="sm"
+                          >
                             تقدم الآن
                           </Button>
-                          <Button variant="outline" size="sm" className="arabic">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="arabic"
+                          >
                             <ExternalLink className="w-4 h-4 ml-1" />
                             تفاصيل
                           </Button>
@@ -297,10 +342,14 @@ export default function Jobs() {
         {/* Job Categories */}
         <Card className="mb-8">
           <CardContent className="p-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">تصفح حسب المجال</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">
+              تصفح حسب المجال
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {categories.slice(1).map((category) => {
-                const jobCount = jobs.filter(job => job.category === category.value).length;
+                const jobCount = jobs.filter(
+                  (job) => job.category === category.value,
+                ).length;
                 return (
                   <div
                     key={category.value}

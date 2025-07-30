@@ -2,16 +2,16 @@ import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Store, 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Globe, 
-  Star, 
-  Users, 
-  Package, 
-  Calendar, 
+import {
+  Store,
+  MapPin,
+  Phone,
+  Mail,
+  Globe,
+  Star,
+  Users,
+  Package,
+  Calendar,
   Clock,
   Shield,
   Heart,
@@ -21,7 +21,7 @@ import {
   CreditCard,
   Award,
   TrendingUp,
-  Eye
+  Eye,
 } from "lucide-react";
 import { useParams, Link } from "react-router-dom";
 import { StoresService } from "@/lib/stores";
@@ -31,15 +31,17 @@ import { useState } from "react";
 
 export default function StoreDetails() {
   const { id } = useParams<{ id: string }>();
-  const [activeTab, setActiveTab] = useState<'products' | 'reviews' | 'info'>('products');
-  
+  const [activeTab, setActiveTab] = useState<"products" | "reviews" | "info">(
+    "products",
+  );
+
   // الحصول على بيانات المتجر
   const stores = StoresService.getAllStores();
-  const store = stores.find(s => s.id === id);
-  
+  const store = stores.find((s) => s.id === id);
+
   // الحصول على منتجات المتجر
   const storeProducts = ProductService.getProducts(id).slice(0, 6);
-  
+
   if (!store) {
     return (
       <Layout>
@@ -57,10 +59,10 @@ export default function StoreDetails() {
   }
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('ar-SA', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Date(dateString).toLocaleDateString("ar-SA", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -71,7 +73,7 @@ export default function StoreDetails() {
       food: "مطاعم وأغذية",
       services: "خدمات",
       fashion: "أزياء",
-      grocery: "بقالة"
+      grocery: "بقالة",
     };
     return categories[category] || category;
   };
@@ -87,7 +89,7 @@ export default function StoreDetails() {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/40" />
-          
+
           {/* Store Logo & Basic Info */}
           <div className="absolute bottom-6 left-6 right-6">
             <div className="flex items-end gap-4">
@@ -98,8 +100,10 @@ export default function StoreDetails() {
               />
               <div className="flex-1 text-white">
                 <div className="flex items-center gap-2 mb-2">
-                  <h1 className="text-2xl md:text-3xl font-bold arabic">{store.name}</h1>
-                  {store.status === 'active' && (
+                  <h1 className="text-2xl md:text-3xl font-bold arabic">
+                    {store.name}
+                  </h1>
+                  {store.status === "active" && (
                     <Badge className="bg-green-500 text-white">
                       <Shield className="w-3 h-3 ml-1" />
                       متجر موثق
@@ -133,7 +137,12 @@ export default function StoreDetails() {
               <Heart className="w-4 h-4 ml-1" />
               متابعة
             </Button>
-            <SmartLinkButton type="store" id={store.id} title={store.name} className="arabic">
+            <SmartLinkButton
+              type="store"
+              id={store.id}
+              title={store.name}
+              className="arabic"
+            >
               <Share2 className="w-4 h-4 ml-1" />
               مشاركة
             </SmartLinkButton>
@@ -165,31 +174,31 @@ export default function StoreDetails() {
               {/* Tabs */}
               <div className="flex border-b mb-6">
                 <button
-                  onClick={() => setActiveTab('products')}
+                  onClick={() => setActiveTab("products")}
                   className={`px-4 py-2 arabic font-medium ${
-                    activeTab === 'products'
-                      ? 'border-b-2 border-green-500 text-green-600'
-                      : 'text-gray-600 hover:text-gray-800'
+                    activeTab === "products"
+                      ? "border-b-2 border-green-500 text-green-600"
+                      : "text-gray-600 hover:text-gray-800"
                   }`}
                 >
                   المنتجات ({storeProducts.length})
                 </button>
                 <button
-                  onClick={() => setActiveTab('reviews')}
+                  onClick={() => setActiveTab("reviews")}
                   className={`px-4 py-2 arabic font-medium ${
-                    activeTab === 'reviews'
-                      ? 'border-b-2 border-green-500 text-green-600'
-                      : 'text-gray-600 hover:text-gray-800'
+                    activeTab === "reviews"
+                      ? "border-b-2 border-green-500 text-green-600"
+                      : "text-gray-600 hover:text-gray-800"
                   }`}
                 >
                   التقييمات (125)
                 </button>
                 <button
-                  onClick={() => setActiveTab('info')}
+                  onClick={() => setActiveTab("info")}
                   className={`px-4 py-2 arabic font-medium ${
-                    activeTab === 'info'
-                      ? 'border-b-2 border-green-500 text-green-600'
-                      : 'text-gray-600 hover:text-gray-800'
+                    activeTab === "info"
+                      ? "border-b-2 border-green-500 text-green-600"
+                      : "text-gray-600 hover:text-gray-800"
                   }`}
                 >
                   معلومات إضافية
@@ -197,10 +206,14 @@ export default function StoreDetails() {
               </div>
 
               {/* Tab Content */}
-              {activeTab === 'products' && (
+              {activeTab === "products" && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {storeProducts.map((product) => (
-                    <Link key={product.id} to={`/products/${product.id}`} className="block">
+                    <Link
+                      key={product.id}
+                      to={`/products/${product.id}`}
+                      className="block"
+                    >
                       <Card className="hover:shadow-md transition-shadow cursor-pointer">
                         <CardContent className="p-4">
                           <div className="flex gap-3">
@@ -210,7 +223,9 @@ export default function StoreDetails() {
                               className="w-16 h-16 object-cover rounded-lg"
                             />
                             <div className="flex-1">
-                              <h3 className="font-semibold arabic text-sm mb-1">{product.name}</h3>
+                              <h3 className="font-semibold arabic text-sm mb-1">
+                                {product.name}
+                              </h3>
                               <p className="text-xs text-gray-600 arabic line-clamp-2">
                                 {product.description}
                               </p>
@@ -250,7 +265,7 @@ export default function StoreDetails() {
                 </div>
               )}
 
-              {activeTab === 'reviews' && (
+              {activeTab === "reviews" && (
                 <div className="space-y-4">
                   {[1, 2, 3].map((review) => (
                     <Card key={review}>
@@ -261,17 +276,25 @@ export default function StoreDetails() {
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="font-semibold text-sm arabic">أحمد محمد</span>
+                              <span className="font-semibold text-sm arabic">
+                                أحمد محمد
+                              </span>
                               <div className="flex">
                                 {[1, 2, 3, 4, 5].map((star) => (
-                                  <Star key={star} className="w-3 h-3 text-yellow-400 fill-current" />
+                                  <Star
+                                    key={star}
+                                    className="w-3 h-3 text-yellow-400 fill-current"
+                                  />
                                 ))}
                               </div>
                             </div>
                             <p className="text-sm text-gray-600 arabic mb-2">
-                              متجر ممتاز وخدمة عملاء رائعة. المنتجات أصلية وجودة عالية. أنصح بالتسوق من هنا.
+                              متجر ممتاز وخدمة عملاء رائعة. المنتجات أصلية وجودة
+                              عالية. أنصح بالتسوق من هنا.
                             </p>
-                            <span className="text-xs text-gray-400">منذ أسبوع</span>
+                            <span className="text-xs text-gray-400">
+                              منذ أسبوع
+                            </span>
                           </div>
                         </div>
                       </CardContent>
@@ -285,32 +308,40 @@ export default function StoreDetails() {
                 </div>
               )}
 
-              {activeTab === 'info' && (
+              {activeTab === "info" && (
                 <div className="space-y-6">
                   <Card>
                     <CardContent className="p-6">
-                      <h3 className="text-lg font-bold mb-4 arabic">عن المتجر</h3>
+                      <h3 className="text-lg font-bold mb-4 arabic">
+                        عن المتجر
+                      </h3>
                       <p className="text-gray-600 arabic leading-relaxed">
-                        {store.description} 
+                        {store.description}
                       </p>
                       <p className="text-gray-600 arabic leading-relaxed mt-4">
-                        نحن متخصصون في تقديم أفضل المنتجات السودانية الأصيلة بجودة عالية وأسعار منافسة. 
-                        فريقنا ملتزم بتقديم خدمة عملاء ممتازة وضمان رضا العملاء.
+                        نحن متخصصون في تقديم أفضل المنتجات السودانية الأصيلة
+                        بجودة عالية وأسعار منافسة. فريقنا ملتزم بتقديم خدمة
+                        عملاء ممتازة وضمان رضا العملاء.
                       </p>
                     </CardContent>
                   </Card>
 
                   <Card>
                     <CardContent className="p-6">
-                      <h3 className="text-lg font-bold mb-4 arabic">سياسات المتجر</h3>
+                      <h3 className="text-lg font-bold mb-4 arabic">
+                        سياسات المتجر
+                      </h3>
                       <div className="space-y-4">
                         <div className="flex items-start gap-3">
                           <Truck className="w-5 h-5 text-green-600 mt-1" />
                           <div>
-                            <h4 className="font-semibold arabic">الشحن والتوصيل</h4>
+                            <h4 className="font-semibold arabic">
+                              الشحن والتوصيل
+                            </h4>
                             <p className="text-sm text-gray-600 arabic">
-                              شحن مجاني للطلبات فوق {store.settings.shipping.freeShippingThreshold} ريال. 
-                              التوصيل خلال 2-5 أيام عمل.
+                              شحن مجاني للطلبات فوق{" "}
+                              {store.settings.shipping.freeShippingThreshold}{" "}
+                              ريال. التوصيل خلال 2-5 أيام عمل.
                             </p>
                           </div>
                         </div>
@@ -319,16 +350,20 @@ export default function StoreDetails() {
                           <div>
                             <h4 className="font-semibold arabic">طرق الدفع</h4>
                             <p className="text-sm text-gray-600 arabic">
-                              نقبل جميع طرق الدفع: البطاقات الائتمانية، التحويل البنكي، الدفع عند التسليم.
+                              نقبل جميع طرق الدفع: البطاقات الائتمانية، التحويل
+                              البنكي، الدفع عند التسليم.
                             </p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3">
                           <Shield className="w-5 h-5 text-purple-600 mt-1" />
                           <div>
-                            <h4 className="font-semibold arabic">سياسة الإرجاع</h4>
+                            <h4 className="font-semibold arabic">
+                              سياسة الإرجاع
+                            </h4>
                             <p className="text-sm text-gray-600 arabic">
-                              إمكانية الإرجاع خلال 15 يوم من تاريخ الاستلام مع ضمان استرداد المبلغ كاملاً.
+                              إمكانية الإرجاع خلال 15 يوم من تاريخ الاستلام مع
+                              ضمان استرداد المبلغ كاملاً.
                             </p>
                           </div>
                         </div>
@@ -344,24 +379,39 @@ export default function StoreDetails() {
               {/* Store Stats */}
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-bold mb-4 arabic">إحصائيات المتجر</h3>
+                  <h3 className="text-lg font-bold mb-4 arabic">
+                    إحصائيات المتجر
+                  </h3>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-600 arabic">إجمالي المشاهدات</span>
-                      <span className="font-semibold">{store.analytics.totalViews.toLocaleString()}</span>
+                      <span className="text-gray-600 arabic">
+                        إجمالي المشاهدات
+                      </span>
+                      <span className="font-semibold">
+                        {store.analytics.totalViews.toLocaleString()}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-600 arabic">إجمالي الطلبات</span>
-                      <span className="font-semibold">{store.analytics.totalOrders}</span>
+                      <span className="text-gray-600 arabic">
+                        إجمالي الطلبات
+                      </span>
+                      <span className="font-semibold">
+                        {store.analytics.totalOrders}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-600 arabic">تاريخ التأسيس</span>
-                      <span className="font-semibold arabic">{formatDate(store.createdAt)}</span>
+                      <span className="text-gray-600 arabic">
+                        تاريخ التأسيس
+                      </span>
+                      <span className="font-semibold arabic">
+                        {formatDate(store.createdAt)}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-gray-600 arabic">الفئة</span>
                       <Badge variant="outline" className="arabic">
-                        {StoresService.getCategoryIcon(store.category)} {getCategoryName(store.category)}
+                        {StoresService.getCategoryIcon(store.category)}{" "}
+                        {getCategoryName(store.category)}
                       </Badge>
                     </div>
                   </div>
@@ -371,11 +421,15 @@ export default function StoreDetails() {
               {/* Contact Info */}
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-bold mb-4 arabic">معلومات التواصل</h3>
+                  <h3 className="text-lg font-bold mb-4 arabic">
+                    معلومات التواصل
+                  </h3>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
                       <Mail className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm">info@{store.name.replace(/\s+/g, '').toLowerCase()}.com</span>
+                      <span className="text-sm">
+                        info@{store.name.replace(/\s+/g, "").toLowerCase()}.com
+                      </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <Phone className="w-4 h-4 text-gray-400" />
@@ -383,11 +437,15 @@ export default function StoreDetails() {
                     </div>
                     <div className="flex items-center gap-3">
                       <Globe className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm">www.{store.name.replace(/\s+/g, '').toLowerCase()}.com</span>
+                      <span className="text-sm">
+                        www.{store.name.replace(/\s+/g, "").toLowerCase()}.com
+                      </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <Clock className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm arabic">السبت - الخميس: 9:00 - 18:00</span>
+                      <span className="text-sm arabic">
+                        السبت - الخميس: 9:00 - 18:00
+                      </span>
                     </div>
                   </div>
                 </CardContent>
@@ -397,7 +455,9 @@ export default function StoreDetails() {
               <Card className="bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
                 <CardContent className="p-6 text-center">
                   <Award className="w-12 h-12 text-green-600 mx-auto mb-3" />
-                  <h3 className="font-bold text-green-800 mb-2 arabic">متجر موثق</h3>
+                  <h3 className="font-bold text-green-800 mb-2 arabic">
+                    متجر موثق
+                  </h3>
                   <p className="text-sm text-green-700 arabic">
                     هذا المتجر معتمد ومتوافق مع معايير الجودة والأمان
                   </p>
@@ -407,26 +467,39 @@ export default function StoreDetails() {
               {/* Similar Stores */}
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-bold mb-4 arabic">متاجر مشابهة</h3>
+                  <h3 className="text-lg font-bold mb-4 arabic">
+                    متاجر مشابهة
+                  </h3>
                   <div className="space-y-3">
-                    {stores.filter(s => s.category === store.category && s.id !== store.id).slice(0, 3).map((similarStore) => (
-                      <Link key={similarStore.id} to={`/store/${similarStore.id}`}>
-                        <div className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
-                          <img
-                            src={similarStore.logo || "/placeholder.svg"}
-                            alt={similarStore.name}
-                            className="w-10 h-10 rounded-lg object-cover"
-                          />
-                          <div className="flex-1">
-                            <h4 className="font-semibold text-sm arabic">{similarStore.name}</h4>
-                            <div className="flex items-center gap-1">
-                              <Star className="w-3 h-3 text-yellow-400" />
-                              <span className="text-xs">4.8</span>
+                    {stores
+                      .filter(
+                        (s) =>
+                          s.category === store.category && s.id !== store.id,
+                      )
+                      .slice(0, 3)
+                      .map((similarStore) => (
+                        <Link
+                          key={similarStore.id}
+                          to={`/store/${similarStore.id}`}
+                        >
+                          <div className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
+                            <img
+                              src={similarStore.logo || "/placeholder.svg"}
+                              alt={similarStore.name}
+                              className="w-10 h-10 rounded-lg object-cover"
+                            />
+                            <div className="flex-1">
+                              <h4 className="font-semibold text-sm arabic">
+                                {similarStore.name}
+                              </h4>
+                              <div className="flex items-center gap-1">
+                                <Star className="w-3 h-3 text-yellow-400" />
+                                <span className="text-xs">4.8</span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </Link>
-                    ))}
+                        </Link>
+                      ))}
                   </div>
                 </CardContent>
               </Card>

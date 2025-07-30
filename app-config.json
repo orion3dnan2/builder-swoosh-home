@@ -35,13 +35,7 @@
     "sound": true,
     "badge": true,
     "alert": true,
-    "topics": [
-      "general",
-      "jobs",
-      "products",
-      "companies",
-      "services"
-    ]
+    "topics": ["general", "jobs", "products", "companies", "services"]
   },
   "features": {
     "offline_mode": true,

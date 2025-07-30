@@ -3,7 +3,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { ShoppingBag, Filter, Search, MapPin, Star, Eye, ShoppingCart } from "lucide-react";
+import {
+  ShoppingBag,
+  Filter,
+  Search,
+  MapPin,
+  Star,
+  Eye,
+  ShoppingCart,
+} from "lucide-react";
 import { useStores, StoresService } from "@/lib/stores";
 import { useState } from "react";
 
@@ -12,12 +20,14 @@ export default function Marketplace() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  const filteredStores = stores.filter(store => {
-    const matchesSearch = searchQuery === "" ||
+  const filteredStores = stores.filter((store) => {
+    const matchesSearch =
+      searchQuery === "" ||
       store.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       store.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesCategory = selectedCategory === "all" || store.category === selectedCategory;
+    const matchesCategory =
+      selectedCategory === "all" || store.category === selectedCategory;
 
     return matchesSearch && matchesCategory && store.status === "active";
   });
@@ -29,7 +39,7 @@ export default function Marketplace() {
     { value: "food", label: "مطاعم" },
     { value: "fashion", label: "أزياء" },
     { value: "grocery", label: "بقالة" },
-    { value: "services", label: "خدمات" }
+    { value: "services", label: "خدمات" },
   ];
 
   return (
@@ -96,7 +106,10 @@ export default function Marketplace() {
         {/* Stores Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {filteredStores.map((store) => (
-            <Card key={store.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer">
+            <Card
+              key={store.id}
+              className="group hover:shadow-lg transition-all duration-300 cursor-pointer"
+            >
               <div className="relative">
                 <img
                   src={store.coverImage || "/placeholder.svg"}
@@ -104,8 +117,12 @@ export default function Marketplace() {
                   className="w-full h-48 object-cover rounded-t-lg"
                 />
                 <div className="absolute top-4 right-4">
-                  <Badge variant="secondary" className="arabic bg-white/90 text-gray-700">
-                    {StoresService.getCategoryIcon(store.category)} {categories.find(c => c.value === store.category)?.label}
+                  <Badge
+                    variant="secondary"
+                    className="arabic bg-white/90 text-gray-700"
+                  >
+                    {StoresService.getCategoryIcon(store.category)}{" "}
+                    {categories.find((c) => c.value === store.category)?.label}
                   </Badge>
                 </div>
                 {store.status === "active" && (
@@ -137,11 +154,15 @@ export default function Marketplace() {
                 <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                   <div className="flex items-center gap-2">
                     <Eye className="w-4 h-4" />
-                    <span className="arabic">{store.analytics.totalViews.toLocaleString()} مشاهدة</span>
+                    <span className="arabic">
+                      {store.analytics.totalViews.toLocaleString()} مشاهدة
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <ShoppingCart className="w-4 h-4" />
-                    <span className="arabic">{store.analytics.totalOrders} طلب</span>
+                    <span className="arabic">
+                      {store.analytics.totalOrders} طلب
+                    </span>
                   </div>
                 </div>
 

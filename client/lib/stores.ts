@@ -6,7 +6,8 @@ export class StoresService {
       id: "store-001",
       merchantId: "merchant-001",
       name: "متجر التراث السوداني",
-      description: "متخصص في المنتجات التراثية والحرف اليدوية السودانية الأصيلة",
+      description:
+        "متخصص في المنتجات التراثية والحرف اليدوية السودانية الأصيلة",
       logo: "/placeholder.svg",
       coverImage: "/placeholder.svg",
       category: "traditional",
@@ -17,27 +18,27 @@ export class StoresService {
         theme: {
           primaryColor: "#22C55E",
           secondaryColor: "#16A34A",
-          layout: "grid"
+          layout: "grid",
         },
         notifications: {
           newOrders: true,
           lowStock: true,
-          reviews: true
+          reviews: true,
         },
         shipping: {
           freeShippingThreshold: 200,
           shippingRates: [
             { zone: "الخليج", rate: 25, estimatedDays: 3 },
-            { zone: "أوروبا", rate: 50, estimatedDays: 7 }
-          ]
-        }
+            { zone: "أوروبا", rate: 50, estimatedDays: 7 },
+          ],
+        },
       },
       analytics: {
         totalViews: 1250,
         totalOrders: 85,
         totalRevenue: 12750,
-        monthlyStats: []
-      }
+        monthlyStats: [],
+      },
     },
     {
       id: "store-002",
@@ -54,27 +55,27 @@ export class StoresService {
         theme: {
           primaryColor: "#8B5CF6",
           secondaryColor: "#7C3AED",
-          layout: "list"
+          layout: "list",
         },
         notifications: {
           newOrders: true,
           lowStock: false,
-          reviews: true
+          reviews: true,
         },
         shipping: {
           freeShippingThreshold: 150,
           shippingRates: [
             { zone: "الخليج", rate: 20, estimatedDays: 2 },
-            { zone: "أمريكا", rate: 75, estimatedDays: 10 }
-          ]
-        }
+            { zone: "أمريكا", rate: 75, estimatedDays: 10 },
+          ],
+        },
       },
       analytics: {
         totalViews: 950,
         totalOrders: 62,
         totalRevenue: 8900,
-        monthlyStats: []
-      }
+        monthlyStats: [],
+      },
     },
     {
       id: "store-003",
@@ -91,26 +92,24 @@ export class StoresService {
         theme: {
           primaryColor: "#EF4444",
           secondaryColor: "#DC2626",
-          layout: "grid"
+          layout: "grid",
         },
         notifications: {
           newOrders: true,
           lowStock: true,
-          reviews: true
+          reviews: true,
         },
         shipping: {
           freeShippingThreshold: 100,
-          shippingRates: [
-            { zone: "محلي", rate: 15, estimatedDays: 1 }
-          ]
-        }
+          shippingRates: [{ zone: "محلي", rate: 15, estimatedDays: 1 }],
+        },
       },
       analytics: {
         totalViews: 2100,
         totalOrders: 156,
         totalRevenue: 18500,
-        monthlyStats: []
-      }
+        monthlyStats: [],
+      },
     },
     {
       id: "store-004",
@@ -127,24 +126,24 @@ export class StoresService {
         theme: {
           primaryColor: "#3B82F6",
           secondaryColor: "#2563EB",
-          layout: "list"
+          layout: "list",
         },
         notifications: {
           newOrders: true,
           lowStock: false,
-          reviews: true
+          reviews: true,
         },
         shipping: {
           freeShippingThreshold: 0,
-          shippingRates: []
-        }
+          shippingRates: [],
+        },
       },
       analytics: {
         totalViews: 680,
         totalOrders: 24,
         totalRevenue: 15600,
-        monthlyStats: []
-      }
+        monthlyStats: [],
+      },
     },
     {
       id: "store-005",
@@ -161,33 +160,34 @@ export class StoresService {
         theme: {
           primaryColor: "#EC4899",
           secondaryColor: "#DB2777",
-          layout: "grid"
+          layout: "grid",
         },
         notifications: {
           newOrders: true,
           lowStock: true,
-          reviews: true
+          reviews: true,
         },
         shipping: {
           freeShippingThreshold: 300,
           shippingRates: [
             { zone: "الخليج", rate: 30, estimatedDays: 4 },
-            { zone: "أفريقيا", rate: 60, estimatedDays: 8 }
-          ]
-        }
+            { zone: "أفريقيا", rate: 60, estimatedDays: 8 },
+          ],
+        },
       },
       analytics: {
         totalViews: 1580,
         totalOrders: 98,
         totalRevenue: 22400,
-        monthlyStats: []
-      }
+        monthlyStats: [],
+      },
     },
     {
       id: "store-006",
       merchantId: "merchant-006",
       name: "سوبر ماركت الخرطوم",
-      description: "جميع احتياجاتك اليومية من المواد الغذائية والمنتجات المنزلية",
+      description:
+        "جميع احتياجاتك اليومية من المواد الغذائية والمنتجات المنزلية",
       logo: "/placeholder.svg",
       coverImage: "/placeholder.svg",
       category: "grocery",
@@ -198,35 +198,36 @@ export class StoresService {
         theme: {
           primaryColor: "#10B981",
           secondaryColor: "#059669",
-          layout: "list"
+          layout: "list",
         },
         notifications: {
           newOrders: true,
           lowStock: true,
-          reviews: false
+          reviews: false,
         },
         shipping: {
           freeShippingThreshold: 120,
           shippingRates: [
             { zone: "الخرطوم", rate: 10, estimatedDays: 1 },
-            { zone: "الخليج", rate: 45, estimatedDays: 5 }
-          ]
-        }
+            { zone: "الخليج", rate: 45, estimatedDays: 5 },
+          ],
+        },
       },
       analytics: {
         totalViews: 3200,
         totalOrders: 245,
         totalRevenue: 35600,
-        monthlyStats: []
-      }
-    }
+        monthlyStats: [],
+      },
+    },
   ];
 
   private static demoServices = [
     {
       id: "service-001",
       name: "خدمات الصيانة المنزلية",
-      description: "صيانة جميع الأجهزة المنزلية والكهربائية بخبرة سودانية متميزة",
+      description:
+        "صيانة جميع الأجهزة المنزلية والكهربائية بخبرة سودانية متميزة",
       category: "maintenance",
       provider: "شركة الخرطوم للصيانة",
       rating: 4.8,
@@ -235,7 +236,7 @@ export class StoresService {
       image: "/placeholder.svg",
       tags: ["صيانة", "كهرباء", "سباكة", "تكييف"],
       availability: "متاح على مدار الساعة",
-      location: "الرياض، جدة، الدمام"
+      location: "الرياض، جدة، الدمام",
     },
     {
       id: "service-002",
@@ -249,7 +250,7 @@ export class StoresService {
       image: "/placeholder.svg",
       tags: ["تصميم", "شعارات", "هوية بصرية", "تسويق"],
       availability: "من الأحد إلى الخميس",
-      location: "عن بُعد - جميع المناطق"
+      location: "عن بُعد - جميع المناطق",
     },
     {
       id: "service-003",
@@ -263,7 +264,7 @@ export class StoresService {
       image: "/placeholder.svg",
       tags: ["طبخ", "وجبات تقليدية", "مناسبات", "ضيافة"],
       availability: "يجب الحجز مسبقاً",
-      location: "الرياض والمناطق المجاورة"
+      location: "الرياض والمناطق المجاورة",
     },
     {
       id: "service-004",
@@ -277,15 +278,16 @@ export class StoresService {
       image: "/placeholder.svg",
       tags: ["تعليم", "رياضيات", "فيزياء", "لغات"],
       availability: "مساءً وعطلة نهاية الأسبوع",
-      location: "عن بُعد أو في المنزل"
-    }
+      location: "عن بُعد أو في المنزل",
+    },
   ];
 
   private static demoAds = [
     {
       id: "ad-001",
       title: "خصم 50% على جميع العطور",
-      description: "عرض خاص لفترة محدودة على جميع أنواع العطور والبخور السودانية",
+      description:
+        "عرض خاص لفترة محدودة على جميع أنواع العطور والبخور السودانية",
       image: "/placeholder.svg",
       advertiser: "عطور الشرق",
       category: "perfumes",
@@ -294,7 +296,7 @@ export class StoresService {
       originalPrice: 200,
       salePrice: 100,
       location: "جميع فروعنا في الخليج",
-      featured: true
+      featured: true,
     },
     {
       id: "ad-002",
@@ -308,7 +310,7 @@ export class StoresService {
       originalPrice: 150,
       salePrice: 100,
       location: "فرع الرياض فقط",
-      featured: true
+      featured: true,
     },
     {
       id: "ad-003",
@@ -322,7 +324,7 @@ export class StoresService {
       originalPrice: 5000,
       salePrice: 3500,
       location: "خدمة عن بُعد",
-      featured: false
+      featured: false,
     },
     {
       id: "ad-004",
@@ -336,8 +338,8 @@ export class StoresService {
       originalPrice: 250,
       salePrice: 150,
       location: "المتجر الإلكتروني",
-      featured: true
-    }
+      featured: true,
+    },
   ];
 
   static getAllStores(): Store[] {
@@ -345,7 +347,7 @@ export class StoresService {
   }
 
   static getStoresByCategory(category: string): Store[] {
-    return this.demoStores.filter(store => store.category === category);
+    return this.demoStores.filter((store) => store.category === category);
   }
 
   static getRestaurants(): Store[] {
@@ -353,15 +355,16 @@ export class StoresService {
   }
 
   static getActiveStores(): Store[] {
-    return this.demoStores.filter(store => store.status === "active");
+    return this.demoStores.filter((store) => store.status === "active");
   }
 
   static searchStores(query: string): Store[] {
     const searchTerm = query.toLowerCase();
-    return this.demoStores.filter(store => 
-      store.name.toLowerCase().includes(searchTerm) ||
-      store.description.toLowerCase().includes(searchTerm) ||
-      store.category.toLowerCase().includes(searchTerm)
+    return this.demoStores.filter(
+      (store) =>
+        store.name.toLowerCase().includes(searchTerm) ||
+        store.description.toLowerCase().includes(searchTerm) ||
+        store.category.toLowerCase().includes(searchTerm),
     );
   }
 
@@ -371,11 +374,12 @@ export class StoresService {
 
   static searchServices(query: string) {
     const searchTerm = query.toLowerCase();
-    return this.demoServices.filter(service =>
-      service.name.toLowerCase().includes(searchTerm) ||
-      service.description.toLowerCase().includes(searchTerm) ||
-      service.category.toLowerCase().includes(searchTerm) ||
-      service.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+    return this.demoServices.filter(
+      (service) =>
+        service.name.toLowerCase().includes(searchTerm) ||
+        service.description.toLowerCase().includes(searchTerm) ||
+        service.category.toLowerCase().includes(searchTerm) ||
+        service.tags.some((tag) => tag.toLowerCase().includes(searchTerm)),
     );
   }
 
@@ -384,16 +388,17 @@ export class StoresService {
   }
 
   static getFeaturedAds() {
-    return this.demoAds.filter(ad => ad.featured);
+    return this.demoAds.filter((ad) => ad.featured);
   }
 
   static searchAds(query: string) {
     const searchTerm = query.toLowerCase();
-    return this.demoAds.filter(ad =>
-      ad.title.toLowerCase().includes(searchTerm) ||
-      ad.description.toLowerCase().includes(searchTerm) ||
-      ad.advertiser.toLowerCase().includes(searchTerm) ||
-      ad.category.toLowerCase().includes(searchTerm)
+    return this.demoAds.filter(
+      (ad) =>
+        ad.title.toLowerCase().includes(searchTerm) ||
+        ad.description.toLowerCase().includes(searchTerm) ||
+        ad.advertiser.toLowerCase().includes(searchTerm) ||
+        ad.category.toLowerCase().includes(searchTerm),
     );
   }
 
@@ -408,7 +413,7 @@ export class StoresService {
       maintenance: "🔧",
       design: "🎨",
       cooking: "👩‍🍳",
-      education: "📚"
+      education: "📚",
     };
     return icons[category] || "🏪";
   }
@@ -421,14 +426,14 @@ export const useStores = () => {
     restaurants: StoresService.getRestaurants(),
     activeStores: StoresService.getActiveStores(),
     searchStores: StoresService.searchStores,
-    getStoresByCategory: StoresService.getStoresByCategory
+    getStoresByCategory: StoresService.getStoresByCategory,
   };
 };
 
 export const useServices = () => {
   return {
     services: StoresService.getServices(),
-    searchServices: StoresService.searchServices
+    searchServices: StoresService.searchServices,
   };
 };
 
@@ -436,6 +441,6 @@ export const useAds = () => {
   return {
     ads: StoresService.getAds(),
     featuredAds: StoresService.getFeaturedAds(),
-    searchAds: StoresService.searchAds
+    searchAds: StoresService.searchAds,
   };
 };

@@ -30,7 +30,7 @@ import {
   Star,
   AlertTriangle,
   CheckCircle,
-  RefreshCw
+  RefreshCw,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -90,20 +90,26 @@ export default function MerchantSettings() {
 
   // Store Settings State - فارغة للتجار الجدد
   const [storeSettings, setStoreSettings] = useState<StoreSettings>({
-    storeName: isNewMerchant ? (user?.profile?.businessName || "") : "متجر الخير السوداني",
-    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
+    storeName: isNewMerchant
+      ? user?.profile?.businessName || ""
+      : "متجر الخير السوداني",
+    description: isNewMerchant
+      ? ""
+      : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
-    phone: isNewMerchant ? (user?.profile?.phone || "") : "+966501234567",
-    email: isNewMerchant ? (user?.email || "") : "store@alkhair-sudani.com",
+    phone: isNewMerchant ? user?.profile?.phone || "" : "+966501234567",
+    email: isNewMerchant ? user?.email || "" : "store@alkhair-sudani.com",
     address: isNewMerchant ? "" : "شارع الملك فهد، حي النرجس",
-    city: isNewMerchant ? (user?.profile?.city || "") : "الرياض",
+    city: isNewMerchant ? user?.profile?.city || "" : "الرياض",
     workingHours: {
       start: isNewMerchant ? "09:00" : "09:00",
       end: isNewMerchant ? "17:00" : "22:00",
-      days: isNewMerchant ? [] : ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"]
+      days: isNewMerchant
+        ? []
+        : ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"],
     },
     logo: "/placeholder.svg",
-    banner: "/placeholder.svg"
+    banner: "/placeholder.svg",
   });
 
   // Notification Settings State - إعدادات افتراضية للتجار الجدد
@@ -115,7 +121,7 @@ export default function MerchantSettings() {
     reviews: true,
     promotions: false,
     smsNotifications: isNewMerchant ? false : true,
-    emailNotifications: true
+    emailNotifications: true,
   });
 
   // Shipping Settings State - قيم افتراضية للتجار الجدد
@@ -124,7 +130,9 @@ export default function MerchantSettings() {
     standardShippingCost: isNewMerchant ? 15 : 25,
     expressShippingCost: isNewMerchant ? 30 : 50,
     processingTime: isNewMerchant ? "1-3 أيام عمل" : "1-2 أيام عمل",
-    shippingAreas: isNewMerchant ? [] : ["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة"]
+    shippingAreas: isNewMerchant
+      ? []
+      : ["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة"],
   });
 
   const [accountSettings, setAccountSettings] = useState({
@@ -132,7 +140,7 @@ export default function MerchantSettings() {
     newPassword: "",
     confirmPassword: "",
     twoFactorAuth: false,
-    loginNotifications: true
+    loginNotifications: true,
   });
 
   // معالجة تغيير الشعار
@@ -140,25 +148,25 @@ export default function MerchantSettings() {
     const file = event.target.files?.[0];
     if (file) {
       // التحق�� من نوع الملف
-      if (!file.type.startsWith('image/')) {
-        alert('يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG)');
+      if (!file.type.startsWith("image/")) {
+        alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG)");
         return;
       }
 
       // ��لتحقق من حجم الملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
-        alert('حجم الصورة يجب أن يكون أقل من 5 ميجابايت');
+        alert("حجم الصورة يجب أن يكون أقل من 5 ميجابايت");
         return;
       }
 
       const reader = new FileReader();
       reader.onload = (e) => {
         const logoUrl = e.target?.result as string;
-        setStoreSettings({...storeSettings, logo: logoUrl});
-        alert('تم تحديث شعار المتجر بنجاح! 🎉');
+        setStoreSettings({ ...storeSettings, logo: logoUrl });
+        alert("تم تحديث شعار المتجر بنجاح! 🎉");
       };
       reader.onerror = () => {
-        alert('فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.');
+        alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
       };
       reader.readAsDataURL(file);
     }
@@ -169,26 +177,31 @@ export default function MerchantSettings() {
     const file = event.target.files?.[0];
     if (file) {
       // التحقق من نوع الملف
-      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+      const allowedTypes = [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/webp",
+      ];
       if (!allowedTypes.includes(file.type)) {
-        alert('يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG, أو WebP)');
+        alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG, أو WebP)");
         return;
       }
 
       // التحقق من حجم الملف (أقل من 10 ميجابايت)
       if (file.size > 10 * 1024 * 1024) {
-        alert('حجم الصورة يجب أن ��كون أقل من 10 ميجابايت');
+        alert("حجم الصورة يجب أن ��كون أقل من 10 ميجابايت");
         return;
       }
 
       const reader = new FileReader();
       reader.onload = (e) => {
         const bannerUrl = e.target?.result as string;
-        setStoreSettings({...storeSettings, banner: bannerUrl});
-        alert('تم تحديث غلاف المتجر بنجاح! 🎨');
+        setStoreSettings({ ...storeSettings, banner: bannerUrl });
+        alert("تم تحديث غلاف المتجر بنجاح! 🎨");
       };
       reader.onerror = () => {
-        alert('فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.');
+        alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
       };
       reader.readAsDataURL(file);
     }
@@ -196,17 +209,17 @@ export default function MerchantSettings() {
 
   // حذف الشعار
   const handleRemoveLogo = () => {
-    if (window.confirm('هل أنت متأكد من حذف شعار المتجر؟')) {
-      setStoreSettings({...storeSettings, logo: '/placeholder.svg'});
-      alert('تم حذف الشعار بنجاح');
+    if (window.confirm("هل أنت متأكد من حذف شعار المتجر؟")) {
+      setStoreSettings({ ...storeSettings, logo: "/placeholder.svg" });
+      alert("تم حذف الشعار بنجاح");
     }
   };
 
   // حذف الغلاف
   const handleRemoveBanner = () => {
-    if (window.confirm('هل أنت متأكد من حذف غلاف المتجر؟')) {
-      setStoreSettings({...storeSettings, banner: '/placeholder.svg'});
-      alert('تم حذف الغلاف بنجاح');
+    if (window.confirm("هل أنت متأكد من حذف غلاف المتجر؟")) {
+      setStoreSettings({ ...storeSettings, banner: "/placeholder.svg" });
+      alert("تم حذف الغلاف بنجاح");
     }
   };
 
@@ -251,18 +264,27 @@ export default function MerchantSettings() {
 
     try {
       // محاكاة استدعاء API
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
       // عرض رسالة نجاح
-      alert("🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.");
+      alert(
+        "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.",
+      );
 
       // حفظ البيانات محلياً كنسخة احتياطية
-      localStorage.setItem('storeSettings', JSON.stringify({...storeSettings, selectedCountry}));
-      localStorage.setItem('notificationSettings', JSON.stringify(notifications));
-      localStorage.setItem('shippingSettings', JSON.stringify(shipping));
-
+      localStorage.setItem(
+        "storeSettings",
+        JSON.stringify({ ...storeSettings, selectedCountry }),
+      );
+      localStorage.setItem(
+        "notificationSettings",
+        JSON.stringify(notifications),
+      );
+      localStorage.setItem("shippingSettings", JSON.stringify(shipping));
     } catch (error) {
-      alert("❌ حدث خطأ أثناء حفظ الإعدادات.\n\nيرجى التحقق من اتصال الإنترنت و��لمحاولة مرة أخرى.");
+      alert(
+        "❌ حدث خطأ أثناء حفظ الإعدادات.\n\nيرجى التحقق من اتصال الإنترنت و��لمحاولة مرة أخرى.",
+      );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
       setIsSaving(false);
@@ -273,7 +295,7 @@ export default function MerchantSettings() {
     { id: "store", label: "بيانات المتجر", icon: Store },
     { id: "notifications", label: "الإشعارات", icon: Bell },
     { id: "shipping", label: "الشحن والتوصيل", icon: Truck },
-    { id: "account", label: "الحساب والأمان", icon: Shield }
+    { id: "account", label: "الحساب والأمان", icon: Shield },
   ];
 
   // أنواع المتاجر المحددة مسبقاً (يمكن تعديلها من قبل الإدارة)
@@ -287,56 +309,88 @@ export default function MerchantSettings() {
     "صحة ورياضة",
     "حرف يدوية وت��ليدية",
     "خدمات عامة",
-    "أخرى (حدد النوع)"
+    "أخرى (حدد النوع)",
   ];
 
   const cities = [
     "الرياض، المملكة العربية السعودية",
-    "جدة، المملكة العربية الس����دية", 
+    "جدة، المملكة العربية الس����دية",
     "الدمام، المملكة العربية السعودية",
     "مكة المكرمة، المملكة العربية السعودية",
     "المدينة المنورة، المملكة العربية السعودية",
     "الطا��ف، الم��لكة العربية السعودية",
     "الخبر، المملكة العربية السعودية",
-    "الأحساء، المملكة العربية السعودية"
+    "الأحساء، المملكة العربية السعودية",
   ];
 
   const workingDays = [
-    "السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"
+    "السبت",
+    "الأحد",
+    "الاثنين",
+    "الثلاثاء",
+    "الأربعاء",
+    "الخميس",
+    "الجمعة",
   ];
 
   // قائمة الدول والمدن التابعة لها
   const countriesWithCities = {
     "المملكة العربية السعودية": [
-      "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة",
-      "الطائف", "الخبر", "الأحساء", "تبوك", "أبها", "جازان", "نجران"
+      "الرياض",
+      "جدة",
+      "الدمام",
+      "مكة المكرمة",
+      "المدينة المنورة",
+      "الطائف",
+      "الخبر",
+      "الأحساء",
+      "تبوك",
+      "أبها",
+      "جازان",
+      "نجران",
     ],
     "الإمارات العربية المتح��ة": [
-      "دبي", "أبوظبي", "الشارقة", "عجمان", "رأس الخيمة", "الفجيرة", "أم القيوين"
+      "دبي",
+      "أبوظبي",
+      "الشارقة",
+      "عجمان",
+      "رأس الخيمة",
+      "الفجيرة",
+      "أم القيوين",
     ],
     "دولة الكويت": [
-      "مدينة الكويت", "��لأحمدي", "الجهراء", "مبارك الكبير", "الفروانية", "حولي"
+      "مدينة الكويت",
+      "��لأحمدي",
+      "الجهراء",
+      "مبارك الكبير",
+      "الفروانية",
+      "حولي",
     ],
-    "دولة قطر": [
-      "الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"
-    ],
-    "مملكة البحرين": [
-      "المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"
-    ],
-    "سلطنة عمان": [
-      "مسقط", "صلالة", "نزوى", "صور", "ا��رستاق", "صحار"
-    ],
+    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"],
+    "مملكة البحرين": ["المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
+    "سلطنة عمان": ["مسقط", "صلالة", "نزوى", "صور", "ا��رستاق", "صحار"],
     "جمهورية مصر العربية": [
-      "القاهرة", "الإسكندرية", "الجيزة", "الأقصر", "أسوان", "بورسعيد", "السويس"
+      "القاهرة",
+      "الإسكندرية",
+      "الجيزة",
+      "الأقصر",
+      "أسوان",
+      "بورسعيد",
+      "السويس",
     ],
     "المملكة الأردنية الهاشمية": [
-      "عمان", "إربد", "الزرقاء", "العقبة", "السلط", "مادبا"
-    ]
+      "عمان",
+      "إربد",
+      "الزرقاء",
+      "العقبة",
+      "السلط",
+      "مادبا",
+    ],
   };
 
   // إضافة حالات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
-    isNewMerchant ? (user?.profile?.country || "") : "المملكة العربية السعودية"
+    isNewMerchant ? user?.profile?.country || "" : "المملكة العربية السعودية",
   );
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
@@ -345,10 +399,10 @@ export default function MerchantSettings() {
   const handleCategoryChange = (value: string) => {
     if (value === "أخرى (حدد النوع)") {
       setShowCustomCategory(true);
-      setStoreSettings({...storeSettings, category: ""});
+      setStoreSettings({ ...storeSettings, category: "" });
     } else {
       setShowCustomCategory(false);
-      setStoreSettings({...storeSettings, category: value});
+      setStoreSettings({ ...storeSettings, category: value });
     }
   };
 
@@ -358,7 +412,7 @@ export default function MerchantSettings() {
     // إعادة تعيين المدينة عند تغيير الدولة
     setStoreSettings({
       ...storeSettings,
-      city: ""
+      city: "",
     });
   };
 
@@ -367,23 +421,33 @@ export default function MerchantSettings() {
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex justify-between items-center py-6 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-            <div className={`flex items-center space-x-4 space-x-reverse ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+          <div
+            className={`flex justify-between items-center py-6 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+          >
+            <div
+              className={`flex items-center space-x-4 space-x-reverse ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+            >
               <Link to="/merchant/dashboard">
                 <Button variant="outline" size="sm">
                   <ArrowLeft className="w-4 h-4 ml-2" />
-                  {t('common.back')}
+                  {t("common.back")}
                 </Button>
               </Link>
               <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl flex items-center justify-center">
                 <Settings className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 arabic">إعدادات ال��تجر</h1>
-                <p className="text-gray-600 arabic">إدارة معلومات وإعدادات متجرك</p>
+                <h1 className="text-2xl font-bold text-gray-900 arabic">
+                  إعدادات ال��تجر
+                </h1>
+                <p className="text-gray-600 arabic">
+                  إدارة معلومات وإعدادات متجرك
+                </p>
               </div>
             </div>
-            <Badge variant="secondary" className="arabic">متجر</Badge>
+            <Badge variant="secondary" className="arabic">
+              متجر
+            </Badge>
           </div>
         </div>
       </div>
@@ -400,10 +464,10 @@ export default function MerchantSettings() {
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
                       className={`w-full flex items-center space-x-3 space-x-reverse px-3 py-2 rounded-lg text-right transition-colors ${
-                        activeTab === tab.id 
-                          ? 'bg-purple-100 text-purple-700 border border-purple-200' 
-                          : 'text-gray-600 hover:bg-gray-100'
-                      } ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}
+                        activeTab === tab.id
+                          ? "bg-purple-100 text-purple-700 border border-purple-200"
+                          : "text-gray-600 hover:bg-gray-100"
+                      } ${isRTL ? "flex-row-reverse" : "flex-row"}`}
                     >
                       <tab.icon className="w-5 h-5" />
                       <span className="arabic">{tab.label}</span>
@@ -432,7 +496,8 @@ export default function MerchantSettings() {
                       <Label className="arabic">شعار المتجر</Label>
                       <div className="mt-2 flex items-center space-x-4 space-x-reverse">
                         <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-                          {storeSettings.logo && storeSettings.logo !== "/placeholder.svg" ? (
+                          {storeSettings.logo &&
+                          storeSettings.logo !== "/placeholder.svg" ? (
                             <img
                               src={storeSettings.logo}
                               alt="شعار المتجر"
@@ -455,12 +520,14 @@ export default function MerchantSettings() {
                               variant="outline"
                               size="sm"
                               className="arabic"
-                              onClick={() => document.getElementById('logo-upload')?.click()}
+                              onClick={() =>
+                                document.getElementById("logo-upload")?.click()
+                              }
                             >
                               <Camera className="w-4 h-4 ml-2" />
                               تغيير الشعار
                             </Button>
-                            {storeSettings.logo !== '/placeholder.svg' && (
+                            {storeSettings.logo !== "/placeholder.svg" && (
                               <Button
                                 variant="outline"
                                 size="sm"
@@ -481,7 +548,8 @@ export default function MerchantSettings() {
                       <Label className="arabic">غلاف المتجر</Label>
                       <div className="mt-2 flex items-center space-x-4 space-x-reverse">
                         <div className="w-32 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-                          {storeSettings.banner && storeSettings.banner !== "/placeholder.svg" ? (
+                          {storeSettings.banner &&
+                          storeSettings.banner !== "/placeholder.svg" ? (
                             <img
                               src={storeSettings.banner}
                               alt="غلاف المتجر"
@@ -504,12 +572,16 @@ export default function MerchantSettings() {
                               variant="outline"
                               size="sm"
                               className="arabic"
-                              onClick={() => document.getElementById('banner-upload')?.click()}
+                              onClick={() =>
+                                document
+                                  .getElementById("banner-upload")
+                                  ?.click()
+                              }
                             >
                               <Camera className="w-4 h-4 ml-2" />
                               تغيير الغلاف
                             </Button>
-                            {storeSettings.banner !== '/placeholder.svg' && (
+                            {storeSettings.banner !== "/placeholder.svg" && (
                               <Button
                                 variant="outline"
                                 size="sm"
@@ -533,17 +605,26 @@ export default function MerchantSettings() {
                   {/* Basic Information */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <Label htmlFor="storeName" className="arabic">اسم المتجر</Label>
+                      <Label htmlFor="storeName" className="arabic">
+                        اسم المتجر
+                      </Label>
                       <Input
                         id="storeName"
                         value={storeSettings.storeName}
-                        onChange={(e) => setStoreSettings({...storeSettings, storeName: e.target.value})}
+                        onChange={(e) =>
+                          setStoreSettings({
+                            ...storeSettings,
+                            storeName: e.target.value,
+                          })
+                        }
                         className="mt-1 text-right arabic"
                         placeholder="أدخل اسم متجرك"
                       />
                     </div>
                     <div>
-                      <Label htmlFor="category" className="arabic">��ئة المتجر</Label>
+                      <Label htmlFor="category" className="arabic">
+                        ��ئة المتجر
+                      </Label>
                       <select
                         id="category"
                         value={storeSettings.category}
@@ -552,14 +633,21 @@ export default function MerchantSettings() {
                       >
                         <option value="">اختر نوع المتجر</option>
                         {predefinedCategories.map((cat) => (
-                          <option key={cat} value={cat}>{cat}</option>
+                          <option key={cat} value={cat}>
+                            {cat}
+                          </option>
                         ))}
                       </select>
                       {showCustomCategory && (
                         <div className="mt-2">
                           <Input
                             value={storeSettings.category}
-                            onChange={(e) => setStoreSettings({...storeSettings, category: e.target.value})}
+                            onChange={(e) =>
+                              setStoreSettings({
+                                ...storeSettings,
+                                category: e.target.value,
+                              })
+                            }
                             className="text-right arabic"
                             placeholder="حدد نوع متجرك (مثال: صيدل��ة، محل حلويات، ورشة تصليح)"
                           />
@@ -569,12 +657,19 @@ export default function MerchantSettings() {
                   </div>
 
                   <div>
-                    <Label htmlFor="description" className="arabic">وصف المتجر</Label>
+                    <Label htmlFor="description" className="arabic">
+                      وصف المتجر
+                    </Label>
                     <Textarea
                       id="description"
                       rows={4}
                       value={storeSettings.description}
-                      onChange={(e) => setStoreSettings({...storeSettings, description: e.target.value})}
+                      onChange={(e) =>
+                        setStoreSettings({
+                          ...storeSettings,
+                          description: e.target.value,
+                        })
+                      }
                       className="mt-1 text-right arabic"
                       placeholder="اكتب وصفاً مختصراً عن متجرك ومن��جاتك..."
                     />
@@ -585,23 +680,37 @@ export default function MerchantSettings() {
                   {/* Contact Information */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <Label htmlFor="phone" className="arabic">رقم الهاتف</Label>
+                      <Label htmlFor="phone" className="arabic">
+                        رقم الهاتف
+                      </Label>
                       <Input
                         id="phone"
                         type="tel"
                         value={storeSettings.phone}
-                        onChange={(e) => setStoreSettings({...storeSettings, phone: e.target.value})}
+                        onChange={(e) =>
+                          setStoreSettings({
+                            ...storeSettings,
+                            phone: e.target.value,
+                          })
+                        }
                         className="mt-1 text-right"
                         placeholder="+966 50 123 4567"
                       />
                     </div>
                     <div>
-                      <Label htmlFor="email" className="arabic">البريد الإلكتروني</Label>
+                      <Label htmlFor="email" className="arabic">
+                        البريد الإلكتروني
+                      </Label>
                       <Input
                         id="email"
                         type="email"
                         value={storeSettings.email}
-                        onChange={(e) => setStoreSettings({...storeSettings, email: e.target.value})}
+                        onChange={(e) =>
+                          setStoreSettings({
+                            ...storeSettings,
+                            email: e.target.value,
+                          })
+                        }
                         className="mt-1 text-right"
                         placeholder="store@example.com"
                       />
@@ -611,7 +720,9 @@ export default function MerchantSettings() {
                   {/* Address Information */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
-                      <Label htmlFor="country" className="arabic">الدولة</Label>
+                      <Label htmlFor="country" className="arabic">
+                        الدولة
+                      </Label>
                       <select
                         id="country"
                         value={selectedCountry}
@@ -620,31 +731,50 @@ export default function MerchantSettings() {
                       >
                         <option value="">اختر الدولة</option>
                         {Object.keys(countriesWithCities).map((country) => (
-                          <option key={country} value={country}>{country}</option>
+                          <option key={country} value={country}>
+                            {country}
+                          </option>
                         ))}
                       </select>
                     </div>
                     <div>
-                      <Label htmlFor="city" className="arabic">المدينة</Label>
+                      <Label htmlFor="city" className="arabic">
+                        المدينة
+                      </Label>
                       <select
                         id="city"
                         value={storeSettings.city}
-                        onChange={(e) => setStoreSettings({...storeSettings, city: e.target.value})}
+                        onChange={(e) =>
+                          setStoreSettings({
+                            ...storeSettings,
+                            city: e.target.value,
+                          })
+                        }
                         className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
                         disabled={!selectedCountry}
                       >
                         <option value="">اختر المدينة</option>
-                        {selectedCountry && countriesWithCities[selectedCountry]?.map((city) => (
-                          <option key={city} value={city}>{city}</option>
-                        ))}
+                        {selectedCountry &&
+                          countriesWithCities[selectedCountry]?.map((city) => (
+                            <option key={city} value={city}>
+                              {city}
+                            </option>
+                          ))}
                       </select>
                     </div>
                     <div>
-                      <Label htmlFor="address" className="arabic">عنوان المتجر</Label>
+                      <Label htmlFor="address" className="arabic">
+                        عنوان المتجر
+                      </Label>
                       <Input
                         id="address"
                         value={storeSettings.address}
-                        onChange={(e) => setStoreSettings({...storeSettings, address: e.target.value})}
+                        onChange={(e) =>
+                          setStoreSettings({
+                            ...storeSettings,
+                            address: e.target.value,
+                          })
+                        }
                         className="mt-1 text-right arabic"
                         placeholder="شارع الملك فهد، حي النرجس"
                       />
@@ -662,10 +792,15 @@ export default function MerchantSettings() {
                         <Input
                           type="time"
                           value={storeSettings.workingHours.start}
-                          onChange={(e) => setStoreSettings({
-                            ...storeSettings, 
-                            workingHours: {...storeSettings.workingHours, start: e.target.value}
-                          })}
+                          onChange={(e) =>
+                            setStoreSettings({
+                              ...storeSettings,
+                              workingHours: {
+                                ...storeSettings.workingHours,
+                                start: e.target.value,
+                              },
+                            })
+                          }
                           className="mt-1"
                         />
                       </div>
@@ -674,10 +809,15 @@ export default function MerchantSettings() {
                         <Input
                           type="time"
                           value={storeSettings.workingHours.end}
-                          onChange={(e) => setStoreSettings({
-                            ...storeSettings, 
-                            workingHours: {...storeSettings.workingHours, end: e.target.value}
-                          })}
+                          onChange={(e) =>
+                            setStoreSettings({
+                              ...storeSettings,
+                              workingHours: {
+                                ...storeSettings.workingHours,
+                                end: e.target.value,
+                              },
+                            })
+                          }
                           className="mt-1"
                         />
                       </div>
@@ -685,17 +825,27 @@ export default function MerchantSettings() {
                         <Label className="arabic text-sm">أيام العم��</Label>
                         <div className="mt-1 space-y-1">
                           {workingDays.map((day) => (
-                            <label key={day} className={`flex items-center space-x-2 space-x-reverse ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                            <label
+                              key={day}
+                              className={`flex items-center space-x-2 space-x-reverse ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                            >
                               <input
                                 type="checkbox"
-                                checked={storeSettings.workingHours.days.includes(day)}
+                                checked={storeSettings.workingHours.days.includes(
+                                  day,
+                                )}
                                 onChange={(e) => {
-                                  const newDays = e.target.checked 
+                                  const newDays = e.target.checked
                                     ? [...storeSettings.workingHours.days, day]
-                                    : storeSettings.workingHours.days.filter(d => d !== day);
+                                    : storeSettings.workingHours.days.filter(
+                                        (d) => d !== day,
+                                      );
                                   setStoreSettings({
                                     ...storeSettings,
-                                    workingHours: {...storeSettings.workingHours, days: newDays}
+                                    workingHours: {
+                                      ...storeSettings.workingHours,
+                                      days: newDays,
+                                    },
                                   });
                                 }}
                                 className="rounded"
@@ -723,22 +873,50 @@ export default function MerchantSettings() {
                 <CardContent className="space-y-6">
                   {/* Order Notifications */}
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 arabic">إشعارات الطلبات</h3>
+                    <h3 className="font-semibold text-gray-900 mb-4 arabic">
+                      إشعارات الطلبات
+                    </h3>
                     <div className="space-y-4">
                       {[
-                        { key: 'newOrders', label: 'طلبات جديدة', desc: 'اشعارات عند وصول طلبات جديدة' },
-                        { key: 'orderUpdates', label: 'تحديثات الطلبات', desc: 'اشعارات عند تغيير حالة الطلبات' },
-                        { key: 'paymentReceived', label: 'استلام الدفعات', desc: 'اشعارا�� عند استلام المدفوعات' }
+                        {
+                          key: "newOrders",
+                          label: "طلبات جديدة",
+                          desc: "اشعارات عند وصول طلبات جديدة",
+                        },
+                        {
+                          key: "orderUpdates",
+                          label: "تحديثات الطلبات",
+                          desc: "اشعارات عند تغيير حالة الطلبات",
+                        },
+                        {
+                          key: "paymentReceived",
+                          label: "استلام الدفعات",
+                          desc: "اشعارا�� عند استلام المدفوعات",
+                        },
                       ].map((item) => (
-                        <div key={item.key} className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-                          <div className={isRTL ? 'text-right' : 'text-left'}>
-                            <div className="font-medium arabic">{item.label}</div>
-                            <div className="text-sm text-gray-600 arabic">{item.desc}</div>
+                        <div
+                          key={item.key}
+                          className={`flex items-center justify-between ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                        >
+                          <div className={isRTL ? "text-right" : "text-left"}>
+                            <div className="font-medium arabic">
+                              {item.label}
+                            </div>
+                            <div className="text-sm text-gray-600 arabic">
+                              {item.desc}
+                            </div>
                           </div>
                           <Switch
-                            checked={notifications[item.key as keyof NotificationSettings]}
-                            onCheckedChange={(checked) => 
-                              setNotifications({...notifications, [item.key]: checked})
+                            checked={
+                              notifications[
+                                item.key as keyof NotificationSettings
+                              ]
+                            }
+                            onCheckedChange={(checked) =>
+                              setNotifications({
+                                ...notifications,
+                                [item.key]: checked,
+                              })
                             }
                           />
                         </div>
@@ -750,21 +928,45 @@ export default function MerchantSettings() {
 
                   {/* Inventory Notifications */}
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 arabic">إشعارات المخزون</h3>
+                    <h3 className="font-semibold text-gray-900 mb-4 arabic">
+                      إشعارات المخزون
+                    </h3>
                     <div className="space-y-4">
                       {[
-                        { key: 'lowStock', label: 'نفاد المخزو��', desc: 'تنبيه عند انخفاض كمية المنتجات' },
-                        { key: 'reviews', label: 'المراجعات الجديدة', desc: 'اشعارات عند وصول مراجعات جديدة' }
+                        {
+                          key: "lowStock",
+                          label: "نفاد المخزو��",
+                          desc: "تنبيه عند انخفاض كمية المنتجات",
+                        },
+                        {
+                          key: "reviews",
+                          label: "المراجعات الجديدة",
+                          desc: "اشعارات عند وصول مراجعات جديدة",
+                        },
                       ].map((item) => (
-                        <div key={item.key} className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-                          <div className={isRTL ? 'text-right' : 'text-left'}>
-                            <div className="font-medium arabic">{item.label}</div>
-                            <div className="text-sm text-gray-600 arabic">{item.desc}</div>
+                        <div
+                          key={item.key}
+                          className={`flex items-center justify-between ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                        >
+                          <div className={isRTL ? "text-right" : "text-left"}>
+                            <div className="font-medium arabic">
+                              {item.label}
+                            </div>
+                            <div className="text-sm text-gray-600 arabic">
+                              {item.desc}
+                            </div>
                           </div>
                           <Switch
-                            checked={notifications[item.key as keyof NotificationSettings]}
-                            onCheckedChange={(checked) => 
-                              setNotifications({...notifications, [item.key]: checked})
+                            checked={
+                              notifications[
+                                item.key as keyof NotificationSettings
+                              ]
+                            }
+                            onCheckedChange={(checked) =>
+                              setNotifications({
+                                ...notifications,
+                                [item.key]: checked,
+                              })
                             }
                           />
                         </div>
@@ -776,21 +978,45 @@ export default function MerchantSettings() {
 
                   {/* Notification Methods */}
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 arabic">طرق الإشعار</h3>
+                    <h3 className="font-semibold text-gray-900 mb-4 arabic">
+                      طرق الإشعار
+                    </h3>
                     <div className="space-y-4">
                       {[
-                        { key: 'smsNotifications', label: 'رسائل SMS', desc: 'استقبال الإشعارات عبر الرسائل النصية' },
-                        { key: 'emailNotifications', label: 'البريد الإلكتروني', desc: 'استقبال الإش���ارات عبر البريد الإلكترو��ي' }
+                        {
+                          key: "smsNotifications",
+                          label: "رسائل SMS",
+                          desc: "استقبال الإشعارات عبر الرسائل النصية",
+                        },
+                        {
+                          key: "emailNotifications",
+                          label: "البريد الإلكتروني",
+                          desc: "استقبال الإش���ارات عبر البريد الإلكترو��ي",
+                        },
                       ].map((item) => (
-                        <div key={item.key} className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-                          <div className={isRTL ? 'text-right' : 'text-left'}>
-                            <div className="font-medium arabic">{item.label}</div>
-                            <div className="text-sm text-gray-600 arabic">{item.desc}</div>
+                        <div
+                          key={item.key}
+                          className={`flex items-center justify-between ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                        >
+                          <div className={isRTL ? "text-right" : "text-left"}>
+                            <div className="font-medium arabic">
+                              {item.label}
+                            </div>
+                            <div className="text-sm text-gray-600 arabic">
+                              {item.desc}
+                            </div>
                           </div>
                           <Switch
-                            checked={notifications[item.key as keyof NotificationSettings]}
-                            onCheckedChange={(checked) => 
-                              setNotifications({...notifications, [item.key]: checked})
+                            checked={
+                              notifications[
+                                item.key as keyof NotificationSettings
+                              ]
+                            }
+                            onCheckedChange={(checked) =>
+                              setNotifications({
+                                ...notifications,
+                                [item.key]: checked,
+                              })
                             }
                           />
                         </div>
@@ -813,45 +1039,74 @@ export default function MerchantSettings() {
                 <CardContent className="space-y-6">
                   {/* Shipping Costs */}
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 arabic">تكاليف الشحن</h3>
+                    <h3 className="font-semibold text-gray-900 mb-4 arabic">
+                      تكاليف الشحن
+                    </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
-                        <Label htmlFor="freeShipping" className="arabic">الشحن المجاني عند</Label>
+                        <Label htmlFor="freeShipping" className="arabic">
+                          الشحن المجاني عند
+                        </Label>
                         <div className="mt-1 relative">
                           <Input
                             id="freeShipping"
                             type="number"
                             value={shipping.freeShippingThreshold}
-                            onChange={(e) => setShipping({...shipping, freeShippingThreshold: Number(e.target.value)})}
+                            onChange={(e) =>
+                              setShipping({
+                                ...shipping,
+                                freeShippingThreshold: Number(e.target.value),
+                              })
+                            }
                             className="text-right"
                           />
-                          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">ر.س</span>
+                          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                            ر.س
+                          </span>
                         </div>
                       </div>
                       <div>
-                        <Label htmlFor="standardShipping" className="arabic">الشحن العادي</Label>
+                        <Label htmlFor="standardShipping" className="arabic">
+                          الشحن العادي
+                        </Label>
                         <div className="mt-1 relative">
                           <Input
                             id="standardShipping"
                             type="number"
                             value={shipping.standardShippingCost}
-                            onChange={(e) => setShipping({...shipping, standardShippingCost: Number(e.target.value)})}
+                            onChange={(e) =>
+                              setShipping({
+                                ...shipping,
+                                standardShippingCost: Number(e.target.value),
+                              })
+                            }
                             className="text-right"
                           />
-                          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">ر.س</span>
+                          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                            ر.س
+                          </span>
                         </div>
                       </div>
                       <div>
-                        <Label htmlFor="expressShipping" className="arabic">الشحن السريع</Label>
+                        <Label htmlFor="expressShipping" className="arabic">
+                          الشحن السريع
+                        </Label>
                         <div className="mt-1 relative">
                           <Input
                             id="expressShipping"
                             type="number"
                             value={shipping.expressShippingCost}
-                            onChange={(e) => setShipping({...shipping, expressShippingCost: Number(e.target.value)})}
+                            onChange={(e) =>
+                              setShipping({
+                                ...shipping,
+                                expressShippingCost: Number(e.target.value),
+                              })
+                            }
                             className="text-right"
                           />
-                          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">ر.س</span>
+                          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                            ر.س
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -861,11 +1116,18 @@ export default function MerchantSettings() {
 
                   {/* Processing Time */}
                   <div>
-                    <Label htmlFor="processingTime" className="arabic">مدة تحضير الطلب</Label>
+                    <Label htmlFor="processingTime" className="arabic">
+                      مدة تحضير الطلب
+                    </Label>
                     <Input
                       id="processingTime"
                       value={shipping.processingTime}
-                      onChange={(e) => setShipping({...shipping, processingTime: e.target.value})}
+                      onChange={(e) =>
+                        setShipping({
+                          ...shipping,
+                          processingTime: e.target.value,
+                        })
+                      }
                       className="mt-1 text-right arabic"
                       placeholder="مثال: 1-2 أيام عمل"
                     />
@@ -877,16 +1139,35 @@ export default function MerchantSettings() {
                   <div>
                     <Label className="arabic">مناطق التوصيل</Label>
                     <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {["الرياض", "جدة", "الدمام", "مك�� المكرمة", "المدينة المنورة", "الطائف", "الخ��ر", "الأحساء", "تبوك", "أبها"].map((area) => (
-                        <label key={area} className={`flex items-center space-x-2 space-x-reverse p-2 border rounded-lg hover:bg-gray-50 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                      {[
+                        "الرياض",
+                        "جدة",
+                        "الدمام",
+                        "مك�� المكرمة",
+                        "المدينة المنورة",
+                        "الطائف",
+                        "الخ��ر",
+                        "الأحساء",
+                        "تبوك",
+                        "أبها",
+                      ].map((area) => (
+                        <label
+                          key={area}
+                          className={`flex items-center space-x-2 space-x-reverse p-2 border rounded-lg hover:bg-gray-50 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                        >
                           <input
                             type="checkbox"
                             checked={shipping.shippingAreas.includes(area)}
                             onChange={(e) => {
-                              const newAreas = e.target.checked 
+                              const newAreas = e.target.checked
                                 ? [...shipping.shippingAreas, area]
-                                : shipping.shippingAreas.filter(a => a !== area);
-                              setShipping({...shipping, shippingAreas: newAreas});
+                                : shipping.shippingAreas.filter(
+                                    (a) => a !== area,
+                                  );
+                              setShipping({
+                                ...shipping,
+                                shippingAreas: newAreas,
+                              });
                             }}
                             className="rounded"
                           />
@@ -911,7 +1192,9 @@ export default function MerchantSettings() {
                 <CardContent className="space-y-6">
                   {/* Account Information */}
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 arabic">معلومات الحساب</h3>
+                    <h3 className="font-semibold text-gray-900 mb-4 arabic">
+                      معلومات الحساب
+                    </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <Label className="arabic">اسم المستخدم</Label>
@@ -936,16 +1219,25 @@ export default function MerchantSettings() {
 
                   {/* Password Change */}
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 arabic">تغيير كلمة المرور</h3>
+                    <h3 className="font-semibold text-gray-900 mb-4 arabic">
+                      تغيير كلمة المرور
+                    </h3>
                     <div className="space-y-4">
                       <div>
-                        <Label htmlFor="currentPassword" className="arabic">كلمة الم��ور الحالية</Label>
+                        <Label htmlFor="currentPassword" className="arabic">
+                          كلمة الم��ور الحالية
+                        </Label>
                         <div className="mt-1 relative">
                           <Input
                             id="currentPassword"
                             type={showPassword ? "text" : "password"}
                             value={accountSettings.currentPassword}
-                            onChange={(e) => setAccountSettings({...accountSettings, currentPassword: e.target.value})}
+                            onChange={(e) =>
+                              setAccountSettings({
+                                ...accountSettings,
+                                currentPassword: e.target.value,
+                              })
+                            }
                             className="text-right pr-10"
                           />
                           <button
@@ -953,28 +1245,46 @@ export default function MerchantSettings() {
                             onClick={() => setShowPassword(!showPassword)}
                             className="absolute right-3 top-1/2 transform -translate-y-1/2"
                           >
-                            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                            {showPassword ? (
+                              <EyeOff className="w-4 h-4" />
+                            ) : (
+                              <Eye className="w-4 h-4" />
+                            )}
                           </button>
                         </div>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <Label htmlFor="newPassword" className="arabic">كلمة المرور الجديدة</Label>
+                          <Label htmlFor="newPassword" className="arabic">
+                            كلمة المرور الجديدة
+                          </Label>
                           <Input
                             id="newPassword"
                             type="password"
                             value={accountSettings.newPassword}
-                            onChange={(e) => setAccountSettings({...accountSettings, newPassword: e.target.value})}
+                            onChange={(e) =>
+                              setAccountSettings({
+                                ...accountSettings,
+                                newPassword: e.target.value,
+                              })
+                            }
                             className="mt-1 text-right"
                           />
                         </div>
                         <div>
-                          <Label htmlFor="confirmPassword" className="arabic">تأكيد كلمة المرور</Label>
+                          <Label htmlFor="confirmPassword" className="arabic">
+                            تأكيد كلمة المرور
+                          </Label>
                           <Input
                             id="confirmPassword"
                             type="password"
                             value={accountSettings.confirmPassword}
-                            onChange={(e) => setAccountSettings({...accountSettings, confirmPassword: e.target.value})}
+                            onChange={(e) =>
+                              setAccountSettings({
+                                ...accountSettings,
+                                confirmPassword: e.target.value,
+                              })
+                            }
                             className="mt-1 text-right"
                           />
                         </div>
@@ -986,29 +1296,49 @@ export default function MerchantSettings() {
 
                   {/* Security Settings */}
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 arabic">إعدادات الأمان</h3>
+                    <h3 className="font-semibold text-gray-900 mb-4 arabic">
+                      إعدادات الأمان
+                    </h3>
                     <div className="space-y-4">
-                      <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-                        <div className={isRTL ? 'text-right' : 'text-left'}>
-                          <div className="font-medium arabic">المصادقة الثنائية</div>
-                          <div className="text-sm text-gray-600 arabic">حماية إضافية لحسابك</div>
+                      <div
+                        className={`flex items-center justify-between ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                      >
+                        <div className={isRTL ? "text-right" : "text-left"}>
+                          <div className="font-medium arabic">
+                            المصادقة الثنائية
+                          </div>
+                          <div className="text-sm text-gray-600 arabic">
+                            حماية إضافية لحسابك
+                          </div>
                         </div>
                         <Switch
                           checked={accountSettings.twoFactorAuth}
-                          onCheckedChange={(checked) => 
-                            setAccountSettings({...accountSettings, twoFactorAuth: checked})
+                          onCheckedChange={(checked) =>
+                            setAccountSettings({
+                              ...accountSettings,
+                              twoFactorAuth: checked,
+                            })
                           }
                         />
                       </div>
-                      <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-                        <div className={isRTL ? 'text-right' : 'text-left'}>
-                          <div className="font-medium arabic">إشع��رات تسجيل الدخول</div>
-                          <div className="text-sm text-gray-600 arabic">تنبيه عند تسجيل دخول جديد</div>
+                      <div
+                        className={`flex items-center justify-between ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                      >
+                        <div className={isRTL ? "text-right" : "text-left"}>
+                          <div className="font-medium arabic">
+                            إشع��رات تسجيل الدخول
+                          </div>
+                          <div className="text-sm text-gray-600 arabic">
+                            تنبيه عند تسجيل دخول جديد
+                          </div>
                         </div>
                         <Switch
                           checked={accountSettings.loginNotifications}
-                          onCheckedChange={(checked) => 
-                            setAccountSettings({...accountSettings, loginNotifications: checked})
+                          onCheckedChange={(checked) =>
+                            setAccountSettings({
+                              ...accountSettings,
+                              loginNotifications: checked,
+                            })
                           }
                         />
                       </div>
@@ -1020,7 +1350,7 @@ export default function MerchantSettings() {
 
             {/* Save Button */}
             <div className="mt-8 flex justify-end">
-              <Button 
+              <Button
                 onClick={handleSaveSettings}
                 disabled={isSaving}
                 className="arabic bg-purple-600 hover:bg-purple-700"

@@ -2,7 +2,15 @@ import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ChefHat, Filter, Search, MapPin, Star, Clock, Phone } from "lucide-react";
+import {
+  ChefHat,
+  Filter,
+  Search,
+  MapPin,
+  Star,
+  Clock,
+  Phone,
+} from "lucide-react";
 import { useStores, StoresService } from "@/lib/stores";
 import { useState } from "react";
 
@@ -10,10 +18,11 @@ export default function Restaurants() {
   const { restaurants } = useStores();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredRestaurants = restaurants.filter(restaurant => 
-    searchQuery === "" || 
-    restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    restaurant.description.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredRestaurants = restaurants.filter(
+    (restaurant) =>
+      searchQuery === "" ||
+      restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      restaurant.description.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -76,10 +85,13 @@ export default function Restaurants() {
         {/* Restaurants Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {filteredRestaurants.map((restaurant) => (
-            <Card key={restaurant.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer">
+            <Card
+              key={restaurant.id}
+              className="group hover:shadow-lg transition-all duration-300 cursor-pointer"
+            >
               <div className="relative">
-                <img 
-                  src={restaurant.coverImage || "/placeholder.svg"} 
+                <img
+                  src={restaurant.coverImage || "/placeholder.svg"}
                   alt={restaurant.name}
                   className="w-full h-48 object-cover rounded-t-lg"
                 />
@@ -97,11 +109,11 @@ export default function Restaurants() {
                   توصيل 30 دقيقة
                 </div>
               </div>
-              
+
               <CardContent className="p-6">
                 <div className="flex items-start gap-3 mb-4">
-                  <img 
-                    src={restaurant.logo || "/placeholder.svg"} 
+                  <img
+                    src={restaurant.logo || "/placeholder.svg"}
                     alt={restaurant.name}
                     className="w-12 h-12 rounded-full object-cover border-2 border-gray-100"
                   />
@@ -128,17 +140,28 @@ export default function Restaurants() {
 
                 <div className="border-t pt-4">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm text-gray-600 arabic">رسوم التوصيل</span>
-                    <span className="text-sm font-semibold text-green-600 arabic">مجاني فوق 100 ريال</span>
+                    <span className="text-sm text-gray-600 arabic">
+                      رسوم التوصيل
+                    </span>
+                    <span className="text-sm font-semibold text-green-600 arabic">
+                      مجاني فوق 100 ريال
+                    </span>
                   </div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm text-gray-600 arabic">أقل طلب</span>
-                    <span className="text-sm font-semibold arabic">50 ريال</span>
+                    <span className="text-sm text-gray-600 arabic">
+                      أقل طلب
+                    </span>
+                    <span className="text-sm font-semibold arabic">
+                      50 ريال
+                    </span>
                   </div>
                 </div>
 
                 <div className="flex gap-2">
-                  <Button className="flex-1 arabic bg-red-600 hover:bg-red-700" size="sm">
+                  <Button
+                    className="flex-1 arabic bg-red-600 hover:bg-red-700"
+                    size="sm"
+                  >
                     اطلب الآن
                   </Button>
                   <Button variant="outline" size="sm" className="arabic">
@@ -154,22 +177,44 @@ export default function Restaurants() {
         {/* Popular Dishes Section */}
         <Card className="mb-8">
           <CardContent className="p-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">الأطباق الشعبية</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">
+              الأطباق الشعبية
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { name: "الفتة السودانية", image: "/placeholder.svg", price: "25 ريال" },
-                { name: "الكسرة واللحم", image: "/placeholder.svg", price: "35 ريال" },
-                { name: "الملاح الأخضر", image: "/placeholder.svg", price: "20 ريال" },
-                { name: "العصيدة بالملح", image: "/placeholder.svg", price: "18 ريال" }
+                {
+                  name: "الفتة السودانية",
+                  image: "/placeholder.svg",
+                  price: "25 ريال",
+                },
+                {
+                  name: "الكسرة واللحم",
+                  image: "/placeholder.svg",
+                  price: "35 ريال",
+                },
+                {
+                  name: "الملاح الأخضر",
+                  image: "/placeholder.svg",
+                  price: "20 ريال",
+                },
+                {
+                  name: "العصيدة بالملح",
+                  image: "/placeholder.svg",
+                  price: "18 ريال",
+                },
               ].map((dish, index) => (
                 <div key={index} className="text-center group cursor-pointer">
-                  <img 
-                    src={dish.image} 
+                  <img
+                    src={dish.image}
                     alt={dish.name}
                     className="w-full h-24 object-cover rounded-lg mb-2 group-hover:scale-105 transition-transform"
                   />
-                  <h4 className="font-semibold text-gray-800 text-sm arabic">{dish.name}</h4>
-                  <p className="text-green-600 font-bold text-sm arabic">{dish.price}</p>
+                  <h4 className="font-semibold text-gray-800 text-sm arabic">
+                    {dish.name}
+                  </h4>
+                  <p className="text-green-600 font-bold text-sm arabic">
+                    {dish.price}
+                  </p>
                 </div>
               ))}
             </div>
@@ -186,8 +231,8 @@ export default function Restaurants() {
             <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
               جرب تغيير كلمات البحث
             </p>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={() => setSearchQuery("")}
               className="arabic"
             >

@@ -2,12 +2,12 @@ import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Building, 
-  Search, 
-  Filter, 
-  MapPin, 
-  Users, 
+import {
+  Building,
+  Search,
+  Filter,
+  MapPin,
+  Users,
   Star,
   Verified,
   Globe,
@@ -16,7 +16,7 @@ import {
   Calendar,
   TrendingUp,
   Award,
-  ExternalLink
+  ExternalLink,
 } from "lucide-react";
 import { CompaniesService, useCompanies } from "@/lib/companies";
 import { useState } from "react";
@@ -29,20 +29,31 @@ export default function Companies() {
   const [selectedSize, setSelectedSize] = useState<string>("all");
   const [showVerifiedOnly, setShowVerifiedOnly] = useState(false);
 
-  const filteredCompanies = companies.filter(company => {
-    const matchesSearch = searchQuery === "" || 
+  const filteredCompanies = companies.filter((company) => {
+    const matchesSearch =
+      searchQuery === "" ||
       company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       company.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       company.industry.toLowerCase().includes(searchQuery.toLowerCase()) ||
       company.location.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.services.some(service => service.toLowerCase().includes(searchQuery.toLowerCase()));
-    
-    const matchesIndustry = selectedIndustry === "all" || company.industry === selectedIndustry;
-    const matchesCountry = selectedCountry === "all" || company.location.country === selectedCountry;
+      company.services.some((service) =>
+        service.toLowerCase().includes(searchQuery.toLowerCase()),
+      );
+
+    const matchesIndustry =
+      selectedIndustry === "all" || company.industry === selectedIndustry;
+    const matchesCountry =
+      selectedCountry === "all" || company.location.country === selectedCountry;
     const matchesSize = selectedSize === "all" || company.size === selectedSize;
     const matchesVerified = !showVerifiedOnly || company.isVerified;
-    
-    return matchesSearch && matchesIndustry && matchesCountry && matchesSize && matchesVerified;
+
+    return (
+      matchesSearch &&
+      matchesIndustry &&
+      matchesCountry &&
+      matchesSize &&
+      matchesVerified
+    );
   });
 
   const industries = CompaniesService.getIndustries();
@@ -72,7 +83,9 @@ export default function Companies() {
             </div>
             <div className="flex items-center gap-2">
               <Verified className="w-4 h-4" />
-              <span className="arabic">{companies.filter(c => c.isVerified).length} شركة موثقة</span>
+              <span className="arabic">
+                {companies.filter((c) => c.isVerified).length} شركة موثقة
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
@@ -144,9 +157,15 @@ export default function Companies() {
                     onChange={(e) => setShowVerifiedOnly(e.target.checked)}
                     className="rounded"
                   />
-                  <span className="text-sm text-gray-600 arabic">الشركات الموثقة فقط</span>
+                  <span className="text-sm text-gray-600 arabic">
+                    الشركات الموثقة فقط
+                  </span>
                 </label>
-                {(searchQuery || selectedIndustry !== "all" || selectedCountry !== "all" || selectedSize !== "all" || showVerifiedOnly) && (
+                {(searchQuery ||
+                  selectedIndustry !== "all" ||
+                  selectedCountry !== "all" ||
+                  selectedSize !== "all" ||
+                  showVerifiedOnly) && (
                   <Button
                     variant="outline"
                     size="sm"
@@ -173,28 +192,41 @@ export default function Companies() {
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-6">
                 <Award className="w-5 h-5 text-orange-600" />
-                <h2 className="text-xl font-bold text-orange-800 arabic">الشركات المميزة</h2>
+                <h2 className="text-xl font-bold text-orange-800 arabic">
+                  الشركات المميزة
+                </h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {featuredCompanies.slice(0, 3).map((company) => (
-                  <div key={company.id} className="bg-white rounded-lg p-4 border border-orange-200">
+                  <div
+                    key={company.id}
+                    className="bg-white rounded-lg p-4 border border-orange-200"
+                  >
                     <div className="flex items-start gap-3">
-                      <img 
-                        src={company.logo || "/placeholder.svg"} 
+                      <img
+                        src={company.logo || "/placeholder.svg"}
                         alt={company.name}
                         className="w-12 h-12 object-cover rounded-lg"
                       />
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-gray-800 arabic text-sm mb-1 truncate">{company.name}</h3>
-                        <p className="text-orange-600 text-xs arabic mb-2">{company.industry}</p>
+                        <h3 className="font-bold text-gray-800 arabic text-sm mb-1 truncate">
+                          {company.name}
+                        </h3>
+                        <p className="text-orange-600 text-xs arabic mb-2">
+                          {company.industry}
+                        </p>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1">
                             <MapPin className="w-3 h-3 text-gray-400" />
-                            <span className="text-xs text-gray-600 arabic">{company.location.city}</span>
+                            <span className="text-xs text-gray-600 arabic">
+                              {company.location.city}
+                            </span>
                           </div>
                           <div className="flex items-center gap-1">
                             <Star className="w-3 h-3 text-yellow-500" />
-                            <span className="text-xs text-gray-600">{company.rating}</span>
+                            <span className="text-xs text-gray-600">
+                              {company.rating}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -209,16 +241,22 @@ export default function Companies() {
         {/* Companies Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {filteredCompanies.map((company) => (
-            <Card key={company.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden">
+            <Card
+              key={company.id}
+              className="group hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden"
+            >
               <div className="relative">
-                <img 
-                  src={company.coverImage || "/placeholder.svg"} 
+                <img
+                  src={company.coverImage || "/placeholder.svg"}
                   alt={company.name}
                   className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute top-2 right-2">
-                  <Badge className={`text-white text-xs arabic ${CompaniesService.getCategoryColor(company.category)}`}>
-                    {CompaniesService.getIndustryIcon(company.industry)} {company.industry}
+                  <Badge
+                    className={`text-white text-xs arabic ${CompaniesService.getCategoryColor(company.category)}`}
+                  >
+                    {CompaniesService.getIndustryIcon(company.industry)}{" "}
+                    {company.industry}
                   </Badge>
                 </div>
                 <div className="absolute top-2 left-2 flex gap-1">
@@ -236,11 +274,11 @@ export default function Companies() {
                   )}
                 </div>
               </div>
-              
+
               <CardContent className="p-5">
                 <div className="flex items-start gap-3 mb-4">
-                  <img 
-                    src={company.logo || "/placeholder.svg"} 
+                  <img
+                    src={company.logo || "/placeholder.svg"}
                     alt={company.name}
                     className="w-12 h-12 object-cover rounded-lg border-2 border-gray-100 flex-shrink-0"
                   />
@@ -257,34 +295,51 @@ export default function Companies() {
                 <div className="space-y-3 mb-4">
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm text-gray-600 arabic">{company.location.city}, {company.location.country}</span>
+                    <span className="text-sm text-gray-600 arabic">
+                      {company.location.city}, {company.location.country}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm text-gray-600 arabic">{CompaniesService.formatEmployeeCount(company.employees)}</span>
+                    <span className="text-sm text-gray-600 arabic">
+                      {CompaniesService.formatEmployeeCount(company.employees)}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm text-gray-600 arabic">تأسست في {company.founded}</span>
+                    <span className="text-sm text-gray-600 arabic">
+                      تأسست في {company.founded}
+                    </span>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-1">
                     <Star className="w-4 h-4 text-yellow-500" />
-                    <span className="text-sm font-semibold arabic">{company.rating}</span>
-                    <span className="text-sm text-gray-500 arabic">({company.reviewsCount} تقييم)</span>
+                    <span className="text-sm font-semibold arabic">
+                      {company.rating}
+                    </span>
+                    <span className="text-sm text-gray-500 arabic">
+                      ({company.reviewsCount} تقييم)
+                    </span>
                   </div>
                   <Badge variant="outline" className="text-xs arabic">
-                    {CompaniesService.getSizeIcon(company.size)} {sizes.find(s => s.value === company.size)?.label}
+                    {CompaniesService.getSizeIcon(company.size)}{" "}
+                    {sizes.find((s) => s.value === company.size)?.label}
                   </Badge>
                 </div>
 
                 <div className="mb-4">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2 arabic">الخدمات:</h4>
+                  <h4 className="text-sm font-semibold text-gray-700 mb-2 arabic">
+                    الخدمات:
+                  </h4>
                   <div className="flex flex-wrap gap-1">
                     {company.services.slice(0, 3).map((service, index) => (
-                      <Badge key={index} variant="secondary" className="text-xs arabic">
+                      <Badge
+                        key={index}
+                        variant="secondary"
+                        className="text-xs arabic"
+                      >
                         {service}
                       </Badge>
                     ))}
@@ -313,13 +368,17 @@ export default function Companies() {
         {/* Industries Section */}
         <Card className="mb-8">
           <CardContent className="p-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">تصفح حسب الصناعة</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">
+              تصفح حسب الصناعة
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {industries.map((industry) => {
-                const industryCount = companies.filter(c => c.industry === industry).length;
+                const industryCount = companies.filter(
+                  (c) => c.industry === industry,
+                ).length;
                 return (
-                  <div 
-                    key={industry} 
+                  <div
+                    key={industry}
                     className="text-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
                     onClick={() => setSelectedIndustry(industry)}
                   >
@@ -342,27 +401,37 @@ export default function Companies() {
         {/* Statistics Section */}
         <Card className="mb-8">
           <CardContent className="p-6">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">إحصائيات الدليل</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 arabic">
+              إحصائيات الدليل
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div className="text-center">
                 <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
                   <Building className="w-8 h-8 text-orange-600" />
                 </div>
-                <div className="text-2xl font-bold text-gray-800 mb-1">{companies.length}</div>
-                <div className="text-sm text-gray-600 arabic">إجمالي الشركات</div>
+                <div className="text-2xl font-bold text-gray-800 mb-1">
+                  {companies.length}
+                </div>
+                <div className="text-sm text-gray-600 arabic">
+                  إجمالي الشركات
+                </div>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
                   <Verified className="w-8 h-8 text-blue-600" />
                 </div>
-                <div className="text-2xl font-bold text-gray-800 mb-1">{companies.filter(c => c.isVerified).length}</div>
+                <div className="text-2xl font-bold text-gray-800 mb-1">
+                  {companies.filter((c) => c.isVerified).length}
+                </div>
                 <div className="text-sm text-gray-600 arabic">شركة موثقة</div>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                   <MapPin className="w-8 h-8 text-green-600" />
                 </div>
-                <div className="text-2xl font-bold text-gray-800 mb-1">{countries.length}</div>
+                <div className="text-2xl font-bold text-gray-800 mb-1">
+                  {countries.length}
+                </div>
                 <div className="text-sm text-gray-600 arabic">دولة</div>
               </div>
               <div className="text-center">
@@ -370,7 +439,10 @@ export default function Companies() {
                   <Users className="w-8 h-8 text-purple-600" />
                 </div>
                 <div className="text-2xl font-bold text-gray-800 mb-1">
-                  {Math.round(companies.reduce((sum, c) => sum + c.employees, 0) / 1000)}k+
+                  {Math.round(
+                    companies.reduce((sum, c) => sum + c.employees, 0) / 1000,
+                  )}
+                  k+
                 </div>
                 <div className="text-sm text-gray-600 arabic">موظف</div>
               </div>
@@ -388,8 +460,8 @@ export default function Companies() {
             <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
               جرب تغيير كلمات البحث أو الفلاتر المختارة
             </p>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={() => {
                 setSearchQuery("");
                 setSelectedIndustry("all");

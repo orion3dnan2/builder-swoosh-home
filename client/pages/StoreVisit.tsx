@@ -2,14 +2,14 @@ import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Store, 
-  Search, 
-  Filter, 
-  Grid3X3, 
-  List, 
-  ShoppingCart, 
-  Heart, 
+import {
+  Store,
+  Search,
+  Filter,
+  Grid3X3,
+  List,
+  ShoppingCart,
+  Heart,
   Star,
   Plus,
   Minus,
@@ -18,7 +18,7 @@ import {
   Phone,
   MessageCircle,
   Share2,
-  Info
+  Info,
 } from "lucide-react";
 import { useParams, Link } from "react-router-dom";
 import { StoresService } from "@/lib/stores";
@@ -32,22 +32,24 @@ export default function StoreVisit() {
   const [sortBy, setSortBy] = useState<string>("name");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [cart, setCart] = useState<Record<string, number>>({});
-  
+
   // الحصول على بيانات المتجر
   const stores = StoresService.getAllStores();
-  const store = stores.find(s => s.id === id);
-  
+  const store = stores.find((s) => s.id === id);
+
   // الحصول على منتجات المتجر
   const allProducts = ProductService.getProducts(id);
-  
+
   // تصفية المنتجات
-  const filteredProducts = allProducts.filter(product => {
-    const matchesSearch = searchQuery === "" || 
+  const filteredProducts = allProducts.filter((product) => {
+    const matchesSearch =
+      searchQuery === "" ||
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.description.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
-    
+
+    const matchesCategory =
+      selectedCategory === "all" || product.category === selectedCategory;
+
     return matchesSearch && matchesCategory && product.status === "active";
   });
 
@@ -59,14 +61,16 @@ export default function StoreVisit() {
       case "price-high":
         return (b.salePrice || b.price) - (a.salePrice || a.price);
       case "newest":
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
       default:
         return a.name.localeCompare(b.name);
     }
   });
 
   // الحصول على الفئات المتوفرة
-  const availableCategories = [...new Set(allProducts.map(p => p.category))];
+  const availableCategories = [...new Set(allProducts.map((p) => p.category))];
 
   if (!store) {
     return (
@@ -85,14 +89,14 @@ export default function StoreVisit() {
   }
 
   const addToCart = (productId: string) => {
-    setCart(prev => ({
+    setCart((prev) => ({
       ...prev,
-      [productId]: (prev[productId] || 0) + 1
+      [productId]: (prev[productId] || 0) + 1,
     }));
   };
 
   const removeFromCart = (productId: string) => {
-    setCart(prev => {
+    setCart((prev) => {
       const newCart = { ...prev };
       if (newCart[productId] > 1) {
         newCart[productId]--;
@@ -175,7 +179,7 @@ export default function StoreVisit() {
                   className="w-full pr-10 pl-4 py-2 border border-gray-300 rounded-lg text-right arabic"
                 />
               </div>
-              
+
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
@@ -252,13 +256,18 @@ export default function StoreVisit() {
               </p>
             </div>
           ) : (
-            <div className={`${
-              viewMode === "grid" 
-                ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" 
-                : "space-y-4"
-            }`}>
+            <div
+              className={`${
+                viewMode === "grid"
+                  ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+                  : "space-y-4"
+              }`}
+            >
               {sortedProducts.map((product) => (
-                <Card key={product.id} className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
+                <Card
+                  key={product.id}
+                  className="group hover:shadow-lg transition-all duration-300 overflow-hidden"
+                >
                   {viewMode === "grid" ? (
                     <>
                       <div className="relative">
@@ -278,16 +287,22 @@ export default function StoreVisit() {
                         </div>
                         {product.salePrice && (
                           <div className="absolute bottom-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs arabic font-bold">
-                            خصم {Math.round((1 - product.salePrice / product.price) * 100)}%
+                            خصم{" "}
+                            {Math.round(
+                              (1 - product.salePrice / product.price) * 100,
+                            )}
+                            %
                           </div>
                         )}
                         <div className="absolute top-2 left-2">
-                          <Badge className={`text-white text-xs arabic ${ProductService.getStatusBadgeColor(product.status)}`}>
+                          <Badge
+                            className={`text-white text-xs arabic ${ProductService.getStatusBadgeColor(product.status)}`}
+                          >
                             {ProductService.getStatusText(product.status)}
                           </Badge>
                         </div>
                       </div>
-                      
+
                       <CardContent className="p-4">
                         <h3 className="font-bold text-gray-800 mb-2 arabic group-hover:text-green-600 transition-colors line-clamp-2">
                           {product.name}
@@ -298,7 +313,8 @@ export default function StoreVisit() {
 
                         <div className="flex items-center justify-between mb-3">
                           <Badge variant="outline" className="text-xs arabic">
-                            {ProductService.getCategoryIcon(product.category)} {product.category}
+                            {ProductService.getCategoryIcon(product.category)}{" "}
+                            {product.category}
                           </Badge>
                           <div className="text-right">
                             {product.salePrice ? (
@@ -319,7 +335,9 @@ export default function StoreVisit() {
                         </div>
 
                         <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
-                          <span className="arabic">المخزون: {product.inventory.quantity}</span>
+                          <span className="arabic">
+                            المخزون: {product.inventory.quantity}
+                          </span>
                           <div className="flex items-center gap-1">
                             <Eye className="w-3 h-3" />
                             <span>120 مشاهدة</span>
@@ -336,7 +354,9 @@ export default function StoreVisit() {
                               >
                                 <Minus className="w-3 h-3" />
                               </Button>
-                              <span className="font-semibold">{cart[product.id]}</span>
+                              <span className="font-semibold">
+                                {cart[product.id]}
+                              </span>
                               <Button
                                 size="sm"
                                 variant="outline"
@@ -345,7 +365,11 @@ export default function StoreVisit() {
                                 <Plus className="w-3 h-3" />
                               </Button>
                             </div>
-                            <Button variant="outline" size="sm" className="arabic">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="arabic"
+                            >
                               <Eye className="w-4 h-4 ml-1" />
                               عرض
                             </Button>
@@ -361,7 +385,11 @@ export default function StoreVisit() {
                               <ShoppingCart className="w-4 h-4 ml-1" />
                               أضف للسلة
                             </Button>
-                            <Button variant="outline" size="sm" className="arabic">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="arabic"
+                            >
                               <Eye className="w-4 h-4" />
                             </Button>
                           </div>
@@ -379,8 +407,12 @@ export default function StoreVisit() {
                         <div className="flex-1">
                           <div className="flex items-start justify-between mb-2">
                             <div className="flex-1">
-                              <h3 className="font-bold text-gray-800 arabic mb-1">{product.name}</h3>
-                              <p className="text-sm text-gray-600 arabic line-clamp-2">{product.description}</p>
+                              <h3 className="font-bold text-gray-800 arabic mb-1">
+                                {product.name}
+                              </h3>
+                              <p className="text-sm text-gray-600 arabic line-clamp-2">
+                                {product.description}
+                              </p>
                             </div>
                             <div className="text-right ml-4">
                               {product.salePrice ? (
@@ -399,15 +431,20 @@ export default function StoreVisit() {
                               )}
                             </div>
                           </div>
-                          
+
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-4 text-sm text-gray-500">
-                              <Badge variant="outline" className="text-xs arabic">
+                              <Badge
+                                variant="outline"
+                                className="text-xs arabic"
+                              >
                                 {product.category}
                               </Badge>
-                              <span className="arabic">المخزون: {product.inventory.quantity}</span>
+                              <span className="arabic">
+                                المخزون: {product.inventory.quantity}
+                              </span>
                             </div>
-                            
+
                             {cart[product.id] ? (
                               <div className="flex items-center gap-2">
                                 <Button
@@ -417,7 +454,9 @@ export default function StoreVisit() {
                                 >
                                   <Minus className="w-3 h-3" />
                                 </Button>
-                                <span className="font-semibold">{cart[product.id]}</span>
+                                <span className="font-semibold">
+                                  {cart[product.id]}
+                                </span>
                                 <Button
                                   size="sm"
                                   variant="outline"

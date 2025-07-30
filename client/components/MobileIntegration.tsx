@@ -1,11 +1,11 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Share, Download, ExternalLink } from 'lucide-react';
-import { DeepLinkingService } from '@/lib/deepLinking';
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Share, Download, ExternalLink } from "lucide-react";
+import { DeepLinkingService } from "@/lib/deepLinking";
 
 // مكون للتحكم في الروابط الذكية
 interface SmartLinkButtonProps {
-  type: 'product' | 'company' | 'job' | 'store';
+  type: "product" | "company" | "job" | "store";
   id: string;
   title: string;
   children: React.ReactNode;
@@ -17,7 +17,7 @@ export const SmartLinkButton: React.FC<SmartLinkButtonProps> = ({
   id,
   title,
   children,
-  className
+  className,
 }) => {
   const handleClick = () => {
     DeepLinkingService.shareContent(type, id, title);
@@ -38,9 +38,12 @@ export const AppPromoBanner: React.FC = () => {
   React.useEffect(() => {
     const checkMobile = async () => {
       // فحص إذا كان الجهاز محمول
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      
-      if (isMobile && !localStorage.getItem('app_banner_dismissed')) {
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent,
+        );
+
+      if (isMobile && !localStorage.getItem("app_banner_dismissed")) {
         const isInstalled = await DeepLinkingService.isAppInstalled();
         if (!isInstalled) {
           setShowBanner(true);
@@ -57,7 +60,7 @@ export const AppPromoBanner: React.FC = () => {
   };
 
   const dismissBanner = () => {
-    localStorage.setItem('app_banner_dismissed', 'true');
+    localStorage.setItem("app_banner_dismissed", "true");
     setShowBanner(false);
   };
 
@@ -76,8 +79,8 @@ export const AppPromoBanner: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Button 
-            size="sm" 
+          <Button
+            size="sm"
             variant="secondary"
             onClick={handleInstallApp}
             className="text-xs arabic"
@@ -85,7 +88,7 @@ export const AppPromoBanner: React.FC = () => {
             <Download className="w-3 h-3 ml-1" />
             تحميل
           </Button>
-          <button 
+          <button
             onClick={dismissBanner}
             className="text-white/70 hover:text-white text-lg w-6 h-6 flex items-center justify-center"
           >
@@ -109,7 +112,7 @@ export const OpenInAppButton: React.FC<OpenInAppButtonProps> = ({
   path,
   params,
   children,
-  className
+  className,
 }) => {
   const [isAppAvailable, setIsAppAvailable] = React.useState(false);
 
@@ -129,8 +132,8 @@ export const OpenInAppButton: React.FC<OpenInAppButtonProps> = ({
   if (!isAppAvailable) return null;
 
   return (
-    <Button 
-      onClick={handleOpenInApp} 
+    <Button
+      onClick={handleOpenInApp}
       variant="outline"
       className={`${className} arabic`}
     >
@@ -142,53 +145,57 @@ export const OpenInAppButton: React.FC<OpenInAppButtonProps> = ({
 
 // مكون للمزامنة التلقائية
 export const SyncIndicator: React.FC = () => {
-  const [syncStatus, setSyncStatus] = React.useState<'idle' | 'syncing' | 'success' | 'error'>('idle');
+  const [syncStatus, setSyncStatus] = React.useState<
+    "idle" | "syncing" | "success" | "error"
+  >("idle");
   const [lastSync, setLastSync] = React.useState<Date | null>(null);
 
   React.useEffect(() => {
     // فحص آخر مزامنة
-    const lastSyncStr = localStorage.getItem('last_sync');
+    const lastSyncStr = localStorage.getItem("last_sync");
     if (lastSyncStr) {
       setLastSync(new Date(lastSyncStr));
     }
 
     // مزامنة تلقائية كل 5 دقائق
     const interval = setInterval(performSync, 5 * 60 * 1000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
   const performSync = async () => {
     try {
-      setSyncStatus('syncing');
-      
+      setSyncStatus("syncing");
+
       // م��اكاة مزامنة البيانات
-      await fetch('/api/mobile/sync', {
-        method: 'POST',
+      await fetch("/api/mobile/sync", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'X-Platform': 'web'
-        }
+          "Content-Type": "application/json",
+          "X-Platform": "web",
+        },
       });
 
-      localStorage.setItem('last_sync', new Date().toISOString());
+      localStorage.setItem("last_sync", new Date().toISOString());
       setLastSync(new Date());
-      setSyncStatus('success');
-      
-      setTimeout(() => setSyncStatus('idle'), 2000);
+      setSyncStatus("success");
+
+      setTimeout(() => setSyncStatus("idle"), 2000);
     } catch (error) {
-      setSyncStatus('error');
-      setTimeout(() => setSyncStatus('idle'), 3000);
+      setSyncStatus("error");
+      setTimeout(() => setSyncStatus("idle"), 3000);
     }
   };
 
   const getSyncStatusIcon = () => {
     switch (syncStatus) {
-      case 'syncing':
-        return <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />;
-      case 'success':
+      case "syncing":
+        return (
+          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+        );
+      case "success":
         return <div className="w-2 h-2 bg-green-500 rounded-full" />;
-      case 'error':
+      case "error":
         return <div className="w-2 h-2 bg-red-500 rounded-full" />;
       default:
         return <div className="w-2 h-2 bg-gray-300 rounded-full" />;
@@ -197,14 +204,16 @@ export const SyncIndicator: React.FC = () => {
 
   const getSyncMessage = () => {
     switch (syncStatus) {
-      case 'syncing':
-        return 'جاري المزامنة...';
-      case 'success':
-        return 'تم التحديث';
-      case 'error':
-        return 'خطأ في المزامنة';
+      case "syncing":
+        return "جاري المزامنة...";
+      case "success":
+        return "تم التحديث";
+      case "error":
+        return "خطأ في المزامنة";
       default:
-        return lastSync ? `آخر تحديث: ${lastSync.toLocaleTimeString('ar-SA')}` : 'لم يتم التحديث';
+        return lastSync
+          ? `آخر تحديث: ${lastSync.toLocaleTimeString("ar-SA")}`
+          : "لم يتم التحديث";
     }
   };
 
@@ -212,8 +221,8 @@ export const SyncIndicator: React.FC = () => {
     <div className="flex items-center gap-2 text-xs text-gray-500">
       {getSyncStatusIcon()}
       <span className="arabic">{getSyncMessage()}</span>
-      {syncStatus === 'idle' && (
-        <button 
+      {syncStatus === "idle" && (
+        <button
           onClick={performSync}
           className="text-blue-500 hover:text-blue-700 arabic"
         >
@@ -227,27 +236,29 @@ export const SyncIndicator: React.FC = () => {
 // مكون لعرض QR code للتطبيق الجوال
 export const AppQRCode: React.FC = () => {
   const [showQR, setShowQR] = React.useState(false);
-  
+
   // في التطبيق الحقيقي، استخدم مكتبة لإنشاء QR code
-  const appStoreLink = 'https://apps.apple.com/app/sudan-house';
-  const playStoreLink = 'https://play.google.com/store/apps/details?id=com.sudanhouse.app';
+  const appStoreLink = "https://apps.apple.com/app/sudan-house";
+  const playStoreLink =
+    "https://play.google.com/store/apps/details?id=com.sudanhouse.app";
 
   return (
     <div className="text-center">
-      <Button 
+      <Button
         onClick={() => setShowQR(!showQR)}
         variant="outline"
         className="arabic"
       >
         QR Code للتطبيق
       </Button>
-      
+
       {showQR && (
         <div className="mt-4 p-4 border rounded-lg bg-white">
           <div className="w-32 h-32 bg-gray-200 rounded-lg mx-auto mb-4 flex items-center justify-center">
             {/* ه��ا يكون QR Code */}
             <span className="text-gray-500 text-xs text-center">
-              QR Code<br/>
+              QR Code
+              <br />
               للتطبيق الجوال
             </span>
           </div>
@@ -255,7 +266,7 @@ export const AppQRCode: React.FC = () => {
             امسح الرمز بكاميرا هاتفك
           </p>
           <div className="flex gap-2 justify-center">
-            <a 
+            <a
               href={appStoreLink}
               target="_blank"
               rel="noopener noreferrer"
@@ -264,7 +275,7 @@ export const AppQRCode: React.FC = () => {
               App Store
             </a>
             <span className="text-gray-300">|</span>
-            <a 
+            <a
               href={playStoreLink}
               target="_blank"
               rel="noopener noreferrer"
