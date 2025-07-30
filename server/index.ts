@@ -45,10 +45,14 @@ import {
 export function createServer() {
   const app = express();
 
-  // تهيئة قاعدة البيانات
-  connectDatabase().catch((error) => {
-    console.error("فشل في الاتصال بقاعدة البيانات:", error);
-  });
+  // تهيئة قاعدة البيانات في production فقط
+  if (process.env.NODE_ENV === 'production') {
+    import("./lib/prisma").then(({ connectDatabase }) => {
+      connectDatabase().catch((error) => {
+        console.error("فشل في الاتصال بقاعدة البيانات:", error);
+      });
+    });
+  }
 
   // Middleware
   app.use(cors());
