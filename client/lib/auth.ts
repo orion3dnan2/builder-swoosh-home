@@ -7,65 +7,36 @@ export class AuthService {
     PERMISSIONS: "bayt_al_sudani_permissions",
   };
 
-  static login(credentials: {
+  static async login(credentials: {
     username: string;
     password: string;
   }): Promise<User> {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Demo users for development
-        const demoUsers: Record<string, User> = {
-          admin: {
-            id: "admin-001",
-            username: "admin",
-            email: "admin@baytsudani.com",
-            role: "super_admin",
-            profile: {
-              name: "مدير التطبيق",
-              language: "ar",
-              avatar: "/placeholder.svg",
-            },
-            permissions: [{ resource: "*", actions: ["*"] }],
-            createdAt: new Date().toISOString(),
-            lastLogin: new Date().toISOString(),
-            isActive: true,
-          },
-          merchant: {
-            id: "merchant-001",
-            username: "merchant",
-            email: "merchant@example.com",
-            role: "merchant",
-            profile: {
-              name: "صاحب متجر",
-              language: "ar",
-              avatar: "/placeholder.svg",
-              businessInfo: {
-                businessName: "متجر الخير",
-                businessType: "retail",
-                description: "متجر لبيع المنتجات السودانية الأصيلة",
-              },
-            },
-            permissions: [
-              { resource: "store", actions: ["read", "write", "delete"] },
-              { resource: "products", actions: ["read", "write", "delete"] },
-              { resource: "orders", actions: ["read", "write"] },
-              { resource: "analytics", actions: ["read"] },
-            ],
-            createdAt: new Date().toISOString(),
-            lastLogin: new Date().toISOString(),
-            isActive: true,
-          },
-        };
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials),
+      });
 
-        const user = demoUsers[credentials.username];
-        if (user && credentials.password === credentials.username) {
-          AuthService.setCurrentUser(user);
-          resolve(user);
-        } else {
-          reject(new Error("اسم المستخدم أو كلمة المرور غير صحيحة"));
-        }
-      }, 1000);
-    });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'خطأ في تسجيل الدخول');
+      }
+
+      // حفظ الرمز المميز والمستخدم
+      if (data.token) {
+        localStorage.setItem('auth_token', data.token);
+      }
+
+      AuthService.setCurrentUser(data.user);
+      return data.user;
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
   }
 
   static logout(): void {
