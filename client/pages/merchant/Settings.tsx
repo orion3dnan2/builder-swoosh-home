@@ -420,6 +420,7 @@ export default function MerchantSettings() {
                         value={storeSettings.storeName}
                         onChange={(e) => setStoreSettings({...storeSettings, storeName: e.target.value})}
                         className="mt-1 text-right arabic"
+                        placeholder="أدخل اسم متجرك"
                       />
                     </div>
                     <div>
@@ -445,7 +446,7 @@ export default function MerchantSettings() {
                       value={storeSettings.description}
                       onChange={(e) => setStoreSettings({...storeSettings, description: e.target.value})}
                       className="mt-1 text-right arabic"
-                      placeholder="اكتب وصفاً مختصراً عن متجرك ومنتجاتك..."
+                      placeholder="اكتب وصفاً مختصراً عن متجرك ومن��جاتك..."
                     />
                   </div>
 
@@ -578,7 +579,7 @@ export default function MerchantSettings() {
                       {[
                         { key: 'newOrders', label: 'طلبات جديدة', desc: 'اشعارات عند وصول طلبات جديدة' },
                         { key: 'orderUpdates', label: 'تحديثات الطلبات', desc: 'اشعارات عند تغيير حالة الطلبات' },
-                        { key: 'paymentReceived', label: 'استلام الدفعات', desc: 'اشعارات عند استلام المدفوعات' }
+                        { key: 'paymentReceived', label: 'استلام الدفعات', desc: 'اشعارا�� عند استلام المدفوعات' }
                       ].map((item) => (
                         <div key={item.key} className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                           <div className={isRTL ? 'text-right' : 'text-left'}>
@@ -603,7 +604,7 @@ export default function MerchantSettings() {
                     <h3 className="font-semibold text-gray-900 mb-4 arabic">إشعارات المخزون</h3>
                     <div className="space-y-4">
                       {[
-                        { key: 'lowStock', label: 'نفاد المخزون', desc: 'تنبيه عند انخفاض كمية المنتجات' },
+                        { key: 'lowStock', label: 'نفاد المخزو��', desc: 'تنبيه عند انخفاض كمية المنتجات' },
                         { key: 'reviews', label: 'المراجعات الجديدة', desc: 'اشعارات عند وصول مراجعات جديدة' }
                       ].map((item) => (
                         <div key={item.key} className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
@@ -727,7 +728,7 @@ export default function MerchantSettings() {
                   <div>
                     <Label className="arabic">مناطق التوصيل</Label>
                     <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة", "الطائف", "الخبر", "الأحساء", "تبوك", "أبها"].map((area) => (
+                      {["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة", "الطائف", "الخ��ر", "الأحساء", "تبوك", "أبها"].map((area) => (
                         <label key={area} className={`flex items-center space-x-2 space-x-reverse p-2 border rounded-lg hover:bg-gray-50 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                           <input
                             type="checkbox"
