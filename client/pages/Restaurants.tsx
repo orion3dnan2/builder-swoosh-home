@@ -14,8 +14,29 @@ import {
 import { useState, useEffect } from "react";
 
 export default function Restaurants() {
-  const { restaurants } = useStores();
+  const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // جلب المطاعم من API
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/stores/restaurants');
+        if (response.ok) {
+          const data = await response.json();
+          setRestaurants(data);
+        }
+      } catch (error) {
+        console.error('خطأ في جلب المطاعم:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRestaurants();
+  }, []);
 
   const filteredRestaurants = restaurants.filter(
     (restaurant) =>
