@@ -45,7 +45,7 @@ export default function Marketplace() {
             السوق التجاري
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto arabic">
-            اكتشف أفضل المتاجر السودانية في الخليج والعالم
+            اكتشف أفضل المتاجر ال��ودانية في الخليج والعالم
           </p>
           <div className="flex items-center justify-center gap-6 mt-6 text-sm text-gray-500">
             <div className="flex items-center gap-2">
@@ -145,12 +145,16 @@ export default function Marketplace() {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button className="flex-1 arabic" size="sm">
-                    زيارة المتجر
-                  </Button>
-                  <Button variant="outline" size="sm" className="arabic">
-                    تفاصيل
-                  </Button>
+                  <Link to={`/store/${store.id}/visit`}>
+                    <Button className="flex-1 arabic" size="sm">
+                      زيارة المتجر
+                    </Button>
+                  </Link>
+                  <Link to={`/store/${store.id}`}>
+                    <Button variant="outline" size="sm" className="arabic">
+                      تفاصيل
+                    </Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
