@@ -104,10 +104,15 @@ export class ApiService {
 
   static async register(userData: {
     fullName: string;
+    username: string;
     email: string;
     phone: string;
     password: string;
     accountType: string;
+    country?: string;
+    city?: string;
+    businessName?: string;
+    businessType?: string;
   }): Promise<any> {
     const response = await this.request<any>('/auth/register', {
       method: 'POST',
