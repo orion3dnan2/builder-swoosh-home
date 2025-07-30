@@ -11,8 +11,7 @@ import {
   Clock,
   Phone,
 } from "lucide-react";
-import { useStores, StoresService } from "@/lib/stores";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Restaurants() {
   const { restaurants } = useStores();
