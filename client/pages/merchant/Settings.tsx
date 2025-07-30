@@ -314,7 +314,7 @@ export default function MerchantSettings() {
     }
   };
 
-  // حذف الشعار
+  // حذف الشع��ر
   const handleRemoveLogo = () => {
     if (window.confirm("هل أنت متأكد ��ن حذف شعار المتجر؟")) {
       setStoreSettings({ ...storeSettings, logo: "/placeholder.svg" });
@@ -401,7 +401,7 @@ export default function MerchantSettings() {
         );
 
         if (existingStore) {
-          // تحديث متجر موجود
+          // تحدي�� متجر موجود
           await ApiService.updateStore(existingStore.id, storeData);
         } else {
           // إنشاء متجر جديد
@@ -473,7 +473,7 @@ export default function MerchantSettings() {
 
   // قائمة الدول والمدن التابعة لها
   const countriesWithCities = {
-    الس��دان: [
+    "السودان": [
       "الخرطوم",
       "أمدرمان",
       "بحري",
@@ -677,7 +677,7 @@ export default function MerchantSettings() {
                               }
                             >
                               <Camera className="w-4 h-4 ml-2" />
-                              تغيير الشعار
+                              تغيير الش��ار
                             </Button>
                             {storeSettings.logo !== "/placeholder.svg" && (
                               <Button
