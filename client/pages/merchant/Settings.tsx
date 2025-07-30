@@ -91,7 +91,7 @@ export default function MerchantSettings() {
   // Store Settings State - فارغة للتجار الجدد
   const [storeSettings, setStoreSettings] = useState<StoreSettings>({
     storeName: isNewMerchant ? (user?.profile?.businessName || "") : "متجر الخير السوداني",
-    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
+    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصي��ة والطبيعية من عطور وأطعمة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
     phone: isNewMerchant ? (user?.profile?.phone || "") : "+966501234567",
     email: isNewMerchant ? (user?.email || "") : "store@alkhair-sudani.com",
@@ -218,7 +218,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.category) {
-      alert("يرجى اختيار فئة المتجر");
+      alert("يرجى اختيار نوع المتجر");
       return;
     }
 
@@ -260,7 +260,7 @@ export default function MerchantSettings() {
   };
 
   const tabs = [
-    { id: "store", label: "بيانات المتجر", icon: Store },
+    { id: "store", label: "بيانات الم��جر", icon: Store },
     { id: "notifications", label: "الإشعارات", icon: Bell },
     { id: "shipping", label: "الشحن والتوصيل", icon: Truck },
     { id: "account", label: "الحساب والأمان", icon: Shield }
@@ -287,7 +287,7 @@ export default function MerchantSettings() {
     "مكة المكرمة، المملكة العربية السعودية",
     "المدينة المنورة، المملكة العربية السعودية",
     "الطا��ف، الم��لكة العربية السعودية",
-    "الخبر، المملكة العربية السعودية",
+    "الخبر، المملكة العرب��ة السعودية",
     "الأحساء، المملكة العربية السعودية"
   ];
 
@@ -311,7 +311,7 @@ export default function MerchantSettings() {
       "الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"
     ],
     "مملكة البحرين": [
-      "المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"
+      "المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "��دحفص"
     ],
     "سلطنة عمان": [
       "مسقط", "صلالة", "نزوى", "صور", "ا��رستاق", "صحار"
