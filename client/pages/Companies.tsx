@@ -393,7 +393,7 @@ export default function Companies() {
                     onClick={() => setSelectedIndustry(industry)}
                   >
                     <div className="text-3xl mb-2">
-                      {CompaniesService.getIndustryIcon(industry)}
+                      🏢
                     </div>
                     <h4 className="font-semibold text-gray-800 text-sm arabic mb-1">
                       {industry}
