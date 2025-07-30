@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { UserDatabase, StoreDatabase } from "../../lib/database";
 import { authenticateToken } from "./auth-dev";
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
 const router = Router();
 
@@ -18,9 +18,9 @@ router.get("/info", authenticateToken, async (req: any, res) => {
     const stores = StoreDatabase.getAllStores();
 
     // معلومات الملفات
-    const dataPath = path.join(process.cwd(), 'data');
-    const usersFile = path.join(dataPath, 'users.json');
-    const storesFile = path.join(dataPath, 'stores.json');
+    const dataPath = path.join(process.cwd(), "data");
+    const usersFile = path.join(dataPath, "users.json");
+    const storesFile = path.join(dataPath, "stores.json");
 
     let usersFileSize = 0;
     let storesFileSize = 0;
@@ -50,33 +50,35 @@ router.get("/info", authenticateToken, async (req: any, res) => {
     // إحصائيات المستخدمين
     const userStats = {
       total: users.length,
-      active: users.filter(u => u.isActive).length,
-      merchants: users.filter(u => u.role === "merchant").length,
-      customers: users.filter(u => u.role === "customer").length,
-      admins: users.filter(u => u.role === "super_admin").length,
-      recentRegistrations: users.filter(u => {
+      active: users.filter((u) => u.isActive).length,
+      merchants: users.filter((u) => u.role === "merchant").length,
+      customers: users.filter((u) => u.role === "customer").length,
+      admins: users.filter((u) => u.role === "super_admin").length,
+      recentRegistrations: users.filter((u) => {
         const registrationDate = new Date(u.createdAt);
-        const daysSince = (Date.now() - registrationDate.getTime()) / (1000 * 60 * 60 * 24);
+        const daysSince =
+          (Date.now() - registrationDate.getTime()) / (1000 * 60 * 60 * 24);
         return daysSince <= 7;
-      }).length
+      }).length,
     };
 
     // إحصائيات المتاجر
     const storeStats = {
       total: stores.length,
-      active: stores.filter(s => s.status === "active").length,
-      pending: stores.filter(s => s.status === "pending").length,
-      suspended: stores.filter(s => s.status === "suspended").length,
-      inactive: stores.filter(s => s.status === "inactive").length,
-      recentStores: stores.filter(s => {
+      active: stores.filter((s) => s.status === "active").length,
+      pending: stores.filter((s) => s.status === "pending").length,
+      suspended: stores.filter((s) => s.status === "suspended").length,
+      inactive: stores.filter((s) => s.status === "inactive").length,
+      recentStores: stores.filter((s) => {
         const creationDate = new Date(s.createdAt);
-        const daysSince = (Date.now() - creationDate.getTime()) / (1000 * 60 * 60 * 24);
+        const daysSince =
+          (Date.now() - creationDate.getTime()) / (1000 * 60 * 60 * 24);
         return daysSince <= 7;
-      }).length
+      }).length,
     };
 
     // معلومات النسخ الاحتياطية
-    const backupPath = path.join(dataPath, 'backups');
+    const backupPath = path.join(dataPath, "backups");
     let backupCount = 0;
     let lastBackup = null;
 
@@ -84,10 +86,13 @@ router.get("/info", authenticateToken, async (req: any, res) => {
       if (fs.existsSync(backupPath)) {
         const backupFiles = fs.readdirSync(backupPath);
         backupCount = backupFiles.length;
-        
+
         if (backupFiles.length > 0) {
           const latestBackup = backupFiles
-            .map(file => ({ name: file, time: fs.statSync(path.join(backupPath, file)).mtime }))
+            .map((file) => ({
+              name: file,
+              time: fs.statSync(path.join(backupPath, file)).mtime,
+            }))
             .sort((a, b) => b.time.getTime() - a.time.getTime())[0];
           lastBackup = latestBackup.time;
         }
@@ -101,25 +106,25 @@ router.get("/info", authenticateToken, async (req: any, res) => {
         stats: userStats,
         fileSize: `${(usersFileSize / 1024).toFixed(2)} KB`,
         lastModified: usersLastModified,
-        exists: fs.existsSync(usersFile)
+        exists: fs.existsSync(usersFile),
       },
       stores: {
         stats: storeStats,
         fileSize: `${(storesFileSize / 1024).toFixed(2)} KB`,
         lastModified: storesLastModified,
-        exists: fs.existsSync(storesFile)
+        exists: fs.existsSync(storesFile),
       },
       backups: {
         count: backupCount,
         lastBackup: lastBackup,
-        path: backupPath
+        path: backupPath,
       },
       system: {
         dataPath: dataPath,
         serverStartTime: new Date().toISOString(),
         nodeVersion: process.version,
-        platform: process.platform
-      }
+        platform: process.platform,
+      },
     };
 
     res.json(databaseInfo);
@@ -139,9 +144,9 @@ router.post("/backup", authenticateToken, async (req: any, res) => {
     const { createBackup } = await import("../../lib/database");
     createBackup();
 
-    res.json({ 
+    res.json({
       message: "تم إنشاء النسخة الاحتياطية بنجاح",
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
   } catch (error) {
     console.error("Create backup error:", error);

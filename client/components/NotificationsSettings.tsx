@@ -3,14 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { 
-  Bell, 
-  Package, 
-  Star, 
-  Mail, 
-  Settings, 
-  CheckCircle 
-} from "lucide-react";
+import { Bell, Package, Star, Mail, Settings, CheckCircle } from "lucide-react";
 
 interface NotificationSettings {
   newOrders: boolean;
@@ -28,9 +21,9 @@ interface NotificationsSettingsProps {
   setNotifications: (notifications: NotificationSettings) => void;
 }
 
-export default function NotificationsSettings({ 
-  notifications, 
-  setNotifications 
+export default function NotificationsSettings({
+  notifications,
+  setNotifications,
 }: NotificationsSettingsProps) {
   return (
     <div className="space-y-6">
@@ -52,8 +45,12 @@ export default function NotificationsSettings({
               </div>
             </div>
             <div className="flex items-center space-x-2 space-x-reverse">
-              <Badge variant="outline" className="arabic text-xs bg-purple-50 text-purple-700 border-purple-200">
-                {Object.values(notifications).filter(Boolean).length} من {Object.keys(notifications).length} مفعل
+              <Badge
+                variant="outline"
+                className="arabic text-xs bg-purple-50 text-purple-700 border-purple-200"
+              >
+                {Object.values(notifications).filter(Boolean).length} من{" "}
+                {Object.keys(notifications).length} مفعل
               </Badge>
             </div>
           </div>
@@ -84,21 +81,21 @@ export default function NotificationsSettings({
               label: "طلبات جديدة",
               desc: "إشعارات فورية عند وصول طلبات جديدة من العملاء",
               icon: "🛍️",
-              priority: "عالية"
+              priority: "عالية",
             },
             {
               key: "orderUpdates",
               label: "تحديثات الطلبات",
               desc: "إشعارات عند تغيير حالة الطلبات أو إلغاءها من العملاء",
               icon: "📝",
-              priority: "متوسطة"
+              priority: "متوسطة",
             },
             {
               key: "paymentReceived",
               label: "استلام الدفعات",
               desc: "إشعارات عند استلام المدفوعات وتأكيد المعاملات المالية",
               icon: "💰",
-              priority: "عالية"
+              priority: "عالية",
             },
           ].map((item) => (
             <div
@@ -117,8 +114,12 @@ export default function NotificationsSettings({
                       <h4 className="font-bold text-gray-900 arabic text-base">
                         {item.label}
                       </h4>
-                      <Badge 
-                        variant={item.priority === "عالية" ? "destructive" : "secondary"}
+                      <Badge
+                        variant={
+                          item.priority === "عالية"
+                            ? "destructive"
+                            : "secondary"
+                        }
                         className="text-xs arabic"
                       >
                         {item.priority}
@@ -132,9 +133,7 @@ export default function NotificationsSettings({
                 <div className="mr-4">
                   <Switch
                     checked={
-                      notifications[
-                        item.key as keyof NotificationSettings
-                      ]
+                      notifications[item.key as keyof NotificationSettings]
                     }
                     onCheckedChange={(checked) =>
                       setNotifications({
@@ -186,14 +185,14 @@ export default function NotificationsSettings({
                 label: "نفاد المخزون",
                 desc: "تنبيه مبكر عند انخفاض كمية المنتجات تحت الحد المحدد",
                 icon: "📦",
-                priority: "عالية"
+                priority: "عالية",
               },
               {
                 key: "reviews",
                 label: "المراجعات الجديدة",
                 desc: "إشعارات عند وصول مراجعات وتقييمات جديدة من العملاء",
                 icon: "⭐",
-                priority: "متوسطة"
+                priority: "متوسطة",
               },
             ].map((item) => (
               <div
@@ -211,8 +210,12 @@ export default function NotificationsSettings({
                       <h4 className="font-bold text-gray-900 arabic text-base">
                         {item.label}
                       </h4>
-                      <Badge 
-                        variant={item.priority === "عالية" ? "destructive" : "secondary"}
+                      <Badge
+                        variant={
+                          item.priority === "عالية"
+                            ? "destructive"
+                            : "secondary"
+                        }
                         className="text-xs arabic mt-1"
                       >
                         {item.priority}
@@ -221,9 +224,7 @@ export default function NotificationsSettings({
                   </div>
                   <Switch
                     checked={
-                      notifications[
-                        item.key as keyof NotificationSettings
-                      ]
+                      notifications[item.key as keyof NotificationSettings]
                     }
                     onCheckedChange={(checked) =>
                       setNotifications({
@@ -278,14 +279,14 @@ export default function NotificationsSettings({
                 label: "رسائل SMS",
                 desc: "استقبال الإشعارات العاجلة عبر الرسائل النصية للتنبيهات السريعة",
                 icon: "📱",
-                feature: "سريع ومباشر"
+                feature: "سريع ومباشر",
               },
               {
                 key: "emailNotifications",
                 label: "البريد الإلكتروني",
                 desc: "استقبال الإشعارات المفصلة والتقارير عبر البريد الإلكتروني",
                 icon: "📧",
-                feature: "تفاصيل شاملة"
+                feature: "تفاصيل شاملة",
               },
             ].map((item) => (
               <div
@@ -312,9 +313,7 @@ export default function NotificationsSettings({
                   </div>
                   <Switch
                     checked={
-                      notifications[
-                        item.key as keyof NotificationSettings
-                      ]
+                      notifications[item.key as keyof NotificationSettings]
                     }
                     onCheckedChange={(checked) =>
                       setNotifications({
@@ -328,7 +327,7 @@ export default function NotificationsSettings({
                 <p className="text-sm text-gray-600 arabic leading-relaxed">
                   {item.desc}
                 </p>
-                
+
                 {notifications[item.key as keyof NotificationSettings] && (
                   <div className="mt-4 p-3 bg-blue-100 rounded-lg border border-blue-200">
                     <div className="flex items-center text-blue-700">
@@ -367,16 +366,22 @@ export default function NotificationsSettings({
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  const allEnabled = Object.values(notifications).every(Boolean);
-                  const newState = Object.keys(notifications).reduce((acc, key) => {
-                    acc[key as keyof NotificationSettings] = !allEnabled;
-                    return acc;
-                  }, {} as NotificationSettings);
+                  const allEnabled =
+                    Object.values(notifications).every(Boolean);
+                  const newState = Object.keys(notifications).reduce(
+                    (acc, key) => {
+                      acc[key as keyof NotificationSettings] = !allEnabled;
+                      return acc;
+                    },
+                    {} as NotificationSettings,
+                  );
                   setNotifications(newState);
                 }}
                 className="arabic text-sm border-purple-200 hover:bg-purple-50 hover:border-purple-300"
               >
-                {Object.values(notifications).every(Boolean) ? "إيقاف الكل" : "تفعيل الكل"}
+                {Object.values(notifications).every(Boolean)
+                  ? "إيقاف الكل"
+                  : "تفعيل الكل"}
               </Button>
               <Button
                 variant="default"

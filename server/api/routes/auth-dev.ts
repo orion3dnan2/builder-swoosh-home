@@ -33,7 +33,7 @@ router.post("/login", async (req, res) => {
 
     // البحث عن المستخدم في قاعدة البيانات
     const user = UserDatabase.findUser(
-      (u) => u.username === username || u.email === username
+      (u) => u.username === username || u.email === username,
     );
 
     if (!user) {
@@ -65,8 +65,8 @@ router.post("/login", async (req, res) => {
     }
 
     // تحديث آخر تسجيل دخول
-    UserDatabase.updateUser(user.id, { 
-      lastLogin: new Date().toISOString() 
+    UserDatabase.updateUser(user.id, {
+      lastLogin: new Date().toISOString(),
     });
 
     // إنشاء رمز الوصول
@@ -185,7 +185,7 @@ router.post("/register", async (req, res) => {
       user: userWithoutPassword,
       token,
       platform,
-      message: "تم إنشاء الحساب بنجاح وحفظه في قاعدة البيانات"
+      message: "تم إنشاء الحساب بنجاح وحفظه في قاعدة البيانات",
     });
   } catch (error) {
     console.error("Registration error:", error);
@@ -216,7 +216,7 @@ router.post("/refresh", authenticateToken, (req: any, res) => {
 router.get("/me", authenticateToken, async (req: any, res) => {
   try {
     const user = UserDatabase.findUser((u) => u.id === req.user.id);
-    
+
     if (!user) {
       return res.status(404).json({ error: "المستخدم غير موجود" });
     }
@@ -245,15 +245,16 @@ router.get("/stats", authenticateToken, (req: any, res) => {
     const allUsers = UserDatabase.getAllUsers();
     const stats = {
       total: allUsers.length,
-      active: allUsers.filter(u => u.isActive).length,
-      merchants: allUsers.filter(u => u.role === "merchant").length,
-      customers: allUsers.filter(u => u.role === "customer").length,
-      admins: allUsers.filter(u => u.role === "super_admin").length,
-      recentRegistrations: allUsers.filter(u => {
+      active: allUsers.filter((u) => u.isActive).length,
+      merchants: allUsers.filter((u) => u.role === "merchant").length,
+      customers: allUsers.filter((u) => u.role === "customer").length,
+      admins: allUsers.filter((u) => u.role === "super_admin").length,
+      recentRegistrations: allUsers.filter((u) => {
         const registrationDate = new Date(u.createdAt);
-        const daysSince = (Date.now() - registrationDate.getTime()) / (1000 * 60 * 60 * 24);
+        const daysSince =
+          (Date.now() - registrationDate.getTime()) / (1000 * 60 * 60 * 24);
         return daysSince <= 7;
-      }).length
+      }).length,
     };
 
     res.json(stats);

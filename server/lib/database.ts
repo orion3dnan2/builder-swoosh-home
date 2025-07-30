@@ -1,10 +1,10 @@
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
 // مسار ملف قاعدة البيانات المحلية
-const DB_PATH = path.join(process.cwd(), 'data');
-const USERS_FILE = path.join(DB_PATH, 'users.json');
-const STORES_FILE = path.join(DB_PATH, 'stores.json');
+const DB_PATH = path.join(process.cwd(), "data");
+const USERS_FILE = path.join(DB_PATH, "users.json");
+const STORES_FILE = path.join(DB_PATH, "stores.json");
 
 // التأكد من وجود مجلد البيانات
 if (!fs.existsSync(DB_PATH)) {
@@ -19,10 +19,10 @@ export class UserDatabase {
   // تحميل المستخدمين من الملف
   static loadUsers() {
     if (this.isLoaded) return this.users;
-    
+
     try {
       if (fs.existsSync(USERS_FILE)) {
-        const data = fs.readFileSync(USERS_FILE, 'utf8');
+        const data = fs.readFileSync(USERS_FILE, "utf8");
         this.users = JSON.parse(data);
       } else {
         // إنشاء بيانات أولية
@@ -41,26 +41,26 @@ export class UserDatabase {
             permissions: [{ resource: "*", actions: ["*"] }],
             createdAt: new Date().toISOString(),
             isActive: true,
-          }
+          },
         ];
         this.saveUsers();
       }
       this.isLoaded = true;
     } catch (error) {
-      console.error('خطأ في تحميل بيانات المستخدمين:', error);
+      console.error("خطأ في تحميل بيانات المستخدمين:", error);
       this.users = [];
     }
-    
+
     return this.users;
   }
 
   // حفظ المستخدمين في الملف
   static saveUsers() {
     try {
-      fs.writeFileSync(USERS_FILE, JSON.stringify(this.users, null, 2), 'utf8');
-      console.log('✅ تم حفظ بيانات المستخدمين بنجاح');
+      fs.writeFileSync(USERS_FILE, JSON.stringify(this.users, null, 2), "utf8");
+      console.log("✅ تم حفظ بيانات المستخدمين بنجاح");
     } catch (error) {
-      console.error('❌ خطأ في حفظ بيانات المستخدمين:', error);
+      console.error("❌ خطأ في حفظ بيانات المستخدمين:", error);
     }
   }
 
@@ -87,7 +87,7 @@ export class UserDatabase {
   // تحديث مستخدم
   static updateUser(id: string, updates: any) {
     this.loadUsers();
-    const index = this.users.findIndex(u => u.id === id);
+    const index = this.users.findIndex((u) => u.id === id);
     if (index !== -1) {
       this.users[index] = { ...this.users[index], ...updates };
       this.saveUsers();
@@ -99,7 +99,7 @@ export class UserDatabase {
   // حذف مستخدم
   static deleteUser(id: string) {
     this.loadUsers();
-    const index = this.users.findIndex(u => u.id === id);
+    const index = this.users.findIndex((u) => u.id === id);
     if (index !== -1) {
       const deletedUser = this.users.splice(index, 1)[0];
       this.saveUsers();
@@ -122,10 +122,10 @@ export class StoreDatabase {
   // تحميل المتاجر من الملف
   static loadStores() {
     if (this.isLoaded) return this.stores;
-    
+
     try {
       if (fs.existsSync(STORES_FILE)) {
-        const data = fs.readFileSync(STORES_FILE, 'utf8');
+        const data = fs.readFileSync(STORES_FILE, "utf8");
         this.stores = JSON.parse(data);
       } else {
         this.stores = [];
@@ -133,20 +133,24 @@ export class StoreDatabase {
       }
       this.isLoaded = true;
     } catch (error) {
-      console.error('خطأ في تحميل بيانات المتاجر:', error);
+      console.error("خطأ في تحميل بيانات المتاجر:", error);
       this.stores = [];
     }
-    
+
     return this.stores;
   }
 
   // حفظ المتاجر في الملف
   static saveStores() {
     try {
-      fs.writeFileSync(STORES_FILE, JSON.stringify(this.stores, null, 2), 'utf8');
-      console.log('✅ تم حفظ بيانات المتاجر بنجاح');
+      fs.writeFileSync(
+        STORES_FILE,
+        JSON.stringify(this.stores, null, 2),
+        "utf8",
+      );
+      console.log("✅ تم حفظ بيانات المتاجر بنجاح");
     } catch (error) {
-      console.error('❌ خطأ في حفظ بيانات المتاجر:', error);
+      console.error("❌ خطأ في حفظ بيانات المتاجر:", error);
     }
   }
 
@@ -173,7 +177,7 @@ export class StoreDatabase {
   // تحديث متجر
   static updateStore(id: string, updates: any) {
     this.loadStores();
-    const index = this.stores.findIndex(s => s.id === id);
+    const index = this.stores.findIndex((s) => s.id === id);
     if (index !== -1) {
       this.stores[index] = { ...this.stores[index], ...updates };
       this.saveStores();
@@ -185,7 +189,7 @@ export class StoreDatabase {
   // حذف متجر
   static deleteStore(id: string) {
     this.loadStores();
-    const index = this.stores.findIndex(s => s.id === id);
+    const index = this.stores.findIndex((s) => s.id === id);
     if (index !== -1) {
       const deletedStore = this.stores.splice(index, 1)[0];
       this.saveStores();
@@ -202,25 +206,31 @@ export class StoreDatabase {
 
 // دالة للنسخ الاحتياطي
 export function createBackup() {
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-  const backupDir = path.join(DB_PATH, 'backups');
-  
+  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const backupDir = path.join(DB_PATH, "backups");
+
   if (!fs.existsSync(backupDir)) {
     fs.mkdirSync(backupDir, { recursive: true });
   }
 
   try {
     if (fs.existsSync(USERS_FILE)) {
-      fs.copyFileSync(USERS_FILE, path.join(backupDir, `users-${timestamp}.json`));
+      fs.copyFileSync(
+        USERS_FILE,
+        path.join(backupDir, `users-${timestamp}.json`),
+      );
     }
-    
+
     if (fs.existsSync(STORES_FILE)) {
-      fs.copyFileSync(STORES_FILE, path.join(backupDir, `stores-${timestamp}.json`));
+      fs.copyFileSync(
+        STORES_FILE,
+        path.join(backupDir, `stores-${timestamp}.json`),
+      );
     }
-    
+
     console.log(`✅ تم إنشاء نسخة احتياطية: ${timestamp}`);
   } catch (error) {
-    console.error('❌ خطأ في إنشاء النسخة الاحتياطية:', error);
+    console.error("❌ خطأ في إنشاء النسخة الاحتياطية:", error);
   }
 }
 

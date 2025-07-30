@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Database, 
-  Users, 
-  Store, 
-  RefreshCw, 
+import {
+  Database,
+  Users,
+  Store,
+  RefreshCw,
   Download,
   CheckCircle,
   AlertCircle,
-  Info
+  Info,
 } from "lucide-react";
 import { ApiService } from "@/lib/apiService";
 
@@ -22,20 +22,20 @@ export default function DatabaseTest() {
   const loadDatabaseInfo = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/database/info', {
+      const response = await fetch("/api/database/info", {
         headers: {
-          'Authorization': `Bearer ${ApiService.getToken()}`
-        }
+          Authorization: `Bearer ${ApiService.getToken()}`,
+        },
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         setDatabaseInfo(data);
       } else {
-        console.error('خطأ في تحميل معلومات قاعدة البيانات');
+        console.error("خطأ في تحميل معلومات قاعدة البيانات");
       }
     } catch (error) {
-      console.error('خطأ في تحميل معلومات قاعدة البيانات:', error);
+      console.error("خطأ في تحميل معلومات قاعدة البيانات:", error);
     } finally {
       setLoading(false);
     }
@@ -44,22 +44,22 @@ export default function DatabaseTest() {
   const createBackup = async () => {
     try {
       setBackupLoading(true);
-      const response = await fetch('/api/database/backup', {
-        method: 'POST',
+      const response = await fetch("/api/database/backup", {
+        method: "POST",
         headers: {
-          'Authorization': `Bearer ${ApiService.getToken()}`
-        }
+          Authorization: `Bearer ${ApiService.getToken()}`,
+        },
       });
-      
+
       if (response.ok) {
-        alert('تم إنشاء النسخة الاحتياطية بنجاح!');
+        alert("تم إنشاء النسخة الاحتياطية بنجاح!");
         loadDatabaseInfo(); // إعادة تحميل المعلومات
       } else {
-        alert('فشل في إنشاء النسخة الاحتياطية');
+        alert("فشل في إنشاء النسخة الاحتياطية");
       }
     } catch (error) {
-      console.error('خطأ في إنشاء النسخة الاحتياطية:', error);
-      alert('حدث خطأ أثنا�� إنشاء النسخة الاحتياطية');
+      console.error("خطأ في إنشاء النسخة الاحتياطية:", error);
+      alert("حدث خطأ أثنا�� إنشاء النسخة الاحتياطية");
     } finally {
       setBackupLoading(false);
     }
@@ -74,7 +74,9 @@ export default function DatabaseTest() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <RefreshCw className="w-8 h-8 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 arabic">جاري تحميل معلومات قاعدة البيانات...</p>
+          <p className="text-gray-600 arabic">
+            جاري تحميل معلومات قاعدة البيانات...
+          </p>
         </div>
       </div>
     );
@@ -138,31 +140,50 @@ export default function DatabaseTest() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="arabic text-gray-600">إجمالي المستخدمين</span>
-                  <Badge variant="secondary">{databaseInfo.users.stats.total}</Badge>
+                  <span className="arabic text-gray-600">
+                    إجمالي المستخدمين
+                  </span>
+                  <Badge variant="secondary">
+                    {databaseInfo.users.stats.total}
+                  </Badge>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="arabic text-gray-600">المستخدمون النشطون</span>
-                  <Badge variant="default" className="bg-green-100 text-green-800">
+                  <span className="arabic text-gray-600">
+                    المستخدمون النشطون
+                  </span>
+                  <Badge
+                    variant="default"
+                    className="bg-green-100 text-green-800"
+                  >
                     {databaseInfo.users.stats.active}
                   </Badge>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="arabic text-gray-600">التجار</span>
-                  <Badge variant="outline">{databaseInfo.users.stats.merchants}</Badge>
+                  <Badge variant="outline">
+                    {databaseInfo.users.stats.merchants}
+                  </Badge>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="arabic text-gray-600">العملاء</span>
-                  <Badge variant="outline">{databaseInfo.users.stats.customers}</Badge>
+                  <Badge variant="outline">
+                    {databaseInfo.users.stats.customers}
+                  </Badge>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="arabic text-gray-600">التسجيلات الحديثة</span>
-                  <Badge variant="secondary">{databaseInfo.users.stats.recentRegistrations}</Badge>
+                  <span className="arabic text-gray-600">
+                    التسجيلات الحديثة
+                  </span>
+                  <Badge variant="secondary">
+                    {databaseInfo.users.stats.recentRegistrations}
+                  </Badge>
                 </div>
                 <div className="pt-2 border-t">
                   <div className="flex items-center justify-between text-sm">
                     <span className="arabic text-gray-500">حجم الملف</span>
-                    <span className="text-gray-700">{databaseInfo.users.fileSize}</span>
+                    <span className="text-gray-700">
+                      {databaseInfo.users.fileSize}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="arabic text-gray-500">حالة الملف</span>
@@ -187,17 +208,25 @@ export default function DatabaseTest() {
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="arabic text-gray-600">إجمالي المتاجر</span>
-                  <Badge variant="secondary">{databaseInfo.stores.stats.total}</Badge>
+                  <Badge variant="secondary">
+                    {databaseInfo.stores.stats.total}
+                  </Badge>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="arabic text-gray-600">المتاجر النشطة</span>
-                  <Badge variant="default" className="bg-green-100 text-green-800">
+                  <Badge
+                    variant="default"
+                    className="bg-green-100 text-green-800"
+                  >
                     {databaseInfo.stores.stats.active}
                   </Badge>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="arabic text-gray-600">قيد المراجعة</span>
-                  <Badge variant="outline" className="bg-yellow-100 text-yellow-800">
+                  <Badge
+                    variant="outline"
+                    className="bg-yellow-100 text-yellow-800"
+                  >
                     {databaseInfo.stores.stats.pending}
                   </Badge>
                 </div>
@@ -209,12 +238,16 @@ export default function DatabaseTest() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="arabic text-gray-600">المتاجر الحديثة</span>
-                  <Badge variant="secondary">{databaseInfo.stores.stats.recentStores}</Badge>
+                  <Badge variant="secondary">
+                    {databaseInfo.stores.stats.recentStores}
+                  </Badge>
                 </div>
                 <div className="pt-2 border-t">
                   <div className="flex items-center justify-between text-sm">
                     <span className="arabic text-gray-500">حجم الملف</span>
-                    <span className="text-gray-700">{databaseInfo.stores.fileSize}</span>
+                    <span className="text-gray-700">
+                      {databaseInfo.stores.fileSize}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="arabic text-gray-500">حالة الملف</span>
@@ -239,24 +272,34 @@ export default function DatabaseTest() {
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="arabic text-gray-600">النسخ الاحتياطية</span>
-                  <Badge variant="secondary">{databaseInfo.backups.count}</Badge>
+                  <Badge variant="secondary">
+                    {databaseInfo.backups.count}
+                  </Badge>
                 </div>
                 {databaseInfo.backups.lastBackup && (
                   <div className="flex justify-between items-center">
-                    <span className="arabic text-gray-600">آخر نسخة احتياطية</span>
+                    <span className="arabic text-gray-600">
+                      آخر نسخة احتياطية
+                    </span>
                     <span className="text-xs text-gray-700">
-                      {new Date(databaseInfo.backups.lastBackup).toLocaleString('ar')}
+                      {new Date(databaseInfo.backups.lastBackup).toLocaleString(
+                        "ar",
+                      )}
                     </span>
                   </div>
                 )}
                 <div className="pt-2 border-t space-y-2">
                   <div className="flex justify-between items-center text-sm">
                     <span className="arabic text-gray-500">إصدار Node.js</span>
-                    <span className="text-gray-700">{databaseInfo.system.nodeVersion}</span>
+                    <span className="text-gray-700">
+                      {databaseInfo.system.nodeVersion}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center text-sm">
                     <span className="arabic text-gray-500">نظام التشغيل</span>
-                    <span className="text-gray-700">{databaseInfo.system.platform}</span>
+                    <span className="text-gray-700">
+                      {databaseInfo.system.platform}
+                    </span>
                   </div>
                   <div className="text-sm text-gray-500 arabic">
                     مسار البيانات: <br />
@@ -287,8 +330,8 @@ export default function DatabaseTest() {
                     النظام يعمل بشكل صحيح
                   </h3>
                   <p className="text-green-700 arabic text-sm mt-1">
-                    جميع الحسابات الجديدة والمتاجر يتم حفظها بشكل دائم في ملفات JSON. 
-                    البيانات محفوظة حتى بعد إعادة تشغيل الخادم.
+                    جميع الحسابات الجديدة والمتاجر يتم حفظها بشكل دائم في ملفات
+                    JSON. البيانات محفوظة حتى بعد إعادة تشغيل الخادم.
                   </p>
                   <ul className="list-disc list-inside text-green-700 arabic text-sm mt-2 space-y-1">
                     <li>الحسابات الجديدة تُحفظ في data/users.json</li>

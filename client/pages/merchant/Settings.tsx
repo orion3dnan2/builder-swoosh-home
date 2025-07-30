@@ -97,7 +97,9 @@ export default function MerchantSettings() {
       try {
         // محاولة تحميل بيانات المتجر من الخادم
         const userStores = await ApiService.getStores();
-        const existingStore = userStores.find(store => store.merchantId === user.id);
+        const existingStore = userStores.find(
+          (store) => store.merchantId === user.id,
+        );
 
         if (existingStore) {
           // تحديث البيانات بناءً على المتجر الموجود
@@ -112,7 +114,7 @@ export default function MerchantSettings() {
             workingHours: existingStore.workingHours || {
               start: "09:00",
               end: "17:00",
-              days: []
+              days: [],
             },
             logo: existingStore.logo || "/placeholder.svg",
             banner: existingStore.banner || "/placeholder.svg",
@@ -134,7 +136,9 @@ export default function MerchantSettings() {
         } else {
           // محاولة تحميل البيانات المحفوظة محلياً
           const savedStoreSettings = localStorage.getItem("storeSettings");
-          const savedNotifications = localStorage.getItem("notificationSettings");
+          const savedNotifications = localStorage.getItem(
+            "notificationSettings",
+          );
           const savedShipping = localStorage.getItem("shippingSettings");
 
           if (savedStoreSettings) {
@@ -159,7 +163,9 @@ export default function MerchantSettings() {
         // الرجوع للبيانات المحفوظة محلياً في حالة الخطأ
         try {
           const savedStoreSettings = localStorage.getItem("storeSettings");
-          const savedNotifications = localStorage.getItem("notificationSettings");
+          const savedNotifications = localStorage.getItem(
+            "notificationSettings",
+          );
           const savedShipping = localStorage.getItem("shippingSettings");
 
           if (savedStoreSettings) {
@@ -381,7 +387,9 @@ export default function MerchantSettings() {
       // البحث عن متجر موجود للمستخدم أولاً
       try {
         const userStores = await ApiService.getStores();
-        const existingStore = userStores.find(store => store.merchantId === user?.id);
+        const existingStore = userStores.find(
+          (store) => store.merchantId === user?.id,
+        );
 
         if (existingStore) {
           // تحديث متجر موجود
@@ -392,7 +400,10 @@ export default function MerchantSettings() {
         }
       } catch (apiError: any) {
         // إذا فشل API، نست��دم التخزين المحلي كنسخة احتياطية
-        console.warn("فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:", apiError);
+        console.warn(
+          "فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:",
+          apiError,
+        );
 
         // حفظ البيانات محلياً
         localStorage.setItem(
@@ -453,7 +464,7 @@ export default function MerchantSettings() {
 
   // قائمة الدول والمدن التابعة لها
   const countriesWithCities = {
-    "السودان": [
+    السودان: [
       "الخرطوم",
       "أمدرمان",
       "بحري",
@@ -1273,7 +1284,7 @@ export default function MerchantSettings() {
                     <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
                       {[
                         "الخرطوم",
-                        "أمدرمان", 
+                        "أمدرمان",
                         "بحري",
                         "مدني",
                         "كسلا",

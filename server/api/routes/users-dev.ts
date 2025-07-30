@@ -28,13 +28,13 @@ router.get("/", authenticateToken, async (req: any, res) => {
 router.get("/:id", authenticateToken, async (req: any, res) => {
   try {
     const userId = req.params.id;
-    
+
     // التحقق من الصلاحيات - المديرون أو المستخدم نفسه فقط
     if (req.user.role !== "super_admin" && req.user.id !== userId) {
       return res.status(403).json({ error: "غير مصرح لك بالوصول" });
     }
 
-    const user = UserDatabase.findUser(u => u.id === userId);
+    const user = UserDatabase.findUser((u) => u.id === userId);
 
     if (!user) {
       return res.status(404).json({ error: "المستخدم غير موجود" });
@@ -53,7 +53,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
   try {
     const userId = req.params.id;
     const { profile, ...userData } = req.body;
-    
+
     // التحقق من الصلاحيات - المديرون أو المستخدم نفسه فقط
     if (req.user.role !== "super_admin" && req.user.id !== userId) {
       return res.status(403).json({ error: "غير مصرح لك بالوصول" });
@@ -61,11 +61,11 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
 
     const updates: any = {
       ...userData,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     if (profile) {
-      const currentUser = UserDatabase.findUser(u => u.id === userId);
+      const currentUser = UserDatabase.findUser((u) => u.id === userId);
       if (currentUser) {
         updates.profile = { ...currentUser.profile, ...profile };
       }
@@ -94,7 +94,7 @@ router.delete("/:id", authenticateToken, async (req: any, res) => {
     }
 
     const userId = req.params.id;
-    
+
     // لا يمكن حذف المدير نفسه
     if (req.user.id === userId) {
       return res.status(400).json({ error: "لا يمكن حذف حسابك الخاص" });
@@ -122,21 +122,21 @@ router.patch("/:id/toggle-status", authenticateToken, async (req: any, res) => {
     }
 
     const userId = req.params.id;
-    
+
     // لا يمكن إيقاف المدير نفسه
     if (req.user.id === userId) {
       return res.status(400).json({ error: "لا يمكن تغيير حالة حسابك الخاص" });
     }
 
-    const user = UserDatabase.findUser(u => u.id === userId);
+    const user = UserDatabase.findUser((u) => u.id === userId);
 
     if (!user) {
       return res.status(404).json({ error: "المستخدم غير موجود" });
     }
 
-    const updatedUser = UserDatabase.updateUser(userId, { 
+    const updatedUser = UserDatabase.updateUser(userId, {
       isActive: !user.isActive,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     });
 
     const { password, ...userWithoutPassword } = updatedUser;
@@ -156,17 +156,18 @@ router.get("/stats/summary", authenticateToken, async (req: any, res) => {
     }
 
     const allUsers = UserDatabase.getAllUsers();
-    
+
     const totalUsers = allUsers.length;
-    const activeUsers = allUsers.filter(u => u.isActive).length;
-    const merchantsCount = allUsers.filter(u => u.role === "merchant").length;
-    const customersCount = allUsers.filter(u => u.role === "customer").length;
-    const adminCount = allUsers.filter(u => u.role === "super_admin").length;
+    const activeUsers = allUsers.filter((u) => u.isActive).length;
+    const merchantsCount = allUsers.filter((u) => u.role === "merchant").length;
+    const customersCount = allUsers.filter((u) => u.role === "customer").length;
+    const adminCount = allUsers.filter((u) => u.role === "super_admin").length;
 
     // إحصائيات إضافية
-    const recentUsers = allUsers.filter(u => {
+    const recentUsers = allUsers.filter((u) => {
       const createdDate = new Date(u.createdAt);
-      const daysSince = (Date.now() - createdDate.getTime()) / (1000 * 60 * 60 * 24);
+      const daysSince =
+        (Date.now() - createdDate.getTime()) / (1000 * 60 * 60 * 24);
       return daysSince <= 7;
     }).length;
 
@@ -178,7 +179,8 @@ router.get("/stats/summary", authenticateToken, async (req: any, res) => {
       customersCount,
       adminCount,
       recentRegistrations: recentUsers,
-      growthRate: totalUsers > 0 ? ((recentUsers / totalUsers) * 100).toFixed(2) : "0.00"
+      growthRate:
+        totalUsers > 0 ? ((recentUsers / totalUsers) * 100).toFixed(2) : "0.00",
     });
   } catch (error) {
     console.error("Get user stats error:", error);

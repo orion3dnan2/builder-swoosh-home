@@ -34,15 +34,12 @@ router.post("/login", async (req, res) => {
     // البحث عن المستخدم في قاعدة البيانات
     const user = await prisma.user.findFirst({
       where: {
-        OR: [
-          { username: username },
-          { email: username }
-        ]
+        OR: [{ username: username }, { email: username }],
       },
       include: {
         profile: true,
-        permissions: true
-      }
+        permissions: true,
+      },
     });
 
     if (!user) {
@@ -69,7 +66,7 @@ router.post("/login", async (req, res) => {
     // تحديث آخر تسجيل دخول
     await prisma.user.update({
       where: { id: user.id },
-      data: { lastLogin: new Date() }
+      data: { lastLogin: new Date() },
     });
 
     // إنشاء رمز الوصول
@@ -123,11 +120,8 @@ router.post("/register", async (req, res) => {
     // التحقق من وجود المستخدم
     const existingUser = await prisma.user.findFirst({
       where: {
-        OR: [
-          { email: email },
-          { username: username }
-        ]
-      }
+        OR: [{ email: email }, { username: username }],
+      },
     });
 
     if (existingUser) {
@@ -163,21 +157,25 @@ router.post("/register", async (req, res) => {
             zipCode: "",
             businessName: accountType === "merchant" ? businessName : undefined,
             businessType: accountType === "merchant" ? businessType : undefined,
-          }
+          },
         },
         permissions: {
-          create: accountType === "merchant" 
-            ? [
-                { resource: "store", actions: ["read", "write", "delete"] },
-                { resource: "products", actions: ["read", "write", "delete"] },
-              ]
-            : [{ resource: "profile", actions: ["read", "write"] }]
-        }
+          create:
+            accountType === "merchant"
+              ? [
+                  { resource: "store", actions: ["read", "write", "delete"] },
+                  {
+                    resource: "products",
+                    actions: ["read", "write", "delete"],
+                  },
+                ]
+              : [{ resource: "profile", actions: ["read", "write"] }],
+        },
       },
       include: {
         profile: true,
-        permissions: true
-      }
+        permissions: true,
+      },
     });
 
     // إنشاء رمز الوصول
@@ -230,8 +228,8 @@ router.get("/me", authenticateToken, async (req: any, res) => {
       where: { id: req.user.id },
       include: {
         profile: true,
-        permissions: true
-      }
+        permissions: true,
+      },
     });
 
     if (!user) {

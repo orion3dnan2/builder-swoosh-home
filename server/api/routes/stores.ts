@@ -9,7 +9,9 @@ router.get("/", authenticateToken, async (req: any, res) => {
   try {
     // إذا كان المستخدم تاجر، أرجع متاجره فقط
     if (req.user.role === "merchant") {
-      const userStores = StoreDatabase.findStores(store => store.merchantId === req.user.id);
+      const userStores = StoreDatabase.findStores(
+        (store) => store.merchantId === req.user.id,
+      );
       return res.json(userStores);
     }
 
@@ -29,7 +31,7 @@ router.get("/", authenticateToken, async (req: any, res) => {
 router.get("/:id", authenticateToken, async (req: any, res) => {
   try {
     const storeId = req.params.id;
-    const store = StoreDatabase.findStore(s => s.id === storeId);
+    const store = StoreDatabase.findStore((s) => s.id === storeId);
 
     if (!store) {
       return res.status(404).json({ error: "المتجر غير موجود" });
@@ -68,7 +70,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
       logo,
       banner,
       notificationSettings,
-      shippingSettings
+      shippingSettings,
     } = req.body;
 
     // التحقق من البيانات المطلوبة
@@ -77,8 +79,10 @@ router.post("/", authenticateToken, async (req: any, res) => {
     }
 
     // التحقق من عدم وجود متجر بنفس الاسم للتاجر
-    const existingStore = StoreDatabase.findStore(s =>
-      s.merchantId === req.user.id && s.name.toLowerCase() === name.toLowerCase()
+    const existingStore = StoreDatabase.findStore(
+      (s) =>
+        s.merchantId === req.user.id &&
+        s.name.toLowerCase() === name.toLowerCase(),
     );
 
     if (existingStore) {
@@ -99,7 +103,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
       workingHours: workingHours || {
         start: "09:00",
         end: "17:00",
-        days: []
+        days: [],
       },
       logo: logo || "/placeholder.svg",
       banner: banner || "/placeholder.svg",
@@ -136,7 +140,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
 
     res.status(201).json({
       message: "تم إنشاء المتجر بنجاح وحفظه في قاعدة البيانات",
-      store: savedStore
+      store: savedStore,
     });
   } catch (error) {
     console.error("Create store error:", error);
@@ -148,7 +152,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
 router.put("/:id", authenticateToken, async (req: any, res) => {
   try {
     const storeId = req.params.id;
-    const store = StoreDatabase.findStore(s => s.id === storeId);
+    const store = StoreDatabase.findStore((s) => s.id === storeId);
 
     if (!store) {
       return res.status(404).json({ error: "المتجر غير موجود" });
@@ -172,7 +176,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
       logo,
       banner,
       notificationSettings,
-      shippingSettings
+      shippingSettings,
     } = req.body;
 
     // تحديث بيانات المتجر
@@ -199,7 +203,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
 
     res.json({
       message: "تم تحديث بيانات المتجر بنجاح",
-      store: updatedStore
+      store: updatedStore,
     });
   } catch (error) {
     console.error("Update store error:", error);
@@ -211,7 +215,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
 router.delete("/:id", authenticateToken, async (req: any, res) => {
   try {
     const storeId = req.params.id;
-    const store = StoreDatabase.findStore(s => s.id === storeId);
+    const store = StoreDatabase.findStore((s) => s.id === storeId);
 
     if (!store) {
       return res.status(404).json({ error: "المتجر غير موجود" });
@@ -237,7 +241,7 @@ router.delete("/:id", authenticateToken, async (req: any, res) => {
 router.get("/:id/analytics", authenticateToken, async (req: any, res) => {
   try {
     const storeId = req.params.id;
-    const store = StoreDatabase.findStore(s => s.id === storeId);
+    const store = StoreDatabase.findStore((s) => s.id === storeId);
 
     if (!store) {
       return res.status(404).json({ error: "المتجر غير موجود" });
@@ -254,12 +258,20 @@ router.get("/:id/analytics", authenticateToken, async (req: any, res) => {
       totalRevenue: store.analytics?.totalRevenue || 0,
       monthlyStats: store.analytics?.monthlyStats || [],
       // إحصائيات إضافية
-      conversionRate: store.analytics?.totalViews > 0
-        ? ((store.analytics?.totalOrders || 0) / store.analytics.totalViews * 100).toFixed(2)
-        : "0.00",
-      averageOrderValue: store.analytics?.totalOrders > 0
-        ? ((store.analytics?.totalRevenue || 0) / store.analytics.totalOrders).toFixed(2)
-        : "0.00"
+      conversionRate:
+        store.analytics?.totalViews > 0
+          ? (
+              ((store.analytics?.totalOrders || 0) /
+                store.analytics.totalViews) *
+              100
+            ).toFixed(2)
+          : "0.00",
+      averageOrderValue:
+        store.analytics?.totalOrders > 0
+          ? (
+              (store.analytics?.totalRevenue || 0) / store.analytics.totalOrders
+            ).toFixed(2)
+          : "0.00",
     };
 
     res.json(analytics);
@@ -278,7 +290,7 @@ router.patch("/:id/status", authenticateToken, async (req: any, res) => {
 
     const storeId = req.params.id;
     const { status } = req.body;
-    const store = StoreDatabase.findStore(s => s.id === storeId);
+    const store = StoreDatabase.findStore((s) => s.id === storeId);
 
     if (!store) {
       return res.status(404).json({ error: "المتجر غير موجود" });
@@ -290,14 +302,14 @@ router.patch("/:id/status", authenticateToken, async (req: any, res) => {
 
     const updatedStore = StoreDatabase.updateStore(storeId, {
       status,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     });
 
     console.log(`✅ تم تحديث حالة متجر ${updatedStore.name} إلى: ${status}`);
 
     res.json({
       message: "تم تحديث حالة المتجر بنجاح",
-      store: updatedStore
+      store: updatedStore,
     });
   } catch (error) {
     console.error("Update store status error:", error);

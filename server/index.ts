@@ -54,7 +54,7 @@ export function createServer() {
   console.log("✅ تم تحميل قواعد البيانات بنجاح");
 
   // تهيئة قاعدة البيانات في production فقط
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === "production") {
     import("./lib/prisma").then(({ connectDatabase }) => {
       connectDatabase().catch((error) => {
         console.error("فشل في الاتصال بقاعدة البيانات:", error);
@@ -91,7 +91,7 @@ export function createServer() {
       status: "ok",
       timestamp: new Date().toISOString(),
       server: "express",
-      database: "postgresql"
+      database: "postgresql",
     });
   });
 

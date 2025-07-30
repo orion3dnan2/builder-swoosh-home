@@ -20,13 +20,13 @@ router.get("/", authenticateToken, async (req: any, res) => {
           select: {
             id: true,
             name: true,
-            status: true
-          }
-        }
+            status: true,
+          },
+        },
       },
       orderBy: {
-        createdAt: 'desc'
-      }
+        createdAt: "desc",
+      },
     });
 
     // إزالة كلمات المرور من النتائج
@@ -43,7 +43,7 @@ router.get("/", authenticateToken, async (req: any, res) => {
 router.get("/:id", authenticateToken, async (req: any, res) => {
   try {
     const userId = req.params.id;
-    
+
     // التحقق من الصلاحيات - المديرون أو المستخدم نفسه فقط
     if (req.user.role !== "SUPER_ADMIN" && req.user.id !== userId) {
       return res.status(403).json({ error: "غير مصرح لك بالوصول" });
@@ -60,10 +60,10 @@ router.get("/:id", authenticateToken, async (req: any, res) => {
             name: true,
             status: true,
             category: true,
-            createdAt: true
-          }
-        }
-      }
+            createdAt: true,
+          },
+        },
+      },
     });
 
     if (!user) {
@@ -83,7 +83,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
   try {
     const userId = req.params.id;
     const { profile, ...userData } = req.body;
-    
+
     // التحقق من الصلاحيات - المديرون أو المستخدم نفسه فقط
     if (req.user.role !== "SUPER_ADMIN" && req.user.id !== userId) {
       return res.status(403).json({ error: "غير مصرح لك بالوصول" });
@@ -93,14 +93,16 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
       where: { id: userId },
       data: {
         ...userData,
-        profile: profile ? {
-          update: profile
-        } : undefined
+        profile: profile
+          ? {
+              update: profile,
+            }
+          : undefined,
       },
       include: {
         profile: true,
-        permissions: true
-      }
+        permissions: true,
+      },
     });
 
     const { password, ...userWithoutPassword } = updatedUser;
@@ -120,14 +122,14 @@ router.delete("/:id", authenticateToken, async (req: any, res) => {
     }
 
     const userId = req.params.id;
-    
+
     // لا يمكن حذف المدير نفسه
     if (req.user.id === userId) {
       return res.status(400).json({ error: "لا يمكن حذف حسابك الخاص" });
     }
 
     await prisma.user.delete({
-      where: { id: userId }
+      where: { id: userId },
     });
 
     res.json({ message: "تم حذف المستخدم بنجاح" });
@@ -146,14 +148,14 @@ router.patch("/:id/toggle-status", authenticateToken, async (req: any, res) => {
     }
 
     const userId = req.params.id;
-    
+
     // لا يمكن إيقاف المدير نفسه
     if (req.user.id === userId) {
       return res.status(400).json({ error: "لا يمكن تغيير حالة حسابك الخاص" });
     }
 
     const user = await prisma.user.findUnique({
-      where: { id: userId }
+      where: { id: userId },
     });
 
     if (!user) {
@@ -164,8 +166,8 @@ router.patch("/:id/toggle-status", authenticateToken, async (req: any, res) => {
       where: { id: userId },
       data: { isActive: !user.isActive },
       include: {
-        profile: true
-      }
+        profile: true,
+      },
     });
 
     const { password, ...userWithoutPassword } = updatedUser;
@@ -184,12 +186,13 @@ router.get("/stats/summary", authenticateToken, async (req: any, res) => {
       return res.status(403).json({ error: "غير مصرح لك بالوصول" });
     }
 
-    const [totalUsers, activeUsers, merchantsCount, customersCount] = await Promise.all([
-      prisma.user.count(),
-      prisma.user.count({ where: { isActive: true } }),
-      prisma.user.count({ where: { role: "MERCHANT" } }),
-      prisma.user.count({ where: { role: "CUSTOMER" } })
-    ]);
+    const [totalUsers, activeUsers, merchantsCount, customersCount] =
+      await Promise.all([
+        prisma.user.count(),
+        prisma.user.count({ where: { isActive: true } }),
+        prisma.user.count({ where: { role: "MERCHANT" } }),
+        prisma.user.count({ where: { role: "CUSTOMER" } }),
+      ]);
 
     res.json({
       totalUsers,
@@ -197,7 +200,7 @@ router.get("/stats/summary", authenticateToken, async (req: any, res) => {
       inactiveUsers: totalUsers - activeUsers,
       merchantsCount,
       customersCount,
-      adminCount: totalUsers - merchantsCount - customersCount
+      adminCount: totalUsers - merchantsCount - customersCount,
     });
   } catch (error) {
     console.error("Get user stats error:", error);
