@@ -91,7 +91,7 @@ export default function MerchantSettings() {
   // Store Settings State - فارغة للتجار الجدد
   const [storeSettings, setStoreSettings] = useState<StoreSettings>({
     storeName: isNewMerchant ? (user?.profile?.businessName || "") : "متجر الخير السوداني",
-    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصي��ة والطبيعية من عطور وأطعمة وحرف يدوية",
+    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
     phone: isNewMerchant ? (user?.profile?.phone || "") : "+966501234567",
     email: isNewMerchant ? (user?.email || "") : "store@alkhair-sudani.com",
@@ -260,7 +260,7 @@ export default function MerchantSettings() {
   };
 
   const tabs = [
-    { id: "store", label: "بيانات الم��جر", icon: Store },
+    { id: "store", label: "بيانات المتجر", icon: Store },
     { id: "notifications", label: "الإشعارات", icon: Bell },
     { id: "shipping", label: "الشحن والتوصيل", icon: Truck },
     { id: "account", label: "الحساب والأمان", icon: Shield }
@@ -287,7 +287,7 @@ export default function MerchantSettings() {
     "مكة المكرمة، المملكة العربية السعودية",
     "المدينة المنورة، المملكة العربية السعودية",
     "الطا��ف، الم��لكة العربية السعودية",
-    "الخبر، المملكة العرب��ة السعودية",
+    "الخبر، المملكة العربية السعودية",
     "الأحساء، المملكة العربية السعودية"
   ];
 
@@ -310,8 +310,8 @@ export default function MerchantSettings() {
     "دولة قطر": [
       "الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"
     ],
-    "مملكة البحرين": [
-      "المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "��دحفص"
+    "مملكة ��لبحرين": [
+      "المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"
     ],
     "سلطنة عمان": [
       "مسقط", "صلالة", "نزوى", "صور", "ا��رستاق", "صحار"
@@ -540,7 +540,8 @@ export default function MerchantSettings() {
                         onChange={(e) => setStoreSettings({...storeSettings, category: e.target.value})}
                         className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
                       >
-                        {categories.map((cat) => (
+                        <option value="">اختر نوع المتجر</option>
+                        {predefinedCategories.map((cat) => (
                           <option key={cat} value={cat}>{cat}</option>
                         ))}
                       </select>
@@ -742,7 +743,7 @@ export default function MerchantSettings() {
                     <h3 className="font-semibold text-gray-900 mb-4 arabic">طرق الإشعار</h3>
                     <div className="space-y-4">
                       {[
-                        { key: 'smsNotifications', label: 'رسائل SMS', desc: 'استقبال الإشعارات عبر الرسائل النصية' },
+                        { key: 'smsNotifications', label: 'رسائ�� SMS', desc: 'استقبال الإشعارات عبر الرسائل النصية' },
                         { key: 'emailNotifications', label: 'البريد الإلكتروني', desc: 'استقبال الإش���ارات عبر البريد الإلكتروني' }
                       ].map((item) => (
                         <div key={item.key} className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
