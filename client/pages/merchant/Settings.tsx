@@ -257,7 +257,7 @@ export default function MerchantSettings() {
       alert("🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.");
 
       // حفظ البيانات محلياً كنسخة احتياطية
-      localStorage.setItem('storeSettings', JSON.stringify(storeSettings));
+      localStorage.setItem('storeSettings', JSON.stringify({...storeSettings, selectedCountry}));
       localStorage.setItem('notificationSettings', JSON.stringify(notifications));
       localStorage.setItem('shippingSettings', JSON.stringify(shipping));
 
@@ -291,7 +291,7 @@ export default function MerchantSettings() {
   ];
 
   const cities = [
-    "الري��ض، المملكة العربية السعودية",
+    "الرياض، المملكة العربية السعودية",
     "جدة، المملكة العربية السع��دية", 
     "الدمام، المملكة العربية السعودية",
     "مكة المكرمة، المملكة العربية السعودية",
@@ -311,7 +311,7 @@ export default function MerchantSettings() {
       "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة",
       "الطائف", "الخبر", "الأحساء", "تبوك", "أبها", "جازان", "نجران"
     ],
-    "الإمارات العربية المتح��ة": [
+    "الإم��رات العربية المتح��ة": [
       "دبي", "أبوظبي", "الشارقة", "عجمان", "رأس الخيمة", "الفجيرة", "أم القيوين"
     ],
     "دولة الكويت": [
@@ -336,7 +336,7 @@ export default function MerchantSettings() {
 
   // إضافة حالات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
-    isNewMerchant ? "" : "المملكة العربية السعودية"
+    isNewMerchant ? "" : "الممل��ة العربية السعودية"
   );
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
@@ -816,7 +816,7 @@ export default function MerchantSettings() {
                     <h3 className="font-semibold text-gray-900 mb-4 arabic">تكاليف الشحن</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
-                        <Label htmlFor="freeShipping" className="arabic">الشحن المج��ني عند</Label>
+                        <Label htmlFor="freeShipping" className="arabic">الشحن المجاني عند</Label>
                         <div className="mt-1 relative">
                           <Input
                             id="freeShipping"
@@ -991,7 +991,7 @@ export default function MerchantSettings() {
                       <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                         <div className={isRTL ? 'text-right' : 'text-left'}>
                           <div className="font-medium arabic">المصادقة الثنائية</div>
-                          <div className="text-sm text-gray-600 arabic">حماية إضافية لحسابك</div>
+                          <div className="text-sm text-gray-600 arabic">حماية إض��فية لحسابك</div>
                         </div>
                         <Switch
                           checked={accountSettings.twoFactorAuth}
