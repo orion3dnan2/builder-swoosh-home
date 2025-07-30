@@ -186,13 +186,52 @@ export default function MerchantSettings() {
   };
 
   const handleSaveSettings = async () => {
+    // التحقق من صحة البيانات
+    if (!storeSettings.storeName.trim()) {
+      alert("يرجى إدخال اسم المتجر");
+      return;
+    }
+
+    if (!storeSettings.category) {
+      alert("يرجى اختيار فئة المتجر");
+      return;
+    }
+
+    if (!storeSettings.phone.trim()) {
+      alert("يرجى إدخال رقم الهاتف");
+      return;
+    }
+
+    if (!storeSettings.email.trim()) {
+      alert("يرجى إدخال البريد الإلكتروني");
+      return;
+    }
+
+    if (storeSettings.workingHours.days.length === 0) {
+      alert("يرجى اختيار أيام العمل");
+      return;
+    }
+
     setIsSaving(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsSaving(false);
-    
-    // Show success message
-    alert("تم حفظ الإعدادات بنجاح! ✅");
+
+    try {
+      // محاكاة استدعاء API
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      // عرض رسالة نجاح
+      alert("تم حفظ الإعدادات بنجاح! ✅");
+
+      // يمكن إضافة منطق إضافي هنا مثل:
+      // - حفظ البيانات في localStorage
+      // - إرسال البيانات إلى الخادم
+      // - تحديث حالة المستخدم
+
+    } catch (error) {
+      alert("حدث خطأ أثناء حفظ الإعدادات. يرجى المحاولة مرة أخرى.");
+      console.error("خطأ في حفظ الإعدادات:", error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const tabs = [
