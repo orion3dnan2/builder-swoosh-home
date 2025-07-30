@@ -104,14 +104,21 @@ router.post('/register', async (req, res) => {
     } = req.body;
 
     // التحقق من البيانات
-    if (!fullName || !email || !password) {
+    if (!fullName || !username || !email || !password) {
       return res.status(400).json({ error: 'جميع الحقول مطلوبة' });
     }
 
     // التحقق من وجود المستخدم
-    const existingUser = users.find(u => u.email === email);
+    const existingUser = users.find(u => u.email === email || u.username === username);
     if (existingUser) {
       return res.status(400).json({ error: 'المستخدم موجود بالفعل' });
+    }
+
+    // التحقق من حقول التاجر إذا كان نوع الحساب تاجر
+    if (accountType === 'merchant') {
+      if (!businessName || !businessType) {
+        return res.status(400).json({ error: 'بيانات العمل التجاري مطلوبة' });
+      }
     }
 
     // إنشاء مستخدم جديد
