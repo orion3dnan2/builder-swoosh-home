@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { authRoutes } from "./routes/auth";
+import { authDevRoutes } from "./routes/auth-dev";
 import { companiesRoutes } from "./routes/companies";
 import { productsRoutes } from "./routes/products";
 import { jobsRoutes } from "./routes/jobs";
