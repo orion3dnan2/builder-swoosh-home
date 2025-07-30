@@ -79,7 +79,7 @@ export default function MerchantSettings() {
   const [isSaving, setIsSaving] = useState(false);
   const [isNewMerchant, setIsNewMerchant] = useState(true);
 
-  // تحديد إذا كان التاجر جديد
+  // تحديد إذا كان التاج�� جديد
   useEffect(() => {
     if (user?.createdAt) {
       const accountAge = Date.now() - new Date(user.createdAt).getTime();
@@ -204,7 +204,7 @@ export default function MerchantSettings() {
 
   // حذف الغلاف
   const handleRemoveBanner = () => {
-    if (window.confirm('هل أنت متأكد من حذف غلاف المتجر؟')) {
+    if (window.confirm('هل أنت متأكد من ح��ف غلاف المتجر؟')) {
       setStoreSettings({...storeSettings, banner: '/placeholder.svg'});
       alert('تم حذف الغلاف بنجاح');
     }
@@ -244,12 +244,12 @@ export default function MerchantSettings() {
       await new Promise(resolve => setTimeout(resolve, 1500));
 
       // عرض رسالة نجاح
-      alert("تم حفظ الإعدادات بنجاح! ✅");
+      alert("🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.");
 
-      // يمكن إضافة منطق إضافي هنا مثل:
-      // - حفظ البيانات في localStorage
-      // - إرسال البيانات إلى الخادم
-      // - تحديث حالة المستخدم
+      // حفظ البيانات محلياً كنسخة احتياطي��
+      localStorage.setItem('storeSettings', JSON.stringify(storeSettings));
+      localStorage.setItem('notificationSettings', JSON.stringify(notifications));
+      localStorage.setItem('shippingSettings', JSON.stringify(shipping));
 
     } catch (error) {
       alert("حدث خطأ أثناء حفظ الإعدادات. يرجى المحاولة مرة أخرى.");
@@ -280,7 +280,7 @@ export default function MerchantSettings() {
   const cities = [
     "الرياض، المملكة العربية السعودية",
     "جدة، المملكة العربية السع��دية", 
-    "الدمام، المملكة العربية السعودية",
+    "الدمام، ا��مملكة العربية السعودية",
     "مكة المكرمة، المملكة العربية السعودية",
     "المدينة المنورة، المملكة العربية السعودية",
     "الطا��ف، المملكة العربية السعودية",
@@ -495,7 +495,7 @@ export default function MerchantSettings() {
                       value={storeSettings.description}
                       onChange={(e) => setStoreSettings({...storeSettings, description: e.target.value})}
                       className="mt-1 text-right arabic"
-                      placeholder="اكتب وصفاً مختصراً عن متجرك ومن��جاتك..."
+                      placeholder="اكتب وصفاً مختصراً عن ��تجرك ومن��جاتك..."
                     />
                   </div>
 
