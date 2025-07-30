@@ -225,13 +225,13 @@ export default function Companies() {
                           {company.name}
                         </h3>
                         <p className="text-orange-600 text-xs arabic mb-2">
-                          {company.industry}
+                          {company.category}
                         </p>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1">
                             <MapPin className="w-3 h-3 text-gray-400" />
                             <span className="text-xs text-gray-600 arabic">
-                              {company.location.city}
+                              {company.city}
                             </span>
                           </div>
                           <div className="flex items-center gap-1">
@@ -307,7 +307,7 @@ export default function Companies() {
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-gray-400" />
                     <span className="text-sm text-gray-600 arabic">
-                      {company.location.city}, {company.location.country}
+                      {company.city}, {company.country}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -384,7 +384,7 @@ export default function Companies() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {industries.map((industry) => {
                 const industryCount = companies.filter(
-                  (c) => c.industry === industry,
+                  (c) => c.category === industry,
                 ).length;
                 return (
                   <div
@@ -431,7 +431,7 @@ export default function Companies() {
                   <Verified className="w-8 h-8 text-blue-600" />
                 </div>
                 <div className="text-2xl font-bold text-gray-800 mb-1">
-                  {companies.filter((c) => c.isVerified).length}
+                  {companies.filter((c) => c.status === "active").length}
                 </div>
                 <div className="text-sm text-gray-600 arabic">شركة موثقة</div>
               </div>
@@ -450,7 +450,7 @@ export default function Companies() {
                 </div>
                 <div className="text-2xl font-bold text-gray-800 mb-1">
                   {Math.round(
-                    companies.reduce((sum, c) => sum + c.employees, 0) / 1000,
+                    companies.length * 50 / 1000,
                   )}
                   k+
                 </div>
