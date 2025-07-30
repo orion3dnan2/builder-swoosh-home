@@ -61,6 +61,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
       name,
       description,
       category,
+      storeType,
       phone,
       email,
       address,
@@ -313,7 +314,7 @@ router.patch("/:id/status", authenticateToken, async (req: any, res) => {
     });
   } catch (error) {
     console.error("Update store status error:", error);
-    res.status(500).json({ error: "خطأ في الخادم" });
+    res.status(500).json({ error: "خطأ في ��لخادم" });
   }
 });
 
@@ -351,7 +352,7 @@ router.get("/:id/orders", authenticateToken, async (req: any, res) => {
     // تصفية الطلبات لهذا المتجر فقط
     const storeOrders = allOrders.filter((order: any) => order.storeId === storeId);
 
-    // أخذ أحدث 5 طلبات وإضافة حقل الوقت النسبي
+    // أخذ أحدث 5 طلبات وإضافة حقل الوقت ال��سبي
     const recentOrders = storeOrders
       .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       .slice(0, 5)
