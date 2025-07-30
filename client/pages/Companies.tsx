@@ -54,26 +54,15 @@ export default function Companies() {
       searchQuery === "" ||
       company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       company.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.industry.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.location.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.services.some((service) =>
-        service.toLowerCase().includes(searchQuery.toLowerCase()),
-      );
+      company.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      company.city.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesIndustry =
-      selectedIndustry === "all" || company.industry === selectedIndustry;
+      selectedIndustry === "all" || company.category === selectedIndustry;
     const matchesCountry =
-      selectedCountry === "all" || company.location.country === selectedCountry;
-    const matchesSize = selectedSize === "all" || company.size === selectedSize;
-    const matchesVerified = !showVerifiedOnly || company.isVerified;
+      selectedCountry === "all" || company.country === selectedCountry;
 
-    return (
-      matchesSearch &&
-      matchesIndustry &&
-      matchesCountry &&
-      matchesSize &&
-      matchesVerified
-    );
+    return matchesSearch && matchesIndustry && matchesCountry;
   });
 
   const industries = CompaniesService.getIndustries();
