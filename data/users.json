@@ -1,0 +1,24 @@
+[
+  {
+    "id": "admin-001",
+    "username": "admin",
+    "email": "admin@baytsudani.com",
+    "password": "$2b$10$hashed_password",
+    "role": "super_admin",
+    "profile": {
+      "name": "مدير التطبيق",
+      "language": "ar",
+      "avatar": "/placeholder.svg"
+    },
+    "permissions": [
+      {
+        "resource": "*",
+        "actions": [
+          "*"
+        ]
+      }
+    ],
+    "createdAt": "2025-07-30T08:45:22.015Z",
+    "isActive": true
+  }
+]
