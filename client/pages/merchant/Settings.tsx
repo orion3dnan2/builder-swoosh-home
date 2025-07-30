@@ -135,6 +135,56 @@ export default function MerchantSettings() {
     loginNotifications: true
   });
 
+  // معالجة تغيير الشعار
+  const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // التحقق من نوع الملف
+      if (!file.type.startsWith('image/')) {
+        alert('يرجى اختيار ملف صورة صالح');
+        return;
+      }
+
+      // التحقق من حجم الملف (أقل من 5 ميجابايت)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('حجم الصورة يجب أن يكون أقل من 5 ميجابايت');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const logoUrl = e.target?.result as string;
+        setStoreSettings({...storeSettings, logo: logoUrl});
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // معالجة تغيير الغلاف
+  const handleBannerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // التحقق من نوع الملف
+      if (!file.type.startsWith('image/')) {
+        alert('يرجى اختيار ملف صورة صالح');
+        return;
+      }
+
+      // التحقق من حجم الملف (أقل من 10 ميجابايت)
+      if (file.size > 10 * 1024 * 1024) {
+        alert('حجم الصورة يجب أن يكون أقل من 10 ميجابايت');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const bannerUrl = e.target?.result as string;
+        setStoreSettings({...storeSettings, banner: bannerUrl});
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSaveSettings = async () => {
     setIsSaving(true);
     // Simulate API call
@@ -164,7 +214,7 @@ export default function MerchantSettings() {
   ];
 
   const cities = [
-    "الرياض، المملكة العربية السعودية",
+    "الرياض�� المملكة العربية السعودية",
     "جدة، المملكة العربية السعودية", 
     "الدمام، المملكة العربية السعودية",
     "مكة المكرمة، المملكة العربية السعودية",
