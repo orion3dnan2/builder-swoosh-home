@@ -50,5 +50,110 @@
     },
     "createdAt": "2025-07-30T09:45:07.117Z",
     "updatedAt": "2025-07-30T10:16:46.950Z"
+  },
+  {
+    "id": "store-company-001",
+    "merchantId": "user-1753865301240-efsqj09s0",
+    "name": "شركة النيل للتجارة والاستثمار",
+    "description": "شركة رائدة في مجال التجارة والاستثمار بين السودان ودول الخليج",
+    "category": "استثمار وتجارة",
+    "storeType": "company",
+    "phone": "+249123456789",
+    "email": "info@nilecompany.com",
+    "address": "شارع النيل، الخرطوم",
+    "city": "الخرطوم",
+    "country": "السودان",
+    "workingHours": {
+      "start": "08:00",
+      "end": "16:00",
+      "days": [
+        "السبت",
+        "الأحد",
+        "الاثنين",
+        "الثلاثاء",
+        "الأربعاء",
+        "الخميس"
+      ]
+    },
+    "logo": "/placeholder.svg",
+    "banner": "/placeholder.svg",
+    "status": "active",
+    "notificationSettings": {
+      "newOrders": true,
+      "orderUpdates": true,
+      "paymentReceived": true,
+      "lowStock": false,
+      "reviews": true,
+      "promotions": true,
+      "smsNotifications": true,
+      "emailNotifications": true
+    },
+    "shippingSettings": {
+      "freeShippingThreshold": 0,
+      "standardShippingCost": 0,
+      "expressShippingCost": 0,
+      "processingTime": "حسب الخدمة",
+      "shippingAreas": []
+    },
+    "analytics": {
+      "totalViews": 150,
+      "totalOrders": 12,
+      "totalRevenue": 25000
+    },
+    "createdAt": "2025-07-30T08:00:00.000Z",
+    "updatedAt": "2025-07-30T10:16:46.950Z"
+  },
+  {
+    "id": "store-general-001",
+    "merchantId": "user-1753865301240-efsqj09s0",
+    "name": "متجر الخير السوداني",
+    "description": "متجر عام يبيع المنتجات السودانية التقليدية والحديثة",
+    "category": "منتجات عامة",
+    "storeType": "store",
+    "phone": "+249987654321",
+    "email": "info@kheir-store.com",
+    "address": "سوق الشعبي، أم درمان",
+    "city": "أم درمان",
+    "country": "السودان",
+    "workingHours": {
+      "start": "09:00",
+      "end": "21:00",
+      "days": [
+        "السبت",
+        "الأحد",
+        "الاثنين",
+        "الثلاثاء",
+        "الأربعاء",
+        "الخميس",
+        "الجمعة"
+      ]
+    },
+    "logo": "/placeholder.svg",
+    "banner": "/placeholder.svg",
+    "status": "active",
+    "notificationSettings": {
+      "newOrders": true,
+      "orderUpdates": true,
+      "paymentReceived": true,
+      "lowStock": true,
+      "reviews": true,
+      "promotions": false,
+      "smsNotifications": false,
+      "emailNotifications": true
+    },
+    "shippingSettings": {
+      "freeShippingThreshold": 50,
+      "standardShippingCost": 10,
+      "expressShippingCost": 20,
+      "processingTime": "1-2 أيام عمل",
+      "shippingAreas": ["الخرطوم", "أم درمان", "بحري"]
+    },
+    "analytics": {
+      "totalViews": 320,
+      "totalOrders": 45,
+      "totalRevenue": 3250
+    },
+    "createdAt": "2025-07-30T07:30:00.000Z",
+    "updatedAt": "2025-07-30T10:16:46.950Z"
   }
 ]
