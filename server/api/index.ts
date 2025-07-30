@@ -45,6 +45,7 @@ app.use("/api/jobs", jobsRoutes);
 app.use("/api/stores", storesRoutes);
 app.use("/api/services", servicesRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/orders", ordersRoutes);
 
 // Mobile-specific routes
 app.use("/api/mobile", require("./routes/mobile"));
