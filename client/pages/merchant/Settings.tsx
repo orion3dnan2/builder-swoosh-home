@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { ApiService } from "@/lib/apiService";
 
 interface StoreSettings {
   storeName: string;
@@ -88,6 +89,109 @@ export default function MerchantSettings() {
     }
   }, [user]);
 
+  // تحميل بيانات المتجر عند تحميل الصفحة
+  useEffect(() => {
+    const loadStoreData = async () => {
+      if (!user?.id) return;
+
+      try {
+        // محاولة تحميل بيانات المتجر من الخادم
+        const userStores = await ApiService.getStores();
+        const existingStore = userStores.find(
+          (store) => store.merchantId === user.id,
+        );
+
+        if (existingStore) {
+          // تحديث البيانات بناءً على المتجر الموجود
+          setStoreSettings({
+            storeName: existingStore.name || "",
+            description: existingStore.description || "",
+            category: existingStore.category || "",
+            phone: existingStore.phone || "",
+            email: existingStore.email || "",
+            address: existingStore.address || "",
+            city: existingStore.city || "",
+            workingHours: existingStore.workingHours || {
+              start: "09:00",
+              end: "17:00",
+              days: [],
+            },
+            logo: existingStore.logo || "/placeholder.svg",
+            banner: existingStore.banner || "/placeholder.svg",
+          });
+
+          if (existingStore.country) {
+            setSelectedCountry(existingStore.country);
+          }
+
+          if (existingStore.notificationSettings) {
+            setNotifications(existingStore.notificationSettings);
+          }
+
+          if (existingStore.shippingSettings) {
+            setShipping(existingStore.shippingSettings);
+          }
+
+          setIsNewMerchant(false); // له متجر موجود
+        } else {
+          // محاولة تحميل البيانات المحفوظة محلياً
+          const savedStoreSettings = localStorage.getItem("storeSettings");
+          const savedNotifications = localStorage.getItem(
+            "notificationSettings",
+          );
+          const savedShipping = localStorage.getItem("shippingSettings");
+
+          if (savedStoreSettings) {
+            const parsed = JSON.parse(savedStoreSettings);
+            setStoreSettings(parsed);
+            if (parsed.selectedCountry) {
+              setSelectedCountry(parsed.selectedCountry);
+            }
+          }
+
+          if (savedNotifications) {
+            setNotifications(JSON.parse(savedNotifications));
+          }
+
+          if (savedShipping) {
+            setShipping(JSON.parse(savedShipping));
+          }
+        }
+      } catch (error) {
+        console.error("خطأ في تحميل بيانات المتجر:", error);
+
+        // الرجوع للبيانات المحفوظة محلياً في حالة الخطأ
+        try {
+          const savedStoreSettings = localStorage.getItem("storeSettings");
+          const savedNotifications = localStorage.getItem(
+            "notificationSettings",
+          );
+          const savedShipping = localStorage.getItem("shippingSettings");
+
+          if (savedStoreSettings) {
+            const parsed = JSON.parse(savedStoreSettings);
+            setStoreSettings(parsed);
+            if (parsed.selectedCountry) {
+              setSelectedCountry(parsed.selectedCountry);
+            }
+          }
+
+          if (savedNotifications) {
+            setNotifications(JSON.parse(savedNotifications));
+          }
+
+          if (savedShipping) {
+            setShipping(JSON.parse(savedShipping));
+          }
+        } catch (localError) {
+          console.error("خطأ في تحميل البيانات المحلية:", localError);
+        }
+      }
+    };
+
+    loadStoreData();
+  }, [user?.id]);
+
   // Store Settings State - فارغة للتجار الجدد
   const [storeSettings, setStoreSettings] = useState<StoreSettings>({
     storeName: isNewMerchant
@@ -97,10 +201,10 @@ export default function MerchantSettings() {
       ? ""
       : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
-    phone: isNewMerchant ? user?.profile?.phone || "" : "+966501234567",
-    email: isNewMerchant ? user?.email || "" : "store@alkhair-sudani.com",
-    address: isNewMerchant ? "" : "شارع الملك فهد، حي النرجس",
-    city: isNewMerchant ? user?.profile?.city || "" : "الرياض",
+    phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
+    email: isNewMerchant ? user?.email || "" : "store@example.com",
+    address: isNewMerchant ? "" : "شارع النيل، الخرطوم",
+    city: isNewMerchant ? user?.profile?.city || "" : "الخرطوم",
     workingHours: {
       start: isNewMerchant ? "09:00" : "09:00",
       end: isNewMerchant ? "17:00" : "22:00",
@@ -132,7 +236,7 @@ export default function MerchantSettings() {
     processingTime: isNewMerchant ? "1-3 أيام عمل" : "1-2 أيام عمل",
     shippingAreas: isNewMerchant
       ? []
-      : ["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة"],
+      : ["الخرطوم", "أمدرمان", "بحري", "مدني", "كسلا"],
   });
 
   const [accountSettings, setAccountSettings] = useState({
@@ -147,13 +251,13 @@ export default function MerchantSettings() {
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // التحق�� من نوع الملف
+      // التحقق من نوع الملف
       if (!file.type.startsWith("image/")) {
         alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG)");
         return;
       }
 
-      // ��لتحقق من حجم الملف (أقل من 5 ميجابايت)
+      // التحقق من حجم الملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
         alert("حجم الصورة يجب أن يكون أقل من 5 ميجابايت");
         return;
@@ -190,7 +294,7 @@ export default function MerchantSettings() {
 
       // التحقق من حجم الملف (أقل من 10 ميجابايت)
       if (file.size > 10 * 1024 * 1024) {
-        alert("حجم الصورة يجب أن ��كون أقل من 10 ميجابايت");
+        alert("حجم الصورة يجب أن يكون أقل من 10 ميجابايت");
         return;
       }
 
@@ -201,7 +305,7 @@ export default function MerchantSettings() {
         alert("تم تحديث غلاف المتجر بنجاح! 🎨");
       };
       reader.onerror = () => {
-        alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
+        alert("فشل في قراءة الصورة. يرجى ��لمحاولة مرة أخرى.");
       };
       reader.readAsDataURL(file);
     }
@@ -209,7 +313,7 @@ export default function MerchantSettings() {
 
   // حذف الشعار
   const handleRemoveLogo = () => {
-    if (window.confirm("هل أنت متأكد من حذف شعار المتجر؟")) {
+    if (window.confirm("هل أنت متأكد ��ن حذف شعار المتجر؟")) {
       setStoreSettings({ ...storeSettings, logo: "/placeholder.svg" });
       alert("تم حذف الشعار بنجاح");
     }
@@ -263,27 +367,63 @@ export default function MerchantSettings() {
     setIsSaving(true);
 
     try {
-      // محاكاة استدعاء API
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // إرسال البيانات إلى الخادم
+      const storeData = {
+        name: storeSettings.storeName,
+        description: storeSettings.description,
+        category: storeSettings.category,
+        phone: storeSettings.phone,
+        email: storeSettings.email,
+        address: storeSettings.address,
+        city: storeSettings.city,
+        country: selectedCountry,
+        workingHours: storeSettings.workingHours,
+        logo: storeSettings.logo,
+        banner: storeSettings.banner,
+        notificationSettings: notifications,
+        shippingSettings: shipping,
+      };
+
+      // البحث عن متجر موجود للمستخدم أولاً
+      try {
+        const userStores = await ApiService.getStores();
+        const existingStore = userStores.find(
+          (store) => store.merchantId === user?.id,
+        );
+
+        if (existingStore) {
+          // تحديث متجر موجود
+          await ApiService.updateStore(existingStore.id, storeData);
+        } else {
+          // إنشاء متجر جديد
+          await ApiService.createStore(storeData);
+        }
+      } catch (apiError: any) {
+        // إذا فشل API، نست��دم التخزين المحلي كنسخة احتياطية
+        console.warn(
+          "فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:",
+          apiError,
+        );
+
+        // حفظ البيانات محلياً
+        localStorage.setItem(
+          "storeSettings",
+          JSON.stringify({ ...storeSettings, selectedCountry }),
+        );
+        localStorage.setItem(
+          "notificationSettings",
+          JSON.stringify(notifications),
+        );
+        localStorage.setItem("shippingSettings", JSON.stringify(shipping));
+      }
 
       // عرض رسالة نجاح
       alert(
         "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.",
       );
-
-      // حفظ البيانات محلياً كنسخة احتياطية
-      localStorage.setItem(
-        "storeSettings",
-        JSON.stringify({ ...storeSettings, selectedCountry }),
-      );
-      localStorage.setItem(
-        "notificationSettings",
-        JSON.stringify(notifications),
-      );
-      localStorage.setItem("shippingSettings", JSON.stringify(shipping));
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ الإعدادات.\n\nيرجى التحقق من اتصال الإنترنت و��لمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ الإعدادات.\n\nيرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
@@ -307,20 +447,9 @@ export default function MerchantSettings() {
     "منتجات منزلية",
     "كتب ومواد تعليمية",
     "صحة ورياضة",
-    "حرف يدوية وت��ليدية",
+    "حرف يدوية وتقليدية",
     "خدمات عامة",
     "أخرى (حدد النوع)",
-  ];
-
-  const cities = [
-    "الرياض، المملكة العربية السعودية",
-    "جدة، المملكة العربية الس����دية",
-    "الدمام، المملكة العربية السعودية",
-    "مكة المكرمة، المملكة العربية السعودية",
-    "المدينة المنورة، المملكة العربية السعودية",
-    "الطا��ف، الم��لكة العربية السعودية",
-    "الخبر، المملكة العربية السعودية",
-    "الأحساء، المملكة العربية السعودية",
   ];
 
   const workingDays = [
@@ -335,6 +464,20 @@ export default function MerchantSettings() {
 
   // قائمة الدول والمدن التابعة لها
   const countriesWithCities = {
+    السودان: [
+      "الخرطوم",
+      "أمدرمان",
+      "بحري",
+      "مدني",
+      "كسلا",
+      "بورتسودان",
+      "أتبرا",
+      "الأبيض",
+      "نيالا",
+      "الفاشر",
+      "القضارف",
+      "سنار",
+    ],
     "المملكة العربية السعودية": [
       "الرياض",
       "جدة",
@@ -349,7 +492,7 @@ export default function MerchantSettings() {
       "جازان",
       "نجران",
     ],
-    "الإمارات العربية المتح��ة": [
+    "الإمارات العربية المتحدة": [
       "دبي",
       "أبوظبي",
       "الشارقة",
@@ -360,7 +503,7 @@ export default function MerchantSettings() {
     ],
     "دولة الكويت": [
       "مدينة الكويت",
-      "��لأحمدي",
+      "الأحمدي",
       "الجهراء",
       "مبارك الكبير",
       "الفروانية",
@@ -368,11 +511,11 @@ export default function MerchantSettings() {
     ],
     "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"],
     "مملكة البحرين": ["المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
-    "سلطنة عمان": ["مسقط", "صلالة", "نزوى", "صور", "ا��رستاق", "صحار"],
+    "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
       "القاهرة",
       "الإسكندرية",
-      "الجيزة",
+      "ال��يزة",
       "الأقصر",
       "أسوان",
       "بورسعيد",
@@ -390,12 +533,12 @@ export default function MerchantSettings() {
 
   // إضافة حالات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
-    isNewMerchant ? user?.profile?.country || "" : "المملكة العربية السعودية",
+    isNewMerchant ? user?.profile?.country || "السودان" : "السودان",
   );
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
 
-  // دالة لمعالجة تغيير ن��ع المتجر
+  // دالة لمعالجة تغيير نوع المتجر
   const handleCategoryChange = (value: string) => {
     if (value === "أخرى (حدد النوع)") {
       setShowCustomCategory(true);
@@ -430,7 +573,7 @@ export default function MerchantSettings() {
               <Link to="/merchant/dashboard">
                 <Button variant="outline" size="sm">
                   <ArrowLeft className="w-4 h-4 ml-2" />
-                  {t("common.back")}
+                  رجوع
                 </Button>
               </Link>
               <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl flex items-center justify-center">
@@ -438,10 +581,10 @@ export default function MerchantSettings() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 arabic">
-                  إعدادات ال��تجر
+                  إعدادات المتجر
                 </h1>
                 <p className="text-gray-600 arabic">
-                  إدارة معلومات وإعدادات متجرك
+                  إدارة معلومات وإعدادات متج��ك
                 </p>
               </div>
             </div>
@@ -623,7 +766,7 @@ export default function MerchantSettings() {
                     </div>
                     <div>
                       <Label htmlFor="category" className="arabic">
-                        ��ئة المتجر
+                        فئة المتجر
                       </Label>
                       <select
                         id="category"
@@ -649,7 +792,7 @@ export default function MerchantSettings() {
                               })
                             }
                             className="text-right arabic"
-                            placeholder="حدد نوع متجرك (مثال: صيدل��ة، محل حلويات، ورشة تصليح)"
+                            placeholder="حدد نوع متجرك (مثال: صيدلية، محل حلويات، ورشة تصليح)"
                           />
                         </div>
                       )}
@@ -671,7 +814,7 @@ export default function MerchantSettings() {
                         })
                       }
                       className="mt-1 text-right arabic"
-                      placeholder="اكتب وصفاً مختصراً عن متجرك ومن��جاتك..."
+                      placeholder="اكتب وصفاً مختصراً عن متجرك ومنتجاتك..."
                     />
                   </div>
 
@@ -694,7 +837,7 @@ export default function MerchantSettings() {
                           })
                         }
                         className="mt-1 text-right"
-                        placeholder="+966 50 123 4567"
+                        placeholder="+249 12 123 4567"
                       />
                     </div>
                     <div>
@@ -776,7 +919,7 @@ export default function MerchantSettings() {
                           })
                         }
                         className="mt-1 text-right arabic"
-                        placeholder="شارع الملك فهد، حي النرجس"
+                        placeholder="شارع النيل، الخرطوم"
                       />
                     </div>
                   </div>
@@ -822,7 +965,7 @@ export default function MerchantSettings() {
                         />
                       </div>
                       <div>
-                        <Label className="arabic text-sm">أيام العم��</Label>
+                        <Label className="arabic text-sm">أيام العمل</Label>
                         <div className="mt-1 space-y-1">
                           {workingDays.map((day) => (
                             <label
@@ -881,17 +1024,17 @@ export default function MerchantSettings() {
                         {
                           key: "newOrders",
                           label: "طلبات جديدة",
-                          desc: "اشعارات عند وصول طلبات جديدة",
+                          desc: "إشعارات عند وصول طلبات جديدة",
                         },
                         {
                           key: "orderUpdates",
                           label: "تحديثات الطلبات",
-                          desc: "اشعارات عند تغيير حالة الطلبات",
+                          desc: "إشع��رات عند تغيير حالة الطلبات",
                         },
                         {
                           key: "paymentReceived",
                           label: "استلام الدفعات",
-                          desc: "اشعارا�� عند استلام المدفوعات",
+                          desc: "إشعارات عند استلام المدفوعات",
                         },
                       ].map((item) => (
                         <div
@@ -935,13 +1078,13 @@ export default function MerchantSettings() {
                       {[
                         {
                           key: "lowStock",
-                          label: "نفاد المخزو��",
+                          label: "نفاد المخزون",
                           desc: "تنبيه عند انخفاض كمية المنتجات",
                         },
                         {
                           key: "reviews",
                           label: "المراجعات الجديدة",
-                          desc: "اشعارات عند وصول مراجعات جديدة",
+                          desc: "إشعارات عند وصول مراجعات جديدة",
                         },
                       ].map((item) => (
                         <div
@@ -991,7 +1134,7 @@ export default function MerchantSettings() {
                         {
                           key: "emailNotifications",
                           label: "البريد الإلكتروني",
-                          desc: "استقبال الإش���ارات عبر البريد الإلكترو��ي",
+                          desc: "استقبال الإشعارات عبر البريد الإلكتروني",
                         },
                       ].map((item) => (
                         <div
@@ -1033,7 +1176,7 @@ export default function MerchantSettings() {
                 <CardHeader>
                   <CardTitle className="arabic text-right flex items-center">
                     <Truck className="w-5 h-5 ml-2" />
-                    إ����دادات الشحن والتوصيل
+                    إعدادات الشحن والتوصيل
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -1061,7 +1204,7 @@ export default function MerchantSettings() {
                             className="text-right"
                           />
                           <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                            ر.س
+                            جنيه
                           </span>
                         </div>
                       </div>
@@ -1083,7 +1226,7 @@ export default function MerchantSettings() {
                             className="text-right"
                           />
                           <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                            ر.س
+                            جنيه
                           </span>
                         </div>
                       </div>
@@ -1105,7 +1248,7 @@ export default function MerchantSettings() {
                             className="text-right"
                           />
                           <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                            ر.س
+                            جنيه
                           </span>
                         </div>
                       </div>
@@ -1140,16 +1283,16 @@ export default function MerchantSettings() {
                     <Label className="arabic">مناطق التوصيل</Label>
                     <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
                       {[
-                        "الرياض",
-                        "جدة",
-                        "الدمام",
-                        "مك�� المكرمة",
-                        "المدينة المنورة",
-                        "الطائف",
-                        "الخ��ر",
-                        "الأحساء",
-                        "تبوك",
-                        "أبها",
+                        "الخرطوم",
+                        "أمدرمان",
+                        "بحري",
+                        "مدني",
+                        "كسلا",
+                        "بورتسودان",
+                        "أتبرا",
+                        "الأبيض",
+                        "نيالا",
+                        "الفاشر",
                       ].map((area) => (
                         <label
                           key={area}
@@ -1207,7 +1350,7 @@ export default function MerchantSettings() {
                       <div>
                         <Label className="arabic">البريد الإلكتروني</Label>
                         <Input
-                          value={user?.profile?.email || ""}
+                          value={user?.email || ""}
                           disabled
                           className="mt-1 text-right bg-gray-50"
                         />
@@ -1225,7 +1368,7 @@ export default function MerchantSettings() {
                     <div className="space-y-4">
                       <div>
                         <Label htmlFor="currentPassword" className="arabic">
-                          كلمة الم��ور الحالية
+                          كلمة المرور الحالية
                         </Label>
                         <div className="mt-1 relative">
                           <Input
@@ -1305,7 +1448,7 @@ export default function MerchantSettings() {
                       >
                         <div className={isRTL ? "text-right" : "text-left"}>
                           <div className="font-medium arabic">
-                            المصادقة الثنائية
+                            المصادقة الثن��ئية
                           </div>
                           <div className="text-sm text-gray-600 arabic">
                             حماية إضافية لحسابك
@@ -1326,7 +1469,7 @@ export default function MerchantSettings() {
                       >
                         <div className={isRTL ? "text-right" : "text-left"}>
                           <div className="font-medium arabic">
-                            إشع��رات تسجيل الدخول
+                            إشعارات تسجيل الدخول
                           </div>
                           <div className="text-sm text-gray-600 arabic">
                             تنبيه عند تسجيل دخول جديد

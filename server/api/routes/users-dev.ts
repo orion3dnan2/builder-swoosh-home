@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { prisma } from "../../lib/prisma";
-import { authenticateToken } from "./auth";
+import { UserDatabase } from "../../lib/database";
+import { authenticateToken } from "./auth-dev";
 
 const router = Router();
 
@@ -8,26 +8,11 @@ const router = Router();
 router.get("/", authenticateToken, async (req: any, res) => {
   try {
     // التحقق من صلاحيات المدير
-    if (req.user.role !== "SUPER_ADMIN") {
+    if (req.user.role !== "super_admin") {
       return res.status(403).json({ error: "غير مصرح لك بالوصول" });
     }
 
-    const users = await prisma.user.findMany({
-      include: {
-        profile: true,
-        permissions: true,
-        stores: {
-          select: {
-            id: true,
-            name: true,
-            status: true,
-          },
-        },
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    const users = UserDatabase.getAllUsers();
 
     // إزالة كلمات المرور من النتائج
     const usersWithoutPasswords = users.map(({ password, ...user }) => user);
@@ -45,26 +30,11 @@ router.get("/:id", authenticateToken, async (req: any, res) => {
     const userId = req.params.id;
 
     // التحقق من الصلاحيات - المديرون أو المستخدم نفسه فقط
-    if (req.user.role !== "SUPER_ADMIN" && req.user.id !== userId) {
+    if (req.user.role !== "super_admin" && req.user.id !== userId) {
       return res.status(403).json({ error: "غير مصرح لك بالوصول" });
     }
 
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      include: {
-        profile: true,
-        permissions: true,
-        stores: {
-          select: {
-            id: true,
-            name: true,
-            status: true,
-            category: true,
-            createdAt: true,
-          },
-        },
-      },
-    });
+    const user = UserDatabase.findUser((u) => u.id === userId);
 
     if (!user) {
       return res.status(404).json({ error: "المستخدم غير موجود" });
@@ -74,7 +44,7 @@ router.get("/:id", authenticateToken, async (req: any, res) => {
     res.json(userWithoutPassword);
   } catch (error) {
     console.error("Get user error:", error);
-    res.status(500).json({ error: "خط�� في الخادم" });
+    res.status(500).json({ error: "خطأ في الخادم" });
   }
 });
 
@@ -85,25 +55,27 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
     const { profile, ...userData } = req.body;
 
     // التحقق من الصلاحيات - المديرون أو المستخدم نفسه فقط
-    if (req.user.role !== "SUPER_ADMIN" && req.user.id !== userId) {
+    if (req.user.role !== "super_admin" && req.user.id !== userId) {
       return res.status(403).json({ error: "غير مصرح لك بالوصول" });
     }
 
-    const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data: {
-        ...userData,
-        profile: profile
-          ? {
-              update: profile,
-            }
-          : undefined,
-      },
-      include: {
-        profile: true,
-        permissions: true,
-      },
-    });
+    const updates: any = {
+      ...userData,
+      updatedAt: new Date().toISOString(),
+    };
+
+    if (profile) {
+      const currentUser = UserDatabase.findUser((u) => u.id === userId);
+      if (currentUser) {
+        updates.profile = { ...currentUser.profile, ...profile };
+      }
+    }
+
+    const updatedUser = UserDatabase.updateUser(userId, updates);
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "المستخدم غير موجود" });
+    }
 
     const { password, ...userWithoutPassword } = updatedUser;
     res.json(userWithoutPassword);
@@ -117,8 +89,8 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
 router.delete("/:id", authenticateToken, async (req: any, res) => {
   try {
     // التحقق من صلاحيات المدير
-    if (req.user.role !== "SUPER_ADMIN") {
-      return res.status(403).json({ error: "غير مصرح لك بالو��ول" });
+    if (req.user.role !== "super_admin") {
+      return res.status(403).json({ error: "غير مصرح لك بالوصول" });
     }
 
     const userId = req.params.id;
@@ -128,9 +100,11 @@ router.delete("/:id", authenticateToken, async (req: any, res) => {
       return res.status(400).json({ error: "لا يمكن حذف حسابك الخاص" });
     }
 
-    await prisma.user.delete({
-      where: { id: userId },
-    });
+    const deletedUser = UserDatabase.deleteUser(userId);
+
+    if (!deletedUser) {
+      return res.status(404).json({ error: "المستخدم غير موجود" });
+    }
 
     res.json({ message: "تم حذف المستخدم بنجاح" });
   } catch (error) {
@@ -143,7 +117,7 @@ router.delete("/:id", authenticateToken, async (req: any, res) => {
 router.patch("/:id/toggle-status", authenticateToken, async (req: any, res) => {
   try {
     // التحقق من صلاحيات المدير
-    if (req.user.role !== "SUPER_ADMIN") {
+    if (req.user.role !== "super_admin") {
       return res.status(403).json({ error: "غير مصرح لك بالوصول" });
     }
 
@@ -154,20 +128,15 @@ router.patch("/:id/toggle-status", authenticateToken, async (req: any, res) => {
       return res.status(400).json({ error: "لا يمكن تغيير حالة حسابك الخاص" });
     }
 
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-    });
+    const user = UserDatabase.findUser((u) => u.id === userId);
 
     if (!user) {
       return res.status(404).json({ error: "المستخدم غير موجود" });
     }
 
-    const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data: { isActive: !user.isActive },
-      include: {
-        profile: true,
-      },
+    const updatedUser = UserDatabase.updateUser(userId, {
+      isActive: !user.isActive,
+      updatedAt: new Date().toISOString(),
     });
 
     const { password, ...userWithoutPassword } = updatedUser;
@@ -182,17 +151,25 @@ router.patch("/:id/toggle-status", authenticateToken, async (req: any, res) => {
 router.get("/stats/summary", authenticateToken, async (req: any, res) => {
   try {
     // التحقق من صلاحيات المدير
-    if (req.user.role !== "SUPER_ADMIN") {
+    if (req.user.role !== "super_admin") {
       return res.status(403).json({ error: "غير مصرح لك بالوصول" });
     }
 
-    const [totalUsers, activeUsers, merchantsCount, customersCount] =
-      await Promise.all([
-        prisma.user.count(),
-        prisma.user.count({ where: { isActive: true } }),
-        prisma.user.count({ where: { role: "MERCHANT" } }),
-        prisma.user.count({ where: { role: "CUSTOMER" } }),
-      ]);
+    const allUsers = UserDatabase.getAllUsers();
+
+    const totalUsers = allUsers.length;
+    const activeUsers = allUsers.filter((u) => u.isActive).length;
+    const merchantsCount = allUsers.filter((u) => u.role === "merchant").length;
+    const customersCount = allUsers.filter((u) => u.role === "customer").length;
+    const adminCount = allUsers.filter((u) => u.role === "super_admin").length;
+
+    // إحصائيات إضافية
+    const recentUsers = allUsers.filter((u) => {
+      const createdDate = new Date(u.createdAt);
+      const daysSince =
+        (Date.now() - createdDate.getTime()) / (1000 * 60 * 60 * 24);
+      return daysSince <= 7;
+    }).length;
 
     res.json({
       totalUsers,
@@ -200,7 +177,10 @@ router.get("/stats/summary", authenticateToken, async (req: any, res) => {
       inactiveUsers: totalUsers - activeUsers,
       merchantsCount,
       customersCount,
-      adminCount: totalUsers - merchantsCount - customersCount,
+      adminCount,
+      recentRegistrations: recentUsers,
+      growthRate:
+        totalUsers > 0 ? ((recentUsers / totalUsers) * 100).toFixed(2) : "0.00",
     });
   } catch (error) {
     console.error("Get user stats error:", error);
@@ -208,4 +188,4 @@ router.get("/stats/summary", authenticateToken, async (req: any, res) => {
   }
 });
 
-export { router as userRoutes };
+export { router as userDevRoutes };

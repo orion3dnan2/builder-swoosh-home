@@ -179,6 +179,68 @@ export class ApiService {
     return this.request(endpoint);
   }
 
+  // طلبات المتاجر
+  static async getStores(): Promise<any[]> {
+    return this.request("/stores");
+  }
+
+  static async getStore(id: string): Promise<any> {
+    return this.request(`/stores/${id}`);
+  }
+
+  static async createStore(storeData: {
+    name: string;
+    description?: string;
+    category: string;
+    phone: string;
+    email: string;
+    address?: string;
+    city: string;
+    country?: string;
+    workingHours?: {
+      start: string;
+      end: string;
+      days: string[];
+    };
+    logo?: string;
+    banner?: string;
+    notificationSettings?: any;
+    shippingSettings?: any;
+  }): Promise<any> {
+    return this.request("/stores", {
+      method: "POST",
+      headers: this.getHeaders(),
+      body: JSON.stringify(storeData),
+    });
+  }
+
+  static async updateStore(id: string, storeData: any): Promise<any> {
+    return this.request(`/stores/${id}`, {
+      method: "PUT",
+      headers: this.getHeaders(),
+      body: JSON.stringify(storeData),
+    });
+  }
+
+  static async deleteStore(id: string): Promise<any> {
+    return this.request(`/stores/${id}`, {
+      method: "DELETE",
+      headers: this.getHeaders(),
+    });
+  }
+
+  static async getStoreAnalytics(id: string): Promise<any> {
+    return this.request(`/stores/${id}/analytics`);
+  }
+
+  static async updateStoreStatus(id: string, status: string): Promise<any> {
+    return this.request(`/stores/${id}/status`, {
+      method: "PATCH",
+      headers: this.getHeaders(),
+      body: JSON.stringify({ status }),
+    });
+  }
+
   static async getProduct(id: string): Promise<any> {
     return this.request(`/products/${id}`);
   }

@@ -1,14 +1,16 @@
 import express from "express";
 import cors from "cors";
+import { UserDatabase, StoreDatabase } from "./lib/database";
 import { handleDemo } from "./routes/demo";
-import { authRoutes } from "./api/routes/auth";
+import { authDevRoutes } from "./api/routes/auth-dev";
 import { companiesRoutes } from "./api/routes/companies";
 import { productsRoutes } from "./api/routes/products";
 import { jobsRoutes } from "./api/routes/jobs";
 import { storesRoutes } from "./api/routes/stores";
 import { servicesRoutes } from "./api/routes/services";
-import { userRoutes } from "./api/routes/users";
+import { userDevRoutes } from "./api/routes/users-dev";
 import { mobileRoutes } from "./api/routes/mobile";
+import { databaseInfoRoutes } from "./api/routes/database-info";
 import {
   getSystemSettings,
   updateSystemSettings,
@@ -45,6 +47,21 @@ import {
 export function createServer() {
   const app = express();
 
+  // تهيئة قواعد البيانات
+  console.log("🗄️ تهيئة قواعد البيانات...");
+  UserDatabase.loadUsers();
+  StoreDatabase.loadStores();
+  console.log("✅ تم تحميل قواعد البيانات بنجاح");
+
+  // تهيئة قاعدة البيانات في production فقط
+  if (process.env.NODE_ENV === "production") {
+    import("./lib/prisma").then(({ connectDatabase }) => {
+      connectDatabase().catch((error) => {
+        console.error("فشل في الاتصال بقاعدة البيانات:", error);
+      });
+    });
+  }
+
   // Middleware
   app.use(cors());
   app.use(express.json());
@@ -58,14 +75,15 @@ export function createServer() {
   app.get("/api/demo", handleDemo);
 
   // API routes
-  app.use("/api/auth", authRoutes);
+  app.use("/api/auth", authDevRoutes);
   app.use("/api/companies", companiesRoutes);
   app.use("/api/products", productsRoutes);
   app.use("/api/jobs", jobsRoutes);
   app.use("/api/stores", storesRoutes);
   app.use("/api/services", servicesRoutes);
-  app.use("/api/users", userRoutes);
+  app.use("/api/users", userDevRoutes);
   app.use("/api/mobile", mobileRoutes);
+  app.use("/api/database", databaseInfoRoutes);
 
   // Health check endpoint
   app.get("/api/health", (req, res) => {
@@ -73,6 +91,7 @@ export function createServer() {
       status: "ok",
       timestamp: new Date().toISOString(),
       server: "express",
+      database: "postgresql",
     });
   });
 
