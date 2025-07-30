@@ -216,7 +216,7 @@ export default function MerchantDashboard() {
                 </div>
                 <div className="flex-1">
                   <h2 className="text-xl font-bold text-gray-900 mb-2 arabic">
-                    مرحباً بك في متجرك الجديد! 🎉
+                    مرحبا�� بك في متجرك الجديد! 🎉
                   </h2>
                   <p className="text-gray-700 mb-4 arabic">
                     أهلاً وسهلاً {user?.profile.name}! متجرك الآن جاهز للبدء.
@@ -293,7 +293,7 @@ export default function MerchantDashboard() {
                     ${storeStats.monthlyRevenue.toLocaleString()}
                   </p>
                   <p className="text-purple-600 text-sm arabic">
-                    إيراد��ت الشهر
+                    إيرادات الشهر
                   </p>
                 </div>
               </div>
