@@ -106,7 +106,7 @@ export default function MerchantSettings() {
     banner: "/placeholder.svg"
   });
 
-  // Notification Settings State - إعدادات افتراضية للتجار الجدد
+  // Notification Settings State - إعداد��ت افتراضية للتجار الجدد
   const [notifications, setNotifications] = useState<NotificationSettings>({
     newOrders: true,
     orderUpdates: true,
@@ -169,8 +169,9 @@ export default function MerchantSettings() {
     const file = event.target.files?.[0];
     if (file) {
       // التحقق من نوع الملف
-      if (!file.type.startsWith('image/')) {
-        alert('يرجى اختيار ملف صورة صالح');
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG, أو WebP)');
         return;
       }
 
@@ -184,6 +185,10 @@ export default function MerchantSettings() {
       reader.onload = (e) => {
         const bannerUrl = e.target?.result as string;
         setStoreSettings({...storeSettings, banner: bannerUrl});
+        alert('تم تحديث غلاف المتجر بنجاح! 🎨');
+      };
+      reader.onerror = () => {
+        alert('فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.');
       };
       reader.readAsDataURL(file);
     }
@@ -249,7 +254,7 @@ export default function MerchantSettings() {
     "مواد غذائية وعطور",
     "ملابس وأقمشة",
     "حرف يدوية",
-    "مستحضرات تجميل",
+    "مستحضرات تجم��ل",
     "أدوات منزلية",
     "كتب ومواد ثقافية",
     "إلكترونيات",
@@ -338,7 +343,7 @@ export default function MerchantSettings() {
                   {/* Store Logo & Banner */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <Label className="arabic">شعار المتجر</Label>
+                      <Label className="arabic">��عار المتجر</Label>
                       <div className="mt-2 flex items-center space-x-4 space-x-reverse">
                         <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                           {storeSettings.logo && storeSettings.logo !== "/placeholder.svg" ? (
