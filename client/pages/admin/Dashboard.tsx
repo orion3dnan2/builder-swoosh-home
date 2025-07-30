@@ -20,11 +20,9 @@ import {
   BarChart3,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
-import { useTheme } from "@/contexts/ThemeContext";
 
 export default function AdminDashboard() {
   const { user } = useAuth();
-  const { t, isRTL } = useTheme();
   const [stats] = useState({
     totalUsers: 1247,
     totalMerchants: 89,
@@ -38,48 +36,48 @@ export default function AdminDashboard() {
 
   const quickActions = [
     {
-      titleKey: "dashboard.app_settings",
-      descriptionKey: "dashboard.app_settings_desc",
+      title: "إعدادات التطبيق",
+      description: "إدارة الإعدادات العامة والتكوينات الأساسية",
       icon: Settings,
       href: "/admin/settings",
       color: "from-blue-500 to-blue-600",
       urgent: false,
     },
     {
-      titleKey: "dashboard.user_management",
-      descriptionKey: "dashboard.user_management_desc",
+      title: "إدارة المستخدمين",
+      description: "إضافة وتعديل وحذف المستخدمين والأذونات",
       icon: Users,
       href: "/admin/users",
       color: "from-green-500 to-green-600",
       urgent: false,
     },
     {
-      titleKey: "dashboard.store_management",
-      descriptionKey: "dashboard.store_management_desc",
+      title: "إدارة المتاجر",
+      description: "مراجعة واعتماد المتاجر الجديدة",
       icon: Store,
       href: "/admin/stores",
       color: "from-purple-500 to-purple-600",
       urgent: stats.pendingApprovals > 0,
     },
     {
-      titleKey: "dashboard.appearance",
-      descriptionKey: "dashboard.appearance_desc",
+      title: "المظهر والثيمات",
+      description: "تخصيص ألوان وثيمات الموقع",
       icon: Palette,
       href: "/admin/appearance",
       color: "from-pink-500 to-pink-600",
       urgent: false,
     },
     {
-      titleKey: "dashboard.system_settings",
-      descriptionKey: "dashboard.system_settings_desc",
+      title: "إعدادات النظام",
+      description: "إعدادات الأمان والأذونات المتقدمة",
       icon: Shield,
       href: "/admin/system",
       color: "from-red-500 to-red-600",
       urgent: false,
     },
     {
-      titleKey: "dashboard.content_management",
-      descriptionKey: "dashboard.content_management_desc",
+      title: "إدارة المحتوى",
+      description: "إدارة الصفحات والمحتوى الثابت",
       icon: Globe,
       href: "/admin/content",
       color: "from-orange-500 to-orange-600",
@@ -115,9 +113,9 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-4 space-x-reverse">
@@ -125,22 +123,22 @@ export default function AdminDashboard() {
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 arabic">
-                  {t("dashboard.admin")}
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white arabic">
+                  لوحة التحكم الإدارية
                 </h1>
-                <p className="text-gray-600 arabic">
-                  {t("dashboard.welcome")} {user?.profile.name}
+                <p className="text-gray-600 dark:text-gray-300 arabic">
+                  أهلاً وسهلاً {user?.profile.name || "المدير"}
                 </p>
               </div>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
               <Badge variant="secondary" className="arabic">
-                {t("dashboard.super_admin")}
+                مدير عام
               </Badge>
               <Link to="/">
                 <Button variant="outline" size="sm" className="arabic">
                   <Eye className="w-4 h-4 ml-2" />
-                  {t("dashboard.view_site")}
+                  عرض الموقع
                 </Button>
               </Link>
             </div>
@@ -151,64 +149,64 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-blue-200 dark:border-blue-700">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Users className="w-8 h-8 text-blue-600" />
+                <Users className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-blue-800">
-                    {stats.totalUsers.toLocaleString()}
+                  <p className="text-2xl font-bold text-blue-800 dark:text-blue-200">
+                    {stats.totalUsers.toLocaleString('ar-SA')}
                   </p>
-                  <p className="text-blue-600 text-sm arabic">
-                    {t("dashboard.total_users")}
+                  <p className="text-blue-600 dark:text-blue-400 text-sm arabic">
+                    إجمالي المستخدمين
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+          <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border-green-200 dark:border-green-700">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Store className="w-8 h-8 text-green-600" />
+                <Store className="w-8 h-8 text-green-600 dark:text-green-400" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-green-800">
-                    {stats.totalMerchants}
+                  <p className="text-2xl font-bold text-green-800 dark:text-green-200">
+                    {stats.totalMerchants.toLocaleString('ar-SA')}
                   </p>
-                  <p className="text-green-600 text-sm arabic">
-                    {t("dashboard.registered_stores")}
+                  <p className="text-green-600 dark:text-green-400 text-sm arabic">
+                    المتاجر المسجلة
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 border-purple-200 dark:border-purple-700">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Package className="w-8 h-8 text-purple-600" />
+                <Package className="w-8 h-8 text-purple-600 dark:text-purple-400" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-purple-800">
-                    {stats.totalProducts.toLocaleString()}
+                  <p className="text-2xl font-bold text-purple-800 dark:text-purple-200">
+                    {stats.totalProducts.toLocaleString('ar-SA')}
                   </p>
-                  <p className="text-purple-600 text-sm arabic">
-                    {t("dashboard.total_products")}
+                  <p className="text-purple-600 dark:text-purple-400 text-sm arabic">
+                    إجمالي المنتجات
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
+          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 border-orange-200 dark:border-orange-700">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <TrendingUp className="w-8 h-8 text-orange-600" />
+                <TrendingUp className="w-8 h-8 text-orange-600 dark:text-orange-400" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-orange-800">
-                    ${stats.monthlyRevenue.toLocaleString()}
+                  <p className="text-2xl font-bold text-orange-800 dark:text-orange-200">
+                    {stats.monthlyRevenue.toLocaleString('ar-SA')} ج.س
                   </p>
-                  <p className="text-orange-600 text-sm arabic">
-                    {t("dashboard.monthly_revenue")}
+                  <p className="text-orange-600 dark:text-orange-400 text-sm arabic">
+                    الإيرادات الشهرية
                   </p>
                 </div>
               </div>
@@ -217,9 +215,9 @@ export default function AdminDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <Card className="mb-8">
+        <Card className="mb-8 dark:bg-gray-800 dark:border-gray-700">
           <CardHeader>
-            <CardTitle className="flex items-center arabic">
+            <CardTitle className="flex items-center arabic text-gray-900 dark:text-white">
               <Activity className="w-5 h-5 ml-2" />
               الإجراءات السريعة
             </CardTitle>
@@ -228,7 +226,7 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {quickActions.map((action, index) => (
                 <Link key={index} to={action.href}>
-                  <Card className="hover:shadow-lg transition-all duration-200 hover:scale-105 group cursor-pointer">
+                  <Card className="hover:shadow-lg dark:hover:shadow-gray-900/50 transition-all duration-200 hover:scale-105 group cursor-pointer dark:bg-gray-700 dark:border-gray-600">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between">
                         <div className="flex items-center space-x-3 space-x-reverse">
@@ -238,7 +236,7 @@ export default function AdminDashboard() {
                             <action.icon className="w-6 h-6 text-white" />
                           </div>
                           <div>
-                            <h3 className="font-semibold text-gray-900 arabic flex items-center">
+                            <h3 className="font-semibold text-gray-900 dark:text-white arabic flex items-center">
                               {action.title}
                               {action.urgent && (
                                 <Badge
@@ -249,12 +247,12 @@ export default function AdminDashboard() {
                                 </Badge>
                               )}
                             </h3>
-                            <p className="text-sm text-gray-600 arabic mt-1">
+                            <p className="text-sm text-gray-600 dark:text-gray-300 arabic mt-1">
                               {action.description}
                             </p>
                           </div>
                         </div>
-                        <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                        <ChevronRight className="w-5 h-5 text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors" />
                       </div>
                     </CardContent>
                   </Card>
@@ -267,11 +265,11 @@ export default function AdminDashboard() {
         {/* Recent Activity & Analytics */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Recent Activity */}
-          <Card>
+          <Card className="dark:bg-gray-800 dark:border-gray-700">
             <CardHeader>
-              <CardTitle className="flex items-center arabic">
+              <CardTitle className="flex items-center arabic text-gray-900 dark:text-white">
                 <MessageSquare className="w-5 h-5 ml-2" />
-                {t("dashboard.recent_activity")}
+                الأنشطة الحديثة
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -279,17 +277,17 @@ export default function AdminDashboard() {
                 {recentActivity.map((activity, index) => (
                   <div
                     key={index}
-                    className="flex items-center space-x-3 space-x-reverse p-3 bg-gray-50 rounded-lg"
+                    className="flex items-center space-x-3 space-x-reverse p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
                   >
                     <div
                       className={`w-8 h-8 rounded-full flex items-center justify-center ${
                         activity.type === "store"
-                          ? "bg-blue-100 text-blue-600"
+                          ? "bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400"
                           : activity.type === "product"
-                            ? "bg-green-100 text-green-600"
+                            ? "bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-400"
                             : activity.type === "review"
-                              ? "bg-red-100 text-red-600"
-                              : "bg-yellow-100 text-yellow-600"
+                              ? "bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400"
+                              : "bg-yellow-100 dark:bg-yellow-900/50 text-yellow-600 dark:text-yellow-400"
                       }`}
                     >
                       {activity.type === "store" && (
@@ -306,17 +304,17 @@ export default function AdminDashboard() {
                       )}
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900 arabic">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white arabic">
                         {activity.action}
                       </p>
-                      <p className="text-xs text-gray-600 arabic">
+                      <p className="text-xs text-gray-600 dark:text-gray-400 arabic">
                         بواسطة {activity.user} • {activity.time}
                       </p>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="mt-4 pt-4 border-t">
+              <div className="mt-4 pt-4 border-t dark:border-gray-600">
                 <Link to="/admin/activity">
                   <Button variant="outline" size="sm" className="w-full arabic">
                     عرض جميع الأنشطة
@@ -327,49 +325,49 @@ export default function AdminDashboard() {
           </Card>
 
           {/* Quick Stats */}
-          <Card>
+          <Card className="dark:bg-gray-800 dark:border-gray-700">
             <CardHeader>
-              <CardTitle className="flex items-center arabic">
+              <CardTitle className="flex items-center arabic text-gray-900 dark:text-white">
                 <BarChart3 className="w-5 h-5 ml-2" />
                 إحصائيات سريعة
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                  <span className="text-sm font-medium text-blue-900 arabic">
+                <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <span className="text-sm font-medium text-blue-900 dark:text-blue-200 arabic">
                     المتاجر ��لنشطة
                   </span>
-                  <span className="text-lg font-bold text-blue-600">
-                    {stats.activeStores}
+                  <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                    {stats.activeStores.toLocaleString('ar-SA')}
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
-                  <span className="text-sm font-medium text-yellow-900 arabic">
+                <div className="flex items-center justify-between p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                  <span className="text-sm font-medium text-yellow-900 dark:text-yellow-200 arabic">
                     طلبات الاعتماد
                   </span>
-                  <span className="text-lg font-bold text-yellow-600">
-                    {stats.pendingApprovals}
+                  <span className="text-lg font-bold text-yellow-600 dark:text-yellow-400">
+                    {stats.pendingApprovals.toLocaleString('ar-SA')}
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
-                  <span className="text-sm font-medium text-green-900 arabic">
+                <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                  <span className="text-sm font-medium text-green-900 dark:text-green-200 arabic">
                     تسجيلات جديدة
                   </span>
-                  <span className="text-lg font-bold text-green-600">
-                    {stats.newRegistrations}
+                  <span className="text-lg font-bold text-green-600 dark:text-green-400">
+                    {stats.newRegistrations.toLocaleString('ar-SA')}
                   </span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
-                  <span className="text-sm font-medium text-purple-900 arabic">
+                <div className="flex items-center justify-between p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                  <span className="text-sm font-medium text-purple-900 dark:text-purple-200 arabic">
                     إجمالي الطلبات
                   </span>
-                  <span className="text-lg font-bold text-purple-600">
-                    {stats.totalOrders}
+                  <span className="text-lg font-bold text-purple-600 dark:text-purple-400">
+                    {stats.totalOrders.toLocaleString('ar-SA')}
                   </span>
                 </div>
               </div>
-              <div className="mt-4 pt-4 border-t">
+              <div className="mt-4 pt-4 border-t dark:border-gray-600">
                 <Link to="/admin/analytics">
                   <Button variant="outline" size="sm" className="w-full arabic">
                     عرض التقارير التفصيلية

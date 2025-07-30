@@ -174,7 +174,7 @@ export default function Login() {
                     to="/forgot-password"
                     className="text-sm text-primary-600 hover:underline arabic font-semibold"
                   >
-                    نسيت كل��ة المرور؟
+                    نسيت كلمة المرور؟
                   </Link>
                 </div>
 
@@ -211,15 +211,6 @@ export default function Login() {
                     انشئ حساب جديد
                   </Link>
                 </div>
-
-                <div className="text-center">
-                  <Link
-                    to="/company-register"
-                    className="text-secondary-600 hover:underline arabic text-sm"
-                  >
-                    🏢 تسجيل للشركات والمؤسسات
-                  </Link>
-                </div>
               </form>
             </CardContent>
           </Card>
@@ -243,7 +234,7 @@ export default function Login() {
                       </code>
                     </div>
                     <div>
-                      كلمة المرور:{" "}
+                      ك��مة المرور:{" "}
                       <code className="bg-primary-200 px-2 py-1 rounded-lg">
                         admin
                       </code>

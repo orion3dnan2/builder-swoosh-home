@@ -22,31 +22,27 @@ import {
 import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Index() {
-  const { t, isRTL } = useTheme();
+  const { isRTL } = useTheme();
 
   const heroStats = [
     {
       icon: Users,
       number: "100K+",
-      labelKey: "stats.users",
       label: "مستخدم نشط",
     },
     {
       icon: Building2,
       number: "5K+",
-      labelKey: "stats.companies",
       label: "شركة مسجلة",
     },
     {
       icon: ShoppingBag,
       number: "50K+",
-      labelKey: "stats.products",
       label: "منتج متوفر",
     },
     {
       icon: Briefcase,
       number: "2K+",
-      labelKey: "stats.jobs",
       label: "فرصة عمل",
     },
   ];
@@ -99,7 +95,7 @@ export default function Index() {
       name: "أحمد محمد",
       role: "صاحب متجر",
       content:
-        "البيت السوداني ساعدني في الوصول لعملاء جدد وتنمية تجارت�� بشكل كبير",
+        "البيت السوداني ساعدني في الوصول لعملاء جدد وتنمية تجارتي بشكل كبير",
       rating: 5,
     },
     {
@@ -260,10 +256,10 @@ export default function Index() {
             className={`text-center mb-12 md:mb-16 ${isRTL ? "text-right" : "text-center"}`}
           >
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 md:mb-4 arabic">
-              {t("home.testimonials.title")}
+              آراء عملائنا
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-muted-foreground arabic">
-              {t("home.testimonials.subtitle")}
+              ماذا يقول عملاؤنا عن تجربتهم معنا
             </p>
           </div>
 
@@ -318,10 +314,10 @@ export default function Index() {
       <section className="py-12 md:py-20 lg:py-24 bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 dark:from-primary-800 dark:via-primary-900 dark:to-secondary-800">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-4 arabic">
-            {t("home.cta.title")}
+            ابدأ رحلتك معنا اليوم
           </h2>
           <p className="text-base md:text-lg lg:text-xl text-white/90 mb-6 md:mb-8 arabic max-w-2xl mx-auto px-4">
-            {t("home.cta.subtitle")}
+            ��نضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم
           </p>
           <div
             className={`flex flex-col xs:flex-row gap-3 md:gap-4 justify-center px-4 ${isRTL ? "xs:flex-row-reverse" : ""}`}
@@ -332,7 +328,7 @@ export default function Index() {
                 variant="secondary"
                 className="w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg arabic bg-white text-primary-700 hover:bg-white/90"
               >
-                {t("home.cta.create_account")}
+                إنشاء حساب مجاني
                 <ArrowIcon
                   className={`w-4 h-4 md:w-5 md:h-5 ${isRTL ? "mr-2" : "ml-2"}`}
                 />
@@ -344,7 +340,7 @@ export default function Index() {
                 variant="outline"
                 className="w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg border-white/20 text-white hover:bg-white/10 arabic"
               >
-                {t("common.login")}
+                تسجيل الدخول
               </Button>
             </Link>
           </div>

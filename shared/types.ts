@@ -194,3 +194,325 @@ export interface AppSettings {
     refundPolicy: string;
   };
 }
+
+export interface SystemSettings {
+  security: {
+    enableTwoFactor: boolean;
+    sessionTimeout: number;
+    maxLoginAttempts: number;
+    passwordMinLength: number;
+    passwordRequireSpecialChars: boolean;
+    enableEmailVerification: boolean;
+    enableSMSVerification: boolean;
+  };
+  api: {
+    rateLimit: {
+      enabled: boolean;
+      requestsPerMinute: number;
+      burstLimit: number;
+    };
+    cors: {
+      enabled: boolean;
+      allowedOrigins: string[];
+      allowCredentials: boolean;
+    };
+    authentication: {
+      jwtSecret: string;
+      jwtExpiresIn: string;
+      refreshTokenExpiresIn: string;
+    };
+    webhooks: {
+      enabled: boolean;
+      endpoints: WebhookEndpoint[];
+    };
+  };
+  database: {
+    backupFrequency: "daily" | "weekly" | "monthly";
+    maxConnections: number;
+    queryTimeout: number;
+    enableSlowQueryLog: boolean;
+  };
+  notifications: {
+    email: {
+      enabled: boolean;
+      smtpHost: string;
+      smtpPort: number;
+      smtpUser: string;
+      smtpPassword: string;
+      fromEmail: string;
+      fromName: string;
+    };
+    sms: {
+      enabled: boolean;
+      provider: "twilio" | "nexmo" | "custom";
+      apiKey: string;
+      apiSecret: string;
+      fromNumber: string;
+    };
+    push: {
+      enabled: boolean;
+      fcmServerKey: string;
+      apnsCertificate: string;
+    };
+  };
+  integrations: {
+    payment: {
+      enabled: boolean;
+      providers: PaymentProvider[];
+    };
+    analytics: {
+      googleAnalytics: {
+        enabled: boolean;
+        trackingId: string;
+      };
+      facebookPixel: {
+        enabled: boolean;
+        pixelId: string;
+      };
+    };
+    social: {
+      facebook: {
+        enabled: boolean;
+        appId: string;
+        appSecret: string;
+      };
+      google: {
+        enabled: boolean;
+        clientId: string;
+        clientSecret: string;
+      };
+      twitter: {
+        enabled: boolean;
+        apiKey: string;
+        apiSecret: string;
+      };
+    };
+  };
+  maintenance: {
+    enabled: boolean;
+    message: string;
+    allowedIPs: string[];
+    scheduledDowntime?: {
+      startTime: string;
+      endTime: string;
+      reason: string;
+    };
+  };
+  logging: {
+    level: "error" | "warn" | "info" | "debug";
+    enableFileLogging: boolean;
+    enableDatabaseLogging: boolean;
+    maxLogFileSize: number;
+    logRetentionDays: number;
+  };
+}
+
+export interface WebhookEndpoint {
+  id: string;
+  name: string;
+  url: string;
+  events: string[];
+  enabled: boolean;
+  secret: string;
+  headers?: Record<string, string>;
+}
+
+export interface PaymentProvider {
+  id: string;
+  name: string;
+  enabled: boolean;
+  testMode: boolean;
+  credentials: Record<string, string>;
+  supportedCurrencies: string[];
+}
+
+export interface SystemHealth {
+  status: "healthy" | "warning" | "critical";
+  services: {
+    database: ServiceStatus;
+    redis: ServiceStatus;
+    email: ServiceStatus;
+    storage: ServiceStatus;
+    api: ServiceStatus;
+  };
+  metrics: {
+    uptime: number;
+    memoryUsage: number;
+    cpuUsage: number;
+    diskUsage: number;
+    activeConnections: number;
+    responseTime: number;
+  };
+  lastChecked: string;
+}
+
+export interface ServiceStatus {
+  status: "online" | "offline" | "degraded";
+  responseTime?: number;
+  lastChecked: string;
+  error?: string;
+}
+
+export interface SystemLog {
+  id: string;
+  level: "error" | "warn" | "info" | "debug";
+  message: string;
+  metadata?: Record<string, any>;
+  userId?: string;
+  ipAddress?: string;
+  userAgent?: string;
+  timestamp: string;
+}
+
+// Content Management Types
+export interface ContentPage {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt?: string;
+  status: "published" | "draft" | "private";
+  type: "page" | "post" | "news";
+  language: "ar" | "en";
+  seo: {
+    metaTitle: string;
+    metaDescription: string;
+    keywords: string[];
+    ogImage?: string;
+  };
+  author: {
+    id: string;
+    name: string;
+  };
+  categories: Category[];
+  tags: string[];
+  featuredImage?: string;
+  publishedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  parentId?: string;
+  color?: string;
+  icon?: string;
+  count: number;
+}
+
+export interface Media {
+  id: string;
+  filename: string;
+  originalName: string;
+  mimeType: string;
+  size: number;
+  url: string;
+  thumbnailUrl?: string;
+  alt?: string;
+  caption?: string;
+  description?: string;
+  uploadedBy: {
+    id: string;
+    name: string;
+  };
+  createdAt: string;
+}
+
+export interface Translation {
+  id: string;
+  key: string;
+  language: "ar" | "en";
+  value: string;
+  category: string;
+  context?: string;
+  isPlural?: boolean;
+  pluralForms?: Record<string, string>;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Menu {
+  id: string;
+  name: string;
+  location: "header" | "footer" | "sidebar" | "custom";
+  items: MenuItem[];
+  language: "ar" | "en";
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface MenuItem {
+  id: string;
+  label: string;
+  url: string;
+  type: "page" | "category" | "custom" | "external";
+  target: "_self" | "_blank";
+  icon?: string;
+  order: number;
+  parentId?: string;
+  children?: MenuItem[];
+}
+
+export interface ContentTemplate {
+  id: string;
+  name: string;
+  description?: string;
+  type: "page" | "post" | "email";
+  content: string;
+  variables: TemplateVariable[];
+  preview?: string;
+  isDefault: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TemplateVariable {
+  key: string;
+  label: string;
+  type: "text" | "image" | "date" | "number" | "boolean";
+  required: boolean;
+  defaultValue?: any;
+}
+
+export interface ContentSettings {
+  general: {
+    siteName: string;
+    tagline: string;
+    description: string;
+    logo: string;
+    favicon: string;
+    language: "ar" | "en";
+    timezone: string;
+  };
+  seo: {
+    defaultMetaTitle: string;
+    defaultMetaDescription: string;
+    defaultKeywords: string[];
+    googleAnalyticsId?: string;
+    googleSearchConsoleId?: string;
+    facebookPixelId?: string;
+  };
+  social: {
+    facebookUrl?: string;
+    twitterUrl?: string;
+    instagramUrl?: string;
+    linkedinUrl?: string;
+    youtubeUrl?: string;
+  };
+  comments: {
+    enabled: boolean;
+    requireApproval: boolean;
+    allowGuests: boolean;
+    notifyOnNewComment: boolean;
+  };
+  editor: {
+    allowHtml: boolean;
+    allowScripts: boolean;
+    uploadMaxSize: number;
+    allowedFileTypes: string[];
+  };
+}

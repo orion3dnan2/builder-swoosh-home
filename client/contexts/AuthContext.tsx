@@ -18,6 +18,7 @@ interface AuthContextType {
   hasRole: (role: UserRole) => boolean;
   hasPermission: (resource: string, action: string) => boolean;
   login: (credentials: { username: string; password: string }) => Promise<User>;
+  setAuthenticatedUser: (user: User, token: string) => void;
   logout: () => void;
   refreshAuth: () => void;
 }
@@ -72,6 +73,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
+  const setAuthenticatedUser = (userData: User, token: string) => {
+    try {
+      // حفظ الرمز المميز
+      localStorage.setItem("auth_token", token);
+      // تعيين المستخدم
+      setUser(userData);
+    } catch (error) {
+      console.error("Error setting authenticated user:", error);
+    }
+  };
+
   const logout = () => {
     try {
       AuthService.logout();
@@ -122,6 +134,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     hasRole,
     hasPermission,
     login,
+    setAuthenticatedUser,
     logout,
     refreshAuth,
   };

@@ -1,23 +1,32 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Search, Bell, MessageCircle, User, Menu } from "lucide-react";
+import { Search, Bell, MessageCircle, User, Menu, LogOut } from "lucide-react";
 import { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
+import { useAuth } from "../contexts/AuthContext";
 import { LanguageAndThemeControls } from "./ThemeToggle";
+import { AppPromoBanner, SyncIndicator } from "./MobileIntegration";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  const { t, isRTL } = useTheme();
+  const { isRTL } = useTheme();
+  const { user, isAuthenticated, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const handleLogout = () => {
+    logout();
+    window.location.href = "/";
+  };
+
   const navigation = [
-    { name: t("nav.home"), href: "/", icon: "🏠" },
-    { name: t("nav.marketplace"), href: "/marketplace", icon: "🛍️" },
-    { name: t("nav.products"), href: "/products", icon: "📦" },
-    { name: t("nav.companies"), href: "/companies", icon: "🏢" },
-    { name: t("nav.jobs"), href: "/jobs", icon: "💼" },
-    { name: t("nav.services"), href: "/services", icon: "🛠️" },
-    { name: t("nav.ads"), href: "/ads", icon: "📢" },
+    { name: "الرئيسية", href: "/", icon: "🏠" },
+    { name: "السوق", href: "/marketplace", icon: "🛍️" },
+    { name: "المنتجات", href: "/products", icon: "📦" },
+    { name: "الشركات", href: "/companies", icon: "🏢" },
+    { name: "الوظائف", href: "/jobs", icon: "💼" },
+    { name: "المطاعم", href: "/restaurants", icon: "🍽️" },
+    { name: "الخدمات", href: "/services", icon: "🛠️" },
+    { name: "الإعلانات", href: "/ads", icon: "📢" },
   ];
 
   return (
@@ -31,7 +40,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <span className="text-muted-foreground">
-                {t("common.welcome")}
+                مرحباً بكم في البيت السوداني
               </span>
               <div
                 className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
@@ -54,18 +63,37 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <span className="text-muted-foreground">
-                {t("common.users_count")}
+                +100 ألف سوداني في البيت
               </span>
               <LanguageAndThemeControls />
-              <Link to="/login">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
+              {isAuthenticated ? (
+                <div
+                  className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
                 >
-                  {t("common.login")}
-                </Button>
-              </Link>
+                  <span className="text-sm text-gray-600 arabic">
+                    أهلاً {user?.profile.name}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleLogout}
+                    className="hover:bg-red-50 hover:text-red-700"
+                  >
+                    <LogOut className="w-4 h-4 ml-1" />
+                    تسجيل الخروج
+                  </Button>
+                </div>
+              ) : (
+                <Link to="/login">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
+                  >
+                    تسجيل الدخول
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
 
@@ -77,7 +105,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <span className="text-xs truncate text-muted-foreground max-w-[120px]">
-                {t("common.welcome")}
+                مرحباً بكم في البيت ا��سوداني
               </span>
               <div
                 className={`flex items-center gap-1 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
@@ -98,15 +126,34 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <LanguageAndThemeControls />
-              <Link to="/login">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="text-xs px-2 py-1 hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
+              {isAuthenticated ? (
+                <div
+                  className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
                 >
-                  دخول
-                </Button>
-              </Link>
+                  <span className="text-xs text-gray-600 arabic">
+                    أهلاً {user?.profile.name}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleLogout}
+                    className="text-xs px-2 py-1 hover:bg-red-50 hover:text-red-700"
+                  >
+                    <LogOut className="w-3 h-3 ml-1" />
+                    خروج
+                  </Button>
+                </div>
+              ) : (
+                <Link to="/login">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-xs px-2 py-1 hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
+                  >
+                    دخول
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
 
@@ -174,7 +221,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 />
                 <input
                   type="text"
-                  placeholder={t("common.search")}
+                  placeholder="ابحث في البيت السوداني..."
                   className={`${isRTL ? "pr-10 pl-4 text-right" : "pl-10 pr-4"} py-2 w-64 xl:w-80 rounded-xl input-dark arabic border shadow-sm focus:shadow-md transition-all duration-200 focus:ring-2 focus:ring-primary-500`}
                 />
               </div>
@@ -186,15 +233,36 @@ export function Layout({ children }: { children: React.ReactNode }) {
               >
                 <Menu className="w-5 h-5" />
               </Button>
-              <Link to="/login">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-foreground hover:bg-muted p-2"
+              {isAuthenticated ? (
+                <div
+                  className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
                 >
-                  <User className="w-5 h-5" />
-                </Button>
-              </Link>
+                  <div className="hidden md:flex items-center gap-2">
+                    <span className="text-sm text-gray-600 arabic">
+                      أهلاً {user?.profile.name}
+                    </span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={handleLogout}
+                    className="text-foreground hover:bg-red-50 hover:text-red-600 p-2"
+                    title="تسجيل الخروج"
+                  >
+                    <LogOut className="w-5 h-5" />
+                  </Button>
+                </div>
+              ) : (
+                <Link to="/login">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-foreground hover:bg-muted p-2"
+                  >
+                    <User className="w-5 h-5" />
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
 
@@ -230,7 +298,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 />
                 <input
                   type="text"
-                  placeholder={t("common.search")}
+                  placeholder="ابحث في البيت السوداني..."
                   className={`${isRTL ? "pr-10 pl-4 text-right" : "pl-10 pr-4"} py-3 w-full rounded-xl input-dark arabic border shadow-sm focus:shadow-md transition-all duration-200 focus:ring-2 focus:ring-primary-500`}
                 />
               </div>
@@ -253,12 +321,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 البيت السوداني
               </h3>
               <p className="text-muted-foreground arabic">
-                {t("brand.description")}
+                منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم
               </p>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4 arabic text-foreground">
-                {t("footer.services")}
+                الخدمات
               </h4>
               <ul className="space-y-2 arabic">
                 <li>
@@ -266,7 +334,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/marketplace"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    {t("nav.marketplace")}
+                    السوق
                   </Link>
                 </li>
                 <li>
@@ -274,7 +342,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/products"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    {t("nav.products")}
+                    المنتجات
                   </Link>
                 </li>
                 <li>
@@ -282,14 +350,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/services"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    {t("nav.services")}
+                    الخدمات
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4 arabic text-foreground">
-                {t("footer.business")}
+                الأعمال
               </h4>
               <ul className="space-y-2 arabic">
                 <li>
@@ -297,7 +365,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/companies"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    {t("nav.companies")}
+                    الشركات
                   </Link>
                 </li>
                 <li>
@@ -305,7 +373,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/jobs"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    {t("nav.jobs")}
+                    الوظائف
                   </Link>
                 </li>
                 <li>
@@ -313,20 +381,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/ads"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    {t("nav.ads")}
+                    الإعلانات
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4 arabic text-foreground">
-                {t("footer.contact")}
+                تواصل معنا
               </h4>
               <p className="text-muted-foreground arabic mb-2">
-                {t("footer.email")}: info@bayt-sudani.com
+                البريد الإلكتروني: info@bayt-sudani.com
               </p>
               <p className="text-muted-foreground arabic">
-                {t("footer.phone")}: +966 50 123 4567
+                الهاتف: +966 50 123 4567
               </p>
             </div>
           </div>
@@ -334,11 +402,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
             className={`border-t border-border mt-8 pt-8 text-center arabic ${isRTL ? "text-right" : "text-center"}`}
           >
             <p className="text-muted-foreground">
-              © 2024 البيت السوداني. {t("footer.rights")}.
+              © 2024 البيت ��لسوداني. جميع الحقوق محفوظة.
             </p>
           </div>
         </div>
       </footer>
+
+      {/* Mobile App Promo Banner */}
+      <AppPromoBanner />
     </div>
   );
 }

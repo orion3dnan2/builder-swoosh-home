@@ -7,7 +7,10 @@ import Products from "./pages/Products";
 import Companies from "./pages/Companies";
 import Jobs from "./pages/Jobs";
 import Services from "./pages/Services";
+import Restaurants from "./pages/Restaurants";
 import Ads from "./pages/Ads";
+import StoreDetails from "./pages/StoreDetails";
+import StoreVisit from "./pages/StoreVisit";
 import NotFound from "./pages/NotFound";
 import Unauthorized from "./pages/Unauthorized";
 import ThemeShowcase from "./pages/ThemeShowcase";
@@ -164,7 +167,10 @@ function App() {
             <Route path="/companies" element={<Companies />} />
             <Route path="/jobs" element={<Jobs />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/restaurants" element={<Restaurants />} />
             <Route path="/ads" element={<Ads />} />
+            <Route path="/store/:id" element={<StoreDetails />} />
+            <Route path="/store/:id/visit" element={<StoreVisit />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

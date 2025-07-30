@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,26 +19,139 @@ import {
   Activity,
   PieChart,
   LineChart,
+  Sparkles,
+  Plus,
 } from "lucide-react";
-import { useAnalytics } from "@/lib/analytics";
-import { useAuth } from "@/lib/auth";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function MerchantAnalytics() {
   const { user } = useAuth();
-  const {
-    analytics,
-    formatCurrency,
-    formatPercentage,
-    calculateGrowth,
-    getMonthName,
-    exportToCSV,
-    generateInsights,
-  } = useAnalytics("store-001");
+  const [isNewMerchant, setIsNewMerchant] = useState(true);
   const [selectedPeriod, setSelectedPeriod] = useState<
     "week" | "month" | "quarter" | "year"
   >("month");
 
-  const insights = generateInsights(analytics);
+  // تحديد إذا كان التاجر جديد
+  useEffect(() => {
+    if (user?.createdAt) {
+      const accountAge = Date.now() - new Date(user.createdAt).getTime();
+      const daysSinceCreation = accountAge / (1000 * 60 * 60 * 24);
+      setIsNewMerchant(daysSinceCreation < 7);
+    }
+  }, [user]);
+
+  // بيانات تحليلية فارغة للتجار الجدد
+  const analytics = isNewMerchant
+    ? {
+        overview: {
+          totalViews: 0,
+          totalOrders: 0,
+          totalRevenue: 0,
+          conversionRate: 0,
+          averageOrderValue: 0,
+          returningCustomers: 0,
+        },
+        monthly: [],
+        customerMetrics: {
+          totalCustomers: 0,
+          customerRetentionRate: 0,
+        },
+        topProducts: [],
+        salesByCategory: [],
+        recentActivity: [],
+      }
+    : {
+        overview: {
+          totalViews: 2340,
+          totalOrders: 128,
+          totalRevenue: 15420,
+          conversionRate: 5.47,
+          averageOrderValue: 120.47,
+          returningCustomers: 45,
+        },
+        monthly: [
+          { month: "2024-01", views: 1200, orders: 65, revenue: 7800 },
+          { month: "2024-02", views: 1500, orders: 85, revenue: 10200 },
+          { month: "2024-03", views: 2340, orders: 128, revenue: 15420 },
+        ],
+        customerMetrics: {
+          totalCustomers: 89,
+          customerRetentionRate: 67.8,
+        },
+        topProducts: [
+          {
+            id: "1",
+            name: "عطر الورد السوداني",
+            views: 450,
+            orders: 25,
+            revenue: 11250,
+          },
+          {
+            id: "2",
+            name: "عسل السدر الطبيعي",
+            views: 380,
+            orders: 18,
+            revenue: 7200,
+          },
+          {
+            id: "3",
+            name: "تمر السكري",
+            views: 320,
+            orders: 15,
+            revenue: 4500,
+          },
+        ],
+        salesByCategory: [
+          { category: "عطور", orders: 45, revenue: 13500, percentage: 87.6 },
+          { category: "أغذية", orders: 25, revenue: 7500, percentage: 48.7 },
+          {
+            category: "حرف يدوية",
+            orders: 15,
+            revenue: 4500,
+            percentage: 29.2,
+          },
+        ],
+        recentActivity: [
+          {
+            type: "order",
+            description: "طلب جديد من أحمد محمد",
+            timestamp: new Date().toISOString(),
+            value: 450,
+          },
+          {
+            type: "view",
+            description: "زيارة جديدة للمتجر",
+            timestamp: new Date().toISOString(),
+          },
+          {
+            type: "review",
+            description: "تقييم جديد للمنتج",
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      };
+
+  const formatCurrency = (amount: number) => `${amount.toLocaleString()} ر.س`;
+  const getMonthName = (month: string) => {
+    const months: Record<string, string> = {
+      "2024-01": "يناير 2024",
+      "2024-02": "فبراير 2024",
+      "2024-03": "مارس 2024",
+    };
+    return months[month] || month;
+  };
+
+  const insights = isNewMerchant
+    ? [
+        "ابدأ بإضافة منتجاتك الأولى لجذب العملاء",
+        "قم بتحسين وصف متجرك وإضافة صور جذابة",
+        "شارك رابط متجرك مع الأصدقاء والعائلة",
+      ]
+    : [
+        "أداء ممتاز هذا الشهر مع نمو في المبيعات",
+        "معدل التحويل جيد، استمر في تحسين المنتجات",
+        "العملاء المتكررون يشكلون نسبة جيدة من المبيعات",
+      ];
 
   const getGrowthIcon = (growth: number) => {
     if (growth > 0) return <TrendingUp className="w-4 h-4 text-green-500" />;
@@ -117,6 +230,46 @@ export default function MerchantAnalytics() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Welcome Message for New Merchants */}
+        {isNewMerchant && (
+          <Card className="mb-8 bg-gradient-to-r from-blue-50 to-green-50 border-blue-200">
+            <CardContent className="p-6">
+              <div className="flex items-start space-x-4 space-x-reverse">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center">
+                  <Sparkles className="w-6 h-6 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-xl font-bold text-gray-900 mb-2 arabic">
+                    تحليلاتك ستظهر هنا قريباً! 📊
+                  </h2>
+                  <p className="text-gray-700 mb-4 arabic">
+                    مرحباً {user?.profile?.name}! بمجرد أن تبدأ في بيع منتجاتك،
+                    ستحصل على تحليلات مفصلة لأداء متجرك ومبيعاتك هنا.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Link to="/merchant/products/new">
+                      <Button className="w-full arabic bg-blue-600 hover:bg-blue-700">
+                        <Plus className="w-4 h-4 ml-2" />
+                        أضف منتجات
+                      </Button>
+                    </Link>
+                    <Link to="/merchant/settings">
+                      <Button variant="outline" className="w-full arabic">
+                        إعداد المتجر
+                      </Button>
+                    </Link>
+                    <Link to="/merchant/dashboard">
+                      <Button variant="outline" className="w-full arabic">
+                        العودة للوحة التحكم
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Overview Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
