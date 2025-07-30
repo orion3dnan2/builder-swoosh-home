@@ -118,7 +118,7 @@ export default function MerchantSettings() {
     emailNotifications: true
   });
 
-  // Shipping Settings State - قيم افتراضية للت��ار الجدد
+  // Shipping Settings State - قيم افتراضية للتجار الجدد
   const [shipping, setShipping] = useState<ShippingSettings>({
     freeShippingThreshold: isNewMerchant ? 100 : 200,
     standardShippingCost: isNewMerchant ? 15 : 25,
@@ -146,7 +146,7 @@ export default function MerchantSettings() {
   };
 
   const tabs = [
-    { id: "store", label: "معلومات المتجر", icon: Store },
+    { id: "store", label: "بيانات المتجر", icon: Store },
     { id: "notifications", label: "الإشعارات", icon: Bell },
     { id: "shipping", label: "الشحن والتوصيل", icon: Truck },
     { id: "account", label: "الحساب والأمان", icon: Shield }
@@ -238,7 +238,7 @@ export default function MerchantSettings() {
                 <CardHeader>
                   <CardTitle className="arabic text-right flex items-center">
                     <Store className="w-5 h-5 ml-2" />
-                    معلوما�� المتجر
+                    معلومات المتجر
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -491,7 +491,7 @@ export default function MerchantSettings() {
                     <div className="space-y-4">
                       {[
                         { key: 'smsNotifications', label: 'رسائل SMS', desc: 'استقبال الإشعارات عبر الرسائل النصية' },
-                        { key: 'emailNotifications', label: 'البريد الإلكتروني', desc: 'استقبال الإشعارات عبر البريد الإلكتروني' }
+                        { key: 'emailNotifications', label: 'البريد الإلكتروني', desc: 'استقبال الإش��ارات عبر البريد الإلكتروني' }
                       ].map((item) => (
                         <div key={item.key} className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                           <div className={isRTL ? 'text-right' : 'text-left'}>
@@ -518,7 +518,7 @@ export default function MerchantSettings() {
                 <CardHeader>
                   <CardTitle className="arabic text-right flex items-center">
                     <Truck className="w-5 h-5 ml-2" />
-                    إعدادات الشحن والتوصيل
+                    إ��دادات الشحن والتوصيل
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
