@@ -4,11 +4,17 @@ import { Search, Bell, MessageCircle, User, Menu } from "lucide-react";
 import { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { LanguageAndThemeControls } from "./ThemeToggle";
+import { AdminFontSelector } from "./AdminFontSelector";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const { t, isRTL } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Check if current page is admin or merchant area
+  const isAdminOrMerchant =
+    location.pathname.startsWith("/admin/") ||
+    location.pathname.startsWith("/merchant/");
 
   const navigation = [
     { name: t("nav.home"), href: "/", icon: "🏠" },
@@ -57,6 +63,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 {t("common.users_count")}
               </span>
               <LanguageAndThemeControls />
+              {isAdminOrMerchant && (
+                <div className="hidden md:block">
+                  <AdminFontSelector />
+                </div>
+              )}
               <Link to="/login">
                 <Button
                   variant="outline"
@@ -98,13 +109,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
             >
               <LanguageAndThemeControls />
+              {isAdminOrMerchant && <AdminFontSelector />}
               <Link to="/login">
                 <Button
                   variant="outline"
                   size="sm"
                   className="text-xs px-2 py-1 hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
                 >
-                  دخول
+                  {t("common.login")}
                 </Button>
               </Link>
             </div>
@@ -131,10 +143,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   className={`${isRTL ? "text-right" : "text-left"} min-w-0`}
                 >
                   <h1 className="text-lg md:text-2xl lg:text-3xl font-bold arabic text-foreground leading-tight">
-                    البيت السوداني
+                    {t("brand.name")}
                   </h1>
                   <p className="text-xs md:text-sm text-muted-foreground hidden sm:block leading-tight">
-                    سوق وخدمات السودان
+                    {t("brand.tagline")}
                   </p>
                 </div>
               </Link>
@@ -250,7 +262,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           >
             <div>
               <h3 className="text-xl font-bold mb-4 arabic text-foreground">
-                البيت السوداني
+                {t("brand.name")}
               </h3>
               <p className="text-muted-foreground arabic">
                 {t("brand.description")}
@@ -334,7 +346,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             className={`border-t border-border mt-8 pt-8 text-center arabic ${isRTL ? "text-right" : "text-center"}`}
           >
             <p className="text-muted-foreground">
-              © 2024 البيت السوداني. {t("footer.rights")}.
+              © 2024 {t("brand.name")}. {t("footer.rights")}.
             </p>
           </div>
         </div>

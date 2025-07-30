@@ -1,12 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* Import Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   /**
@@ -14,6 +14,26 @@
    * Sudanese cultural colors with modern aesthetics
    */
   :root {
+    /* Font CSS Variables */
+    --font-amiri: "Amiri", "Noto Sans Arabic", serif;
+    --font-cairo: "Cairo", "Noto Sans Arabic", sans-serif;
+    --font-tajawal: "Tajawal", "Noto Sans Arabic", sans-serif;
+    --font-noto-kufi: "Noto Kufi Arabic", "Cairo", sans-serif;
+    --font-ibm-plex: "IBM Plex Sans Arabic", "Cairo", sans-serif;
+    --font-lateef: "Lateef", "Amiri", serif;
+    --font-almarai: "Almarai", "Cairo", sans-serif;
+    --font-markazi: "Markazi Text", "Amiri", serif;
+    --font-kufi-standard: "Amiri", "Noto Sans Arabic", serif;
+    --font-inter:
+      "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-roboto:
+      "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-poppins:
+      "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-montserrat:
+      "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-open-sans:
+      "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     /* Light Theme - Base Colors */
     --background: 0 0% 100%;
     --foreground: 215 25% 27%;
@@ -175,34 +195,80 @@
     text-align: left;
   }
 
-  /* Typography System */
+  /* Arabic Font Classes */
+  .font-amiri {
+    font-family: var(--font-amiri) !important;
+  }
+
   .font-cairo {
-    font-family: "Cairo", "Noto Sans Arabic", sans-serif !important;
+    font-family: var(--font-cairo) !important;
   }
 
   .font-tajawal {
-    font-family: "Tajawal", "Noto Sans Arabic", sans-serif !important;
+    font-family: var(--font-tajawal) !important;
   }
 
   .font-noto-kufi {
-    font-family: "Noto Kufi Arabic", "Cairo", sans-serif !important;
+    font-family: var(--font-noto-kufi) !important;
   }
 
-  .font-amiri {
-    font-family: "Amiri", "Noto Sans Arabic", serif !important;
+  .font-ibm-plex {
+    font-family: var(--font-ibm-plex) !important;
   }
 
-  /* Arabic Text Styling */
+  .font-lateef {
+    font-family: var(--font-lateef) !important;
+  }
+
+  .font-almarai {
+    font-family: var(--font-almarai) !important;
+  }
+
+  .font-markazi {
+    font-family: var(--font-markazi) !important;
+  }
+
+  .font-kufi-standard {
+    font-family: var(--font-kufi-standard) !important;
+  }
+
+  /* English Font Classes */
+  .font-inter {
+    font-family: var(--font-inter) !important;
+  }
+
+  .font-roboto {
+    font-family: var(--font-roboto) !important;
+  }
+
+  .font-poppins {
+    font-family: var(--font-poppins) !important;
+  }
+
+  .font-montserrat {
+    font-family: var(--font-montserrat) !important;
+  }
+
+  .font-open-sans {
+    font-family: var(--font-open-sans) !important;
+  }
+
+  /* Arabic-only text styling */
   .arabic {
-    font-family: var(--arabic-font, "Cairo"), "Noto Sans Arabic", sans-serif;
     line-height: 1.7;
     letter-spacing: 0.025em;
+    font-family: inherit; /* Uses the current Arabic font class */
   }
 
   .english {
-    font-family:
-      -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
     line-height: 1.5;
+    letter-spacing: normal;
+    font-family: inherit; /* Also uses Arabic font for consistency */
+  }
+
+  /* All text uses the selected Arabic font */
+  body {
+    font-family: inherit;
   }
 
   /* Enhanced scroll bars for dark mode */

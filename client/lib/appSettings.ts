@@ -61,6 +61,10 @@ export class AppSettingsService {
 
   static getSettings(): AppSettings {
     try {
+      if (!this.STORAGE_KEY) {
+        console.warn("STORAGE_KEY is not defined, using default settings");
+        return this.defaultSettings;
+      }
       const settingsStr = localStorage.getItem(this.STORAGE_KEY);
       if (settingsStr) {
         const saved = JSON.parse(settingsStr);
@@ -68,18 +72,23 @@ export class AppSettingsService {
         return { ...this.defaultSettings, ...saved };
       }
       return this.defaultSettings;
-    } catch {
+    } catch (error) {
+      console.error("Failed to load app settings:", error);
       return this.defaultSettings;
     }
   }
 
   static saveSettings(settings: AppSettings): void {
     try {
+      if (!this.STORAGE_KEY) {
+        throw new Error("STORAGE_KEY is not defined");
+      }
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(settings));
       // Apply settings to the document
       this.applySettings(settings);
     } catch (error) {
       console.error("Failed to save app settings:", error);
+      throw error;
     }
   }
 
@@ -221,11 +230,15 @@ export const useAppSettings = () => {
 
   return {
     settings,
-    updateTheme: AppSettingsService.updateTheme,
-    updateBranding: AppSettingsService.updateBranding,
-    updateFeatures: AppSettingsService.updateFeatures,
-    saveSettings: AppSettingsService.saveSettings,
-    resetToDefaults: AppSettingsService.resetToDefaults,
+    updateTheme: (theme: Partial<AppSettings["theme"]>) =>
+      AppSettingsService.updateTheme(theme),
+    updateBranding: (branding: Partial<AppSettings["branding"]>) =>
+      AppSettingsService.updateBranding(branding),
+    updateFeatures: (features: Partial<AppSettings["features"]>) =>
+      AppSettingsService.updateFeatures(features),
+    saveSettings: (settings: AppSettings) =>
+      AppSettingsService.saveSettings(settings),
+    resetToDefaults: () => AppSettingsService.resetToDefaults(),
     colorPalettes: AppSettingsService.getColorPalettes(),
     fontFamilies: AppSettingsService.getFontFamilies(),
   };

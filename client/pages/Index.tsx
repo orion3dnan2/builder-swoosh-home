@@ -18,6 +18,11 @@ import {
   Megaphone,
   ArrowLeft,
   ArrowRight,
+  Store,
+  Factory,
+  UserCheck,
+  Settings,
+  Volume2,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -28,32 +33,28 @@ export default function Index() {
     {
       icon: Users,
       number: "100K+",
-      labelKey: "stats.users",
-      label: "مستخدم نشط",
+      labelKey: "home.stats.users",
     },
     {
       icon: Building2,
       number: "5K+",
-      labelKey: "stats.companies",
-      label: "شركة مسجلة",
+      labelKey: "home.stats.companies",
     },
     {
       icon: ShoppingBag,
       number: "50K+",
-      labelKey: "stats.products",
-      label: "منتج متوفر",
+      labelKey: "home.stats.products",
     },
     {
       icon: Briefcase,
       number: "2K+",
-      labelKey: "stats.jobs",
-      label: "فرصة عمل",
+      labelKey: "home.stats.jobs",
     },
   ];
 
   const services = [
     {
-      icon: ShoppingBag,
+      icon: Store,
       title: "السوق التجاري",
       description: "اكتشف منتجات سودانية أصيلة من تجار موثوقين",
       href: "/marketplace",
@@ -61,7 +62,7 @@ export default function Index() {
       bgColor: "bg-blue-50 dark:bg-blue-900/20",
     },
     {
-      icon: Building2,
+      icon: Factory,
       title: "دليل الشركات",
       description: "تواصل مع الشركات والمؤسسات السودانية في الخليج",
       href: "/companies",
@@ -69,7 +70,7 @@ export default function Index() {
       bgColor: "bg-green-50 dark:bg-green-900/20",
     },
     {
-      icon: Briefcase,
+      icon: UserCheck,
       title: "لوحة الوظائف",
       description: "ابحث عن فرص عمل مناسبة أو أعلن عن وظائف شاغرة",
       href: "/jobs",
@@ -77,7 +78,7 @@ export default function Index() {
       bgColor: "bg-purple-50 dark:bg-purple-900/20",
     },
     {
-      icon: Wrench,
+      icon: Settings,
       title: "الخدمات المهنية",
       description: "احصل على خدمات مهنية متخصصة من خبراء سودانيين",
       href: "/services",
@@ -85,7 +86,7 @@ export default function Index() {
       bgColor: "bg-orange-50 dark:bg-orange-900/20",
     },
     {
-      icon: Megaphone,
+      icon: Volume2,
       title: "الإعلانات",
       description: "روج لأعمالك وخدماتك للمجتمع السوداني",
       href: "/ads",
@@ -138,10 +139,10 @@ export default function Index() {
           >
             {/* Main Title - Fixed Arabic Name */}
             <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 md:mb-6 arabic animate-fade-in leading-tight">
-              البيت السوداني
+              {t("home.hero.title")}
             </h1>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 md:mb-8 arabic leading-relaxed animate-slide-up px-4 md:px-0">
-              سوق وخدمات وشركات السودان في الخليج والعالم
+              {t("home.hero.subtitle")}
             </p>
 
             {/* CTA Buttons */}
@@ -153,7 +154,7 @@ export default function Index() {
                   size="lg"
                   className="button-cultural w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg arabic"
                 >
-                  استكشف السوق
+                  {t("home.hero.explore_market")}
                   <ArrowIcon
                     className={`w-4 h-4 md:w-5 md:h-5 ${isRTL ? "mr-2" : "ml-2"}`}
                   />
@@ -165,7 +166,7 @@ export default function Index() {
                   size="lg"
                   className="w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white hover:text-primary-700 arabic"
                 >
-                  انضم إلينا
+                  {t("home.hero.join_us")}
                 </Button>
               </Link>
             </div>
@@ -185,7 +186,7 @@ export default function Index() {
                     {stat.number}
                   </div>
                   <div className="text-xs md:text-sm lg:text-base text-white/80 arabic px-1">
-                    {stat.label}
+                    {t(stat.labelKey)}
                   </div>
                 </div>
               ))}
@@ -201,11 +202,10 @@ export default function Index() {
             className={`text-center mb-12 md:mb-16 ${isRTL ? "text-right" : "text-center"}`}
           >
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 md:mb-4 arabic">
-              خدماتنا
+              {t("home.services.title")}
             </h2>
             <p className="text-base md:text-lg lg:text-xl text-muted-foreground arabic max-w-3xl mx-auto px-4">
-              مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج
-              والعالم
+              {t("home.services.subtitle")}
             </p>
           </div>
 
@@ -240,7 +240,7 @@ export default function Index() {
                     <Button
                       className={`w-full bg-gradient-to-r ${service.color} hover:opacity-90 transition-opacity arabic text-sm md:text-base`}
                     >
-                      اكتشف المزيد
+                      {t("home.services.discover")}
                       <ArrowIcon
                         className={`w-4 h-4 ${isRTL ? "mr-2" : "ml-2"}`}
                       />

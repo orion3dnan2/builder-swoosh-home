@@ -89,27 +89,27 @@ export default function AdminDashboard() {
 
   const recentActivity = [
     {
-      action: "تسجيل متجر جديد",
-      user: "أحمد محمد",
-      time: "منذ 15 دقيقة",
+      actionKey: "dashboard.activity.new_store",
+      userKey: "dashboard.user.ahmed_mohamed",
+      timeKey: "dashboard.time.15_minutes_ago",
       type: "store",
     },
     {
-      action: "طلب اعتماد منتج",
-      user: "فاطمة عبدالله",
-      time: "منذ 30 دقيقة",
+      actionKey: "dashboard.activity.product_approval",
+      userKey: "dashboard.user.fatima_abdullah",
+      timeKey: "dashboard.time.30_minutes_ago",
       type: "product",
     },
     {
-      action: "مراجعة سلبية",
-      user: "محمد علي",
-      time: "منذ ساعة",
+      actionKey: "dashboard.activity.negative_review",
+      userKey: "dashboard.user.mohamed_ali",
+      timeKey: "dashboard.time.1_hour_ago",
       type: "review",
     },
     {
-      action: "طلب دعم فني",
-      user: "عائشة أحمد",
-      time: "منذ ساعتين",
+      actionKey: "dashboard.activity.support_request",
+      userKey: "dashboard.user.aisha_ahmed",
+      timeKey: "dashboard.time.2_hours_ago",
       type: "support",
     },
   ];
@@ -221,7 +221,7 @@ export default function AdminDashboard() {
           <CardHeader>
             <CardTitle className="flex items-center arabic">
               <Activity className="w-5 h-5 ml-2" />
-              الإجراءات السريعة
+              {t("dashboard.quick_actions")}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -239,18 +239,18 @@ export default function AdminDashboard() {
                           </div>
                           <div>
                             <h3 className="font-semibold text-gray-900 arabic flex items-center">
-                              {action.title}
+                              {t(action.titleKey)}
                               {action.urgent && (
                                 <Badge
                                   variant="destructive"
                                   className="mr-2 text-xs"
                                 >
-                                  عاجل
+                                  {t("dashboard.urgent")}
                                 </Badge>
                               )}
                             </h3>
                             <p className="text-sm text-gray-600 arabic mt-1">
-                              {action.description}
+                              {t(action.descriptionKey)}
                             </p>
                           </div>
                         </div>
@@ -307,10 +307,11 @@ export default function AdminDashboard() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-gray-900 arabic">
-                        {activity.action}
+                        {t(activity.actionKey)}
                       </p>
                       <p className="text-xs text-gray-600 arabic">
-                        بواسطة {activity.user} • {activity.time}
+                        {t("dashboard.by")} {t(activity.userKey)} •{" "}
+                        {t(activity.timeKey)}
                       </p>
                     </div>
                   </div>
@@ -319,7 +320,7 @@ export default function AdminDashboard() {
               <div className="mt-4 pt-4 border-t">
                 <Link to="/admin/activity">
                   <Button variant="outline" size="sm" className="w-full arabic">
-                    عرض جميع الأنشطة
+                    {t("dashboard.view_all_activities")}
                   </Button>
                 </Link>
               </div>
@@ -331,14 +332,14 @@ export default function AdminDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center arabic">
                 <BarChart3 className="w-5 h-5 ml-2" />
-                إحصائيات سريعة
+                {t("dashboard.quick_stats")}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                   <span className="text-sm font-medium text-blue-900 arabic">
-                    المتاجر ��لنشطة
+                    {t("dashboard.active_stores")}
                   </span>
                   <span className="text-lg font-bold text-blue-600">
                     {stats.activeStores}
@@ -346,7 +347,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
                   <span className="text-sm font-medium text-yellow-900 arabic">
-                    طلبات الاعتماد
+                    {t("dashboard.pending_approvals")}
                   </span>
                   <span className="text-lg font-bold text-yellow-600">
                     {stats.pendingApprovals}
@@ -354,7 +355,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                   <span className="text-sm font-medium text-green-900 arabic">
-                    تسجيلات جديدة
+                    {t("dashboard.new_registrations")}
                   </span>
                   <span className="text-lg font-bold text-green-600">
                     {stats.newRegistrations}
@@ -362,7 +363,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
                   <span className="text-sm font-medium text-purple-900 arabic">
-                    إجمالي الطلبات
+                    {t("dashboard.total_orders")}
                   </span>
                   <span className="text-lg font-bold text-purple-600">
                     {stats.totalOrders}
@@ -372,7 +373,7 @@ export default function AdminDashboard() {
               <div className="mt-4 pt-4 border-t">
                 <Link to="/admin/analytics">
                   <Button variant="outline" size="sm" className="w-full arabic">
-                    عرض التقارير التفصيلية
+                    {t("dashboard.view_detailed_reports")}
                   </Button>
                 </Link>
               </div>

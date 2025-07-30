@@ -6,11 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/contexts/ThemeContext";
-import {
-  FontFamilySelector,
-  ThemeToggle,
-  LanguageToggle,
-} from "@/components/ThemeToggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { AdminFontSelector } from "@/components/AdminFontSelector";
 import {
   Palette,
   Type,
@@ -126,7 +123,7 @@ export default function ThemeShowcase() {
                   className={`space-y-3 ${isRTL ? "text-right" : "text-left"}`}
                 >
                   <Label className="text-sm font-medium arabic">
-                    {isRTL ? "نمط العرض" : "Display Mode"}
+                    {isRTL ? "نمط الع��ض" : "Display Mode"}
                   </Label>
                   <div
                     className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
@@ -145,24 +142,11 @@ export default function ThemeShowcase() {
                 </div>
 
                 {/* Language Toggle */}
-                <div
-                  className={`space-y-3 ${isRTL ? "text-right" : "text-left"}`}
-                >
-                  <Label className="text-sm font-medium arabic">
-                    {isRTL ? "اللغة" : "Language"}
-                  </Label>
-                  <div
-                    className={`flex items-center gap-3 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
-                  >
-                    <LanguageToggle />
+                <div className={`space-y-3 text-right`}>
+                  <Label className="text-sm font-medium arabic">اللغة</Label>
+                  <div className="flex items-center gap-3 flex-row-reverse">
                     <span className="text-sm text-muted-foreground arabic">
-                      {language === "ar"
-                        ? isRTL
-                          ? "العربية"
-                          : "Arabic"
-                        : isRTL
-                          ? "الإنجليزية"
-                          : "English"}
+                      العربية (ثابت)
                     </span>
                   </div>
                 </div>
@@ -172,9 +156,9 @@ export default function ThemeShowcase() {
                   className={`space-y-3 ${isRTL ? "text-right" : "text-left"}`}
                 >
                   <Label className="text-sm font-medium arabic">
-                    {isRTL ? "نوع الخط" : "Font Family"}
+                    نوع الخط العربي
                   </Label>
-                  <FontFamilySelector />
+                  <AdminFontSelector />
                 </div>
               </div>
             </CardContent>
@@ -221,7 +205,7 @@ export default function ThemeShowcase() {
                 className={`flex items-center gap-2 arabic ${isRTL ? "flex-row-reverse" : "flex-row"}`}
               >
                 <Type className="w-6 h-6" />
-                {isRTL ? "عرض الخطوط" : "Typography Showcase"}
+                عرض الخطوط
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -239,7 +223,7 @@ export default function ThemeShowcase() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <Label className="text-sm font-medium arabic">
-                        {isRTL ? "نص قصير" : "Short Text"}
+                        نص قصير
                       </Label>
                       <p className="text-foreground arabic">
                         {sampleText[language].short}
@@ -298,7 +282,7 @@ export default function ThemeShowcase() {
                 className={`flex items-center gap-2 arabic ${isRTL ? "flex-row-reverse" : "flex-row"}`}
               >
                 <Eye className="w-6 h-6" />
-                {isRTL ? "عرض المكونات" : "Component Showcase"}
+                عرض المكونات
               </CardTitle>
             </CardHeader>
             <CardContent>
