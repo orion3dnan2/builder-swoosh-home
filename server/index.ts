@@ -67,13 +67,13 @@ export function createServer() {
   app.get("/api/demo", handleDemo);
 
   // API routes
-  app.use("/api/auth", authRoutes);
+  app.use("/api/auth", authDevRoutes);
   app.use("/api/companies", companiesRoutes);
   app.use("/api/products", productsRoutes);
   app.use("/api/jobs", jobsRoutes);
   app.use("/api/stores", storesRoutes);
   app.use("/api/services", servicesRoutes);
-  app.use("/api/users", userRoutes);
+  app.use("/api/users", userDevRoutes);
   app.use("/api/mobile", mobileRoutes);
 
   // Health check endpoint
