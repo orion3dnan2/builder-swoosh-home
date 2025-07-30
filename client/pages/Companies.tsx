@@ -18,8 +18,7 @@ import {
   Award,
   ExternalLink,
 } from "lucide-react";
-import { CompaniesService, useCompanies } from "@/lib/companies";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Companies() {
   const { companies, featuredCompanies } = useCompanies();
