@@ -23,20 +23,32 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export default function MerchantDashboard() {
   const { user } = useAuth();
+  const [isNewMerchant, setIsNewMerchant] = useState(true);
+
+  // تحديد إذا كان التاجر جديد بناءً على تاريخ ��نشاء الحساب
+  useEffect(() => {
+    if (user?.createdAt) {
+      const accountAge = Date.now() - new Date(user.createdAt).getTime();
+      const daysSinceCreation = accountAge / (1000 * 60 * 60 * 24);
+      // إذا كان الحساب أقل من 7 أيام وليس له منتجات أو طلبات، يُعتبر جديد
+      setIsNewMerchant(daysSinceCreation < 7);
+    }
+  }, [user]);
+
   const [storeStats] = useState({
-    totalProducts: 45,
-    totalOrders: 128,
-    monthlyRevenue: 15420,
-    storeViews: 2340,
-    activeProducts: 42,
-    outOfStock: 3,
-    pendingOrders: 7,
-    completedOrders: 121,
-    averageRating: 4.6,
-    totalReviews: 89,
+    totalProducts: isNewMerchant ? 0 : 45,
+    totalOrders: isNewMerchant ? 0 : 128,
+    monthlyRevenue: isNewMerchant ? 0 : 15420,
+    storeViews: isNewMerchant ? 0 : 2340,
+    activeProducts: isNewMerchant ? 0 : 42,
+    outOfStock: isNewMerchant ? 0 : 3,
+    pendingOrders: isNewMerchant ? 0 : 7,
+    completedOrders: isNewMerchant ? 0 : 121,
+    averageRating: isNewMerchant ? 0 : 4.6,
+    totalReviews: isNewMerchant ? 0 : 89,
   });
 
-  const recentOrders = [
+  const recentOrders = isNewMerchant ? [] : [
     {
       id: "ORD-001",
       customer: "أحمد محمد",
@@ -71,7 +83,7 @@ export default function MerchantDashboard() {
     },
   ];
 
-  const lowStockProducts = [
+  const lowStockProducts = isNewMerchant ? [] : [
     { name: "عطر صندل سوداني", stock: 2, sku: "PER-001" },
     { name: "كركديه طبيعي", stock: 1, sku: "TEA-003" },
     { name: "حقيبة سودانية", stock: 0, sku: "BAG-012" },
@@ -290,7 +302,7 @@ export default function MerchantDashboard() {
                             {order.customer}
                           </p>
                           <p className="text-sm text-gray-600 arabic">
-                            {order.id} • {order.items} منتجات
+                            {order.id} • {order.items} منتج��ت
                           </p>
                           <p className="text-xs text-gray-500 arabic">
                             {order.time}
