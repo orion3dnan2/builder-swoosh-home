@@ -96,6 +96,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
       name,
       description: description || "",
       category,
+      storeType: storeType || "store",
       phone,
       email,
       address: address || "",
