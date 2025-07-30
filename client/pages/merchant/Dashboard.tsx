@@ -25,7 +25,7 @@ export default function MerchantDashboard() {
   const { user } = useAuth();
   const [isNewMerchant, setIsNewMerchant] = useState(true);
 
-  // تحديد إذا كان التاجر جديد بناءً على تاريخ إنشاء الحساب
+  // تحديد إذا كان التاجر جديد بناءً على تاريخ إنشاء ال��ساب
   useEffect(() => {
     if (user?.createdAt) {
       const accountAge = Date.now() - new Date(user.createdAt).getTime();
@@ -192,11 +192,11 @@ export default function MerchantDashboard() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 arabic">
-                  لوحة إدارة المتجر
+                  {loading ? "جاري التحميل..." : userStore?.name || "لوحة إدارة المتجر"}
                 </h1>
                 <p className="text-gray-600 arabic">
-                  مرحباً {user?.profile.name} -{" "}
-                  {user?.profile.businessInfo?.businessName}
+                  مرحباً {user?.profile.name}
+                  {userStore && ` - ${userStore.name}`}
                 </p>
               </div>
             </div>
