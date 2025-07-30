@@ -265,17 +265,16 @@ export default function Companies() {
                 />
                 <div className="absolute top-2 right-2">
                   <Badge
-                    className={`text-white text-xs arabic ${CompaniesService.getCategoryColor(company.category)}`}
+                    className="bg-orange-500 text-white text-xs arabic"
                   >
-                    {CompaniesService.getIndustryIcon(company.industry)}{" "}
-                    {company.industry}
+                    🏢 {company.category}
                   </Badge>
                 </div>
                 <div className="absolute top-2 left-2 flex gap-1">
-                  {company.isVerified && (
-                    <Badge className="bg-blue-500 text-white text-xs arabic">
+                  {company.status === "active" && (
+                    <Badge className="bg-green-500 text-white text-xs arabic">
                       <Verified className="w-3 h-3 ml-1" />
-                      موثق
+                      نشط
                     </Badge>
                   )}
                   {company.isFeatured && (
