@@ -138,7 +138,7 @@ export class CompaniesService {
       reviewsCount: 89,
       establishedIn: "الإمارات",
       certifications: ["ADGM License", "DFSA Regulated"],
-      awards: ["��فضل مجموعة استثمارية للعام 2022"],
+      awards: ["أفضل مجموعة استثمارية للعام 2022"],
       keyClients: ["بنك الإمارات", "شركة الاتصالات", "موانئ دبي"],
       specializations: ["Real Estate", "Banking", "Trade Finance"],
       languages: ["العربية", "الإنجليزية", "الفرنسية"],
