@@ -462,19 +462,51 @@ export default function MerchantProducts() {
 
         {filteredProducts.length === 0 && (
           <div className="text-center py-12">
-            <Package className="w-24 h-24 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2 arabic">
-              لا توجد منتجات
-            </h3>
-            <p className="text-gray-600 arabic mb-4">
-              لم يتم العثور على م��تجات تطابق معايير البحث
-            </p>
-            <Link to="/merchant/products/new">
-              <Button className="arabic">
-                <Plus className="w-4 h-4 ml-2" />
-                إضافة منتج جديد
-              </Button>
-            </Link>
+            {isNewMerchant ? (
+              <Card className="max-w-2xl mx-auto bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
+                <CardContent className="p-8">
+                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Sparkles className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 arabic">
+                    ابدأ رحلتك التجارية! 🚀
+                  </h3>
+                  <p className="text-gray-700 mb-6 arabic">
+                    أهلاً وسهلاً {user?.profile?.name}! متجرك جاهز الآن.
+                    ابدأ بإضافة منتجاتك الأولى لتكون متاحة للعملاء.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Link to="/merchant/products/new">
+                      <Button className="arabic bg-green-600 hover:bg-green-700">
+                        <Plus className="w-4 h-4 ml-2" />
+                        أضف منتجك الأول
+                      </Button>
+                    </Link>
+                    <Link to="/merchant/settings">
+                      <Button variant="outline" className="arabic">
+                        إعداد المتجر أولاً
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <>
+                <Package className="w-24 h-24 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2 arabic">
+                  لا توجد منتجات
+                </h3>
+                <p className="text-gray-600 arabic mb-4">
+                  لم يتم العثور على منتجات تطابق معايير البحث
+                </p>
+                <Link to="/merchant/products/new">
+                  <Button className="arabic">
+                    <Plus className="w-4 h-4 ml-2" />
+                    إضافة منتج جديد
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
         )}
       </div>
