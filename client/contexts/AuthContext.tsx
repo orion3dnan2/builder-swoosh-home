@@ -18,6 +18,7 @@ interface AuthContextType {
   hasRole: (role: UserRole) => boolean;
   hasPermission: (resource: string, action: string) => boolean;
   login: (credentials: { username: string; password: string }) => Promise<User>;
+  setAuthenticatedUser: (user: User, token: string) => void;
   logout: () => void;
   refreshAuth: () => void;
 }
