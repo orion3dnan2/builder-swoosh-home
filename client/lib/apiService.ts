@@ -1,4 +1,4 @@
-// خدمة API موحد�� للويب والجوال
+// خدمة API موحدة للويب والجوال
 export class ApiService {
   private static baseURL = import.meta.env.VITE_API_URL || "/api";
   private static platform = "web"; // سيتم تغييرها في التطبيق الجوال
