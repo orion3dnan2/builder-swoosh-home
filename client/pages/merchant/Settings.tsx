@@ -91,7 +91,7 @@ export default function MerchantSettings() {
   // Store Settings State - فارغة للتجار الجدد
   const [storeSettings, setStoreSettings] = useState<StoreSettings>({
     storeName: isNewMerchant ? (user?.profile?.businessName || "") : "متجر الخير السوداني",
-    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصيلة و��لطبيعية من عطور وأطعمة وحرف يدوية",
+    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
     phone: isNewMerchant ? (user?.profile?.phone || "") : "+966501234567",
     email: isNewMerchant ? (user?.email || "") : "store@alkhair-sudani.com",
@@ -228,7 +228,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.email.trim()) {
-      alert("��رجى إدخال البريد الإلكتروني");
+      alert("يرجى إدخال البريد الإلكتروني");
       return;
     }
 
@@ -292,7 +292,7 @@ export default function MerchantSettings() {
 
   const cities = [
     "الرياض، المملكة العربية السعودية",
-    "جدة، المملكة العربية السع��دية", 
+    "جدة، المملكة العربية الس����دية", 
     "الدمام، المملكة العربية السعودية",
     "مكة المكرمة، المملكة العربية السعودية",
     "المدينة المنورة، المملكة العربية السعودية",
@@ -315,7 +315,7 @@ export default function MerchantSettings() {
       "دبي", "أبوظبي", "الشارقة", "عجمان", "رأس الخيمة", "الفجيرة", "أم القيوين"
     ],
     "دولة الكويت": [
-      "مدينة الكويت", "الأحمدي", "الجهراء", "مبارك الكبير", "الفروانية", "حولي"
+      "مدينة الكويت", "��لأحمدي", "الجهراء", "مبارك الكبير", "الفروانية", "حولي"
     ],
     "دولة قطر": [
       "الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"
@@ -336,12 +336,12 @@ export default function MerchantSettings() {
 
   // إضافة حالات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
-    isNewMerchant ? "" : "المملكة العربية السعودية"
+    isNewMerchant ? (user?.profile?.country || "") : "المملكة العربية السعودية"
   );
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
 
-  // دالة لمعالجة تغيير نوع المتجر
+  // دالة لمعالجة تغيير ن��ع المتجر
   const handleCategoryChange = (value: string) => {
     if (value === "أخرى (حدد النوع)") {
       setShowCustomCategory(true);
@@ -561,7 +561,7 @@ export default function MerchantSettings() {
                             value={storeSettings.category}
                             onChange={(e) => setStoreSettings({...storeSettings, category: e.target.value})}
                             className="text-right arabic"
-                            placeholder="حدد نوع متجرك (مثال: صيدلية، محل حلويات، ورشة تصليح)"
+                            placeholder="حدد نوع متجرك (مثال: صيدل��ة، محل حلويات، ورشة تصليح)"
                           />
                         </div>
                       )}
@@ -922,7 +922,7 @@ export default function MerchantSettings() {
                         />
                       </div>
                       <div>
-                        <Label className="arabic">البري�� الإلكتروني</Label>
+                        <Label className="arabic">البريد الإلكتروني</Label>
                         <Input
                           value={user?.profile?.email || ""}
                           disabled
