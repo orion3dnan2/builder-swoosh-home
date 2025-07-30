@@ -211,20 +211,20 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
 router.delete("/:id", authenticateToken, async (req: any, res) => {
   try {
     const storeId = req.params.id;
-    const storeIndex = stores.findIndex(s => s.id === storeId);
+    const store = StoreDatabase.findStore(s => s.id === storeId);
 
-    if (storeIndex === -1) {
+    if (!store) {
       return res.status(404).json({ error: "المتجر غير موجود" });
     }
-
-    const store = stores[storeIndex];
 
     // التحقق من الصلاحيات
     if (req.user.role !== "super_admin" && store.merchantId !== req.user.id) {
       return res.status(403).json({ error: "غير مصرح لك بحذف هذا المتجر" });
     }
 
-    stores.splice(storeIndex, 1);
+    const deletedStore = StoreDatabase.deleteStore(storeId);
+
+    console.log(`✅ تم حذف متجر: ${deletedStore.name}`);
 
     res.json({ message: "تم حذف المتجر بنجاح" });
   } catch (error) {
