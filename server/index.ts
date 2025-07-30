@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import { connectDatabase } from "./lib/prisma";
 import { handleDemo } from "./routes/demo";
 import { authRoutes } from "./api/routes/auth";
 import { companiesRoutes } from "./api/routes/companies";
