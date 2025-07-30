@@ -93,12 +93,14 @@ export default function Companies() {
             <div className="flex items-center gap-2">
               <Verified className="w-4 h-4" />
               <span className="arabic">
-                {companies.filter((c) => c.isVerified).length} شركة موثقة
+                {companies.filter((c) => c.status === "active").length} شركة نشطة
               </span>
             </div>
             <div className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
-              <span className="arabic">{industries.length} قطاع</span>
+              <span className="arabic">
+                {new Set(companies.map(c => c.category)).size} قطاع
+              </span>
             </div>
           </div>
         </div>
