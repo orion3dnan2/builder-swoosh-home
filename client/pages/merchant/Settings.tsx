@@ -258,7 +258,7 @@ export default function MerchantSettings() {
     "الدمام، المملكة العربية السعودية",
     "مكة المكرمة، المملكة العربية السعودية",
     "المدينة المنورة، المملكة العربية السعودية",
-    "الطائف، المملكة العربية السعودية",
+    "الطا��ف، المملكة العربية السعودية",
     "الخبر، المملكة العربية السعودية",
     "الأحساء، المملكة العربية السعودية"
   ];
@@ -473,6 +473,7 @@ export default function MerchantSettings() {
                         value={storeSettings.email}
                         onChange={(e) => setStoreSettings({...storeSettings, email: e.target.value})}
                         className="mt-1 text-right"
+                        placeholder="store@example.com"
                       />
                     </div>
                   </div>
