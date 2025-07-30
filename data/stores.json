@@ -3,7 +3,7 @@
     "id": "store-1753868707117-r80zjqevj",
     "merchantId": "user-1753865301240-efsqj09s0",
     "name": "زول اقاشي",
-    "description": "",
+    "description": "اكل سوداني",
     "category": "مواد غذائية وأطعمة",
     "storeType": "restaurant",
     "phone": "+96551325559",
@@ -49,6 +49,6 @@
       "totalRevenue": 0
     },
     "createdAt": "2025-07-30T09:45:07.117Z",
-    "updatedAt": "2025-07-30T10:16:02.278Z"
+    "updatedAt": "2025-07-30T10:16:46.950Z"
   }
 ]

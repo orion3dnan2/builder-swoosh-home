@@ -15,8 +15,29 @@ import {
 import { useState, useEffect } from "react";
 
 export default function Marketplace() {
-  const { stores } = useStores();
+  const [stores, setStores] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // جلب المتاجر العامة من API
+  useEffect(() => {
+    const fetchStores = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/stores/general');
+        if (response.ok) {
+          const data = await response.json();
+          setStores(data);
+        }
+      } catch (error) {
+        console.error('خطأ في جلب المتاجر:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStores();
+  }, []);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   const filteredStores = stores.filter((store) => {
