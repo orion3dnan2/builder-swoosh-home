@@ -253,7 +253,7 @@ export default function MerchantSettings() {
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // التحقق من نوع الملف
+      // التح��ق من نوع الملف
       if (!file.type.startsWith("image/")) {
         alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG)");
         return;
@@ -290,7 +290,7 @@ export default function MerchantSettings() {
         "image/webp",
       ];
       if (!allowedTypes.includes(file.type)) {
-        alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG, أو WebP)");
+        alert("يرجى ا��تيار ملف صورة صالح (PNG, JPG, JPEG, أو WebP)");
         return;
       }
 
@@ -801,6 +801,39 @@ export default function MerchantSettings() {
                     </div>
                   </div>
 
+                  {/* Store Type */}
+                  <div>
+                    <Label htmlFor="storeType" className="arabic">
+                      نوع المتجر
+                    </Label>
+                    <select
+                      id="storeType"
+                      value={storeSettings.storeType}
+                      onChange={(e) =>
+                        setStoreSettings({
+                          ...storeSettings,
+                          storeType: e.target.value,
+                        })
+                      }
+                      className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
+                    >
+                      <option value="">اختر نوع المتجر</option>
+                      <option value="restaurant">مطعم</option>
+                      <option value="company">شركة</option>
+                      <option value="store">متجر عام</option>
+                      <option value="service">خدمات</option>
+                      <option value="pharmacy">صيدلية</option>
+                      <option value="supermarket">سوبر ماركت</option>
+                      <option value="bakery">مخبز/حلويات</option>
+                      <option value="electronics">إلكترونيات</option>
+                      <option value="clothing">ملابس</option>
+                      <option value="beauty">تجميل وعناية</option>
+                    </select>
+                    <p className="text-xs text-gray-500 mt-1 arabic">
+                      يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم، الشركات، أو المتاجر)
+                    </p>
+                  </div>
+
                   <div>
                     <Label htmlFor="description" className="arabic">
                       وصف المتجر
@@ -1031,7 +1064,7 @@ export default function MerchantSettings() {
                         {
                           key: "orderUpdates",
                           label: "تحديثات الطلبات",
-                          desc: "إشع��رات عند تغيير حالة الطلبات",
+                          desc: "��شع��رات عند تغيير حالة الطلبات",
                         },
                         {
                           key: "paymentReceived",
