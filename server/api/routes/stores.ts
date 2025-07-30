@@ -332,45 +332,60 @@ router.get("/:id/orders", authenticateToken, async (req: any, res) => {
       return res.status(403).json({ error: "غير مصرح لك بالوصول" });
     }
 
-    // بيانات طلبات تجريبية للمتجر
-    const recentOrders = store.analytics?.totalOrders > 0 ? [
-      {
-        id: "ORD-001",
-        customer: "أحمد محمد",
-        items: 3,
-        total: 125.5,
-        status: "pending",
-        time: "منذ 15 دقيقة",
-        date: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
-      },
-      {
-        id: "ORD-002",
-        customer: "فاطمة علي",
-        items: 1,
-        total: 45.0,
-        status: "confirmed",
-        time: "منذ ساعة",
-        date: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
-      },
-      {
-        id: "ORD-003",
-        customer: "محمد سعد",
-        items: 2,
-        total: 89.99,
-        status: "shipped",
-        time: "منذ 3 ساعات",
-        date: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
-      },
-      {
-        id: "ORD-004",
-        customer: "عائشة أحمد",
-        items: 4,
-        total: 234.75,
-        status: "delivered",
-        time: "اليوم",
-        date: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
-      },
-    ] : [];
+    // تحميل الطلبات الحقيقية من قاعدة البيانات
+    const fs = await import("fs");
+    const path = await import("path");
+
+    const ORDERS_FILE = path.join(process.cwd(), "data", "orders.json");
+    let allOrders = [];
+
+    try {
+      if (fs.existsSync(ORDERS_FILE)) {
+        const data = fs.readFileSync(ORDERS_FILE, "utf8");
+        allOrders = JSON.parse(data);
+      }
+    } catch (error) {
+      console.error("خطأ في تحميل الطلبات:", error);
+    }
+
+    // تصفية الطلبات لهذا المتجر فقط
+    const storeOrders = allOrders.filter((order: any) => order.storeId === storeId);
+
+    // أخذ أحدث 5 طلبات وإضافة حقل الوقت النسبي
+    const recentOrders = storeOrders
+      .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, 5)
+      .map((order: any) => {
+        const createdAt = new Date(order.createdAt);
+        const now = new Date();
+        const diffInMs = now.getTime() - createdAt.getTime();
+        const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+        const diffInDays = Math.floor(diffInHours / 24);
+
+        let timeAgo;
+        if (diffInHours < 1) {
+          const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+          timeAgo = `منذ ${diffInMinutes} دقيقة`;
+        } else if (diffInHours < 24) {
+          timeAgo = `منذ ${diffInHours} ساعة`;
+        } else if (diffInDays === 1) {
+          timeAgo = "أمس";
+        } else if (diffInDays < 7) {
+          timeAgo = `منذ ${diffInDays} أيام`;
+        } else {
+          timeAgo = createdAt.toLocaleDateString("ar");
+        }
+
+        return {
+          id: order.id,
+          customer: order.customerInfo.name,
+          items: order.items.length,
+          total: order.pricing.total,
+          status: order.status,
+          time: timeAgo,
+          date: order.createdAt,
+        };
+      });
 
     res.json(recentOrders);
   } catch (error) {
