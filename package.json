@@ -26,6 +26,9 @@
     "db:studio": "prisma studio",
     "db:reset": "prisma migrate reset"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "dependencies": {
     "@prisma/client": "^6.13.0",
     "@types/bcrypt": "^6.0.0",
