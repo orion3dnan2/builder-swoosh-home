@@ -119,42 +119,7 @@ export default function MerchantDashboard() {
     }
   }, [user]);
 
-  const recentOrders = isNewMerchant
-    ? []
-    : [
-        {
-          id: "ORD-001",
-          customer: "أحمد محمد",
-          items: 3,
-          total: 125.5,
-          status: "pending",
-          time: "منذ 15 دقيقة",
-        },
-        {
-          id: "ORD-002",
-          customer: "فاطمة علي",
-          items: 1,
-          total: 45.0,
-          status: "confirmed",
-          time: "منذ ساعة",
-        },
-        {
-          id: "ORD-003",
-          customer: "محمد سعد",
-          items: 2,
-          total: 89.99,
-          status: "shipped",
-          time: "منذ 3 ساعات",
-        },
-        {
-          id: "ORD-004",
-          customer: "عائشة أحمد",
-          items: 4,
-          total: 234.75,
-          status: "delivered",
-          time: "اليوم",
-        },
-      ];
+
 
   const lowStockProducts = isNewMerchant
     ? []
