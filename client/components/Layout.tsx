@@ -183,18 +183,57 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <div
                   className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
                 >
-                  <span className="text-xs text-gray-600 arabic">
-                    أهلاً {user?.profile.name}
-                  </span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleLogout}
-                    className="text-xs px-2 py-1 hover:bg-red-50 hover:text-red-700"
-                  >
-                    <LogOut className="w-3 h-3 ml-1" />
-                    خروج
-                  </Button>
+                  {/* قائمة المستخدم المنسدلة للمحمول */}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="sm" className="text-xs px-2 py-1 gap-1">
+                        <User className="w-3 h-3" />
+                        {user?.profile.name.split(' ')[0]}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-48">
+                      <DropdownMenuLabel className="arabic text-sm">
+                        {user?.profile.name}
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+
+                      {/* لوحة التحكم */}
+                      {user?.role === "super_admin" && (
+                        <DropdownMenuItem asChild>
+                          <Link to="/admin/dashboard" className="cursor-pointer arabic text-sm">
+                            <Settings className="w-3 h-3 ml-1" />
+                            لوحة المدير
+                          </Link>
+                        </DropdownMenuItem>
+                      )}
+
+                      {user?.role === "merchant" && (
+                        <DropdownMenuItem asChild>
+                          <Link to="/merchant/dashboard" className="cursor-pointer arabic text-sm">
+                            <BarChart3 className="w-3 h-3 ml-1" />
+                            لوحة التحكم
+                          </Link>
+                        </DropdownMenuItem>
+                      )}
+
+                      <DropdownMenuItem asChild>
+                        <Link to="/profile" className="cursor-pointer arabic text-sm">
+                          <User className="w-3 h-3 ml-1" />
+                          الملف الشخصي
+                        </Link>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuSeparator />
+
+                      <DropdownMenuItem
+                        onClick={handleLogout}
+                        className="cursor-pointer arabic text-sm text-red-600"
+                      >
+                        <LogOut className="w-3 h-3 ml-1" />
+                        خروج
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               ) : (
                 <Link to="/login">
