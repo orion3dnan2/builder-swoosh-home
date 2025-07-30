@@ -7,7 +7,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { User, Mail, Phone, MapPin, Calendar, Edit, Save, X } from "lucide-react";
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Calendar,
+  Edit,
+  Save,
+  X,
+} from "lucide-react";
 
 export default function Profile() {
   const { user } = useAuth();
@@ -54,7 +63,7 @@ export default function Profile() {
   const getInitials = (name: string) => {
     return name
       .split(" ")
-      .map(n => n[0])
+      .map((n) => n[0])
       .join("")
       .toUpperCase()
       .slice(0, 2);
@@ -93,14 +102,19 @@ export default function Profile() {
             <CardHeader className="text-center pb-6">
               <div className="flex justify-center mb-4">
                 <Avatar className="w-24 h-24">
-                  <AvatarImage src={user.profile.avatar} alt={user.profile.name} />
+                  <AvatarImage
+                    src={user.profile.avatar}
+                    alt={user.profile.name}
+                  />
                   <AvatarFallback className="text-lg">
                     {getInitials(user.profile.name)}
                   </AvatarFallback>
                 </Avatar>
               </div>
               <div className="space-y-2">
-                <CardTitle className="text-2xl arabic">{user.profile.name}</CardTitle>
+                <CardTitle className="text-2xl arabic">
+                  {user.profile.name}
+                </CardTitle>
                 <div className="flex justify-center">
                   {getRoleBadge(user.role)}
                 </div>
@@ -140,7 +154,10 @@ export default function Profile() {
               <div className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="name" className="arabic flex items-center gap-2">
+                    <Label
+                      htmlFor="name"
+                      className="arabic flex items-center gap-2"
+                    >
                       <User className="w-4 h-4" />
                       الاسم الكامل
                     </Label>
@@ -161,7 +178,10 @@ export default function Profile() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="arabic flex items-center gap-2">
+                    <Label
+                      htmlFor="email"
+                      className="arabic flex items-center gap-2"
+                    >
                       <Mail className="w-4 h-4" />
                       البريد الإلكتروني
                     </Label>
@@ -183,7 +203,10 @@ export default function Profile() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="phone" className="arabic flex items-center gap-2">
+                    <Label
+                      htmlFor="phone"
+                      className="arabic flex items-center gap-2"
+                    >
                       <Phone className="w-4 h-4" />
                       رقم الهاتف
                     </Label>
@@ -204,7 +227,10 @@ export default function Profile() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="city" className="arabic flex items-center gap-2">
+                    <Label
+                      htmlFor="city"
+                      className="arabic flex items-center gap-2"
+                    >
                       <MapPin className="w-4 h-4" />
                       المدينة
                     </Label>
@@ -231,14 +257,18 @@ export default function Profile() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-muted-foreground arabic">تاريخ التسجيل:</span>
+                      <span className="text-muted-foreground arabic">
+                        تاريخ التسجيل:
+                      </span>
                       <span className="arabic">
                         {new Date(user.createdAt).toLocaleDateString("ar")}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <User className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-muted-foreground arabic">نوع الحساب:</span>
+                      <span className="text-muted-foreground arabic">
+                        نوع الحساب:
+                      </span>
                       {getRoleBadge(user.role)}
                     </div>
                   </div>
@@ -250,12 +280,20 @@ export default function Profile() {
                     <h3 className="font-semibold arabic">معلومات العمل</h3>
                     <div className="space-y-2">
                       <p className="text-sm">
-                        <span className="text-muted-foreground arabic">اسم المتجر: </span>
-                        <span className="arabic">{user.profile.businessName}</span>
+                        <span className="text-muted-foreground arabic">
+                          اسم المتجر:{" "}
+                        </span>
+                        <span className="arabic">
+                          {user.profile.businessName}
+                        </span>
                       </p>
                       <p className="text-sm">
-                        <span className="text-muted-foreground arabic">نوع العمل: </span>
-                        <span className="arabic">{user.profile.businessType}</span>
+                        <span className="text-muted-foreground arabic">
+                          نوع العمل:{" "}
+                        </span>
+                        <span className="arabic">
+                          {user.profile.businessType}
+                        </span>
                       </p>
                     </div>
                   </div>

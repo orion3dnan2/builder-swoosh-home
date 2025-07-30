@@ -45,7 +45,9 @@ router.post("/login", async (req, res) => {
         .json({ error: "اسم المستخدم أو كلمة المرور غير صحيحة" });
     }
 
-    console.log(`✅ المستخدم موجود: ${user.username}, كلمة المرور المحفوظة: ${user.password}`);
+    console.log(
+      `✅ المستخدم موجود: ${user.username}, كلمة المرور المحفوظة: ${user.password}`,
+    );
     console.log(`🔑 كلمة المرور المدخلة: ${password}`);
     console.log(`🔍 البحث في قاعدة البيانات...`);
 
@@ -60,11 +62,11 @@ router.post("/login", async (req, res) => {
     let isPasswordValid = false;
 
     // إذا كانت كلمة المرور تبدأ بـ $2b$ فهي مشفرة، وإلا فهي بسيطة
-    if (user.password.startsWith('$2b$')) {
+    if (user.password.startsWith("$2b$")) {
       try {
         isPasswordValid = await bcrypt.compare(password, user.password);
       } catch (bcryptError) {
-        console.error('خطأ في فك تشفير كلمة المرور:', bcryptError);
+        console.error("خطأ في فك تشفير كلمة المرور:", bcryptError);
         isPasswordValid = false;
       }
     } else {

@@ -473,7 +473,7 @@ export default function MerchantSettings() {
 
   // قائمة الدول والمدن التابعة لها
   const countriesWithCities = {
-    "السودان": [
+    السودان: [
       "الخرطوم",
       "أمدرمان",
       "بحري",
@@ -837,7 +837,8 @@ export default function MerchantSettings() {
                       <option value="beauty">تجميل وعناية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
-                      يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم، الشركات، أو المتاجر)
+                      يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
+                      الشركات، أو المتاجر)
                     </p>
                   </div>
 

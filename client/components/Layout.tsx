@@ -1,6 +1,15 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Search, Bell, MessageCircle, User, Menu, LogOut, Settings, BarChart3 } from "lucide-react";
+import {
+  Search,
+  Bell,
+  MessageCircle,
+  User,
+  Menu,
+  LogOut,
+  Settings,
+  BarChart3,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -99,7 +108,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       {/* لوحة التحكم حسب نوع المستخدم */}
                       {user?.role === "super_admin" && (
                         <DropdownMenuItem asChild>
-                          <Link to="/admin/dashboard" className="cursor-pointer arabic">
+                          <Link
+                            to="/admin/dashboard"
+                            className="cursor-pointer arabic"
+                          >
                             <Settings className="w-4 h-4 ml-2" />
                             لوحة تحكم المدير
                           </Link>
@@ -108,7 +120,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
                       {user?.role === "merchant" && (
                         <DropdownMenuItem asChild>
-                          <Link to="/merchant/dashboard" className="cursor-pointer arabic">
+                          <Link
+                            to="/merchant/dashboard"
+                            className="cursor-pointer arabic"
+                          >
                             <BarChart3 className="w-4 h-4 ml-2" />
                             لوحة التحكم التجارية
                           </Link>
@@ -186,9 +201,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   {/* قائمة المستخدم المنسدلة للمحمول */}
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="outline" size="sm" className="text-xs px-2 py-1 gap-1">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-xs px-2 py-1 gap-1"
+                      >
                         <User className="w-3 h-3" />
-                        {user?.profile.name.split(' ')[0]}
+                        {user?.profile.name.split(" ")[0]}
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-48">
@@ -200,7 +219,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       {/* لوحة التحكم */}
                       {user?.role === "super_admin" && (
                         <DropdownMenuItem asChild>
-                          <Link to="/admin/dashboard" className="cursor-pointer arabic text-sm">
+                          <Link
+                            to="/admin/dashboard"
+                            className="cursor-pointer arabic text-sm"
+                          >
                             <Settings className="w-3 h-3 ml-1" />
                             لوحة المدير
                           </Link>
@@ -209,7 +231,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
                       {user?.role === "merchant" && (
                         <DropdownMenuItem asChild>
-                          <Link to="/merchant/dashboard" className="cursor-pointer arabic text-sm">
+                          <Link
+                            to="/merchant/dashboard"
+                            className="cursor-pointer arabic text-sm"
+                          >
                             <BarChart3 className="w-3 h-3 ml-1" />
                             لوحة التحكم
                           </Link>
@@ -217,7 +242,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       )}
 
                       <DropdownMenuItem asChild>
-                        <Link to="/profile" className="cursor-pointer arabic text-sm">
+                        <Link
+                          to="/profile"
+                          className="cursor-pointer arabic text-sm"
+                        >
                           <User className="w-3 h-3 ml-1" />
                           الملف الشخصي
                         </Link>

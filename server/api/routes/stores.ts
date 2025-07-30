@@ -353,11 +353,16 @@ router.get("/:id/orders", authenticateToken, async (req: any, res) => {
     }
 
     // تصفية الطلبات لهذا المتجر فقط
-    const storeOrders = allOrders.filter((order: any) => order.storeId === storeId);
+    const storeOrders = allOrders.filter(
+      (order: any) => order.storeId === storeId,
+    );
 
     // أخذ أحدث 5 طلبات وإضافة حقل الوقت ال��سبي
     const recentOrders = storeOrders
-      .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .sort(
+        (a: any, b: any) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+      )
       .slice(0, 5)
       .map((order: any) => {
         const createdAt = new Date(order.createdAt);
@@ -403,7 +408,8 @@ router.get("/restaurants", async (req, res) => {
   try {
     const stores = StoreDatabase.getAllStores();
     const restaurants = stores.filter(
-      (store: any) => store.storeType === "restaurant" && store.status === "active"
+      (store: any) =>
+        store.storeType === "restaurant" && store.status === "active",
     );
     res.json(restaurants);
   } catch (error) {
@@ -417,7 +423,8 @@ router.get("/companies", async (req, res) => {
   try {
     const stores = StoreDatabase.getAllStores();
     const companies = stores.filter(
-      (store: any) => store.storeType === "company" && store.status === "active"
+      (store: any) =>
+        store.storeType === "company" && store.status === "active",
     );
     res.json(companies);
   } catch (error) {
@@ -434,8 +441,8 @@ router.get("/general", async (req, res) => {
       (store: any) =>
         store.status === "active" &&
         (!store.storeType ||
-         store.storeType === "store" ||
-         !["restaurant", "company"].includes(store.storeType))
+          store.storeType === "store" ||
+          !["restaurant", "company"].includes(store.storeType)),
     );
     res.json(generalStores);
   } catch (error) {

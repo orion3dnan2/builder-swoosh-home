@@ -12,10 +12,10 @@ export class AuthService {
     password: string;
   }): Promise<User> {
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(credentials),
       });
@@ -23,18 +23,18 @@ export class AuthService {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'خطأ في تسجيل الدخول');
+        throw new Error(data.error || "خطأ في تسجيل الدخول");
       }
 
       // حفظ الرمز المميز والمستخدم
       if (data.token) {
-        localStorage.setItem('auth_token', data.token);
+        localStorage.setItem("auth_token", data.token);
       }
 
       AuthService.setCurrentUser(data.user);
       return data.user;
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       throw error;
     }
   }

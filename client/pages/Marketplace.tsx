@@ -24,13 +24,13 @@ export default function Marketplace() {
     const fetchStores = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/stores/general');
+        const response = await fetch("/api/stores/general");
         if (response.ok) {
           const data = await response.json();
           setStores(data);
         }
       } catch (error) {
-        console.error('خطأ في جلب المتاجر:', error);
+        console.error("خطأ في جلب المتاجر:", error);
       } finally {
         setLoading(false);
       }

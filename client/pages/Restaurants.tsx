@@ -23,13 +23,13 @@ export default function Restaurants() {
     const fetchRestaurants = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/stores/restaurants');
+        const response = await fetch("/api/stores/restaurants");
         if (response.ok) {
           const data = await response.json();
           setRestaurants(data);
         }
       } catch (error) {
-        console.error('خطأ في جلب المطاعم:', error);
+        console.error("خطأ في جلب المطاعم:", error);
       } finally {
         setLoading(false);
       }

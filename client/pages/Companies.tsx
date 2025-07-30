@@ -30,13 +30,13 @@ export default function Companies() {
     const fetchCompanies = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/stores/companies');
+        const response = await fetch("/api/stores/companies");
         if (response.ok) {
           const data = await response.json();
           setCompanies(data);
         }
       } catch (error) {
-        console.error('خطأ في جلب الشركات:', error);
+        console.error("خطأ في جلب الشركات:", error);
       } finally {
         setLoading(false);
       }
@@ -66,12 +66,14 @@ export default function Companies() {
   });
 
   // استخراج القطاعات والدول من البيانات
-  const industries = [...new Set(companies.map(c => c.category))];
-  const countries = [...new Set(companies.map(c => c.country))];
+  const industries = [...new Set(companies.map((c) => c.category))];
+  const countries = [...new Set(companies.map((c) => c.country))];
   const sizes = ["صغيرة", "متوسطة", "كبيرة"];
 
   // الشركات المميزة (أول 3 شركات نشطة)
-  const featuredCompanies = companies.filter(c => c.status === "active").slice(0, 3);
+  const featuredCompanies = companies
+    .filter((c) => c.status === "active")
+    .slice(0, 3);
 
   return (
     <Layout>
@@ -97,13 +99,14 @@ export default function Companies() {
             <div className="flex items-center gap-2">
               <Verified className="w-4 h-4" />
               <span className="arabic">
-                {companies.filter((c) => c.status === "active").length} شركة نشطة
+                {companies.filter((c) => c.status === "active").length} شركة
+                نشطة
               </span>
             </div>
             <div className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
               <span className="arabic">
-                {new Set(companies.map(c => c.category)).size} قطاع
+                {new Set(companies.map((c) => c.category)).size} قطاع
               </span>
             </div>
           </div>
@@ -267,9 +270,7 @@ export default function Companies() {
                   className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute top-2 right-2">
-                  <Badge
-                    className="bg-orange-500 text-white text-xs arabic"
-                  >
+                  <Badge className="bg-orange-500 text-white text-xs arabic">
                     🏢 {company.category}
                   </Badge>
                 </div>
@@ -395,9 +396,7 @@ export default function Companies() {
                     className="text-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
                     onClick={() => setSelectedIndustry(industry)}
                   >
-                    <div className="text-3xl mb-2">
-                      🏢
-                    </div>
+                    <div className="text-3xl mb-2">🏢</div>
                     <h4 className="font-semibold text-gray-800 text-sm arabic mb-1">
                       {industry}
                     </h4>
@@ -452,9 +451,7 @@ export default function Companies() {
                   <Users className="w-8 h-8 text-purple-600" />
                 </div>
                 <div className="text-2xl font-bold text-gray-800 mb-1">
-                  {Math.round(
-                    companies.length * 50 / 1000,
-                  )}
+                  {Math.round((companies.length * 50) / 1000)}
                   k+
                 </div>
                 <div className="text-sm text-gray-600 arabic">موظف</div>

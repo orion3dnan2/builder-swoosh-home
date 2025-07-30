@@ -52,9 +52,9 @@ router.post("/", async (req, res) => {
 
     // حساب المجموع
     const subtotal = items.reduce((sum: number, item: any) => {
-      return sum + (item.price * item.quantity);
+      return sum + item.price * item.quantity;
     }, 0);
-    
+
     const shipping = subtotal >= 100 ? 0 : 15; // شحن مجاني للطلبات فوق 100
     const tax = subtotal * 0.1; // ضريبة 10%
     const total = subtotal + shipping + tax;
@@ -115,7 +115,7 @@ router.post("/", async (req, res) => {
 router.get("/", authenticateToken, async (req: any, res) => {
   try {
     const orders = loadOrders();
-    
+
     // إذا كان المستخدم مدير، أرجع جميع الطلبات
     if (req.user.role === "super_admin") {
       return res.json(orders);
@@ -126,20 +126,20 @@ router.get("/", authenticateToken, async (req: any, res) => {
       // تحميل المتاجر لمعرفة متاجر المستخدم
       const { StoreDatabase } = await import("../../lib/database");
       const userStores = StoreDatabase.findStores(
-        (store: any) => store.merchantId === req.user.id
+        (store: any) => store.merchantId === req.user.id,
       );
       const userStoreIds = userStores.map((store: any) => store.id);
-      
-      const merchantOrders = orders.filter((order: any) => 
-        userStoreIds.includes(order.storeId)
+
+      const merchantOrders = orders.filter((order: any) =>
+        userStoreIds.includes(order.storeId),
       );
       return res.json(merchantOrders);
     }
 
     // إذا كان عميل، أرجع طلباته فقط
     if (req.user.role === "customer") {
-      const customerOrders = orders.filter((order: any) => 
-        order.customerId === req.user.id
+      const customerOrders = orders.filter(
+        (order: any) => order.customerId === req.user.id,
       );
       return res.json(customerOrders);
     }
@@ -171,10 +171,10 @@ router.get("/:id", authenticateToken, async (req: any, res) => {
       // التحقق أن الطلب من متجر المستخدم
       const { StoreDatabase } = await import("../../lib/database");
       const userStores = StoreDatabase.findStores(
-        (store: any) => store.merchantId === req.user.id
+        (store: any) => store.merchantId === req.user.id,
       );
       const userStoreIds = userStores.map((store: any) => store.id);
-      
+
       if (!userStoreIds.includes(order.storeId)) {
         return res.status(403).json({ error: "غير مصرح لك بالوصول" });
       }
@@ -198,7 +198,14 @@ router.put("/:id/status", authenticateToken, async (req: any, res) => {
     const orderId = req.params.id;
     const { status } = req.body;
 
-    const validStatuses = ["pending", "confirmed", "processing", "shipped", "delivered", "cancelled"];
+    const validStatuses = [
+      "pending",
+      "confirmed",
+      "processing",
+      "shipped",
+      "delivered",
+      "cancelled",
+    ];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ error: "حالة غير صحيحة" });
     }
@@ -221,10 +228,10 @@ router.put("/:id/status", authenticateToken, async (req: any, res) => {
       // التحقق أن الطلب من متجر المستخدم
       const { StoreDatabase } = await import("../../lib/database");
       const userStores = StoreDatabase.findStores(
-        (store: any) => store.merchantId === req.user.id
+        (store: any) => store.merchantId === req.user.id,
       );
       const userStoreIds = userStores.map((store: any) => store.id);
-      
+
       if (!userStoreIds.includes(order.storeId)) {
         return res.status(403).json({ error: "غير مصرح لك بالوصول" });
       }
