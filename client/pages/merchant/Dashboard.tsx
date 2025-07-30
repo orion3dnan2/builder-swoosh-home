@@ -25,7 +25,7 @@ export default function MerchantDashboard() {
   const { user } = useAuth();
   const [isNewMerchant, setIsNewMerchant] = useState(true);
 
-  // تحديد إذا كان التاجر جديد بناءً على تاريخ ��نشاء الحساب
+  // تحديد إذا كان التاجر جديد بناءً على تاريخ إنشاء الحساب
   useEffect(() => {
     if (user?.createdAt) {
       const accountAge = Date.now() - new Date(user.createdAt).getTime();
@@ -155,6 +155,46 @@ export default function MerchantDashboard() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Welcome Message for New Merchants */}
+        {isNewMerchant && (
+          <Card className="mb-8 bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
+            <CardContent className="p-6">
+              <div className="flex items-start space-x-4 space-x-reverse">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-blue-500 rounded-full flex items-center justify-center">
+                  <Sparkles className="w-6 h-6 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-xl font-bold text-gray-900 mb-2 arabic">
+                    مرحباً بك في متجرك الجديد! 🎉
+                  </h2>
+                  <p className="text-gray-700 mb-4 arabic">
+                    أهلاً وسهلاً {user?.profile.name}! متجرك الآن جاهز للبدء.
+                    ابدأ بإضافة منتجاتك الأولى وتخصيص مظهر متجرك.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Link to="/merchant/products/new">
+                      <Button className="w-full arabic bg-green-600 hover:bg-green-700">
+                        <Plus className="w-4 h-4 ml-2" />
+                        أضف منتجك الأول
+                      </Button>
+                    </Link>
+                    <Link to="/merchant/settings">
+                      <Button variant="outline" className="w-full arabic">
+                        <Settings className="w-4 h-4 ml-2" />
+                        إعداد المتجر
+                      </Button>
+                    </Link>
+                    <Button variant="outline" className="w-full arabic" onClick={() => setIsNewMerchant(false)}>
+                      <Eye className="w-4 h-4 ml-2" />
+                      جولة سريعة
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
@@ -302,7 +342,7 @@ export default function MerchantDashboard() {
                             {order.customer}
                           </p>
                           <p className="text-sm text-gray-600 arabic">
-                            {order.id} • {order.items} منتج��ت
+                            {order.id} • {order.items} منتجات
                           </p>
                           <p className="text-xs text-gray-500 arabic">
                             {order.time}
