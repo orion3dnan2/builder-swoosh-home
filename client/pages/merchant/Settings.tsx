@@ -91,12 +91,12 @@ export default function MerchantSettings() {
   // Store Settings State - فارغة للتجار الجدد
   const [storeSettings, setStoreSettings] = useState<StoreSettings>({
     storeName: isNewMerchant ? (user?.profile?.businessName || "") : "متجر الخير السوداني",
-    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
+    description: isNewMerchant ? "" : "متجر متخصص في بيع المنتجات السودانية الأصيلة و��لطبيعية من عطور وأطعمة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
     phone: isNewMerchant ? (user?.profile?.phone || "") : "+966501234567",
     email: isNewMerchant ? (user?.email || "") : "store@alkhair-sudani.com",
     address: isNewMerchant ? "" : "شارع الملك فهد، حي النرجس",
-    city: isNewMerchant ? (user?.profile?.city || "") : "الرياض، المملكة العربية السعودية",
+    city: isNewMerchant ? (user?.profile?.city || "") : "الرياض",
     workingHours: {
       start: isNewMerchant ? "09:00" : "09:00",
       end: isNewMerchant ? "17:00" : "22:00",
@@ -228,7 +228,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.email.trim()) {
-      alert("يرجى إدخال البريد الإلكتروني");
+      alert("��رجى إدخال البريد الإلكتروني");
       return;
     }
 
@@ -311,7 +311,7 @@ export default function MerchantSettings() {
       "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة",
       "الطائف", "الخبر", "الأحساء", "تبوك", "أبها", "جازان", "نجران"
     ],
-    "الإم��رات العربية المتح��ة": [
+    "الإمارات العربية المتح��ة": [
       "دبي", "أبوظبي", "الشارقة", "عجمان", "رأس الخيمة", "الفجيرة", "أم القيوين"
     ],
     "دولة الكويت": [
@@ -336,7 +336,7 @@ export default function MerchantSettings() {
 
   // إضافة حالات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
-    isNewMerchant ? "" : "الممل��ة العربية السعودية"
+    isNewMerchant ? "" : "المملكة العربية السعودية"
   );
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
@@ -922,7 +922,7 @@ export default function MerchantSettings() {
                         />
                       </div>
                       <div>
-                        <Label className="arabic">البريد الإلكتروني</Label>
+                        <Label className="arabic">البري�� الإلكتروني</Label>
                         <Input
                           value={user?.profile?.email || ""}
                           disabled
@@ -991,7 +991,7 @@ export default function MerchantSettings() {
                       <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                         <div className={isRTL ? 'text-right' : 'text-left'}>
                           <div className="font-medium arabic">المصادقة الثنائية</div>
-                          <div className="text-sm text-gray-600 arabic">حماية إض��فية لحسابك</div>
+                          <div className="text-sm text-gray-600 arabic">حماية إضافية لحسابك</div>
                         </div>
                         <Switch
                           checked={accountSettings.twoFactorAuth}
