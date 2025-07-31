@@ -100,6 +100,14 @@ export default function MerchantSettings() {
       if (!user?.id) return;
 
       try {
+        // تحقق من وجود token المصادقة
+        const token = ApiService.getToken();
+        if (!token) {
+          console.log("لا يوجد token للمصادقة، استخدام البيانات المحلية");
+          loadLocalData();
+          return;
+        }
+
         // محاولة تحميل بيانات المتجر من الخادم
         const userStores = await ApiService.getStores();
         const existingStore = userStores.find(
@@ -107,7 +115,7 @@ export default function MerchantSettings() {
         );
 
         if (existingStore) {
-          // تحديث البيانات بناءً على المتجر الموجود
+          // تحديث البيانات بناء�� على المتجر الموجود
           setStoreSettings({
             storeName: existingStore.name || "",
             description: existingStore.description || "",
@@ -473,7 +481,7 @@ export default function MerchantSettings() {
 
   const workingDays = [
     "السبت",
-    "الأحد",
+    "ال��حد",
     "الاثنين",
     "الثلاثاء",
     "الأربعاء",
@@ -485,7 +493,7 @@ export default function MerchantSettings() {
   const countriesWithCities = {
     السودان: [
       "الخرطوم",
-      "أمدرما��",
+      "أمدرمان",
       "بحري",
       "مدني",
       "كسلا",
@@ -1466,7 +1474,7 @@ export default function MerchantSettings() {
                 <CardHeader>
                   <CardTitle className="arabic text-right flex items-center">
                     <Shield className="w-5 h-5 ml-2" />
-                    الحساب والأمان
+                    ال��ساب والأمان
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
