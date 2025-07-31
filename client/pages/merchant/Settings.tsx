@@ -69,12 +69,26 @@ interface NotificationSettings {
   emailNotifications: boolean;
 }
 
+interface DeliveryDriver {
+  id: string;
+  name: string;
+  phone: string;
+  area: string;
+  rating: number;
+  isActive: boolean;
+  vehicle: string;
+  speciality: string[];
+}
+
 interface ShippingSettings {
   freeShippingThreshold: number;
   standardShippingCost: number;
   expressShippingCost: number;
   processingTime: string;
   shippingAreas: string[];
+  deliveryDrivers: DeliveryDriver[];
+  trackingEnabled: boolean;
+  autoAssignDrivers: boolean;
 }
 
 export default function MerchantSettings() {
@@ -182,7 +196,7 @@ export default function MerchantSettings() {
       } catch (error) {
         console.error("خطأ في تحميل بيانات المتجر:", error);
 
-        // عرض رسالة للمستخدم في حالة عدم وجود اتصال أو مشكلة في المصادقة
+        // عرض رسالة للمستخدم في حالة عدم وجود اتصال أو مشكلة في المص��دقة
         if (error.message?.includes('Failed to fetch') || error.message?.includes('TypeError')) {
           // تجاهل الخطأ واستخدم البيانات المحلية
           console.log("استخدام البيانات المحفوظة محلياً...");
@@ -241,7 +255,7 @@ export default function MerchantSettings() {
     processingTime: isNewMerchant ? "1-3 أيام عمل" : "1-2 أيام عمل",
     shippingAreas: isNewMerchant
       ? []
-      : ["الخرطوم", "أمدرمان", "بحري", "مدني", "كسلا"],
+      : ["الخرطوم", "أمدرمان", "بحري", "مدني", "��سلا"],
   });
 
   const [accountSettings, setAccountSettings] = useState({
@@ -410,7 +424,7 @@ export default function MerchantSettings() {
           await ApiService.createStore(storeData);
         }
       } catch (apiError: any) {
-        // إذا فشل API، نستخدم التخزين المحلي كنسخة احتياطية
+        // إذا فشل API، نستخدم ��لتخزين المحلي كنسخة احتياطية
         console.warn(
           "فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:",
           apiError,
@@ -444,7 +458,7 @@ export default function MerchantSettings() {
 
   const tabs = [
     { id: "store", label: "بيانات المتجر", icon: Store },
-    { id: "notifications", label: "الإشعارات", icon: Bell },
+    { id: "notifications", label: "الإشعارا��", icon: Bell },
     { id: "shipping", label: "الشحن والتوصيل", icon: Truck },
     { id: "account", label: "الحساب والأمان", icon: Shield },
   ];
@@ -525,7 +539,7 @@ export default function MerchantSettings() {
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
       "القاهرة",
-      "الإسكندرية",
+      "ال��سكندرية",
       "الجيزة",
       "الأقصر",
       "أسوان",
@@ -706,7 +720,7 @@ export default function MerchantSettings() {
                           storeSettings.banner !== "/placeholder.svg" ? (
                             <img
                               src={storeSettings.banner}
-                              alt="غلاف المتجر"
+                              alt="غلاف المت��ر"
                               className="w-full h-full object-cover rounded-lg"
                             />
                           ) : (
