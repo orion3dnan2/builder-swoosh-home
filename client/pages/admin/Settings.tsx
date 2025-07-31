@@ -211,7 +211,7 @@ export default function AdminSettings() {
                 className="arabic"
               >
                 <Save className="w-4 h-4 ml-2" />
-                حفظ ال��غييرات
+                حفظ التغييرات
               </Button>
             </div>
           </div>
@@ -379,7 +379,7 @@ export default function AdminSettings() {
                       className="w-full mt-2 p-2 border rounded-lg arabic"
                     >
                       <option value="modern">عصري</option>
-                      <option value="classic">كلاسيكي</option>
+                      <option value="classic">كلا��يكي</option>
                       <option value="minimal">بسيط</option>
                     </select>
                   </div>
@@ -661,7 +661,7 @@ export default function AdminSettings() {
                         </span>
                       </div>
                       <div className="text-2xl font-bold text-green-700 mt-2">
-                        {Object.keys(regionsStats.byCountry).length}
+                        {regionsStats.countries}
                       </div>
                     </div>
 
@@ -826,7 +826,7 @@ export default function AdminSettings() {
                       </li>
                       <li>
                         • المناطق تُحفظ تلقائياً ولا تحتاج للضغط على "حفظ
-                        التغييرات"
+                        التغيي��ات"
                       </li>
                       <li>
                         • المناطق المحددة هنا ستظهر لجميع التجار في النظام فوراً
@@ -961,7 +961,7 @@ export default function AdminSettings() {
                   </div>
 
                   <div>
-                    <Label className="arabic">سياسة الإرجاع</Label>
+                    <Label className="arabic">سياسة الإرج��ع</Label>
                     <Textarea
                       value={localSettings.policies.refundPolicy}
                       onChange={(e) =>
@@ -990,7 +990,7 @@ export default function AdminSettings() {
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-yellow-800 arabic">
                     ⚠️ تحذير: الإعدادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
-                    بعدم تغييرها إلا إذا كنت تعرف ما تفعل.
+                    بعدم تغيي��ها إلا إذا كنت تعرف ما تفعل.
                   </p>
                 </div>
 
