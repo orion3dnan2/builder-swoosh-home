@@ -379,7 +379,7 @@ export default function AdminSettings() {
                       className="w-full mt-2 p-2 border rounded-lg arabic"
                     >
                       <option value="modern">عصري</option>
-                      <option value="classic">كلا��يكي</option>
+                      <option value="classic">كلاسيكي</option>
                       <option value="minimal">بسيط</option>
                     </select>
                   </div>
@@ -826,7 +826,7 @@ export default function AdminSettings() {
                       </li>
                       <li>
                         • المناطق تُحفظ تلقائياً ولا تحتاج للضغط على "حفظ
-                        التغيي��ات"
+                        التغييرات"
                       </li>
                       <li>
                         • المناطق المحددة هنا ستظهر لجميع التجار في النظام فوراً
@@ -838,11 +838,50 @@ export default function AdminSettings() {
                     </ul>
                   </div>
 
-                  {/* Countries Breakdown */}
+                  {/* All Countries Overview */}
+                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <h4 className="font-semibold text-gray-800 arabic mb-3">
+                      جميع الدول والمناطق:
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {countries.map((country) => {
+                        const countryRegions = regionsByCountry[country.code] || [];
+                        return (
+                          <div
+                            key={country.code}
+                            className={`p-3 rounded-lg border-2 transition-all cursor-pointer ${
+                              selectedCountry === country.code
+                                ? 'border-blue-500 bg-blue-50'
+                                : 'border-gray-200 bg-white hover:border-gray-300'
+                            }`}
+                            onClick={() => setSelectedCountry(country.code)}
+                          >
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="font-semibold arabic">
+                                {country.name}
+                              </span>
+                              <Badge variant={countryRegions.length > 0 ? "default" : "secondary"}>
+                                {countryRegions.length} منطقة
+                              </Badge>
+                            </div>
+                            <div className="text-xs text-gray-600 arabic">
+                              {countryRegions.length > 0
+                                ? countryRegions.slice(0, 3).map(r => r.name).join(', ') +
+                                  (countryRegions.length > 3 ? '...' : '')
+                                : 'لا توجد مناطق'
+                              }
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Countries Statistics */}
                   {Object.keys(regionsStats.byCountry).length > 0 && (
-                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                      <h4 className="font-semibold text-gray-800 arabic mb-3">
-                        توزيع المناطق حسب الدول:
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <h4 className="font-semibold text-blue-800 arabic mb-3">
+                        إحصائيات المناطق حسب الدول:
                       </h4>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                         {Object.entries(regionsStats.byCountry).map(
@@ -961,7 +1000,7 @@ export default function AdminSettings() {
                   </div>
 
                   <div>
-                    <Label className="arabic">سياسة الإرج��ع</Label>
+                    <Label className="arabic">سياسة الإرجاع</Label>
                     <Textarea
                       value={localSettings.policies.refundPolicy}
                       onChange={(e) =>
@@ -990,7 +1029,7 @@ export default function AdminSettings() {
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-yellow-800 arabic">
                     ⚠️ تحذير: الإعدادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
-                    بعدم تغيي��ها إلا إذا كنت تعرف ما تفعل.
+                    بعدم تغييرها إلا إذا كنت تعرف ما تفعل.
                   </p>
                 </div>
 
