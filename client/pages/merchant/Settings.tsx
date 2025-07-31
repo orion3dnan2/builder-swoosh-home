@@ -244,7 +244,7 @@ export default function MerchantSettings() {
     banner: "/placeholder.svg",
   });
 
-  // Notification Settings State - إعدادات افتراضية للتجار الجدد
+  // Notification Settings State - إع��ادات افتراضية للتجار الجدد
   const [notifications, setNotifications] = useState<NotificationSettings>({
     newOrders: true,
     orderUpdates: true,
@@ -261,7 +261,7 @@ export default function MerchantSettings() {
     freeShippingThreshold: isNewMerchant ? 100 : 200,
     standardShippingCost: isNewMerchant ? 15 : 25,
     expressShippingCost: isNewMerchant ? 30 : 50,
-    processingTime: isNewMerchant ? "1-3 أيام عمل" : "1-2 أيام عمل",
+    processingTime: isNewMerchant ? "30" : "45",
     shippingAreas: isNewMerchant
       ? []
       : ["الخرطوم", "أمدرمان", "بحري", "مدني", "��سلا"],
@@ -431,7 +431,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.phone.trim()) {
-      alert("يرجى إدخال رقم اله��تف");
+      alert("يرجى إدخا�� رقم اله��تف");
       return;
     }
 
@@ -602,7 +602,7 @@ export default function MerchantSettings() {
       "حولي",
     ],
     "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"],
-    "مملكة البحرين": ["المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
+    "مملكة البحرين": ["ا��منامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
       "القاهرة",
