@@ -358,7 +358,7 @@ export default function AdminSettings() {
                       className="w-full mt-2 p-2 border rounded-lg arabic"
                     >
                       <option value="modern">عصري</option>
-                      <option value="classic">كلاسيكي</option>
+                      <option value="classic">كل��سيكي</option>
                       <option value="minimal">بسيط</option>
                     </select>
                   </div>
@@ -514,7 +514,7 @@ export default function AdminSettings() {
                   </div>
 
                   <div>
-                    <Label className="arabic">أيقونة الموقع (Favicon)</Label>
+                    <Label className="arabic">أيقون�� الموقع (Favicon)</Label>
                     <Input
                       value={localSettings.branding.favicon}
                       onChange={(e) =>
@@ -712,7 +712,7 @@ export default function AdminSettings() {
                             تحذير: لا توجد مناطق توصيل!
                           </h4>
                           <p className="text-red-600 arabic text-sm mb-4">
-                            جميع التجار لن يتمكنوا من تحديد مناطق التوصيل حتى ت��يف مناطق هنا
+                            جميع التجار لن يتمكنوا من تحديد مناطق التوصيل حتى تضيف مناطق هنا
                           </p>
                           <Button
                             onClick={() => {
@@ -743,7 +743,7 @@ export default function AdminSettings() {
                       className="arabic"
                     >
                       <RotateCcw className="w-4 h-4 ml-2" />
-                      إعادة تعيين للافتر��ضي
+                      إعادة تعيين للافتراضي
                     </Button>
 
                     <Button
@@ -781,13 +781,13 @@ export default function AdminSettings() {
                   </div>
 
                   {/* Countries Breakdown */}
-                  {Object.keys(regionsManager.getStats().byCountry).length > 0 && (
+                  {Object.keys(regionsStats.byCountry).length > 0 && (
                     <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                       <h4 className="font-semibold text-gray-800 arabic mb-3">
                         توزيع المناطق حسب الدول:
                       </h4>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                        {Object.entries(regionsManager.getStats().byCountry).map(([country, count]) => (
+                        {Object.entries(regionsStats.byCountry).map(([country, count]) => (
                           <div key={country} className="flex items-center justify-between p-2 bg-white rounded border">
                             <span className="text-sm arabic font-medium">{country}</span>
                             <Badge variant="secondary" className="text-xs">
@@ -833,11 +833,11 @@ export default function AdminSettings() {
                           </Label>
                           <p className="text-sm text-gray-600 arabic">
                             {key === "enableMarketplace" &&
-                              "تفعيل قسم السوق التجاري"}
+                              "تف��يل قسم السوق التجاري"}
                             {key === "enableProducts" &&
                               "تفعيل قسم بيع المنتجات"}
                             {key === "enableCompanies" && "تفعيل دليل الشركات"}
-                            {key === "enableJobs" && "ت��عيل لوحة الوظائف"}
+                            {key === "enableJobs" && "تفعيل لوحة الوظائف"}
                             {key === "enableServices" && "تفعيل قائمة الخدمات"}
                             {key === "enableAds" && "تفعيل الإعلانات المدفوعة"}
                             {key === "enableReviews" && "تفعيل نظام التقييمات"}
@@ -953,7 +953,7 @@ export default function AdminSettings() {
                   <div className="flex items-center justify-between p-4 border rounded-lg">
                     <div>
                       <Label className="font-medium arabic">
-                        دعم الكتابة من ا��يمين لليسار
+                        دعم الكتابة من اليمين لليسار
                       </Label>
                       <p className="text-sm text-gray-600 arabic">
                         تفعيل RTL للغة العربية
@@ -984,7 +984,7 @@ export default function AdminSettings() {
                     إعادة تعيين جميع الإعدادات
                   </Button>
                   <p className="text-sm text-gray-600 mt-2 arabic">
-                    سيتم حذف جميع التخصيصات والعودة لل��عدادات الافتراضية
+                    سيتم حذف جميع التخصيصات والعودة للإعدادات الافتراضية
                   </p>
                 </div>
               </CardContent>
