@@ -72,7 +72,7 @@ const translations = {
       "اكتشف منتجات سودانية أصيلة من تجار موثوقين",
     "home.services.companies": "دليل الشركات",
     "home.services.companies_desc":
-      "تواصل مع الشركات والمؤسسات السودانية في الخليج",
+      "��واصل مع الشركات والمؤسسات السودانية في الخليج",
     "home.services.jobs": "لوحة الوظائف",
     "home.services.jobs_desc": "ابحث عن فرص عمل مناسبة أو أعلن عن وظائف شاغرة",
     "home.services.professional": "الخدمات ا��مهنية",
@@ -117,7 +117,7 @@ const translations = {
     "dashboard.recent_activity": "النشاط الأخير",
     "dashboard.quick_stats": "إحصائيات سريعة",
     "dashboard.view_all_activities": "عرض جميع الأنشطة",
-    "dashboard.view_detailed_reports": "عرض التقارير التفصيلية",
+    "dashboard.view_detailed_reports": "عرض التقارير التفصيل��ة",
     "dashboard.total_users": "إجمالي المستخدمين",
     "dashboard.registered_stores": "المتاجر المسجلة",
     "dashboard.total_products": "إجمالي المنتجات",
@@ -135,7 +135,7 @@ const translations = {
     "dashboard.appearance": "تخصيص المظهر",
     "dashboard.appearance_desc": "تغيير الألوان والصور والخلفيات",
     "dashboard.system_settings": "إعدادات النظام",
-    "dashboard.system_settings_desc": "صلاحيات وإعدادات الأمان",
+    "dashboard.system_settings_desc": "ص��احيات وإعدادات الأمان",
     "dashboard.content_management": "إدارة المحتوى",
     "dashboard.content_management_desc": "النصوص والصور والترجمات",
     "dashboard.view_site": "عرض الموقع",
@@ -556,6 +556,33 @@ export const loadFonts = () => {
     link.href = font.url;
     link.rel = "stylesheet";
     link.type = "text/css";
+    link.crossOrigin = "anonymous";
+
+    // Add error handling
+    link.onerror = () => {
+      console.warn(`Failed to load font: ${font.family}`);
+    };
+
+    link.onload = () => {
+      console.log(`Successfully loaded font: ${font.family}`);
+    };
+
     document.head.appendChild(link);
   });
+
+  // Force font display optimization
+  const style = document.createElement('style');
+  style.textContent = `
+    @font-face {
+      font-family: 'ArabicFallback';
+      src: local('Tahoma'), local('Arial Unicode MS');
+      font-display: swap;
+      unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+    }
+
+    * {
+      font-family: 'Cairo', 'Noto Sans Arabic', 'Tajawal', 'ArabicFallback', 'Tahoma', 'Arial Unicode MS', sans-serif !important;
+    }
+  `;
+  document.head.appendChild(style);
 };
