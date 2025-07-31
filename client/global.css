@@ -436,6 +436,19 @@
     }
   }
 
+  /* Hide corrupted characters */
+  *:before,
+  *:after,
+  * {
+    font-variant-ligatures: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Replace corrupted characters with empty content */
+  [data-corrupted]::before {
+    content: '';
+  }
+
   /* High contrast mode support */
   @media (prefers-contrast: high) {
     :root {
