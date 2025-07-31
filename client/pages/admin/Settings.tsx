@@ -593,7 +593,7 @@ export default function AdminSettings() {
                       className="arabic"
                     >
                       <Plus className="w-4 h-4 ml-2" />
-                      إضافة
+                      ��ضافة
                     </Button>
                   </div>
 
@@ -750,15 +750,35 @@ export default function AdminSettings() {
                   {/* Instructions */}
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <h4 className="font-semibold text-blue-800 arabic mb-2">
-                      تعليمات:
+                      تعليمات الاستخدام:
                     </h4>
                     <ul className="text-sm text-blue-700 arabic space-y-1">
                       <li>• أضف المناطق التي تريد أن تظهر للتجار في إعدادات الشحن</li>
                       <li>• يمكن تعديل أو حذف أي منطقة بالضغط على الأيقونات المناسبة</li>
-                      <li>• سيتم حفظ التغييرات تلقائياً عند الضغط على "حفظ التغييرات"</li>
-                      <li>• المناطق المحددة هنا ستظهر لجميع التجار في النظام</li>
+                      <li>• المناطق تُحفظ تلقائياً ولا تحتاج للضغط على "حفظ التغييرات"</li>
+                      <li>• المناطق المحددة هنا ستظهر لجميع التجار في النظام فوراً</li>
+                      <li>• يمكن إعادة تعيين المناطق للقيم الافتراضية أو تصديرها كملف</li>
                     </ul>
                   </div>
+
+                  {/* Countries Breakdown */}
+                  {Object.keys(regionsManager.getStats().byCountry).length > 0 && (
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                      <h4 className="font-semibold text-gray-800 arabic mb-3">
+                        توزيع المناطق حسب الدول:
+                      </h4>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        {Object.entries(regionsManager.getStats().byCountry).map(([country, count]) => (
+                          <div key={country} className="flex items-center justify-between p-2 bg-white rounded border">
+                            <span className="text-sm arabic font-medium">{country}</span>
+                            <Badge variant="secondary" className="text-xs">
+                              {count} منطقة
+                            </Badge>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -886,7 +906,7 @@ export default function AdminSettings() {
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-yellow-800 arabic">
                     ⚠️ تحذير: الإعدادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
-                    بعدم تغييرها إلا إذا كنت تعرف ما تفعل.
+                    بعدم تغييرها إلا إذا كنت تعرف ��ا تفعل.
                   </p>
                 </div>
 
