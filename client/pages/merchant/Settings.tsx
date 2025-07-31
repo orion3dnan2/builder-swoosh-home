@@ -202,7 +202,7 @@ export default function MerchantSettings() {
           setIsNewMerchant(false); // له متجر موجود
           setLoadingState({ isLoading: false, hasError: false, isOffline: false, retryCount: 0 });
         } else {
-          // تحميل البيانات المحفوظة محلياً إذا لم يكن هناك متجر موجود
+          // تحميل البيانات المحفوظة محلياً إذا لم يكن هناك متجر مو��ود
           loadLocalData();
           setLoadingState({ isLoading: false, hasError: false, isOffline: false, retryCount: 0 });
         }
@@ -338,7 +338,7 @@ export default function MerchantSettings() {
 
   // دالة لفتح الواتساب
   const openWhatsApp = (phone: string, driverName: string) => {
-    const message = encodeURIComponent(`��لسلام عليكم ${driverName}، أريد التواصل معك بخصوص توصيل طلب من متجر ${storeSettings.storeName}.`);
+    const message = encodeURIComponent(`��لسلام عليكم ${driverName}، أريد التواصل معك بخصوص توصيل طلب من مت��ر ${storeSettings.storeName}.`);
     const whatsappUrl = `https://wa.me/${phone.replace('+', '')}?text=${message}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -405,7 +405,7 @@ export default function MerchantSettings() {
       reader.onload = (e) => {
         const bannerUrl = e.target?.result as string;
         setStoreSettings({ ...storeSettings, banner: bannerUrl });
-        alert("تم تحديث غلاف المتجر بنجاح! 🎨");
+        alert("تم تحديث غلاف المتجر بنجاح! ���");
       };
       reader.onerror = () => {
         alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
@@ -532,7 +532,7 @@ export default function MerchantSettings() {
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ الإعدا��ات.\n\nيرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ الإعدا��ات.\n\nيرجى التحقق من اتصال الإن��رنت والمحاولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
@@ -618,7 +618,7 @@ export default function MerchantSettings() {
       "الفروانية",
       "حولي",
     ],
-    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"],
+    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشم��ل"],
     "مملكة البحرين": ["ا��منامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
@@ -646,6 +646,12 @@ export default function MerchantSettings() {
   );
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
+
+  // إدارة المناطق من localStorage الإداري
+  const [availableRegions, setAvailableRegions] = useState<string[]>([
+    "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة",
+    "دبي", "أبوظبي", "الشارقة", "الدوحة", "الكويت", "المنامة", "مسقط"
+  ]);
 
   // دال�� لمعالجة تغيير نوع المتجر
   const handleCategoryChange = (value: string) => {
@@ -984,7 +990,7 @@ export default function MerchantSettings() {
                       <option value="beauty">تجميل وعناية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
-                      يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
+                      يحدد نوع المتجر مكان ظهوره في المو��ع (صفحة المطاعم،
                       الشركات، أو المت��جر)
                     </p>
                   </div>
@@ -1220,7 +1226,7 @@ export default function MerchantSettings() {
                           إشعارات الطلبات
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تلقى تحديثات حول طلباتك ومبيعاتك
+                          تلقى تحديثات حو�� طلباتك ومبيعاتك
                         </p>
                       </div>
                     </div>
@@ -1618,7 +1624,7 @@ export default function MerchantSettings() {
                         </div>
                         <div>
                           <h3 className="font-bold text-gray-900 arabic text-lg">
-                            السائ��ون ومؤسسات التوصيل
+                            السائ����ون ومؤسسات التوصيل
                           </h3>
                           <p className="text-sm text-gray-600 arabic">
                             إدارة شبكة السائقين المتاحين لتوصيل طلباتك
@@ -1747,7 +1753,7 @@ export default function MerchantSettings() {
                           إعدادات التتبع والأتمتة
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تفعيل خيارات التتبع المباشر وتوزيع الطلبات التلقائي
+                          تفعيل خيارات التتبع المباشر وتوز��ع الطلبات التلقائي
                         </p>
                       </div>
                     </div>
