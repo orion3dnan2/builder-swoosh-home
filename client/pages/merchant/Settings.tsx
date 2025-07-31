@@ -79,6 +79,7 @@ interface ShippingSettings {
 export default function MerchantSettings() {
   const { t, isRTL } = useTheme();
   const { user } = useAuth();
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("store");
   const [showPassword, setShowPassword] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -205,7 +206,7 @@ export default function MerchantSettings() {
     description: isNewMerchant
       ? ""
       : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
-    category: isNewMerchant ? "" : "مواد ��ذائية وعطور",
+    category: isNewMerchant ? "" : "موا�� ��ذائية وعطور",
     storeType: isNewMerchant ? "" : "restaurant",
     phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
     email: isNewMerchant ? user?.email || "" : "store@example.com",
@@ -396,7 +397,7 @@ export default function MerchantSettings() {
         shippingSettings: shipping,
       };
 
-      // ��لبحث عن متجر موجود ���لمستخدم أولاً
+      // ��لبحث عن متجر ��وجود ���لمستخدم أولاً
       try {
         const userStores = await ApiService.getStores();
         const existingStore = userStores.find(
@@ -435,7 +436,7 @@ export default function MerchantSettings() {
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ ال��عدادات.\n\nيرجى التحقق م�� اتصال الإنترنت والمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ ال��عدادات.\n\n��رجى التحقق م�� اتصال الإنترنت والمحاولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
@@ -474,7 +475,7 @@ export default function MerchantSettings() {
     "الجمعة",
   ];
 
-  // قائمة الدول والمدن التابعة لها
+  // قائم�� الدول والمدن التابعة لها
   const countriesWithCities = {
     السودان: [
       "الخرطوم",
@@ -521,7 +522,7 @@ export default function MerchantSettings() {
       "الفروانية",
       "حولي",
     ],
-    "دولة قطر": ["الدوحة", "الريان", "الوك��ة", "أم صلال", "الخور", "الشما��"],
+    "دولة قطر": ["الدوحة", "الريان", "الوك��ة", "أم ص��ال", "الخور", "الشما��"],
     "مملكة البحرين": ["المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
@@ -1231,7 +1232,7 @@ export default function MerchantSettings() {
                         {
                           key: "emailNotifications",
                           label: "البريد الإلكتروني",
-                          desc: "استقبال الإشعارات عبر البريد الإلكتروني",
+                          desc: "استقبال الإشعارات عب�� البريد الإلكتروني",
                           icon: "📧",
                           color: "bg-indigo-50 border-indigo-200 hover:bg-indigo-100"
                         },
