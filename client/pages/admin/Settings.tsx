@@ -491,7 +491,7 @@ export default function AdminSettings() {
                         handleBrandingChange("tagline", e.target.value)
                       }
                       className="mt-2 arabic text-right"
-                      placeholder="سوق الخدمات وشركات السودان في الخليج والعالم"
+                      placeholder="سوق الخدمات وشركات السودان في ال��ليج والعالم"
                     />
                   </div>
 
@@ -593,7 +593,7 @@ export default function AdminSettings() {
                       className="arabic"
                     >
                       <Plus className="w-4 h-4 ml-2" />
-                      ��ضافة
+                      إضافة
                     </Button>
                   </div>
 
@@ -703,10 +703,27 @@ export default function AdminSettings() {
                     </div>
 
                     {deliveryRegions.length === 0 && (
-                      <div className="text-center py-8 text-gray-500">
-                        <MapPin className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                        <p className="arabic">لا توجد مناطق مضافة بعد</p>
-                        <p className="text-sm arabic">أضف منطقة جديدة للبدء</p>
+                      <div className="text-center py-8">
+                        <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+                          <MapPin className="w-12 h-12 mx-auto mb-4 text-red-400" />
+                          <h4 className="font-semibold text-red-700 arabic mb-2">
+                            تحذير: لا توجد مناطق توصيل!
+                          </h4>
+                          <p className="text-red-600 arabic text-sm mb-4">
+                            جميع التجار لن يتمكنوا من تحديد مناطق التوصيل حتى تضيف مناطق هنا
+                          </p>
+                          <Button
+                            onClick={() => {
+                              regionsManager.resetToDefaults();
+                              setDeliveryRegions(regionsManager.getRegions());
+                              setUnsavedChanges(true);
+                            }}
+                            className="arabic"
+                          >
+                            <Plus className="w-4 h-4 ml-2" />
+                            إضافة المناطق الافتراضية
+                          </Button>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -753,7 +770,7 @@ export default function AdminSettings() {
                       تعليمات الاستخدام:
                     </h4>
                     <ul className="text-sm text-blue-700 arabic space-y-1">
-                      <li>• أضف المناطق التي تريد أن تظهر للتجار في إعدادات الشحن</li>
+                      <li>• أضف المناطق التي ��ريد أن تظهر للتجار في إعدادات الشحن</li>
                       <li>• يمكن تعديل أو حذف أي منطقة بالضغط على الأيقونات المناسبة</li>
                       <li>• المناطق تُحفظ تلقائياً ولا تحتاج للضغط على "حفظ التغييرات"</li>
                       <li>• المناطق المحددة هنا ستظهر لجميع التجار في النظام فوراً</li>
@@ -906,7 +923,7 @@ export default function AdminSettings() {
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-yellow-800 arabic">
                     ⚠️ تحذير: الإعدادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
-                    بعدم تغييرها إلا إذا كنت تعرف ��ا تفعل.
+                    بعدم تغييرها إل�� إذا كنت تعرف ما تفعل.
                   </p>
                 </div>
 
