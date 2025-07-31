@@ -94,6 +94,33 @@ export default function MerchantSettings() {
     }
   }, [user]);
 
+  // دالة لتحميل البيانات المحفوظة محلياً
+  const loadLocalData = () => {
+    try {
+      const savedStoreSettings = localStorage.getItem("storeSettings");
+      const savedNotifications = localStorage.getItem("notificationSettings");
+      const savedShipping = localStorage.getItem("shippingSettings");
+
+      if (savedStoreSettings) {
+        const parsed = JSON.parse(savedStoreSettings);
+        setStoreSettings(parsed);
+        if (parsed.selectedCountry) {
+          setSelectedCountry(parsed.selectedCountry);
+        }
+      }
+
+      if (savedNotifications) {
+        setNotifications(JSON.parse(savedNotifications));
+      }
+
+      if (savedShipping) {
+        setShipping(JSON.parse(savedShipping));
+      }
+    } catch (error) {
+      console.error("خطأ في تحميل البيانات المحلية:", error);
+    }
+  };
+
   // تحميل بيانات المتجر عند تحميل الصفحة
   useEffect(() => {
     const loadStoreData = async () => {
@@ -115,7 +142,7 @@ export default function MerchantSettings() {
         );
 
         if (existingStore) {
-          // تحديث البيانات بناء�� على المتجر الموجود
+          // تحديث البيانات بناءً على المتجر الموجود
           setStoreSettings({
             storeName: existingStore.name || "",
             description: existingStore.description || "",
@@ -366,7 +393,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.phone.trim()) {
-      alert("يرجى إدخال رقم الهاتف");
+      alert("يرجى إدخا�� رقم الهاتف");
       return;
     }
 
@@ -376,7 +403,7 @@ export default function MerchantSettings() {
     }
 
     if (!selectedCountry) {
-      alert("يرجى اختيار الدولة");
+      alert("يرج�� اختيار الدولة");
       return;
     }
 
@@ -419,7 +446,7 @@ export default function MerchantSettings() {
         );
 
         if (existingStore) {
-          // تحديث متجر موجود
+          // تحد��ث متجر موجود
           await ApiService.updateStore(existingStore.id, storeData);
         } else {
           // إنشاء متجر جديد
@@ -450,7 +477,7 @@ export default function MerchantSettings() {
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ ال��عدادات.\n\n��رجى التحقق م�� اتصال الإنترنت والمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ ال��عدادات.\n\n��رجى التحقق م�� اتصال الإنترنت والمح��ولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
@@ -481,7 +508,7 @@ export default function MerchantSettings() {
 
   const workingDays = [
     "السبت",
-    "ال��حد",
+    "الأحد",
     "الاثنين",
     "الثلاثاء",
     "الأربعاء",
@@ -537,7 +564,7 @@ export default function MerchantSettings() {
       "حولي",
     ],
     "دولة قطر": ["الدوحة", "الريان", "الوك��ة", "أم ص��ال", "الخور", "الشما��"],
-    "مملكة البحرين": ["المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
+    "مملكة ��لبحرين": ["المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
       "القاهرة",
@@ -1474,7 +1501,7 @@ export default function MerchantSettings() {
                 <CardHeader>
                   <CardTitle className="arabic text-right flex items-center">
                     <Shield className="w-5 h-5 ml-2" />
-                    ال��ساب والأمان
+                    الحساب والأمان
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
