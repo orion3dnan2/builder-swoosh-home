@@ -13,7 +13,9 @@
     "permissions": [
       {
         "resource": "*",
-        "actions": ["*"]
+        "actions": [
+          "*"
+        ]
       }
     ],
     "createdAt": "2025-07-30T08:45:22.015Z",
@@ -38,16 +40,24 @@
     "permissions": [
       {
         "resource": "store",
-        "actions": ["read", "write", "delete"]
+        "actions": [
+          "read",
+          "write",
+          "delete"
+        ]
       },
       {
         "resource": "products",
-        "actions": ["read", "write", "delete"]
+        "actions": [
+          "read",
+          "write",
+          "delete"
+        ]
       }
     ],
     "createdAt": "2025-07-30T08:48:21.241Z",
     "isActive": true,
-    "lastLogin": "2025-07-30T09:44:21.721Z"
+    "lastLogin": "2025-07-31T10:36:40.524Z"
   },
   {
     "id": "merchant-001",
@@ -68,11 +78,19 @@
     "permissions": [
       {
         "resource": "store",
-        "actions": ["read", "write", "delete"]
+        "actions": [
+          "read",
+          "write",
+          "delete"
+        ]
       },
       {
         "resource": "products",
-        "actions": ["read", "write", "delete"]
+        "actions": [
+          "read",
+          "write",
+          "delete"
+        ]
       }
     ],
     "createdAt": "2025-07-30T08:45:22.015Z",
