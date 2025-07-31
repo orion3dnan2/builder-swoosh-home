@@ -1641,6 +1641,17 @@ export default function MerchantSettings() {
                         ))}
                       </div>
                     )}
+
+                    {availableRegions.length > 0 && (
+                      <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div className="flex items-center space-x-2 space-x-reverse">
+                          <MapPin className="w-4 h-4 text-blue-600" />
+                          <p className="text-sm text-blue-700 arabic">
+                            المناطق المتاحة يديرها مدير النظام. للتواصل حول إضافة منطقة جديدة تواصل مع الدعم الفني.
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <Separator />
@@ -1810,7 +1821,7 @@ export default function MerchantSettings() {
                         },
                         {
                           key: "customerNotifications",
-                          title: "إشعارات العملاء",
+                          title: "إشعارات العملا��",
                           desc: "إشعار العملا�� عند كل مرحلة من التوصيل",
                           icon: "🔔"
                         }
@@ -1858,7 +1869,7 @@ export default function MerchantSettings() {
                           تكامل الواتساب للتوصيل
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تواصل مباشر مع السائقين وتتبع الطلبات عبر الواتساب
+                          تواصل مباشر مع السائقين وتتبع الطلبات عبر ال��اتساب
                         </p>
                       </div>
                     </div>
@@ -1945,7 +1956,7 @@ export default function MerchantSettings() {
                   {/* Password Change */}
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-4 arabic">
-                      تغيير كلمة المرور
+                      ��غيير كلمة المرور
                     </h3>
                     <div className="space-y-4">
                       <div>
