@@ -333,7 +333,7 @@ export default function MerchantSettings() {
             id: "driver3",
             name: "عثمان عبدالرحمن",
             phone: "+96550123456",
-            area: "الكويت",
+            area: "ال��ويت",
             rating: 4.7,
             isActive: true,
             vehicle: "شاحنة صغيرة",
@@ -534,7 +534,7 @@ export default function MerchantSettings() {
           await ApiService.createStore(storeData);
         }
       } catch (apiError: any) {
-        // إذا فشل API، نستخدم ��لتخزين المحلي كنسخة احتياطية
+        // إذا فشل API، نستخدم ��لتخزين المحلي كنس��ة احتياطية
         console.warn(
           "فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:",
           apiError,
@@ -613,7 +613,7 @@ export default function MerchantSettings() {
       "القضارف",
       "سنار",
     ],
-    "المملكة العربية السعودية": [
+    "ا��مملكة العربية السعودية": [
       "الرياض",
       "جدة",
       "الدمام",
@@ -649,7 +649,7 @@ export default function MerchantSettings() {
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
       "القاهرة",
-      "ال��سكندرية",
+      "ال��س��ندرية",
       "الجيزة",
       "الأقصر",
       "أسوان",
@@ -691,7 +691,7 @@ export default function MerchantSettings() {
     }
   };
 
-  // دالة لمعالجة تغيير الدولة
+  // دالة لمعالجة تغي��ر الدولة
   const handleCountryChange = (country: string) => {
     setSelectedCountry(country);
     // إعادة تعيين المدينة عند تغيير الدولة
@@ -1482,7 +1482,7 @@ export default function MerchantSettings() {
                           حفظ الإعدادات
                         </h3>
                         <p className="text-primary-100 arabic text-sm">
-                          تأكد من حفظ تغييراتك
+                          تأكد من حفظ تغ��يراتك
                         </p>
                       </div>
                       <Button
@@ -1506,14 +1506,19 @@ export default function MerchantSettings() {
 
             {/* Shipping Tab */}
             {activeTab === "shipping" && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="arabic text-right flex items-center">
-                    <Truck className="w-5 h-5 ml-2" />
+              <Card className="shadow-lg border-0 bg-gradient-to-br from-white to-gray-50">
+                <CardHeader className="pb-4">
+                  <CardTitle className="arabic text-right flex items-center text-xl font-bold text-gray-800">
+                    <div className="flex items-center ml-3 bg-primary/10 p-2 rounded-lg">
+                      <Truck className="w-6 h-6 text-primary" />
+                    </div>
                     إعدادات الشحن والتوصيل
                   </CardTitle>
+                  <p className="text-gray-600 arabic text-sm text-right mt-2">
+                    قم بتخصيص أسعار الشحن وأوقات التحضير لمتجرك
+                  </p>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-8">
                   {/* Shipping Costs */}
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-4 arabic">
@@ -1626,7 +1631,7 @@ export default function MerchantSettings() {
                   {/* Shipping Areas */}
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <Label className="arabic">مناطق ال��وصيل</Label>
+                      <Label className="arabic">مناطق ال����وصيل</Label>
                       <div className="text-xs text-gray-500 arabic">
                         {regionsLoading
                           ? "جارٍ التحميل..."
@@ -1721,7 +1726,7 @@ export default function MerchantSettings() {
                             id: `driver${Date.now()}`,
                             name: "سائق جديد",
                             phone: "+966500000000",
-                            area: "منطقة جديدة",
+                            area: "منطقة جدي��ة",
                             rating: 0,
                             isActive: false,
                             vehicle: "سيارة",
@@ -1933,7 +1938,7 @@ export default function MerchantSettings() {
                         <div className="text-center">
                           <div className="text-2xl mb-2">📱</div>
                           <h4 className="font-semibold arabic text-sm mb-2">
-                            تواصل فوري
+                            تواصل ف��ري
                           </h4>
                           <p className="text-xs text-gray-600 arabic">
                             تواصل مع السائقين مباشرة عبر الواتساب
