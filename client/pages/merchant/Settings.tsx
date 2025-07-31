@@ -549,7 +549,7 @@ export default function MerchantSettings() {
   const predefinedCategories = [
     "مواد غذائ��ة وأطعمة",
     "عطور ومستحضرات تجميل",
-    "ملابس وأزياء",
+    "ملابس وأز��اء",
     "إلكترونيات وتقنية",
     "منتجات منزلية",
     "كتب ومواد تعليمية",
@@ -665,6 +665,26 @@ export default function MerchantSettings() {
       city: "",
     });
   };
+
+  // عرض loading عند التحميل الأولي
+  if (loadingState.isLoading && !loadingState.isOffline) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-flex items-center px-6 py-3 font-semibold leading-6 text-sm shadow-lg rounded-xl text-white bg-gradient-to-r from-primary-500 to-secondary-500">
+            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            جاري تحميل بيانات المتجر...
+          </div>
+          <p className="mt-4 text-gray-600 arabic">
+            يتم تحميل إعدادات متجرك، يرجى الانتظار...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
@@ -936,7 +956,7 @@ export default function MerchantSettings() {
                   {/* Store Type */}
                   <div>
                     <Label htmlFor="storeType" className="arabic">
-                      نوع المتجر
+                      ��وع المتجر
                     </Label>
                     <select
                       id="storeType"
