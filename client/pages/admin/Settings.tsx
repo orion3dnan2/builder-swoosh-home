@@ -141,7 +141,7 @@ export default function AdminSettings() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs defaultValue="theme" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="theme" className="arabic">
               المظهر
             </TabsTrigger>
@@ -150,6 +150,9 @@ export default function AdminSettings() {
             </TabsTrigger>
             <TabsTrigger value="features" className="arabic">
               الميزات
+            </TabsTrigger>
+            <TabsTrigger value="regions" className="arabic">
+              المناطق
             </TabsTrigger>
             <TabsTrigger value="content" className="arabic">
               المحتوى
