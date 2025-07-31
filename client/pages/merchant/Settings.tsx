@@ -233,7 +233,7 @@ export default function MerchantSettings() {
     emailNotifications: true,
   });
 
-  // Shipping Settings State - قيم افتراضية للتجار الجد��
+  // Shipping Settings State - قيم افتراضية للتجار الجدد
   const [shipping, setShipping] = useState<ShippingSettings>({
     freeShippingThreshold: isNewMerchant ? 100 : 200,
     standardShippingCost: isNewMerchant ? 15 : 25,
@@ -468,7 +468,7 @@ export default function MerchantSettings() {
     "الأحد",
     "الاثنين",
     "الثلاثاء",
-    "��لأربعاء",
+    "الأربعاء",
     "الخميس",
     "الجمعة",
   ];
@@ -839,7 +839,7 @@ export default function MerchantSettings() {
                       <option value="beauty">تجميل وعناية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
-                      يحدد نوع المتجر مكان ظه��ره في الموقع (صفحة المطاعم،
+                      يحدد نوع المت��ر مكان ظهوره في الموقع (صفحة المطاعم،
                       الشركات، أو ال��تاجر)
                     </p>
                   </div>
@@ -1075,7 +1075,7 @@ export default function MerchantSettings() {
                           إشعارات الطلبات
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تلقى تحديثات حول طلباتك ومبيعاتك
+                          تلقى تحديثات حول طلباتك ومبي��اتك
                         </p>
                       </div>
                     </div>
@@ -1203,36 +1203,51 @@ export default function MerchantSettings() {
                     </div>
                   </div>
 
-                  <Separator />
-
                   {/* Notification Methods */}
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 arabic">
-                      طرق الإشعار
-                    </h3>
+                  <div className="bg-gradient-to-r from-green-50 to-teal-50 p-6 rounded-xl border border-green-200">
+                    <div className="flex items-center mb-6">
+                      <div className="bg-green-100 p-2 rounded-lg ml-3">
+                        <MessageSquare className="w-5 h-5 text-green-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 arabic text-lg">
+                          طرق الإشعار
+                        </h3>
+                        <p className="text-sm text-gray-600 arabic">
+                          اختر كيفية تلقي الإشعارات
+                        </p>
+                      </div>
+                    </div>
                     <div className="space-y-4">
                       {[
                         {
                           key: "smsNotifications",
                           label: "رسائل SMS",
                           desc: "استقبال الإشعارات عبر الرسائل النصية",
+                          icon: "📱",
+                          color: "bg-cyan-50 border-cyan-200 hover:bg-cyan-100"
                         },
                         {
                           key: "emailNotifications",
-                          label: "البريد الإلكتروني",
+                          label: "البر��د الإلكتروني",
                           desc: "استقبال الإشعارات عبر البريد الإلكتروني",
+                          icon: "📧",
+                          color: "bg-indigo-50 border-indigo-200 hover:bg-indigo-100"
                         },
                       ].map((item) => (
                         <div
                           key={item.key}
-                          className={`flex items-center justify-between ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          className={`p-4 rounded-lg border-2 transition-all duration-200 ${item.color} ${isRTL ? "flex-row-reverse" : "flex-row"} flex items-center justify-between`}
                         >
-                          <div className={isRTL ? "text-right" : "text-left"}>
-                            <div className="font-medium arabic">
-                              {item.label}
-                            </div>
-                            <div className="text-sm text-gray-600 arabic">
-                              {item.desc}
+                          <div className={`flex items-center ${isRTL ? "flex-row-reverse" : "flex-row"}`}>
+                            <div className="text-2xl ml-3">{item.icon}</div>
+                            <div className={isRTL ? "text-right" : "text-left"}>
+                              <div className="font-semibold arabic text-gray-900">
+                                {item.label}
+                              </div>
+                              <div className="text-sm text-gray-600 arabic mt-1">
+                                {item.desc}
+                              </div>
                             </div>
                           </div>
                           <Switch
@@ -1247,9 +1262,37 @@ export default function MerchantSettings() {
                                 [item.key]: checked,
                               })
                             }
+                            className="data-[state=checked]:bg-primary-600"
                           />
                         </div>
                       ))}
+                    </div>
+                  </div>
+
+                  {/* Save Button */}
+                  <div className="bg-gradient-to-r from-primary-500 to-secondary-500 p-6 rounded-xl shadow-lg">
+                    <div className="flex items-center justify-between">
+                      <div className="text-white">
+                        <h3 className="font-bold arabic text-lg mb-1">
+                          حفظ الإعدادات
+                        </h3>
+                        <p className="text-primary-100 arabic text-sm">
+                          تأكد من حفظ تغييراتك
+                        </p>
+                      </div>
+                      <Button
+                        size="lg"
+                        className="bg-white text-primary-600 hover:bg-gray-50 font-bold arabic px-8 shadow-lg"
+                        onClick={() => {
+                          // Handle save notifications
+                          toast({
+                            title: "تم الحفظ",
+                            description: "تم حفظ إعدادات الإشعارات بنجاح",
+                          });
+                        }}
+                      >
+                        💾 حفظ التغييرات
+                      </Button>
                     </div>
                   </div>
                 </CardContent>
@@ -1537,7 +1580,7 @@ export default function MerchantSettings() {
                             ��لمصادقة الثن��ئية
                           </div>
                           <div className="text-sm text-gray-600 arabic">
-                            حماية إضافية لحسابك
+                            حما��ة إضافية لحسابك
                           </div>
                         </div>
                         <Switch
