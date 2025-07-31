@@ -226,7 +226,7 @@ export default function MerchantSettings() {
       : "متجر الخير السوداني",
     description: isNewMerchant
       ? ""
-      : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور ��أطعمة وحرف يدوية",
+      : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
     storeType: isNewMerchant ? "" : "restaurant",
     phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
@@ -295,7 +295,7 @@ export default function MerchantSettings() {
         area: "دبي",
         rating: 4.9,
         isActive: true,
-        vehicle: "دراجة نار��ة",
+        vehicle: "دراجة نارية",
         speciality: ["طلبات صغيرة", "مستندات"]
       },
       {
@@ -378,7 +378,7 @@ export default function MerchantSettings() {
         return;
       }
 
-      // التحق�� من حجم الملف (أقل من 10 ميجابايت)
+      // التحق�� من حجم الملف (أقل من 10 م��جابايت)
       if (file.size > 10 * 1024 * 1024) {
         alert("حجم الصورة يجب أن يكون أقل من 10 ميجابايت");
         return;
@@ -414,7 +414,7 @@ export default function MerchantSettings() {
   };
 
   const handleSaveSettings = async () => {
-    // التحقق من صحة البيانات
+    // التحقق من صحة البي��نات
     if (!storeSettings.storeName.trim()) {
       alert("يرجى إدخال اسم المتجر");
       return;
@@ -610,7 +610,7 @@ export default function MerchantSettings() {
       "الجيزة",
       "الأقصر",
       "أسوان",
-      "بور��عيد",
+      "بورسعيد",
       "السويس",
     ],
     "المملكة الأردنية الهاشمية": [
@@ -940,7 +940,7 @@ export default function MerchantSettings() {
                         })
                       }
                       className="mt-1 text-right arabic"
-                      placeholder="اكتب وصفاً مختصراً عن متجرك ومنتجاتك..."
+                      placeholder="اكتب وصفاً مختصراً عن متجرك ��منتجاتك..."
                     />
                   </div>
 
@@ -1470,20 +1470,31 @@ export default function MerchantSettings() {
                   {/* Processing Time */}
                   <div>
                     <Label htmlFor="processingTime" className="arabic">
-                      مدة تحضير الطلب
+                      مدة تحضير الطلب (بالدقائق)
                     </Label>
-                    <Input
-                      id="processingTime"
-                      value={shipping.processingTime}
-                      onChange={(e) =>
-                        setShipping({
-                          ...shipping,
-                          processingTime: e.target.value,
-                        })
-                      }
-                      className="mt-1 text-right arabic"
-                      placeholder="مثال: 1-2 أيام عمل"
-                    />
+                    <div className="mt-1 relative">
+                      <Input
+                        id="processingTime"
+                        type="number"
+                        value={shipping.processingTime}
+                        onChange={(e) =>
+                          setShipping({
+                            ...shipping,
+                            processingTime: e.target.value,
+                          })
+                        }
+                        className="text-right"
+                        placeholder="مثال: 30"
+                        min="5"
+                        max="480"
+                      />
+                      <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                        دقيقة
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-500 arabic mt-1">
+                      الحد الأدنى: 5 دقائق - الحد الأقصى: 8 ساعات (480 دقيقة)
+                    </p>
                   </div>
 
                   <Separator />
@@ -1779,7 +1790,7 @@ export default function MerchantSettings() {
 
                       <div className="bg-white p-4 rounded-lg border border-green-200">
                         <div className="text-center">
-                          <div className="text-2xl mb-2">🚀</div>
+                          <div className="text-2xl mb-2">���</div>
                           <h4 className="font-semibold arabic text-sm mb-2">
                             توصيل سريع
                           </h4>
