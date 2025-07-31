@@ -319,6 +319,14 @@ export default function MerchantSettings() {
     customerNotifications: !isNewMerchant,
   });
 
+  // حالة تحميل البيانات
+  const [loadingState, setLoadingState] = useState({
+    isLoading: true,
+    hasError: false,
+    isOffline: false,
+    retryCount: 0,
+  });
+
   // دالة لفتح الواتساب
   const openWhatsApp = (phone: string, driverName: string) => {
     const message = encodeURIComponent(`��لسلام عليكم ${driverName}، أريد التواصل معك بخصوص توصيل طلب من متجر ${storeSettings.storeName}.`);
@@ -414,7 +422,7 @@ export default function MerchantSettings() {
   };
 
   const handleSaveSettings = async () => {
-    // التحقق من صحة البي��نات
+    // التحقق من صحة البي��نا��
     if (!storeSettings.storeName.trim()) {
       alert("يرجى إدخال اسم المتجر");
       return;
@@ -532,7 +540,7 @@ export default function MerchantSettings() {
 
   // أنواع المتاجر المحددة مسبقاً (يمكن تعديلها من قبل الإدارة)
   const predefinedCategories = [
-    "مواد غذائية وأطعمة",
+    "مواد غذائ��ة وأطعمة",
     "عطور ومستحضرات تجميل",
     "ملابس وأزياء",
     "إلكترونيات وتقنية",
