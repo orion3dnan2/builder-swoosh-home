@@ -186,7 +186,7 @@ export default function MerchantSettings() {
         // تحقق من وجود token المصادقة
         const token = ApiService.getToken();
         if (!token) {
-          console.log("لا يوجد token ��لمصادقة، استخدام البيانات المحلية");
+          console.log("لا يوجد token للمصادقة، استخدام البيانات المحلية");
           loadLocalData();
           return;
         }
@@ -270,7 +270,7 @@ export default function MerchantSettings() {
     storeType: isNewMerchant ? "" : "restaurant",
     phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
     email: isNewMerchant ? user?.email || "" : "store@example.com",
-    address: isNewMerchant ? "" : "شارع النيل�� الخرطوم",
+    address: isNewMerchant ? "" : "شارع ا��نيل�� الخرطوم",
     city: isNewMerchant ? user?.profile?.city || "" : "الخرطوم",
     workingHours: {
       start: isNewMerchant ? "09:00" : "09:00",
@@ -421,7 +421,7 @@ export default function MerchantSettings() {
         "image/webp",
       ];
       if (!allowedTypes.includes(file.type)) {
-        alert("يرجى اختيار ملف صورة صا��ح (PNG, JPG, JPEG, أو WebP)");
+        alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG, أو WebP)");
         return;
       }
 
@@ -580,7 +580,7 @@ export default function MerchantSettings() {
   // أنواع المتاجر المحددة مسبقاً (يمكن تعديلها من قبل الإدارة)
   const predefinedCategories = [
     "مواد غذائ��ة وأطعمة",
-    "عطور ومستحضرات تج��يل",
+    "عطور ومستحضرات تجميل",
     "ملابس وأزياء",
     "إلكترونيات وتقنية",
     "منتجات منزلية",
@@ -631,7 +631,7 @@ export default function MerchantSettings() {
       "جازان",
       "نجران",
     ],
-    "الإمارا�� العربية المتحدة": [
+    "الإمارات العربية المتحدة": [
       "��بي",
       "أبوظبي",
       "الشارقة",
@@ -662,7 +662,7 @@ export default function MerchantSettings() {
     ],
     "المملكة الأردنية ال��اشمية": [
       "عمان",
-      "إربد",
+      "��ربد",
       "الزرقاء",
       "العقبة",
       "السلط",
@@ -670,18 +670,15 @@ export default function MerchantSettings() {
     ],
   };
 
-  // إضافة حا��ات جديدة
+  // إضافة حالات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
     isNewMerchant ? user?.profile?.country || "السودان" : "الس��دان",
   );
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
 
-  // إدارة المناطق من localStorage الإداري
-  const [availableRegions, setAvailableRegions] = useState<string[]>([
-    "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة",
-    "دبي", "أبوظبي", "الشارقة", "الدوحة", "الكويت", "المنامة", "مسقط"
-  ]);
+  // إدارة المناطق من النظام الإداري
+  const { regions: availableRegions, isLoading: regionsLoading, hasRegions } = useRegions();
 
   // دال�� لمعالجة تغيير نوع المتجر
   const handleCategoryChange = (value: string) => {
@@ -1648,7 +1645,7 @@ export default function MerchantSettings() {
                         <div className="flex items-center space-x-2 space-x-reverse">
                           <MapPin className="w-4 h-4 text-blue-600" />
                           <p className="text-sm text-blue-700 arabic">
-                            المناطق المتاحة يديرها مدير النظام. للتواصل حول إضافة منطقة جديدة تواصل مع الدعم الفني.
+                            الم��اطق المتاحة يديرها مدير النظام. للتواصل حول إضافة منطقة جديدة تواصل مع الدعم الفني.
                           </p>
                         </div>
                       </div>
