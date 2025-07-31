@@ -32,6 +32,7 @@ import Profile from "./pages/Profile";
 import { SuperAdminRoute, MerchantRoute } from "./components/ProtectedRoute";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
+import { TextCleaner } from "./components/SafeText";
 import "./global.css";
 
 function App() {
