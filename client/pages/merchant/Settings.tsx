@@ -31,6 +31,8 @@ import {
   AlertTriangle,
   CheckCircle,
   RefreshCw,
+  ShoppingCart,
+  MessageSquare,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -393,7 +395,7 @@ export default function MerchantSettings() {
         shippingSettings: shipping,
       };
 
-      // البحث عن متجر موجود ���لمستخدم أولاً
+      // ��لبحث عن متجر موجود ���لمستخدم أولاً
       try {
         const userStores = await ApiService.getStores();
         const existingStore = userStores.find(
@@ -432,7 +434,7 @@ export default function MerchantSettings() {
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ الإعدادات.\n\nيرجى التحقق م�� اتصال الإنترنت والمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ ال��عدادات.\n\nيرجى التحقق م�� اتصال الإنترنت والمحاولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
@@ -518,7 +520,7 @@ export default function MerchantSettings() {
       "الفروانية",
       "حولي",
     ],
-    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشما��"],
+    "دولة قطر": ["الدوحة", "الريان", "الوك��ة", "أم صلال", "الخور", "الشما��"],
     "مملكة البحرين": ["المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
@@ -838,7 +840,7 @@ export default function MerchantSettings() {
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
                       يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
-                      الشركات، أو المتاجر)
+                      الشركات، أو ال��تاجر)
                     </p>
                   </div>
 
@@ -1008,7 +1010,7 @@ export default function MerchantSettings() {
                         />
                       </div>
                       <div>
-                        <Label className="arabic text-sm">أيام العمل</Label>
+                        <Label className="arabic text-sm">أي��م العمل</Label>
                         <div className="mt-1 space-y-1">
                           {workingDays.map((day) => (
                             <label
