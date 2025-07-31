@@ -42,6 +42,7 @@ import {
   Plus,
   Edit,
   Trash2,
+  DollarSign,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -399,7 +400,7 @@ export default function MerchantSettings() {
         alert("تم تحديث شعار المتجر بنجاح! 🎉");
       };
       reader.onerror = () => {
-        alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
+        alert("فشل في قراءة الصورة. يرجى ا��محاولة مرة أخرى.");
       };
       reader.readAsDataURL(file);
     }
@@ -1035,7 +1036,7 @@ export default function MerchantSettings() {
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
                       يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
-                      الشركات، أو المت��جر)
+                      الشركات، أو المت����جر)
                     </p>
                   </div>
 
@@ -1159,7 +1160,7 @@ export default function MerchantSettings() {
                           })
                         }
                         className="mt-1 text-right arabic"
-                        placeholder="شارع ال��يل، الخرطوم"
+                        placeholder="شا��ع ال��يل، الخرطوم"
                       />
                     </div>
                   </div>
