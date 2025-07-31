@@ -52,8 +52,12 @@ export default function AdminSettings() {
   // State for managing delivery regions
   const { regions: deliveryRegions, notifyRegionsUpdate } = useRegions();
   const regionsStats = useRegionsStats();
+  const countries = useCountries();
+  const { regionsByCountry, addRegionToCountry, removeRegionFromCountry, updateRegionInCountry } = useRegionsByCountry();
+
+  const [selectedCountry, setSelectedCountry] = useState<string>("SA");
   const [newRegion, setNewRegion] = useState("");
-  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editingRegionId, setEditingRegionId] = useState<string | null>(null);
   const [editingValue, setEditingValue] = useState("");
 
   const handleThemeChange = (key: string, value: any) => {
@@ -145,7 +149,7 @@ export default function AdminSettings() {
       setUnsavedChanges(true);
       toast({
         title: "تم تحديث المنطقة",
-        description: `تم ت��يير اسم المنطقة من "${oldName}" إلى "${editingValue}"`,
+        description: `تم تغيير اسم المنطقة من "${oldName}" إلى "${editingValue}"`,
       });
     } else {
       toast({
@@ -569,7 +573,7 @@ export default function AdminSettings() {
                     />
                     <Button variant="outline" size="sm" className="mt-2 arabic">
                       <Upload className="w-4 h-4 ml-2" />
-                      رفع صور�� جديدة
+                      رفع صور�� جد��دة
                     </Button>
                   </div>
 
@@ -798,7 +802,7 @@ export default function AdminSettings() {
                       className="arabic"
                     >
                       <Upload className="w-4 h-4 ml-2" />
-                      تصدير المناطق
+                      تصدير المنا��ق
                     </Button>
                   </div>
 
@@ -823,7 +827,7 @@ export default function AdminSettings() {
                         • المناطق المحددة هنا ستظهر لجميع التجار في النظام فوراً
                       </li>
                       <li>
-                        • يمكن إعادة تعيين المناطق للقيم الافتراضية أ�� تصديرها
+                        • يمكن إعادة تعيين المناطق للقيم الافتراضية أو تصديرها
                         كملف
                       </li>
                     </ul>
