@@ -82,9 +82,7 @@ export default function AdminSettings() {
   };
 
   const handleSave = () => {
-    saveSettings(localSettings);
-    setUnsavedChanges(false);
-    // Optionally show success message
+    handleSaveAll();
   };
 
   const handleReset = () => {
@@ -410,7 +408,7 @@ export default function AdminSettings() {
                   <div className="space-y-4">
                     <div className="flex items-center space-x-2 space-x-reverse">
                       <Monitor className="w-5 h-5" />
-                      <span className="arabic">سطح المكتب</span>
+                      <span className="arabic">سطح المكت��</span>
                     </div>
                     <div className="border rounded-lg p-4 bg-white">
                       <div
@@ -607,7 +605,7 @@ export default function AdminSettings() {
                             {key === "enableJobs" && "تفعيل لوحة الوظائف"}
                             {key === "enableServices" && "تفعيل قائمة الخدمات"}
                             {key === "enableAds" && "تفعيل الإعلانات المدفوعة"}
-                            {key === "enableReviews" && "تفعيل نظام التقييمات"}
+                            {key === "enableReviews" && "تفع��ل نظام التقييمات"}
                             {key === "enableChat" && "تفعيل الدردشة المباشرة"}
                           </p>
                         </div>
