@@ -48,7 +48,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ApiService } from "@/lib/apiService";
 import { useToast } from "@/hooks/use-toast";
 import { cleanArabicText } from "@/lib/textUtils";
-import { useRegions } from "@/hooks/use-regions";
+import { useRegions, useCountries, useRegionsByCountry } from "@/hooks/use-regions";
 
 interface StoreSettings {
   storeName: string;
@@ -110,7 +110,7 @@ export default function MerchantSettings() {
   const [isSaving, setIsSaving] = useState(false);
   const [isNewMerchant, setIsNewMerchant] = useState(true);
 
-  // تحديد إذا كان التاجر جديد
+  // تحديد إذا كان الت��جر جديد
   useEffect(() => {
     if (user?.createdAt) {
       const accountAge = Date.now() - new Date(user.createdAt).getTime();
@@ -285,7 +285,7 @@ export default function MerchantSettings() {
     emailNotifications: true,
   });
 
-  // Shipping Settings State - قيم افتراضية للتجار الجدد
+  // Shipping Settings State - قيم افتراضية للتجار ال��دد
   const [shipping, setShipping] = useState<ShippingSettings>({
     freeShippingThreshold: isNewMerchant ? 100 : 200,
     standardShippingCost: isNewMerchant ? 15 : 25,
@@ -599,7 +599,7 @@ export default function MerchantSettings() {
 
   // ��ائمة الدول والمدن التابعة لها
   const countriesWithCities = {
-    السودان: [
+    ا��سودان: [
       "الخرطوم",
       "أمدرمان",
       "بحري",
@@ -1034,7 +1034,7 @@ export default function MerchantSettings() {
                       <option value="beauty">تجميل وعناية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
-                      يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
+                      يحدد نوع المت��ر مكان ظهوره في الموقع (صفحة المطاعم،
                       الشركات، أو المت��جر)
                     </p>
                   </div>
@@ -1724,7 +1724,7 @@ export default function MerchantSettings() {
                             area: "منطقة جديدة",
                             rating: 0,
                             isActive: false,
-                            vehicle: "سيارة",
+                            vehicle: "سي��رة",
                             speciality: [],
                           };
                           setDeliveryDrivers([...deliveryDrivers, newDriver]);
@@ -1857,7 +1857,7 @@ export default function MerchantSettings() {
                         },
                         {
                           key: "autoAssignDrivers",
-                          title: "توزيع تلقائي للطلبات",
+                          title: "توز��ع تلقائي للطلبات",
                           desc: "توزيع الطلبات تلقائياً على أقرب سائق متاح",
                           icon: "🤖",
                         },
@@ -1960,7 +1960,7 @@ export default function MerchantSettings() {
                             توصيل سريع
                           </h4>
                           <p className="text-xs text-gray-600 arabic">
-                            شبكة واسعة من السائقين لضمان التوصيل السريع
+                            شبكة واسعة من ال��ائقين لضمان التوصيل السريع
                           </p>
                         </div>
                       </div>
