@@ -30,7 +30,7 @@ import {
 import { useAppSettings } from "@/lib/appSettings";
 import { useAuth } from "@/lib/auth";
 import { regionsManager } from "@/lib/regionsManager";
-import { useRegions, useRegionsStats } from "@/hooks/use-regions";
+import { useRegions, useRegionsStats, useRegionsByCountry, useCountries } from "@/hooks/use-regions";
 import { useToast } from "@/hooks/use-toast";
 
 export default function AdminSettings() {
@@ -145,7 +145,7 @@ export default function AdminSettings() {
       setUnsavedChanges(true);
       toast({
         title: "تم تحديث المنطقة",
-        description: `تم تغيير اسم المنطقة من "${oldName}" إلى "${editingValue}"`,
+        description: `تم ت��يير اسم المنطقة من "${oldName}" إلى "${editingValue}"`,
       });
     } else {
       toast({
@@ -823,7 +823,7 @@ export default function AdminSettings() {
                         • المناطق المحددة هنا ستظهر لجميع التجار في النظام فوراً
                       </li>
                       <li>
-                        • يمكن إعادة تعيين المناطق للقيم الافتراضية أو تصديرها
+                        • يمكن إعادة تعيين المناطق للقيم الافتراضية أ�� تصديرها
                         كملف
                       </li>
                     </ul>
