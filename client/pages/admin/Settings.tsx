@@ -712,12 +712,12 @@ export default function AdminSettings() {
                             تحذير: لا توجد مناطق توصيل!
                           </h4>
                           <p className="text-red-600 arabic text-sm mb-4">
-                            جميع التجار لن يتمكنوا ��ن تحديد مناطق التوصيل حتى تضيف مناطق هنا
+                            جميع التجار لن يتمكنوا من تحديد مناطق التوصيل حتى ت��يف مناطق هنا
                           </p>
                           <Button
                             onClick={() => {
                               regionsManager.resetToDefaults();
-                              setDeliveryRegions(regionsManager.getRegions());
+                              notifyRegionsUpdate();
                               setUnsavedChanges(true);
                             }}
                             className="arabic"
@@ -743,7 +743,7 @@ export default function AdminSettings() {
                       className="arabic"
                     >
                       <RotateCcw className="w-4 h-4 ml-2" />
-                      إعادة تعيين للافتراضي
+                      إعادة تعيين للافتر��ضي
                     </Button>
 
                     <Button
@@ -837,7 +837,7 @@ export default function AdminSettings() {
                             {key === "enableProducts" &&
                               "تفعيل قسم بيع المنتجات"}
                             {key === "enableCompanies" && "تفعيل دليل الشركات"}
-                            {key === "enableJobs" && "تفعيل لوحة الوظائف"}
+                            {key === "enableJobs" && "ت��عيل لوحة الوظائف"}
                             {key === "enableServices" && "تفعيل قائمة الخدمات"}
                             {key === "enableAds" && "تفعيل الإعلانات المدفوعة"}
                             {key === "enableReviews" && "تفعيل نظام التقييمات"}
@@ -924,7 +924,7 @@ export default function AdminSettings() {
               <CardContent className="space-y-6">
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-yellow-800 arabic">
-                    ⚠️ تحذير: الإعدادات المت��دمة قد تؤثر على أداء التطبيق. يُنصح
+                    ⚠️ تحذير: الإعدادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
                     بعدم تغييرها إلا إذا كنت تعرف ما تفعل.
                   </p>
                 </div>
@@ -953,7 +953,7 @@ export default function AdminSettings() {
                   <div className="flex items-center justify-between p-4 border rounded-lg">
                     <div>
                       <Label className="font-medium arabic">
-                        دعم الكتابة من اليمين لليسار
+                        دعم الكتابة من ا��يمين لليسار
                       </Label>
                       <p className="text-sm text-gray-600 arabic">
                         تفعيل RTL للغة العربية
@@ -984,7 +984,7 @@ export default function AdminSettings() {
                     إعادة تعيين جميع الإعدادات
                   </Button>
                   <p className="text-sm text-gray-600 mt-2 arabic">
-                    سيتم حذف جميع التخصيصات والعودة للإعدادات الافتراضية
+                    سيتم حذف جميع التخصيصات والعودة لل��عدادات الافتراضية
                   </p>
                 </div>
               </CardContent>
