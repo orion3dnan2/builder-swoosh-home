@@ -52,19 +52,9 @@ export default function AdminSettings() {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editingValue, setEditingValue] = useState("");
 
-  // Load regions from localStorage on component mount
+  // Load regions from regionsManager on component mount
   useEffect(() => {
-    const savedRegions = localStorage.getItem('adminDeliveryRegions');
-    if (savedRegions) {
-      try {
-        const parsedRegions = JSON.parse(savedRegions);
-        if (Array.isArray(parsedRegions)) {
-          setDeliveryRegions(parsedRegions);
-        }
-      } catch (error) {
-        console.error('Error loading regions from localStorage:', error);
-      }
-    }
+    setDeliveryRegions(regionsManager.getRegions());
   }, []);
 
   const handleThemeChange = (key: string, value: any) => {
@@ -335,7 +325,7 @@ export default function AdminSettings() {
                 <CardHeader>
                   <CardTitle className="flex items-center arabic">
                     <Type className="w-5 h-5 ml-2" />
-                    الخطو�� والنصوص
+                    الخطوط والنصوص
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -728,7 +718,7 @@ export default function AdminSettings() {
                             {key === "enableProducts" && "المنتجات"}
                             {key === "enableCompanies" && "الشركات"}
                             {key === "enableJobs" && "الوظائف"}
-                            {key === "enableServices" && "الخدمات"}
+                            {key === "enableServices" && "الخ��مات"}
                             {key === "enableAds" && "الإعلانات"}
                             {key === "enableReviews" && "التقييمات"}
                             {key === "enableChat" && "الدردشة"}
