@@ -47,12 +47,27 @@ export default function AdminSettings() {
 
   // State for managing delivery regions
   const [deliveryRegions, setDeliveryRegions] = useState<string[]>([
-    "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة ا��منورة",
+    "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة",
     "دبي", "أبوظبي", "الشارقة", "الدوحة", "الكويت", "المنامة", "مسقط"
   ]);
   const [newRegion, setNewRegion] = useState("");
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editingValue, setEditingValue] = useState("");
+
+  // Load regions from localStorage on component mount
+  useEffect(() => {
+    const savedRegions = localStorage.getItem('adminDeliveryRegions');
+    if (savedRegions) {
+      try {
+        const parsedRegions = JSON.parse(savedRegions);
+        if (Array.isArray(parsedRegions)) {
+          setDeliveryRegions(parsedRegions);
+        }
+      } catch (error) {
+        console.error('Error loading regions from localStorage:', error);
+      }
+    }
+  }, []);
 
   const handleThemeChange = (key: string, value: any) => {
     const updatedSettings = {
@@ -673,7 +688,7 @@ export default function AdminSettings() {
                     {deliveryRegions.length === 0 && (
                       <div className="text-center py-8 text-gray-500">
                         <MapPin className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                        <p className="arabic">لا توجد مناطق مضافة بعد</p>
+                        <p className="arabic">��ا توجد مناطق مضافة بعد</p>
                         <p className="text-sm arabic">أضف منطقة جديدة للبدء</p>
                       </div>
                     )}
