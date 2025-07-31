@@ -712,7 +712,7 @@ export default function AdminSettings() {
                             تحذير: لا توجد مناطق توصيل!
                           </h4>
                           <p className="text-red-600 arabic text-sm mb-4">
-                            جميع التجار لن يتمكنوا من تحديد مناطق التوصيل حتى تضيف مناطق هنا
+                            جميع التجار لن يتمكنوا ��ن تحديد مناطق التوصيل حتى تضيف مناطق هنا
                           </p>
                           <Button
                             onClick={() => {
@@ -737,7 +737,7 @@ export default function AdminSettings() {
                       size="sm"
                       onClick={() => {
                         regionsManager.resetToDefaults();
-                        setDeliveryRegions(regionsManager.getRegions());
+                        notifyRegionsUpdate();
                         setUnsavedChanges(true);
                       }}
                       className="arabic"
@@ -924,7 +924,7 @@ export default function AdminSettings() {
               <CardContent className="space-y-6">
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-yellow-800 arabic">
-                    ⚠️ تحذير: الإعدادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
+                    ⚠️ تحذير: الإعدادات المت��دمة قد تؤثر على أداء التطبيق. يُنصح
                     بعدم تغييرها إلا إذا كنت تعرف ما تفعل.
                   </p>
                 </div>
