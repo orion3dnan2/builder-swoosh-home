@@ -154,9 +154,22 @@
 
   body {
     @apply bg-background text-foreground transition-colors duration-300;
+    font-family:
+      "Cairo",
+      "Noto Sans Arabic",
+      "Tajawal",
+      "Noto Kufi Arabic",
+      "Amiri",
+      "Tahoma",
+      "Segoe UI",
+      "Arial Unicode MS",
+      sans-serif;
     font-feature-settings:
       "rlig" 1,
       "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   /* Smooth transitions for theme changes */
