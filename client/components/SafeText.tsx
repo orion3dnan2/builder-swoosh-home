@@ -65,29 +65,82 @@ export const useCleanText = (text: string): string => {
 export const TextCleaner: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   React.useEffect(() => {
     const cleanupTexts = () => {
-      const textNodes = document.evaluate(
-        '//text()[contains(., "��")]',
-        document,
-        null,
-        XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-        null
+      // Find all text nodes with corrupted characters
+      const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        {
+          acceptNode: (node) => {
+            return node.textContent && node.textContent.includes('��')
+              ? NodeFilter.FILTER_ACCEPT
+              : NodeFilter.FILTER_REJECT;
+          }
+        }
       );
 
-      for (let i = 0; i < textNodes.snapshotLength; i++) {
-        const node = textNodes.snapshotItem(i);
-        if (node && node.textContent) {
-          node.textContent = cleanArabicText(node.textContent);
-        }
+      const corruptedNodes = [];
+      let node;
+      while (node = walker.nextNode()) {
+        corruptedNodes.push(node);
       }
+
+      // Clean each corrupted node
+      corruptedNodes.forEach(textNode => {
+        if (textNode.textContent) {
+          textNode.textContent = cleanArabicText(textNode.textContent);
+        }
+      });
     };
 
     // تنظيف فوري
     cleanupTexts();
-    
-    // تنظيف دوري
-    const interval = setInterval(cleanupTexts, 1000);
-    
-    return () => clearInterval(interval);
+
+    // مراقبة التغييرات في DOM وتنظيف المحتوى الجديد
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.TEXT_NODE && node.textContent?.includes('��')) {
+              node.textContent = cleanArabicText(node.textContent);
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+              const walker = document.createTreeWalker(
+                node as Element,
+                NodeFilter.SHOW_TEXT,
+                {
+                  acceptNode: (textNode) => {
+                    return textNode.textContent && textNode.textContent.includes('��')
+                      ? NodeFilter.FILTER_ACCEPT
+                      : NodeFilter.FILTER_REJECT;
+                  }
+                }
+              );
+
+              let textNode;
+              while (textNode = walker.nextNode()) {
+                if (textNode.textContent) {
+                  textNode.textContent = cleanArabicText(textNode.textContent);
+                }
+              }
+            }
+          });
+        }
+      });
+    });
+
+    // بدء مراقبة DOM
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+
+    // تنظيف دوري كنسخة احتياطية
+    const interval = setInterval(cleanupTexts, 5000);
+
+    return () => {
+      observer.disconnect();
+      clearInterval(interval);
+    };
   }, []);
 
   return <>{children}</>;
