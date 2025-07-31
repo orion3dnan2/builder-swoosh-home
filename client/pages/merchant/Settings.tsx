@@ -276,7 +276,7 @@ export default function MerchantSettings() {
     processingTime: isNewMerchant ? "30" : "45",
     shippingAreas: isNewMerchant
       ? []
-      : ["الخرطوم", "أمدرمان", "بحري", "مدني", "��سلا"],
+      : ["الخرطوم", "أمدرمان", "بحري", "مدني", "����سلا"],
   });
 
   const [accountSettings, setAccountSettings] = useState({
@@ -339,7 +339,7 @@ export default function MerchantSettings() {
     retryCount: 0,
   });
 
-  // دالة لفتح الواتسا��
+  // دالة لفتح الواتساب
   const openWhatsApp = (phone: string, driverName: string) => {
     const message = encodeURIComponent(`��لسلام عليكم ${driverName}، أريد التواصل معك بخصوص توصيل طلب من متجر ${storeSettings.storeName}.`);
     const whatsappUrl = `https://wa.me/${phone.replace('+', '')}?text=${message}`;
@@ -365,7 +365,7 @@ export default function MerchantSettings() {
 
       // التحقق من حجم الملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
-        alert("حجم الصورة يجب أن يكون أقل من 5 مي��ابايت");
+        alert("حجم الصورة يجب أن يكون أقل من 5 ميجابايت");
         return;
       }
 
@@ -398,7 +398,7 @@ export default function MerchantSettings() {
         return;
       }
 
-      // التحق�� من حجم الملف (أقل من 10 م��جابايت)
+      // التحق�� م�� حجم الملف (أقل من 10 م��جابايت)
       if (file.size > 10 * 1024 * 1024) {
         alert("حجم الصورة يجب أن يكون أقل من 10 ميجابايت");
         return;
@@ -408,7 +408,7 @@ export default function MerchantSettings() {
       reader.onload = (e) => {
         const bannerUrl = e.target?.result as string;
         setStoreSettings({ ...storeSettings, banner: bannerUrl });
-        alert("تم تحديث غلاف المتجر ��نجاح! 🎨");
+        alert("تم تحديث غلاف المتجر بنجاح! 🎨");
       };
       reader.onerror = () => {
         alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
@@ -565,7 +565,7 @@ export default function MerchantSettings() {
   ];
 
   const workingDays = [
-    "السب��",
+    "السبت",
     "الأحد",
     "الاثنين",
     "الثلاثاء",
@@ -674,7 +674,7 @@ export default function MerchantSettings() {
     });
   };
 
-  // عرض loading عند التحميل الأ��لي
+  // عرض loading عند الت��ميل الأ��لي
   if (loadingState.isLoading && !loadingState.isOffline) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 flex items-center justify-center">
@@ -954,7 +954,7 @@ export default function MerchantSettings() {
                               })
                             }
                             className="text-right arabic"
-                            placeholder="حدد نوع متجرك (مثال: صيدلية، محل حلويات، ورشة تصليح)"
+                            placeholder="حدد نوع متجرك (مثال: صيدلية، محل حلويات، ورشة ��صليح)"
                           />
                         </div>
                       )}
@@ -990,7 +990,7 @@ export default function MerchantSettings() {
                       <option value="beauty">تجميل وعناية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
-                      يحدد نوع المتجر مكان ظهوره في الم��قع (صفحة المطاعم،
+                      يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
                       الشركات، أو المت��جر)
                     </p>
                   </div>
@@ -1144,7 +1144,7 @@ export default function MerchantSettings() {
                         />
                       </div>
                       <div>
-                        <Label className="arabic text-sm">إلى الساع��</Label>
+                        <Label className="arabic text-sm">إلى الساعة</Label>
                         <Input
                           type="time"
                           value={storeSettings.workingHours.end}
@@ -1572,17 +1572,27 @@ export default function MerchantSettings() {
                   {/* Shipping Areas */}
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <Label className="arabic">مناطق التوصيل</Label>
+                      <Label className="arabic">مناطق ال��وصيل</Label>
                       <div className="text-xs text-gray-500 arabic">
-                        ({availableRegions.length} منطقة متاحة)
+                        {regionsLoading ? (
+                          "جارٍ التحميل..."
+                        ) : (
+                          `(${availableRegions.length} منطقة متاحة)`
+                        )}
                       </div>
                     </div>
 
-                    {availableRegions.length === 0 ? (
+                    {regionsLoading ? (
                       <div className="text-center py-8 text-gray-500 border-2 border-dashed border-gray-200 rounded-lg">
-                        <MapPin className="w-8 h-8 mx-auto mb-2 text-gray-300" />
-                        <p className="arabic text-sm">لا توجد مناطق متاحة</p>
-                        <p className="arabic text-xs">يجب على المدير إضافة مناطق التوصيل أولاً</p>
+                        <RefreshCw className="w-8 h-8 mx-auto mb-2 text-gray-300 animate-spin" />
+                        <p className="arabic text-sm">جارٍ تحميل المناطق...</p>
+                      </div>
+                    ) : !hasRegions ? (
+                      <div className="text-center py-8 border-2 border-dashed border-orange-200 rounded-lg bg-orange-50">
+                        <MapPin className="w-8 h-8 mx-auto mb-2 text-orange-400" />
+                        <p className="arabic text-sm text-orange-600 font-medium">لا توجد مناطق متاحة حالياً</p>
+                        <p className="arabic text-xs text-orange-500 mt-1">يجب على مدير النظام إضافة مناطق التوصيل أولاً</p>
+                        <p className="arabic text-xs text-orange-500">تواصل مع الدعم الفني لإضافة مناطق جديدة</p>
                       </div>
                     ) : (
                       <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
@@ -1730,7 +1740,7 @@ export default function MerchantSettings() {
                               className="flex-1 arabic text-xs"
                               onClick={() => openWhatsApp(driver.phone, driver.name)}
                             >
-                              📱 واتساب
+                              📱 وا��ساب
                             </Button>
                             <Button
                               size="sm"
@@ -2065,7 +2075,7 @@ export default function MerchantSettings() {
                 {isSaving ? (
                   <>
                     <RefreshCw className="w-4 h-4 ml-2 animate-spin" />
-                    جاري ا��حفظ...
+                    جاري الحفظ...
                   </>
                 ) : (
                   <>
