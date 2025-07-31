@@ -108,6 +108,16 @@ export default function AdminSettings() {
       notifyRegionsUpdate();
       setNewRegion("");
       setUnsavedChanges(true);
+      toast({
+        title: "تم إضافة المنطقة بنجاح",
+        description: `تمت إضافة "${newRegion}" إلى قائمة المناطق المتاحة`,
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "خطأ في إضافة المنطقة",
+        description: "المنطقة موجودة بالفعل أو الاسم غير صحيح",
+      });
     }
   };
 
@@ -116,6 +126,10 @@ export default function AdminSettings() {
     if (regionsManager.removeRegion(regionName)) {
       notifyRegionsUpdate();
       setUnsavedChanges(true);
+      toast({
+        title: "تم حذف المنطقة",
+        description: `تم حذف "${regionName}" من قائمة المناطق`,
+      });
     }
   };
 
