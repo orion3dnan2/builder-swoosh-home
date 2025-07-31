@@ -102,7 +102,7 @@ const translations = {
 
     // Theme Settings
     "theme.light": "الوضع النهاري",
-    "theme.dark": "الوضع الليلي",
+    "theme.dark": "الوضع ��لليلي",
     "theme.toggle": "تبديل الثيم",
     "language.toggle": "تبديل اللغة",
 
@@ -527,22 +527,27 @@ export const loadFonts = () => {
     {
       family: "Cairo",
       weights: ["300", "400", "500", "600", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap",
+      url: "https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap&subset=arabic",
     },
     {
       family: "Tajawal",
       weights: ["300", "400", "500", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap",
+      url: "https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap&subset=arabic",
+    },
+    {
+      family: "Noto Sans Arabic",
+      weights: ["300", "400", "500", "600", "700"],
+      url: "https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap&subset=arabic",
     },
     {
       family: "Noto Kufi Arabic",
       weights: ["400", "500", "600", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap",
+      url: "https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap&subset=arabic",
     },
     {
       family: "Amiri",
       weights: ["400", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap",
+      url: "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap&subset=arabic",
     },
   ];
 
