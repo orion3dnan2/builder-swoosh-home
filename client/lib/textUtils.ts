@@ -75,18 +75,12 @@ export const useCleanText = () => {
   };
 };
 
-// Component wrapper for safe text display
-export const SafeText: React.FC<{ 
-  children: string; 
-  fallback?: string;
-  className?: string;
-}> = ({ children, fallback = 'نص غير صالح', className }) => {
-  const cleanText = cleanArabicText(children);
+// Safe text processing function
+export const getSafeText = (
+  text: string,
+  fallback: string = 'نص غير صالح'
+): string => {
+  const cleanText = cleanArabicText(text);
   const isValid = isValidArabicText(cleanText);
-  
-  return (
-    <span className={className}>
-      {isValid ? cleanText : fallback}
-    </span>
-  );
+  return isValid ? cleanText : fallback;
 };
