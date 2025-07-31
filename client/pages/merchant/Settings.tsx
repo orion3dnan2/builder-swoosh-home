@@ -37,8 +37,6 @@ import {
   Car,
   Navigation,
   WhatsApp,
-  Clock,
-  Star,
   Check,
   X,
   Plus,
@@ -323,7 +321,7 @@ export default function MerchantSettings() {
 
   // دالة لفتح الواتساب
   const openWhatsApp = (phone: string, driverName: string) => {
-    const message = encodeURIComponent(`السلام عليكم ${driverName}، أريد التواصل معك بخصوص توصيل طلب من متجر ${storeSettings.storeName}.`);
+    const message = encodeURIComponent(`��لسلام عليكم ${driverName}، أريد التواصل معك بخصوص توصيل طلب من متجر ${storeSettings.storeName}.`);
     const whatsappUrl = `https://wa.me/${phone.replace('+', '')}?text=${message}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -438,7 +436,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.email.trim()) {
-      alert("يرجى إدخ��ل البريد الإلكتروني");
+      alert("يرجى إدخ��ل ا��بريد الإلكتروني");
       return;
     }
 
@@ -556,7 +554,7 @@ export default function MerchantSettings() {
     "الجمعة",
   ];
 
-  // قائمة الدول والمدن التابعة لها
+  // ��ائمة الدول والمدن التابعة لها
   const countriesWithCities = {
     السودان: [
       "الخرطوم",
@@ -923,7 +921,7 @@ export default function MerchantSettings() {
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
                       يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
-                      الشركات، أو المتاجر)
+                      الشركات، أو المت��جر)
                     </p>
                   </div>
 
@@ -1047,7 +1045,7 @@ export default function MerchantSettings() {
                           })
                         }
                         className="mt-1 text-right arabic"
-                        placeholder="شارع النيل، الخرطوم"
+                        placeholder="شارع ال��يل، الخرطوم"
                       />
                     </div>
                   </div>
@@ -1313,7 +1311,7 @@ export default function MerchantSettings() {
                         {
                           key: "emailNotifications",
                           label: "البريد الإلكتروني",
-                          desc: "استقبال الإشعارات عبر ا��بريد الإلكتروني",
+                          desc: "استقبال ا��إشعارات عبر ا��بريد الإلكتروني",
                           icon: "📧",
                           color: "bg-indigo-50 border-indigo-200 hover:bg-indigo-100"
                         },
@@ -1395,7 +1393,7 @@ export default function MerchantSettings() {
                   {/* Shipping Costs */}
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-4 arabic">
-                      تكاليف الشحن
+                      ��كاليف الشحن
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
@@ -1422,7 +1420,7 @@ export default function MerchantSettings() {
                       </div>
                       <div>
                         <Label htmlFor="standardShipping" className="arabic">
-                          الشحن العادي
+                          الش��ن العادي
                         </Label>
                         <div className="mt-1 relative">
                           <Input
@@ -1700,7 +1698,7 @@ export default function MerchantSettings() {
                         {
                           key: "customerNotifications",
                           title: "إشعارات العملاء",
-                          desc: "إشعار العملاء عند كل مرحلة من التوصيل",
+                          desc: "إشعار العملا�� عند كل مرحلة من التوصيل",
                           icon: "🔔"
                         }
                       ].map((setting) => (
