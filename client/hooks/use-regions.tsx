@@ -89,7 +89,7 @@ export function useRegionsByCountry(countryCode?: string) {
   };
 
   const addRegionToCountry = (regionName: string, code: string): boolean => {
-    const success = regionsManager.addRegion(regionName, code);
+    const success = regionsManager.addRegionNew(regionName, code);
     if (success) {
       notifyRegionsUpdate();
     }
@@ -97,7 +97,7 @@ export function useRegionsByCountry(countryCode?: string) {
   };
 
   const removeRegionFromCountry = (regionId: string, code: string): boolean => {
-    const success = regionsManager.removeRegion(regionId, code);
+    const success = regionsManager.removeRegionNew(regionId, code);
     if (success) {
       notifyRegionsUpdate();
     }
@@ -105,7 +105,7 @@ export function useRegionsByCountry(countryCode?: string) {
   };
 
   const updateRegionInCountry = (regionId: string, code: string, newName: string): boolean => {
-    const success = regionsManager.updateRegion(regionId, code, newName);
+    const success = regionsManager.updateRegionNew(regionId, code, newName);
     if (success) {
       notifyRegionsUpdate();
     }
