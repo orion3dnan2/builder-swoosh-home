@@ -1137,7 +1137,7 @@ export default function MerchantSettings() {
                         className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
                         disabled={!selectedCountry}
                       >
-                        <option value="">اختر المدينة</option>
+                        <option value="">��ختر المدينة</option>
                         {selectedCountry &&
                           countriesWithCities[selectedCountry]?.map((city) => (
                             <option key={city} value={city}>
@@ -1633,8 +1633,8 @@ export default function MerchantSettings() {
 
                   <Separator />
 
-                  {/* Shipping Areas */}
-                  <div>
+                  {/* Shipping Areas - مخفي حسب طلب المستخدم */}
+                  <div className="hidden">
                     <div className="flex items-center justify-between mb-2">
                       <Label className="arabic">مناطق ال����وصيل</Label>
                       <div className="text-xs text-gray-500 arabic">
@@ -2105,7 +2105,7 @@ export default function MerchantSettings() {
                       >
                         <div className={isRTL ? "text-right" : "text-left"}>
                           <div className="font-medium arabic">
-                            المصادقة الثنائية
+                            المصادق�� الثنائية
                           </div>
                           <div className="text-sm text-gray-600 arabic">
                             حماية إضافية لحسابك
