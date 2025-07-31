@@ -58,16 +58,22 @@ export class ApiService {
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
 
+    // إضافة timeout للطلب
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 ثواني
+
     const config: RequestInit = {
       ...options,
       headers: {
         ...this.getHeaders(),
         ...options.headers,
       },
+      signal: controller.signal,
     };
 
     try {
       const response = await fetch(url, config);
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -75,7 +81,20 @@ export class ApiService {
       }
 
       return await response.json();
-    } catch (error) {
+    } catch (error: any) {
+      clearTimeout(timeoutId);
+
+      // التعامل مع أنواع مختلفة من الأخطاء
+      if (error.name === 'AbortError') {
+        console.warn(`Request timeout for ${endpoint}`);
+        throw new Error('انتهت مهلة الاتصال');
+      }
+
+      if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError')) {
+        console.warn(`Network error for ${endpoint}`);
+        throw new Error('مشكلة في الاتصال بالشبكة');
+      }
+
       console.error("API Request failed:", error);
       throw error;
     }
