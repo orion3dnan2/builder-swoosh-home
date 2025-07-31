@@ -31,6 +31,7 @@ import { useAppSettings } from "@/lib/appSettings";
 import { useAuth } from "@/lib/auth";
 import { regionsManager } from "@/lib/regionsManager";
 import { useRegions, useRegionsStats } from "@/hooks/use-regions";
+import { useToast } from "@/hooks/use-toast";
 
 export default function AdminSettings() {
   const { user } = useAuth();
@@ -709,7 +710,7 @@ export default function AdminSettings() {
                             تحذير: لا توجد مناطق توصيل!
                           </h4>
                           <p className="text-red-600 arabic text-sm mb-4">
-                            جميع التجار لن يتمكنوا من تحديد مناطق التوصيل حتى تضيف مناطق هنا
+                            جميع التجار لن يتمكن��ا من تحديد مناطق التوصيل حتى تضيف مناطق هنا
                           </p>
                           <Button
                             onClick={() => {
@@ -770,7 +771,7 @@ export default function AdminSettings() {
                     </h4>
                     <ul className="text-sm text-blue-700 arabic space-y-1">
                       <li>• أضف المناطق التي تريد أن تظهر للتجار في إعدادات الشحن</li>
-                      <li>• يمكن تعديل أو حذف أي منطقة بالضغط على الأيقونات المناسبة</li>
+                      <li>• يمكن تعديل أو حذف أي منطقة بالضغط على ا��أيقونات المناسبة</li>
                       <li>• المناطق تُحفظ تلقائياً ولا تحتاج للضغط على "حفظ التغييرات"</li>
                       <li>• المناطق المحددة هنا ستظهر لجميع التجار في النظام فوراً</li>
                       <li>• يمكن إعادة تعيين المناطق للقيم الافتراضية أو تصديرها كملف</li>
@@ -836,7 +837,7 @@ export default function AdminSettings() {
                             {key === "enableCompanies" && "تفعيل دليل الشركات"}
                             {key === "enableJobs" && "تفعيل لوحة الوظائف"}
                             {key === "enableServices" && "تفعيل قائمة الخدمات"}
-                            {key === "enableAds" && "تفعيل الإعلانات المدفوعة"}
+                            {key === "enableAds" && "تفعيل الإعلانات المدفو��ة"}
                             {key === "enableReviews" && "تفعيل نظام التقييمات"}
                             {key === "enableChat" && "تفعيل الدردشة المباشرة"}
                           </p>
