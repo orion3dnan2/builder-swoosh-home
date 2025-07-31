@@ -45,6 +45,15 @@ export default function AdminSettings() {
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [localSettings, setLocalSettings] = useState(settings);
 
+  // State for managing delivery regions
+  const [deliveryRegions, setDeliveryRegions] = useState<string[]>([
+    "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة",
+    "دبي", "أبوظبي", "الشارقة", "الدوحة", "الكويت", "المنامة", "مسقط"
+  ]);
+  const [newRegion, setNewRegion] = useState("");
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editingValue, setEditingValue] = useState("");
+
   const handleThemeChange = (key: string, value: any) => {
     const updatedSettings = {
       ...localSettings,
@@ -696,7 +705,7 @@ export default function AdminSettings() {
                     إعادة تعيين جميع الإعدادات
                   </Button>
                   <p className="text-sm text-gray-600 mt-2 arabic">
-                    سيتم حذف جميع التخصيصات والعودة للإعدادات الافتراضية
+                    س��تم حذف جميع التخصيصات والعودة للإعدادات الافتراضية
                   </p>
                 </div>
               </CardContent>
