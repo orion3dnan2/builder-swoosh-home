@@ -265,6 +265,29 @@
     text-align: left;
   }
 
+  /* Fix for corrupted Arabic characters */
+  @font-face {
+    font-family: 'ArabicFallback';
+    src: local('Tahoma'), local('Arial Unicode MS'), local('Microsoft Sans Serif');
+    unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+  }
+
+  /* Force UTF-8 encoding for Arabic text */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Ensure proper text rendering */
+  body, html {
+    text-rendering: optimizeLegibility;
+    -webkit-font-feature-settings: "kern" 1;
+    -moz-font-feature-settings: "kern" 1;
+    -ms-font-feature-settings: "kern" 1;
+    font-feature-settings: "kern" 1;
+  }
+
   /* Enhanced scroll bars for dark mode */
   ::-webkit-scrollbar {
     width: 8px;
