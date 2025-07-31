@@ -266,6 +266,50 @@ export default function MerchantSettings() {
     loginNotifications: true,
   });
 
+  // Delivery Drivers State
+  const [deliveryDrivers, setDeliveryDrivers] = useState<DeliveryDriver[]>(
+    isNewMerchant ? [] : [
+      {
+        id: "driver1",
+        name: "أحمد محمد الطيب",
+        phone: "+966501234567",
+        area: "الرياض",
+        rating: 4.8,
+        isActive: true,
+        vehicle: "سيارة صالون",
+        speciality: ["طلبات سريعة", "أطعمة"]
+      },
+      {
+        id: "driver2",
+        name: "فاطمة عبدالله",
+        phone: "+971501234567",
+        area: "دبي",
+        rating: 4.9,
+        isActive: true,
+        vehicle: "دراجة نارية",
+        speciality: ["طلبات صغيرة", "مستندات"]
+      },
+      {
+        id: "driver3",
+        name: "عثمان عبدالرحمن",
+        phone: "+96550123456",
+        area: "الكويت",
+        rating: 4.7,
+        isActive: true,
+        vehicle: "شاحنة صغيرة",
+        speciality: ["طلبات كبيرة", "أثاث"]
+      }
+    ]
+  );
+
+  // Tracking Settings
+  const [trackingSettings, setTrackingSettings] = useState({
+    trackingEnabled: !isNewMerchant,
+    autoAssignDrivers: !isNewMerchant,
+    realTimeUpdates: !isNewMerchant,
+    customerNotifications: !isNewMerchant,
+  });
+
   // معالجة تغيير الشعار
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -276,7 +320,7 @@ export default function MerchantSettings() {
         return;
       }
 
-      // التحقق من حجم الملف (أقل من 5 ميجابايت)
+      // التحقق من حجم ا��ملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
         alert("حجم الصورة يجب أن يكون أقل من 5 ميجابايت");
         return;
@@ -349,7 +393,7 @@ export default function MerchantSettings() {
   const handleSaveSettings = async () => {
     // التحقق من صحة البيانات
     if (!storeSettings.storeName.trim()) {
-      alert("يرجى إدخال اسم المتجر");
+      alert("ير��ى إدخال اسم المتجر");
       return;
     }
 
@@ -473,7 +517,7 @@ export default function MerchantSettings() {
     "كتب ومواد تعليمية",
     "صحة ورياضة",
     "حرف يدوية وتقليدية",
-    "خدمات عامة",
+    "خدمات ��امة",
     "أخرى (حدد النوع)",
   ];
 
@@ -761,7 +805,7 @@ export default function MerchantSettings() {
                             )}
                           </div>
                           <p className="text-xs text-gray-500 arabic">
-                            PNG, JPG أو JPEG (أقل من 10 ميجا)
+                            PNG, JPG أو JPEG (أقل ��ن 10 ميجا)
                           </p>
                         </div>
                       </div>
@@ -827,7 +871,7 @@ export default function MerchantSettings() {
                   {/* Store Type */}
                   <div>
                     <Label htmlFor="storeType" className="arabic">
-                      نوع المتجر
+                      نوع ��لمتجر
                     </Label>
                     <select
                       id="storeType"
@@ -850,7 +894,7 @@ export default function MerchantSettings() {
                       <option value="bakery">مخبز/حلويات</option>
                       <option value="electronics">إلكترونيات</option>
                       <option value="clothing">ملابس</option>
-                      <option value="beauty">تجميل وعناية</option>
+                      <option value="beauty">تجميل وعن��ية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
                       يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
