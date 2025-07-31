@@ -209,6 +209,11 @@ export default function MerchantSettings() {
         if (error.message?.includes('Failed to fetch') || error.message?.includes('TypeError')) {
           // تجاهل الخطأ واستخدم البيانات المحلية
           console.log("استخدام البيانات المحفوظة محلياً...");
+          toast({
+            title: "وضع غير متصل",
+            description: "تم تحميل البيانات المحفوظة محلياً. ستتم مزامنة التغييرات عند استعادة الاتصال.",
+            variant: "default",
+          });
         }
 
         // الرجوع للبيانات المحفوظة محلياً في حالة الخطأ
@@ -341,7 +346,7 @@ export default function MerchantSettings() {
     window.open(whatsappUrl, '_blank');
   };
 
-  // معالجة تغيير الشعار
+  // معالجة تغ��ير الشعار
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -621,7 +626,7 @@ export default function MerchantSettings() {
       "بورسعيد",
       "السويس",
     ],
-    "المملكة الأردنية الهاشمية": [
+    "المملكة الأردنية ال��اشمية": [
       "عمان",
       "إربد",
       "الزرقاء",
@@ -1501,7 +1506,7 @@ export default function MerchantSettings() {
                       </span>
                     </div>
                     <p className="text-xs text-gray-500 arabic mt-1">
-                      الحد الأدنى: 5 دقائق - الحد الأقصى: 8 ساعات (480 دقيقة)
+                      ��لحد الأدنى: 5 دقائق - الحد الأقصى: 8 ساعات (480 دقيقة)
                     </p>
                   </div>
 
@@ -1562,7 +1567,7 @@ export default function MerchantSettings() {
                         </div>
                         <div>
                           <h3 className="font-bold text-gray-900 arabic text-lg">
-                            السائقون ومؤسسات التوصيل
+                            السائ��ون ومؤسسات التوصيل
                           </h3>
                           <p className="text-sm text-gray-600 arabic">
                             إدارة شبكة السائقين المتاحين لتوصيل طلباتك
