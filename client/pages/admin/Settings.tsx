@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { useAppSettings } from "@/lib/appSettings";
 import { useAuth } from "@/lib/auth";
+import { regionsManager } from "@/lib/regionsManager";
 
 export default function AdminSettings() {
   const { user } = useAuth();
@@ -688,7 +689,7 @@ export default function AdminSettings() {
                     {deliveryRegions.length === 0 && (
                       <div className="text-center py-8 text-gray-500">
                         <MapPin className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                        <p className="arabic">��ا توجد مناطق مضافة بعد</p>
+                        <p className="arabic">لا توجد مناطق مضافة بعد</p>
                         <p className="text-sm arabic">أضف منطقة جديدة للبدء</p>
                       </div>
                     )}
@@ -833,7 +834,7 @@ export default function AdminSettings() {
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-yellow-800 arabic">
                     ⚠️ تحذير: الإعدادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
-                    بعدم تغييرها إلا إذا كنت تعرف ما تفعل.
+                    بعد�� تغييرها إلا إذا كنت تعرف ما تفعل.
                   </p>
                 </div>
 
