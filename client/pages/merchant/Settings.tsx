@@ -154,7 +154,7 @@ export default function MerchantSettings() {
         // تحقق من وجود token المصادقة
         const token = ApiService.getToken();
         if (!token) {
-          console.log("لا يوجد token للم��ادقة، استخدام البيانات المحلية");
+          console.log("لا يوجد token للمصادقة، استخدام البيانات المحلية");
           loadLocalData();
           return;
         }
@@ -198,9 +198,11 @@ export default function MerchantSettings() {
           }
 
           setIsNewMerchant(false); // له متجر موجود
+          setLoadingState({ isLoading: false, hasError: false, isOffline: false, retryCount: 0 });
         } else {
           // تحميل البيانات المحفوظة محلياً إذا لم يكن هناك متجر موجود
           loadLocalData();
+          setLoadingState({ isLoading: false, hasError: false, isOffline: false, retryCount: 0 });
         }
       } catch (error) {
         console.error("خطأ في تحميل بيانات المتجر:", error);
@@ -552,7 +554,7 @@ export default function MerchantSettings() {
     "منتجات منزلية",
     "كتب ومواد تعليمية",
     "صحة ورياضة",
-    "ح��ف يدوية وتقليدية",
+    "حرف يدوية وتقليدية",
     "خدمات عامة",
     "أخرى (حدد النوع)",
   ];
@@ -1181,7 +1183,7 @@ export default function MerchantSettings() {
                     إعدادات الإشعارات
                   </CardTitle>
                   <p className="text-sm text-gray-600 arabic text-right mt-2">
-                    تحكم في إشعاراتك واختر الطريقة المناسبة لتلقي التحديثات
+                    تحكم في إشعاراتك واختر الطريقة المناسبة لتل��ي التحديثات
                   </p>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -1994,7 +1996,7 @@ export default function MerchantSettings() {
                             إشعارات تسجيل الدخول
                           </div>
                           <div className="text-sm text-gray-600 arabic">
-                            تنبيه عند تسجيل دخول جديد
+                            ت��بيه عند تسجيل دخول جديد
                           </div>
                         </div>
                         <Switch
