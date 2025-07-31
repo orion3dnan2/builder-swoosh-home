@@ -118,6 +118,35 @@ export default function MerchantSettings() {
     }
   }, [user]);
 
+  // تحميل المناطق من localStorage الإداري
+  useEffect(() => {
+    const loadAdminRegions = () => {
+      try {
+        const savedRegions = localStorage.getItem('adminDeliveryRegions');
+        if (savedRegions) {
+          const parsedRegions = JSON.parse(savedRegions);
+          if (Array.isArray(parsedRegions) && parsedRegions.length > 0) {
+            setAvailableRegions(parsedRegions);
+          }
+        }
+      } catch (error) {
+        console.error('خطأ في تحميل المناطق الإدارية:', error);
+      }
+    };
+
+    loadAdminRegions();
+
+    // إضافة listener للتحديثات على localStorage
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'adminDeliveryRegions') {
+        loadAdminRegions();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
   // دالة لتحميل البيانات المحفوظة محلياً
   const loadLocalData = () => {
     try {
@@ -202,7 +231,7 @@ export default function MerchantSettings() {
           setIsNewMerchant(false); // له متجر موجود
           setLoadingState({ isLoading: false, hasError: false, isOffline: false, retryCount: 0 });
         } else {
-          // تحميل البيانات المحفوظة محلياً إذا لم يكن هناك متجر مو��ود
+          // تحميل البيانات المحفوظة محلياً إذا لم يكن هناك متجر موجود
           loadLocalData();
           setLoadingState({ isLoading: false, hasError: false, isOffline: false, retryCount: 0 });
         }
@@ -338,7 +367,7 @@ export default function MerchantSettings() {
 
   // دالة لفتح الواتساب
   const openWhatsApp = (phone: string, driverName: string) => {
-    const message = encodeURIComponent(`��لسلام عليكم ${driverName}، أريد التواصل معك بخصوص توصيل طلب من مت��ر ${storeSettings.storeName}.`);
+    const message = encodeURIComponent(`��لسلام عليكم ${driverName}، أريد التواصل معك بخصوص توصيل طلب من متجر ${storeSettings.storeName}.`);
     const whatsappUrl = `https://wa.me/${phone.replace('+', '')}?text=${message}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -405,7 +434,7 @@ export default function MerchantSettings() {
       reader.onload = (e) => {
         const bannerUrl = e.target?.result as string;
         setStoreSettings({ ...storeSettings, banner: bannerUrl });
-        alert("تم تحديث غلاف المتجر بنجاح! ���");
+        alert("تم تحديث غلاف المتجر بنجاح! 🎨");
       };
       reader.onerror = () => {
         alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
@@ -532,7 +561,7 @@ export default function MerchantSettings() {
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ الإعدا��ات.\n\nيرجى التحقق من اتصال الإن��رنت والمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ الإعدا��ات.\n\nيرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
@@ -602,7 +631,7 @@ export default function MerchantSettings() {
       "نجران",
     ],
     "الإمارات العربية المتحدة": [
-      "دبي",
+      "��بي",
       "أبوظبي",
       "الشارقة",
       "عجمان",
@@ -618,7 +647,7 @@ export default function MerchantSettings() {
       "الفروانية",
       "حولي",
     ],
-    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشم��ل"],
+    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"],
     "مملكة البحرين": ["ا��منامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
@@ -990,7 +1019,7 @@ export default function MerchantSettings() {
                       <option value="beauty">تجميل وعناية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
-                      يحدد نوع المتجر مكان ظهوره في المو��ع (صفحة المطاعم،
+                      يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
                       الشركات، أو المت��جر)
                     </p>
                   </div>
@@ -1226,7 +1255,7 @@ export default function MerchantSettings() {
                           إشعارات الطلبات
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تلقى تحديثات حو�� طلباتك ومبيعاتك
+                          تلقى تحديثات حول طلباتك ومبيعاتك
                         </p>
                       </div>
                     </div>
@@ -1242,7 +1271,7 @@ export default function MerchantSettings() {
                         {
                           key: "orderUpdates",
                           label: "تحديثات الطلبات",
-                          desc: "إشعارات عند تغيير حالة الطلبات",
+                          desc: "إشعارات عند تغيير حالة الطل��ات",
                           icon: "📦",
                           color: "bg-blue-50 border-blue-200 hover:bg-blue-100"
                         },
@@ -1624,7 +1653,7 @@ export default function MerchantSettings() {
                         </div>
                         <div>
                           <h3 className="font-bold text-gray-900 arabic text-lg">
-                            السائ����ون ومؤسسات التوصيل
+                            السائ��ون ومؤسسات التوصيل
                           </h3>
                           <p className="text-sm text-gray-600 arabic">
                             إدارة شبكة السائقين المتاحين لتوصيل طلباتك
@@ -1753,7 +1782,7 @@ export default function MerchantSettings() {
                           إعدادات التتبع والأتمتة
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تفعيل خيارات التتبع المباشر وتوز��ع الطلبات التلقائي
+                          تفعيل خيارات التتبع المباشر وتوزيع الطلبات التلقائي
                         </p>
                       </div>
                     </div>
@@ -1920,7 +1949,7 @@ export default function MerchantSettings() {
                     <div className="space-y-4">
                       <div>
                         <Label htmlFor="currentPassword" className="arabic">
-                          كلمة المرور الحالية
+                          كلم�� المرور الحالية
                         </Label>
                         <div className="mt-1 relative">
                           <Input
