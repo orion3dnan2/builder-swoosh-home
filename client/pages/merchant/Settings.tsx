@@ -1527,7 +1527,10 @@ export default function MerchantSettings() {
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="group">
-                        <Label htmlFor="freeShipping" className="arabic font-semibold text-gray-700 mb-2 block">
+                        <Label
+                          htmlFor="freeShipping"
+                          className="arabic font-semibold text-gray-700 mb-2 block"
+                        >
                           الشحن المجاني عند
                         </Label>
                         <div className="relative">
@@ -1545,7 +1548,9 @@ export default function MerchantSettings() {
                             placeholder="أدخل المبلغ"
                           />
                           <div className="absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center">
-                            <span className="text-gray-500 font-medium">جنيه</span>
+                            <span className="text-gray-500 font-medium">
+                              جنيه
+                            </span>
                           </div>
                         </div>
                         <p className="text-xs text-gray-500 arabic mt-2">
