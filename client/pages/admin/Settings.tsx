@@ -113,17 +113,19 @@ export default function AdminSettings() {
 
   // Functions for managing delivery regions
   const addRegion = () => {
-    if (newRegion.trim() && !deliveryRegions.includes(newRegion.trim())) {
-      setDeliveryRegions([...deliveryRegions, newRegion.trim()]);
+    if (regionsManager.addRegion(newRegion)) {
+      setDeliveryRegions(regionsManager.getRegions());
       setNewRegion("");
       setUnsavedChanges(true);
     }
   };
 
   const deleteRegion = (index: number) => {
-    const newRegions = deliveryRegions.filter((_, i) => i !== index);
-    setDeliveryRegions(newRegions);
-    setUnsavedChanges(true);
+    const regionName = deliveryRegions[index];
+    if (regionsManager.removeRegion(regionName)) {
+      setDeliveryRegions(regionsManager.getRegions());
+      setUnsavedChanges(true);
+    }
   };
 
   const startEditing = (index: number) => {
@@ -132,10 +134,9 @@ export default function AdminSettings() {
   };
 
   const saveEdit = (index: number) => {
-    if (editingValue.trim() && !deliveryRegions.includes(editingValue.trim())) {
-      const newRegions = [...deliveryRegions];
-      newRegions[index] = editingValue.trim();
-      setDeliveryRegions(newRegions);
+    const oldName = deliveryRegions[index];
+    if (regionsManager.updateRegion(oldName, editingValue)) {
+      setDeliveryRegions(regionsManager.getRegions());
       setEditingIndex(null);
       setEditingValue("");
       setUnsavedChanges(true);
@@ -147,13 +148,8 @@ export default function AdminSettings() {
     setEditingValue("");
   };
 
-  const saveRegionsToStorage = () => {
-    localStorage.setItem('adminDeliveryRegions', JSON.stringify(deliveryRegions));
-  };
-
   const handleSaveAll = () => {
     saveSettings(localSettings);
-    saveRegionsToStorage();
     setUnsavedChanges(false);
   };
 
@@ -339,12 +335,12 @@ export default function AdminSettings() {
                 <CardHeader>
                   <CardTitle className="flex items-center arabic">
                     <Type className="w-5 h-5 ml-2" />
-                    الخطوط والنصوص
+                    الخطو�� والنصوص
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <Label className="arabic">عائلة ��لخط</Label>
+                    <Label className="arabic">عائلة الخط</Label>
                     <select
                       value={localSettings.theme.fontFamily}
                       onChange={(e) =>
@@ -560,7 +556,7 @@ export default function AdminSettings() {
                     />
                     <Button variant="outline" size="sm" className="mt-2 arabic">
                       <Upload className="w-4 h-4 ml-2" />
-                      رفع صور�� ��ديدة
+                      رفع صور�� جديدة
                     </Button>
                   </div>
 
