@@ -408,7 +408,7 @@ export default function AdminSettings() {
                   <div className="space-y-4">
                     <div className="flex items-center space-x-2 space-x-reverse">
                       <Monitor className="w-5 h-5" />
-                      <span className="arabic">سطح المكت��</span>
+                      <span className="arabic">سطح المكتب</span>
                     </div>
                     <div className="border rounded-lg p-4 bg-white">
                       <div
@@ -568,6 +568,134 @@ export default function AdminSettings() {
             </div>
           </TabsContent>
 
+          {/* Regions Management */}
+          <TabsContent value="regions" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center arabic">
+                  <MapPin className="w-5 h-5 ml-2" />
+                  إدارة مناطق التوصيل
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {/* Add New Region */}
+                  <div className="flex items-center space-x-2 space-x-reverse">
+                    <Input
+                      value={newRegion}
+                      onChange={(e) => setNewRegion(e.target.value)}
+                      placeholder="أدخل اسم المنطقة الجديدة"
+                      className="flex-1 arabic text-right"
+                      onKeyPress={(e) => e.key === 'Enter' && addRegion()}
+                    />
+                    <Button
+                      onClick={addRegion}
+                      disabled={!newRegion.trim() || deliveryRegions.includes(newRegion.trim())}
+                      className="arabic"
+                    >
+                      <Plus className="w-4 h-4 ml-2" />
+                      إضافة
+                    </Button>
+                  </div>
+
+                  {/* Regions List */}
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-lg arabic">
+                      المناطق الحالية ({deliveryRegions.length})
+                    </h3>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {deliveryRegions.map((region, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between p-3 border rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
+                        >
+                          {editingIndex === index ? (
+                            <div className="flex items-center space-x-2 space-x-reverse flex-1">
+                              <Input
+                                value={editingValue}
+                                onChange={(e) => setEditingValue(e.target.value)}
+                                className="flex-1 arabic text-right text-sm"
+                                onKeyPress={(e) => {
+                                  if (e.key === 'Enter') saveEdit(index);
+                                  if (e.key === 'Escape') cancelEdit();
+                                }}
+                                autoFocus
+                              />
+                              <div className="flex space-x-1 space-x-reverse">
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => saveEdit(index)}
+                                  className="text-green-600 hover:text-green-700"
+                                >
+                                  ✓
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={cancelEdit}
+                                  className="text-red-600 hover:text-red-700"
+                                >
+                                  ✕
+                                </Button>
+                              </div>
+                            </div>
+                          ) : (
+                            <>
+                              <span className="text-sm arabic font-medium flex-1">
+                                {region}
+                              </span>
+                              <div className="flex space-x-1 space-x-reverse">
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => startEditing(index)}
+                                  className="text-blue-600 hover:text-blue-700"
+                                >
+                                  <Edit className="w-3 h-3" />
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => deleteRegion(index)}
+                                  className="text-red-600 hover:text-red-700"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </Button>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    {deliveryRegions.length === 0 && (
+                      <div className="text-center py-8 text-gray-500">
+                        <MapPin className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                        <p className="arabic">لا توجد مناطق مضافة بعد</p>
+                        <p className="text-sm arabic">أضف منطقة جديدة للبدء</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Instructions */}
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h4 className="font-semibold text-blue-800 arabic mb-2">
+                      تعليمات:
+                    </h4>
+                    <ul className="text-sm text-blue-700 arabic space-y-1">
+                      <li>• أضف المناطق التي تريد أن تظهر للتجار في إعدادات الشحن</li>
+                      <li>• يمكن تعديل أو حذف أي منطقة بالضغط على الأيقونات المناسبة</li>
+                      <li>• سيتم حفظ التغييرات تلقائياً عند الضغط على "حفظ التغييرات"</li>
+                      <li>• المناطق المحددة هنا ستظهر لجميع التجار في النظام</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           {/* Features Settings */}
           <TabsContent value="features" className="space-y-6">
             <Card>
@@ -605,7 +733,7 @@ export default function AdminSettings() {
                             {key === "enableJobs" && "تفعيل لوحة الوظائف"}
                             {key === "enableServices" && "تفعيل قائمة الخدمات"}
                             {key === "enableAds" && "تفعيل الإعلانات المدفوعة"}
-                            {key === "enableReviews" && "تفع��ل نظام التقييمات"}
+                            {key === "enableReviews" && "تفعيل نظام التقييمات"}
                             {key === "enableChat" && "تفعيل الدردشة المباشرة"}
                           </p>
                         </div>
