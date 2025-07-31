@@ -181,38 +181,14 @@ export default function MerchantSettings() {
       } catch (error) {
         console.error("خطأ في تحميل بيانات المتجر:", error);
 
-        // عرض رسالة للمستخدم في حالة عدم وجود اتصال أو مشكلة في المصادقة
+        // عرض رسالة للمستخدم في حالة عدم وجود اتصال أو ��شكلة في المصادقة
         if (error.message?.includes('Failed to fetch') || error.message?.includes('TypeError')) {
           // تجاهل الخطأ واستخدم البيانات المحلية
           console.log("استخدام البيانات المحفوظة محلياً...");
         }
 
         // الرجوع للبيانات المحفوظة محلياً في حالة الخطأ
-        try {
-          const savedStoreSettings = localStorage.getItem("storeSettings");
-          const savedNotifications = localStorage.getItem(
-            "notificationSettings",
-          );
-          const savedShipping = localStorage.getItem("shippingSettings");
-
-          if (savedStoreSettings) {
-            const parsed = JSON.parse(savedStoreSettings);
-            setStoreSettings(parsed);
-            if (parsed.selectedCountry) {
-              setSelectedCountry(parsed.selectedCountry);
-            }
-          }
-
-          if (savedNotifications) {
-            setNotifications(JSON.parse(savedNotifications));
-          }
-
-          if (savedShipping) {
-            setShipping(JSON.parse(savedShipping));
-          }
-        } catch (localError) {
-          console.error("خطأ في تحميل البيانات المحلية:", localError);
-        }
+        loadLocalData();
       }
     };
 
@@ -433,7 +409,7 @@ export default function MerchantSettings() {
           await ApiService.createStore(storeData);
         }
       } catch (apiError: any) {
-        // إذا فشل API، نست��دم التخزين المحلي كنسخة احتياطية
+        // إذا ��شل API، نست��دم التخزين المحلي كنسخة احتياطية
         console.warn(
           "فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:",
           apiError,
@@ -586,7 +562,7 @@ export default function MerchantSettings() {
   // دالة لمعالجة تغيير الدولة
   const handleCountryChange = (country: string) => {
     setSelectedCountry(country);
-    // إعادة تعيين المدينة عند تغيير الدولة
+    // إع��دة تعيين المدينة عند تغيير الدولة
     setStoreSettings({
       ...storeSettings,
       city: "",
@@ -1080,7 +1056,7 @@ export default function MerchantSettings() {
                     <div className="bg-primary-100 p-2 rounded-lg ml-3">
                       <Bell className="w-5 h-5 text-primary-600" />
                     </div>
-                    إعدادات الإشعارات
+                    إع��ادات الإشعارات
                   </CardTitle>
                   <p className="text-sm text-gray-600 arabic text-right mt-2">
                     تحكم في إشعاراتك واختر الطريقة المناسبة لتلقي التحديثات
@@ -1412,7 +1388,7 @@ export default function MerchantSettings() {
                   {/* Processing Time */}
                   <div>
                     <Label htmlFor="processingTime" className="arabic">
-                      مدة ��حضير الطلب
+                      مدة تحضير الطلب
                     </Label>
                     <Input
                       id="processingTime"
