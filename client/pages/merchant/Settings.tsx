@@ -445,7 +445,7 @@ export default function MerchantSettings() {
   const tabs = [
     { id: "store", label: "بيانات المتجر", icon: Store },
     { id: "notifications", label: "الإشعارات", icon: Bell },
-    { id: "shipping", label: "الشحن والتوصيل", icon: Truck },
+    { id: "shipping", label: "الشح�� والتوصيل", icon: Truck },
     { id: "account", label: "الحساب والأمان", icon: Shield },
   ];
 
@@ -489,7 +489,7 @@ export default function MerchantSettings() {
       "القضارف",
       "سنار",
     ],
-    "المملكة العربية السعودية": [
+    "المملكة العربية السعودي��": [
       "الرياض",
       "جدة",
       "الدمام",
@@ -527,7 +527,7 @@ export default function MerchantSettings() {
       "القاهرة",
       "الإسكندرية",
       "ال��يزة",
-      "الأقصر",
+      "��لأقصر",
       "أسوان",
       "بورسعيد",
       "السويس",
@@ -1052,11 +1052,16 @@ export default function MerchantSettings() {
             {/* Notifications Tab */}
             {activeTab === "notifications" && (
               <Card>
-                <CardHeader>
-                  <CardTitle className="arabic text-right flex items-center">
-                    <Bell className="w-5 h-5 ml-2" />
+                <CardHeader className="bg-gradient-to-r from-primary-50 to-secondary-50 border-b">
+                  <CardTitle className="arabic text-right flex items-center text-xl font-bold text-primary-700">
+                    <div className="bg-primary-100 p-2 rounded-lg ml-3">
+                      <Bell className="w-5 h-5 text-primary-600" />
+                    </div>
                     إعدادات الإشعارات
                   </CardTitle>
+                  <p className="text-sm text-gray-600 arabic text-right mt-2">
+                    تحكم في إشعاراتك واختر الطريقة المناسبة لتلقي التحديثات
+                  </p>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {/* Order Notifications */}
