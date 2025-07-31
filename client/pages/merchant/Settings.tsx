@@ -175,28 +175,8 @@ export default function MerchantSettings() {
 
           setIsNewMerchant(false); // له متجر موجود
         } else {
-          // محاولة تحميل البيانات المحفوظة محلياً
-          const savedStoreSettings = localStorage.getItem("storeSettings");
-          const savedNotifications = localStorage.getItem(
-            "notificationSettings",
-          );
-          const savedShipping = localStorage.getItem("shippingSettings");
-
-          if (savedStoreSettings) {
-            const parsed = JSON.parse(savedStoreSettings);
-            setStoreSettings(parsed);
-            if (parsed.selectedCountry) {
-              setSelectedCountry(parsed.selectedCountry);
-            }
-          }
-
-          if (savedNotifications) {
-            setNotifications(JSON.parse(savedNotifications));
-          }
-
-          if (savedShipping) {
-            setShipping(JSON.parse(savedShipping));
-          }
+          // تحميل البيانات المحفوظة محلياً إذا لم يكن هناك متجر موجود
+          loadLocalData();
         }
       } catch (error) {
         console.error("خطأ في تحميل بيانات المتجر:", error);
@@ -393,7 +373,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.phone.trim()) {
-      alert("يرجى إدخا�� رقم الهاتف");
+      alert("يرجى إدخال رقم الهاتف");
       return;
     }
 
@@ -403,7 +383,7 @@ export default function MerchantSettings() {
     }
 
     if (!selectedCountry) {
-      alert("يرج�� اختيار الدولة");
+      alert("يرجى اختيار الدولة");
       return;
     }
 
@@ -446,7 +426,7 @@ export default function MerchantSettings() {
         );
 
         if (existingStore) {
-          // تحد��ث متجر موجود
+          // تحديث متجر موجود
           await ApiService.updateStore(existingStore.id, storeData);
         } else {
           // إنشاء متجر جديد
@@ -477,7 +457,7 @@ export default function MerchantSettings() {
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ ال��عدادات.\n\n��رجى التحقق م�� اتصال الإنترنت والمح��ولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ ال��عدادات.\n\n��رجى التحقق م�� اتصال الإنترنت والمحاولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
@@ -564,7 +544,7 @@ export default function MerchantSettings() {
       "حولي",
     ],
     "دولة قطر": ["الدوحة", "الريان", "الوك��ة", "أم ص��ال", "الخور", "الشما��"],
-    "مملكة ��لبحرين": ["المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
+    "مملكة البحرين": ["المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
       "القاهرة",
@@ -1432,7 +1412,7 @@ export default function MerchantSettings() {
                   {/* Processing Time */}
                   <div>
                     <Label htmlFor="processingTime" className="arabic">
-                      مدة تحضير الطلب
+                      مدة ��حضير الطلب
                     </Label>
                     <Input
                       id="processingTime"
