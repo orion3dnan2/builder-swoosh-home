@@ -233,7 +233,7 @@ export default function MerchantSettings() {
     emailNotifications: true,
   });
 
-  // Shipping Settings State - قيم افتراضية للتجار الجدد
+  // Shipping Settings State - قيم افتراضية للتجار الجد��
   const [shipping, setShipping] = useState<ShippingSettings>({
     freeShippingThreshold: isNewMerchant ? 100 : 200,
     standardShippingCost: isNewMerchant ? 15 : 25,
@@ -449,7 +449,7 @@ export default function MerchantSettings() {
     { id: "account", label: "الحساب والأمان", icon: Shield },
   ];
 
-  // أنواع المتاجر المحددة مسبقاً (يمكن ��عديلها من قبل الإدارة)
+  // أنواع المتاجر المحددة مسبقاً (يمكن تعديلها من قبل الإدارة)
   const predefinedCategories = [
     "مواد غذائية وأطعمة",
     "عطور ومستحضرات تجميل",
@@ -468,7 +468,7 @@ export default function MerchantSettings() {
     "الأحد",
     "الاثنين",
     "الثلاثاء",
-    "الأربعاء",
+    "��لأربعاء",
     "الخميس",
     "الجمعة",
   ];
@@ -534,7 +534,7 @@ export default function MerchantSettings() {
     ],
     "المملكة الأردنية الهاشمية": [
       "عمان",
-      "إرب��",
+      "إربد",
       "الزرقاء",
       "العقبة",
       "السلط",
@@ -839,7 +839,7 @@ export default function MerchantSettings() {
                       <option value="beauty">تجميل وعناية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
-                      يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
+                      يحدد نوع المتجر مكان ظه��ره في الموقع (صفحة المطاعم،
                       الشركات، أو ال��تاجر)
                     </p>
                   </div>
@@ -1137,36 +1137,51 @@ export default function MerchantSettings() {
                     </div>
                   </div>
 
-                  <Separator />
-
                   {/* Inventory Notifications */}
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 arabic">
-                      إشعارات المخزون
-                    </h3>
+                  <div className="bg-gradient-to-r from-orange-50 to-red-50 p-6 rounded-xl border border-orange-200">
+                    <div className="flex items-center mb-6">
+                      <div className="bg-orange-100 p-2 rounded-lg ml-3">
+                        <Package className="w-5 h-5 text-orange-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 arabic text-lg">
+                          إشعارات المخزون
+                        </h3>
+                        <p className="text-sm text-gray-600 arabic">
+                          تنبيهات حول مستوى المخزون والمراجعات
+                        </p>
+                      </div>
+                    </div>
                     <div className="space-y-4">
                       {[
                         {
                           key: "lowStock",
                           label: "نفاد المخزون",
                           desc: "تنبيه عند انخفاض كمية المنتجات",
+                          icon: "⚠️",
+                          color: "bg-red-50 border-red-200 hover:bg-red-100"
                         },
                         {
                           key: "reviews",
                           label: "المراجعات الجديدة",
                           desc: "إشعارات عند وصول مراجعات جديدة",
+                          icon: "⭐",
+                          color: "bg-purple-50 border-purple-200 hover:bg-purple-100"
                         },
                       ].map((item) => (
                         <div
                           key={item.key}
-                          className={`flex items-center justify-between ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          className={`p-4 rounded-lg border-2 transition-all duration-200 ${item.color} ${isRTL ? "flex-row-reverse" : "flex-row"} flex items-center justify-between`}
                         >
-                          <div className={isRTL ? "text-right" : "text-left"}>
-                            <div className="font-medium arabic">
-                              {item.label}
-                            </div>
-                            <div className="text-sm text-gray-600 arabic">
-                              {item.desc}
+                          <div className={`flex items-center ${isRTL ? "flex-row-reverse" : "flex-row"}`}>
+                            <div className="text-2xl ml-3">{item.icon}</div>
+                            <div className={isRTL ? "text-right" : "text-left"}>
+                              <div className="font-semibold arabic text-gray-900">
+                                {item.label}
+                              </div>
+                              <div className="text-sm text-gray-600 arabic mt-1">
+                                {item.desc}
+                              </div>
                             </div>
                           </div>
                           <Switch
@@ -1181,6 +1196,7 @@ export default function MerchantSettings() {
                                 [item.key]: checked,
                               })
                             }
+                            className="data-[state=checked]:bg-primary-600"
                           />
                         </div>
                       ))}
