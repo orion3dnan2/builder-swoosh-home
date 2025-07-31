@@ -211,7 +211,7 @@ export default function AdminSettings() {
                 className="arabic"
               >
                 <Save className="w-4 h-4 ml-2" />
-                حفظ التغييرات
+                حفظ ال��غييرات
               </Button>
             </div>
           </div>
@@ -678,19 +678,24 @@ export default function AdminSettings() {
                     </div>
                   </div>
 
-                  {/* Regions List */}
+                  {/* Current Country Regions */}
                   <div className="space-y-4">
-                    <h3 className="font-semibold text-lg arabic">
-                      إدارة المناطق ({deliveryRegions.length})
-                    </h3>
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold text-lg arabic">
+                        مناطق {countries.find(c => c.code === selectedCountry)?.name} ({(regionsByCountry[selectedCountry] || []).length})
+                      </h3>
+                      <Badge variant="outline" className="arabic">
+                        {selectedCountry}
+                      </Badge>
+                    </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {deliveryRegions.map((region, index) => (
+                      {(regionsByCountry[selectedCountry] || []).map((region) => (
                         <div
-                          key={index}
+                          key={region.id}
                           className="flex items-center justify-between p-3 border rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
                         >
-                          {editingIndex === index ? (
+                          {editingRegionId === region.id ? (
                             <div className="flex items-center space-x-2 space-x-reverse flex-1">
                               <Input
                                 value={editingValue}
@@ -699,7 +704,7 @@ export default function AdminSettings() {
                                 }
                                 className="flex-1 arabic text-right text-sm"
                                 onKeyPress={(e) => {
-                                  if (e.key === "Enter") saveEdit(index);
+                                  if (e.key === "Enter") saveEdit(region.id, selectedCountry);
                                   if (e.key === "Escape") cancelEdit();
                                 }}
                                 autoFocus
@@ -708,7 +713,7 @@ export default function AdminSettings() {
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  onClick={() => saveEdit(index)}
+                                  onClick={() => saveEdit(region.id, selectedCountry)}
                                   className="text-green-600 hover:text-green-700"
                                 >
                                   ✓
@@ -726,13 +731,13 @@ export default function AdminSettings() {
                           ) : (
                             <>
                               <span className="text-sm arabic font-medium flex-1">
-                                {region}
+                                {region.name}
                               </span>
                               <div className="flex space-x-1 space-x-reverse">
                                 <Button
                                   size="sm"
                                   variant="ghost"
-                                  onClick={() => startEditing(index)}
+                                  onClick={() => startEditing(region.id, region.name)}
                                   className="text-blue-600 hover:text-blue-700"
                                 >
                                   <Edit className="w-3 h-3" />
@@ -740,7 +745,7 @@ export default function AdminSettings() {
                                 <Button
                                   size="sm"
                                   variant="ghost"
-                                  onClick={() => deleteRegion(index)}
+                                  onClick={() => deleteRegion(region.id, selectedCountry, region.name)}
                                   className="text-red-600 hover:text-red-700"
                                 >
                                   <Trash2 className="w-3 h-3" />
@@ -752,28 +757,16 @@ export default function AdminSettings() {
                       ))}
                     </div>
 
-                    {deliveryRegions.length === 0 && (
+                    {(regionsByCountry[selectedCountry] || []).length === 0 && (
                       <div className="text-center py-8">
-                        <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-                          <MapPin className="w-12 h-12 mx-auto mb-4 text-red-400" />
-                          <h4 className="font-semibold text-red-700 arabic mb-2">
-                            تحذير: لا توجد مناطق توصيل!
+                        <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
+                          <MapPin className="w-12 h-12 mx-auto mb-4 text-orange-400" />
+                          <h4 className="font-semibold text-orange-700 arabic mb-2">
+                            لا توجد مناطق في {countries.find(c => c.code === selectedCountry)?.name}
                           </h4>
-                          <p className="text-red-600 arabic text-sm mb-4">
-                            جميع التجار لن يتمكنوا من تحديد مناطق التوصيل حتى
-                            تضيف مناطق هنا
+                          <p className="text-orange-600 arabic text-sm mb-4">
+                            أضف مناطق لهذه الدولة لتتمكن الشركات من تحديد مناطق التوصيل
                           </p>
-                          <Button
-                            onClick={() => {
-                              regionsManager.resetToDefaults();
-                              notifyRegionsUpdate();
-                              setUnsavedChanges(true);
-                            }}
-                            className="arabic"
-                          >
-                            <Plus className="w-4 h-4 ml-2" />
-                            إضافة المناطق الافتراضية
-                          </Button>
                         </div>
                       </div>
                     )}
