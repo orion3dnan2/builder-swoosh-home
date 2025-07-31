@@ -48,7 +48,8 @@ export default function AdminSettings() {
   const [localSettings, setLocalSettings] = useState(settings);
 
   // State for managing delivery regions
-  const [deliveryRegions, setDeliveryRegions] = useState<string[]>(regionsManager.getRegions());
+  const { regions: deliveryRegions, notifyRegionsUpdate } = useRegions();
+  const regionsStats = useRegionsStats();
   const [newRegion, setNewRegion] = useState("");
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editingValue, setEditingValue] = useState("");
@@ -923,7 +924,7 @@ export default function AdminSettings() {
               <CardContent className="space-y-6">
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-yellow-800 arabic">
-                    ⚠️ تحذير: الإعدادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
+                    ⚠️ تحذير: الإعدادات المتقدمة قد ��ؤثر على أداء التطبيق. يُنصح
                     بعدم تغييرها إلا إذا كنت تعرف ما تفعل.
                   </p>
                 </div>
@@ -983,7 +984,7 @@ export default function AdminSettings() {
                     إعادة تعيين جميع الإعدادات
                   </Button>
                   <p className="text-sm text-gray-600 mt-2 arabic">
-                    سيتم حذف جميع التخصيصات والعودة للإعدادات الافتراضية
+                    ��يتم حذف جميع التخصيصات والعودة للإعدادات الافتراضية
                   </p>
                 </div>
               </CardContent>
