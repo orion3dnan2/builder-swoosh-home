@@ -226,7 +226,7 @@ export default function MerchantSettings() {
       : "متجر الخير السوداني",
     description: isNewMerchant
       ? ""
-      : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
+      : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور ��أطعمة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
     storeType: isNewMerchant ? "" : "restaurant",
     phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
@@ -295,7 +295,7 @@ export default function MerchantSettings() {
         area: "دبي",
         rating: 4.9,
         isActive: true,
-        vehicle: "دراجة نارية",
+        vehicle: "دراجة نار��ة",
         speciality: ["طلبات صغيرة", "مستندات"]
       },
       {
@@ -610,7 +610,7 @@ export default function MerchantSettings() {
       "الجيزة",
       "الأقصر",
       "أسوان",
-      "بورسعيد",
+      "بور��عيد",
       "السويس",
     ],
     "المملكة الأردنية الهاشمية": [
@@ -1493,16 +1493,18 @@ export default function MerchantSettings() {
                     <Label className="arabic">مناطق التوصيل</Label>
                     <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
                       {[
-                        "الخرطوم",
-                        "أمدرمان",
-                        "بحري",
-                        "مدني",
-                        "كسلا",
-                        "بورتسودان",
-                        "أتبرا",
-                        "الأبيض",
-                        "نيالا",
-                        "الفاشر",
+                        "الرياض",
+                        "جدة",
+                        "الدمام",
+                        "مكة المكرمة",
+                        "المدينة المنورة",
+                        "دبي",
+                        "أبوظبي",
+                        "الشارقة",
+                        "الدوحة",
+                        "الكويت",
+                        "المنامة",
+                        "مسقط",
                       ].map((area) => (
                         <label
                           key={area}
