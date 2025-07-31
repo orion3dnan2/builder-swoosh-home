@@ -181,7 +181,7 @@ export default function MerchantSettings() {
       } catch (error) {
         console.error("خطأ في تحميل بيانات المتجر:", error);
 
-        // عرض رسالة للمستخدم في حالة عدم وجود اتصال أو ��شكلة في المصادقة
+        // عرض رسالة للمستخدم في حالة عدم وجود اتصال أو مشكلة في المصادقة
         if (error.message?.includes('Failed to fetch') || error.message?.includes('TypeError')) {
           // تجاهل الخطأ واستخدم البيانات المحلية
           console.log("استخدام البيانات المحفوظة محلياً...");
@@ -203,7 +203,7 @@ export default function MerchantSettings() {
     description: isNewMerchant
       ? ""
       : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
-    category: isNewMerchant ? "" : "موا�� ��ذائية وعطور",
+    category: isNewMerchant ? "" : "مواد غذائية وعطور",
     storeType: isNewMerchant ? "" : "restaurant",
     phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
     email: isNewMerchant ? user?.email || "" : "store@example.com",
@@ -232,7 +232,7 @@ export default function MerchantSettings() {
     emailNotifications: true,
   });
 
-  // Shipping Settings State - قيم افتراضية للتجار ��لجدد
+  // Shipping Settings State - قيم افتراضية للتجار الجدد
   const [shipping, setShipping] = useState<ShippingSettings>({
     freeShippingThreshold: isNewMerchant ? 100 : 200,
     standardShippingCost: isNewMerchant ? 15 : 25,
@@ -255,7 +255,7 @@ export default function MerchantSettings() {
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // التح��ق من نوع الملف
+      // التحقق من نوع الملف
       if (!file.type.startsWith("image/")) {
         alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG)");
         return;
@@ -263,7 +263,7 @@ export default function MerchantSettings() {
 
       // التحقق من حجم الملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
-        alert("حجم الصورة ��جب أن يكون أقل من 5 ميجابايت");
+        alert("حجم الصورة يجب أن يكون أقل من 5 ميجابايت");
         return;
       }
 
@@ -292,7 +292,7 @@ export default function MerchantSettings() {
         "image/webp",
       ];
       if (!allowedTypes.includes(file.type)) {
-        alert("يرجى ا��تيار ملف صورة صالح (PNG, JPG, JPEG, أو WebP)");
+        alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG, أو WebP)");
         return;
       }
 
@@ -309,7 +309,7 @@ export default function MerchantSettings() {
         alert("تم تحديث غلاف المتجر بنجاح! 🎨");
       };
       reader.onerror = () => {
-        alert("فشل في قراءة الصورة. يرجى ��لمحاولة مرة أخرى.");
+        alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
       };
       reader.readAsDataURL(file);
     }
@@ -317,7 +317,7 @@ export default function MerchantSettings() {
 
   // حذف الشعار
   const handleRemoveLogo = () => {
-    if (window.confirm("هل أنت متأكد ��ن حذف شعار المتجر؟")) {
+    if (window.confirm("هل أنت متأكد من حذف شعار المتجر؟")) {
       setStoreSettings({ ...storeSettings, logo: "/placeholder.svg" });
       alert("تم حذف الشعار بنجاح");
     }
@@ -349,7 +349,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.phone.trim()) {
-      alert("يرجى إدخال رقم الهاتف");
+      alert("يرجى إدخال رقم اله��تف");
       return;
     }
 
@@ -394,7 +394,7 @@ export default function MerchantSettings() {
         shippingSettings: shipping,
       };
 
-      // ��لبحث عن متجر ��وجود ���لمستخدم أولاً
+      // البحث عن متجر موجود للمستخدم أولاً
       try {
         const userStores = await ApiService.getStores();
         const existingStore = userStores.find(
@@ -409,7 +409,7 @@ export default function MerchantSettings() {
           await ApiService.createStore(storeData);
         }
       } catch (apiError: any) {
-        // إذا ��شل API، نست��دم التخزين المحلي كنسخة احتياطية
+        // إذا فشل API، نستخدم التخزين المحلي كنسخة احتياطية
         console.warn(
           "فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:",
           apiError,
@@ -429,11 +429,11 @@ export default function MerchantSettings() {
 
       // عرض رسالة نجاح
       alert(
-        "🎉 تم حفظ إعدادات المتجر بنج��ح!\n\nتم تحديث جميع البي��نات والإعدادات ال��اصة بمتجرك.",
+        "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.",
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ ال��عدادات.\n\n��رجى التحقق م�� اتصال الإنترنت والمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ الإعدادات.\n\nيرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
@@ -472,7 +472,7 @@ export default function MerchantSettings() {
     "الجمعة",
   ];
 
-  // قائم�� الدول والمدن التابعة لها
+  // قائمة الدول والمدن التابعة لها
   const countriesWithCities = {
     السودان: [
       "الخرطوم",
@@ -519,13 +519,13 @@ export default function MerchantSettings() {
       "الفروانية",
       "حولي",
     ],
-    "دولة قطر": ["الدوحة", "الريان", "الوك��ة", "أم ص��ال", "الخور", "الشما��"],
+    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"],
     "مملكة البحرين": ["المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
       "القاهرة",
       "الإسكندرية",
-      "ال��يزة",
+      "الجيزة",
       "الأقصر",
       "أسوان",
       "بورسعيد",
@@ -562,7 +562,7 @@ export default function MerchantSettings() {
   // دالة لمعالجة تغيير الدولة
   const handleCountryChange = (country: string) => {
     setSelectedCountry(country);
-    // إع��دة تعيين المدينة عند تغيير الدولة
+    // إعادة تعيين المدينة عند تغيير الدولة
     setStoreSettings({
       ...storeSettings,
       city: "",
@@ -594,7 +594,7 @@ export default function MerchantSettings() {
                   إعدادات المتجر
                 </h1>
                 <p className="text-gray-600 arabic">
-                  إدارة معلومات وإعدادات متج��ك
+                  إدارة معلومات وإعدادات متجرك
                 </p>
               </div>
             </div>
@@ -646,7 +646,7 @@ export default function MerchantSettings() {
                   {/* Store Logo & Banner */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <Label className="arabic">ش��ار المتجر</Label>
+                      <Label className="arabic">شعار المتجر</Label>
                       <div className="mt-2 flex items-center space-x-4 space-x-reverse">
                         <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                           {storeSettings.logo &&
@@ -839,7 +839,7 @@ export default function MerchantSettings() {
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
                       يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
-                      الشركات، أو ال��تاجر)
+                      الشركات، أو المتاجر)
                     </p>
                   </div>
 
@@ -908,7 +908,7 @@ export default function MerchantSettings() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                       <Label htmlFor="country" className="arabic">
-                        ا��دولة
+                        الدولة
                       </Label>
                       <select
                         id="country"
@@ -916,7 +916,7 @@ export default function MerchantSettings() {
                         onChange={(e) => handleCountryChange(e.target.value)}
                         className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
                       >
-                        <option value="">��ختر الدولة</option>
+                        <option value="">اختر الدولة</option>
                         {Object.keys(countriesWithCities).map((country) => (
                           <option key={country} value={country}>
                             {country}
@@ -1009,7 +1009,7 @@ export default function MerchantSettings() {
                         />
                       </div>
                       <div>
-                        <Label className="arabic text-sm">أي��م العمل</Label>
+                        <Label className="arabic text-sm">أيام العمل</Label>
                         <div className="mt-1 space-y-1">
                           {workingDays.map((day) => (
                             <label
@@ -1056,7 +1056,7 @@ export default function MerchantSettings() {
                     <div className="bg-primary-100 p-2 rounded-lg ml-3">
                       <Bell className="w-5 h-5 text-primary-600" />
                     </div>
-                    إع��ادات الإشعارات
+                    إعدادات الإشعارات
                   </CardTitle>
                   <p className="text-sm text-gray-600 arabic text-right mt-2">
                     تحكم في إشعاراتك واختر الطريقة المناسبة لتلقي التحديثات
@@ -1229,7 +1229,7 @@ export default function MerchantSettings() {
                         {
                           key: "emailNotifications",
                           label: "البريد الإلكتروني",
-                          desc: "استقبال الإشعارات عب�� البريد الإلكتروني",
+                          desc: "استقبال الإشعارات عبر البريد الإلكتروني",
                           icon: "📧",
                           color: "bg-indigo-50 border-indigo-200 hover:bg-indigo-100"
                         },
@@ -1527,7 +1527,7 @@ export default function MerchantSettings() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="newPassword" className="arabic">
-                            كلمة ا���مرور الجديدة
+                            كلمة المرور الجديدة
                           </Label>
                           <Input
                             id="newPassword"
@@ -1576,7 +1576,7 @@ export default function MerchantSettings() {
                       >
                         <div className={isRTL ? "text-right" : "text-left"}>
                           <div className="font-medium arabic">
-                            ��لمصادقة الثن��ئية
+                            المصادقة الثنائية
                           </div>
                           <div className="text-sm text-gray-600 arabic">
                             حماية إضافية لحسابك
