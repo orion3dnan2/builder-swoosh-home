@@ -1053,7 +1053,7 @@ export default function MerchantSettings() {
                 <CardHeader>
                   <CardTitle className="arabic text-right flex items-center">
                     <Bell className="w-5 h-5 ml-2" />
-                    ��عدادات الإشعارات
+                    إعدادات الإشعارات
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -1072,7 +1072,7 @@ export default function MerchantSettings() {
                         {
                           key: "orderUpdates",
                           label: "تحديثات الطلبات",
-                          desc: "��شع��رات عند تغيير حالة الطلبات",
+                          desc: "إشعارات عند تغيير حالة الطلبات",
                         },
                         {
                           key: "paymentReceived",
@@ -1176,7 +1176,7 @@ export default function MerchantSettings() {
                         },
                         {
                           key: "emailNotifications",
-                          label: "ال��ريد الإلكتروني",
+                          label: "البريد الإلكتروني",
                           desc: "استقبال الإشعارات عبر البريد الإلكتروني",
                         },
                       ].map((item) => (
@@ -1491,7 +1491,7 @@ export default function MerchantSettings() {
                       >
                         <div className={isRTL ? "text-right" : "text-left"}>
                           <div className="font-medium arabic">
-                            المصادقة الثن��ئية
+                            ��لمصادقة الثن��ئية
                           </div>
                           <div className="text-sm text-gray-600 arabic">
                             حماية إضافية لحسابك
