@@ -310,6 +310,20 @@ export default function MerchantSettings() {
     customerNotifications: !isNewMerchant,
   });
 
+  // دالة لفتح الواتساب
+  const openWhatsApp = (phone: string, driverName: string) => {
+    const message = encodeURIComponent(`السلام عليكم ${driverName}، أريد التواصل معك بخصوص توصيل طلب من متجر ${storeSettings.storeName}.`);
+    const whatsappUrl = `https://wa.me/${phone.replace('+', '')}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  // دالة لتتبع الطلب
+  const trackOrder = (orderId: string, driverPhone: string) => {
+    const message = encodeURIComponent(`مرحباً، أريد متابعة حالة الطلب رقم: ${orderId}`);
+    const whatsappUrl = `https://wa.me/${driverPhone.replace('+', '')}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   // معالجة تغيير الشعار
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -320,7 +334,7 @@ export default function MerchantSettings() {
         return;
       }
 
-      // التحقق من حجم ا��ملف (أقل من 5 ميجابايت)
+      // التحقق من حجم الملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
         alert("حجم الصورة يجب أن يكون أقل من 5 ميجابايت");
         return;
@@ -393,7 +407,7 @@ export default function MerchantSettings() {
   const handleSaveSettings = async () => {
     // التحقق من صحة البيانات
     if (!storeSettings.storeName.trim()) {
-      alert("ير��ى إدخال اسم المتجر");
+      alert("يرجى إدخال اسم المتجر");
       return;
     }
 
@@ -517,7 +531,7 @@ export default function MerchantSettings() {
     "كتب ومواد تعليمية",
     "صحة ورياضة",
     "حرف يدوية وتقليدية",
-    "خدمات ��امة",
+    "خدمات عامة",
     "أخرى (حدد النوع)",
   ];
 
@@ -805,7 +819,7 @@ export default function MerchantSettings() {
                             )}
                           </div>
                           <p className="text-xs text-gray-500 arabic">
-                            PNG, JPG أو JPEG (أقل ��ن 10 ميجا)
+                            PNG, JPG أو JPEG (أقل من 10 ميجا)
                           </p>
                         </div>
                       </div>
@@ -871,7 +885,7 @@ export default function MerchantSettings() {
                   {/* Store Type */}
                   <div>
                     <Label htmlFor="storeType" className="arabic">
-                      نوع ��لمتجر
+                      نوع المتجر
                     </Label>
                     <select
                       id="storeType"
@@ -890,11 +904,11 @@ export default function MerchantSettings() {
                       <option value="store">متجر عام</option>
                       <option value="service">خدمات</option>
                       <option value="pharmacy">صيدلية</option>
-                      <option value="supermarket">سوبر ماركت</option>
+                      <option value="supermarket">سوبر مار��ت</option>
                       <option value="bakery">مخبز/حلويات</option>
                       <option value="electronics">إلكترونيات</option>
                       <option value="clothing">ملابس</option>
-                      <option value="beauty">تجميل وعن��ية</option>
+                      <option value="beauty">تجميل وعناية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
                       يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
@@ -1477,7 +1491,7 @@ export default function MerchantSettings() {
                         "كسلا",
                         "بورتسودان",
                         "أتبرا",
-                        "الأبيض",
+                        "الأ��يض",
                         "نيالا",
                         "الفاشر",
                       ].map((area) => (
