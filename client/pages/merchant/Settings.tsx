@@ -445,11 +445,11 @@ export default function MerchantSettings() {
   const tabs = [
     { id: "store", label: "بيانات المتجر", icon: Store },
     { id: "notifications", label: "الإشعارات", icon: Bell },
-    { id: "shipping", label: "الشح�� والتوصيل", icon: Truck },
+    { id: "shipping", label: "الشحن والتوصيل", icon: Truck },
     { id: "account", label: "الحساب والأمان", icon: Shield },
   ];
 
-  // أنواع المتاجر المحددة مسبقاً (يمكن تعديلها من قبل الإدارة)
+  // أنواع المتاجر المحددة مسبقاً (يمكن ��عديلها من قبل الإدارة)
   const predefinedCategories = [
     "مواد غذائية وأطعمة",
     "عطور ومستحضرات تجميل",
@@ -489,7 +489,7 @@ export default function MerchantSettings() {
       "القضارف",
       "سنار",
     ],
-    "المملكة العربية السعودي��": [
+    "المملكة العربية السعودية": [
       "الرياض",
       "جدة",
       "الدمام",
@@ -527,14 +527,14 @@ export default function MerchantSettings() {
       "القاهرة",
       "الإسكندرية",
       "ال��يزة",
-      "��لأقصر",
+      "الأقصر",
       "أسوان",
       "بورسعيد",
       "السويس",
     ],
     "المملكة الأردنية الهاشمية": [
       "عمان",
-      "إربد",
+      "إرب��",
       "الزرقاء",
       "العقبة",
       "السلط",
@@ -1065,38 +1065,57 @@ export default function MerchantSettings() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {/* Order Notifications */}
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 arabic">
-                      إشعارات الطلبات
-                    </h3>
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
+                    <div className="flex items-center mb-6">
+                      <div className="bg-blue-100 p-2 rounded-lg ml-3">
+                        <ShoppingCart className="w-5 h-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 arabic text-lg">
+                          إشعارات الطلبات
+                        </h3>
+                        <p className="text-sm text-gray-600 arabic">
+                          تلقى تحديثات حول طلباتك ومبيعاتك
+                        </p>
+                      </div>
+                    </div>
                     <div className="space-y-4">
                       {[
                         {
                           key: "newOrders",
                           label: "طلبات جديدة",
                           desc: "إشعارات عند وصول طلبات جديدة",
+                          icon: "🛒",
+                          color: "bg-green-50 border-green-200 hover:bg-green-100"
                         },
                         {
                           key: "orderUpdates",
                           label: "تحديثات الطلبات",
                           desc: "إشعارات عند تغيير حالة الطلبات",
+                          icon: "📦",
+                          color: "bg-blue-50 border-blue-200 hover:bg-blue-100"
                         },
                         {
                           key: "paymentReceived",
                           label: "استلام الدفعات",
                           desc: "إشعارات عند استلام المدفوعات",
+                          icon: "💰",
+                          color: "bg-yellow-50 border-yellow-200 hover:bg-yellow-100"
                         },
                       ].map((item) => (
                         <div
                           key={item.key}
-                          className={`flex items-center justify-between ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          className={`p-4 rounded-lg border-2 transition-all duration-200 ${item.color} ${isRTL ? "flex-row-reverse" : "flex-row"} flex items-center justify-between`}
                         >
-                          <div className={isRTL ? "text-right" : "text-left"}>
-                            <div className="font-medium arabic">
-                              {item.label}
-                            </div>
-                            <div className="text-sm text-gray-600 arabic">
-                              {item.desc}
+                          <div className={`flex items-center ${isRTL ? "flex-row-reverse" : "flex-row"}`}>
+                            <div className="text-2xl ml-3">{item.icon}</div>
+                            <div className={isRTL ? "text-right" : "text-left"}>
+                              <div className="font-semibold arabic text-gray-900">
+                                {item.label}
+                              </div>
+                              <div className="text-sm text-gray-600 arabic mt-1">
+                                {item.desc}
+                              </div>
                             </div>
                           </div>
                           <Switch
@@ -1111,6 +1130,7 @@ export default function MerchantSettings() {
                                 [item.key]: checked,
                               })
                             }
+                            className="data-[state=checked]:bg-primary-600"
                           />
                         </div>
                       ))}
