@@ -154,7 +154,7 @@ export default function MerchantSettings() {
         // تحقق من وجود token المصادقة
         const token = ApiService.getToken();
         if (!token) {
-          console.log("لا يوجد token للمصادقة، استخدام البيانات المحلية");
+          console.log("لا يوجد token للم��ادقة، استخدام البيانات المحلية");
           loadLocalData();
           return;
         }
@@ -552,7 +552,7 @@ export default function MerchantSettings() {
     "منتجات منزلية",
     "كتب ومواد تعليمية",
     "صحة ورياضة",
-    "حرف يدوية وتقليدية",
+    "ح��ف يدوية وتقليدية",
     "خدمات عامة",
     "أخرى (حدد النوع)",
   ];
@@ -701,6 +701,33 @@ export default function MerchantSettings() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Connection Status Banner */}
+        {loadingState.isOffline && (
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-yellow-500 rounded-full ml-3 animate-pulse"></div>
+                <div>
+                  <span className="text-sm font-medium text-yellow-800 arabic">
+                    وضع غير متصل
+                  </span>
+                  <p className="text-xs text-yellow-700 arabic mt-1">
+                    تعمل بالبيانات المحفوظة محلياً. ستتم مزامنة التغييرات عند استعادة الاتصال.
+                  </p>
+                </div>
+              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => window.location.reload()}
+                className="text-xs arabic"
+              >
+                🔄 إعادة الاتصال
+              </Button>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar Tabs */}
           <div className="lg:col-span-1">
