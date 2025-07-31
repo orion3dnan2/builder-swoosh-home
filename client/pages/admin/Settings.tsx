@@ -100,6 +100,52 @@ export default function AdminSettings() {
     handleThemeChange("secondaryColor", palette.secondary);
   };
 
+  // Functions for managing delivery regions
+  const addRegion = () => {
+    if (newRegion.trim() && !deliveryRegions.includes(newRegion.trim())) {
+      setDeliveryRegions([...deliveryRegions, newRegion.trim()]);
+      setNewRegion("");
+      setUnsavedChanges(true);
+    }
+  };
+
+  const deleteRegion = (index: number) => {
+    const newRegions = deliveryRegions.filter((_, i) => i !== index);
+    setDeliveryRegions(newRegions);
+    setUnsavedChanges(true);
+  };
+
+  const startEditing = (index: number) => {
+    setEditingIndex(index);
+    setEditingValue(deliveryRegions[index]);
+  };
+
+  const saveEdit = (index: number) => {
+    if (editingValue.trim() && !deliveryRegions.includes(editingValue.trim())) {
+      const newRegions = [...deliveryRegions];
+      newRegions[index] = editingValue.trim();
+      setDeliveryRegions(newRegions);
+      setEditingIndex(null);
+      setEditingValue("");
+      setUnsavedChanges(true);
+    }
+  };
+
+  const cancelEdit = () => {
+    setEditingIndex(null);
+    setEditingValue("");
+  };
+
+  const saveRegionsToStorage = () => {
+    localStorage.setItem('adminDeliveryRegions', JSON.stringify(deliveryRegions));
+  };
+
+  const handleSaveAll = () => {
+    saveSettings(localSettings);
+    saveRegionsToStorage();
+    setUnsavedChanges(false);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
       {/* Header */}
@@ -705,7 +751,7 @@ export default function AdminSettings() {
                     إعادة تعيين جميع الإعدادات
                   </Button>
                   <p className="text-sm text-gray-600 mt-2 arabic">
-                    س��تم حذف جميع التخصيصات والعودة للإعدادات الافتراضية
+                    سيتم حذف جميع التخصيصات والعودة للإعدادات الافتراضية
                   </p>
                 </div>
               </CardContent>
