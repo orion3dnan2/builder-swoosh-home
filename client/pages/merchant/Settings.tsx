@@ -1240,7 +1240,7 @@ export default function MerchantSettings() {
                     إعدادات الإشعارات
                   </CardTitle>
                   <p className="text-sm text-gray-600 arabic text-right mt-2">
-                    تحكم في إشعاراتك واختر الطريقة المناسبة لتل��ي التحديثات
+                    تحكم في إشعاراتك واختر الطريقة المناسبة لتل����ي التحديثات
                   </p>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -1592,7 +1592,7 @@ export default function MerchantSettings() {
                       </span>
                     </div>
                     <p className="text-xs text-gray-500 arabic mt-1">
-                      ��لحد الأدنى: 5 دقائق - الحد الأقصى: 8 ساعات (480 دقيقة)
+                      ����لحد الأدنى: 5 دقائق - الحد الأقصى: 8 ساعات (480 دقيقة)
                     </p>
                   </div>
 
@@ -1600,46 +1600,47 @@ export default function MerchantSettings() {
 
                   {/* Shipping Areas */}
                   <div>
-                    <Label className="arabic">مناطق التوصيل</Label>
-                    <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {[
-                        "الرياض",
-                        "جدة",
-                        "الدمام",
-                        "مكة المكرمة",
-                        "المدينة المنورة",
-                        "دبي",
-                        "أبوظبي",
-                        "الشارقة",
-                        "الدوحة",
-                        "الكويت",
-                        "المنامة",
-                        "مسقط",
-                      ].map((area) => (
-                        <label
-                          key={area}
-                          className={`flex items-center space-x-2 space-x-reverse p-2 border rounded-lg hover:bg-gray-50 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={shipping.shippingAreas.includes(area)}
-                            onChange={(e) => {
-                              const newAreas = e.target.checked
-                                ? [...shipping.shippingAreas, area]
-                                : shipping.shippingAreas.filter(
-                                    (a) => a !== area,
-                                  );
-                              setShipping({
-                                ...shipping,
-                                shippingAreas: newAreas,
-                              });
-                            }}
-                            className="rounded"
-                          />
-                          <span className="text-sm arabic">{area}</span>
-                        </label>
-                      ))}
+                    <div className="flex items-center justify-between mb-2">
+                      <Label className="arabic">مناطق التوصيل</Label>
+                      <div className="text-xs text-gray-500 arabic">
+                        ({availableRegions.length} منطقة متاحة)
+                      </div>
                     </div>
+
+                    {availableRegions.length === 0 ? (
+                      <div className="text-center py-8 text-gray-500 border-2 border-dashed border-gray-200 rounded-lg">
+                        <MapPin className="w-8 h-8 mx-auto mb-2 text-gray-300" />
+                        <p className="arabic text-sm">لا توجد مناطق متاحة</p>
+                        <p className="arabic text-xs">يجب على المدير إضافة مناطق التوصيل أولاً</p>
+                      </div>
+                    ) : (
+                      <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
+                        {availableRegions.map((area) => (
+                          <label
+                            key={area}
+                            className={`flex items-center space-x-2 space-x-reverse p-2 border rounded-lg hover:bg-gray-50 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={shipping.shippingAreas.includes(area)}
+                              onChange={(e) => {
+                                const newAreas = e.target.checked
+                                  ? [...shipping.shippingAreas, area]
+                                  : shipping.shippingAreas.filter(
+                                      (a) => a !== area,
+                                    );
+                                setShipping({
+                                  ...shipping,
+                                  shippingAreas: newAreas,
+                                });
+                              }}
+                              className="rounded"
+                            />
+                            <span className="text-sm arabic">{area}</span>
+                          </label>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   <Separator />
