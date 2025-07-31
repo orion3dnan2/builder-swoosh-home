@@ -166,6 +166,12 @@ export default function MerchantSettings() {
       } catch (error) {
         console.error("خطأ في تحميل بيانات المتجر:", error);
 
+        // عرض رسالة للمستخدم في حالة عدم وجود اتصال أو مشكلة في المصادقة
+        if (error.message?.includes('Failed to fetch') || error.message?.includes('TypeError')) {
+          // تجاهل الخطأ واستخدم البيانات المحلية
+          console.log("استخدام البيانات المحفوظة محلياً...");
+        }
+
         // الرجوع للبيانات المحفوظة محلياً في حالة الخطأ
         try {
           const savedStoreSettings = localStorage.getItem("storeSettings");
@@ -479,7 +485,7 @@ export default function MerchantSettings() {
   const countriesWithCities = {
     السودان: [
       "الخرطوم",
-      "أمدرمان",
+      "أمدرما��",
       "بحري",
       "مدني",
       "كسلا",
