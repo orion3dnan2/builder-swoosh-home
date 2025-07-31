@@ -617,7 +617,7 @@ export default function AdminSettings() {
                         <span className="text-sm text-green-600 arabic">الدول المغطاة</span>
                       </div>
                       <div className="text-2xl font-bold text-green-700 mt-2">
-                        {Object.keys(regionsManager.getStats().byCountry).length}
+                        {Object.keys(regionsStats.byCountry).length}
                       </div>
                     </div>
 
