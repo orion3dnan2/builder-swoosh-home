@@ -48,6 +48,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ApiService } from "@/lib/apiService";
 import { useToast } from "@/hooks/use-toast";
 import { cleanArabicText } from "@/lib/textUtils";
+import { useRegions } from "@/hooks/use-regions";
 
 interface StoreSettings {
   storeName: string;
@@ -185,7 +186,7 @@ export default function MerchantSettings() {
         // تحقق من وجود token المصادقة
         const token = ApiService.getToken();
         if (!token) {
-          console.log("لا يوجد token للمصادقة، استخدام البيانات المحلية");
+          console.log("لا يوجد token ��لمصادقة، استخدام البيانات المحلية");
           loadLocalData();
           return;
         }
@@ -420,7 +421,7 @@ export default function MerchantSettings() {
         "image/webp",
       ];
       if (!allowedTypes.includes(file.type)) {
-        alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG, أو WebP)");
+        alert("يرجى اختيار ملف صورة صا��ح (PNG, JPG, JPEG, أو WebP)");
         return;
       }
 
@@ -579,7 +580,7 @@ export default function MerchantSettings() {
   // أنواع المتاجر المحددة مسبقاً (يمكن تعديلها من قبل الإدارة)
   const predefinedCategories = [
     "مواد غذائ��ة وأطعمة",
-    "عطور ومستحضرات تجميل",
+    "عطور ومستحضرات تج��يل",
     "ملابس وأزياء",
     "إلكترونيات وتقنية",
     "منتجات منزلية",
@@ -630,7 +631,7 @@ export default function MerchantSettings() {
       "جازان",
       "نجران",
     ],
-    "الإمارات العربية المتحدة": [
+    "الإمارا�� العربية المتحدة": [
       "��بي",
       "أبوظبي",
       "الشارقة",
@@ -669,7 +670,7 @@ export default function MerchantSettings() {
     ],
   };
 
-  // إضافة حالات جديدة
+  // إضافة حا��ات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
     isNewMerchant ? user?.profile?.country || "السودان" : "الس��دان",
   );
@@ -1821,7 +1822,7 @@ export default function MerchantSettings() {
                         },
                         {
                           key: "customerNotifications",
-                          title: "إشعارات العملا��",
+                          title: "إشعارات العملاء",
                           desc: "إشعار العملا�� عند كل مرحلة من التوصيل",
                           icon: "🔔"
                         }
@@ -1869,7 +1870,7 @@ export default function MerchantSettings() {
                           تكامل الواتساب للتوصيل
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تواصل مباشر مع السائقين وتتبع الطلبات عبر ال��اتساب
+                          تواصل مباشر مع السائقين وتتبع الطلبات عبر الواتساب
                         </p>
                       </div>
                     </div>
@@ -1956,7 +1957,7 @@ export default function MerchantSettings() {
                   {/* Password Change */}
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-4 arabic">
-                      ��غيير كلمة المرور
+                      تغيير كلمة المرور
                     </h3>
                     <div className="space-y-4">
                       <div>
