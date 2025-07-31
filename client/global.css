@@ -155,15 +155,8 @@
   body {
     @apply bg-background text-foreground transition-colors duration-300;
     font-family:
-      "Cairo",
-      "Noto Sans Arabic",
-      "Tajawal",
-      "Noto Kufi Arabic",
-      "Amiri",
-      "Tahoma",
-      "Segoe UI",
-      "Arial Unicode MS",
-      sans-serif;
+      "Cairo", "Noto Sans Arabic", "Tajawal", "Noto Kufi Arabic", "Amiri",
+      "Tahoma", "Segoe UI", "Arial Unicode MS", sans-serif;
     font-feature-settings:
       "rlig" 1,
       "calt" 1;
@@ -209,13 +202,8 @@
   /* Arabic Text Styling - Enhanced */
   .arabic {
     font-family:
-      "Cairo",
-      "Noto Sans Arabic",
-      "Tajawal",
-      "Noto Kufi Arabic",
-      "Tahoma",
-      "Arial Unicode MS",
-      sans-serif !important;
+      "Cairo", "Noto Sans Arabic", "Tajawal", "Noto Kufi Arabic", "Tahoma",
+      "Arial Unicode MS", sans-serif !important;
     line-height: 1.7;
     letter-spacing: 0.025em;
     direction: rtl;
@@ -245,13 +233,8 @@
   [dir="rtl"],
   .rtl {
     font-family:
-      "Cairo",
-      "Noto Sans Arabic",
-      "Tajawal",
-      "Noto Kufi Arabic",
-      "Tahoma",
-      "Arial Unicode MS",
-      sans-serif !important;
+      "Cairo", "Noto Sans Arabic", "Tajawal", "Noto Kufi Arabic", "Tahoma",
+      "Arial Unicode MS", sans-serif !important;
     direction: rtl;
     text-align: right;
     unicode-bidi: bidi-override;
@@ -267,9 +250,11 @@
 
   /* Fix for corrupted Arabic characters */
   @font-face {
-    font-family: 'ArabicFallback';
-    src: local('Tahoma'), local('Arial Unicode MS'), local('Microsoft Sans Serif');
-    unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+    font-family: "ArabicFallback";
+    src:
+      local("Tahoma"), local("Arial Unicode MS"), local("Microsoft Sans Serif");
+    unicode-range:
+      U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
   }
 
   /* Force UTF-8 encoding for Arabic text */
@@ -280,7 +265,8 @@
   }
 
   /* Ensure proper text rendering */
-  body, html {
+  body,
+  html {
     text-rendering: optimizeLegibility;
     -webkit-font-feature-settings: "kern" 1;
     -moz-font-feature-settings: "kern" 1;
@@ -446,7 +432,7 @@
 
   /* Replace corrupted characters with empty content */
   [data-corrupted]::before {
-    content: '';
+    content: "";
   }
 
   /* High contrast mode support */

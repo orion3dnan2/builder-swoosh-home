@@ -56,8 +56,6 @@ export default function AdminSettings() {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editingValue, setEditingValue] = useState("");
 
-
-
   const handleThemeChange = (key: string, value: any) => {
     const updatedSettings = {
       ...localSettings,
@@ -610,11 +608,14 @@ export default function AdminSettings() {
                       onChange={(e) => setNewRegion(e.target.value)}
                       placeholder="أدخل اسم المنطقة الجديدة"
                       className="flex-1 arabic text-right"
-                      onKeyPress={(e) => e.key === 'Enter' && addRegion()}
+                      onKeyPress={(e) => e.key === "Enter" && addRegion()}
                     />
                     <Button
                       onClick={addRegion}
-                      disabled={!newRegion.trim() || deliveryRegions.includes(newRegion.trim())}
+                      disabled={
+                        !newRegion.trim() ||
+                        deliveryRegions.includes(newRegion.trim())
+                      }
                       className="arabic"
                     >
                       <Plus className="w-4 h-4 ml-2" />
@@ -627,7 +628,9 @@ export default function AdminSettings() {
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                       <div className="flex items-center space-x-2 space-x-reverse">
                         <MapPin className="w-5 h-5 text-blue-600" />
-                        <span className="text-sm text-blue-600 arabic">إجمالي المناطق</span>
+                        <span className="text-sm text-blue-600 arabic">
+                          إجمالي المناطق
+                        </span>
                       </div>
                       <div className="text-2xl font-bold text-blue-700 mt-2">
                         {deliveryRegions.length}
@@ -637,7 +640,9 @@ export default function AdminSettings() {
                     <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                       <div className="flex items-center space-x-2 space-x-reverse">
                         <Globe className="w-5 h-5 text-green-600" />
-                        <span className="text-sm text-green-600 arabic">الدول المغطاة</span>
+                        <span className="text-sm text-green-600 arabic">
+                          الدول المغطاة
+                        </span>
                       </div>
                       <div className="text-2xl font-bold text-green-700 mt-2">
                         {Object.keys(regionsStats.byCountry).length}
@@ -647,7 +652,9 @@ export default function AdminSettings() {
                     <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
                       <div className="flex items-center space-x-2 space-x-reverse">
                         <Settings className="w-5 h-5 text-orange-600" />
-                        <span className="text-sm text-orange-600 arabic">حالة النظام</span>
+                        <span className="text-sm text-orange-600 arabic">
+                          حالة النظام
+                        </span>
                       </div>
                       <div className="text-sm font-medium text-orange-700 mt-2 arabic">
                         {deliveryRegions.length > 0 ? "نشط" : "غير نشط"}
@@ -671,11 +678,13 @@ export default function AdminSettings() {
                             <div className="flex items-center space-x-2 space-x-reverse flex-1">
                               <Input
                                 value={editingValue}
-                                onChange={(e) => setEditingValue(e.target.value)}
+                                onChange={(e) =>
+                                  setEditingValue(e.target.value)
+                                }
                                 className="flex-1 arabic text-right text-sm"
                                 onKeyPress={(e) => {
-                                  if (e.key === 'Enter') saveEdit(index);
-                                  if (e.key === 'Escape') cancelEdit();
+                                  if (e.key === "Enter") saveEdit(index);
+                                  if (e.key === "Escape") cancelEdit();
                                 }}
                                 autoFocus
                               />
@@ -735,7 +744,8 @@ export default function AdminSettings() {
                             تحذير: لا توجد مناطق توصيل!
                           </h4>
                           <p className="text-red-600 arabic text-sm mb-4">
-                            جميع التجار لن يتمكنوا من تحديد مناطق التوصيل حتى تضيف مناطق هنا
+                            جميع التجار لن يتمكنوا من تحديد مناطق التوصيل حتى
+                            تضيف مناطق هنا
                           </p>
                           <Button
                             onClick={() => {
@@ -774,11 +784,14 @@ export default function AdminSettings() {
                       size="sm"
                       onClick={() => {
                         const regions = regionsManager.getRegions();
-                        const blob = new Blob([JSON.stringify(regions, null, 2)], { type: 'application/json' });
+                        const blob = new Blob(
+                          [JSON.stringify(regions, null, 2)],
+                          { type: "application/json" },
+                        );
                         const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
+                        const a = document.createElement("a");
                         a.href = url;
-                        a.download = 'delivery-regions.json';
+                        a.download = "delivery-regions.json";
                         a.click();
                         URL.revokeObjectURL(url);
                       }}
@@ -795,11 +808,24 @@ export default function AdminSettings() {
                       تعليمات الاستخدام:
                     </h4>
                     <ul className="text-sm text-blue-700 arabic space-y-1">
-                      <li>• أضف المناطق التي تريد أن تظهر للتجار في إعدادات الشحن</li>
-                      <li>• يمكن تعديل أو حذف أي منطقة بالضغط على الأيقونات المناسبة</li>
-                      <li>• المناطق تُحفظ تلقائياً ولا تحتاج للضغط على "حفظ التغييرات"</li>
-                      <li>• المناطق المحددة هنا ستظهر لجميع التجار في النظام فوراً</li>
-                      <li>• يمكن إعادة تعيين المناطق للقيم الافتراضية أو تصديرها كملف</li>
+                      <li>
+                        • أضف المناطق التي تريد أن تظهر للتجار في إعدادات الشحن
+                      </li>
+                      <li>
+                        • يمكن تعديل أو حذف أي منطقة بالضغط على الأيقونات
+                        المناسبة
+                      </li>
+                      <li>
+                        • المناطق تُحفظ تلقائياً ولا تحتاج للضغط على "حفظ
+                        التغييرات"
+                      </li>
+                      <li>
+                        • المناطق المحددة هنا ستظهر لجميع التجار في النظام فوراً
+                      </li>
+                      <li>
+                        • يمكن إعادة تعيين المناطق للقيم الافتراضية أو تصديرها
+                        كملف
+                      </li>
                     </ul>
                   </div>
 
@@ -810,14 +836,21 @@ export default function AdminSettings() {
                         توزيع المناطق حسب الدول:
                       </h4>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                        {Object.entries(regionsStats.byCountry).map(([country, count]) => (
-                          <div key={country} className="flex items-center justify-between p-2 bg-white rounded border">
-                            <span className="text-sm arabic font-medium">{country}</span>
-                            <Badge variant="secondary" className="text-xs">
-                              {count} منطقة
-                            </Badge>
-                          </div>
-                        ))}
+                        {Object.entries(regionsStats.byCountry).map(
+                          ([country, count]) => (
+                            <div
+                              key={country}
+                              className="flex items-center justify-between p-2 bg-white rounded border"
+                            >
+                              <span className="text-sm arabic font-medium">
+                                {country}
+                              </span>
+                              <Badge variant="secondary" className="text-xs">
+                                {count} منطقة
+                              </Badge>
+                            </div>
+                          ),
+                        )}
                       </div>
                     </div>
                   )}

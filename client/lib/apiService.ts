@@ -85,14 +85,17 @@ export class ApiService {
       clearTimeout(timeoutId);
 
       // التعامل مع أنواع مختلفة من الأخطاء
-      if (error.name === 'AbortError') {
+      if (error.name === "AbortError") {
         console.warn(`Request timeout for ${endpoint}`);
-        throw new Error('انتهت مهلة الاتصال');
+        throw new Error("انتهت مهلة الاتصال");
       }
 
-      if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError')) {
+      if (
+        error.message?.includes("Failed to fetch") ||
+        error.message?.includes("NetworkError")
+      ) {
         console.warn(`Network error for ${endpoint}`);
-        throw new Error('مشكلة في الاتصال بالشبكة');
+        throw new Error("مشكلة في الاتصال بالشبكة");
       }
 
       console.error("API Request failed:", error);

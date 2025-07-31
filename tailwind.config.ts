@@ -20,10 +20,38 @@ export default {
     },
     extend: {
       fontFamily: {
-        cairo: ["Cairo", "Noto Sans Arabic", "Tajawal", "Tahoma", "Arial Unicode MS", "sans-serif"],
-        tajawal: ["Tajawal", "Noto Sans Arabic", "Cairo", "Tahoma", "Arial Unicode MS", "sans-serif"],
-        "noto-kufi": ["Noto Kufi Arabic", "Cairo", "Noto Sans Arabic", "Tahoma", "Arial Unicode MS", "sans-serif"],
-        amiri: ["Amiri", "Noto Sans Arabic", "Cairo", "Tahoma", "Arial Unicode MS", "serif"],
+        cairo: [
+          "Cairo",
+          "Noto Sans Arabic",
+          "Tajawal",
+          "Tahoma",
+          "Arial Unicode MS",
+          "sans-serif",
+        ],
+        tajawal: [
+          "Tajawal",
+          "Noto Sans Arabic",
+          "Cairo",
+          "Tahoma",
+          "Arial Unicode MS",
+          "sans-serif",
+        ],
+        "noto-kufi": [
+          "Noto Kufi Arabic",
+          "Cairo",
+          "Noto Sans Arabic",
+          "Tahoma",
+          "Arial Unicode MS",
+          "sans-serif",
+        ],
+        amiri: [
+          "Amiri",
+          "Noto Sans Arabic",
+          "Cairo",
+          "Tahoma",
+          "Arial Unicode MS",
+          "serif",
+        ],
         arabic: [
           "Cairo",
           "Noto Sans Arabic",

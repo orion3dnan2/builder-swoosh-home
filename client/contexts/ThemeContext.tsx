@@ -508,14 +508,14 @@ export function useTheme() {
   if (context === undefined) {
     // Provide a safe fallback during initial render
     return {
-      theme: 'light' as Theme,
-      language: 'ar' as Language,
-      fontFamily: 'cairo' as FontFamily,
+      theme: "light" as Theme,
+      language: "ar" as Language,
+      fontFamily: "cairo" as FontFamily,
       toggleTheme: () => {},
       toggleLanguage: () => {},
       setFontFamily: () => {},
       t: (key: string) => key,
-      isRTL: true
+      isRTL: true,
     };
   }
   return context;
@@ -571,7 +571,7 @@ export const loadFonts = () => {
   });
 
   // Force font display optimization
-  const style = document.createElement('style');
+  const style = document.createElement("style");
   style.textContent = `
     @font-face {
       font-family: 'ArabicFallback';

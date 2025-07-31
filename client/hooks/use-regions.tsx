@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { regionsManager } from '@/lib/regionsManager';
+import { useState, useEffect } from "react";
+import { regionsManager } from "@/lib/regionsManager";
 
 /**
  * Hook مخصص لمراقبة تحديثات المناطق
@@ -16,7 +16,7 @@ export function useRegions() {
         const currentRegions = regionsManager.getRegions();
         setRegions(currentRegions);
       } catch (error) {
-        console.error('خطأ في تحميل المناطق:', error);
+        console.error("خطأ في تحميل المناطق:", error);
       } finally {
         setIsLoading(false);
       }
@@ -26,7 +26,7 @@ export function useRegions() {
 
     // مراقبة التغييرات في localStorage
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'adminDeliveryRegions') {
+      if (e.key === "adminDeliveryRegions") {
         loadRegions();
       }
     };
@@ -36,18 +36,18 @@ export function useRegions() {
       loadRegions();
     };
 
-    window.addEventListener('storage', handleStorageChange);
-    window.addEventListener('regionsUpdated', handleRegionsUpdate);
+    window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("regionsUpdated", handleRegionsUpdate);
 
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('regionsUpdated', handleRegionsUpdate);
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("regionsUpdated", handleRegionsUpdate);
     };
   }, []);
 
   // إشعار بالتحديثات
   const notifyRegionsUpdate = () => {
-    window.dispatchEvent(new Event('regionsUpdated'));
+    window.dispatchEvent(new Event("regionsUpdated"));
   };
 
   return {

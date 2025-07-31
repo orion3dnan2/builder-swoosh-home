@@ -119,8 +119,6 @@ export default function MerchantSettings() {
     }
   }, [user]);
 
-
-
   // دالة لتحميل البيانات المحفوظة محلياً
   const loadLocalData = () => {
     try {
@@ -153,7 +151,12 @@ export default function MerchantSettings() {
     const loadStoreData = async () => {
       if (!user?.id) return;
 
-      setLoadingState({ isLoading: true, hasError: false, isOffline: false, retryCount: 0 });
+      setLoadingState({
+        isLoading: true,
+        hasError: false,
+        isOffline: false,
+        retryCount: 0,
+      });
 
       try {
         // تحقق من وجود token المصادقة
@@ -203,22 +206,36 @@ export default function MerchantSettings() {
           }
 
           setIsNewMerchant(false); // له متجر موجود
-          setLoadingState({ isLoading: false, hasError: false, isOffline: false, retryCount: 0 });
+          setLoadingState({
+            isLoading: false,
+            hasError: false,
+            isOffline: false,
+            retryCount: 0,
+          });
         } else {
           // تحميل البيانات المحفوظة محلياً إذا لم يكن هناك متجر موجود
           loadLocalData();
-          setLoadingState({ isLoading: false, hasError: false, isOffline: false, retryCount: 0 });
+          setLoadingState({
+            isLoading: false,
+            hasError: false,
+            isOffline: false,
+            retryCount: 0,
+          });
         }
       } catch (error) {
         console.error("خطأ في تحميل بيانات المتجر:", error);
 
         // عرض رسالة للمستخدم في حالة عدم وج��د اتصال أو مشكلة في المص��دقة
-        if (error.message?.includes('Failed to fetch') || error.message?.includes('TypeError')) {
+        if (
+          error.message?.includes("Failed to fetch") ||
+          error.message?.includes("TypeError")
+        ) {
           // تجاهل الخطأ واستخدم البيانات المحلية
           console.log("استخدام البيانات المحفوظة محلياً...");
           toast({
             title: "وضع غير متصل",
-            description: "تم تحميل البيانات المحفوظة محلياً. ستتم مزامنة التغييرات عند استعادة الاتصال.",
+            description:
+              "تم تحميل البيانات المحفوظة محلياً. ستتم مزامنة التغييرات عند استعادة الاتصال.",
             variant: "default",
           });
         }
@@ -289,38 +306,40 @@ export default function MerchantSettings() {
 
   // Delivery Drivers State
   const [deliveryDrivers, setDeliveryDrivers] = useState<DeliveryDriver[]>(
-    isNewMerchant ? [] : [
-      {
-        id: "driver1",
-        name: "أحمد محمد الطيب",
-        phone: "+966501234567",
-        area: "الرياض",
-        rating: 4.8,
-        isActive: true,
-        vehicle: "سيارة صالون",
-        speciality: ["طلبات سريعة", "أطعمة"]
-      },
-      {
-        id: "driver2",
-        name: "فاطمة عبدالله",
-        phone: "+971501234567",
-        area: "دبي",
-        rating: 4.9,
-        isActive: true,
-        vehicle: "دراجة نارية",
-        speciality: ["طلبات صغيرة", "مستندات"]
-      },
-      {
-        id: "driver3",
-        name: "عثمان عبدالرحمن",
-        phone: "+96550123456",
-        area: "الكويت",
-        rating: 4.7,
-        isActive: true,
-        vehicle: "شاحنة صغيرة",
-        speciality: ["طلبات كبيرة", "أثاث"]
-      }
-    ]
+    isNewMerchant
+      ? []
+      : [
+          {
+            id: "driver1",
+            name: "أحمد محمد الطيب",
+            phone: "+966501234567",
+            area: "الرياض",
+            rating: 4.8,
+            isActive: true,
+            vehicle: "سيارة صالون",
+            speciality: ["طلبات سريعة", "أطعمة"],
+          },
+          {
+            id: "driver2",
+            name: "فاطمة عبدالله",
+            phone: "+971501234567",
+            area: "دبي",
+            rating: 4.9,
+            isActive: true,
+            vehicle: "دراجة نارية",
+            speciality: ["طلبات صغيرة", "مستندات"],
+          },
+          {
+            id: "driver3",
+            name: "عثمان عبدالرحمن",
+            phone: "+96550123456",
+            area: "الكويت",
+            rating: 4.7,
+            isActive: true,
+            vehicle: "شاحنة صغيرة",
+            speciality: ["طلبات كبيرة", "أثاث"],
+          },
+        ],
   );
 
   // Tracking Settings
@@ -341,16 +360,20 @@ export default function MerchantSettings() {
 
   // دالة لفتح الواتساب
   const openWhatsApp = (phone: string, driverName: string) => {
-    const message = encodeURIComponent(`��لسلام عليكم ${driverName}، أريد التواصل معك بخصوص توصيل طلب من متجر ${storeSettings.storeName}.`);
-    const whatsappUrl = `https://wa.me/${phone.replace('+', '')}?text=${message}`;
-    window.open(whatsappUrl, '_blank');
+    const message = encodeURIComponent(
+      `��لسلام عليكم ${driverName}، أريد التواصل معك بخصوص توصيل طلب من متجر ${storeSettings.storeName}.`,
+    );
+    const whatsappUrl = `https://wa.me/${phone.replace("+", "")}?text=${message}`;
+    window.open(whatsappUrl, "_blank");
   };
 
   // دالة لتتبع الطلب
   const trackOrder = (orderId: string, driverPhone: string) => {
-    const message = encodeURIComponent(`مرحباً، أريد متابعة حالة الطلب رقم: ${orderId}`);
-    const whatsappUrl = `https://wa.me/${driverPhone.replace('+', '')}?text=${message}`;
-    window.open(whatsappUrl, '_blank');
+    const message = encodeURIComponent(
+      `مرحباً، أريد متابعة حالة الطلب رقم: ${orderId}`,
+    );
+    const whatsappUrl = `https://wa.me/${driverPhone.replace("+", "")}?text=${message}`;
+    window.open(whatsappUrl, "_blank");
   };
 
   // معالجة تغ��ير الشعار
@@ -651,7 +674,11 @@ export default function MerchantSettings() {
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
 
   // إدارة المناطق من النظام الإداري
-  const { regions: availableRegions, isLoading: regionsLoading, hasRegions } = useRegions();
+  const {
+    regions: availableRegions,
+    isLoading: regionsLoading,
+    hasRegions,
+  } = useRegions();
 
   // دال�� لمعالجة تغيير نوع المتجر
   const handleCategoryChange = (value: string) => {
@@ -680,9 +707,25 @@ export default function MerchantSettings() {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 flex items-center justify-center">
         <div className="text-center">
           <div className="inline-flex items-center px-6 py-3 font-semibold leading-6 text-sm shadow-lg rounded-xl text-white bg-gradient-to-r from-primary-500 to-secondary-500">
-            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            <svg
+              className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
             </svg>
             جاري تحميل بيانات المتجر...
           </div>
@@ -742,7 +785,8 @@ export default function MerchantSettings() {
                     وضع غير متصل
                   </span>
                   <p className="text-xs text-yellow-700 arabic mt-1">
-                    تعمل بالبيانات المحفوظة محلياً. ستتم مزامنة التغييرات عند استعادة الاتصال.
+                    تعمل بالبيانات المحفوظة محلياً. ستتم مزامنة التغييرات عند
+                    استعادة الاتصال.
                   </p>
                 </div>
               </div>
@@ -1237,28 +1281,32 @@ export default function MerchantSettings() {
                           label: "طلبات جديدة",
                           desc: "إشعارات عند وصول طلبات جديدة",
                           icon: "🛒",
-                          color: "bg-green-50 border-green-200 hover:bg-green-100"
+                          color:
+                            "bg-green-50 border-green-200 hover:bg-green-100",
                         },
                         {
                           key: "orderUpdates",
                           label: "تحديثات الطلبات",
                           desc: "إشعارات عند تغيير حالة الطل��ات",
                           icon: "📦",
-                          color: "bg-blue-50 border-blue-200 hover:bg-blue-100"
+                          color: "bg-blue-50 border-blue-200 hover:bg-blue-100",
                         },
                         {
                           key: "paymentReceived",
                           label: "استلام الدفعات",
                           desc: "إشعارات عند استلام المدفوعات",
                           icon: "💰",
-                          color: "bg-yellow-50 border-yellow-200 hover:bg-yellow-100"
+                          color:
+                            "bg-yellow-50 border-yellow-200 hover:bg-yellow-100",
                         },
                       ].map((item) => (
                         <div
                           key={item.key}
                           className={`p-4 rounded-lg border-2 transition-all duration-200 ${item.color} ${isRTL ? "flex-row-reverse" : "flex-row"} flex items-center justify-between`}
                         >
-                          <div className={`flex items-center ${isRTL ? "flex-row-reverse" : "flex-row"}`}>
+                          <div
+                            className={`flex items-center ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          >
                             <div className="text-2xl ml-3">{item.icon}</div>
                             <div className={isRTL ? "text-right" : "text-left"}>
                               <div className="font-semibold arabic text-gray-900">
@@ -1310,21 +1358,24 @@ export default function MerchantSettings() {
                           label: "نفاد المخزون",
                           desc: "تنبيه عند انخفاض كمية المنتجات",
                           icon: "⚠️",
-                          color: "bg-red-50 border-red-200 hover:bg-red-100"
+                          color: "bg-red-50 border-red-200 hover:bg-red-100",
                         },
                         {
                           key: "reviews",
                           label: "المراجعات الجديدة",
                           desc: "إشعارات عند وصول مراجعات جديدة",
                           icon: "⭐",
-                          color: "bg-purple-50 border-purple-200 hover:bg-purple-100"
+                          color:
+                            "bg-purple-50 border-purple-200 hover:bg-purple-100",
                         },
                       ].map((item) => (
                         <div
                           key={item.key}
                           className={`p-4 rounded-lg border-2 transition-all duration-200 ${item.color} ${isRTL ? "flex-row-reverse" : "flex-row"} flex items-center justify-between`}
                         >
-                          <div className={`flex items-center ${isRTL ? "flex-row-reverse" : "flex-row"}`}>
+                          <div
+                            className={`flex items-center ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          >
                             <div className="text-2xl ml-3">{item.icon}</div>
                             <div className={isRTL ? "text-right" : "text-left"}>
                               <div className="font-semibold arabic text-gray-900">
@@ -1376,21 +1427,24 @@ export default function MerchantSettings() {
                           label: "رسائل SMS",
                           desc: "استقبال الإشعارات عبر الرسائل النصية",
                           icon: "📱",
-                          color: "bg-cyan-50 border-cyan-200 hover:bg-cyan-100"
+                          color: "bg-cyan-50 border-cyan-200 hover:bg-cyan-100",
                         },
                         {
                           key: "emailNotifications",
                           label: "البريد الإلكتروني",
                           desc: "استقبال ا��إشعارات عبر ا��بريد الإلكتروني",
                           icon: "📧",
-                          color: "bg-indigo-50 border-indigo-200 hover:bg-indigo-100"
+                          color:
+                            "bg-indigo-50 border-indigo-200 hover:bg-indigo-100",
                         },
                       ].map((item) => (
                         <div
                           key={item.key}
                           className={`p-4 rounded-lg border-2 transition-all duration-200 ${item.color} ${isRTL ? "flex-row-reverse" : "flex-row"} flex items-center justify-between`}
                         >
-                          <div className={`flex items-center ${isRTL ? "flex-row-reverse" : "flex-row"}`}>
+                          <div
+                            className={`flex items-center ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          >
                             <div className="text-2xl ml-3">{item.icon}</div>
                             <div className={isRTL ? "text-right" : "text-left"}>
                               <div className="font-semibold arabic text-gray-900">
@@ -1574,11 +1628,9 @@ export default function MerchantSettings() {
                     <div className="flex items-center justify-between mb-2">
                       <Label className="arabic">مناطق ال��وصيل</Label>
                       <div className="text-xs text-gray-500 arabic">
-                        {regionsLoading ? (
-                          "جارٍ التحميل..."
-                        ) : (
-                          `(${availableRegions.length} منطقة متاحة)`
-                        )}
+                        {regionsLoading
+                          ? "جارٍ التحميل..."
+                          : `(${availableRegions.length} منطقة متاحة)`}
                       </div>
                     </div>
 
@@ -1590,9 +1642,15 @@ export default function MerchantSettings() {
                     ) : !hasRegions ? (
                       <div className="text-center py-8 border-2 border-dashed border-orange-200 rounded-lg bg-orange-50">
                         <MapPin className="w-8 h-8 mx-auto mb-2 text-orange-400" />
-                        <p className="arabic text-sm text-orange-600 font-medium">لا توجد مناطق متاحة حالياً</p>
-                        <p className="arabic text-xs text-orange-500 mt-1">يجب على مدير النظام إضافة مناطق التوصيل أولاً</p>
-                        <p className="arabic text-xs text-orange-500">تواصل مع الدعم الفني لإضافة مناطق جديدة</p>
+                        <p className="arabic text-sm text-orange-600 font-medium">
+                          لا توجد مناطق متاحة حالياً
+                        </p>
+                        <p className="arabic text-xs text-orange-500 mt-1">
+                          يجب على مدير النظام إضافة مناطق التوصيل أولاً
+                        </p>
+                        <p className="arabic text-xs text-orange-500">
+                          تواصل مع الدعم الفني لإضافة مناطق جديدة
+                        </p>
                       </div>
                     ) : (
                       <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
@@ -1628,7 +1686,8 @@ export default function MerchantSettings() {
                         <div className="flex items-center space-x-2 space-x-reverse">
                           <MapPin className="w-4 h-4 text-blue-600" />
                           <p className="text-sm text-blue-700 arabic">
-                            المناطق المتاحة يديرها مدير النظام. للتواصل حول إضافة منطقة جديدة تواصل مع الدعم الفني.
+                            المناطق المتاحة يديرها مدير النظام. للتواصل حول
+                            إضافة منطقة جديدة تواصل مع الدعم الفني.
                           </p>
                         </div>
                       </div>
@@ -1666,7 +1725,7 @@ export default function MerchantSettings() {
                             rating: 0,
                             isActive: false,
                             vehicle: "سيارة",
-                            speciality: []
+                            speciality: [],
                           };
                           setDeliveryDrivers([...deliveryDrivers, newDriver]);
                         }}
@@ -1682,15 +1741,19 @@ export default function MerchantSettings() {
                           key={driver.id}
                           className={`bg-white p-4 rounded-lg border-2 transition-all duration-200 ${
                             driver.isActive
-                              ? 'border-green-200 bg-green-50'
-                              : 'border-gray-200'
+                              ? "border-green-200 bg-green-50"
+                              : "border-gray-200"
                           }`}
                         >
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center">
-                              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                                driver.isActive ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600'
-                              }`}>
+                              <div
+                                className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                                  driver.isActive
+                                    ? "bg-green-100 text-green-600"
+                                    : "bg-gray-100 text-gray-600"
+                                }`}
+                              >
                                 <Car className="w-5 h-5" />
                               </div>
                               <div className="mr-3">
@@ -1705,9 +1768,11 @@ export default function MerchantSettings() {
                                 </div>
                               </div>
                             </div>
-                            <div className={`w-3 h-3 rounded-full ${
-                              driver.isActive ? 'bg-green-500' : 'bg-gray-400'
-                            }`} />
+                            <div
+                              className={`w-3 h-3 rounded-full ${
+                                driver.isActive ? "bg-green-500" : "bg-gray-400"
+                              }`}
+                            />
                           </div>
 
                           <div className="space-y-2 mb-4">
@@ -1738,7 +1803,9 @@ export default function MerchantSettings() {
                               size="sm"
                               variant="outline"
                               className="flex-1 arabic text-xs"
-                              onClick={() => openWhatsApp(driver.phone, driver.name)}
+                              onClick={() =>
+                                openWhatsApp(driver.phone, driver.name)
+                              }
                             >
                               📱 وا��ساب
                             </Button>
@@ -1746,7 +1813,7 @@ export default function MerchantSettings() {
                               size="sm"
                               variant="outline"
                               className="flex-1 arabic text-xs"
-                              onClick={() => trackOrder('ORD123', driver.phone)}
+                              onClick={() => trackOrder("ORD123", driver.phone)}
                             >
                               📍 تتبع
                             </Button>
@@ -1786,26 +1853,26 @@ export default function MerchantSettings() {
                           key: "trackingEnabled",
                           title: "تتبع الطلبات المباشر",
                           desc: "تمكين العملاء من تتبع طلباتهم مباشرة",
-                          icon: "🗺️"
+                          icon: "🗺️",
                         },
                         {
                           key: "autoAssignDrivers",
                           title: "توزيع تلقائي للطلبات",
                           desc: "توزيع الطلبات تلقائياً على أقرب سائق متاح",
-                          icon: "🤖"
+                          icon: "🤖",
                         },
                         {
                           key: "realTimeUpdates",
                           title: "التحديثات المباشرة",
                           desc: "إرسال تحديثات مباشرة عن حالة التوصيل",
-                          icon: "⚡"
+                          icon: "⚡",
                         },
                         {
                           key: "customerNotifications",
                           title: "إشعارات العملاء",
                           desc: "إشعار العملا�� عند كل مرحلة من التوصيل",
-                          icon: "🔔"
-                        }
+                          icon: "🔔",
+                        },
                       ].map((setting) => (
                         <div
                           key={setting.key}
@@ -1813,7 +1880,9 @@ export default function MerchantSettings() {
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center">
-                              <div className="text-2xl ml-3">{setting.icon}</div>
+                              <div className="text-2xl ml-3">
+                                {setting.icon}
+                              </div>
                               <div>
                                 <div className="font-semibold arabic text-sm">
                                   {setting.title}
@@ -1824,7 +1893,11 @@ export default function MerchantSettings() {
                               </div>
                             </div>
                             <Switch
-                              checked={trackingSettings[setting.key as keyof typeof trackingSettings]}
+                              checked={
+                                trackingSettings[
+                                  setting.key as keyof typeof trackingSettings
+                                ]
+                              }
                               onCheckedChange={(checked) =>
                                 setTrackingSettings({
                                   ...trackingSettings,

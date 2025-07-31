@@ -5,34 +5,34 @@
 // Function to clean corrupted Arabic text
 export const cleanArabicText = (text: string): string => {
   if (!text) return text;
-  
+
   // Replace common corruption patterns
   const replacements: { [key: string]: string } = {
-    '��': '', // Remove replacement characters
-    'ï»¿': '', // Remove BOM
-    'â€™': "'", // Fix apostrophe
-    'â€œ': '"', // Fix opening quote
-    'â€': '"', // Fix closing quote
-    'â€"': '–', // Fix en dash
-    'â€"': '—', // Fix em dash
-    'Ã ': 'à',
-    'Ã¡': 'á',
-    'Ã©': 'é',
-    'Ã­': 'í',
-    'Ã³': 'ó',
-    'Ãº': 'ú',
+    "��": "", // Remove replacement characters
+    "ï»¿": "", // Remove BOM
+    "â€™": "'", // Fix apostrophe
+    "â€œ": '"', // Fix opening quote
+    "â€": '"', // Fix closing quote
+    'â€"': "–", // Fix en dash
+    'â€"': "—", // Fix em dash
+    "Ã ": "à",
+    "Ã¡": "á",
+    "Ã©": "é",
+    "Ã­": "í",
+    "Ã³": "ó",
+    Ãº: "ú",
   };
 
   let cleaned = text;
-  
+
   // Apply replacements
   Object.entries(replacements).forEach(([corrupted, correct]) => {
-    cleaned = cleaned.replace(new RegExp(corrupted, 'g'), correct);
+    cleaned = cleaned.replace(new RegExp(corrupted, "g"), correct);
   });
 
   // Normalize Arabic characters
-  cleaned = cleaned.normalize('NFC');
-  
+  cleaned = cleaned.normalize("NFC");
+
   return cleaned;
 };
 
@@ -44,7 +44,7 @@ export const ensureUtf8 = (text: string): string => {
     const decoded = decodeURIComponent(encoded);
     return decoded;
   } catch (error) {
-    console.warn('UTF-8 encoding issue:', error);
+    console.warn("UTF-8 encoding issue:", error);
     return text;
   }
 };
@@ -52,18 +52,18 @@ export const ensureUtf8 = (text: string): string => {
 // Function to validate Arabic text
 export const isValidArabicText = (text: string): boolean => {
   if (!text) return true;
-  
+
   // Check for replacement characters
-  if (text.includes('�')) return false;
-  
+  if (text.includes("�")) return false;
+
   // Check for common encoding issues
   const corruptionPatterns = [
     /ï»¿/g, // BOM
-    /â€/g,  // Common corruption
+    /â€/g, // Common corruption
     /Ã[0-9a-f]/g, // UTF-8 corruption
   ];
-  
-  return !corruptionPatterns.some(pattern => pattern.test(text));
+
+  return !corruptionPatterns.some((pattern) => pattern.test(text));
 };
 
 // Hook for cleaning text in React components
@@ -78,7 +78,7 @@ export const useCleanText = () => {
 // Safe text processing function
 export const getSafeText = (
   text: string,
-  fallback: string = 'نص غير صالح'
+  fallback: string = "نص غير صالح",
 ): string => {
   const cleanText = cleanArabicText(text);
   const isValid = isValidArabicText(cleanText);

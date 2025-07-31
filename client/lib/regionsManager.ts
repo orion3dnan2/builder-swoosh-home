@@ -12,12 +12,39 @@ export interface DeliveryRegion {
 
 // المناطق الافتراضية
 const DEFAULT_REGIONS = [
-  "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة",
-  "دبي", "أبوظبي", "الشارقة", "عجمان", "رأس الخيمة", "الفجيرة", "أم القيوين",
-  "الدوحة", "الريان", "الوكرة", "الخور",
-  "الكويت", "حولي", "الفروانية", "��لأحمدي", "الجهراء", "مبارك الكبير",
-  "المنامة", "المحرق", "مدينة عيسى", "الرفاع", "مدينة حمد",
-  "مسقط", "صلالة", "نزوى", "صحار", "البريمي", "إبراء"
+  "الرياض",
+  "جدة",
+  "الدمام",
+  "مكة المكرمة",
+  "المدينة المنورة",
+  "دبي",
+  "أبوظبي",
+  "الشارقة",
+  "عجمان",
+  "رأس الخيمة",
+  "الفجيرة",
+  "أم القيوين",
+  "الدوحة",
+  "الريان",
+  "الوكرة",
+  "الخور",
+  "الكويت",
+  "حولي",
+  "الفروانية",
+  "��لأحمدي",
+  "الجهراء",
+  "مبارك الكبير",
+  "المنامة",
+  "المحرق",
+  "مدينة عيسى",
+  "الرفاع",
+  "مدينة حمد",
+  "مسقط",
+  "صلالة",
+  "نزوى",
+  "صحار",
+  "البريمي",
+  "إبراء",
 ];
 
 export class RegionsManager {
@@ -40,7 +67,7 @@ export class RegionsManager {
    */
   private loadRegions(): void {
     try {
-      const savedRegions = localStorage.getItem('adminDeliveryRegions');
+      const savedRegions = localStorage.getItem("adminDeliveryRegions");
       if (savedRegions) {
         const parsedRegions = JSON.parse(savedRegions);
         if (Array.isArray(parsedRegions)) {
@@ -48,12 +75,12 @@ export class RegionsManager {
           return;
         }
       }
-      
+
       // إذا لم توجد مناطق محفوظة، استخدم الافتراضية
       this.regions = [...DEFAULT_REGIONS];
       this.saveRegions();
     } catch (error) {
-      console.error('خطأ في تحميل المناطق:', error);
+      console.error("خطأ في تحميل المناطق:", error);
       this.regions = [...DEFAULT_REGIONS];
     }
   }
@@ -63,9 +90,12 @@ export class RegionsManager {
    */
   private saveRegions(): void {
     try {
-      localStorage.setItem('adminDeliveryRegions', JSON.stringify(this.regions));
+      localStorage.setItem(
+        "adminDeliveryRegions",
+        JSON.stringify(this.regions),
+      );
     } catch (error) {
-      console.error('خطأ في حفظ المناطق:', error);
+      console.error("خطأ في حفظ المناطق:", error);
     }
   }
 
@@ -147,27 +177,56 @@ export class RegionsManager {
   } {
     const stats = {
       total: this.regions.length,
-      byCountry: {} as Record<string, number>
+      byCountry: {} as Record<string, number>,
     };
 
     // تصنيف المناطق حسب الدول (تقريبي)
-    this.regions.forEach(region => {
-      let country = 'أخرى';
-      
-      if (['الرياض', 'جدة', 'الدمام', 'مكة المكرمة', 'المدينة المنورة'].includes(region)) {
-        country = 'السعودية';
-      } else if (['دبي', 'أبوظبي', 'الشارقة', 'عجمان', 'رأس الخيمة', 'الفجيرة', 'أم القيوين'].includes(region)) {
-        country = 'الإمارات';
-      } else if (['الدوحة', 'ا��ريان', 'الوكرة', 'الخور'].includes(region)) {
-        country = 'قطر';
-      } else if (['الكويت', 'حولي', 'الفروانية', 'الأحمدي', 'الجهراء', 'مبارك الكبير'].includes(region)) {
-        country = 'الكويت';
-      } else if (['المنامة', 'المحرق', 'مدينة عيسى', 'الرفاع', 'مدينة حمد'].includes(region)) {
-        country = 'البحرين';
-      } else if (['مسقط', 'صلالة', 'نزوى', 'صحار', 'البريمي', 'إبراء'].includes(region)) {
-        country = 'عمان';
+    this.regions.forEach((region) => {
+      let country = "أخرى";
+
+      if (
+        ["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة"].includes(
+          region,
+        )
+      ) {
+        country = "السعودية";
+      } else if (
+        [
+          "دبي",
+          "أبوظبي",
+          "الشارقة",
+          "عجمان",
+          "رأس الخيمة",
+          "الفجيرة",
+          "أم القيوين",
+        ].includes(region)
+      ) {
+        country = "الإمارات";
+      } else if (["الدوحة", "ا��ريان", "الوكرة", "الخور"].includes(region)) {
+        country = "قطر";
+      } else if (
+        [
+          "الكويت",
+          "حولي",
+          "الفروانية",
+          "الأحمدي",
+          "الجهراء",
+          "مبارك الكبير",
+        ].includes(region)
+      ) {
+        country = "الكويت";
+      } else if (
+        ["المنامة", "المحرق", "مدينة عيسى", "الرفاع", "مدينة حمد"].includes(
+          region,
+        )
+      ) {
+        country = "البحرين";
+      } else if (
+        ["مسقط", "صلالة", "نزوى", "صحار", "البريمي", "إبراء"].includes(region)
+      ) {
+        country = "عمان";
       }
-      
+
       stats.byCountry[country] = (stats.byCountry[country] || 0) + 1;
     });
 
