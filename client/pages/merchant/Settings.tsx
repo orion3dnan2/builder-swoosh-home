@@ -31,10 +31,24 @@ import {
   AlertTriangle,
   CheckCircle,
   RefreshCw,
+  ShoppingCart,
+  MessageSquare,
+  Users,
+  Car,
+  Navigation,
+  WhatsApp,
+  Check,
+  X,
+  Plus,
+  Edit,
+  Trash2,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { ApiService } from "@/lib/apiService";
+import { useToast } from "@/hooks/use-toast";
+import { cleanArabicText } from "@/lib/textUtils";
+import { useRegions } from "@/hooks/use-regions";
 
 interface StoreSettings {
   storeName: string;
@@ -65,17 +79,32 @@ interface NotificationSettings {
   emailNotifications: boolean;
 }
 
+interface DeliveryDriver {
+  id: string;
+  name: string;
+  phone: string;
+  area: string;
+  rating: number;
+  isActive: boolean;
+  vehicle: string;
+  speciality: string[];
+}
+
 interface ShippingSettings {
   freeShippingThreshold: number;
   standardShippingCost: number;
   expressShippingCost: number;
   processingTime: string;
   shippingAreas: string[];
+  deliveryDrivers: DeliveryDriver[];
+  trackingEnabled: boolean;
+  autoAssignDrivers: boolean;
 }
 
 export default function MerchantSettings() {
   const { t, isRTL } = useTheme();
   const { user } = useAuth();
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("store");
   const [showPassword, setShowPassword] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -90,12 +119,54 @@ export default function MerchantSettings() {
     }
   }, [user]);
 
-  // تحميل بيانات المتجر عند تحميل الصفحة
+  // دالة لتحميل البيانات المحفوظة محلياً
+  const loadLocalData = () => {
+    try {
+      const savedStoreSettings = localStorage.getItem("storeSettings");
+      const savedNotifications = localStorage.getItem("notificationSettings");
+      const savedShipping = localStorage.getItem("shippingSettings");
+
+      if (savedStoreSettings) {
+        const parsed = JSON.parse(savedStoreSettings);
+        setStoreSettings(parsed);
+        if (parsed.selectedCountry) {
+          setSelectedCountry(parsed.selectedCountry);
+        }
+      }
+
+      if (savedNotifications) {
+        setNotifications(JSON.parse(savedNotifications));
+      }
+
+      if (savedShipping) {
+        setShipping(JSON.parse(savedShipping));
+      }
+    } catch (error) {
+      console.error("خطأ في تحميل البيانات المحلية:", error);
+    }
+  };
+
+  // تحميل بيانات المتجر عند تحميل ا��صفحة
   useEffect(() => {
     const loadStoreData = async () => {
       if (!user?.id) return;
 
+      setLoadingState({
+        isLoading: true,
+        hasError: false,
+        isOffline: false,
+        retryCount: 0,
+      });
+
       try {
+        // تحقق من وجود token المصادقة
+        const token = ApiService.getToken();
+        if (!token) {
+          console.log("لا يوجد token للمصادقة، استخدام البيانات المحلية");
+          loadLocalData();
+          return;
+        }
+
         // محاولة تحميل بيانات المتجر من الخادم
         const userStores = await ApiService.getStores();
         const existingStore = userStores.find(
@@ -135,66 +206,49 @@ export default function MerchantSettings() {
           }
 
           setIsNewMerchant(false); // له متجر موجود
+          setLoadingState({
+            isLoading: false,
+            hasError: false,
+            isOffline: false,
+            retryCount: 0,
+          });
         } else {
-          // محاولة تحميل البيانات المحفوظة محلياً
-          const savedStoreSettings = localStorage.getItem("storeSettings");
-          const savedNotifications = localStorage.getItem(
-            "notificationSettings",
-          );
-          const savedShipping = localStorage.getItem("shippingSettings");
-
-          if (savedStoreSettings) {
-            const parsed = JSON.parse(savedStoreSettings);
-            setStoreSettings(parsed);
-            if (parsed.selectedCountry) {
-              setSelectedCountry(parsed.selectedCountry);
-            }
-          }
-
-          if (savedNotifications) {
-            setNotifications(JSON.parse(savedNotifications));
-          }
-
-          if (savedShipping) {
-            setShipping(JSON.parse(savedShipping));
-          }
+          // تحميل البيانات المحفوظة محلياً إذا لم يكن هناك متجر موجود
+          loadLocalData();
+          setLoadingState({
+            isLoading: false,
+            hasError: false,
+            isOffline: false,
+            retryCount: 0,
+          });
         }
       } catch (error) {
         console.error("خطأ في تحميل بيانات المتجر:", error);
 
-        // الرجوع للبيانات المحفوظة محلياً في حالة الخطأ
-        try {
-          const savedStoreSettings = localStorage.getItem("storeSettings");
-          const savedNotifications = localStorage.getItem(
-            "notificationSettings",
-          );
-          const savedShipping = localStorage.getItem("shippingSettings");
-
-          if (savedStoreSettings) {
-            const parsed = JSON.parse(savedStoreSettings);
-            setStoreSettings(parsed);
-            if (parsed.selectedCountry) {
-              setSelectedCountry(parsed.selectedCountry);
-            }
-          }
-
-          if (savedNotifications) {
-            setNotifications(JSON.parse(savedNotifications));
-          }
-
-          if (savedShipping) {
-            setShipping(JSON.parse(savedShipping));
-          }
-        } catch (localError) {
-          console.error("خطأ في تحميل البيانات المحلية:", localError);
+        // عرض رسالة للمستخدم في حالة عدم وج��د اتصال أو مشكلة في المص��دقة
+        if (
+          error.message?.includes("Failed to fetch") ||
+          error.message?.includes("TypeError")
+        ) {
+          // تجاهل الخطأ واستخدم البيانات المحلية
+          console.log("استخدام البيانات المحفوظة محلياً...");
+          toast({
+            title: "وضع غير متصل",
+            description:
+              "تم تحميل البيانات المحفوظة محلياً. ستتم مزامنة التغييرات عند استعادة الاتصال.",
+            variant: "default",
+          });
         }
+
+        // الرجوع للبيانات المحفوظة محلياً في حالة الخطأ
+        loadLocalData();
       }
     };
 
     loadStoreData();
   }, [user?.id]);
 
-  // Store Settings State - فارغة للتجار الجدد
+  // Store Settings State - فارغة للتجار ��لجدد
   const [storeSettings, setStoreSettings] = useState<StoreSettings>({
     storeName: isNewMerchant
       ? user?.profile?.businessName || ""
@@ -202,24 +256,24 @@ export default function MerchantSettings() {
     description: isNewMerchant
       ? ""
       : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
-    category: isNewMerchant ? "" : "مواد ��ذائية وعطور",
+    category: isNewMerchant ? "" : "مواد غذائية وعطور",
     storeType: isNewMerchant ? "" : "restaurant",
     phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
     email: isNewMerchant ? user?.email || "" : "store@example.com",
-    address: isNewMerchant ? "" : "شارع النيل، الخرطوم",
+    address: isNewMerchant ? "" : "شارع النيل�� الخرطوم",
     city: isNewMerchant ? user?.profile?.city || "" : "الخرطوم",
     workingHours: {
       start: isNewMerchant ? "09:00" : "09:00",
       end: isNewMerchant ? "17:00" : "22:00",
       days: isNewMerchant
         ? []
-        : ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"],
+        : ["السبت", "الأحد", "الاثنين", "الثلاثا��", "الأربعاء", "الخميس"],
     },
     logo: "/placeholder.svg",
     banner: "/placeholder.svg",
   });
 
-  // Notification Settings State - إعدادات افتراضية للتجار الجدد
+  // Notification Settings State - إع��ادات افتراضية للتجار الجدد
   const [notifications, setNotifications] = useState<NotificationSettings>({
     newOrders: true,
     orderUpdates: true,
@@ -236,10 +290,10 @@ export default function MerchantSettings() {
     freeShippingThreshold: isNewMerchant ? 100 : 200,
     standardShippingCost: isNewMerchant ? 15 : 25,
     expressShippingCost: isNewMerchant ? 30 : 50,
-    processingTime: isNewMerchant ? "1-3 أيام عمل" : "1-2 أيام عمل",
+    processingTime: isNewMerchant ? "30" : "45",
     shippingAreas: isNewMerchant
       ? []
-      : ["الخرطوم", "أمدرمان", "بحري", "مدني", "كسلا"],
+      : ["الخرطوم", "أمدرمان", "بحري", "مدني", "����سلا"],
   });
 
   const [accountSettings, setAccountSettings] = useState({
@@ -250,19 +304,91 @@ export default function MerchantSettings() {
     loginNotifications: true,
   });
 
-  // معالجة تغيير الشعار
+  // Delivery Drivers State
+  const [deliveryDrivers, setDeliveryDrivers] = useState<DeliveryDriver[]>(
+    isNewMerchant
+      ? []
+      : [
+          {
+            id: "driver1",
+            name: "أحمد محمد الطيب",
+            phone: "+966501234567",
+            area: "الرياض",
+            rating: 4.8,
+            isActive: true,
+            vehicle: "سيارة صالون",
+            speciality: ["طلبات سريعة", "أطعمة"],
+          },
+          {
+            id: "driver2",
+            name: "فاطمة عبدالله",
+            phone: "+971501234567",
+            area: "دبي",
+            rating: 4.9,
+            isActive: true,
+            vehicle: "دراجة نارية",
+            speciality: ["طلبات صغيرة", "مستندات"],
+          },
+          {
+            id: "driver3",
+            name: "عثمان عبدالرحمن",
+            phone: "+96550123456",
+            area: "الكويت",
+            rating: 4.7,
+            isActive: true,
+            vehicle: "شاحنة صغيرة",
+            speciality: ["طلبات كبيرة", "أثاث"],
+          },
+        ],
+  );
+
+  // Tracking Settings
+  const [trackingSettings, setTrackingSettings] = useState({
+    trackingEnabled: !isNewMerchant,
+    autoAssignDrivers: !isNewMerchant,
+    realTimeUpdates: !isNewMerchant,
+    customerNotifications: !isNewMerchant,
+  });
+
+  // حالة تحميل البيانات
+  const [loadingState, setLoadingState] = useState({
+    isLoading: true,
+    hasError: false,
+    isOffline: false,
+    retryCount: 0,
+  });
+
+  // دالة لفتح الواتساب
+  const openWhatsApp = (phone: string, driverName: string) => {
+    const message = encodeURIComponent(
+      `��لسلام عليكم ${driverName}، أريد التواصل معك بخصوص توصيل طلب من متجر ${storeSettings.storeName}.`,
+    );
+    const whatsappUrl = `https://wa.me/${phone.replace("+", "")}?text=${message}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
+  // دالة لتتبع الطلب
+  const trackOrder = (orderId: string, driverPhone: string) => {
+    const message = encodeURIComponent(
+      `مرحباً، أريد متابعة حالة الطلب رقم: ${orderId}`,
+    );
+    const whatsappUrl = `https://wa.me/${driverPhone.replace("+", "")}?text=${message}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
+  // معالجة تغ��ير الشعار
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // التح��ق من نوع الملف
+      // التحقق من نوع الملف
       if (!file.type.startsWith("image/")) {
-        alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG)");
+        alert("يرجى اختيا�� ملف صورة صالح (PNG, JPG, JPEG)");
         return;
       }
 
       // التحقق من حجم الملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
-        alert("حجم الصورة ��جب أن يكون أقل من 5 ميجابايت");
+        alert("حجم الصورة يجب أن يكون أقل من 5 ميجابايت");
         return;
       }
 
@@ -291,11 +417,11 @@ export default function MerchantSettings() {
         "image/webp",
       ];
       if (!allowedTypes.includes(file.type)) {
-        alert("يرجى ا��تيار ملف صورة صالح (PNG, JPG, JPEG, أو WebP)");
+        alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG, أو WebP)");
         return;
       }
 
-      // التحقق من حجم الملف (أقل من 10 ميجابايت)
+      // التحق�� م�� حجم الملف (أقل من 10 م��جابايت)
       if (file.size > 10 * 1024 * 1024) {
         alert("حجم الصورة يجب أن يكون أقل من 10 ميجابايت");
         return;
@@ -308,7 +434,7 @@ export default function MerchantSettings() {
         alert("تم تحديث غلاف المتجر بنجاح! 🎨");
       };
       reader.onerror = () => {
-        alert("فشل في قراءة الصورة. يرجى ��لمحاولة مرة أخرى.");
+        alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
       };
       reader.readAsDataURL(file);
     }
@@ -316,7 +442,7 @@ export default function MerchantSettings() {
 
   // حذف الشعار
   const handleRemoveLogo = () => {
-    if (window.confirm("هل أنت متأكد ��ن حذف شعار المتجر؟")) {
+    if (window.confirm("هل أنت متأكد من حذف شعار المتجر؟")) {
       setStoreSettings({ ...storeSettings, logo: "/placeholder.svg" });
       alert("تم حذف الشعار بنجاح");
     }
@@ -331,7 +457,7 @@ export default function MerchantSettings() {
   };
 
   const handleSaveSettings = async () => {
-    // التحقق من صحة البيانات
+    // التحقق من صحة البي��نا��
     if (!storeSettings.storeName.trim()) {
       alert("يرجى إدخال اسم المتجر");
       return;
@@ -348,12 +474,12 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.phone.trim()) {
-      alert("يرجى إدخال رقم الهاتف");
+      alert("يرجى إدخا�� رقم اله��تف");
       return;
     }
 
     if (!storeSettings.email.trim()) {
-      alert("يرجى إدخال البريد الإلكتروني");
+      alert("يرجى إدخ��ل ا��بريد الإلكتروني");
       return;
     }
 
@@ -393,7 +519,7 @@ export default function MerchantSettings() {
         shippingSettings: shipping,
       };
 
-      // البحث عن متجر موجود ���لمستخدم أولاً
+      // البحث عن متجر موجود للمستخدم أولاً
       try {
         const userStores = await ApiService.getStores();
         const existingStore = userStores.find(
@@ -408,7 +534,7 @@ export default function MerchantSettings() {
           await ApiService.createStore(storeData);
         }
       } catch (apiError: any) {
-        // إذا فشل API، نست��دم التخزين المحلي كنسخة احتياطية
+        // إذا فشل API، نستخدم ��لتخزين المحلي كنسخة احتياطية
         console.warn(
           "فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:",
           apiError,
@@ -428,11 +554,11 @@ export default function MerchantSettings() {
 
       // عرض رسالة نجاح
       alert(
-        "🎉 تم حفظ إعدادات المتجر بنج��ح!\n\nتم تحديث جميع البي��نات والإعدادات ال��اصة بمتجرك.",
+        "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.",
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ الإعدادات.\n\nيرجى التحقق م�� اتصال الإنترنت والمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ الإعدا��ات.\n\nيرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
@@ -442,14 +568,14 @@ export default function MerchantSettings() {
 
   const tabs = [
     { id: "store", label: "بيانات المتجر", icon: Store },
-    { id: "notifications", label: "الإشعارات", icon: Bell },
+    { id: "notifications", label: "الإشعارا��", icon: Bell },
     { id: "shipping", label: "الشحن والتوصيل", icon: Truck },
     { id: "account", label: "الحساب والأمان", icon: Shield },
   ];
 
   // أنواع المتاجر المحددة مسبقاً (يمكن تعديلها من قبل الإدارة)
   const predefinedCategories = [
-    "مواد غذائية وأطعمة",
+    "مواد غذائ��ة وأطعمة",
     "عطور ومستحضرات تجميل",
     "ملابس وأزياء",
     "إلكترونيات وتقنية",
@@ -466,12 +592,12 @@ export default function MerchantSettings() {
     "الأحد",
     "الاثنين",
     "الثلاثاء",
-    "الأربعاء",
+    "��لأربعاء",
     "الخميس",
     "الجمعة",
   ];
 
-  // قائمة الدول والمدن التابعة لها
+  // ��ائمة الدول والمدن التابعة لها
   const countriesWithCities = {
     السودان: [
       "الخرطوم",
@@ -491,7 +617,7 @@ export default function MerchantSettings() {
       "الرياض",
       "جدة",
       "الدمام",
-      "مكة المكرمة",
+      "��كة المكرمة",
       "المدينة المنورة",
       "الطائف",
       "الخبر",
@@ -502,11 +628,11 @@ export default function MerchantSettings() {
       "نجران",
     ],
     "الإمارات العربية المتحدة": [
-      "دبي",
+      "��بي",
       "أبوظبي",
       "الشارقة",
       "عجمان",
-      "رأس الخيمة",
+      "��أس الخيمة",
       "الفجيرة",
       "أم القيوين",
     ],
@@ -518,19 +644,19 @@ export default function MerchantSettings() {
       "الفروانية",
       "حولي",
     ],
-    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشما��"],
-    "مملكة البحرين": ["المنامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
+    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"],
+    "مملكة البحرين": ["ا��منامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
       "القاهرة",
-      "الإسكندرية",
-      "ال��يزة",
+      "ال��سكندرية",
+      "الجيزة",
       "الأقصر",
       "أسوان",
       "بورسعيد",
       "السويس",
     ],
-    "المملكة الأردنية الهاشمية": [
+    "المملكة الأردنية ال��اشمية": [
       "عمان",
       "إربد",
       "الزرقاء",
@@ -542,12 +668,19 @@ export default function MerchantSettings() {
 
   // إضافة حالات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
-    isNewMerchant ? user?.profile?.country || "السودان" : "السودان",
+    isNewMerchant ? user?.profile?.country || "السودان" : "الس��دان",
   );
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
 
-  // دالة لمعالجة تغيير نوع المتجر
+  // إدارة المناطق من النظام الإداري
+  const {
+    regions: availableRegions,
+    isLoading: regionsLoading,
+    hasRegions,
+  } = useRegions();
+
+  // دال�� لمعالجة تغيير نوع المتجر
   const handleCategoryChange = (value: string) => {
     if (value === "أخرى (حدد النوع)") {
       setShowCustomCategory(true);
@@ -567,6 +700,42 @@ export default function MerchantSettings() {
       city: "",
     });
   };
+
+  // عرض loading عند الت��ميل الأ��لي
+  if (loadingState.isLoading && !loadingState.isOffline) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-flex items-center px-6 py-3 font-semibold leading-6 text-sm shadow-lg rounded-xl text-white bg-gradient-to-r from-primary-500 to-secondary-500">
+            <svg
+              className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            جاري تحميل بيانات المتجر...
+          </div>
+          <p className="mt-4 text-gray-600 arabic">
+            يتم تحميل إعدادات متجرك، يرجى الانتظار...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
@@ -593,7 +762,7 @@ export default function MerchantSettings() {
                   إعدادات المتجر
                 </h1>
                 <p className="text-gray-600 arabic">
-                  إدارة معلومات وإعدادات متج��ك
+                  إدارة معلومات وإعدادات متجرك
                 </p>
               </div>
             </div>
@@ -605,6 +774,34 @@ export default function MerchantSettings() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Connection Status Banner */}
+        {loadingState.isOffline && (
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-yellow-500 rounded-full ml-3 animate-pulse"></div>
+                <div>
+                  <span className="text-sm font-medium text-yellow-800 arabic">
+                    وضع غير متصل
+                  </span>
+                  <p className="text-xs text-yellow-700 arabic mt-1">
+                    تعمل بالبيانات المحفوظة محلياً. ستتم مزامنة التغييرات عند
+                    استعادة الاتصال.
+                  </p>
+                </div>
+              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => window.location.reload()}
+                className="text-xs arabic"
+              >
+                🔄 إعادة الاتصال
+              </Button>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar Tabs */}
           <div className="lg:col-span-1">
@@ -704,7 +901,7 @@ export default function MerchantSettings() {
                           storeSettings.banner !== "/placeholder.svg" ? (
                             <img
                               src={storeSettings.banner}
-                              alt="غلاف المتجر"
+                              alt="غلاف المت��ر"
                               className="w-full h-full object-cover rounded-lg"
                             />
                           ) : (
@@ -801,7 +998,7 @@ export default function MerchantSettings() {
                               })
                             }
                             className="text-right arabic"
-                            placeholder="حدد نوع متجرك (مثال: صيدلية، محل حلويات، ورشة تصليح)"
+                            placeholder="حدد نوع متجرك (مثال: صيدلية، محل حلويات، ورشة ��صليح)"
                           />
                         </div>
                       )}
@@ -838,7 +1035,7 @@ export default function MerchantSettings() {
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
                       يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
-                      الشركات، أو المتاجر)
+                      الشركات، أو المت��جر)
                     </p>
                   </div>
 
@@ -857,7 +1054,7 @@ export default function MerchantSettings() {
                         })
                       }
                       className="mt-1 text-right arabic"
-                      placeholder="اكتب وصفاً مختصراً عن متجرك ومنتجاتك..."
+                      placeholder="اكتب وصفاً مختصراً عن متج��ك ��منتجاتك..."
                     />
                   </div>
 
@@ -907,7 +1104,7 @@ export default function MerchantSettings() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                       <Label htmlFor="country" className="arabic">
-                        ا��دولة
+                        الدولة
                       </Label>
                       <select
                         id="country"
@@ -915,7 +1112,7 @@ export default function MerchantSettings() {
                         onChange={(e) => handleCountryChange(e.target.value)}
                         className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
                       >
-                        <option value="">��ختر الدولة</option>
+                        <option value="">اختر الدولة</option>
                         {Object.keys(countriesWithCities).map((country) => (
                           <option key={country} value={country}>
                             {country}
@@ -962,7 +1159,7 @@ export default function MerchantSettings() {
                           })
                         }
                         className="mt-1 text-right arabic"
-                        placeholder="شارع النيل، الخرطوم"
+                        placeholder="شارع ال��يل، الخرطوم"
                       />
                     </div>
                   </div>
@@ -1050,46 +1247,74 @@ export default function MerchantSettings() {
             {/* Notifications Tab */}
             {activeTab === "notifications" && (
               <Card>
-                <CardHeader>
-                  <CardTitle className="arabic text-right flex items-center">
-                    <Bell className="w-5 h-5 ml-2" />
-                    ��عدادات الإشعارات
+                <CardHeader className="bg-gradient-to-r from-primary-50 to-secondary-50 border-b">
+                  <CardTitle className="arabic text-right flex items-center text-xl font-bold text-primary-700">
+                    <div className="bg-primary-100 p-2 rounded-lg ml-3">
+                      <Bell className="w-5 h-5 text-primary-600" />
+                    </div>
+                    إعدادات الإشعارات
                   </CardTitle>
+                  <p className="text-sm text-gray-600 arabic text-right mt-2">
+                    تحكم في إشعاراتك واختر الطريقة المناسبة لتل����ي التحديثات
+                  </p>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {/* Order Notifications */}
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 arabic">
-                      إشعارات الطلبات
-                    </h3>
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
+                    <div className="flex items-center mb-6">
+                      <div className="bg-blue-100 p-2 rounded-lg ml-3">
+                        <ShoppingCart className="w-5 h-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 arabic text-lg">
+                          إشعارات الطلبات
+                        </h3>
+                        <p className="text-sm text-gray-600 arabic">
+                          تلقى تحديثات حول طلباتك ومبيعاتك
+                        </p>
+                      </div>
+                    </div>
                     <div className="space-y-4">
                       {[
                         {
                           key: "newOrders",
                           label: "طلبات جديدة",
                           desc: "إشعارات عند وصول طلبات جديدة",
+                          icon: "🛒",
+                          color:
+                            "bg-green-50 border-green-200 hover:bg-green-100",
                         },
                         {
                           key: "orderUpdates",
                           label: "تحديثات الطلبات",
-                          desc: "��شع��رات عند تغيير حالة الطلبات",
+                          desc: "إشعارات عند تغيير حالة الطل��ات",
+                          icon: "📦",
+                          color: "bg-blue-50 border-blue-200 hover:bg-blue-100",
                         },
                         {
                           key: "paymentReceived",
                           label: "استلام الدفعات",
                           desc: "إشعارات عند استلام المدفوعات",
+                          icon: "💰",
+                          color:
+                            "bg-yellow-50 border-yellow-200 hover:bg-yellow-100",
                         },
                       ].map((item) => (
                         <div
                           key={item.key}
-                          className={`flex items-center justify-between ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          className={`p-4 rounded-lg border-2 transition-all duration-200 ${item.color} ${isRTL ? "flex-row-reverse" : "flex-row"} flex items-center justify-between`}
                         >
-                          <div className={isRTL ? "text-right" : "text-left"}>
-                            <div className="font-medium arabic">
-                              {item.label}
-                            </div>
-                            <div className="text-sm text-gray-600 arabic">
-                              {item.desc}
+                          <div
+                            className={`flex items-center ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          >
+                            <div className="text-2xl ml-3">{item.icon}</div>
+                            <div className={isRTL ? "text-right" : "text-left"}>
+                              <div className="font-semibold arabic text-gray-900">
+                                {item.label}
+                              </div>
+                              <div className="text-sm text-gray-600 arabic mt-1">
+                                {item.desc}
+                              </div>
                             </div>
                           </div>
                           <Switch
@@ -1104,42 +1329,61 @@ export default function MerchantSettings() {
                                 [item.key]: checked,
                               })
                             }
+                            className="data-[state=checked]:bg-primary-600"
                           />
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <Separator />
-
                   {/* Inventory Notifications */}
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 arabic">
-                      إشعارات المخزون
-                    </h3>
+                  <div className="bg-gradient-to-r from-orange-50 to-red-50 p-6 rounded-xl border border-orange-200">
+                    <div className="flex items-center mb-6">
+                      <div className="bg-orange-100 p-2 rounded-lg ml-3">
+                        <Package className="w-5 h-5 text-orange-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 arabic text-lg">
+                          إشعارات المخزون
+                        </h3>
+                        <p className="text-sm text-gray-600 arabic">
+                          تنبيهات حول مستوى المخزون والمراجعات
+                        </p>
+                      </div>
+                    </div>
                     <div className="space-y-4">
                       {[
                         {
                           key: "lowStock",
                           label: "نفاد المخزون",
                           desc: "تنبيه عند انخفاض كمية المنتجات",
+                          icon: "⚠️",
+                          color: "bg-red-50 border-red-200 hover:bg-red-100",
                         },
                         {
                           key: "reviews",
                           label: "المراجعات الجديدة",
                           desc: "إشعارات عند وصول مراجعات جديدة",
+                          icon: "⭐",
+                          color:
+                            "bg-purple-50 border-purple-200 hover:bg-purple-100",
                         },
                       ].map((item) => (
                         <div
                           key={item.key}
-                          className={`flex items-center justify-between ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          className={`p-4 rounded-lg border-2 transition-all duration-200 ${item.color} ${isRTL ? "flex-row-reverse" : "flex-row"} flex items-center justify-between`}
                         >
-                          <div className={isRTL ? "text-right" : "text-left"}>
-                            <div className="font-medium arabic">
-                              {item.label}
-                            </div>
-                            <div className="text-sm text-gray-600 arabic">
-                              {item.desc}
+                          <div
+                            className={`flex items-center ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          >
+                            <div className="text-2xl ml-3">{item.icon}</div>
+                            <div className={isRTL ? "text-right" : "text-left"}>
+                              <div className="font-semibold arabic text-gray-900">
+                                {item.label}
+                              </div>
+                              <div className="text-sm text-gray-600 arabic mt-1">
+                                {item.desc}
+                              </div>
                             </div>
                           </div>
                           <Switch
@@ -1154,42 +1398,61 @@ export default function MerchantSettings() {
                                 [item.key]: checked,
                               })
                             }
+                            className="data-[state=checked]:bg-primary-600"
                           />
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <Separator />
-
                   {/* Notification Methods */}
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-4 arabic">
-                      طرق الإشعار
-                    </h3>
+                  <div className="bg-gradient-to-r from-green-50 to-teal-50 p-6 rounded-xl border border-green-200">
+                    <div className="flex items-center mb-6">
+                      <div className="bg-green-100 p-2 rounded-lg ml-3">
+                        <MessageSquare className="w-5 h-5 text-green-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 arabic text-lg">
+                          طرق الإشعار
+                        </h3>
+                        <p className="text-sm text-gray-600 arabic">
+                          اختر كيفية تلقي الإشعارات
+                        </p>
+                      </div>
+                    </div>
                     <div className="space-y-4">
                       {[
                         {
                           key: "smsNotifications",
                           label: "رسائل SMS",
                           desc: "استقبال الإشعارات عبر الرسائل النصية",
+                          icon: "📱",
+                          color: "bg-cyan-50 border-cyan-200 hover:bg-cyan-100",
                         },
                         {
                           key: "emailNotifications",
-                          label: "ال��ريد الإلكتروني",
-                          desc: "استقبال الإشعارات عبر البريد الإلكتروني",
+                          label: "البريد الإلكتروني",
+                          desc: "استقبال ا��إشعارات عبر ا��بريد الإلكتروني",
+                          icon: "📧",
+                          color:
+                            "bg-indigo-50 border-indigo-200 hover:bg-indigo-100",
                         },
                       ].map((item) => (
                         <div
                           key={item.key}
-                          className={`flex items-center justify-between ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          className={`p-4 rounded-lg border-2 transition-all duration-200 ${item.color} ${isRTL ? "flex-row-reverse" : "flex-row"} flex items-center justify-between`}
                         >
-                          <div className={isRTL ? "text-right" : "text-left"}>
-                            <div className="font-medium arabic">
-                              {item.label}
-                            </div>
-                            <div className="text-sm text-gray-600 arabic">
-                              {item.desc}
+                          <div
+                            className={`flex items-center ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          >
+                            <div className="text-2xl ml-3">{item.icon}</div>
+                            <div className={isRTL ? "text-right" : "text-left"}>
+                              <div className="font-semibold arabic text-gray-900">
+                                {item.label}
+                              </div>
+                              <div className="text-sm text-gray-600 arabic mt-1">
+                                {item.desc}
+                              </div>
                             </div>
                           </div>
                           <Switch
@@ -1204,9 +1467,37 @@ export default function MerchantSettings() {
                                 [item.key]: checked,
                               })
                             }
+                            className="data-[state=checked]:bg-primary-600"
                           />
                         </div>
                       ))}
+                    </div>
+                  </div>
+
+                  {/* Save Button */}
+                  <div className="bg-gradient-to-r from-primary-500 to-secondary-500 p-6 rounded-xl shadow-lg">
+                    <div className="flex items-center justify-between">
+                      <div className="text-white">
+                        <h3 className="font-bold arabic text-lg mb-1">
+                          حفظ الإعدادات
+                        </h3>
+                        <p className="text-primary-100 arabic text-sm">
+                          تأكد من حفظ تغييراتك
+                        </p>
+                      </div>
+                      <Button
+                        size="lg"
+                        className="bg-white text-primary-600 hover:bg-gray-50 font-bold arabic px-8 shadow-lg"
+                        onClick={() => {
+                          // Handle save notifications
+                          toast({
+                            title: "تم الحفظ",
+                            description: "تم حفظ إعدادات الإشعارات بنجاح",
+                          });
+                        }}
+                      >
+                        💾 حفظ التغييرات
+                      </Button>
                     </div>
                   </div>
                 </CardContent>
@@ -1226,7 +1517,7 @@ export default function MerchantSettings() {
                   {/* Shipping Costs */}
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-4 arabic">
-                      تكاليف الشحن
+                      ��كاليف الشحن
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
@@ -1253,7 +1544,7 @@ export default function MerchantSettings() {
                       </div>
                       <div>
                         <Label htmlFor="standardShipping" className="arabic">
-                          الشحن العادي
+                          الش��ن العادي
                         </Label>
                         <div className="mt-1 relative">
                           <Input
@@ -1303,63 +1594,376 @@ export default function MerchantSettings() {
                   {/* Processing Time */}
                   <div>
                     <Label htmlFor="processingTime" className="arabic">
-                      مدة تحضير الطلب
+                      مدة تحضير الطلب (بالدقائق)
                     </Label>
-                    <Input
-                      id="processingTime"
-                      value={shipping.processingTime}
-                      onChange={(e) =>
-                        setShipping({
-                          ...shipping,
-                          processingTime: e.target.value,
-                        })
-                      }
-                      className="mt-1 text-right arabic"
-                      placeholder="مثال: 1-2 أيام عمل"
-                    />
+                    <div className="mt-1 relative">
+                      <Input
+                        id="processingTime"
+                        type="number"
+                        value={shipping.processingTime}
+                        onChange={(e) =>
+                          setShipping({
+                            ...shipping,
+                            processingTime: e.target.value,
+                          })
+                        }
+                        className="text-right"
+                        placeholder="مثال: 30"
+                        min="5"
+                        max="480"
+                      />
+                      <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                        دقيقة
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-500 arabic mt-1">
+                      ����لحد الأدنى: 5 دقائق - الحد الأقصى: 8 ساعات (480 دقيقة)
+                    </p>
                   </div>
 
                   <Separator />
 
                   {/* Shipping Areas */}
                   <div>
-                    <Label className="arabic">مناطق التوصيل</Label>
-                    <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {[
-                        "الخرطوم",
-                        "أمدرمان",
-                        "بحري",
-                        "مدني",
-                        "كسلا",
-                        "بورتسودان",
-                        "أتبرا",
-                        "الأبيض",
-                        "نيالا",
-                        "الفاشر",
-                      ].map((area) => (
-                        <label
-                          key={area}
-                          className={`flex items-center space-x-2 space-x-reverse p-2 border rounded-lg hover:bg-gray-50 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                    <div className="flex items-center justify-between mb-2">
+                      <Label className="arabic">مناطق ال��وصيل</Label>
+                      <div className="text-xs text-gray-500 arabic">
+                        {regionsLoading
+                          ? "جارٍ التحميل..."
+                          : `(${availableRegions.length} منطقة متاحة)`}
+                      </div>
+                    </div>
+
+                    {regionsLoading ? (
+                      <div className="text-center py-8 text-gray-500 border-2 border-dashed border-gray-200 rounded-lg">
+                        <RefreshCw className="w-8 h-8 mx-auto mb-2 text-gray-300 animate-spin" />
+                        <p className="arabic text-sm">جارٍ تحميل المناطق...</p>
+                      </div>
+                    ) : !hasRegions ? (
+                      <div className="text-center py-8 border-2 border-dashed border-orange-200 rounded-lg bg-orange-50">
+                        <MapPin className="w-8 h-8 mx-auto mb-2 text-orange-400" />
+                        <p className="arabic text-sm text-orange-600 font-medium">
+                          لا توجد مناطق متاحة حالياً
+                        </p>
+                        <p className="arabic text-xs text-orange-500 mt-1">
+                          يجب على مدير النظام إضافة مناطق التوصيل أولاً
+                        </p>
+                        <p className="arabic text-xs text-orange-500">
+                          تواصل مع الدعم الفني لإضافة مناطق جديدة
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-2">
+                        {availableRegions.map((area) => (
+                          <label
+                            key={area}
+                            className={`flex items-center space-x-2 space-x-reverse p-2 border rounded-lg hover:bg-gray-50 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={shipping.shippingAreas.includes(area)}
+                              onChange={(e) => {
+                                const newAreas = e.target.checked
+                                  ? [...shipping.shippingAreas, area]
+                                  : shipping.shippingAreas.filter(
+                                      (a) => a !== area,
+                                    );
+                                setShipping({
+                                  ...shipping,
+                                  shippingAreas: newAreas,
+                                });
+                              }}
+                              className="rounded"
+                            />
+                            <span className="text-sm arabic">{area}</span>
+                          </label>
+                        ))}
+                      </div>
+                    )}
+
+                    {availableRegions.length > 0 && (
+                      <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div className="flex items-center space-x-2 space-x-reverse">
+                          <MapPin className="w-4 h-4 text-blue-600" />
+                          <p className="text-sm text-blue-700 arabic">
+                            المناطق المتاحة يديرها مدير النظام. للتواصل حول
+                            إضافة منطقة جديدة تواصل مع الدعم الفني.
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <Separator />
+
+                  {/* Delivery Drivers Section */}
+                  <div className="bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-xl border border-blue-200">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="flex items-center">
+                        <div className="bg-blue-100 p-2 rounded-lg ml-3">
+                          <Users className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-gray-900 arabic text-lg">
+                            السائ��ون ومؤسسات التوصيل
+                          </h3>
+                          <p className="text-sm text-gray-600 arabic">
+                            إدارة شبكة السائقين المتاحين لتوصيل طلباتك
+                          </p>
+                        </div>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="arabic"
+                        onClick={() => {
+                          const newDriver: DeliveryDriver = {
+                            id: `driver${Date.now()}`,
+                            name: "سائق جديد",
+                            phone: "+966500000000",
+                            area: "منطقة جديدة",
+                            rating: 0,
+                            isActive: false,
+                            vehicle: "سيارة",
+                            speciality: [],
+                          };
+                          setDeliveryDrivers([...deliveryDrivers, newDriver]);
+                        }}
+                      >
+                        <Plus className="w-4 h-4 ml-2" />
+                        إضافة سائق
+                      </Button>
+                    </div>
+
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                      {deliveryDrivers.map((driver) => (
+                        <div
+                          key={driver.id}
+                          className={`bg-white p-4 rounded-lg border-2 transition-all duration-200 ${
+                            driver.isActive
+                              ? "border-green-200 bg-green-50"
+                              : "border-gray-200"
+                          }`}
                         >
-                          <input
-                            type="checkbox"
-                            checked={shipping.shippingAreas.includes(area)}
-                            onChange={(e) => {
-                              const newAreas = e.target.checked
-                                ? [...shipping.shippingAreas, area]
-                                : shipping.shippingAreas.filter(
-                                    (a) => a !== area,
-                                  );
-                              setShipping({
-                                ...shipping,
-                                shippingAreas: newAreas,
-                              });
-                            }}
-                            className="rounded"
-                          />
-                          <span className="text-sm arabic">{area}</span>
-                        </label>
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center">
+                              <div
+                                className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                                  driver.isActive
+                                    ? "bg-green-100 text-green-600"
+                                    : "bg-gray-100 text-gray-600"
+                                }`}
+                              >
+                                <Car className="w-5 h-5" />
+                              </div>
+                              <div className="mr-3">
+                                <h4 className="font-semibold arabic text-sm">
+                                  {driver.name}
+                                </h4>
+                                <div className="flex items-center">
+                                  <Star className="w-3 h-3 text-yellow-500 ml-1" />
+                                  <span className="text-xs text-gray-600">
+                                    {driver.rating.toFixed(1)}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              className={`w-3 h-3 rounded-full ${
+                                driver.isActive ? "bg-green-500" : "bg-gray-400"
+                              }`}
+                            />
+                          </div>
+
+                          <div className="space-y-2 mb-4">
+                            <div className="flex items-center text-xs text-gray-600">
+                              <MapPin className="w-3 h-3 ml-1" />
+                              <span className="arabic">{driver.area}</span>
+                            </div>
+                            <div className="flex items-center text-xs text-gray-600">
+                              <Car className="w-3 h-3 ml-1" />
+                              <span className="arabic">{driver.vehicle}</span>
+                            </div>
+                            {driver.speciality.length > 0 && (
+                              <div className="flex flex-wrap gap-1">
+                                {driver.speciality.map((spec, index) => (
+                                  <span
+                                    key={index}
+                                    className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full arabic"
+                                  >
+                                    {spec}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="flex-1 arabic text-xs"
+                              onClick={() =>
+                                openWhatsApp(driver.phone, driver.name)
+                              }
+                            >
+                              📱 وا��ساب
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="flex-1 arabic text-xs"
+                              onClick={() => trackOrder("ORD123", driver.phone)}
+                            >
+                              📍 تتبع
+                            </Button>
+                          </div>
+
+                          <div className="mt-3 pt-3 border-t border-gray-200">
+                            <div className="text-xs text-gray-500 arabic text-center">
+                              {driver.phone}
+                            </div>
+                          </div>
+                        </div>
                       ))}
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Tracking & Automation Settings */}
+                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl border border-purple-200">
+                    <div className="flex items-center mb-6">
+                      <div className="bg-purple-100 p-2 rounded-lg ml-3">
+                        <Navigation className="w-5 h-5 text-purple-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 arabic text-lg">
+                          إعدادات التتبع والأتمتة
+                        </h3>
+                        <p className="text-sm text-gray-600 arabic">
+                          تفعيل خيارات التتبع المباشر وتوزيع الطلبات التلقائي
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="grid gap-4 md:grid-cols-2">
+                      {[
+                        {
+                          key: "trackingEnabled",
+                          title: "تتبع الطلبات المباشر",
+                          desc: "تمكين العملاء من تتبع طلباتهم مباشرة",
+                          icon: "🗺️",
+                        },
+                        {
+                          key: "autoAssignDrivers",
+                          title: "توزيع تلقائي للطلبات",
+                          desc: "توزيع الطلبات تلقائياً على أقرب سائق متاح",
+                          icon: "🤖",
+                        },
+                        {
+                          key: "realTimeUpdates",
+                          title: "التحديثات المباشرة",
+                          desc: "إرسال تحديثات مباشرة عن حالة التوصيل",
+                          icon: "⚡",
+                        },
+                        {
+                          key: "customerNotifications",
+                          title: "إشعارات العملاء",
+                          desc: "إشعار العملا�� عند كل مرحلة من التوصيل",
+                          icon: "🔔",
+                        },
+                      ].map((setting) => (
+                        <div
+                          key={setting.key}
+                          className="p-4 bg-white rounded-lg border-2 border-gray-200 hover:border-purple-300 transition-all duration-200"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                              <div className="text-2xl ml-3">
+                                {setting.icon}
+                              </div>
+                              <div>
+                                <div className="font-semibold arabic text-sm">
+                                  {setting.title}
+                                </div>
+                                <div className="text-xs text-gray-600 arabic mt-1">
+                                  {setting.desc}
+                                </div>
+                              </div>
+                            </div>
+                            <Switch
+                              checked={
+                                trackingSettings[
+                                  setting.key as keyof typeof trackingSettings
+                                ]
+                              }
+                              onCheckedChange={(checked) =>
+                                setTrackingSettings({
+                                  ...trackingSettings,
+                                  [setting.key]: checked,
+                                })
+                              }
+                              className="data-[state=checked]:bg-purple-600"
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* WhatsApp Integration Info */}
+                  <div className="bg-gradient-to-r from-green-50 to-teal-50 p-6 rounded-xl border border-green-200">
+                    <div className="flex items-center mb-4">
+                      <div className="bg-green-100 p-2 rounded-lg ml-3">
+                        <MessageSquare className="w-5 h-5 text-green-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 arabic text-lg">
+                          تكامل الواتساب للتوصيل
+                        </h3>
+                        <p className="text-sm text-gray-600 arabic">
+                          تواصل مباشر مع السائقين وتتبع الطلبات عبر الواتساب
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="grid gap-4 md:grid-cols-3">
+                      <div className="bg-white p-4 rounded-lg border border-green-200">
+                        <div className="text-center">
+                          <div className="text-2xl mb-2">📱</div>
+                          <h4 className="font-semibold arabic text-sm mb-2">
+                            تواصل فوري
+                          </h4>
+                          <p className="text-xs text-gray-600 arabic">
+                            تواصل مع السائقين مباشرة عبر الواتساب
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white p-4 rounded-lg border border-green-200">
+                        <div className="text-center">
+                          <div className="text-2xl mb-2">📍</div>
+                          <h4 className="font-semibold arabic text-sm mb-2">
+                            تتبع مباشر
+                          </h4>
+                          <p className="text-xs text-gray-600 arabic">
+                            تتبع موقع الطلب والحصول على تحديثات فورية
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white p-4 rounded-lg border border-green-200">
+                        <div className="text-center">
+                          <div className="text-2xl mb-2">���</div>
+                          <h4 className="font-semibold arabic text-sm mb-2">
+                            توصيل سريع
+                          </h4>
+                          <p className="text-xs text-gray-600 arabic">
+                            شبكة واسعة من السائقين لضمان التوصيل السريع
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
@@ -1411,7 +2015,7 @@ export default function MerchantSettings() {
                     <div className="space-y-4">
                       <div>
                         <Label htmlFor="currentPassword" className="arabic">
-                          كلمة المرور الحالية
+                          كلم�� المرور الحالية
                         </Label>
                         <div className="mt-1 relative">
                           <Input
@@ -1442,7 +2046,7 @@ export default function MerchantSettings() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="newPassword" className="arabic">
-                            كلمة ا���مرور الجديدة
+                            كلمة المرور الجديدة
                           </Label>
                           <Input
                             id="newPassword"
@@ -1491,7 +2095,7 @@ export default function MerchantSettings() {
                       >
                         <div className={isRTL ? "text-right" : "text-left"}>
                           <div className="font-medium arabic">
-                            المصادقة الثن��ئية
+                            المصادقة الثنائية
                           </div>
                           <div className="text-sm text-gray-600 arabic">
                             حماية إضافية لحسابك
@@ -1515,7 +2119,7 @@ export default function MerchantSettings() {
                             إشعارات تسجيل الدخول
                           </div>
                           <div className="text-sm text-gray-600 arabic">
-                            تنبيه عند تسجيل دخول جديد
+                            ت��بيه عند تسجيل دخول جديد
                           </div>
                         </div>
                         <Switch

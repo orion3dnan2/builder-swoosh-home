@@ -1,0 +1,157 @@
+import React from "react";
+
+// دالة لتنظيف النصوص العربية المعطوبة
+const cleanArabicText = (text: string): string => {
+  if (!text) return text;
+
+  return (
+    text
+      // إزالة الأحرف المعطوبة الأساسية
+      .replace(/��/g, "")
+      .replace(/ï»¿/g, "")
+      .replace(/�/g, "")
+
+      // إصلاح الكلمات الشائعة المعطوبة
+      .replace(/مت��جر/gi, "متاجر")
+      .replace(/��لسوداني/gi, "السوداني")
+      .replace(/��لليلي/gi, "الليلي")
+      .replace(/تفصيل��ة/gi, "تفصيلية")
+      .replace(/��هنية/gi, "مهنية")
+      .replace(/ه��ا/gi, "هذا")
+      .replace(/له��تف/gi, "للهاتف")
+      .replace(/��ودانية/gi, "سودانية")
+      .replace(/من��لي/gi, "منزلي")
+      .replace(/شام��ة/gi, "شاملة")
+      .replace(/��شطة/gi, "نشطة")
+      .replace(/��رحباً/gi, "مرحباً")
+      .replace(/��تاجر/gi, "متاجر")
+      .replace(/��لجدد/gi, "الجدد")
+      .replace(/��ختر/gi, "اختر")
+      .replace(/��كتشف/gi, "اكتشف")
+      .replace(/��نضم/gi, "انضم")
+      .replace(/��ثناء/gi, "أثناء")
+      .replace(/��دخال/gi, "إدخال")
+      .replace(/��زياء/gi, "أزياء")
+      .replace(/��لغاء/gi, "إلغاء")
+      .replace(/��عدادات/gi, "إعدادات")
+      .replace(/��روط/gi, "شروط")
+      .replace(/��ميز/gi, "مميز")
+      .replace(/��ين/gi, "أين")
+      .replace(/��يام/gi, "أيام")
+
+      // تنظيف المسافات الزائدة
+      .replace(/\s+/g, " ")
+      .trim()
+  );
+};
+
+// مكون النص الآمن
+export const SafeText: React.FC<{
+  children: string;
+  className?: string;
+  as?: keyof JSX.IntrinsicElements;
+  fallback?: string;
+}> = ({ children, className, as: Component = "span", fallback = "" }) => {
+  const cleanedText = cleanArabicText(children);
+  const finalText = cleanedText || fallback;
+
+  return React.createElement(Component, { className }, finalText);
+};
+
+// Hook لتنظيف النصوص
+export const useCleanText = (text: string): string => {
+  return React.useMemo(() => cleanArabicText(text), [text]);
+};
+
+// مكون عالي المستوى لتنظيف جميع النصوص في شجرة المكونات
+export const TextCleaner: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  React.useEffect(() => {
+    const cleanupTexts = () => {
+      // Find all text nodes with corrupted characters
+      const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        {
+          acceptNode: (node) => {
+            return node.textContent && node.textContent.includes("��")
+              ? NodeFilter.FILTER_ACCEPT
+              : NodeFilter.FILTER_REJECT;
+          },
+        },
+      );
+
+      const corruptedNodes = [];
+      let node;
+      while ((node = walker.nextNode())) {
+        corruptedNodes.push(node);
+      }
+
+      // Clean each corrupted node
+      corruptedNodes.forEach((textNode) => {
+        if (textNode.textContent) {
+          textNode.textContent = cleanArabicText(textNode.textContent);
+        }
+      });
+    };
+
+    // تنظيف فوري
+    cleanupTexts();
+
+    // مراقبة التغييرات في DOM وتنظيف المحتوى الجديد
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === "childList") {
+          mutation.addedNodes.forEach((node) => {
+            if (
+              node.nodeType === Node.TEXT_NODE &&
+              node.textContent?.includes("��")
+            ) {
+              node.textContent = cleanArabicText(node.textContent);
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+              const walker = document.createTreeWalker(
+                node as Element,
+                NodeFilter.SHOW_TEXT,
+                {
+                  acceptNode: (textNode) => {
+                    return textNode.textContent &&
+                      textNode.textContent.includes("��")
+                      ? NodeFilter.FILTER_ACCEPT
+                      : NodeFilter.FILTER_REJECT;
+                  },
+                },
+              );
+
+              let textNode;
+              while ((textNode = walker.nextNode())) {
+                if (textNode.textContent) {
+                  textNode.textContent = cleanArabicText(textNode.textContent);
+                }
+              }
+            }
+          });
+        }
+      });
+    });
+
+    // بدء مراقبة DOM
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+
+    // تنظيف دوري كنسخة احتياطية
+    const interval = setInterval(cleanupTexts, 5000);
+
+    return () => {
+      observer.disconnect();
+      clearInterval(interval);
+    };
+  }, []);
+
+  return <>{children}</>;
+};
+
+export default SafeText;

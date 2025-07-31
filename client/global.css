@@ -1,8 +1,9 @@
-/* Import Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap");
+/* Import Google Fonts with proper Arabic support */
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap&subset=arabic");
+@import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap&subset=arabic");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap&subset=arabic");
+@import url("https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap&subset=arabic");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap&subset=arabic");
 
 @tailwind base;
 @tailwind components;
@@ -153,9 +154,15 @@
 
   body {
     @apply bg-background text-foreground transition-colors duration-300;
+    font-family:
+      "Cairo", "Noto Sans Arabic", "Tajawal", "Noto Kufi Arabic", "Amiri",
+      "Tahoma", "Segoe UI", "Arial Unicode MS", sans-serif;
     font-feature-settings:
       "rlig" 1,
       "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   /* Smooth transitions for theme changes */
@@ -192,17 +199,79 @@
     font-family: "Amiri", "Noto Sans Arabic", serif !important;
   }
 
-  /* Arabic Text Styling */
+  /* Arabic Text Styling - Enhanced */
   .arabic {
-    font-family: var(--arabic-font, "Cairo"), "Noto Sans Arabic", sans-serif;
+    font-family:
+      "Cairo", "Noto Sans Arabic", "Tajawal", "Noto Kufi Arabic", "Tahoma",
+      "Arial Unicode MS", sans-serif !important;
     line-height: 1.7;
     letter-spacing: 0.025em;
+    direction: rtl;
+    text-align: right;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Force Arabic fonts for all elements */
+  * {
+    font-family:
+      "Cairo",
+      "Noto Sans Arabic",
+      "Tajawal",
+      "Tahoma",
+      "Arial Unicode MS",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif !important;
+  }
+
+  /* Specific Arabic text classes */
+  .text-arabic,
+  [lang="ar"],
+  [dir="rtl"],
+  .rtl {
+    font-family:
+      "Cairo", "Noto Sans Arabic", "Tajawal", "Noto Kufi Arabic", "Tahoma",
+      "Arial Unicode MS", sans-serif !important;
+    direction: rtl;
+    text-align: right;
+    unicode-bidi: bidi-override;
   }
 
   .english {
     font-family:
       -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
     line-height: 1.5;
+    direction: ltr;
+    text-align: left;
+  }
+
+  /* Fix for corrupted Arabic characters */
+  @font-face {
+    font-family: "ArabicFallback";
+    src:
+      local("Tahoma"), local("Arial Unicode MS"), local("Microsoft Sans Serif");
+    unicode-range:
+      U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+  }
+
+  /* Force UTF-8 encoding for Arabic text */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Ensure proper text rendering */
+  body,
+  html {
+    text-rendering: optimizeLegibility;
+    -webkit-font-feature-settings: "kern" 1;
+    -moz-font-feature-settings: "kern" 1;
+    -ms-font-feature-settings: "kern" 1;
+    font-feature-settings: "kern" 1;
   }
 
   /* Enhanced scroll bars for dark mode */
@@ -351,6 +420,19 @@
     body {
       @apply bg-white text-black;
     }
+  }
+
+  /* Hide corrupted characters */
+  *:before,
+  *:after,
+  * {
+    font-variant-ligatures: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Replace corrupted characters with empty content */
+  [data-corrupted]::before {
+    content: "";
   }
 
   /* High contrast mode support */

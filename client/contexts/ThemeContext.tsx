@@ -102,7 +102,7 @@ const translations = {
 
     // Theme Settings
     "theme.light": "الوضع النهاري",
-    "theme.dark": "الوضع الليلي",
+    "theme.dark": "الوضع ��لليلي",
     "theme.toggle": "تبديل الثيم",
     "language.toggle": "تبديل اللغة",
 
@@ -117,7 +117,7 @@ const translations = {
     "dashboard.recent_activity": "النشاط الأخير",
     "dashboard.quick_stats": "إحصائيات سريعة",
     "dashboard.view_all_activities": "عرض جميع الأنشطة",
-    "dashboard.view_detailed_reports": "عرض التقارير التفصيلية",
+    "dashboard.view_detailed_reports": "عرض التقارير التفصيل��ة",
     "dashboard.total_users": "إجمالي المستخدمين",
     "dashboard.registered_stores": "المتاجر المسجلة",
     "dashboard.total_products": "إجمالي المنتجات",
@@ -130,12 +130,12 @@ const translations = {
     "dashboard.app_settings_desc": "تخصيص المظهر والألوان والخطوط",
     "dashboard.user_management": "إدارة المستخدمين",
     "dashboard.user_management_desc": "عرض وإدارة حسابات المستخدمين",
-    "dashboard.store_management": "إدارة المتاجر",
+    "dashboard.store_management": "إد��رة المتاجر",
     "dashboard.store_management_desc": "مراجعة وإدارة المتاجر المسجلة",
     "dashboard.appearance": "تخصيص المظهر",
     "dashboard.appearance_desc": "تغيير الألوان والصور والخلفيات",
     "dashboard.system_settings": "إعدادات النظام",
-    "dashboard.system_settings_desc": "صلاحيات وإعدادات الأمان",
+    "dashboard.system_settings_desc": "ص��احيات وإعدادات الأمان",
     "dashboard.content_management": "إدارة المحتوى",
     "dashboard.content_management_desc": "النصوص والصور والترجمات",
     "dashboard.view_site": "عرض الموقع",
@@ -152,7 +152,7 @@ const translations = {
     "stores.search_placeholder": "البحث في المتاجر...",
     "stores.all_statuses": "جميع الحالات",
     "stores.status_active": "نشط",
-    "stores.status_pending": "في الانتظار",
+    "stores.status_pending": "في ا��انتظار",
     "stores.status_suspended": "معلق",
     "stores.category": "الفئة",
     "stores.join_date": "تاريخ الانضمام",
@@ -508,14 +508,14 @@ export function useTheme() {
   if (context === undefined) {
     // Provide a safe fallback during initial render
     return {
-      theme: 'light' as Theme,
-      language: 'ar' as Language,
-      fontFamily: 'cairo' as FontFamily,
+      theme: "light" as Theme,
+      language: "ar" as Language,
+      fontFamily: "cairo" as FontFamily,
       toggleTheme: () => {},
       toggleLanguage: () => {},
       setFontFamily: () => {},
       t: (key: string) => key,
-      isRTL: true
+      isRTL: true,
     };
   }
   return context;
@@ -527,22 +527,27 @@ export const loadFonts = () => {
     {
       family: "Cairo",
       weights: ["300", "400", "500", "600", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap",
+      url: "https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap&subset=arabic",
     },
     {
       family: "Tajawal",
       weights: ["300", "400", "500", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap",
+      url: "https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap&subset=arabic",
+    },
+    {
+      family: "Noto Sans Arabic",
+      weights: ["300", "400", "500", "600", "700"],
+      url: "https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap&subset=arabic",
     },
     {
       family: "Noto Kufi Arabic",
       weights: ["400", "500", "600", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap",
+      url: "https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap&subset=arabic",
     },
     {
       family: "Amiri",
       weights: ["400", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap",
+      url: "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap&subset=arabic",
     },
   ];
 
@@ -551,6 +556,33 @@ export const loadFonts = () => {
     link.href = font.url;
     link.rel = "stylesheet";
     link.type = "text/css";
+    link.crossOrigin = "anonymous";
+
+    // Add error handling
+    link.onerror = () => {
+      console.warn(`Failed to load font: ${font.family}`);
+    };
+
+    link.onload = () => {
+      console.log(`Successfully loaded font: ${font.family}`);
+    };
+
     document.head.appendChild(link);
   });
+
+  // Force font display optimization
+  const style = document.createElement("style");
+  style.textContent = `
+    @font-face {
+      font-family: 'ArabicFallback';
+      src: local('Tahoma'), local('Arial Unicode MS');
+      font-display: swap;
+      unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+    }
+
+    * {
+      font-family: 'Cairo', 'Noto Sans Arabic', 'Tajawal', 'ArabicFallback', 'Tahoma', 'Arial Unicode MS', sans-serif !important;
+    }
+  `;
+  document.head.appendChild(style);
 };
