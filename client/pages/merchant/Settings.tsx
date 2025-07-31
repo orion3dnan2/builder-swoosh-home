@@ -150,6 +150,8 @@ export default function MerchantSettings() {
     const loadStoreData = async () => {
       if (!user?.id) return;
 
+      setLoadingState({ isLoading: true, hasError: false, isOffline: false, retryCount: 0 });
+
       try {
         // تحقق من وجود token المصادقة
         const token = ApiService.getToken();
@@ -549,7 +551,7 @@ export default function MerchantSettings() {
   const predefinedCategories = [
     "مواد غذائ��ة وأطعمة",
     "عطور ومستحضرات تجميل",
-    "ملابس وأز��اء",
+    "ملابس وأزياء",
     "إلكترونيات وتقنية",
     "منتجات منزلية",
     "كتب ومواد تعليمية",
@@ -589,7 +591,7 @@ export default function MerchantSettings() {
       "الرياض",
       "جدة",
       "الدمام",
-      "مكة المكرمة",
+      "��كة المكرمة",
       "المدينة المنورة",
       "الطائف",
       "الخبر",
@@ -666,7 +668,7 @@ export default function MerchantSettings() {
     });
   };
 
-  // عرض loading عند التحميل الأولي
+  // عرض loading عند التحميل الأ��لي
   if (loadingState.isLoading && !loadingState.isOffline) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 flex items-center justify-center">
@@ -956,7 +958,7 @@ export default function MerchantSettings() {
                   {/* Store Type */}
                   <div>
                     <Label htmlFor="storeType" className="arabic">
-                      ��وع المتجر
+                      نوع المتجر
                     </Label>
                     <select
                       id="storeType"
@@ -1002,7 +1004,7 @@ export default function MerchantSettings() {
                         })
                       }
                       className="mt-1 text-right arabic"
-                      placeholder="اكتب وصفاً مختصراً عن متجرك ��منتجاتك..."
+                      placeholder="اكتب وصفاً مختصراً عن متج��ك ��منتجاتك..."
                     />
                   </div>
 
