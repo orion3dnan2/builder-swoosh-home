@@ -22,6 +22,10 @@ import {
   Smartphone,
   Eye,
   Upload,
+  MapPin,
+  Plus,
+  Trash2,
+  Edit,
 } from "lucide-react";
 import { useAppSettings } from "@/lib/appSettings";
 import { useAuth } from "@/lib/auth";
