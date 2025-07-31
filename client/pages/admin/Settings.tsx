@@ -47,10 +47,7 @@ export default function AdminSettings() {
   const [localSettings, setLocalSettings] = useState(settings);
 
   // State for managing delivery regions
-  const [deliveryRegions, setDeliveryRegions] = useState<string[]>([
-    "الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة",
-    "دبي", "أبوظبي", "الشارقة", "الدوحة", "الكويت", "المنامة", "مسقط"
-  ]);
+  const [deliveryRegions, setDeliveryRegions] = useState<string[]>(regionsManager.getRegions());
   const [newRegion, setNewRegion] = useState("");
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editingValue, setEditingValue] = useState("");
@@ -347,7 +344,7 @@ export default function AdminSettings() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <Label className="arabic">عائلة الخط</Label>
+                    <Label className="arabic">عائلة ��لخط</Label>
                     <select
                       value={localSettings.theme.fontFamily}
                       onChange={(e) =>
@@ -563,7 +560,7 @@ export default function AdminSettings() {
                     />
                     <Button variant="outline" size="sm" className="mt-2 arabic">
                       <Upload className="w-4 h-4 ml-2" />
-                      رفع صور�� جديدة
+                      رفع صور�� ��ديدة
                     </Button>
                   </div>
 
@@ -834,7 +831,7 @@ export default function AdminSettings() {
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-yellow-800 arabic">
                     ⚠️ تحذير: الإعدادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
-                    بعد�� تغييرها إلا إذا كنت تعرف ما تفعل.
+                    بعدم تغييرها إلا إذا كنت تعرف ما تفعل.
                   </p>
                 </div>
 
