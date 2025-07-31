@@ -208,7 +208,7 @@ export default function MerchantSettings() {
       } catch (error) {
         console.error("خطأ في تحميل بيانات المتجر:", error);
 
-        // عرض رسالة للمستخدم في حالة عدم وجود اتصال أو مشكلة في المص��دقة
+        // عرض رسالة للمستخدم في حالة عدم وج��د اتصال أو مشكلة في المص��دقة
         if (error.message?.includes('Failed to fetch') || error.message?.includes('TypeError')) {
           // تجاهل الخطأ واستخدم البيانات المحلية
           console.log("استخدام البيانات المحفوظة محلياً...");
@@ -234,7 +234,7 @@ export default function MerchantSettings() {
     storeType: isNewMerchant ? "" : "restaurant",
     phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
     email: isNewMerchant ? user?.email || "" : "store@example.com",
-    address: isNewMerchant ? "" : "شارع النيل، الخرطوم",
+    address: isNewMerchant ? "" : "شارع النيل�� الخرطوم",
     city: isNewMerchant ? user?.profile?.city || "" : "الخرطوم",
     workingHours: {
       start: isNewMerchant ? "09:00" : "09:00",
@@ -633,7 +633,7 @@ export default function MerchantSettings() {
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
 
-  // دالة لمعالجة تغيير نوع المتجر
+  // دال�� لمعالجة تغيير نوع المتجر
   const handleCategoryChange = (value: string) => {
     if (value === "أخرى (حدد النوع)") {
       setShowCustomCategory(true);
@@ -1530,6 +1530,265 @@ export default function MerchantSettings() {
                           <span className="text-sm arabic">{area}</span>
                         </label>
                       ))}
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Delivery Drivers Section */}
+                  <div className="bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-xl border border-blue-200">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="flex items-center">
+                        <div className="bg-blue-100 p-2 rounded-lg ml-3">
+                          <Users className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-gray-900 arabic text-lg">
+                            السائقون ومؤسسات التوصيل
+                          </h3>
+                          <p className="text-sm text-gray-600 arabic">
+                            إدارة شبكة السائقين المتاحين لتوصيل طلباتك
+                          </p>
+                        </div>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="arabic"
+                        onClick={() => {
+                          const newDriver: DeliveryDriver = {
+                            id: `driver${Date.now()}`,
+                            name: "سائق جديد",
+                            phone: "+966500000000",
+                            area: "منطقة جديدة",
+                            rating: 0,
+                            isActive: false,
+                            vehicle: "سيارة",
+                            speciality: []
+                          };
+                          setDeliveryDrivers([...deliveryDrivers, newDriver]);
+                        }}
+                      >
+                        <Plus className="w-4 h-4 ml-2" />
+                        إضافة سائق
+                      </Button>
+                    </div>
+
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                      {deliveryDrivers.map((driver) => (
+                        <div
+                          key={driver.id}
+                          className={`bg-white p-4 rounded-lg border-2 transition-all duration-200 ${
+                            driver.isActive
+                              ? 'border-green-200 bg-green-50'
+                              : 'border-gray-200'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center">
+                              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                                driver.isActive ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600'
+                              }`}>
+                                <Car className="w-5 h-5" />
+                              </div>
+                              <div className="mr-3">
+                                <h4 className="font-semibold arabic text-sm">
+                                  {driver.name}
+                                </h4>
+                                <div className="flex items-center">
+                                  <Star className="w-3 h-3 text-yellow-500 ml-1" />
+                                  <span className="text-xs text-gray-600">
+                                    {driver.rating.toFixed(1)}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className={`w-3 h-3 rounded-full ${
+                              driver.isActive ? 'bg-green-500' : 'bg-gray-400'
+                            }`} />
+                          </div>
+
+                          <div className="space-y-2 mb-4">
+                            <div className="flex items-center text-xs text-gray-600">
+                              <MapPin className="w-3 h-3 ml-1" />
+                              <span className="arabic">{driver.area}</span>
+                            </div>
+                            <div className="flex items-center text-xs text-gray-600">
+                              <Car className="w-3 h-3 ml-1" />
+                              <span className="arabic">{driver.vehicle}</span>
+                            </div>
+                            {driver.speciality.length > 0 && (
+                              <div className="flex flex-wrap gap-1">
+                                {driver.speciality.map((spec, index) => (
+                                  <span
+                                    key={index}
+                                    className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full arabic"
+                                  >
+                                    {spec}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="flex-1 arabic text-xs"
+                              onClick={() => openWhatsApp(driver.phone, driver.name)}
+                            >
+                              📱 واتساب
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="flex-1 arabic text-xs"
+                              onClick={() => trackOrder('ORD123', driver.phone)}
+                            >
+                              📍 تتبع
+                            </Button>
+                          </div>
+
+                          <div className="mt-3 pt-3 border-t border-gray-200">
+                            <div className="text-xs text-gray-500 arabic text-center">
+                              {driver.phone}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Tracking & Automation Settings */}
+                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl border border-purple-200">
+                    <div className="flex items-center mb-6">
+                      <div className="bg-purple-100 p-2 rounded-lg ml-3">
+                        <Navigation className="w-5 h-5 text-purple-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 arabic text-lg">
+                          إعدادات التتبع والأتمتة
+                        </h3>
+                        <p className="text-sm text-gray-600 arabic">
+                          تفعيل خيارات التتبع المباشر وتوزيع الطلبات التلقائي
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="grid gap-4 md:grid-cols-2">
+                      {[
+                        {
+                          key: "trackingEnabled",
+                          title: "تتبع الطلبات المباشر",
+                          desc: "تمكين العملاء من تتبع طلباتهم مباشرة",
+                          icon: "🗺️"
+                        },
+                        {
+                          key: "autoAssignDrivers",
+                          title: "توزيع تلقائي للطلبات",
+                          desc: "توزيع الطلبات تلقائياً على أقرب سائق متاح",
+                          icon: "🤖"
+                        },
+                        {
+                          key: "realTimeUpdates",
+                          title: "التحديثات المباشرة",
+                          desc: "إرسال تحديثات مباشرة عن حالة التوصيل",
+                          icon: "⚡"
+                        },
+                        {
+                          key: "customerNotifications",
+                          title: "إشعارات العملاء",
+                          desc: "إشعار العملاء عند كل مرحلة من التوصيل",
+                          icon: "🔔"
+                        }
+                      ].map((setting) => (
+                        <div
+                          key={setting.key}
+                          className="p-4 bg-white rounded-lg border-2 border-gray-200 hover:border-purple-300 transition-all duration-200"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                              <div className="text-2xl ml-3">{setting.icon}</div>
+                              <div>
+                                <div className="font-semibold arabic text-sm">
+                                  {setting.title}
+                                </div>
+                                <div className="text-xs text-gray-600 arabic mt-1">
+                                  {setting.desc}
+                                </div>
+                              </div>
+                            </div>
+                            <Switch
+                              checked={trackingSettings[setting.key as keyof typeof trackingSettings]}
+                              onCheckedChange={(checked) =>
+                                setTrackingSettings({
+                                  ...trackingSettings,
+                                  [setting.key]: checked,
+                                })
+                              }
+                              className="data-[state=checked]:bg-purple-600"
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* WhatsApp Integration Info */}
+                  <div className="bg-gradient-to-r from-green-50 to-teal-50 p-6 rounded-xl border border-green-200">
+                    <div className="flex items-center mb-4">
+                      <div className="bg-green-100 p-2 rounded-lg ml-3">
+                        <MessageSquare className="w-5 h-5 text-green-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 arabic text-lg">
+                          تكامل الواتساب للتوصيل
+                        </h3>
+                        <p className="text-sm text-gray-600 arabic">
+                          تواصل مباشر مع السائقين وتتبع الطلبات عبر الواتساب
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="grid gap-4 md:grid-cols-3">
+                      <div className="bg-white p-4 rounded-lg border border-green-200">
+                        <div className="text-center">
+                          <div className="text-2xl mb-2">📱</div>
+                          <h4 className="font-semibold arabic text-sm mb-2">
+                            تواصل فوري
+                          </h4>
+                          <p className="text-xs text-gray-600 arabic">
+                            تواصل مع السائقين مباشرة عبر الواتساب
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white p-4 rounded-lg border border-green-200">
+                        <div className="text-center">
+                          <div className="text-2xl mb-2">📍</div>
+                          <h4 className="font-semibold arabic text-sm mb-2">
+                            تتبع مباشر
+                          </h4>
+                          <p className="text-xs text-gray-600 arabic">
+                            تتبع موقع الطلب والحصول على تحديثات فورية
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="bg-white p-4 rounded-lg border border-green-200">
+                        <div className="text-center">
+                          <div className="text-2xl mb-2">🚀</div>
+                          <h4 className="font-semibold arabic text-sm mb-2">
+                            توصيل سريع
+                          </h4>
+                          <p className="text-xs text-gray-600 arabic">
+                            شبكة واسعة من السائقين لضمان التوصيل السريع
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
