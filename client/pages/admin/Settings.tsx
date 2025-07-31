@@ -106,27 +106,24 @@ export default function AdminSettings() {
 
   // Functions for managing delivery regions
   const addRegion = () => {
-    if (regionsManager.addRegion(newRegion)) {
-      notifyRegionsUpdate();
+    if (addRegionToCountry(newRegion, selectedCountry)) {
       setNewRegion("");
       setUnsavedChanges(true);
       toast({
         title: "تم إضافة المنطقة بنجاح",
-        description: `تمت إضافة "${newRegion}" إلى قائمة المناطق المتاحة`,
+        description: `تمت إضافة "${newRegion}" إلى قائمة مناطق ${countries.find(c => c.code === selectedCountry)?.name}`,
       });
     } else {
       toast({
         variant: "destructive",
         title: "خطأ في إضافة المنطقة",
-        description: "المنطقة موجودة بالفعل أو الاسم غير صحيح",
+        description: "المنطقة موجودة بالفعل في هذه الدولة أو الاسم غير صحيح",
       });
     }
   };
 
-  const deleteRegion = (index: number) => {
-    const regionName = deliveryRegions[index];
-    if (regionsManager.removeRegion(regionName)) {
-      notifyRegionsUpdate();
+  const deleteRegion = (regionId: string, countryCode: string, regionName: string) => {
+    if (removeRegionFromCountry(regionId, countryCode)) {
       setUnsavedChanges(true);
       toast({
         title: "تم حذف المنطقة",
@@ -135,16 +132,15 @@ export default function AdminSettings() {
     }
   };
 
-  const startEditing = (index: number) => {
-    setEditingIndex(index);
-    setEditingValue(deliveryRegions[index]);
+  const startEditing = (regionId: string, regionName: string) => {
+    setEditingRegionId(regionId);
+    setEditingValue(regionName);
   };
 
-  const saveEdit = (index: number) => {
-    const oldName = deliveryRegions[index];
-    if (regionsManager.updateRegion(oldName, editingValue)) {
-      notifyRegionsUpdate();
-      setEditingIndex(null);
+  const saveEdit = (regionId: string, countryCode: string) => {
+    const oldName = regionsByCountry[countryCode]?.find(r => r.id === regionId)?.name || "";
+    if (updateRegionInCountry(regionId, countryCode, editingValue)) {
+      setEditingRegionId(null);
       setEditingValue("");
       setUnsavedChanges(true);
       toast({
@@ -155,13 +151,13 @@ export default function AdminSettings() {
       toast({
         variant: "destructive",
         title: "خطأ في التحديث",
-        description: "الاسم الجديد موجود بالفعل أو غير صحيح",
+        description: "الاسم الجديد موجود بالفعل في هذه الدولة أو غير صحيح",
       });
     }
   };
 
   const cancelEdit = () => {
-    setEditingIndex(null);
+    setEditingRegionId(null);
     setEditingValue("");
   };
 
@@ -383,7 +379,7 @@ export default function AdminSettings() {
                       className="w-full mt-2 p-2 border rounded-lg arabic"
                     >
                       <option value="modern">عصري</option>
-                      <option value="classic">كلاسيكي</option>
+                      <option value="classic">كلاس��كي</option>
                       <option value="minimal">بسيط</option>
                     </select>
                   </div>
@@ -573,7 +569,7 @@ export default function AdminSettings() {
                     />
                     <Button variant="outline" size="sm" className="mt-2 arabic">
                       <Upload className="w-4 h-4 ml-2" />
-                      رفع صور�� جد��دة
+                      رفع صور�� جديدة
                     </Button>
                   </div>
 
@@ -802,7 +798,7 @@ export default function AdminSettings() {
                       className="arabic"
                     >
                       <Upload className="w-4 h-4 ml-2" />
-                      تصدير المنا��ق
+                      تصدير المناطق
                     </Button>
                   </div>
 
@@ -985,7 +981,7 @@ export default function AdminSettings() {
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-yellow-800 arabic">
                     ⚠️ تحذير: الإعدادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
-                    بعدم تغييرها إلا إذا كنت تعرف ما تفعل.
+                    بعدم تغيير��ا إلا إذا كنت تعرف ما تفعل.
                   </p>
                 </div>
 
@@ -1013,7 +1009,7 @@ export default function AdminSettings() {
                   <div className="flex items-center justify-between p-4 border rounded-lg">
                     <div>
                       <Label className="font-medium arabic">
-                        دعم الكتابة من اليمين لليسار
+                        دعم الكتابة من اليمين لليس��ر
                       </Label>
                       <p className="text-sm text-gray-600 arabic">
                         تفعيل RTL للغة العربية
@@ -1044,7 +1040,7 @@ export default function AdminSettings() {
                     إعادة تعيين جميع الإعدادات
                   </Button>
                   <p className="text-sm text-gray-600 mt-2 arabic">
-                    سيتم حذف جميع التخصيصات والعودة للإعدادات الافتراضية
+                    سيتم حذف جميع التخصيصات والعودة للإعدادات ال��فتراضية
                   </p>
                 </div>
               </CardContent>
