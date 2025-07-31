@@ -54,10 +54,7 @@ export default function AdminSettings() {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editingValue, setEditingValue] = useState("");
 
-  // Load regions from regionsManager on component mount
-  useEffect(() => {
-    setDeliveryRegions(regionsManager.getRegions());
-  }, []);
+
 
   const handleThemeChange = (key: string, value: any) => {
     const updatedSettings = {
@@ -358,7 +355,7 @@ export default function AdminSettings() {
                       className="w-full mt-2 p-2 border rounded-lg arabic"
                     >
                       <option value="modern">عصري</option>
-                      <option value="classic">كل��سيكي</option>
+                      <option value="classic">كلاسيكي</option>
                       <option value="minimal">بسيط</option>
                     </select>
                   </div>
@@ -514,7 +511,7 @@ export default function AdminSettings() {
                   </div>
 
                   <div>
-                    <Label className="arabic">أيقون�� الموقع (Favicon)</Label>
+                    <Label className="arabic">أيقونة الموقع (Favicon)</Label>
                     <Input
                       value={localSettings.branding.favicon}
                       onChange={(e) =>
@@ -833,7 +830,7 @@ export default function AdminSettings() {
                           </Label>
                           <p className="text-sm text-gray-600 arabic">
                             {key === "enableMarketplace" &&
-                              "تف��يل قسم السوق التجاري"}
+                              "تفعيل قسم السوق التجاري"}
                             {key === "enableProducts" &&
                               "تفعيل قسم بيع المنتجات"}
                             {key === "enableCompanies" && "تفعيل دليل الشركات"}
