@@ -38,6 +38,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { ApiService } from "@/lib/apiService";
 import { useToast } from "@/hooks/use-toast";
+import { cleanArabicText } from "@/lib/textUtils";
 
 interface StoreSettings {
   storeName: string;
@@ -195,7 +196,7 @@ export default function MerchantSettings() {
     loadStoreData();
   }, [user?.id]);
 
-  // Store Settings State - فارغة للتجار الجدد
+  // Store Settings State - فارغة للتجار ��لجدد
   const [storeSettings, setStoreSettings] = useState<StoreSettings>({
     storeName: isNewMerchant
       ? user?.profile?.businessName || ""
@@ -257,7 +258,7 @@ export default function MerchantSettings() {
     if (file) {
       // التحقق من نوع الملف
       if (!file.type.startsWith("image/")) {
-        alert("يرجى اختيار ملف صورة صالح (PNG, JPG, JPEG)");
+        alert("يرجى اختيا�� ملف صورة صالح (PNG, JPG, JPEG)");
         return;
       }
 
@@ -296,7 +297,7 @@ export default function MerchantSettings() {
         return;
       }
 
-      // التحقق من حجم الملف (أقل من 10 ميجابايت)
+      // التحق�� من حجم الملف (أقل من 10 ميجابايت)
       if (file.size > 10 * 1024 * 1024) {
         alert("حجم الصورة يجب أن يكون أقل من 10 ميجابايت");
         return;
@@ -507,7 +508,7 @@ export default function MerchantSettings() {
       "أبوظبي",
       "الشارقة",
       "عجمان",
-      "رأس الخيمة",
+      "��أس الخيمة",
       "الفجيرة",
       "أم القيوين",
     ],
@@ -543,7 +544,7 @@ export default function MerchantSettings() {
 
   // إضافة حالات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
-    isNewMerchant ? user?.profile?.country || "السودان" : "السودان",
+    isNewMerchant ? user?.profile?.country || "السودان" : "الس��دان",
   );
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
