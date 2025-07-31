@@ -507,7 +507,7 @@ export default function AdminSettings() {
                     />
                     <Button variant="outline" size="sm" className="mt-2 arabic">
                       <Upload className="w-4 h-4 ml-2" />
-                      رفع صورة
+                      رفع ��ورة
                     </Button>
                   </div>
 
@@ -597,10 +597,43 @@ export default function AdminSettings() {
                     </Button>
                   </div>
 
+                  {/* Regions Statistics */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <div className="flex items-center space-x-2 space-x-reverse">
+                        <MapPin className="w-5 h-5 text-blue-600" />
+                        <span className="text-sm text-blue-600 arabic">إجمالي المناطق</span>
+                      </div>
+                      <div className="text-2xl font-bold text-blue-700 mt-2">
+                        {deliveryRegions.length}
+                      </div>
+                    </div>
+
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                      <div className="flex items-center space-x-2 space-x-reverse">
+                        <Globe className="w-5 h-5 text-green-600" />
+                        <span className="text-sm text-green-600 arabic">الدول المغطاة</span>
+                      </div>
+                      <div className="text-2xl font-bold text-green-700 mt-2">
+                        {Object.keys(regionsManager.getStats().byCountry).length}
+                      </div>
+                    </div>
+
+                    <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                      <div className="flex items-center space-x-2 space-x-reverse">
+                        <Settings className="w-5 h-5 text-orange-600" />
+                        <span className="text-sm text-orange-600 arabic">حالة النظام</span>
+                      </div>
+                      <div className="text-sm font-medium text-orange-700 mt-2 arabic">
+                        {deliveryRegions.length > 0 ? "نشط" : "غير نشط"}
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Regions List */}
                   <div className="space-y-4">
                     <h3 className="font-semibold text-lg arabic">
-                      المناطق الحالية ({deliveryRegions.length})
+                      إدارة المناطق ({deliveryRegions.length})
                     </h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -718,7 +751,7 @@ export default function AdminSettings() {
                             {key === "enableProducts" && "المنتجات"}
                             {key === "enableCompanies" && "الشركات"}
                             {key === "enableJobs" && "الوظائف"}
-                            {key === "enableServices" && "الخ��مات"}
+                            {key === "enableServices" && "الخدمات"}
                             {key === "enableAds" && "الإعلانات"}
                             {key === "enableReviews" && "التقييمات"}
                             {key === "enableChat" && "الدردشة"}
