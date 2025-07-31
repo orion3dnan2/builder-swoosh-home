@@ -88,7 +88,7 @@ export class RegionsManager {
   }
 
   /**
-   * الحصول على جميع المناطق
+   * الحصول على جميع المناطق (للتوافق مع النظام القديم)
    */
   public getRegions(): string[] {
     const allRegions: string[] = [];
@@ -123,9 +123,9 @@ export class RegionsManager {
   }
 
   /**
-   * إضافة منطقة جديدة
+   * إضافة منطقة جديدة (النظام الجديد)
    */
-  public addRegion(regionName: string, countryCode: string): boolean {
+  public addRegionNew(regionName: string, countryCode: string): boolean {
     const trimmedName = regionName.trim();
     if (!trimmedName) {
       return false;
@@ -156,9 +156,9 @@ export class RegionsManager {
   }
 
   /**
-   * حذف منطقة
+   * حذف منطقة (النظام الجديد)
    */
-  public removeRegion(regionId: string, countryCode: string): boolean {
+  public removeRegionNew(regionId: string, countryCode: string): boolean {
     const regions = this.regionsByCountry[countryCode];
     if (!regions) {
       return false;
@@ -175,9 +175,9 @@ export class RegionsManager {
   }
 
   /**
-   * تحديث منطقة
+   * تحديث منطقة (النظام الجديد)
    */
-  public updateRegion(regionId: string, countryCode: string, newName: string): boolean {
+  public updateRegionNew(regionId: string, countryCode: string, newName: string): boolean {
     const trimmedNewName = newName.trim();
     if (!trimmedNewName) {
       return false;
@@ -204,6 +204,40 @@ export class RegionsManager {
   }
 
   /**
+   * إضافة منطقة (للتوافق مع النظام القديم)
+   */
+  public addRegion(regionName: string): boolean {
+    const country = this.detectCountryFromRegionName(regionName);
+    return this.addRegionNew(regionName, country);
+  }
+
+  /**
+   * حذف منطقة (للتوافق مع النظام القديم)
+   */
+  public removeRegion(regionName: string): boolean {
+    for (const [countryCode, regions] of Object.entries(this.regionsByCountry)) {
+      const region = regions.find(r => r.name === regionName);
+      if (region) {
+        return this.removeRegionNew(region.id, countryCode);
+      }
+    }
+    return false;
+  }
+
+  /**
+   * تحديث منطقة (للتوافق مع النظام القديم)
+   */
+  public updateRegion(oldName: string, newName: string): boolean {
+    for (const [countryCode, regions] of Object.entries(this.regionsByCountry)) {
+      const region = regions.find(r => r.name === oldName);
+      if (region) {
+        return this.updateRegionNew(region.id, countryCode, newName);
+      }
+    }
+    return false;
+  }
+
+  /**
    * التحقق من وجود منطقة
    */
   public hasRegion(regionName: string, countryCode?: string): boolean {
@@ -219,7 +253,7 @@ export class RegionsManager {
   }
 
   /**
-   * إعادة تعيين المناطق للقيم ا��افتراضية
+   * إعادة تعيين المناطق للقيم الافتراضية
    */
   public resetToDefaults(): void {
     this.regionsByCountry = {};
@@ -263,136 +297,16 @@ export class RegionsManager {
     };
   }
 
-  // دوال للتوافق مع الن��ام القديم - تعيد توجيه للدوال الجديدة
-  public addRegion_legacy(regionName: string): boolean {
-    const country = this.detectCountryFromRegionName(regionName);
-    return this.addRegion(regionName, country);
-  }
-
-  public removeRegion_legacy(regionName: string): boolean {
-    for (const [countryCode, regions] of Object.entries(this.regionsByCountry)) {
-      const region = regions.find(r => r.name === regionName);
-      if (region) {
-        return this.removeRegion(region.id, countryCode);
-      }
-    }
-    return false;
-  }
-
-  public updateRegion_legacy(oldName: string, newName: string): boolean {
-    for (const [countryCode, regions] of Object.entries(this.regionsByCountry)) {
-      const region = regions.find(r => r.name === oldName);
-      if (region) {
-        return this.updateRegion(region.id, countryCode, newName);
-      }
-    }
-    return false;
-  }
-
+  /**
+   * تحديد الدولة من اسم المنطقة
+   */
   private detectCountryFromRegionName(regionName: string): string {
     for (const [countryCode, regions] of Object.entries(DEFAULT_REGIONS_BY_COUNTRY)) {
       if (regions.includes(regionName)) {
         return countryCode;
       }
     }
-    return 'SA';
-  }
-
-  // إعادة توجيه الدوال القديمة للجديدة للتوافق الكامل
-  public addRegion(regionNameOrRegion: string, countryCode?: string): boolean {
-    if (typeof regionNameOrRegion === 'string' && countryCode) {
-      return this.addRegion_new(regionNameOrRegion, countryCode);
-    } else if (typeof regionNameOrRegion === 'string' && !countryCode) {
-      return this.addRegion_legacy(regionNameOrRegion);
-    }
-    return false;
-  }
-
-  public removeRegion(regionIdOrName: string, countryCode?: string): boolean {
-    if (countryCode) {
-      return this.removeRegion_new(regionIdOrName, countryCode);
-    } else {
-      return this.removeRegion_legacy(regionIdOrName);
-    }
-  }
-
-  public updateRegion(regionIdOrOldName: string, countryCodeOrNewName: string, newName?: string): boolean {
-    if (newName && countryCodeOrNewName) {
-      return this.updateRegion_new(regionIdOrOldName, countryCodeOrNewName, newName);
-    } else if (!newName && countryCodeOrNewName) {
-      return this.updateRegion_legacy(regionIdOrOldName, countryCodeOrNewName);
-    }
-    return false;
-  }
-
-  // الدوال الجديدة مع أسماء واضحة
-  private addRegion_new(regionName: string, countryCode: string): boolean {
-    const trimmedName = regionName.trim();
-    if (!trimmedName) {
-      return false;
-    }
-
-    const existingRegions = this.regionsByCountry[countryCode] || [];
-    if (existingRegions.some(r => r.name === trimmedName)) {
-      return false;
-    }
-
-    const newRegion: DeliveryRegion = {
-      id: `${countryCode}_${Date.now()}`,
-      name: trimmedName,
-      country: countryCode,
-      isActive: true,
-      createdAt: new Date().toISOString()
-    };
-
-    if (!this.regionsByCountry[countryCode]) {
-      this.regionsByCountry[countryCode] = [];
-    }
-
-    this.regionsByCountry[countryCode].push(newRegion);
-    this.saveRegions();
-    return true;
-  }
-
-  private removeRegion_new(regionId: string, countryCode: string): boolean {
-    const regions = this.regionsByCountry[countryCode];
-    if (!regions) {
-      return false;
-    }
-
-    const index = regions.findIndex(r => r.id === regionId);
-    if (index === -1) {
-      return false;
-    }
-
-    regions.splice(index, 1);
-    this.saveRegions();
-    return true;
-  }
-
-  private updateRegion_new(regionId: string, countryCode: string, newName: string): boolean {
-    const trimmedNewName = newName.trim();
-    if (!trimmedNewName) {
-      return false;
-    }
-
-    const regions = this.regionsByCountry[countryCode];
-    if (!regions) {
-      return false;
-    }
-
-    const region = regions.find(r => r.id === regionId);
-    if (!region) {
-      return false;
-    }
-
-    if (regions.some(r => r.name === trimmedNewName && r.id !== regionId)) {
-      return false;
-    }
-
-    region.name = trimmedNewName;
-    this.saveRegions();
-    return true;
+    return 'SA'; // افتراضي
   }
 }
 
