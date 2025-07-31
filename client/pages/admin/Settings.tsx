@@ -145,6 +145,16 @@ export default function AdminSettings() {
       setEditingIndex(null);
       setEditingValue("");
       setUnsavedChanges(true);
+      toast({
+        title: "تم تحديث المنطقة",
+        description: `تم تغيير اسم المنطقة من "${oldName}" إلى "${editingValue}"`,
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "خطأ في التحديث",
+        description: "الاسم الجديد موجود بالفعل أو غير صحيح",
+      });
     }
   };
 
@@ -836,7 +846,7 @@ export default function AdminSettings() {
                         <div>
                           <Label className="font-medium arabic">
                             {key === "enableMarketplace" && "السوق التجاري"}
-                            {key === "enableProducts" && "المنتجات"}
+                            {key === "enableProducts" && "ا��منتجات"}
                             {key === "enableCompanies" && "الشركات"}
                             {key === "enableJobs" && "الوظائف"}
                             {key === "enableServices" && "الخدمات"}
@@ -944,7 +954,7 @@ export default function AdminSettings() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <Label className="arabic">اللغة الافتراضية</Label>
+                    <Label className="arabic">اللغة الافتر��ضية</Label>
                     <select
                       value={localSettings.localization.defaultLanguage}
                       onChange={(e) =>
