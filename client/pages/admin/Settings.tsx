@@ -711,6 +711,42 @@ export default function AdminSettings() {
                     )}
                   </div>
 
+                  {/* Quick Actions */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        regionsManager.resetToDefaults();
+                        setDeliveryRegions(regionsManager.getRegions());
+                        setUnsavedChanges(true);
+                      }}
+                      className="arabic"
+                    >
+                      <RotateCcw className="w-4 h-4 ml-2" />
+                      إعادة تعيين للافتراضي
+                    </Button>
+
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const regions = regionsManager.getRegions();
+                        const blob = new Blob([JSON.stringify(regions, null, 2)], { type: 'application/json' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'delivery-regions.json';
+                        a.click();
+                        URL.revokeObjectURL(url);
+                      }}
+                      className="arabic"
+                    >
+                      <Upload className="w-4 h-4 ml-2" />
+                      تصدير المناطق
+                    </Button>
+                  </div>
+
                   {/* Instructions */}
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <h4 className="font-semibold text-blue-800 arabic mb-2">
