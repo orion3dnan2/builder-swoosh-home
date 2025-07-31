@@ -37,6 +37,7 @@ import {
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { ApiService } from "@/lib/apiService";
+import { useToast } from "@/hooks/use-toast";
 
 interface StoreSettings {
   storeName: string;
@@ -233,7 +234,7 @@ export default function MerchantSettings() {
     emailNotifications: true,
   });
 
-  // Shipping Settings State - قيم افتراضية للتجار الجدد
+  // Shipping Settings State - قيم افتراضية للتجار ��لجدد
   const [shipping, setShipping] = useState<ShippingSettings>({
     freeShippingThreshold: isNewMerchant ? 100 : 200,
     standardShippingCost: isNewMerchant ? 15 : 25,
@@ -647,7 +648,7 @@ export default function MerchantSettings() {
                   {/* Store Logo & Banner */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <Label className="arabic">شعار المتجر</Label>
+                      <Label className="arabic">ش��ار المتجر</Label>
                       <div className="mt-2 flex items-center space-x-4 space-x-reverse">
                         <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                           {storeSettings.logo &&
@@ -839,7 +840,7 @@ export default function MerchantSettings() {
                       <option value="beauty">تجميل وعناية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
-                      يحدد نوع المت��ر مكان ظهوره في الموقع (صفحة المطاعم،
+                      يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
                       الشركات، أو ال��تاجر)
                     </p>
                   </div>
@@ -1075,7 +1076,7 @@ export default function MerchantSettings() {
                           إشعارات الطلبات
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تلقى تحديثات حول طلباتك ومبي��اتك
+                          تلقى تحديثات حول طلباتك ومبيعاتك
                         </p>
                       </div>
                     </div>
@@ -1229,7 +1230,7 @@ export default function MerchantSettings() {
                         },
                         {
                           key: "emailNotifications",
-                          label: "البر��د الإلكتروني",
+                          label: "البريد الإلكتروني",
                           desc: "استقبال الإشعارات عبر البريد الإلكتروني",
                           icon: "📧",
                           color: "bg-indigo-50 border-indigo-200 hover:bg-indigo-100"
@@ -1580,7 +1581,7 @@ export default function MerchantSettings() {
                             ��لمصادقة الثن��ئية
                           </div>
                           <div className="text-sm text-gray-600 arabic">
-                            حما��ة إضافية لحسابك
+                            حماية إضافية لحسابك
                           </div>
                         </div>
                         <Switch
