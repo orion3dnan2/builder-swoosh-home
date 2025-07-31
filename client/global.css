@@ -206,17 +206,63 @@
     font-family: "Amiri", "Noto Sans Arabic", serif !important;
   }
 
-  /* Arabic Text Styling */
+  /* Arabic Text Styling - Enhanced */
   .arabic {
-    font-family: var(--arabic-font, "Cairo"), "Noto Sans Arabic", sans-serif;
+    font-family:
+      "Cairo",
+      "Noto Sans Arabic",
+      "Tajawal",
+      "Noto Kufi Arabic",
+      "Tahoma",
+      "Arial Unicode MS",
+      sans-serif !important;
     line-height: 1.7;
     letter-spacing: 0.025em;
+    direction: rtl;
+    text-align: right;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Force Arabic fonts for all elements */
+  * {
+    font-family:
+      "Cairo",
+      "Noto Sans Arabic",
+      "Tajawal",
+      "Tahoma",
+      "Arial Unicode MS",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif !important;
+  }
+
+  /* Specific Arabic text classes */
+  .text-arabic,
+  [lang="ar"],
+  [dir="rtl"],
+  .rtl {
+    font-family:
+      "Cairo",
+      "Noto Sans Arabic",
+      "Tajawal",
+      "Noto Kufi Arabic",
+      "Tahoma",
+      "Arial Unicode MS",
+      sans-serif !important;
+    direction: rtl;
+    text-align: right;
+    unicode-bidi: bidi-override;
   }
 
   .english {
     font-family:
       -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
     line-height: 1.5;
+    direction: ltr;
+    text-align: left;
   }
 
   /* Enhanced scroll bars for dark mode */
