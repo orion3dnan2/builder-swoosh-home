@@ -400,7 +400,7 @@ export default function MerchantSettings() {
         alert("تم تحديث شعار المتجر بنجاح! 🎉");
       };
       reader.onerror = () => {
-        alert("فشل في قراءة الصورة. يرجى ا��محاولة مرة أخرى.");
+        alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
       };
       reader.readAsDataURL(file);
     }
@@ -568,7 +568,7 @@ export default function MerchantSettings() {
   };
 
   const tabs = [
-    { id: "store", label: "بيانات المتجر", icon: Store },
+    { id: "store", label: "بيانات الم��جر", icon: Store },
     { id: "notifications", label: "الإشعارا��", icon: Bell },
     { id: "shipping", label: "الشحن والتوصيل", icon: Truck },
     { id: "account", label: "الحساب والأمان", icon: Shield },
@@ -647,7 +647,7 @@ export default function MerchantSettings() {
     ],
     "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"],
     "مملكة البحرين": ["ا��منامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
-    "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
+    "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرست��ق", "صحار"],
     "جمهورية مصر العربية": [
       "القاهرة",
       "ال��س��ندرية",
@@ -1036,7 +1036,7 @@ export default function MerchantSettings() {
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
                       يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
-                      الشركات، أو المت����جر)
+                      الشركات، أو المت��جر)
                     </p>
                   </div>
 
@@ -1160,7 +1160,7 @@ export default function MerchantSettings() {
                           })
                         }
                         className="mt-1 text-right arabic"
-                        placeholder="شا��ع ال��يل، الخرطوم"
+                        placeholder="شارع ال��يل، الخرطوم"
                       />
                     </div>
                   </div>
@@ -1526,11 +1526,11 @@ export default function MerchantSettings() {
                       ��كاليف الشحن
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div>
-                        <Label htmlFor="freeShipping" className="arabic">
+                      <div className="group">
+                        <Label htmlFor="freeShipping" className="arabic font-semibold text-gray-700 mb-2 block">
                           الشحن المجاني عند
                         </Label>
-                        <div className="mt-1 relative">
+                        <div className="relative">
                           <Input
                             id="freeShipping"
                             type="number"
@@ -1541,12 +1541,16 @@ export default function MerchantSettings() {
                                 freeShippingThreshold: Number(e.target.value),
                               })
                             }
-                            className="text-right"
+                            className="text-right pl-12 pr-4 h-12 border-2 border-gray-200 focus:border-primary transition-colors group-hover:border-gray-300"
+                            placeholder="أدخل المبلغ"
                           />
-                          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                            جنيه
-                          </span>
+                          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center">
+                            <span className="text-gray-500 font-medium">جنيه</span>
+                          </div>
                         </div>
+                        <p className="text-xs text-gray-500 arabic mt-2">
+                          عند تجاوز هذا المبلغ سيكون الشحن مجاني
+                        </p>
                       </div>
                       <div>
                         <Label htmlFor="standardShipping" className="arabic">
@@ -1714,7 +1718,7 @@ export default function MerchantSettings() {
                             السائ��ون ومؤسسات التوصيل
                           </h3>
                           <p className="text-sm text-gray-600 arabic">
-                            إدارة شبكة السائقين المتاحين لتوصيل طلباتك
+                            إدارة شبكة السائقي�� المتاحين لتوصيل طلباتك
                           </p>
                         </div>
                       </div>
@@ -1876,7 +1880,7 @@ export default function MerchantSettings() {
                         {
                           key: "customerNotifications",
                           title: "إشعارات العملاء",
-                          desc: "إشعار العملا�� عند كل مرحلة من التوصيل",
+                          desc: "إشعار العملا�� عند ��ل مرحلة من التوصيل",
                           icon: "🔔",
                         },
                       ].map((setting) => (
