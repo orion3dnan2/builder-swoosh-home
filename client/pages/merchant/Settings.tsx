@@ -119,34 +119,7 @@ export default function MerchantSettings() {
     }
   }, [user]);
 
-  // تحميل المناطق من localStorage الإداري
-  useEffect(() => {
-    const loadAdminRegions = () => {
-      try {
-        const savedRegions = localStorage.getItem('adminDeliveryRegions');
-        if (savedRegions) {
-          const parsedRegions = JSON.parse(savedRegions);
-          if (Array.isArray(parsedRegions) && parsedRegions.length > 0) {
-            setAvailableRegions(parsedRegions);
-          }
-        }
-      } catch (error) {
-        console.error('خطأ في تحميل المناطق الإدارية:', error);
-      }
-    };
 
-    loadAdminRegions();
-
-    // إضافة listener للتحديثات على localStorage
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'adminDeliveryRegions') {
-        loadAdminRegions();
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
 
   // دالة لتحميل البيانات المحفوظة محلياً
   const loadLocalData = () => {
@@ -270,7 +243,7 @@ export default function MerchantSettings() {
     storeType: isNewMerchant ? "" : "restaurant",
     phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
     email: isNewMerchant ? user?.email || "" : "store@example.com",
-    address: isNewMerchant ? "" : "شارع ا��نيل�� الخرطوم",
+    address: isNewMerchant ? "" : "شارع النيل�� الخرطوم",
     city: isNewMerchant ? user?.profile?.city || "" : "الخرطوم",
     workingHours: {
       start: isNewMerchant ? "09:00" : "09:00",
@@ -366,7 +339,7 @@ export default function MerchantSettings() {
     retryCount: 0,
   });
 
-  // دالة لفتح الواتساب
+  // دالة لفتح الواتسا��
   const openWhatsApp = (phone: string, driverName: string) => {
     const message = encodeURIComponent(`��لسلام عليكم ${driverName}، أريد التواصل معك بخصوص توصيل طلب من متجر ${storeSettings.storeName}.`);
     const whatsappUrl = `https://wa.me/${phone.replace('+', '')}?text=${message}`;
@@ -392,7 +365,7 @@ export default function MerchantSettings() {
 
       // التحقق من حجم الملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
-        alert("حجم الصورة يجب أن يكون أقل من 5 ميجابايت");
+        alert("حجم الصورة يجب أن يكون أقل من 5 مي��ابايت");
         return;
       }
 
@@ -435,7 +408,7 @@ export default function MerchantSettings() {
       reader.onload = (e) => {
         const bannerUrl = e.target?.result as string;
         setStoreSettings({ ...storeSettings, banner: bannerUrl });
-        alert("تم تحديث غلاف المتجر بنجاح! 🎨");
+        alert("تم تحديث غلاف المتجر ��نجاح! 🎨");
       };
       reader.onerror = () => {
         alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
@@ -592,7 +565,7 @@ export default function MerchantSettings() {
   ];
 
   const workingDays = [
-    "السبت",
+    "السب��",
     "الأحد",
     "الاثنين",
     "الثلاثاء",
@@ -662,7 +635,7 @@ export default function MerchantSettings() {
     ],
     "المملكة الأردنية ال��اشمية": [
       "عمان",
-      "��ربد",
+      "إربد",
       "الزرقاء",
       "العقبة",
       "السلط",
@@ -1017,7 +990,7 @@ export default function MerchantSettings() {
                       <option value="beauty">تجميل وعناية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
-                      يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
+                      يحدد نوع المتجر مكان ظهوره في الم��قع (صفحة المطاعم،
                       الشركات، أو المت��جر)
                     </p>
                   </div>
@@ -1171,7 +1144,7 @@ export default function MerchantSettings() {
                         />
                       </div>
                       <div>
-                        <Label className="arabic text-sm">إلى الساعة</Label>
+                        <Label className="arabic text-sm">إلى الساع��</Label>
                         <Input
                           type="time"
                           value={storeSettings.workingHours.end}
@@ -1645,7 +1618,7 @@ export default function MerchantSettings() {
                         <div className="flex items-center space-x-2 space-x-reverse">
                           <MapPin className="w-4 h-4 text-blue-600" />
                           <p className="text-sm text-blue-700 arabic">
-                            الم��اطق المتاحة يديرها مدير النظام. للتواصل حول إضافة منطقة جديدة تواصل مع الدعم الفني.
+                            المناطق المتاحة يديرها مدير النظام. للتواصل حول إضافة منطقة جديدة تواصل مع الدعم الفني.
                           </p>
                         </div>
                       </div>
@@ -2092,7 +2065,7 @@ export default function MerchantSettings() {
                 {isSaving ? (
                   <>
                     <RefreshCw className="w-4 h-4 ml-2 animate-spin" />
-                    جاري الحفظ...
+                    جاري ا��حفظ...
                   </>
                 ) : (
                   <>
