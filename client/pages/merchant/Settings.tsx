@@ -33,6 +33,18 @@ import {
   RefreshCw,
   ShoppingCart,
   MessageSquare,
+  Users,
+  Car,
+  Navigation,
+  WhatsApp,
+  MapPin,
+  Clock,
+  Star,
+  Check,
+  X,
+  Plus,
+  Edit,
+  Trash2,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -136,7 +148,7 @@ export default function MerchantSettings() {
     }
   };
 
-  // تحميل بيانات المتجر عند تحميل الصفحة
+  // تحميل بيانات المتجر عند تحميل ا��صفحة
   useEffect(() => {
     const loadStoreData = async () => {
       if (!user?.id) return;
@@ -229,7 +241,7 @@ export default function MerchantSettings() {
       end: isNewMerchant ? "17:00" : "22:00",
       days: isNewMerchant
         ? []
-        : ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"],
+        : ["السبت", "الأحد", "الاثنين", "الثلاثا��", "الأربعاء", "الخميس"],
     },
     logo: "/placeholder.svg",
     banner: "/placeholder.svg",
@@ -540,7 +552,7 @@ export default function MerchantSettings() {
     "الأحد",
     "الاثنين",
     "الثلاثاء",
-    "الأربعاء",
+    "��لأربعاء",
     "الخميس",
     "الجمعة",
   ];
@@ -904,7 +916,7 @@ export default function MerchantSettings() {
                       <option value="store">متجر عام</option>
                       <option value="service">خدمات</option>
                       <option value="pharmacy">صيدلية</option>
-                      <option value="supermarket">سوبر مار��ت</option>
+                      <option value="supermarket">سوبر ماركت</option>
                       <option value="bakery">مخبز/حلويات</option>
                       <option value="electronics">إلكترونيات</option>
                       <option value="clothing">ملابس</option>
@@ -1491,7 +1503,7 @@ export default function MerchantSettings() {
                         "كسلا",
                         "بورتسودان",
                         "أتبرا",
-                        "الأ��يض",
+                        "الأبيض",
                         "نيالا",
                         "الفاشر",
                       ].map((area) => (
