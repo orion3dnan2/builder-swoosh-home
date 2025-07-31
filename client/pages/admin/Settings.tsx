@@ -106,7 +106,7 @@ export default function AdminSettings() {
   // Functions for managing delivery regions
   const addRegion = () => {
     if (regionsManager.addRegion(newRegion)) {
-      setDeliveryRegions(regionsManager.getRegions());
+      notifyRegionsUpdate();
       setNewRegion("");
       setUnsavedChanges(true);
     }
@@ -115,7 +115,7 @@ export default function AdminSettings() {
   const deleteRegion = (index: number) => {
     const regionName = deliveryRegions[index];
     if (regionsManager.removeRegion(regionName)) {
-      setDeliveryRegions(regionsManager.getRegions());
+      notifyRegionsUpdate();
       setUnsavedChanges(true);
     }
   };
@@ -128,7 +128,7 @@ export default function AdminSettings() {
   const saveEdit = (index: number) => {
     const oldName = deliveryRegions[index];
     if (regionsManager.updateRegion(oldName, editingValue)) {
-      setDeliveryRegions(regionsManager.getRegions());
+      notifyRegionsUpdate();
       setEditingIndex(null);
       setEditingValue("");
       setUnsavedChanges(true);
@@ -924,7 +924,7 @@ export default function AdminSettings() {
               <CardContent className="space-y-6">
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-yellow-800 arabic">
-                    ⚠️ تحذير: الإعدادات المتقدمة قد ��ؤثر على أداء التطبيق. يُنصح
+                    ⚠️ تحذير: الإعدادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
                     بعدم تغييرها إلا إذا كنت تعرف ما تفعل.
                   </p>
                 </div>
@@ -984,7 +984,7 @@ export default function AdminSettings() {
                     إعادة تعيين جميع الإعدادات
                   </Button>
                   <p className="text-sm text-gray-600 mt-2 arabic">
-                    ��يتم حذف جميع التخصيصات والعودة للإعدادات الافتراضية
+                    سيتم حذف جميع التخصيصات والعودة للإعدادات الافتراضية
                   </p>
                 </div>
               </CardContent>
