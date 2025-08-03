@@ -296,7 +296,7 @@ export default function AdminStores() {
                   إدارة المتاجر
                 </h1>
                 <p className="text-gray-600 arabic">
-                  {totalStores} {t("stores.subtitle")}
+                  إدارة ومراقبة جميع المتاجر ({totalStores} متجر)
                 </p>
               </div>
             </div>
@@ -481,7 +481,7 @@ export default function AdminStores() {
                         <span className="font-medium">{store.joinDate}</span>
                       </div>
                       <div>
-                        <span className="text-gray-600 arabic">آخر نشاط: </span>
+                        <span className="text-gray-600 arabic">آخر ن��اط: </span>
                         <span className="font-medium arabic">
                           {store.lastActive}
                         </span>
