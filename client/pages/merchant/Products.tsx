@@ -141,9 +141,7 @@ export default function MerchantProducts() {
 
   const handleStockUpdate = (id: string, newQuantity: number) => {
     try {
-      // TODO: Implement updateStock function in products hook
-      console.log("Update stock for product", id, "to", newQuantity);
-      // updateStock(id, newQuantity);
+      updateStock(id, newQuantity);
     } catch (error) {
       console.error("Error updating stock:", error);
     }
@@ -572,7 +570,7 @@ export default function MerchantProducts() {
                   </h3>
                   <p className="text-gray-700 mb-6 arabic">
                     أهلاً وسهلاً {user?.profile?.name}! متجر "{currentStore.name}" جاهز الآن. ابدأ
-                    بإضافة منتجا��ك الأولى لتكون متاحة للعملاء.
+                    بإضافة منتجاتك الأولى لتكون متاحة للعملاء.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link to="/merchant/products/new">
