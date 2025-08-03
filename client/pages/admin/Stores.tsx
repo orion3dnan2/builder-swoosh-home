@@ -464,7 +464,8 @@ export default function AdminStores() {
               return { ...store, status: "suspended" as const, tags: [...blockedTags, "موقف"] };
             case "renew":
               // تجدي�� الاشتراك - يمكن إضافة منطق تاريخ الانتهاء هنا
-              return { ...store, tags: [...store.tags.filter(tag => tag !== "منتهي الصلاحية"), "مجدد حديثاً"] };
+              const renewedTags = store.tags.filter(tag => tag !== "منتهي الصلاحية" && tag !== "مجدد حديثاً");
+              return { ...store, tags: [...renewedTags, "مجدد حديثاً"] };
             case "feature":
               return { ...store, status: "featured" as const, featured: true };
             case "unfeature":
@@ -978,7 +979,7 @@ export default function AdminStores() {
                   لا توجد متاجر
                 </h3>
                 <p className="text-gray-600 arabic">
-                  لم يتم العثور على متاجر تطابق معايير البحث
+                  لم يتم العثور على متاجر ��طابق معايير البحث
                 </p>
               </div>
             )}
@@ -1194,7 +1195,7 @@ export default function AdminStores() {
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="arabic">إج��الي الإيرادات</span>
+                      <span className="arabic">إجمالي الإيرادات</span>
                       <span className="font-bold text-2xl">${totalRevenue.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between items-center">
@@ -1617,7 +1618,7 @@ export default function AdminStores() {
           {selectedStore && (
             <div className="space-y-4">
               <div className="text-center p-4 bg-green-50 rounded-lg">
-                <h3 className="font-semibold arabic">مساع��ة: {selectedStore.name}</h3>
+                <h3 className="font-semibold arabic">مساع���ة: {selectedStore.name}</h3>
                 <p className="text-gray-600 arabic">{selectedStore.owner}</p>
               </div>
               
