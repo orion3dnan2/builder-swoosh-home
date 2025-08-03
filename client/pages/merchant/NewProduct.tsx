@@ -472,21 +472,33 @@ export default function NewProduct() {
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <Label className="arabic">السعر الأساسي *</Label>
-                  <Input
-                    type="number"
-                    step="0.01"
-                    value={formData.price}
-                    onChange={(e) =>
-                      handleInputChange(
-                        "price",
-                        parseFloat(e.target.value) || 0,
-                      )
-                    }
-                    className="mt-2"
-                    placeholder="0.00"
-                    required
-                  />
+                  <Label className="arabic">
+                    السعر الأساسي * ({storeCurrency.symbol} {storeCurrency.nameAr})
+                  </Label>
+                  <div className="relative mt-2">
+                    <Input
+                      type="number"
+                      step="0.01"
+                      value={formData.price}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "price",
+                          parseFloat(e.target.value) || 0,
+                        )
+                      }
+                      className="pr-16"
+                      placeholder="0.00"
+                      required
+                    />
+                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
+                      {storeCurrency.symbol}
+                    </div>
+                  </div>
+                  {storeDetails && (
+                    <p className="text-xs text-gray-500 mt-1 arabic">
+                      العملة المحددة حسب موقع المتجر: {storeDetails.country}
+                    </p>
+                  )}
                 </div>
 
                 <div>
