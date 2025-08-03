@@ -68,7 +68,7 @@
     "workingHours": {
       "start": "10:00",
       "end": "23:00",
-      "days": ["السبت", "الأحد", "الاثنين", "الثلاث��ء", "الأربعاء", "الخميس", "الجمعة"]
+      "days": ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"]
     },
     "logo": "/placeholder.svg",
     "banner": "/placeholder.svg",
@@ -113,7 +113,7 @@
     "workingHours": {
       "start": "11:00",
       "end": "22:30",
-      "days": ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"]
+      "days": ["السبت", "الأحد", "الاثنين", "الثلاث��ء", "الأربعاء", "الخميس", "الجمعة"]
     },
     "logo": "/placeholder.svg",
     "banner": "/placeholder.svg",
@@ -232,5 +232,50 @@
     },
     "createdAt": "2024-11-15T10:30:00.000Z",
     "updatedAt": "2025-01-30T17:10:00.000Z"
+  },
+  {
+    "id": "store-general-001",
+    "merchantId": "demo-merchant-5",
+    "name": "متجر السودان الأصيل",
+    "description": "متجر شامل للمنتجات السودانية التقليدية والحديثة",
+    "category": "متجر عام",
+    "storeType": "store",
+    "phone": "+966505678901",
+    "email": "info@sudanstore.com",
+    "address": "سوق الثميري، الرياض",
+    "city": "الرياض",
+    "country": "السعودية",
+    "workingHours": {
+      "start": "09:00",
+      "end": "22:00",
+      "days": ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"]
+    },
+    "logo": "/placeholder.svg",
+    "banner": "/placeholder.svg",
+    "status": "active",
+    "notificationSettings": {
+      "newOrders": true,
+      "orderUpdates": true,
+      "paymentReceived": true,
+      "lowStock": true,
+      "reviews": true,
+      "promotions": true,
+      "smsNotifications": true,
+      "emailNotifications": true
+    },
+    "shippingSettings": {
+      "freeShippingThreshold": 100,
+      "standardShippingCost": 20,
+      "expressShippingCost": 35,
+      "processingTime": "1-2 أيام عمل",
+      "shippingAreas": ["الرياض", "الدمام", "جدة", "مكة", "المدينة"]
+    },
+    "analytics": {
+      "totalViews": 3500,
+      "totalOrders": 210,
+      "totalRevenue": 45000
+    },
+    "createdAt": "2024-10-01T08:00:00.000Z",
+    "updatedAt": "2025-01-30T19:30:00.000Z"
   }
 ]
