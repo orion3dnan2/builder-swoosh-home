@@ -36,17 +36,27 @@ export default function MerchantProducts() {
   );
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
+  // Use products hook to get actual products
+  const {
+    products: allProducts,
+    deleteProduct,
+    categories,
+    getProductsByStatus,
+    searchProducts
+  } = useProducts();
+
+  // Filter products by current user's store (we'll use store-001 for now)
+  const userStoreId = "store-001"; // This should come from user context in a real app
+  const products = allProducts.filter(product => product.storeId === userStoreId);
+
   // تحديد إذا كان التاجر جديد
   useEffect(() => {
     if (user?.createdAt) {
       const accountAge = Date.now() - new Date(user.createdAt).getTime();
       const daysSinceCreation = accountAge / (1000 * 60 * 60 * 24);
-      setIsNewMerchant(daysSinceCreation < 7);
+      setIsNewMerchant(daysSinceCreation < 7 && products.length === 0);
     }
-  }, [user]);
-
-  // قائمة المنتجات - فارغة للتجار الجدد
-  const products: any[] = isNewMerchant ? [] : [];
+  }, [user, products.length]);
 
   // Filter and sort products
   const filteredProducts = products
@@ -185,7 +195,7 @@ export default function MerchantProducts() {
                 onChange={(e) => setSelectedCategory(e.target.value)}
                 className="border border-gray-300 rounded-lg px-3 py-2 arabic text-right"
               >
-                <option value="all">جميع ال��ئات</option>
+                <option value="all">جميع الفئات</option>
                 {categories.map((category) => (
                   <option key={category} value={category}>
                     {category}
