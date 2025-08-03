@@ -163,13 +163,15 @@ export default function MerchantDashboard() {
     (product) => product.storeId === userStoreId,
   );
 
-  // Mock user store for demo (in real app, this would come from user context or API)
-  const userStore = {
+  // Fallback store data for display
+  const defaultStore = {
     id: userStoreId,
     name: "متجر التراث السوداني",
-    description: "��تجر متخصص في المنتجات السودانية الأصيلة",
+    description: "متجر متخصص في المنتجات السودانية الأصيلة",
     category: "traditional",
   };
+
+  const displayStore = userStore || defaultStore;
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -287,7 +289,7 @@ export default function MerchantDashboard() {
                           onClick={() => setIsNewMerchant(false)}
                         >
                           <Eye className="w-4 h-4 ml-2" />
-                          جولة سري��ة
+                          جولة سريعة
                         </Button>
                       </div>
                     </div>
