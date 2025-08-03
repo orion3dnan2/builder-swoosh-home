@@ -52,5 +52,95 @@
     },
     "createdAt": "2025-07-30T09:45:07.117Z",
     "updatedAt": "2025-07-31T11:30:23.668Z"
+  },
+  {
+    "id": "restaurant-001",
+    "merchantId": "demo-merchant-1",
+    "name": "مطعم السلام السوداني",
+    "description": "أشهى الأطباق السودانية الأصيلة في قلب المدينة",
+    "category": "مطاعم",
+    "storeType": "restaurant",
+    "phone": "+966501234567",
+    "email": "info@alsalam-restaurant.com",
+    "address": "شارع التحلية، الرياض",
+    "city": "الرياض",
+    "country": "السعودية",
+    "workingHours": {
+      "start": "10:00",
+      "end": "23:00",
+      "days": ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"]
+    },
+    "logo": "/placeholder.svg",
+    "banner": "/placeholder.svg",
+    "status": "active",
+    "notificationSettings": {
+      "newOrders": true,
+      "orderUpdates": true,
+      "paymentReceived": true,
+      "lowStock": true,
+      "reviews": true,
+      "promotions": true,
+      "smsNotifications": true,
+      "emailNotifications": true
+    },
+    "shippingSettings": {
+      "freeShippingThreshold": 100,
+      "standardShippingCost": 10,
+      "expressShippingCost": 20,
+      "processingTime": "30-45 دقيقة",
+      "shippingAreas": ["الرياض", "الخرج", "الدرعية"]
+    },
+    "analytics": {
+      "totalViews": 1250,
+      "totalOrders": 87,
+      "totalRevenue": 5600
+    },
+    "createdAt": "2025-01-01T10:00:00.000Z",
+    "updatedAt": "2025-01-30T15:30:00.000Z"
+  },
+  {
+    "id": "restaurant-002",
+    "merchantId": "demo-merchant-2",
+    "name": "مطعم الأندلس للأكلات الشعبية",
+    "description": "تراث الطبخ السوداني الأصيل مع نكهات عربية مميزة",
+    "category": "مطاعم",
+    "storeType": "restaurant",
+    "phone": "+966502345678",
+    "email": "contact@andalus-food.com",
+    "address": "حي النسيم، جدة",
+    "city": "جدة",
+    "country": "السعودية",
+    "workingHours": {
+      "start": "11:00",
+      "end": "22:30",
+      "days": ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"]
+    },
+    "logo": "/placeholder.svg",
+    "banner": "/placeholder.svg",
+    "status": "active",
+    "notificationSettings": {
+      "newOrders": true,
+      "orderUpdates": true,
+      "paymentReceived": true,
+      "lowStock": false,
+      "reviews": true,
+      "promotions": false,
+      "smsNotifications": true,
+      "emailNotifications": true
+    },
+    "shippingSettings": {
+      "freeShippingThreshold": 80,
+      "standardShippingCost": 12,
+      "expressShippingCost": 25,
+      "processingTime": "25-40 دقيقة",
+      "shippingAreas": ["جدة", "مكة", "الطائف"]
+    },
+    "analytics": {
+      "totalViews": 980,
+      "totalOrders": 64,
+      "totalRevenue": 4200
+    },
+    "createdAt": "2025-01-15T12:00:00.000Z",
+    "updatedAt": "2025-01-30T16:45:00.000Z"
   }
 ]
