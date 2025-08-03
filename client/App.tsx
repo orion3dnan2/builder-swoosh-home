@@ -183,6 +183,7 @@ function App() {
               <Route path="/ads" element={<Ads />} />
               <Route path="/store/:id" element={<StoreDetails />} />
               <Route path="/store/:id/visit" element={<StoreVisit />} />
+              <Route path="/debug/products/:id" element={<DebugProducts />} />
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
