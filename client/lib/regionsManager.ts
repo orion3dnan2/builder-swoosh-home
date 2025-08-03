@@ -59,16 +59,35 @@ export class RegionsManager {
       const savedRegions = localStorage.getItem("adminDeliveryRegions");
       if (savedRegions) {
         const parsedRegions = JSON.parse(savedRegions);
-        if (parsedRegions && typeof parsedRegions === 'object') {
-          this.regionsByCountry = parsedRegions;
-          return;
+
+        // فحص إذا كانت البيانات بالتنسيق الجديد (object بمفاتيح الدول)
+        if (parsedRegions && typeof parsedRegions === 'object' && !Array.isArray(parsedRegions)) {
+          // التحقق من أن البيانات صحيحة
+          let isValidFormat = true;
+          for (const [countryCode, regions] of Object.entries(parsedRegions)) {
+            if (!Array.isArray(regions)) {
+              isValidFormat = false;
+              break;
+            }
+          }
+
+          if (isValidFormat) {
+            this.regionsByCountry = parsedRegions;
+            return;
+          }
         }
+
+        // إذا كانت البيانات بالتنسيق القديم (array من strings) أو تنسيق غير صحيح
+        console.warn("تم العثور على بيانات مناطق بتنسيق قديم، سيتم إعادة تعيينها");
+        localStorage.removeItem("adminDeliveryRegions");
       }
 
-      // إذا لم توجد مناطق محفوظة، استخدم الافتراضية
+      // إذا لم توجد مناطق محفوظة أو كانت بتنسيق خاطئ، استخدم الافتراضية
       this.resetToDefaults();
     } catch (error) {
       console.error("خطأ في تحميل المناطق:", error);
+      // إزالة البيانات التالفة وإعادة تعيين افتراضية
+      localStorage.removeItem("adminDeliveryRegions");
       this.resetToDefaults();
     }
   }
