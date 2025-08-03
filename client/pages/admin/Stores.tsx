@@ -288,7 +288,7 @@ export default function AdminStores() {
       storeId: "store-001",
       storeName: "متجر الخير السوداني",
       subject: "مشكلة في عرض المنتجات",
-      message: "أوا��ه مشكلة في ظهور بعض المنتجات في المتجر",
+      message: "أوا��ه مشكلة في ظهور بعض المن��جات في المتجر",
       priority: "medium",
       status: "open",
       createdAt: "2024-03-15",
@@ -462,7 +462,7 @@ export default function AdminStores() {
             case "block":
               return { ...store, status: "suspended" as const, tags: [...store.tags.filter(tag => tag !== "موقف"), "موقف"] };
             case "renew":
-              // تجديد الاشتراك - يمكن إضافة منطق تاريخ الانتهاء هنا
+              // تجدي�� الاشتراك - يمكن إضافة منطق تاريخ الانتهاء هنا
               return { ...store, tags: [...store.tags.filter(tag => tag !== "منتهي الصلاحية"), "مجدد حديثاً"] };
             case "feature":
               return { ...store, status: "featured" as const, featured: true };
@@ -583,7 +583,7 @@ export default function AdminStores() {
                 <Store className="w-8 h-8 text-blue-600" />
                 <div className="mr-4">
                   <p className="text-2xl font-bold text-blue-800">{totalStores}</p>
-                  <p className="text-blue-600 text-sm arabic">إجمالي المتاجر</p>
+                  <p className="text-blue-600 text-sm arabic">إجم��لي المتاجر</p>
                 </div>
               </div>
             </CardContent>
@@ -685,7 +685,7 @@ export default function AdminStores() {
                     <option value="all">جميع الحالات</option>
                     <option value="active">نشط</option>
                     <option value="pending">في الانتظار</option>
-                    <option value="suspended">معلق</option>
+                    <option value="suspended">م��لق</option>
                     <option value="featured">مميز</option>
                   </select>
 
@@ -1558,7 +1558,7 @@ export default function AdminStores() {
               className="arabic"
             >
               <Send className="w-4 h-4 ml-2" />
-              إرسال الرسالة
+              إرس��ل الرسالة
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1639,7 +1639,9 @@ export default function AdminStores() {
             <DialogDescription className="arabic text-right">
               {confirmAction?.type === "approve" && "هل أنت متأكد من اعتماد هذا المتجر؟"}
               {confirmAction?.type === "suspend" && "هل أنت متأكد من تعليق هذا المتجر؟"}
+              {confirmAction?.type === "block" && "هل أنت متأكد من إيقاف هذا المتجر نهائياً؟"}
               {confirmAction?.type === "reactivate" && "هل أنت متأكد من إعادة تفعيل هذا المتجر؟"}
+              {confirmAction?.type === "renew" && "هل تريد تجديد اشتراك هذا المتجر؟"}
               {confirmAction?.type === "feature" && "هل أنت متأكد من جعل هذا المتجر مميزاً؟"}
               {confirmAction?.type === "unfeature" && "هل أنت متأكد من إلغاء تمييز هذا المتجر؟"}
               {confirmAction?.type === "verify" && "هل أنت متأكد من توثيق هذا المتجر؟"}
