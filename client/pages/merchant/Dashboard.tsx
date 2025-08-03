@@ -61,25 +61,38 @@ export default function MerchantDashboard() {
       // إذا كان الحساب أقل من 7 أيام وليس له منتجات أو طلبات، يُعتبر جديد
       setIsNewMerchant(daysSinceCreation < 7 && userProducts.length === 0);
     }
-  }, [user, userProducts.length]);
+  }, [user?.createdAt, userProducts.length]);
 
   // Initialize stats with local products data if no store data is available
   useEffect(() => {
     if (!userStore) {
-      setStoreStats({
-        totalProducts: userProducts.length,
-        totalOrders: 0,
-        monthlyRevenue: 0,
-        storeViews: 0,
-        activeProducts: userProducts.filter((p) => p.status === "active").length,
-        outOfStock: userProducts.filter((p) => p.status === "out_of_stock").length,
-        pendingOrders: 0,
-        completedOrders: 0,
-        averageRating: 0,
-        totalReviews: 0,
+      const activeProducts = userProducts.filter((p) => p.status === "active").length;
+      const outOfStock = userProducts.filter((p) => p.status === "out_of_stock").length;
+
+      setStoreStats(prev => {
+        const newStats = {
+          totalProducts: userProducts.length,
+          totalOrders: 0,
+          monthlyRevenue: 0,
+          storeViews: 0,
+          activeProducts,
+          outOfStock,
+          pendingOrders: 0,
+          completedOrders: 0,
+          averageRating: 0,
+          totalReviews: 0,
+        };
+
+        // Only update if values actually changed
+        if (prev.totalProducts !== newStats.totalProducts ||
+            prev.activeProducts !== newStats.activeProducts ||
+            prev.outOfStock !== newStats.outOfStock) {
+          return newStats;
+        }
+        return prev;
       });
     }
-  }, [userProducts, userStore]);
+  }, [userProducts.length, userStore]);
 
   const [loading, setLoading] = useState(false);
   const [recentOrders, setRecentOrders] = useState([]);
@@ -422,7 +435,7 @@ export default function MerchantDashboard() {
                   <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle className="flex items-center arabic">
                       <Clock className="w-5 h-5 ml-2" />
-                      الطلبات الأخير��
+                      الطلبات الأخيرة
                     </CardTitle>
                     <Link to="/merchant/orders">
                       <Button variant="outline" size="sm" className="arabic">
