@@ -74,7 +74,7 @@ export class ProductService {
       specifications: {
         المقاس: "30x25x10 سم",
         المادة: "جلد طبيعي",
-        اللون: "بن��",
+        ��للون: "بن��",
         الإغلاق: "سوستة",
       },
       status: "out_of_stock",
@@ -185,7 +185,7 @@ export class ProductService {
     {
       id: "prod-008",
       storeId: "store-005",
-      name: "فستان سوداني تقليدي",
+      name: "فستان سودا��ي تقليدي",
       description:
         "فستان نسائي بالطراز السوداني التقليدي. قماش عالي الجودة وتطريز يدوي أنيق.",
       price: 125.0,
@@ -277,7 +277,7 @@ export class ProductService {
         الوزن: "500 جرام",
         النوع: "محمص طبيعياً",
         المنشأ: "غرب السودان",
-        ا��صلاحية: "6 أشهر",
+        الصلاحية: "6 أشهر",
       },
       status: "active",
       createdAt: "2024-02-22T14:00:00Z",
