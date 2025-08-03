@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,7 @@ import {
   Warehouse,
 } from "lucide-react";
 import { useProducts } from "@/lib/products";
-import { useAuth } from "@/lib/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import { Product } from "../../../shared/types";
 
 export default function NewProduct() {
@@ -31,9 +31,32 @@ export default function NewProduct() {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [currentImageUrl, setCurrentImageUrl] = useState("");
+  const [userStoreId, setUserStoreId] = useState<string | null>(null);
+
+  // Get user's store ID - use known mapping for current user
+  useEffect(() => {
+    if (!user?.id) return;
+
+    // Known store mappings from stores.json
+    const storeMapping: Record<string, string> = {
+      "user-1753865301240-efsqj09s0": "store-1753868707117-r80zjqevj", // زول اقاشي
+      "merchant-001": "store-001",
+      "admin-001": "store-001",
+    };
+
+    const userStoreId = storeMapping[user.id];
+    if (userStoreId) {
+      setUserStoreId(userStoreId);
+    } else {
+      // If user has businessName, assume they have a store
+      if (user.profile?.businessName) {
+        setUserStoreId(`store-${user.id}`);
+      }
+    }
+  }, [user?.id]);
 
   const [formData, setFormData] = useState<Partial<Product>>({
-    storeId: "store-001", // Using store-001 for merchant testing
+    storeId: null, // Will be set when store ID is fetched
     name: "",
     description: "",
     price: 0,
@@ -49,6 +72,16 @@ export default function NewProduct() {
     specifications: {},
     status: "active",
   });
+
+  // Update storeId when user store ID is fetched
+  useEffect(() => {
+    if (userStoreId) {
+      setFormData((prev) => ({
+        ...prev,
+        storeId: userStoreId,
+      }));
+    }
+  }, [userStoreId]);
 
   const handleInputChange = (field: string, value: any) => {
     setFormData((prev) => ({
@@ -150,6 +183,15 @@ export default function NewProduct() {
     setIsLoading(true);
     setErrors([]);
 
+    // Check if user has store setup
+    if (!userStoreId) {
+      setErrors([
+        "يجب إعداد معلومات المتجر أولاً. يرجى إكمال معلومات العمل التجاري في ملفك الشخصي.",
+      ]);
+      setIsLoading(false);
+      return;
+    }
+
     // Validate form
     const validationErrors = validateProduct(formData);
     if (validationErrors.length > 0) {
@@ -167,7 +209,7 @@ export default function NewProduct() {
 
       const newProduct: Product = {
         id: productId,
-        storeId: formData.storeId!,
+        storeId: userStoreId!,
         name: formData.name!,
         description: formData.description!,
         price: formData.price!,
@@ -195,6 +237,68 @@ export default function NewProduct() {
     }
   };
 
+  // Show setup message if user doesn't have store setup
+  if (!userStoreId) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-green-50">
+        <div className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-6">
+              <div className="flex items-center space-x-4 space-x-reverse">
+                <Link to="/merchant/products">
+                  <Button variant="outline" size="sm">
+                    <ArrowLeft className="w-4 h-4 ml-2" />
+                    العودة
+                  </Button>
+                </Link>
+                <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center">
+                  <Package className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-900 arabic">
+                    إعداد المتجر مطلوب
+                  </h1>
+                  <p className="text-gray-600 arabic">
+                    يجب إكمال معلومات المتجر أولاً
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-200">
+            <CardContent className="p-8 text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Package className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900 mb-4 arabic">
+                يجب إعداد معلومات المتجر أولاً
+              </h2>
+              <p className="text-gray-700 mb-6 arabic">
+                لإضافة منتجات، يرجى إكمال معلومات العمل التجاري (اسم العمل، نوع
+                العمل) في ملفك الشخصي أولاً.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/profile">
+                  <Button className="arabic bg-yellow-600 hover:bg-yellow-700">
+                    إكمال معلومات المتجر
+                  </Button>
+                </Link>
+                <Link to="/merchant/dashboard">
+                  <Button variant="outline" className="arabic">
+                    العودة للوحة التحكم
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-green-50">
       {/* Header */}
@@ -216,7 +320,7 @@ export default function NewProduct() {
                   إضافة منتج جديد
                 </h1>
                 <p className="text-gray-600 arabic">
-                  أدخل معلومات المنتج الجديد
+                  أدخل معلومات ا��منتج الجديد
                 </p>
               </div>
             </div>
@@ -233,7 +337,7 @@ export default function NewProduct() {
                 <div className="flex items-center text-red-800 mb-2">
                   <X className="w-5 h-5 ml-2" />
                   <span className="font-semibold arabic">
-                    يرجى تصحيح الأخطاء التالية:
+                    يرجى تصحيح الأخطاء الت��لية:
                   </span>
                 </div>
                 <ul className="space-y-1">
@@ -252,7 +356,7 @@ export default function NewProduct() {
             <CardHeader>
               <CardTitle className="flex items-center arabic">
                 <Package className="w-5 h-5 ml-2" />
-                المعلومات الأساسية
+                المعلومات الأساس��ة
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -388,7 +492,7 @@ export default function NewProduct() {
                 <Input
                   value={currentImageUrl}
                   onChange={(e) => setCurrentImageUrl(e.target.value)}
-                  placeholder="رابط ��لصورة (https://...)"
+                  placeholder="رابط ����لصورة (https://...)"
                   className="flex-1"
                 />
                 <Button
@@ -420,7 +524,7 @@ export default function NewProduct() {
                       </Button>
                       {index === 0 && (
                         <Badge className="absolute bottom-2 right-2 bg-blue-500 text-white text-xs">
-                          الصورة الرئيسية
+                          الصور�� الرئيسية
                         </Badge>
                       )}
                     </div>

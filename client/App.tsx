@@ -4,10 +4,13 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Marketplace from "./pages/Marketplace";
 import Products from "./pages/Products";
+import Store from "./pages/Store";
 import Companies from "./pages/Companies";
+import Company from "./pages/Company";
 import Jobs from "./pages/Jobs";
 import Services from "./pages/Services";
 import Restaurants from "./pages/Restaurants";
+import Restaurant from "./pages/Restaurant";
 import Ads from "./pages/Ads";
 import StoreDetails from "./pages/StoreDetails";
 import StoreVisit from "./pages/StoreVisit";
@@ -29,6 +32,8 @@ import MerchantAnalytics from "./pages/merchant/Analytics";
 import MerchantOrders from "./pages/merchant/Orders";
 import MerchantSettings from "./pages/merchant/Settings";
 import Profile from "./pages/Profile";
+import DebugProducts from "./pages/DebugProducts";
+import AddSampleProducts from "./pages/AddSampleProducts";
 import { SuperAdminRoute, MerchantRoute } from "./components/ProtectedRoute";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -169,13 +174,21 @@ function App() {
               {/* Public Routes */}
               <Route path="/marketplace" element={<Marketplace />} />
               <Route path="/products" element={<Products />} />
+              <Route path="/store/:id" element={<Store />} />
               <Route path="/companies" element={<Companies />} />
+              <Route path="/company/:id" element={<Company />} />
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/services" element={<Services />} />
               <Route path="/restaurants" element={<Restaurants />} />
+              <Route path="/restaurant/:id" element={<Restaurant />} />
               <Route path="/ads" element={<Ads />} />
               <Route path="/store/:id" element={<StoreDetails />} />
               <Route path="/store/:id/visit" element={<StoreVisit />} />
+              <Route path="/debug/products/:id" element={<DebugProducts />} />
+              <Route
+                path="/admin/add-sample-products"
+                element={<AddSampleProducts />}
+              />
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

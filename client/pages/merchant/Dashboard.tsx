@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -25,6 +25,19 @@ import { useProducts } from "@/lib/products";
 export default function MerchantDashboard() {
   const { user } = useAuth();
   const [isNewMerchant, setIsNewMerchant] = useState(true);
+  const [userStore, setUserStore] = useState(null);
+  const [storeStats, setStoreStats] = useState({
+    totalProducts: 0,
+    totalOrders: 0,
+    monthlyRevenue: 0,
+    storeViews: 0,
+    activeProducts: 0,
+    outOfStock: 0,
+    pendingOrders: 0,
+    completedOrders: 0,
+    averageRating: 0,
+    totalReviews: 0,
+  });
 
   // Use products hook to get actual products
   const {
@@ -35,8 +48,9 @@ export default function MerchantDashboard() {
 
   // Filter products by current user's store (we'll use store-001 for now)
   const userStoreId = "store-001"; // This should come from user context in a real app
-  const userProducts = allProducts.filter(
-    (product) => product.storeId === userStoreId,
+  const userProducts = useMemo(
+    () => allProducts.filter((product) => product.storeId === userStoreId),
+    [allProducts, userStoreId],
   );
 
   // تحديد إذا كان التاجر جديد بناءً على تاريخ إنشاء ال��ساب
@@ -47,21 +61,44 @@ export default function MerchantDashboard() {
       // إذا كان الحساب أقل من 7 أيام وليس له منتجات أو طلبات، يُعتبر جديد
       setIsNewMerchant(daysSinceCreation < 7 && userProducts.length === 0);
     }
-  }, [user, userProducts.length]);
+  }, [user?.createdAt, userProducts.length]);
 
-  // Calculate stats from local products data
-  const storeStats = {
-    totalProducts: userProducts.length,
-    totalOrders: 0,
-    monthlyRevenue: 0,
-    storeViews: 0,
-    activeProducts: userProducts.filter((p) => p.status === "active").length,
-    outOfStock: userProducts.filter((p) => p.status === "out_of_stock").length,
-    pendingOrders: 0,
-    completedOrders: 0,
-    averageRating: 0,
-    totalReviews: 0,
-  };
+  // Initialize stats with local products data if no store data is available
+  useEffect(() => {
+    if (!userStore) {
+      const activeProducts = userProducts.filter(
+        (p) => p.status === "active",
+      ).length;
+      const outOfStock = userProducts.filter(
+        (p) => p.status === "out_of_stock",
+      ).length;
+
+      setStoreStats((prev) => {
+        const newStats = {
+          totalProducts: userProducts.length,
+          totalOrders: 0,
+          monthlyRevenue: 0,
+          storeViews: 0,
+          activeProducts,
+          outOfStock,
+          pendingOrders: 0,
+          completedOrders: 0,
+          averageRating: 0,
+          totalReviews: 0,
+        };
+
+        // Only update if values actually changed
+        if (
+          prev.totalProducts !== newStats.totalProducts ||
+          prev.activeProducts !== newStats.activeProducts ||
+          prev.outOfStock !== newStats.outOfStock
+        ) {
+          return newStats;
+        }
+        return prev;
+      });
+    }
+  }, [userProducts.length, userStore]);
 
   const [loading, setLoading] = useState(false);
   const [recentOrders, setRecentOrders] = useState([]);
@@ -86,7 +123,7 @@ export default function MerchantDashboard() {
           setUserStore(currentStore);
 
           if (currentStore) {
-            // تحديث الإحصائيات من بيانات المتجر
+            // ت��ديث الإحصائيات من بيانات المتجر
             setStoreStats({
               totalProducts: currentStore.analytics?.totalProducts || 0,
               totalOrders: currentStore.analytics?.totalOrders || 0,
@@ -142,17 +179,20 @@ export default function MerchantDashboard() {
   }, [user]);
 
   // Filter low stock products for current user's store
-  const userLowStockProducts = lowStockProducts.filter(
-    (product) => product.storeId === userStoreId,
+  const userLowStockProducts = useMemo(
+    () => lowStockProducts.filter((product) => product.storeId === userStoreId),
+    [lowStockProducts, userStoreId],
   );
 
-  // Mock user store for demo (in real app, this would come from user context or API)
-  const userStore = {
+  // Fallback store data for display
+  const defaultStore = {
     id: userStoreId,
     name: "متجر التراث السوداني",
     description: "متجر متخصص في المنتجات السودانية الأصيلة",
     category: "traditional",
   };
+
+  const displayStore = userStore || defaultStore;
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -198,11 +238,11 @@ export default function MerchantDashboard() {
                 <h1 className="text-2xl font-bold text-gray-900 arabic">
                   {loading
                     ? "جاري التحميل..."
-                    : userStore?.name || "لوحة إدارة المتجر"}
+                    : displayStore?.name || "لوحة إدارة المتجر"}
                 </h1>
                 <p className="text-gray-600 arabic">
                   مرحباً {user?.profile.name}
-                  {userStore && ` - ${userStore.name}`}
+                  {displayStore && ` - ${displayStore.name}`}
                 </p>
               </div>
             </div>
@@ -249,7 +289,7 @@ export default function MerchantDashboard() {
                       </h2>
                       <p className="text-gray-700 mb-4 arabic">
                         أهلاً وسهلاً {user?.profile.name}! متجرك الآن جاهز
-                        للبدء. ابدأ بإضافة منتجاتك الأولى وتخصيص مظهر متجرك.
+                        للبدء. اب��أ بإضافة منتجاتك الأولى وتخصيص مظهر متجرك.
                       </p>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <Link to="/merchant/products/new">
@@ -364,7 +404,7 @@ export default function MerchantDashboard() {
                 >
                   <div className="text-center">
                     <Package className="w-6 h-6 mx-auto mb-2" />
-                    <span className="text-sm arabic">إدارة المنتجات</span>
+                    <span className="text-sm arabic">إدارة المنتجا��</span>
                   </div>
                 </Button>
               </Link>

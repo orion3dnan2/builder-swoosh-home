@@ -19,6 +19,7 @@ import {
   SortAsc,
   SortDesc,
   Sparkles,
+  Settings,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useProducts } from "@/lib/products";
@@ -40,31 +41,28 @@ export default function MerchantProducts() {
   const {
     products: allProducts,
     deleteProduct,
+    updateStock,
     categories,
     getProductsByStatus,
     searchProducts,
   } = useProducts();
 
-  // Store selection state - in real app this would come from user context
-  const [currentStoreId, setCurrentStoreId] = useState("store-001");
+  // Get user's store information
+  const userStoreId = user?.profile?.businessName ? `store-${user.id}` : null;
+  const userStoreName = user?.profile?.businessName || "متجرك";
 
-  // Available stores for demo
-  const availableStores = [
-    { id: "store-001", name: "متجر التراث السوداني", category: "traditional" },
-    { id: "store-002", name: "عطور الشرق", category: "perfumes" },
-    { id: "store-003", name: "مطعم أم درمان", category: "food" },
-    { id: "store-004", name: "خدمات التقنية السودانية", category: "services" },
-    { id: "store-005", name: "أزياء النيل", category: "fashion" },
-    { id: "store-006", name: "سوبر ماركت الخرطوم", category: "grocery" },
-  ];
+  // Filter products by current user's store only
+  const products = userStoreId
+    ? allProducts.filter((product) => product.storeId === userStoreId)
+    : [];
 
-  // Filter products by current user's selected store
-  const products = allProducts.filter(
-    (product) => product.storeId === currentStoreId,
-  );
-  const currentStore = availableStores.find(
-    (store) => store.id === currentStoreId,
-  );
+  const currentStore = userStoreId
+    ? {
+        id: userStoreId,
+        name: userStoreName,
+        category: user?.profile?.businessType || "general",
+      }
+    : null;
 
   // تحديد إذا كان التاجر جديد
   useEffect(() => {
@@ -173,23 +171,9 @@ export default function MerchantProducts() {
                 <h1 className="text-2xl font-bold text-gray-900 arabic">
                   إدارة المنتجات
                 </h1>
-                <div className="flex items-center space-x-3 space-x-reverse mt-1">
-                  <p className="text-gray-600 arabic">
-                    {filteredProducts.length} منتج
-                  </p>
-                  <span className="text-gray-400">•</span>
-                  <select
-                    value={currentStoreId}
-                    onChange={(e) => setCurrentStoreId(e.target.value)}
-                    className="text-sm border border-gray-300 rounded px-2 py-1 arabic text-right bg-white"
-                  >
-                    {availableStores.map((store) => (
-                      <option key={store.id} value={store.id}>
-                        {store.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <p className="text-gray-600 arabic mt-1">
+                  {filteredProducts.length} منتج في متجرك
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
@@ -209,22 +193,44 @@ export default function MerchantProducts() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Store Info Banner */}
-        <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <div className="flex items-center space-x-3 space-x-reverse">
-            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-              <Package className="w-4 h-4 text-white" />
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-blue-800 arabic">
-                عرض منتجات متجر: {currentStore?.name}
-              </h3>
-              <p className="text-xs text-blue-600 arabic">
-                يمكنك تغيير المتجر من القائمة أعلاه • المنتجات تظهر في السوق
-                العام تلقائياً
-              </p>
+        {currentStore && (
+          <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-center space-x-3 space-x-reverse">
+              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                <Package className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-blue-800 arabic">
+                  منتجات متجر: {currentStore.name}
+                </h3>
+                <p className="text-xs text-blue-600 arabic">
+                  منتجاتك تظهر في السوق العام تلقائياً • يمكن للعملاء رؤية وشراء
+                  منتجاتك
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {/* Message for users without store */}
+        {!currentStore && (
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="flex items-center space-x-3 space-x-reverse">
+              <div className="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center">
+                <AlertTriangle className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-yellow-800 arabic">
+                  يجب إعداد معلومات المتجر أولاً
+                </h3>
+                <p className="text-xs text-yellow-700 arabic">
+                  لعرض وإدارة منتجاتك، يرجى إكمال معلومات العمل التجاري في
+                  إعدادات الملف الشخصي
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Filters and Search */}
         <Card className="mb-6">
@@ -524,7 +530,41 @@ export default function MerchantProducts() {
           </Card>
         )}
 
-        {filteredProducts.length === 0 && (
+        {/* No Store Setup Message */}
+        {!currentStore && (
+          <div className="text-center py-12">
+            <Card className="max-w-2xl mx-auto bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-200">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <AlertTriangle className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2 arabic">
+                  إعداد المتجر مطلوب
+                </h3>
+                <p className="text-gray-700 mb-6 arabic">
+                  لبدء إدارة منتجاتك، يرجى إكمال معلومات العمل التجاري (اسم
+                  العمل، نوع العمل) في ملفك الشخصي أولاً.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link to="/profile">
+                    <Button className="arabic bg-yellow-600 hover:bg-yellow-700">
+                      <Settings className="w-4 h-4 ml-2" />
+                      إكمال معلومات المتجر
+                    </Button>
+                  </Link>
+                  <Link to="/merchant/settings">
+                    <Button variant="outline" className="arabic">
+                      إعدادات التاجر
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* No Products Message */}
+        {currentStore && filteredProducts.length === 0 && (
           <div className="text-center py-12">
             {isNewMerchant ? (
               <Card className="max-w-2xl mx-auto bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
@@ -536,8 +576,9 @@ export default function MerchantProducts() {
                     ابدأ رحلتك التجارية! 🚀
                   </h3>
                   <p className="text-gray-700 mb-6 arabic">
-                    أهلاً وسهلاً {user?.profile?.name}! متجرك جاهز الآن. ابدأ
-                    بإضافة منتجاتك الأولى لتكون متاحة للعملاء.
+                    أهلاً وسهلاً {user?.profile?.name}! متجر "
+                    {currentStore.name}" جاهز الآن. ابدأ بإضافة منتجاتك الأولى
+                    لتكون متاحة للعملاء.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link to="/merchant/products/new">
@@ -558,10 +599,11 @@ export default function MerchantProducts() {
               <>
                 <Package className="w-24 h-24 text-gray-300 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2 arabic">
-                  لا توجد منتجات
+                  لا توجد منتجات في متجرك
                 </h3>
                 <p className="text-gray-600 arabic mb-4">
-                  لم يتم العثور على منتجات تطابق معايير البحث
+                  لم يتم العثور على منتجات في متجر "{currentStore.name}" تطابق
+                  معايير البحث
                 </p>
                 <Link to="/merchant/products/new">
                   <Button className="arabic">
