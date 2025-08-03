@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -536,7 +536,7 @@ export default function NewProduct() {
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <Label className="arabic">الكمية المتو��رة *</Label>
+                  <Label className="arabic">الكمية المتوفرة *</Label>
                   <Input
                     type="number"
                     value={formData.inventory?.quantity ?? 0}
@@ -605,7 +605,7 @@ export default function NewProduct() {
               <div>
                 <Label className="arabic">العلامات (مفصولة بفاصلة)</Label>
                 <Input
-                  placeholder="مثال: عطر, صندل, سوداني, ط��يعي"
+                  placeholder="مثال: عطر, صندل, سوداني, طبيعي"
                   className="mt-2 arabic text-right"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
