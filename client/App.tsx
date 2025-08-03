@@ -8,6 +8,7 @@ import Companies from "./pages/Companies";
 import Jobs from "./pages/Jobs";
 import Services from "./pages/Services";
 import Restaurants from "./pages/Restaurants";
+import Restaurant from "./pages/Restaurant";
 import Ads from "./pages/Ads";
 import StoreDetails from "./pages/StoreDetails";
 import StoreVisit from "./pages/StoreVisit";
