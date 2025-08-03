@@ -142,14 +142,6 @@ export default function MerchantDashboard() {
   // Filter low stock products for current user's store
   const userLowStockProducts = lowStockProducts.filter(product => product.storeId === userStoreId);
 
-  // Mock user store for demo (in real app, this would come from user context or API)
-  const userStore = {
-    id: userStoreId,
-    name: "متجر التراث السوداني",
-    description: "متجر متخصص في المنتجات السودانية الأصيلة",
-    category: "traditional"
-  };
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case "pending":
