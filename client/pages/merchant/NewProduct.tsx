@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -353,7 +354,7 @@ export default function NewProduct() {
             <CardHeader>
               <CardTitle className="flex items-center arabic">
                 <Package className="w-5 h-5 ml-2" />
-                المعلومات الأساسية
+                المعلومات الأساس��ة
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -521,7 +522,7 @@ export default function NewProduct() {
                       </Button>
                       {index === 0 && (
                         <Badge className="absolute bottom-2 right-2 bg-blue-500 text-white text-xs">
-                          الصورة الرئيسية
+                          الصور�� الرئيسية
                         </Badge>
                       )}
                     </div>
