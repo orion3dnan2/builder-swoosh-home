@@ -192,7 +192,7 @@ export default function AdminStores() {
     {
       id: "store-002",
       name: "العطور السودانية الأصيلة",
-      owner: "فاطمة عبدالله",
+      owner: "��اطمة عبدالله",
       email: "fatima@example.com",
       phone: "+966509876543",
       status: "pending",
@@ -288,7 +288,7 @@ export default function AdminStores() {
       storeId: "store-001",
       storeName: "متجر الخير السوداني",
       subject: "مشكلة في عرض المنتجات",
-      message: "أواجه مشكلة في ظهور بعض المنتجات في المتجر",
+      message: "أوا��ه مشكلة في ظهور بعض المنتجات في المتجر",
       priority: "medium",
       status: "open",
       createdAt: "2024-03-15",
@@ -459,6 +459,11 @@ export default function AdminStores() {
               return { ...store, status: "suspended" as const };
             case "reactivate":
               return { ...store, status: "active" as const };
+            case "block":
+              return { ...store, status: "suspended" as const, tags: [...store.tags.filter(tag => tag !== "موقف"), "موقف"] };
+            case "renew":
+              // تجديد الاشتراك - يمكن إضافة منطق تاريخ الانتهاء هنا
+              return { ...store, tags: [...store.tags.filter(tag => tag !== "منتهي الصلاحية"), "مجدد حديثاً"] };
             case "feature":
               return { ...store, status: "featured" as const, featured: true };
             case "unfeature":
