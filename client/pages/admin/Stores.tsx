@@ -756,7 +756,7 @@ export default function AdminStores() {
                               className="text-green-600 font-semibold"
                             >
                               <Check className="w-4 h-4 ml-2" />
-                              ✅ قبول المتجر
+                              ✅ قبول ال��تجر
                             </DropdownMenuItem>
                           )}
 
@@ -811,7 +811,7 @@ export default function AdminStores() {
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => handleContactStore(store)}>
                             <MessageSquare className="w-4 h-4 ml-2" />
-                            إرسال رسالة
+                            إرس��ل رسالة
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => handleSupportTicket(store)}>
                             <HelpCircle className="w-4 h-4 ml-2" />
@@ -860,8 +860,8 @@ export default function AdminStores() {
                       <Badge variant="outline" className="arabic">
                         عمولة {store.commission}%
                       </Badge>
-                      {store.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="arabic">
+                      {store.tags.map((tag, index) => (
+                        <Badge key={`${store.id}-tag-${index}`} variant="secondary" className="arabic">
                           {tag}
                         </Badge>
                       ))}
@@ -940,7 +940,7 @@ export default function AdminStores() {
                         className="arabic flex-1 border-purple-500 text-purple-600 hover:bg-purple-50"
                       >
                         <Calendar className="w-4 h-4 ml-2" />
-                        📅 تجديد الاشتراك
+                        📅 تجديد ��لاشتراك
                       </Button>
                     </div>
 
