@@ -196,7 +196,7 @@ export default function AdminStores() {
       email: "fatima@example.com",
       phone: "+966509876543",
       status: "pending",
-      category: "عطور ومستحضرات",
+      category: "عطور ومست��ضرات",
       location: "جدة، الس��ودية",
       products: 23,
       orders: 67,
@@ -897,7 +897,54 @@ export default function AdminStores() {
                       )}
                     </div>
 
-                    {/* Quick Actions */}
+                    {/* Primary Actions - Important and Visible */}
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {store.status === "pending" && (
+                        <Button
+                          size="sm"
+                          onClick={() => openConfirmModal("approve", store.id, store.name)}
+                          className="arabic flex-1 bg-green-600 hover:bg-green-700 text-white"
+                        >
+                          <Check className="w-4 h-4 ml-2" />
+                          ✅ قبول المتجر
+                        </Button>
+                      )}
+
+                      {store.status === "active" && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => openConfirmModal("suspend", store.id, store.name)}
+                          className="arabic flex-1 border-orange-500 text-orange-600 hover:bg-orange-50"
+                        >
+                          <AlertTriangle className="w-4 h-4 ml-2" />
+                          ⏸️ تعليق
+                        </Button>
+                      )}
+
+                      {store.status === "suspended" && (
+                        <Button
+                          size="sm"
+                          onClick={() => openConfirmModal("reactivate", store.id, store.name)}
+                          className="arabic flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                        >
+                          <RefreshCw className="w-4 h-4 ml-2" />
+                          🔄 إعادة تفعيل
+                        </Button>
+                      )}
+
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => openConfirmModal("renew", store.id, store.name)}
+                        className="arabic flex-1 border-purple-500 text-purple-600 hover:bg-purple-50"
+                      >
+                        <Calendar className="w-4 h-4 ml-2" />
+                        📅 تجديد الاشتراك
+                      </Button>
+                    </div>
+
+                    {/* Secondary Actions */}
                     <div className="flex flex-wrap gap-2">
                       <Button
                         variant="outline"
@@ -907,15 +954,6 @@ export default function AdminStores() {
                       >
                         <Eye className="w-4 h-4 ml-2" />
                         التفاصيل
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleManagePermissions(store)}
-                        className="arabic flex-1"
-                      >
-                        <Key className="w-4 h-4 ml-2" />
-                        الصلاحيات
                       </Button>
                       <Button
                         variant="outline"
@@ -1474,7 +1512,7 @@ export default function AdminStores() {
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
                     <Label className="font-medium arabic">الوصول للتحليلات</Label>
-                    <p className="text-sm text-gray-600 arabic">يمكن للمتجر عرض التحليلات والإحصائيات</p>
+                    <p className="text-sm text-gray-600 arabic">يمكن للمتجر عرض التحليلا�� والإحصائيات</p>
                   </div>
                   <Switch
                     checked={selectedStore.permissions.canAnalytics}
@@ -1578,7 +1616,7 @@ export default function AdminStores() {
           {selectedStore && (
             <div className="space-y-4">
               <div className="text-center p-4 bg-green-50 rounded-lg">
-                <h3 className="font-semibold arabic">مساعدة: {selectedStore.name}</h3>
+                <h3 className="font-semibold arabic">مساع��ة: {selectedStore.name}</h3>
                 <p className="text-gray-600 arabic">{selectedStore.owner}</p>
               </div>
               
