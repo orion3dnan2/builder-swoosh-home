@@ -539,12 +539,12 @@ export default function MerchantDashboard() {
                                 {product.name}
                               </p>
                               <p className="text-xs text-gray-600">
-                                {product.sku}
+                                {product.inventory.sku}
                               </p>
                             </div>
                             <Badge
                               variant={
-                                product.stock === 0
+                                product.inventory.quantity === 0
                                   ? "destructive"
                                   : "secondary"
                               }
