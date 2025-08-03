@@ -20,10 +20,24 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useProducts } from "@/lib/products";
 
 export default function MerchantDashboard() {
   const { user } = useAuth();
   const [isNewMerchant, setIsNewMerchant] = useState(true);
+
+  // Use products hook to get actual products
+  const {
+    products: allProducts,
+    getProductsByStatus,
+    lowStockProducts,
+  } = useProducts();
+
+  // Filter products by current user's store (we'll use store-001 for now)
+  const userStoreId = "store-001"; // This should come from user context in a real app
+  const userProducts = allProducts.filter(
+    (product) => product.storeId === userStoreId,
+  );
 
   // تحديد إذا كان التاجر جديد بناءً على تاريخ إنشاء ال��ساب
   useEffect(() => {
@@ -31,25 +45,25 @@ export default function MerchantDashboard() {
       const accountAge = Date.now() - new Date(user.createdAt).getTime();
       const daysSinceCreation = accountAge / (1000 * 60 * 60 * 24);
       // إذا كان الحساب أقل من 7 أيام وليس له منتجات أو طلبات، يُعتبر جديد
-      setIsNewMerchant(daysSinceCreation < 7);
+      setIsNewMerchant(daysSinceCreation < 7 && userProducts.length === 0);
     }
-  }, [user]);
+  }, [user, userProducts.length]);
 
-  const [storeStats, setStoreStats] = useState({
-    totalProducts: 0,
+  // Calculate stats from local products data
+  const storeStats = {
+    totalProducts: userProducts.length,
     totalOrders: 0,
     monthlyRevenue: 0,
     storeViews: 0,
-    activeProducts: 0,
-    outOfStock: 0,
+    activeProducts: userProducts.filter((p) => p.status === "active").length,
+    outOfStock: userProducts.filter((p) => p.status === "out_of_stock").length,
     pendingOrders: 0,
     completedOrders: 0,
     averageRating: 0,
     totalReviews: 0,
-  });
+  };
 
-  const [userStore, setUserStore] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [recentOrders, setRecentOrders] = useState([]);
 
   // جلب بيانات المتجر من API
@@ -127,13 +141,18 @@ export default function MerchantDashboard() {
     }
   }, [user]);
 
-  const lowStockProducts = isNewMerchant
-    ? []
-    : [
-        { name: "عطر صندل سوداني", stock: 2, sku: "PER-001" },
-        { name: "كركديه طبيعي", stock: 1, sku: "TEA-003" },
-        { name: "حقيبة سودانية", stock: 0, sku: "BAG-012" },
-      ];
+  // Filter low stock products for current user's store
+  const userLowStockProducts = lowStockProducts.filter(
+    (product) => product.storeId === userStoreId,
+  );
+
+  // Mock user store for demo (in real app, this would come from user context or API)
+  const userStore = {
+    id: userStoreId,
+    name: "متجر التراث السوداني",
+    description: "متجر متخصص في المنتجات السودانية الأصيلة",
+    category: "traditional",
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -512,7 +531,7 @@ export default function MerchantDashboard() {
                 </Card>
 
                 {/* Low Stock Alert */}
-                {!isNewMerchant && lowStockProducts.length > 0 && (
+                {!isNewMerchant && userLowStockProducts.length > 0 && (
                   <Card className="border-red-200 bg-red-50">
                     <CardHeader>
                       <CardTitle className="flex items-center text-red-800 arabic">
@@ -522,7 +541,7 @@ export default function MerchantDashboard() {
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-3">
-                        {lowStockProducts.map((product, index) => (
+                        {userLowStockProducts.map((product, index) => (
                           <div
                             key={index}
                             className="flex items-center justify-between p-2 bg-white rounded-lg"
@@ -532,20 +551,20 @@ export default function MerchantDashboard() {
                                 {product.name}
                               </p>
                               <p className="text-xs text-gray-600">
-                                {product.sku}
+                                {product.inventory.sku}
                               </p>
                             </div>
                             <Badge
                               variant={
-                                product.stock === 0
+                                product.inventory.quantity === 0
                                   ? "destructive"
                                   : "secondary"
                               }
                               className="arabic"
                             >
-                              {product.stock === 0
+                              {product.inventory.quantity === 0
                                 ? "نفد المخزون"
-                                : `${product.stock} متبقي`}
+                                : `${product.inventory.quantity} متبقي`}
                             </Badge>
                           </div>
                         ))}

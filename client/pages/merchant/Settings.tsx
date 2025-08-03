@@ -49,7 +49,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ApiService } from "@/lib/apiService";
 import { useToast } from "@/hooks/use-toast";
 import { cleanArabicText } from "@/lib/textUtils";
-import { useRegions } from "@/hooks/use-regions";
+import {
+  useRegions,
+  useCountries,
+  useRegionsByCountry,
+} from "@/hooks/use-regions";
 
 interface StoreSettings {
   storeName: string;
@@ -111,7 +115,7 @@ export default function MerchantSettings() {
   const [isSaving, setIsSaving] = useState(false);
   const [isNewMerchant, setIsNewMerchant] = useState(true);
 
-  // تحديد إذا كان التاجر جديد
+  // تحديد إذا كان الت��جر جديد
   useEffect(() => {
     if (user?.createdAt) {
       const accountAge = Date.now() - new Date(user.createdAt).getTime();
@@ -286,7 +290,7 @@ export default function MerchantSettings() {
     emailNotifications: true,
   });
 
-  // Shipping Settings State - قيم افتراضية للتجار الجدد
+  // Shipping Settings State - قيم افتراضية للتجار ال��دد
   const [shipping, setShipping] = useState<ShippingSettings>({
     freeShippingThreshold: isNewMerchant ? 100 : 200,
     standardShippingCost: isNewMerchant ? 15 : 25,
@@ -322,7 +326,7 @@ export default function MerchantSettings() {
           },
           {
             id: "driver2",
-            name: "فاطمة عبدالله",
+            name: "فاطمة ��بدالله",
             phone: "+971501234567",
             area: "دبي",
             rating: 4.9,
@@ -480,7 +484,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.email.trim()) {
-      alert("يرجى إدخ��ل ا��بريد الإلكتروني");
+      alert("يرجى إدخ��ل ا��بريد ا��إلكتروني");
       return;
     }
 
@@ -559,7 +563,7 @@ export default function MerchantSettings() {
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ الإعدا��ات.\n\nيرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ الإعدا��ات.\n\nيرجى ��لتحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
@@ -598,7 +602,7 @@ export default function MerchantSettings() {
     "الجمعة",
   ];
 
-  // ��ائمة الدول والمدن التابعة لها
+  // قائمة ال��ول والمدن التابعة لها
   const countriesWithCities = {
     السودان: [
       "الخرطوم",
@@ -645,7 +649,7 @@ export default function MerchantSettings() {
       "الفروانية",
       "حولي",
     ],
-    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"],
+    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أ�� صلال", "الخور", "الشمال"],
     "مملكة البحرين": ["ا��منامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرست��ق", "صحار"],
     "جمهورية مصر العربية": [
@@ -681,7 +685,7 @@ export default function MerchantSettings() {
     hasRegions,
   } = useRegions();
 
-  // دال�� لمعالجة تغيير نوع المتجر
+  // دال�� لمعا��جة تغيير نوع المتجر
   const handleCategoryChange = (value: string) => {
     if (value === "أخرى (حدد النوع)") {
       setShowCustomCategory(true);
@@ -1035,7 +1039,7 @@ export default function MerchantSettings() {
                       <option value="beauty">تجميل وعناية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
-                      يحدد نوع المتجر مكان ظهوره في الموقع (صفحة المطاعم،
+                      يحدد نوع المت��ر مكان ظهوره في الموقع (صفحة المطاعم،
                       الشركات، أو المت��جر)
                     </p>
                   </div>
@@ -1268,7 +1272,7 @@ export default function MerchantSettings() {
                       </div>
                       <div>
                         <h3 className="font-bold text-gray-900 arabic text-lg">
-                          إشعارات الطلبات
+                          إشعارات الطلب��ت
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
                           تلقى تحديثات حول طلباتك ومبيعاتك
@@ -1739,7 +1743,7 @@ export default function MerchantSettings() {
                             area: "منطقة جدي��ة",
                             rating: 0,
                             isActive: false,
-                            vehicle: "سيارة",
+                            vehicle: "سي��رة",
                             speciality: [],
                           };
                           setDeliveryDrivers([...deliveryDrivers, newDriver]);
@@ -1857,7 +1861,7 @@ export default function MerchantSettings() {
                           إعدادات التتبع والأتمتة
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تفعيل خيارات التتبع المباشر وتوزيع الطلبات التلقائي
+                          تف��يل خيارات التتبع المباشر وتوزيع الطلبات التلقائي
                         </p>
                       </div>
                     </div>
@@ -1872,7 +1876,7 @@ export default function MerchantSettings() {
                         },
                         {
                           key: "autoAssignDrivers",
-                          title: "توزيع تلقائي للطلبات",
+                          title: "توز��ع تلقائي للطلبات",
                           desc: "توزيع الطلبات تلقائياً على أقرب سائق متاح",
                           icon: "🤖",
                         },
@@ -1938,7 +1942,7 @@ export default function MerchantSettings() {
                           تكامل الواتساب للتوصيل
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تواصل مباشر مع السائقين وتتبع الطلبات عبر الواتساب
+                          تواصل مبا��ر مع السائقين وتتبع الطلبات عبر الواتساب
                         </p>
                       </div>
                     </div>
@@ -1975,7 +1979,7 @@ export default function MerchantSettings() {
                             توصيل سريع
                           </h4>
                           <p className="text-xs text-gray-600 arabic">
-                            شبكة واسعة من السائقين لضمان التوصيل السريع
+                            شبكة واسعة من ال��ائقين لضمان التوصيل السريع
                           </p>
                         </div>
                       </div>
@@ -2134,7 +2138,7 @@ export default function MerchantSettings() {
                             إشعارات تسجيل الدخول
                           </div>
                           <div className="text-sm text-gray-600 arabic">
-                            ت��بيه عند تسجيل دخول جديد
+                            ت��بيه عند ��سجيل دخول جديد
                           </div>
                         </div>
                         <Switch

@@ -250,7 +250,7 @@ export class ProductService {
       },
       specifications: {
         الوزن: "1 كيلو",
-        النوع: "عدس أحمر خالص",
+        النوع: "عدس أحمر خا��ص",
         المنشأ: "شمال السودان",
         الصلاحية: "سنتان",
       },
@@ -288,7 +288,7 @@ export class ProductService {
       storeId: "store-004",
       name: "خدمة تصميم موقع إلكتروني",
       description:
-        "خدمة تصميم وتطوير موقع إلكتروني احترافي بأحدث التقنيات والمعايير العالمية.",
+        "خ��مة تصميم وتطوير موقع إلكتروني احترافي بأحدث التقنيات والمعايير العالمية.",
       price: 850.0,
       salePrice: 699.99,
       images: ["/placeholder.svg"],
@@ -458,7 +458,10 @@ export class ProductService {
       errors.push("يجب إضافة صورة واحدة على الأقل");
     }
 
-    if (!product.inventory?.quantity || product.inventory.quantity < 0) {
+    if (
+      product.inventory?.quantity === undefined ||
+      product.inventory.quantity < 0
+    ) {
       errors.push("كمية المخزون يجب أن تكون صفر أو أكثر");
     }
 
@@ -478,7 +481,7 @@ export class ProductService {
       "store-003": { name: "مطعم أم درمان", category: "food" },
       "store-004": { name: "خدمات التقنية السودانية", category: "services" },
       "store-005": { name: "أزياء النيل", category: "fashion" },
-      "store-006": { name: "سوبر ماركت الخرطوم", category: "grocery" },
+      "store-006": { name: "سوبر ماركت ا��خرطوم", category: "grocery" },
     };
 
     return products.map((product) => ({
@@ -536,17 +539,20 @@ export const useProducts = (storeId?: string) => {
 
   return {
     products,
-    getProduct: ProductService.getProduct,
-    saveProduct: ProductService.saveProduct,
-    deleteProduct: ProductService.deleteProduct,
-    updateStock: ProductService.updateStock,
+    getProduct: (id: string) => ProductService.getProduct(id),
+    saveProduct: (product: Product) => ProductService.saveProduct(product),
+    deleteProduct: (id: string) => ProductService.deleteProduct(id),
+    updateStock: (id: string, quantity: number) =>
+      ProductService.updateStock(id, quantity),
     searchProducts: (query: string) =>
       ProductService.searchProducts(query, storeId),
     categories: ProductService.getCategories(),
     lowStockProducts: ProductService.getLowStockProducts(storeId),
     getProductsByStatus: (status: Product["status"]) =>
       ProductService.getProductsByStatus(status, storeId),
-    generateSKU: ProductService.generateSKU,
-    validateProduct: ProductService.validateProduct,
+    generateSKU: (category: string, name: string) =>
+      ProductService.generateSKU(category, name),
+    validateProduct: (product: Partial<Product>) =>
+      ProductService.validateProduct(product),
   };
 };

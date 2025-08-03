@@ -33,7 +33,7 @@ export default function NewProduct() {
   const [currentImageUrl, setCurrentImageUrl] = useState("");
 
   const [formData, setFormData] = useState<Partial<Product>>({
-    storeId: "store-001", // Replace with actual store ID from user context
+    storeId: "store-001", // Using store-001 for merchant testing
     name: "",
     description: "",
     price: 0,
@@ -74,6 +74,21 @@ export default function NewProduct() {
         images: [...(prev.images || []), currentImageUrl.trim()],
       }));
       setCurrentImageUrl("");
+    }
+  };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Create a temporary URL for the uploaded file
+      const tempUrl = URL.createObjectURL(file);
+      setFormData((prev) => ({
+        ...prev,
+        images: [...(prev.images || []), tempUrl],
+      }));
+
+      // Reset the input
+      event.target.value = "";
     }
   };
 
@@ -373,7 +388,7 @@ export default function NewProduct() {
                 <Input
                   value={currentImageUrl}
                   onChange={(e) => setCurrentImageUrl(e.target.value)}
-                  placeholder="رابط الصورة (https://...)"
+                  placeholder="رابط ��لصورة (https://...)"
                   className="flex-1"
                 />
                 <Button
@@ -414,7 +429,21 @@ export default function NewProduct() {
               )}
 
               <div className="flex items-center space-x-2 space-x-reverse">
-                <Button type="button" variant="outline" className="arabic">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  id="image-upload"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="arabic"
+                  onClick={() =>
+                    document.getElementById("image-upload")?.click()
+                  }
+                >
                   <Upload className="w-4 h-4 ml-2" />
                   رفع صورة من الجهاز
                 </Button>
@@ -439,13 +468,15 @@ export default function NewProduct() {
                   <Label className="arabic">الكمية المتوفرة *</Label>
                   <Input
                     type="number"
-                    value={formData.inventory?.quantity}
-                    onChange={(e) =>
+                    value={formData.inventory?.quantity ?? 0}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      const numValue = value === "" ? 0 : parseInt(value);
                       handleInventoryChange(
                         "quantity",
-                        parseInt(e.target.value) || 0,
-                      )
-                    }
+                        isNaN(numValue) ? 0 : Math.max(0, numValue),
+                      );
+                    }}
                     className="mt-2"
                     min="0"
                     required

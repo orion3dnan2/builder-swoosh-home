@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { regionsManager } from "@/lib/regionsManager";
+import { regionsManager, DeliveryRegion, Country } from "@/lib/regionsManager";
 
 /**
  * Hook مخصص لمراقبة تحديثات المناطق
  */
 export function useRegions() {
   const [regions, setRegions] = useState<string[]>([]);
+  const [regionsByCountry, setRegionsByCountry] = useState<Record<string, DeliveryRegion[]>>({});
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -14,7 +15,9 @@ export function useRegions() {
       setIsLoading(true);
       try {
         const currentRegions = regionsManager.getRegions();
+        const currentRegionsByCountry = regionsManager.getAllRegionsByCountry();
         setRegions(currentRegions);
+        setRegionsByCountry(currentRegionsByCountry);
       } catch (error) {
         console.error("خطأ في تحميل المناطق:", error);
       } finally {
@@ -52,6 +55,7 @@ export function useRegions() {
 
   return {
     regions,
+    regionsByCountry,
     isLoading,
     regionsCount: regions.length,
     hasRegions: regions.length > 0,
@@ -72,4 +76,62 @@ export function useRegionsStats() {
   }, [regions]);
 
   return stats;
+}
+
+/**
+ * Hook للحصول على المناطق حسب الدولة
+ */
+export function useRegionsByCountry(countryCode?: string) {
+  const { regionsByCountry, notifyRegionsUpdate } = useRegions();
+  
+  const getRegionsForCountry = (code: string): DeliveryRegion[] => {
+    return regionsByCountry[code] || [];
+  };
+
+  const addRegionToCountry = (regionName: string, code: string): boolean => {
+    const success = regionsManager.addRegionNew(regionName, code);
+    if (success) {
+      notifyRegionsUpdate();
+    }
+    return success;
+  };
+
+  const removeRegionFromCountry = (regionId: string, code: string): boolean => {
+    const success = regionsManager.removeRegionNew(regionId, code);
+    if (success) {
+      notifyRegionsUpdate();
+    }
+    return success;
+  };
+
+  const updateRegionInCountry = (regionId: string, code: string, newName: string): boolean => {
+    const success = regionsManager.updateRegionNew(regionId, code, newName);
+    if (success) {
+      notifyRegionsUpdate();
+    }
+    return success;
+  };
+
+  return {
+    regionsByCountry,
+    getRegionsForCountry,
+    addRegionToCountry,
+    removeRegionFromCountry,
+    updateRegionInCountry,
+    availableCountries: regionsManager.getAvailableCountries(),
+  };
+}
+
+/**
+ * Hook للحصول على الدول المتاحة
+ */
+export function useCountries() {
+  const [countries, setCountries] = useState<Country[]>([]);
+  const { regionsByCountry } = useRegions();
+
+  useEffect(() => {
+    setCountries(regionsManager.getAvailableCountries());
+  }, [regionsByCountry]);
+
+  return countries;
 }

@@ -21,6 +21,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useProducts } from "@/lib/products";
+import { Product } from "../../../shared/types";
 
 export default function MerchantProducts() {
   const { user } = useAuth();
@@ -34,17 +36,44 @@ export default function MerchantProducts() {
   );
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
+  // Use products hook to get actual products
+  const {
+    products: allProducts,
+    deleteProduct,
+    categories,
+    getProductsByStatus,
+    searchProducts,
+  } = useProducts();
+
+  // Store selection state - in real app this would come from user context
+  const [currentStoreId, setCurrentStoreId] = useState("store-001");
+
+  // Available stores for demo
+  const availableStores = [
+    { id: "store-001", name: "متجر التراث السوداني", category: "traditional" },
+    { id: "store-002", name: "عطور الشرق", category: "perfumes" },
+    { id: "store-003", name: "مطعم أم درمان", category: "food" },
+    { id: "store-004", name: "خدمات التقنية السودانية", category: "services" },
+    { id: "store-005", name: "أزياء النيل", category: "fashion" },
+    { id: "store-006", name: "سوبر ماركت الخرطوم", category: "grocery" },
+  ];
+
+  // Filter products by current user's selected store
+  const products = allProducts.filter(
+    (product) => product.storeId === currentStoreId,
+  );
+  const currentStore = availableStores.find(
+    (store) => store.id === currentStoreId,
+  );
+
   // تحديد إذا كان التاجر جديد
   useEffect(() => {
     if (user?.createdAt) {
       const accountAge = Date.now() - new Date(user.createdAt).getTime();
       const daysSinceCreation = accountAge / (1000 * 60 * 60 * 24);
-      setIsNewMerchant(daysSinceCreation < 7);
+      setIsNewMerchant(daysSinceCreation < 7 && products.length === 0);
     }
-  }, [user]);
-
-  // قائمة المنتجات - فارغة للتجار الجدد
-  const products: any[] = isNewMerchant ? [] : [];
+  }, [user, products.length]);
 
   // Filter and sort products
   const filteredProducts = products
@@ -78,7 +107,7 @@ export default function MerchantProducts() {
       return sortOrder === "asc" ? comparison : -comparison;
     });
 
-  const categories = [...new Set(products.map((p) => p.category))];
+  const userCategories = [...new Set(products.map((p) => p.category))];
 
   const getStatusColor = (status: Product["status"]) => {
     switch (status) {
@@ -98,7 +127,7 @@ export default function MerchantProducts() {
       case "active":
         return "نشط";
       case "inactive":
-        return "غير نشط";
+        return "غ���ر نشط";
       case "out_of_stock":
         return "نفد المخزون";
       default:
@@ -144,12 +173,29 @@ export default function MerchantProducts() {
                 <h1 className="text-2xl font-bold text-gray-900 arabic">
                   إدارة المنتجات
                 </h1>
-                <p className="text-gray-600 arabic">
-                  {filteredProducts.length} منتج
-                </p>
+                <div className="flex items-center space-x-3 space-x-reverse mt-1">
+                  <p className="text-gray-600 arabic">
+                    {filteredProducts.length} منتج
+                  </p>
+                  <span className="text-gray-400">•</span>
+                  <select
+                    value={currentStoreId}
+                    onChange={(e) => setCurrentStoreId(e.target.value)}
+                    className="text-sm border border-gray-300 rounded px-2 py-1 arabic text-right bg-white"
+                  >
+                    {availableStores.map((store) => (
+                      <option key={store.id} value={store.id}>
+                        {store.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
+              <Badge variant="outline" className="arabic">
+                {currentStore?.name}
+              </Badge>
               <Link to="/merchant/products/new">
                 <Button className="arabic">
                   <Plus className="w-4 h-4 ml-2" />
@@ -162,6 +208,24 @@ export default function MerchantProducts() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Store Info Banner */}
+        <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="flex items-center space-x-3 space-x-reverse">
+            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+              <Package className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-blue-800 arabic">
+                عرض منتجات متجر: {currentStore?.name}
+              </h3>
+              <p className="text-xs text-blue-600 arabic">
+                يمكنك تغيير المتجر من القائمة أعلاه • المنتجات تظهر في السوق
+                العام تلقائياً
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Filters and Search */}
         <Card className="mb-6">
           <CardContent className="p-6">
@@ -184,7 +248,7 @@ export default function MerchantProducts() {
                 className="border border-gray-300 rounded-lg px-3 py-2 arabic text-right"
               >
                 <option value="all">جميع الفئات</option>
-                {categories.map((category) => (
+                {userCategories.map((category) => (
                   <option key={category} value={category}>
                     {category}
                   </option>
