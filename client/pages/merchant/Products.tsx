@@ -90,7 +90,7 @@ export default function MerchantProducts() {
       return sortOrder === "asc" ? comparison : -comparison;
     });
 
-  const categories = [...new Set(products.map((p) => p.category))];
+  const userCategories = [...new Set(products.map((p) => p.category))];
 
   const getStatusColor = (status: Product["status"]) => {
     switch (status) {
