@@ -47,8 +47,31 @@ export default function MerchantProducts() {
     searchProducts,
   } = useProducts();
 
-  // Get user's store information
-  const userStoreId = user?.profile?.businessName ? `store-${user.id}` : null;
+  // Get user's store information - use proper store mapping
+  const getUserStoreId = () => {
+    if (!user?.id) return null;
+
+    // Known store mappings from stores.json
+    const storeMapping: Record<string, string> = {
+      "user-1753865301240-efsqj09s0": "store-1753868707117-r80zjqevj", // زول اقاشي
+      "merchant-001": "store-001",
+      "admin-001": "store-001",
+    };
+
+    const userStoreId = storeMapping[user.id];
+    if (userStoreId) {
+      return userStoreId;
+    }
+
+    // Fallback: if user has businessName, assume they have a store
+    if (user.profile?.businessName) {
+      return `store-${user.id}`;
+    }
+
+    return null;
+  };
+
+  const userStoreId = getUserStoreId();
   const userStoreName = user?.profile?.businessName || "متجرك";
 
   // Filter products by current user's store only
@@ -224,7 +247,7 @@ export default function MerchantProducts() {
                   يجب إعداد معلومات المتجر أولاً
                 </h3>
                 <p className="text-xs text-yellow-700 arabic">
-                  لعرض وإدارة منتجاتك، يرجى إكمال معلومات العمل التجاري في
+                  لعرض وإدارة منتجاتك، يرجى إكمال مع��ومات العمل التجاري في
                   إعدادات الملف الشخصي
                 </p>
               </div>
