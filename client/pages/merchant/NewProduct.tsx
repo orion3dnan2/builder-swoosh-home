@@ -31,12 +31,32 @@ export default function NewProduct() {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [currentImageUrl, setCurrentImageUrl] = useState("");
+  const [userStoreId, setUserStoreId] = useState<string | null>(null);
 
-  // Get user's store ID
-  const userStoreId = user?.profile?.businessName ? `store-${user.id}` : null;
+  // Fetch user's actual store ID
+  useEffect(() => {
+    const fetchUserStore = async () => {
+      if (!user?.id) return;
+
+      try {
+        const response = await fetch('/api/stores');
+        if (response.ok) {
+          const stores = await response.json();
+          const userStore = stores.find((store: any) => store.merchantId === user.id);
+          if (userStore) {
+            setUserStoreId(userStore.id);
+          }
+        }
+      } catch (error) {
+        console.error('خطأ في جلب معلومات المتجر:', error);
+      }
+    };
+
+    fetchUserStore();
+  }, [user?.id]);
 
   const [formData, setFormData] = useState<Partial<Product>>({
-    storeId: userStoreId, // Use actual user store ID
+    storeId: null, // Will be set when store ID is fetched
     name: "",
     description: "",
     price: 0,
