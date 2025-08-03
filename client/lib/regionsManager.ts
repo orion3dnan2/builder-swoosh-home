@@ -28,7 +28,7 @@ export const AVAILABLE_COUNTRIES: Country[] = [
 
 // المناطق الافتراضية مرتبة حسب الدول
 const DEFAULT_REGIONS_BY_COUNTRY: Record<string, string[]> = {
-  'SA': ["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة المنورة"],
+  'SA': ["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة ال��نورة"],
   'AE': ["دبي", "أبوظبي", "الشارقة", "عجمان", "رأس الخيمة", "الفجيرة", "أم القيوين"],
   'QA': ["الدوحة", "الريان", "الوكرة", "الخور"],
   'KW': ["الكويت", "حولي", "الفروانية", "الأحمدي", "الجهراء", "مبارك الكبير"],
@@ -111,8 +111,20 @@ export class RegionsManager {
    */
   public getRegions(): string[] {
     const allRegions: string[] = [];
+
+    // فحص أمان
+    if (!this.regionsByCountry || typeof this.regionsByCountry !== 'object') {
+      this.resetToDefaults();
+    }
+
     Object.values(this.regionsByCountry).forEach(regions => {
-      regions.forEach(region => allRegions.push(region.name));
+      if (Array.isArray(regions)) {
+        regions.forEach(region => {
+          if (region && typeof region === 'object' && region.name) {
+            allRegions.push(region.name);
+          }
+        });
+      }
     });
     return allRegions;
   }
@@ -175,7 +187,7 @@ export class RegionsManager {
   }
 
   /**
-   * حذف منطقة (النظام الجديد)
+   * حذف ��نطقة (النظام الجديد)
    */
   public removeRegionNew(regionId: string, countryCode: string): boolean {
     const regions = this.regionsByCountry[countryCode];
@@ -309,7 +321,7 @@ export class RegionsManager {
     
     // حساب الإحصائيات من البيانات الفعلية
     Object.entries(this.regionsByCountry).forEach(([countryCode, regions]) => {
-      // التأكد من أن regions هو array صالح
+      // التأ��د من أن regions هو array صالح
       if (!Array.isArray(regions)) {
         console.warn(`Invalid regions data for country ${countryCode}:`, regions);
         return;
