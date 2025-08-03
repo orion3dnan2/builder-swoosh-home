@@ -298,7 +298,7 @@ export default function AdminStores() {
       id: "ticket-002",
       storeId: "store-002",
       storeName: "العطور السودانية الأصيلة",
-      subject: "ط��ب تفعيل المتجر",
+      subject: "طلب تفعيل المتجر",
       message: "أرجو تفعيل متجري لبدء البيع",
       priority: "high",
       status: "in-progress",
@@ -484,6 +484,23 @@ export default function AdminStores() {
 
     setIsConfirmModalOpen(false);
     setConfirmAction(null);
+  };
+
+  // Helper function to manage tags without duplicates
+  const updateStoreTags = (currentTags: string[], removeTag?: string, addTag?: string): string[] => {
+    let newTags = [...currentTags];
+
+    // Remove specified tag if exists
+    if (removeTag) {
+      newTags = newTags.filter(tag => tag !== removeTag);
+    }
+
+    // Add new tag if provided and not already exists
+    if (addTag && !newTags.includes(addTag)) {
+      newTags.push(addTag);
+    }
+
+    return newTags;
   };
 
   const updatePermissions = (storeId: string, permissions: StoreData["permissions"]) => {
@@ -788,7 +805,7 @@ export default function AdminStores() {
                               className="text-blue-600 font-semibold"
                             >
                               <RefreshCw className="w-4 h-4 ml-2" />
-                              🔄 إعادة تفعيل
+                              🔄 إعادة ��فعيل
                             </DropdownMenuItem>
                           )}
 
@@ -817,7 +834,7 @@ export default function AdminStores() {
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => handleSupportTicket(store)}>
                             <HelpCircle className="w-4 h-4 ml-2" />
-                            تقديم المساعدة
+                            ��قديم المساعدة
                           </DropdownMenuItem>
 
                           <DropdownMenuSeparator />
@@ -979,7 +996,7 @@ export default function AdminStores() {
                   لا توجد متاجر
                 </h3>
                 <p className="text-gray-600 arabic">
-                  لم يتم العثور على متاجر ��طابق معايير البحث
+                  لم يتم العثور على متاجر تطابق معايير البحث
                 </p>
               </div>
             )}
@@ -1165,7 +1182,7 @@ export default function AdminStores() {
                   </Button>
                   <Button className="w-full arabic" variant="outline">
                     <Gift className="w-4 h-4 ml-2" />
-                    إرسال عرض خاص
+                    إ��سال عرض خاص
                   </Button>
                   <Button className="w-full arabic" variant="outline">
                     <FileText className="w-4 h-4 ml-2" />
@@ -1436,7 +1453,7 @@ export default function AdminStores() {
               إدارة صلاحيات المتجر
             </DialogTitle>
             <DialogDescription className="arabic text-right">
-              تحكم في الصلاحيات والأذونات الممنوحة للمتجر
+              تحكم في ال��لاحيات والأذونات الممنوحة للمتجر
             </DialogDescription>
           </DialogHeader>
           {selectedStore && (
@@ -1618,7 +1635,7 @@ export default function AdminStores() {
           {selectedStore && (
             <div className="space-y-4">
               <div className="text-center p-4 bg-green-50 rounded-lg">
-                <h3 className="font-semibold arabic">مساع���ة: {selectedStore.name}</h3>
+                <h3 className="font-semibold arabic">مساع��ة: {selectedStore.name}</h3>
                 <p className="text-gray-600 arabic">{selectedStore.owner}</p>
               </div>
               
