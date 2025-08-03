@@ -25,6 +25,19 @@ import { useProducts } from "@/lib/products";
 export default function MerchantDashboard() {
   const { user } = useAuth();
   const [isNewMerchant, setIsNewMerchant] = useState(true);
+  const [userStore, setUserStore] = useState(null);
+  const [storeStats, setStoreStats] = useState({
+    totalProducts: 0,
+    totalOrders: 0,
+    monthlyRevenue: 0,
+    storeViews: 0,
+    activeProducts: 0,
+    outOfStock: 0,
+    pendingOrders: 0,
+    completedOrders: 0,
+    averageRating: 0,
+    totalReviews: 0,
+  });
 
   // Use products hook to get actual products
   const {
@@ -589,7 +602,7 @@ export default function MerchantDashboard() {
                   <CardHeader>
                     <CardTitle className="flex items-center arabic">
                       <ImageIcon className="w-5 h-5 ml-2" />
-                      تخصيص المتجر
+                      تخص��ص المتجر
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
