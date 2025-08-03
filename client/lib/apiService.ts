@@ -1,11 +1,64 @@
+import { apiConfigManager } from './apiConfig';
+
 // خدمة API موحدة للويب والجوال
 export class ApiService {
   private static baseURL = import.meta.env.VITE_API_URL || "/api";
   private static platform = "web"; // سيتم تغييرها في التطبيق الجوال
+  private static useExternalConfig = false;
 
   // تعيين منصة التطبيق
   static setPlatform(platform: "web" | "mobile") {
     this.platform = platform;
+  }
+
+  // تفعيل/إلغاء استخدام الإعدادات الخارجية
+  static setUseExternalConfig(useExternal: boolean) {
+    this.useExternalConfig = useExternal;
+  }
+
+  // الحصول على رابط الخادم الحالي
+  private static getBaseURL(): string {
+    if (this.useExternalConfig) {
+      const activeConfig = apiConfigManager.getActiveConfig();
+      if (activeConfig && activeConfig.isActive) {
+        return activeConfig.baseUrl;
+      }
+    }
+    return this.baseURL;
+  }
+
+  // الحصول على رابط نقطة النهاية
+  private static getEndpointURL(endpoint: string): string {
+    const baseUrl = this.getBaseURL();
+    
+    if (this.useExternalConfig) {
+      const activeConfig = apiConfigManager.getActiveConfig();
+      if (activeConfig && activeConfig.endpoints) {
+        // Check if we have a custom endpoint mapping
+        const endpointMapping: Record<string, string> = {
+          '/auth/login': activeConfig.endpoints.auth + '/login',
+          '/auth/register': activeConfig.endpoints.auth + '/register',
+          '/auth/logout': activeConfig.endpoints.auth + '/logout',
+          '/auth/me': activeConfig.endpoints.auth + '/me',
+          '/users': activeConfig.endpoints.users || '/users',
+          '/stores': activeConfig.endpoints.stores || '/stores',
+          '/products': activeConfig.endpoints.products || '/products',
+          '/companies': activeConfig.endpoints.companies || '/companies',
+          '/jobs': activeConfig.endpoints.jobs || '/jobs',
+          '/orders': activeConfig.endpoints.orders || '/orders',
+          '/analytics': activeConfig.endpoints.analytics || '/analytics'
+        };
+
+        // Find matching endpoint
+        for (const [pattern, customEndpoint] of Object.entries(endpointMapping)) {
+          if (endpoint.startsWith(pattern)) {
+            return `${baseUrl}${customEndpoint}${endpoint.substring(pattern.length)}`;
+          }
+        }
+      }
+    }
+    
+    return `${baseUrl}${endpoint}`;
   }
 
   // الحصول على العناوين الافتراضية
@@ -15,10 +68,39 @@ export class ApiService {
       "X-Platform": this.platform,
     };
 
-    if (includeAuth) {
-      const token = this.getToken();
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
+    // إضافة عناوين مخصصة من إعدادات الخادم الخارجي
+    if (this.useExternalConfig) {
+      const activeConfig = apiConfigManager.getActiveConfig();
+      if (activeConfig && activeConfig.headers) {
+        Object.assign(headers, activeConfig.headers);
+      }
+
+      // إضافة المصادقة المخصصة
+      if (activeConfig && activeConfig.authentication && includeAuth) {
+        switch (activeConfig.authentication.type) {
+          case 'apikey':
+            if (activeConfig.authentication.apiKeyHeader && activeConfig.authentication.apiKeyValue) {
+              headers[activeConfig.authentication.apiKeyHeader] = activeConfig.authentication.apiKeyValue;
+            }
+            break;
+          case 'bearer':
+            const token = this.getToken();
+            if (token) {
+              headers["Authorization"] = `Bearer ${token}`;
+            }
+            break;
+          case 'basic':
+            // يمكن إضافة دعم المصادقة الأساسية هنا
+            break;
+        }
+      }
+    } else {
+      // المصادقة الافتراضية
+      if (includeAuth) {
+        const token = this.getToken();
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
       }
     }
 
@@ -56,11 +138,20 @@ export class ApiService {
     endpoint: string,
     options: RequestInit = {},
   ): Promise<T> {
-    const url = `${this.baseURL}${endpoint}`;
+    const url = this.getEndpointURL(endpoint);
+    
+    // الحصول على إعدادات المهلة الزمنية من الإعدادات الخارجية
+    let timeout = 10000; // الافتراضي 10 ثواني
+    if (this.useExternalConfig) {
+      const activeConfig = apiConfigManager.getActiveConfig();
+      if (activeConfig && activeConfig.timeout) {
+        timeout = activeConfig.timeout;
+      }
+    }
 
     // إضافة timeout للطلب
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 ثواني
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
 
     const config: RequestInit = {
       ...options,
@@ -95,11 +186,70 @@ export class ApiService {
         error.message?.includes("NetworkError")
       ) {
         console.warn(`Network error for ${endpoint}`);
-        throw new Error("مشكلة في الاتصال بالشبكة");
+        
+        // إذا كان يستخدم خادم خارجي، اقترح التحقق من الإعدادات
+        if (this.useExternalConfig) {
+          throw new Error("مشكلة في الاتصال بالخادم الخارجي - تحقق من إعدادات الخادم");
+        } else {
+          throw new Error("مشكلة في الاتصال بالشبكة");
+        }
       }
 
       console.error("API Request failed:", error);
       throw error;
+    }
+  }
+
+  // تفعيل الاتصال بالخادم الخارجي
+  static enableExternalApi(): void {
+    this.setUseExternalConfig(true);
+  }
+
+  // إلغاء الاتصال بالخادم الخارجي
+  static disableExternalApi(): void {
+    this.setUseExternalConfig(false);
+  }
+
+  // الحصول على حالة الاتصال الحالية
+  static getConnectionStatus(): { 
+    isExternal: boolean; 
+    activeConfig: any | null; 
+    baseUrl: string; 
+  } {
+    const activeConfig = this.useExternalConfig ? apiConfigManager.getActiveConfig() : null;
+    return {
+      isExternal: this.useExternalConfig,
+      activeConfig,
+      baseUrl: this.getBaseURL()
+    };
+  }
+
+  // اختبار الاتصال بالخادم الحالي
+  static async testConnection(): Promise<{ success: boolean; message: string; responseTime?: number }> {
+    const startTime = Date.now();
+    
+    try {
+      const healthEndpoint = this.useExternalConfig 
+        ? '/health' 
+        : '/health';
+      
+      const response = await this.request(healthEndpoint, {
+        method: 'GET'
+      });
+      
+      const responseTime = Date.now() - startTime;
+      return {
+        success: true,
+        message: 'الاتصال ناجح',
+        responseTime
+      };
+    } catch (error: any) {
+      const responseTime = Date.now() - startTime;
+      return {
+        success: false,
+        message: error.message || 'فشل الاتصال',
+        responseTime
+      };
     }
   }
 
@@ -267,7 +417,7 @@ export class ApiService {
     return this.request(`/products/${id}`);
   }
 
-  // طلبات الوظائف
+  // طلبات الوظائ��
   static async getJobs(filters?: {
     category?: string;
     type?: string;
@@ -345,12 +495,33 @@ export class ApiService {
       "X-Platform": this.platform,
     };
 
-    const token = this.getToken();
-    if (token) {
-      headers["Authorization"] = `Bearer ${token}`;
+    // إضافة المصادقة بناءً على إعدادات الخادم
+    if (this.useExternalConfig) {
+      const activeConfig = apiConfigManager.getActiveConfig();
+      if (activeConfig && activeConfig.authentication) {
+        switch (activeConfig.authentication.type) {
+          case 'bearer':
+            const token = this.getToken();
+            if (token) {
+              headers["Authorization"] = `Bearer ${token}`;
+            }
+            break;
+          case 'apikey':
+            if (activeConfig.authentication.apiKeyHeader && activeConfig.authentication.apiKeyValue) {
+              headers[activeConfig.authentication.apiKeyHeader] = activeConfig.authentication.apiKeyValue;
+            }
+            break;
+        }
+      }
+    } else {
+      const token = this.getToken();
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
     }
 
-    const response = await fetch(`${this.baseURL}/upload`, {
+    const uploadUrl = this.getEndpointURL('/upload');
+    const response = await fetch(uploadUrl, {
       method: "POST",
       headers,
       body: formData,
