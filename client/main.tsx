@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./global.css";
 import { loadFonts } from "./contexts/ThemeContext";
+import "./lib/initializeApp";
 
 // Load fonts on app initialization
 loadFonts();
