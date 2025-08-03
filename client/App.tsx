@@ -172,6 +172,7 @@ function App() {
               {/* Public Routes */}
               <Route path="/marketplace" element={<Marketplace />} />
               <Route path="/products" element={<Products />} />
+              <Route path="/store/:id" element={<Store />} />
               <Route path="/companies" element={<Companies />} />
               <Route path="/company/:id" element={<Company />} />
               <Route path="/jobs" element={<Jobs />} />
