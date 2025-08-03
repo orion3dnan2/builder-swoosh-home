@@ -205,6 +205,67 @@ export default function NewProduct() {
     }
   };
 
+  // Show setup message if user doesn't have store setup
+  if (!userStoreId) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-green-50">
+        <div className="bg-white shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-6">
+              <div className="flex items-center space-x-4 space-x-reverse">
+                <Link to="/merchant/products">
+                  <Button variant="outline" size="sm">
+                    <ArrowLeft className="w-4 h-4 ml-2" />
+                    العودة
+                  </Button>
+                </Link>
+                <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center">
+                  <Package className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-900 arabic">
+                    إعداد المتجر مطلوب
+                  </h1>
+                  <p className="text-gray-600 arabic">
+                    يجب إكمال معلومات المتجر أولاً
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-200">
+            <CardContent className="p-8 text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Package className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900 mb-4 arabic">
+                يجب إعداد معلومات المتجر أولاً
+              </h2>
+              <p className="text-gray-700 mb-6 arabic">
+                لإضافة منتجات، يرجى إكمال معلومات العمل التجاري (اسم العمل، نوع العمل) في ملفك الشخصي أولاً.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/profile">
+                  <Button className="arabic bg-yellow-600 hover:bg-yellow-700">
+                    إكمال معلومات المتجر
+                  </Button>
+                </Link>
+                <Link to="/merchant/dashboard">
+                  <Button variant="outline" className="arabic">
+                    العودة للوحة التحكم
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-green-50">
       {/* Header */}
@@ -475,7 +536,7 @@ export default function NewProduct() {
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <Label className="arabic">الكمية المتوفرة *</Label>
+                  <Label className="arabic">الكمية المتو��رة *</Label>
                   <Input
                     type="number"
                     value={formData.inventory?.quantity ?? 0}
@@ -544,7 +605,7 @@ export default function NewProduct() {
               <div>
                 <Label className="arabic">العلامات (مفصولة بفاصلة)</Label>
                 <Input
-                  placeholder="مثال: عطر, صندل, سوداني, طبيعي"
+                  placeholder="مثال: عطر, صندل, سوداني, ط��يعي"
                   className="mt-2 arabic text-right"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
