@@ -108,87 +108,87 @@ export default function Restaurants() {
           {filteredRestaurants.map((restaurant) => (
             <Link to={`/restaurant/${restaurant.id}`} key={restaurant.id}>
               <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer">
-              <div className="relative">
-                <img
-                  src={restaurant.coverImage || "/placeholder.svg"}
-                  alt={restaurant.name}
-                  className="w-full h-48 object-cover rounded-t-lg"
-                />
-                <div className="absolute top-4 right-4">
-                  <Badge className="arabic bg-red-500 text-white">
-                    🍽️ مطعم
-                  </Badge>
-                </div>
-                <div className="absolute top-4 left-4">
-                  <Badge className="arabic bg-green-500 text-white">
-                    مفتوح الآن
-                  </Badge>
-                </div>
-                <div className="absolute bottom-4 right-4 bg-black/70 text-white px-2 py-1 rounded text-sm arabic">
-                  توصيل 30 دقيقة
-                </div>
-              </div>
-
-              <CardContent className="p-6">
-                <div className="flex items-start gap-3 mb-4">
+                <div className="relative">
                   <img
-                    src={restaurant.logo || "/placeholder.svg"}
+                    src={restaurant.coverImage || "/placeholder.svg"}
                     alt={restaurant.name}
-                    className="w-12 h-12 rounded-full object-cover border-2 border-gray-100"
+                    className="w-full h-48 object-cover rounded-t-lg"
                   />
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-800 mb-1 arabic group-hover:text-red-600 transition-colors">
-                      {restaurant.name}
-                    </h3>
-                    <p className="text-gray-600 text-sm arabic leading-relaxed">
-                      {restaurant.description}
-                    </p>
+                  <div className="absolute top-4 right-4">
+                    <Badge className="arabic bg-red-500 text-white">
+                      🍽️ مطعم
+                    </Badge>
+                  </div>
+                  <div className="absolute top-4 left-4">
+                    <Badge className="arabic bg-green-500 text-white">
+                      مفتوح الآن
+                    </Badge>
+                  </div>
+                  <div className="absolute bottom-4 right-4 bg-black/70 text-white px-2 py-1 rounded text-sm arabic">
+                    توصيل 30 دقيقة
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                  <div className="flex items-center gap-2">
-                    <Star className="w-4 h-4 text-yellow-500" />
-                    <span className="arabic">4.8 (125 تقييم)</span>
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-3 mb-4">
+                    <img
+                      src={restaurant.logo || "/placeholder.svg"}
+                      alt={restaurant.name}
+                      className="w-12 h-12 rounded-full object-cover border-2 border-gray-100"
+                    />
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-gray-800 mb-1 arabic group-hover:text-red-600 transition-colors">
+                        {restaurant.name}
+                      </h3>
+                      <p className="text-gray-600 text-sm arabic leading-relaxed">
+                        {restaurant.description}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4" />
-                    <span className="arabic">الرياض</span>
-                  </div>
-                </div>
 
-                <div className="border-t pt-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm text-gray-600 arabic">
-                      رسوم التوصيل
-                    </span>
-                    <span className="text-sm font-semibold text-green-600 arabic">
-                      مجاني فوق 100 ريال
-                    </span>
+                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                    <div className="flex items-center gap-2">
+                      <Star className="w-4 h-4 text-yellow-500" />
+                      <span className="arabic">4.8 (125 تقييم)</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4" />
+                      <span className="arabic">الرياض</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm text-gray-600 arabic">
-                      أقل طلب
-                    </span>
-                    <span className="text-sm font-semibold arabic">
-                      50 ريال
-                    </span>
-                  </div>
-                </div>
 
-                <div className="flex gap-2">
-                  <Button
-                    className="flex-1 arabic bg-red-600 hover:bg-red-700"
-                    size="sm"
-                  >
-                    اطلب الآن
-                  </Button>
-                  <Button variant="outline" size="sm" className="arabic">
-                    <Phone className="w-4 h-4 ml-1" />
-                    اتصل
-                  </Button>
-                </div>
-              </CardContent>
+                  <div className="border-t pt-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-sm text-gray-600 arabic">
+                        رسوم التوصيل
+                      </span>
+                      <span className="text-sm font-semibold text-green-600 arabic">
+                        مجاني فوق 100 ريال
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-sm text-gray-600 arabic">
+                        أقل طلب
+                      </span>
+                      <span className="text-sm font-semibold arabic">
+                        50 ريال
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button
+                      className="flex-1 arabic bg-red-600 hover:bg-red-700"
+                      size="sm"
+                    >
+                      اطلب الآن
+                    </Button>
+                    <Button variant="outline" size="sm" className="arabic">
+                      <Phone className="w-4 h-4 ml-1" />
+                      اتصل
+                    </Button>
+                  </div>
+                </CardContent>
               </Card>
             </Link>
           ))}

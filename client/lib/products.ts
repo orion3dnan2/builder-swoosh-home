@@ -314,7 +314,8 @@ export class ProductService {
       id: "prod-restaurant-real-001",
       storeId: "store-1753868707117-r80zjqevj",
       name: "ملوخية سودانية",
-      description: "ملوخية سودانية أصيلة مطبوخة بالطريقة التقليدية مع اللحم الطازج",
+      description:
+        "ملوخية سودانية أصيلة مطبوخة بالطريقة التقليدية مع اللحم الطازج",
       price: 25.0,
       images: ["/placeholder.svg"],
       category: "أطباق رئيسية",
@@ -675,8 +676,8 @@ export class ProductService {
           lowStockThreshold: 5,
         },
         specifications: {
-          "الحجم": "طبق كبير",
-          "المكونات": "ملوخية، لحم، توابل سودانية",
+          الحجم: "طبق كبير",
+          المكونات: "ملوخية، لحم، توابل سودانية",
           "وقت التحضير": "20 دقيقة",
         },
         status: "active" as const,
@@ -698,9 +699,9 @@ export class ProductService {
           lowStockThreshold: 10,
         },
         specifications: {
-          "النوع": "خبز تقليدي",
-          "الحجم": "قطعة واحدة",
-          "المدة": "طازج يومياً",
+          النوع: "خبز تقليدي",
+          الحجم: "قطعة واحدة",
+          المدة: "طازج يومياً",
         },
         status: "active" as const,
         createdAt: new Date().toISOString(),
@@ -722,9 +723,9 @@ export class ProductService {
           lowStockThreshold: 5,
         },
         specifications: {
-          "النوع": "حلو تقليدي",
-          "المكونات": "عصيدة، ملبن، سكر",
-          "الحجم": "كوب متوسط",
+          النوع: "حلو تقليدي",
+          المكونات: "عصيدة، ملبن، سكر",
+          الحجم: "كوب متوسط",
         },
         status: "active" as const,
         createdAt: new Date().toISOString(),
@@ -745,14 +746,14 @@ export class ProductService {
           lowStockThreshold: 10,
         },
         specifications: {
-          "النوع": "مشروب ساخن",
-          "الحجم": "كوب",
-          "المكونات": "شاي، حليب، سكر",
+          النوع: "مشروب ساخن",
+          الحجم: "كوب",
+          المكونات: "شاي، حليب، سكر",
         },
         status: "active" as const,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-      }
+      },
     ];
 
     // Add products to localStorage

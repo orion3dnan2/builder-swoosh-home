@@ -25,11 +25,11 @@ export default function Restaurant() {
   const [restaurant, setRestaurant] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  
+
   // جلب منتجات المطعم
   const { products: allProducts } = useProducts();
-  const restaurantProducts = allProducts.filter(product =>
-    product.storeId === id && product.status === "active"
+  const restaurantProducts = allProducts.filter(
+    (product) => product.storeId === id && product.status === "active",
   );
 
   // جلب معلومات المطعم
@@ -72,7 +72,9 @@ export default function Restaurant() {
         <div className="container mx-auto px-4 py-12">
           <div className="flex justify-center items-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
-            <span className="ml-3 text-gray-600 arabic">جاري تحميل بيانات المطعم...</span>
+            <span className="ml-3 text-gray-600 arabic">
+              جاري تحميل بيانات المطعم...
+            </span>
           </div>
         </div>
       </Layout>
@@ -186,13 +188,18 @@ export default function Restaurant() {
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-2xl font-bold arabic">قائمة الطعام</h2>
-                    <Badge className="arabic">{restaurantProducts.length} صنف</Badge>
+                    <Badge className="arabic">
+                      {restaurantProducts.length} صنف
+                    </Badge>
                   </div>
 
                   {restaurantProducts.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {restaurantProducts.map((product) => (
-                        <Card key={product.id} className="overflow-hidden hover:shadow-md transition-shadow">
+                        <Card
+                          key={product.id}
+                          className="overflow-hidden hover:shadow-md transition-shadow"
+                        >
                           <div className="flex">
                             <img
                               src={product.images[0] || "/placeholder.svg"}
@@ -232,7 +239,11 @@ export default function Restaurant() {
                           </div>
                           {product.salePrice && (
                             <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs arabic">
-                              خصم {Math.round((1 - product.salePrice / product.price) * 100)}%
+                              خصم{" "}
+                              {Math.round(
+                                (1 - product.salePrice / product.price) * 100,
+                              )}
+                              %
                             </div>
                           )}
                         </Card>
@@ -258,26 +269,34 @@ export default function Restaurant() {
               {/* Contact Info */}
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-bold arabic mb-4">معلومات التواصل</h3>
+                  <h3 className="text-lg font-bold arabic mb-4">
+                    معلومات التواصل
+                  </h3>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
                       <Phone className="w-5 h-5 text-gray-400" />
                       <div>
                         <p className="font-medium">{restaurant.phone}</p>
-                        <p className="text-sm text-gray-600 arabic">للطلب والاستفسار</p>
+                        <p className="text-sm text-gray-600 arabic">
+                          للطلب والاستفسار
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Mail className="w-5 h-5 text-gray-400" />
                       <div>
                         <p className="font-medium">{restaurant.email}</p>
-                        <p className="text-sm text-gray-600 arabic">البريد الإلكتروني</p>
+                        <p className="text-sm text-gray-600 arabic">
+                          البريد الإلكتروني
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <MapPin className="w-5 h-5 text-gray-400" />
                       <div>
-                        <p className="font-medium arabic">{restaurant.address || restaurant.city}</p>
+                        <p className="font-medium arabic">
+                          {restaurant.address || restaurant.city}
+                        </p>
                         <p className="text-sm text-gray-600 arabic">العنوان</p>
                       </div>
                     </div>
@@ -303,20 +322,24 @@ export default function Restaurant() {
                     <div className="flex justify-between">
                       <span className="arabic">السبت - الخميس</span>
                       <span className="arabic">
-                        {restaurant.workingHours?.start} - {restaurant.workingHours?.end}
+                        {restaurant.workingHours?.start} -{" "}
+                        {restaurant.workingHours?.end}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="arabic">الجمعة</span>
                       <span className="arabic">
-                        {restaurant.workingHours?.start} - {restaurant.workingHours?.end}
+                        {restaurant.workingHours?.start} -{" "}
+                        {restaurant.workingHours?.end}
                       </span>
                     </div>
                   </div>
                   <div className="mt-4 p-3 bg-green-50 rounded-lg">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-green-700 font-medium arabic">مفتوح الآن</span>
+                      <span className="text-green-700 font-medium arabic">
+                        مفتوح الآن
+                      </span>
                     </div>
                   </div>
                 </CardContent>
@@ -325,7 +348,9 @@ export default function Restaurant() {
               {/* Delivery Info */}
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-bold arabic mb-4">معلومات التوصيل</h3>
+                  <h3 className="text-lg font-bold arabic mb-4">
+                    معلومات التوصيل
+                  </h3>
                   <div className="space-y-3">
                     <div className="flex justify-between">
                       <span className="text-gray-600 arabic">رسوم التوصيل</span>
@@ -346,7 +371,9 @@ export default function Restaurant() {
                     {restaurant.shippingSettings?.freeShippingThreshold && (
                       <div className="p-3 bg-blue-50 rounded-lg">
                         <p className="text-blue-700 text-sm arabic">
-                          توصيل مجاني للطلبات فوق {restaurant.shippingSettings.freeShippingThreshold} ريال
+                          توصيل مجاني للطلبات فوق{" "}
+                          {restaurant.shippingSettings.freeShippingThreshold}{" "}
+                          ريال
                         </p>
                       </div>
                     )}

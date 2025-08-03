@@ -44,16 +44,16 @@ export default function AddSampleProducts() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Button 
-                onClick={handleAddProducts} 
+              <Button
+                onClick={handleAddProducts}
                 disabled={loading}
                 className="w-full arabic"
               >
                 إضافة منتجات تجريبية لمطعم زول اقاشي
               </Button>
-              
-              <Button 
-                onClick={handleClearProducts} 
+
+              <Button
+                onClick={handleClearProducts}
                 disabled={loading}
                 variant="destructive"
                 className="w-full arabic"
@@ -61,7 +61,7 @@ export default function AddSampleProducts() {
                 مسح جميع المنتجات
               </Button>
             </div>
-            
+
             {message && (
               <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
                 <p className="text-green-800 arabic">{message}</p>

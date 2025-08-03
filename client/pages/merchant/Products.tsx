@@ -57,7 +57,11 @@ export default function MerchantProducts() {
     : [];
 
   const currentStore = userStoreId
-    ? { id: userStoreId, name: userStoreName, category: user?.profile?.businessType || "general" }
+    ? {
+        id: userStoreId,
+        name: userStoreName,
+        category: user?.profile?.businessType || "general",
+      }
     : null;
 
   // تحديد إذا كان التاجر جديد
@@ -200,7 +204,8 @@ export default function MerchantProducts() {
                   منتجات متجر: {currentStore.name}
                 </h3>
                 <p className="text-xs text-blue-600 arabic">
-                  منتجاتك تظهر في السوق العام تلقائياً • يمكن للعملاء رؤية وشراء منتجاتك
+                  منتجاتك تظهر في السوق العام تلقائياً • يمكن للعملاء رؤية وشراء
+                  منتجاتك
                 </p>
               </div>
             </div>
@@ -219,7 +224,8 @@ export default function MerchantProducts() {
                   يجب إعداد معلومات المتجر أولاً
                 </h3>
                 <p className="text-xs text-yellow-700 arabic">
-                  لعرض وإدارة منتجاتك، يرجى إكمال معلومات العمل التجاري في إعدادات الملف الشخصي
+                  لعرض وإدارة منتجاتك، يرجى إكمال معلومات العمل التجاري في
+                  إعدادات الملف الشخصي
                 </p>
               </div>
             </div>
@@ -536,7 +542,8 @@ export default function MerchantProducts() {
                   إعداد المتجر مطلوب
                 </h3>
                 <p className="text-gray-700 mb-6 arabic">
-                  لبدء إدارة منتجاتك، يرجى إكمال معلومات العمل التجاري (اسم العمل، نوع العمل) في ملفك الشخصي أولاً.
+                  لبدء إدارة منتجاتك، يرجى إكمال معلومات العمل التجاري (اسم
+                  العمل، نوع العمل) في ملفك الشخصي أولاً.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link to="/profile">
@@ -569,8 +576,9 @@ export default function MerchantProducts() {
                     ابدأ رحلتك التجارية! 🚀
                   </h3>
                   <p className="text-gray-700 mb-6 arabic">
-                    أهلاً وسهلاً {user?.profile?.name}! متجر "{currentStore.name}" جاهز الآن. ابدأ
-                    بإضافة منتجاتك الأولى لتكون متاحة للعملاء.
+                    أهلاً وسهلاً {user?.profile?.name}! متجر "
+                    {currentStore.name}" جاهز الآن. ابدأ بإضافة منتجاتك الأولى
+                    لتكون متاحة للعملاء.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link to="/merchant/products/new">
@@ -594,7 +602,8 @@ export default function MerchantProducts() {
                   لا توجد منتجات في متجرك
                 </h3>
                 <p className="text-gray-600 arabic mb-4">
-                  لم يتم العثور على منتجات في متجر "{currentStore.name}" تطابق معايير البحث
+                  لم يتم العثور على منتجات في متجر "{currentStore.name}" تطابق
+                  معايير البحث
                 </p>
                 <Link to="/merchant/products/new">
                   <Button className="arabic">

@@ -262,118 +262,118 @@ export default function Companies() {
           {filteredCompanies.map((company) => (
             <Link to={`/company/${company.id}`} key={company.id}>
               <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden">
-              <div className="relative">
-                <img
-                  src={company.coverImage || "/placeholder.svg"}
-                  alt={company.name}
-                  className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-2 right-2">
-                  <Badge className="bg-orange-500 text-white text-xs arabic">
-                    🏢 {company.category}
-                  </Badge>
-                </div>
-                <div className="absolute top-2 left-2 flex gap-1">
-                  {company.status === "active" && (
-                    <Badge className="bg-green-500 text-white text-xs arabic">
-                      <Verified className="w-3 h-3 ml-1" />
-                      نشط
-                    </Badge>
-                  )}
-                  {company.isFeatured && (
-                    <Badge className="bg-yellow-500 text-white text-xs arabic">
-                      <Award className="w-3 h-3 ml-1" />
-                      مميز
-                    </Badge>
-                  )}
-                </div>
-              </div>
-
-              <CardContent className="p-5">
-                <div className="flex items-start gap-3 mb-4">
+                <div className="relative">
                   <img
-                    src={company.logo || "/placeholder.svg"}
+                    src={company.coverImage || "/placeholder.svg"}
                     alt={company.name}
-                    className="w-12 h-12 object-cover rounded-lg border-2 border-gray-100 flex-shrink-0"
+                    className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-lg font-bold text-gray-800 mb-1 arabic group-hover:text-orange-600 transition-colors line-clamp-2">
-                      {company.name}
-                    </h3>
-                    <p className="text-sm text-gray-600 arabic line-clamp-2 leading-relaxed">
-                      {company.description}
-                    </p>
+                  <div className="absolute top-2 right-2">
+                    <Badge className="bg-orange-500 text-white text-xs arabic">
+                      🏢 {company.category}
+                    </Badge>
                   </div>
-                </div>
-
-                <div className="space-y-3 mb-4">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm text-gray-600 arabic">
-                      {company.city}, {company.country}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Users className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm text-gray-600 arabic">
-                      متعدد الموظفين
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm text-gray-600 arabic">
-                      تأسست في {company.founded}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-1">
-                    <Star className="w-4 h-4 text-yellow-500" />
-                    <span className="text-sm font-semibold arabic">
-                      {company.rating}
-                    </span>
-                    <span className="text-sm text-gray-500 arabic">
-                      ({company.reviewsCount} تقييم)
-                    </span>
-                  </div>
-                  <Badge variant="outline" className="text-xs arabic">
-                    📏 شركة كبيرة
-                  </Badge>
-                </div>
-
-                <div className="mb-4">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2 arabic">
-                    الخدمات:
-                  </h4>
-                  <div className="flex flex-wrap gap-1">
-                    {company.services.slice(0, 3).map((service, index) => (
-                      <Badge
-                        key={index}
-                        variant="secondary"
-                        className="text-xs arabic"
-                      >
-                        {service}
+                  <div className="absolute top-2 left-2 flex gap-1">
+                    {company.status === "active" && (
+                      <Badge className="bg-green-500 text-white text-xs arabic">
+                        <Verified className="w-3 h-3 ml-1" />
+                        نشط
                       </Badge>
-                    ))}
-                    {company.services.length > 3 && (
-                      <Badge variant="secondary" className="text-xs arabic">
-                        +{company.services.length - 3}
+                    )}
+                    {company.isFeatured && (
+                      <Badge className="bg-yellow-500 text-white text-xs arabic">
+                        <Award className="w-3 h-3 ml-1" />
+                        مميز
                       </Badge>
                     )}
                   </div>
                 </div>
 
-                <div className="flex gap-2">
-                  <Button className="flex-1 arabic" size="sm">
-                    عر�� التفاصيل
-                  </Button>
-                  <Button variant="outline" size="sm" className="arabic">
-                    <ExternalLink className="w-4 h-4 ml-1" />
-                    موقع
-                  </Button>
-                </div>
-              </CardContent>
+                <CardContent className="p-5">
+                  <div className="flex items-start gap-3 mb-4">
+                    <img
+                      src={company.logo || "/placeholder.svg"}
+                      alt={company.name}
+                      className="w-12 h-12 object-cover rounded-lg border-2 border-gray-100 flex-shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg font-bold text-gray-800 mb-1 arabic group-hover:text-orange-600 transition-colors line-clamp-2">
+                        {company.name}
+                      </h3>
+                      <p className="text-sm text-gray-600 arabic line-clamp-2 leading-relaxed">
+                        {company.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3 mb-4">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-gray-400" />
+                      <span className="text-sm text-gray-600 arabic">
+                        {company.city}, {company.country}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Users className="w-4 h-4 text-gray-400" />
+                      <span className="text-sm text-gray-600 arabic">
+                        متعدد الموظفين
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-gray-400" />
+                      <span className="text-sm text-gray-600 arabic">
+                        تأسست في {company.founded}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-1">
+                      <Star className="w-4 h-4 text-yellow-500" />
+                      <span className="text-sm font-semibold arabic">
+                        {company.rating}
+                      </span>
+                      <span className="text-sm text-gray-500 arabic">
+                        ({company.reviewsCount} تقييم)
+                      </span>
+                    </div>
+                    <Badge variant="outline" className="text-xs arabic">
+                      📏 شركة كبيرة
+                    </Badge>
+                  </div>
+
+                  <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-gray-700 mb-2 arabic">
+                      الخدمات:
+                    </h4>
+                    <div className="flex flex-wrap gap-1">
+                      {company.services.slice(0, 3).map((service, index) => (
+                        <Badge
+                          key={index}
+                          variant="secondary"
+                          className="text-xs arabic"
+                        >
+                          {service}
+                        </Badge>
+                      ))}
+                      {company.services.length > 3 && (
+                        <Badge variant="secondary" className="text-xs arabic">
+                          +{company.services.length - 3}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button className="flex-1 arabic" size="sm">
+                      عر�� التفاصيل
+                    </Button>
+                    <Button variant="outline" size="sm" className="arabic">
+                      <ExternalLink className="w-4 h-4 ml-1" />
+                      موقع
+                    </Button>
+                  </div>
+                </CardContent>
               </Card>
             </Link>
           ))}

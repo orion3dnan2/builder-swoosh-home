@@ -41,7 +41,7 @@ export default function NewProduct() {
     const storeMapping: Record<string, string> = {
       "user-1753865301240-efsqj09s0": "store-1753868707117-r80zjqevj", // زول اقاشي
       "merchant-001": "store-001",
-      "admin-001": "store-001"
+      "admin-001": "store-001",
     };
 
     const userStoreId = storeMapping[user.id];
@@ -76,9 +76,9 @@ export default function NewProduct() {
   // Update storeId when user store ID is fetched
   useEffect(() => {
     if (userStoreId) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        storeId: userStoreId
+        storeId: userStoreId,
       }));
     }
   }, [userStoreId]);
@@ -185,7 +185,9 @@ export default function NewProduct() {
 
     // Check if user has store setup
     if (!userStoreId) {
-      setErrors(["يجب إعداد معلومات المتجر أولاً. يرجى إكمال معلومات العمل التجاري في ملفك الشخصي."]);
+      setErrors([
+        "يجب إعداد معلومات المتجر أولاً. يرجى إكمال معلومات العمل التجاري في ملفك الشخصي.",
+      ]);
       setIsLoading(false);
       return;
     }
@@ -275,7 +277,8 @@ export default function NewProduct() {
                 يجب إعداد معلومات المتجر أولاً
               </h2>
               <p className="text-gray-700 mb-6 arabic">
-                لإضافة منتجات، يرجى إكمال معلومات العمل التجاري (اسم العمل، نوع العمل) في ملفك الشخصي أولاً.
+                لإضافة منتجات، يرجى إكمال معلومات العمل التجاري (اسم العمل، نوع
+                العمل) في ملفك الشخصي أولاً.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/profile">

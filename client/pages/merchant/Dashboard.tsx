@@ -48,9 +48,9 @@ export default function MerchantDashboard() {
 
   // Filter products by current user's store (we'll use store-001 for now)
   const userStoreId = "store-001"; // This should come from user context in a real app
-  const userProducts = useMemo(() =>
-    allProducts.filter((product) => product.storeId === userStoreId),
-    [allProducts, userStoreId]
+  const userProducts = useMemo(
+    () => allProducts.filter((product) => product.storeId === userStoreId),
+    [allProducts, userStoreId],
   );
 
   // تحديد إذا كان التاجر جديد بناءً على تاريخ إنشاء ال��ساب
@@ -66,10 +66,14 @@ export default function MerchantDashboard() {
   // Initialize stats with local products data if no store data is available
   useEffect(() => {
     if (!userStore) {
-      const activeProducts = userProducts.filter((p) => p.status === "active").length;
-      const outOfStock = userProducts.filter((p) => p.status === "out_of_stock").length;
+      const activeProducts = userProducts.filter(
+        (p) => p.status === "active",
+      ).length;
+      const outOfStock = userProducts.filter(
+        (p) => p.status === "out_of_stock",
+      ).length;
 
-      setStoreStats(prev => {
+      setStoreStats((prev) => {
         const newStats = {
           totalProducts: userProducts.length,
           totalOrders: 0,
@@ -84,9 +88,11 @@ export default function MerchantDashboard() {
         };
 
         // Only update if values actually changed
-        if (prev.totalProducts !== newStats.totalProducts ||
-            prev.activeProducts !== newStats.activeProducts ||
-            prev.outOfStock !== newStats.outOfStock) {
+        if (
+          prev.totalProducts !== newStats.totalProducts ||
+          prev.activeProducts !== newStats.activeProducts ||
+          prev.outOfStock !== newStats.outOfStock
+        ) {
           return newStats;
         }
         return prev;
@@ -173,9 +179,9 @@ export default function MerchantDashboard() {
   }, [user]);
 
   // Filter low stock products for current user's store
-  const userLowStockProducts = useMemo(() =>
-    lowStockProducts.filter((product) => product.storeId === userStoreId),
-    [lowStockProducts, userStoreId]
+  const userLowStockProducts = useMemo(
+    () => lowStockProducts.filter((product) => product.storeId === userStoreId),
+    [lowStockProducts, userStoreId],
   );
 
   // Fallback store data for display
