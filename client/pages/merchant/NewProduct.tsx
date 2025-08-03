@@ -213,7 +213,7 @@ export default function NewProduct() {
     // Check if user has store setup
     if (!userStoreId) {
       setErrors([
-        "يجب إعداد معلومات المتجر أولاً. يرجى إكمال معلومات ا��عمل التجاري في ملفك الشخصي.",
+        "يجب إعداد معلومات المتجر أولاً. يرجى إكمال معلومات ا��عمل التجا��ي في ملفك الشخصي.",
       ]);
       setIsLoading(false);
       return;
@@ -251,7 +251,7 @@ export default function NewProduct() {
         },
         specifications: formData.specifications || {},
         status: formData.status as Product["status"],
-        createdAt: new Date().toISOString(),
+        createdAt: isEditing && formData.createdAt ? formData.createdAt : new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
 
