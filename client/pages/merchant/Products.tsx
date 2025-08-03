@@ -19,6 +19,7 @@ import {
   SortAsc,
   SortDesc,
   Sparkles,
+  Settings,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useProducts } from "@/lib/products";
@@ -214,7 +215,7 @@ export default function MerchantProducts() {
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-yellow-800 arabic">
-                  يجب إعداد معلومات المتجر أولاً
+                  يجب إعداد معلومات ��لمتجر أولاً
                 </h3>
                 <p className="text-xs text-yellow-700 arabic">
                   لعرض وإدارة منتجاتك، يرجى إكمال معلومات العمل التجاري في إعدادات الملف الشخصي
@@ -574,7 +575,7 @@ export default function MerchantProducts() {
                     <Link to="/merchant/products/new">
                       <Button className="arabic bg-green-600 hover:bg-green-700">
                         <Plus className="w-4 h-4 ml-2" />
-                        أضف منتجك الأول
+                        أضف منتجك ا��أول
                       </Button>
                     </Link>
                     <Link to="/merchant/settings">
