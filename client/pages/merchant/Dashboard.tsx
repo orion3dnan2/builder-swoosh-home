@@ -62,19 +62,23 @@ export default function MerchantDashboard() {
     }
   }, [user, userProducts.length]);
 
-  // Calculate stats from local products data
-  const storeStats = {
-    totalProducts: userProducts.length,
-    totalOrders: 0,
-    monthlyRevenue: 0,
-    storeViews: 0,
-    activeProducts: userProducts.filter((p) => p.status === "active").length,
-    outOfStock: userProducts.filter((p) => p.status === "out_of_stock").length,
-    pendingOrders: 0,
-    completedOrders: 0,
-    averageRating: 0,
-    totalReviews: 0,
-  };
+  // Initialize stats with local products data if no store data is available
+  useEffect(() => {
+    if (!userStore) {
+      setStoreStats({
+        totalProducts: userProducts.length,
+        totalOrders: 0,
+        monthlyRevenue: 0,
+        storeViews: 0,
+        activeProducts: userProducts.filter((p) => p.status === "active").length,
+        outOfStock: userProducts.filter((p) => p.status === "out_of_stock").length,
+        pendingOrders: 0,
+        completedOrders: 0,
+        averageRating: 0,
+        totalReviews: 0,
+      });
+    }
+  }, [userProducts, userStore]);
 
   const [loading, setLoading] = useState(false);
   const [recentOrders, setRecentOrders] = useState([]);
@@ -163,7 +167,7 @@ export default function MerchantDashboard() {
   const userStore = {
     id: userStoreId,
     name: "متجر التراث السوداني",
-    description: "متجر متخصص في المنتجات السودانية الأصيلة",
+    description: "��تجر متخصص في المنتجات السودانية الأصيلة",
     category: "traditional",
   };
 
@@ -283,7 +287,7 @@ export default function MerchantDashboard() {
                           onClick={() => setIsNewMerchant(false)}
                         >
                           <Eye className="w-4 h-4 ml-2" />
-                          جولة سريعة
+                          جولة سري��ة
                         </Button>
                       </div>
                     </div>
@@ -602,7 +606,7 @@ export default function MerchantDashboard() {
                   <CardHeader>
                     <CardTitle className="flex items-center arabic">
                       <ImageIcon className="w-5 h-5 ml-2" />
-                      تخص��ص المتجر
+                      تخصيص المتجر
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
