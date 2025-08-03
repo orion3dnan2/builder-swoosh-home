@@ -28,9 +28,15 @@ export default function Restaurant() {
   
   // جلب منتجات المطعم
   const { products: allProducts } = useProducts();
-  const restaurantProducts = allProducts.filter(product => 
+  const restaurantProducts = allProducts.filter(product =>
     product.storeId === id && product.status === "active"
   );
+
+  // Debug info
+  console.log("Restaurant ID:", id);
+  console.log("All products:", allProducts.length);
+  console.log("Restaurant products:", restaurantProducts.length);
+  console.log("Products for this store:", allProducts.filter(p => p.storeId === id));
 
   // جلب معلومات المطعم
   useEffect(() => {
