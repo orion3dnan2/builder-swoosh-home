@@ -471,6 +471,7 @@ export default function AdminUsers() {
                               setSelectedUser(user);
                               setIsViewModalOpen(true);
                             }}
+                            title="عرض التفاصيل"
                           >
                             <Eye className="w-4 h-4" />
                           </Button>
@@ -481,6 +482,7 @@ export default function AdminUsers() {
                               setSelectedUser(user);
                               setIsEditModalOpen(true);
                             }}
+                            title="تعديل المستخدم"
                           >
                             <Edit className="w-4 h-4" />
                           </Button>
@@ -488,6 +490,7 @@ export default function AdminUsers() {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleToggleUserStatus(user.id)}
+                            title={user.isActive ? "إلغاء تفعيل المستخدم" : "تفعيل المستخدم"}
                           >
                             {user.isActive ? <UserX className="w-4 h-4" /> : <UserCheck className="w-4 h-4" />}
                           </Button>
@@ -697,7 +700,7 @@ function UserDetails({ user }: { user: User }) {
                   <div>
                     <Label className="arabic">الرقم الضريبي</Label>
                     <p className="text-gray-900 dark:text-white">
-                      {user.profile.businessInfo.taxId || 'غير محدد'}
+                      {user.profile.businessInfo.taxId || 'غ��ر محدد'}
                     </p>
                   </div>
                 </div>
