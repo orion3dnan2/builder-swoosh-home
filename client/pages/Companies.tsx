@@ -2,6 +2,7 @@ import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 import {
   Building,
   Search,
@@ -365,7 +366,7 @@ export default function Companies() {
 
                 <div className="flex gap-2">
                   <Button className="flex-1 arabic" size="sm">
-                    عرض التفاصيل
+                    عر�� التفاصيل
                   </Button>
                   <Button variant="outline" size="sm" className="arabic">
                     <ExternalLink className="w-4 h-4 ml-1" />
