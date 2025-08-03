@@ -94,7 +94,7 @@ export default function NewProduct() {
 
   // Load existing product data when editing
   useEffect(() => {
-    if (isEditing && id) {
+    if (isEditing && id && !hasLoadedProduct) {
       const existingProduct = getProduct(id);
       if (existingProduct) {
         setFormData({
@@ -102,12 +102,13 @@ export default function NewProduct() {
           // Keep the id for updating
           id: existingProduct.id,
         });
+        setHasLoadedProduct(true);
       } else {
         // Product not found, redirect back to products list
         navigate('/merchant/products');
       }
     }
-  }, [isEditing, id]);
+  }, [isEditing, id, hasLoadedProduct]);
 
   const handleInputChange = (field: string, value: any) => {
     setFormData((prev) => ({
@@ -303,7 +304,7 @@ export default function NewProduct() {
                 يجب إعداد معلومات المتجر أولاً
               </h2>
               <p className="text-gray-700 mb-6 arabic">
-                لإضافة منتجات، يرجى إكمال معلومات العمل التجاري (اسم العمل، نوع
+                لإضافة منتجات، يرجى إكمال معلومات العمل التجاري (اسم ا��عمل، نوع
                 العمل) في ملفك الشخصي أولاً.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
