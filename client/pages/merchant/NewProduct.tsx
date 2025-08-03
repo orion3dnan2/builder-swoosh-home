@@ -19,7 +19,7 @@ import {
   Warehouse,
 } from "lucide-react";
 import { useProducts } from "@/lib/products";
-import { useAuth } from "@/lib/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import { Product } from "../../../shared/types";
 
 export default function NewProduct() {
