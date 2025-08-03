@@ -36,7 +36,7 @@ export class ProductService {
       storeId: "store-001",
       name: "كركديه سوداني طبيعي",
       description:
-        "كركديه طبيعي من أجود أنواع الكركديه السوداني. غني ��الفيتامينات ومضادات الأكسدة.",
+        "كركديه طبيعي من أجود أنواع الكركديه السود��ني. غني ��الفيتامينات ومضادات الأكسدة.",
       price: 15.5,
       images: ["/placeholder.svg"],
       category: "أطعمة ومشروبات",
@@ -288,7 +288,7 @@ export class ProductService {
       storeId: "store-004",
       name: "خدمة تصميم موقع إلكتروني",
       description:
-        "خ��مة تصميم وتطوير موقع إلكتروني احترافي بأحدث التقنيات والمعايير العالمية.",
+        "خ��مة تصميم وتطوير موقع إلكتروني احترافي بأحدث التقنيات والمعايي�� العالمية.",
       price: 850.0,
       salePrice: 699.99,
       images: ["/placeholder.svg"],
@@ -360,7 +360,7 @@ export class ProductService {
       id: "prod-restaurant-real-003",
       storeId: "store-1753868707117-r80zjqevj",
       name: "عصيدة بالملبن",
-      description: "عصيدة سودانية تقليدي�� بالملبن الطازج والعسل",
+      description: "عصيدة سودا��ية تقليدي�� بالملبن الطازج والعسل",
       price: 18.0,
       salePrice: 15.0,
       images: ["/placeholder.svg"],
@@ -563,8 +563,8 @@ export class ProductService {
       errors.push("اسم المنتج يجب أن يكون 3 أحرف على الأقل");
     }
 
-    if (!product.description || product.description.trim().length < 10) {
-      errors.push("وصف المنتج يجب أن يكون 10 أحرف على الأقل");
+    if (!product.description || product.description.trim().length === 0) {
+      errors.push("وصف المنتج مطلوب");
     }
 
     if (!product.price || product.price <= 0) {
@@ -601,7 +601,7 @@ export class ProductService {
 
     // Store information mapping
     const storeInfo: Record<string, { name: string; category: string }> = {
-      "store-001": { name: "متجر التراث السوداني", category: "traditional" },
+      "store-001": { name: "متجر التر��ث السوداني", category: "traditional" },
       "store-002": { name: "عطور الشرق", category: "perfumes" },
       "store-003": { name: "مطعم أم درمان", category: "food" },
       "store-004": { name: "خدمات التقنية السودانية", category: "services" },
@@ -737,7 +737,7 @@ export class ProductService {
         description: "شاي سوداني أحمر مع الحليب والسكر",
         price: 5.0,
         images: ["/placeholder.svg"],
-        category: "مشروبات",
+        category: "مشروبا��",
         tags: ["شاي", "كشري", "سوداني", "ساخن"],
         inventory: {
           quantity: 50,
