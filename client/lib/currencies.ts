@@ -96,7 +96,7 @@ export const countryCurrencies: Record<string, Currency> = {
     code: "JOD",
     symbol: "د.أ",
     name: "Jordanian Dinar",
-    nameAr: "دينار أردني"
+    nameAr: "دينا�� أردني"
   },
   "المملكة الأردنية الهاشمية": {
     code: "JOD",
@@ -140,7 +140,10 @@ export const defaultCurrency: Currency = {
 
 // الحصول على العملة حسب البلد
 export function getCurrencyByCountry(country: string): Currency {
-  return countryCurrencies[country] || defaultCurrency;
+  console.log("Looking for currency for country:", country);
+  const currency = countryCurrencies[country];
+  console.log("Found currency:", currency);
+  return currency || defaultCurrency;
 }
 
 // تنسيق السعر مع العملة
