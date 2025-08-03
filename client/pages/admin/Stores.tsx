@@ -252,7 +252,7 @@ export default function AdminStores() {
     {
       id: "store-004",
       name: "الألبسة التراثية",
-      owner: "عا��شة السيد",
+      owner: "عائشة السيد",
       email: "aisha@example.com",
       phone: "+966587654321",
       status: "suspended",
@@ -297,7 +297,7 @@ export default function AdminStores() {
     {
       id: "ticket-002",
       storeId: "store-002",
-      storeName: "العط��ر السودانية الأصيلة",
+      storeName: "العطور السودانية الأصيلة",
       subject: "طلب تفعيل المتجر",
       message: "أرجو تفعيل متجري لبدء البيع",
       priority: "high",
@@ -467,8 +467,10 @@ export default function AdminStores() {
               };
             case "renew":
               // تجدي�� الاشتراك - يمكن إضافة منطق تاريخ الانتهاء هنا
-              const renewedTags = store.tags.filter(tag => tag !== "منتهي الصلاحية" && tag !== "مجدد حديثاً");
-              return { ...store, tags: [...renewedTags, "مجدد حديثاً"] };
+              return {
+                ...store,
+                tags: updateStoreTags(store.tags, "منتهي الصلاحية", "مجدد حديثاً")
+              };
             case "feature":
               return { ...store, status: "featured" as const, featured: true };
             case "unfeature":
@@ -825,11 +827,11 @@ export default function AdminStores() {
                           {/* الإجراءات الثانوية */}
                           <DropdownMenuItem onClick={() => handleViewDetails(store)}>
                             <Eye className="w-4 h-4 ml-2" />
-                            عرض التفاصيل
+                            عرض ��لتفاصيل
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => handleManagePermissions(store)}>
                             <Key className="w-4 h-4 ml-2" />
-                            إدارة الصلاحيات
+                            إدارة الص��احيات
                           </DropdownMenuItem>
                           <DropdownMenuItem onClick={() => handleContactStore(store)}>
                             <MessageSquare className="w-4 h-4 ml-2" />
@@ -1093,7 +1095,7 @@ export default function AdminStores() {
                           
                           <div className="flex items-center justify-between">
                             <Label htmlFor={`analytics-${store.id}`} className="arabic">
-                              ال��صول للتحليلات
+                              الوصول للتحليلات
                             </Label>
                             <Switch
                               id={`analytics-${store.id}`}
@@ -1348,7 +1350,7 @@ export default function AdminStores() {
                     <span className="font-bold text-orange-600">{selectedStore.commission}%</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="arabic">تاريخ الانضمام:</span>
+                    <span className="arabic">تاريخ الانض��ام:</span>
                     <span className="font-medium">{selectedStore.joinDate}</span>
                   </div>
                   <div className="flex items-center justify-between">
@@ -1705,7 +1707,7 @@ export default function AdminStores() {
               {confirmAction?.type === "feature" && "هل أنت متأكد من جعل هذا المتجر مميزاً؟"}
               {confirmAction?.type === "unfeature" && "ه�� أنت متأكد من إلغاء تمييز هذا المتجر؟"}
               {confirmAction?.type === "verify" && "هل أنت متأكد من توثيق هذا المتجر؟"}
-              {confirmAction?.type === "unverify" && "هل أنت متأكد من إلغاء توثيق هذا المتجر��"}
+              {confirmAction?.type === "unverify" && "هل أنت متأكد من إلغاء توثيق هذا المتجر؟"}
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
