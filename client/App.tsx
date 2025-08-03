@@ -29,6 +29,7 @@ import MerchantDashboard from "./pages/merchant/Dashboard";
 import MerchantProducts from "./pages/merchant/Products";
 import NewProduct from "./pages/merchant/NewProduct";
 import ClearDemoProducts from "./pages/ClearDemoProducts";
+import ClearAllProducts from "./pages/ClearAllProducts";
 import MerchantAnalytics from "./pages/merchant/Analytics";
 import MerchantOrders from "./pages/merchant/Orders";
 import MerchantSettings from "./pages/merchant/Settings";
