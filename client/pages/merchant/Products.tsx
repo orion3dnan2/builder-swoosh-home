@@ -100,6 +100,17 @@ export default function MerchantProducts() {
     }
   }, [user, products.length]);
 
+  // تحميل عملة المتجر
+  useEffect(() => {
+    if (userStoreId) {
+      StoresService.getStoreDetails(userStoreId).then(details => {
+        if (details && details.currency) {
+          setStoreCurrency(details.currency);
+        }
+      });
+    }
+  }, [userStoreId]);
+
   // Filter and sort products
   const filteredProducts = products
     .filter((product) => {
