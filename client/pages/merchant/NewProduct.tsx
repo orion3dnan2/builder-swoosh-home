@@ -106,7 +106,7 @@ export default function NewProduct() {
         navigate('/merchant/products');
       }
     }
-  }, [isEditing, id, getProduct, navigate]);
+  }, [isEditing, id]);
 
   const handleInputChange = (field: string, value: any) => {
     setFormData((prev) => ({
@@ -302,7 +302,7 @@ export default function NewProduct() {
                 يجب إعداد معلومات المتجر أولاً
               </h2>
               <p className="text-gray-700 mb-6 arabic">
-                لإضافة منتجات، يرجى إكمال معلومات العمل التجاري (اسم العمل، نوع
+                لإض��فة منتجات، يرجى إكمال معلومات العمل التجاري (اسم العمل، نوع
                 العمل) في ملفك الشخصي أولاً.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
