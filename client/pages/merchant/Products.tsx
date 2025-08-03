@@ -187,22 +187,42 @@ export default function MerchantProducts() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Store Info Banner */}
-        <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <div className="flex items-center space-x-3 space-x-reverse">
-            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-              <Package className="w-4 h-4 text-white" />
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-blue-800 arabic">
-                عرض منتجات متجر: {currentStore?.name}
-              </h3>
-              <p className="text-xs text-blue-600 arabic">
-                يمكنك تغيير المتجر من القائمة أعلاه • المنتجات تظهر في السوق
-                العام تلقائياً
-              </p>
+        {currentStore && (
+          <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-center space-x-3 space-x-reverse">
+              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                <Package className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-blue-800 arabic">
+                  منتجات متجر: {currentStore.name}
+                </h3>
+                <p className="text-xs text-blue-600 arabic">
+                  منتجاتك تظهر في السوق العام تلقائياً • يمكن للعملاء رؤية وشراء منتجاتك
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {/* Message for users without store */}
+        {!currentStore && (
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="flex items-center space-x-3 space-x-reverse">
+              <div className="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center">
+                <AlertTriangle className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-yellow-800 arabic">
+                  يجب إعداد معلومات المتجر أولاً
+                </h3>
+                <p className="text-xs text-yellow-700 arabic">
+                  لعرض وإدارة منتجاتك، يرجى إكمال معلومات العمل التجاري في إعدادات الملف الشخصي
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Filters and Search */}
         <Card className="mb-6">
@@ -511,7 +531,7 @@ export default function MerchantProducts() {
                     <Sparkles className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-2 arabic">
-                    ابدأ رحلتك التجارية! 🚀
+                    ابد�� رحلتك التجارية! 🚀
                   </h3>
                   <p className="text-gray-700 mb-6 arabic">
                     أهلاً وسهلاً {user?.profile?.name}! متجرك جاهز الآن. ابدأ
