@@ -249,7 +249,7 @@ export class StoresService {
       reviewsCount: 89,
       price: "يبدأ من 200 ريال",
       image: "/placeholder.svg",
-      tags: ["تصميم", "شعارات", "هو��ة بصرية", "تسويق"],
+      tags: ["تصميم", "شعارات", "هوية بصرية", "تسويق"],
       availability: "من الأحد إلى الخميس",
       location: "عن بُعد - جميع المناطق",
     },
@@ -316,7 +316,7 @@ export class StoresService {
     {
       id: "ad-003",
       title: "تطبيق جوال مجاني لمتجرك",
-      description: "احصل على تطبيق ج��ال احترافي لمتجرك مع خصم 30%",
+      description: "احصل على تطبيق جوال احترافي لمتجرك مع خصم 30%",
       image: "/placeholder.svg",
       advertiser: "خدمات التقنية السودانية",
       category: "services",
@@ -417,6 +417,32 @@ export class StoresService {
       education: "📚",
     };
     return icons[category] || "🏪";
+  }
+
+  // الحصول على معلومات المتجر الكاملة من ملف stores.json
+  static async getStoreDetails(storeId: string) {
+    try {
+      const response = await fetch('/data/stores.json');
+      const stores = await response.json();
+      const store = stores.find((s: any) => s.id === storeId);
+
+      if (store) {
+        return {
+          ...store,
+          currency: getCurrencyByCountry(store.country)
+        };
+      }
+      return null;
+    } catch (error) {
+      console.error('Error fetching store details:', error);
+      return null;
+    }
+  }
+
+  // الحصول على عملة المتجر
+  static async getStoreCurrency(storeId: string) {
+    const storeDetails = await this.getStoreDetails(storeId);
+    return storeDetails?.currency || null;
   }
 }
 
