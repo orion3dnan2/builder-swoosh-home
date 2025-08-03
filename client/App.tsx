@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Marketplace from "./pages/Marketplace";
 import Products from "./pages/Products";
 import Companies from "./pages/Companies";
+import Company from "./pages/Company";
 import Jobs from "./pages/Jobs";
 import Services from "./pages/Services";
 import Restaurants from "./pages/Restaurants";
