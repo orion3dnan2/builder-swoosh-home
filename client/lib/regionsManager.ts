@@ -1,5 +1,5 @@
 /**
- * مدير المناطق - يدير المناطق المتاحة للتوصيل
+ * ��دير المناطق - يدير المناطق المتاحة للتوصيل
  */
 
 export interface DeliveryRegion {
@@ -107,7 +107,7 @@ export class RegionsManager {
   }
 
   /**
-   * الحصول على جميع المناطق (للتوافق مع النظام القديم)
+   * ال��صول على جميع المناطق (للتوافق مع النظام القديم)
    */
   public getRegions(): string[] {
     const allRegions: string[] = [];
@@ -140,6 +140,10 @@ export class RegionsManager {
    * الحصول على جميع الدول والمناطق
    */
   public getAllRegionsByCountry(): Record<string, DeliveryRegion[]> {
+    // فحص أمان
+    if (!this.regionsByCountry || typeof this.regionsByCountry !== 'object') {
+      this.resetToDefaults();
+    }
     return { ...this.regionsByCountry };
   }
 
