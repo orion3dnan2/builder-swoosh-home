@@ -117,12 +117,11 @@ export default function NewProduct() {
   // تحميل معلومات المتجر والعملة
   useEffect(() => {
     if (userStoreId) {
-      StoresService.getStoreDetails(userStoreId).then(details => {
-        if (details) {
-          setStoreDetails(details);
-          setStoreCurrency(details.currency);
-        }
-      });
+      const details = StoresService.getStoreDetails(userStoreId);
+      if (details) {
+        setStoreDetails(details);
+        setStoreCurrency(details.currency);
+      }
     }
   }, [userStoreId]);
 
