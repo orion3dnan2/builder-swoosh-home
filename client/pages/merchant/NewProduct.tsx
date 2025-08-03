@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -191,7 +191,7 @@ export default function NewProduct() {
     // Check if user has store setup
     if (!userStoreId) {
       setErrors([
-        "يجب إعداد معلومات المتجر أولاً. يرجى إكمال معلومات العمل التجاري في ملفك الشخصي.",
+        "يجب إعداد معلومات المتجر أولاً. يرجى إكمال معلومات ا��عمل التجاري في ملفك الشخصي.",
       ]);
       setIsLoading(false);
       return;
