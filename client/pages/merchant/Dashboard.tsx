@@ -30,12 +30,14 @@ export default function MerchantDashboard() {
   const {
     products: allProducts,
     getProductsByStatus,
-    lowStockProducts
+    lowStockProducts,
   } = useProducts();
 
   // Filter products by current user's store (we'll use store-001 for now)
   const userStoreId = "store-001"; // This should come from user context in a real app
-  const userProducts = allProducts.filter(product => product.storeId === userStoreId);
+  const userProducts = allProducts.filter(
+    (product) => product.storeId === userStoreId,
+  );
 
   // تحديد إذا كان التاجر جديد بناءً على تاريخ إنشاء ال��ساب
   useEffect(() => {
@@ -53,8 +55,8 @@ export default function MerchantDashboard() {
     totalOrders: 0,
     monthlyRevenue: 0,
     storeViews: 0,
-    activeProducts: userProducts.filter(p => p.status === 'active').length,
-    outOfStock: userProducts.filter(p => p.status === 'out_of_stock').length,
+    activeProducts: userProducts.filter((p) => p.status === "active").length,
+    outOfStock: userProducts.filter((p) => p.status === "out_of_stock").length,
     pendingOrders: 0,
     completedOrders: 0,
     averageRating: 0,
@@ -140,14 +142,16 @@ export default function MerchantDashboard() {
   }, [user]);
 
   // Filter low stock products for current user's store
-  const userLowStockProducts = lowStockProducts.filter(product => product.storeId === userStoreId);
+  const userLowStockProducts = lowStockProducts.filter(
+    (product) => product.storeId === userStoreId,
+  );
 
   // Mock user store for demo (in real app, this would come from user context or API)
   const userStore = {
     id: userStoreId,
     name: "متجر التراث السوداني",
     description: "متجر متخصص في المنتجات السودانية الأصيلة",
-    category: "traditional"
+    category: "traditional",
   };
 
   const getStatusColor = (status: string) => {

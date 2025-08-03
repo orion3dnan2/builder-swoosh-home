@@ -48,7 +48,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ApiService } from "@/lib/apiService";
 import { useToast } from "@/hooks/use-toast";
 import { cleanArabicText } from "@/lib/textUtils";
-import { useRegions, useCountries, useRegionsByCountry } from "@/hooks/use-regions";
+import {
+  useRegions,
+  useCountries,
+  useRegionsByCountry,
+} from "@/hooks/use-regions";
 
 interface StoreSettings {
   storeName: string;
@@ -599,7 +603,7 @@ export default function MerchantSettings() {
 
   // قائمة ال��ول والمدن التابعة لها
   const countriesWithCities = {
-    "السودان": [
+    السودان: [
       "الخرطوم",
       "أمدرمان",
       "بحري",

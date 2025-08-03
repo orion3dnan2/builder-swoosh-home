@@ -4,11 +4,40 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
@@ -34,9 +63,14 @@ import {
   Upload,
   MoreVertical,
   Key,
-  RefreshCw
+  RefreshCw,
 } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { User, UserRole } from "@shared/types";
 import { toast } from "@/hooks/use-toast";
 
@@ -51,15 +85,15 @@ const mockUsers: User[] = [
       name: "أحمد محمد",
       phone: "+249-123-456-789",
       avatar: "/placeholder.svg",
-      language: "ar"
+      language: "ar",
     },
     permissions: [
       { resource: "users", actions: ["create", "read", "update", "delete"] },
-      { resource: "products", actions: ["create", "read", "update", "delete"] }
+      { resource: "products", actions: ["create", "read", "update", "delete"] },
     ],
     createdAt: "2024-01-15T08:00:00Z",
     lastLogin: "2024-01-20T14:30:00Z",
-    isActive: true
+    isActive: true,
   },
   {
     id: "2",
@@ -73,16 +107,16 @@ const mockUsers: User[] = [
       businessInfo: {
         businessName: "متجر الالكترونيات",
         businessType: "إلكترونيات",
-        description: "متجر متخصص في بيع الأجهزة الإلكترونية"
-      }
+        description: "متجر متخصص في بيع الأجهزة الإلكترونية",
+      },
     },
     permissions: [
       { resource: "products", actions: ["create", "read", "update"] },
-      { resource: "orders", actions: ["read", "update"] }
+      { resource: "orders", actions: ["read", "update"] },
     ],
     createdAt: "2024-01-10T10:00:00Z",
     lastLogin: "2024-01-19T16:45:00Z",
-    isActive: true
+    isActive: true,
   },
   {
     id: "3",
@@ -98,29 +132,29 @@ const mockUsers: User[] = [
         city: "الخرطوم",
         state: "الخرطوم",
         country: "السودان",
-        zipCode: "11111"
-      }
+        zipCode: "11111",
+      },
     },
     permissions: [
       { resource: "orders", actions: ["create", "read"] },
-      { resource: "profile", actions: ["read", "update"] }
+      { resource: "profile", actions: ["read", "update"] },
     ],
     createdAt: "2024-01-05T12:00:00Z",
     lastLogin: "2024-01-18T09:20:00Z",
-    isActive: false
-  }
+    isActive: false,
+  },
 ];
 
 const roleColors = {
   super_admin: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
   merchant: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-  customer: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+  customer: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
 };
 
 const roleLabels = {
   super_admin: "مدير عام",
   merchant: "تاجر",
-  customer: "عميل"
+  customer: "عميل",
 };
 
 export default function AdminUsers() {
@@ -139,20 +173,21 @@ export default function AdminUsers() {
     let filtered = users;
 
     if (searchTerm) {
-      filtered = filtered.filter(user => 
-        user.profile.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.username.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(
+        (user) =>
+          user.profile.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.username.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
 
     if (roleFilter !== "all") {
-      filtered = filtered.filter(user => user.role === roleFilter);
+      filtered = filtered.filter((user) => user.role === roleFilter);
     }
 
     if (statusFilter !== "all") {
-      filtered = filtered.filter(user => 
-        statusFilter === "active" ? user.isActive : !user.isActive
+      filtered = filtered.filter((user) =>
+        statusFilter === "active" ? user.isActive : !user.isActive,
       );
     }
 
@@ -160,7 +195,7 @@ export default function AdminUsers() {
   }, [users, searchTerm, roleFilter, statusFilter]);
 
   const handleDeleteUser = (userId: string) => {
-    setUsers(users.filter(user => user.id !== userId));
+    setUsers(users.filter((user) => user.id !== userId));
     toast({
       title: "تم حذف المستخدم",
       description: "تم حذف المستخدم بنجاح",
@@ -168,22 +203,28 @@ export default function AdminUsers() {
   };
 
   const handleToggleUserStatus = (userId: string) => {
-    setUsers(users.map(user =>
-      user.id === userId ? { ...user, isActive: !user.isActive } : user
-    ));
+    setUsers(
+      users.map((user) =>
+        user.id === userId ? { ...user, isActive: !user.isActive } : user,
+      ),
+    );
     toast({
       title: "تم تحديث حالة المستخدم",
       description: "تم تحديث حالة المستخدم بنجاح",
     });
   };
 
-  const handleResetPassword = async (userId: string, email: string, userName: string) => {
+  const handleResetPassword = async (
+    userId: string,
+    email: string,
+    userName: string,
+  ) => {
     try {
       // في التطبيق الحقيقي، سيتم إرسال طلب إلى API لإعادة تعيين كلمة المرور
       // await resetUserPassword(userId);
 
       // محاكاة تأخير العملية
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       toast({
         title: "تم إرسال رابط إعادة تعيين كلمة المرور",
@@ -192,7 +233,8 @@ export default function AdminUsers() {
     } catch (error) {
       toast({
         title: "خطأ في إعادة تعيين كلمة المرور",
-        description: "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور. يرجى المحاولة مرة أخرى.",
+        description:
+          "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور. يرجى المحاولة مرة أخرى.",
         variant: "destructive",
       });
     }
@@ -200,7 +242,7 @@ export default function AdminUsers() {
 
   const handleBulkPasswordReset = async () => {
     try {
-      const activeUsers = users.filter(user => user.isActive);
+      const activeUsers = users.filter((user) => user.isActive);
 
       if (activeUsers.length === 0) {
         toast({
@@ -212,7 +254,7 @@ export default function AdminUsers() {
       }
 
       // محاكاة تأخير العملية
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       toast({
         title: "تم إرس��ل روابط إعادة تعيين كلمة المرور",
@@ -221,24 +263,25 @@ export default function AdminUsers() {
     } catch (error) {
       toast({
         title: "خطأ في العملية الجماعية",
-        description: "حدث خطأ أثناء إرسال روابط إعادة تعيين كلمة المرور. يرجى المحاولة مرة أخرى.",
+        description:
+          "حدث خطأ أثناء إرسال روابط إعادة تعيين كلمة المرور. يرجى المحاولة مرة أخرى.",
         variant: "destructive",
       });
     }
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('ar-SA', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Date(dateString).toLocaleDateString("ar-SA", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
   const formatTime = (dateString: string) => {
-    return new Date(dateString).toLocaleTimeString('ar-SA', {
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(dateString).toLocaleTimeString("ar-SA", {
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -269,7 +312,10 @@ export default function AdminUsers() {
             </div>
 
             <div className="flex items-center space-x-3 space-x-reverse">
-              <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
+              <Dialog
+                open={isCreateModalOpen}
+                onOpenChange={setIsCreateModalOpen}
+              >
                 <DialogTrigger asChild>
                   <Button className="arabic">
                     <Plus className="w-4 h-4 ml-2" />
@@ -278,7 +324,9 @@ export default function AdminUsers() {
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl">
                   <DialogHeader>
-                    <DialogTitle className="arabic">إضافة مستخدم جديد</DialogTitle>
+                    <DialogTitle className="arabic">
+                      إضافة مستخدم جديد
+                    </DialogTitle>
                   </DialogHeader>
                   <UserForm onClose={() => setIsCreateModalOpen(false)} />
                 </DialogContent>
@@ -340,7 +388,7 @@ export default function AdminUsers() {
                     المستخدمين النشطين
                   </p>
                   <p className="text-2xl font-bold text-green-600">
-                    {users.filter(u => u.isActive).length}
+                    {users.filter((u) => u.isActive).length}
                   </p>
                 </div>
                 <UserCheck className="w-8 h-8 text-green-600" />
@@ -356,7 +404,7 @@ export default function AdminUsers() {
                     التجار
                   </p>
                   <p className="text-2xl font-bold text-blue-600">
-                    {users.filter(u => u.role === 'merchant').length}
+                    {users.filter((u) => u.role === "merchant").length}
                   </p>
                 </div>
                 <Shield className="w-8 h-8 text-blue-600" />
@@ -372,7 +420,7 @@ export default function AdminUsers() {
                     العملاء
                   </p>
                   <p className="text-2xl font-bold text-purple-600">
-                    {users.filter(u => u.role === 'customer').length}
+                    {users.filter((u) => u.role === "customer").length}
                   </p>
                 </div>
                 <Users className="w-8 h-8 text-purple-600" />
@@ -472,9 +520,13 @@ export default function AdminUsers() {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center space-x-2 space-x-reverse">
-                          <div className={`w-2 h-2 rounded-full ${user.isActive ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                          <span className={`text-sm ${user.isActive ? 'text-green-600' : 'text-red-600'} arabic`}>
-                            {user.isActive ? 'نشط' : 'غير نشط'}
+                          <div
+                            className={`w-2 h-2 rounded-full ${user.isActive ? "bg-green-500" : "bg-red-500"}`}
+                          ></div>
+                          <span
+                            className={`text-sm ${user.isActive ? "text-green-600" : "text-red-600"} arabic`}
+                          >
+                            {user.isActive ? "نشط" : "غير نشط"}
                           </span>
                         </div>
                       </TableCell>
@@ -495,7 +547,9 @@ export default function AdminUsers() {
                             </div>
                           </div>
                         ) : (
-                          <span className="text-sm text-gray-400 arabic">لم يسجل دخول</span>
+                          <span className="text-sm text-gray-400 arabic">
+                            لم يسجل دخول
+                          </span>
                         )}
                       </TableCell>
                       <TableCell>
@@ -526,9 +580,17 @@ export default function AdminUsers() {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleToggleUserStatus(user.id)}
-                            title={user.isActive ? "إلغاء تفعيل المستخدم" : "تفعيل المستخدم"}
+                            title={
+                              user.isActive
+                                ? "إلغاء تفعيل المستخدم"
+                                : "تفعيل المستخدم"
+                            }
                           >
-                            {user.isActive ? <UserX className="w-4 h-4" /> : <UserCheck className="w-4 h-4" />}
+                            {user.isActive ? (
+                              <UserX className="w-4 h-4" />
+                            ) : (
+                              <UserCheck className="w-4 h-4" />
+                            )}
                           </Button>
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
@@ -543,17 +605,27 @@ export default function AdminUsers() {
                             </AlertDialogTrigger>
                             <AlertDialogContent className="arabic">
                               <AlertDialogHeader>
-                                <AlertDialogTitle>إعادة تعيين كلمة المرور</AlertDialogTitle>
+                                <AlertDialogTitle>
+                                  إعادة تعيين كلمة المرور
+                                </AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  هل أنت متأكد من إعادة تعيين كلمة المرور للمستخدم "{user.profile.name}"؟
+                                  هل أنت متأكد من إعادة تعيين كلمة المرور
+                                  للمستخدم "{user.profile.name}"؟
                                   <br />
-                                  سيتم إرسال رابط إعادة تعيين كلمة المرور إلى البريد الإلكتروني: {user.email}
+                                  سيتم إرسال رابط إعادة تعيين كلمة المرور إلى
+                                  البريد الإلكتروني: {user.email}
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>إلغاء</AlertDialogCancel>
                                 <AlertDialogAction
-                                  onClick={() => handleResetPassword(user.id, user.email, user.profile.name)}
+                                  onClick={() =>
+                                    handleResetPassword(
+                                      user.id,
+                                      user.email,
+                                      user.profile.name,
+                                    )
+                                  }
                                   className="bg-blue-600 hover:bg-blue-700"
                                 >
                                   <Key className="w-4 h-4 ml-2" />
@@ -577,12 +649,13 @@ export default function AdminUsers() {
                               <AlertDialogHeader>
                                 <AlertDialogTitle>تأكيد الحذف</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  هل أنت متأكد من حذف هذا المستخدم؟ لا يمكن التراجع عن هذا الإجراء.
+                                  هل أنت متأكد من حذف هذا المستخدم؟ لا يمكن
+                                  التراجع عن هذا الإجراء.
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>إلغاء</AlertDialogCancel>
-                                <AlertDialogAction 
+                                <AlertDialogAction
                                   onClick={() => handleDeleteUser(user.id)}
                                   className="bg-red-600 hover:bg-red-700"
                                 >
@@ -619,11 +692,13 @@ export default function AdminUsers() {
         <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle className="arabic">تعديل بيانات المستخدم</DialogTitle>
+              <DialogTitle className="arabic">
+                تعديل بيانات المستخدم
+              </DialogTitle>
             </DialogHeader>
-            <UserForm 
-              user={selectedUser} 
-              onClose={() => setIsEditModalOpen(false)} 
+            <UserForm
+              user={selectedUser}
+              onClose={() => setIsEditModalOpen(false)}
             />
           </DialogContent>
         </Dialog>
@@ -652,9 +727,13 @@ function UserDetails({ user }: { user: User }) {
             <Badge className={roleColors[user.role]}>
               {roleLabels[user.role]}
             </Badge>
-            <div className={`w-2 h-2 rounded-full ${user.isActive ? 'bg-green-500' : 'bg-red-500'}`}></div>
-            <span className={`text-sm ${user.isActive ? 'text-green-600' : 'text-red-600'} arabic`}>
-              {user.isActive ? 'نشط' : 'غير نشط'}
+            <div
+              className={`w-2 h-2 rounded-full ${user.isActive ? "bg-green-500" : "bg-red-500"}`}
+            ></div>
+            <span
+              className={`text-sm ${user.isActive ? "text-green-600" : "text-red-600"} arabic`}
+            >
+              {user.isActive ? "نشط" : "غير نشط"}
             </span>
           </div>
         </div>
@@ -676,11 +755,15 @@ function UserDetails({ user }: { user: User }) {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label className="arabic">الاسم الكامل</Label>
-                  <p className="text-gray-900 dark:text-white arabic">{user.profile.name}</p>
+                  <p className="text-gray-900 dark:text-white arabic">
+                    {user.profile.name}
+                  </p>
                 </div>
                 <div>
                   <Label className="arabic">اسم المستخدم</Label>
-                  <p className="text-gray-900 dark:text-white">@{user.username}</p>
+                  <p className="text-gray-900 dark:text-white">
+                    @{user.username}
+                  </p>
                 </div>
                 <div>
                   <Label className="arabic">البريد الإلكتروني</Label>
@@ -688,18 +771,20 @@ function UserDetails({ user }: { user: User }) {
                 </div>
                 <div>
                   <Label className="arabic">رقم الهاتف</Label>
-                  <p className="text-gray-900 dark:text-white">{user.profile.phone || 'غير محدد'}</p>
+                  <p className="text-gray-900 dark:text-white">
+                    {user.profile.phone || "غير محدد"}
+                  </p>
                 </div>
                 <div>
                   <Label className="arabic">اللغة المفضلة</Label>
                   <p className="text-gray-900 dark:text-white arabic">
-                    {user.profile.language === 'ar' ? 'العربية' : 'الإنجليزية'}
+                    {user.profile.language === "ar" ? "العربية" : "الإنجليزية"}
                   </p>
                 </div>
                 <div>
                   <Label className="arabic">تاريخ التسجيل</Label>
                   <p className="text-gray-900 dark:text-white">
-                    {new Date(user.createdAt).toLocaleDateString('ar-SA')}
+                    {new Date(user.createdAt).toLocaleDateString("ar-SA")}
                   </p>
                 </div>
               </div>
@@ -709,8 +794,13 @@ function UserDetails({ user }: { user: User }) {
                   <Label className="arabic">العنوان</Label>
                   <div className="text-gray-900 dark:text-white arabic">
                     <p>{user.profile.address.street}</p>
-                    <p>{user.profile.address.city}, {user.profile.address.state}</p>
-                    <p>{user.profile.address.country} - {user.profile.address.zipCode}</p>
+                    <p>
+                      {user.profile.address.city}, {user.profile.address.state}
+                    </p>
+                    <p>
+                      {user.profile.address.country} -{" "}
+                      {user.profile.address.zipCode}
+                    </p>
                   </div>
                 </div>
               )}
@@ -741,7 +831,7 @@ function UserDetails({ user }: { user: User }) {
                   <div>
                     <Label className="arabic">الرقم الضريبي</Label>
                     <p className="text-gray-900 dark:text-white">
-                      {user.profile.businessInfo.taxId || 'غير محدد'}
+                      {user.profile.businessInfo.taxId || "غير محدد"}
                     </p>
                   </div>
                 </div>
@@ -801,20 +891,22 @@ function UserForm({ user, onClose }: { user?: User; onClose: () => void }) {
     username: user?.username || "",
     email: user?.email || "",
     phone: user?.profile.phone || "",
-    role: user?.role || "customer" as UserRole,
+    role: user?.role || ("customer" as UserRole),
     isActive: user?.isActive ?? true,
-    language: user?.profile.language || "ar" as "ar" | "en"
+    language: user?.profile.language || ("ar" as "ar" | "en"),
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // هنا يتم إرسال البي��نات للخادم
     toast({
       title: user ? "تم تحديث المستخدم" : "تم إضافة المستخدم",
-      description: user ? "تم تحديث بيانات المستخدم بنجاح" : "تم إضافة المستخدم الجديد بنجاح",
+      description: user
+        ? "تم تحديث بيانات المستخدم بنجاح"
+        : "تم إضافة المستخدم الجديد بنجاح",
     });
-    
+
     onClose();
   };
 
@@ -822,45 +914,66 @@ function UserForm({ user, onClose }: { user?: User; onClose: () => void }) {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="name" className="arabic">الاسم الكامل</Label>
+          <Label htmlFor="name" className="arabic">
+            الاسم الكامل
+          </Label>
           <Input
             id="name"
             value={formData.name}
-            onChange={(e) => setFormData({...formData, name: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
             className="arabic"
           />
         </div>
         <div>
-          <Label htmlFor="username" className="arabic">اسم المستخدم</Label>
+          <Label htmlFor="username" className="arabic">
+            اسم المستخدم
+          </Label>
           <Input
             id="username"
             value={formData.username}
-            onChange={(e) => setFormData({...formData, username: e.target.value})}
+            onChange={(e) =>
+              setFormData({ ...formData, username: e.target.value })
+            }
             required
           />
         </div>
         <div>
-          <Label htmlFor="email" className="arabic">البريد الإلكتروني</Label>
+          <Label htmlFor="email" className="arabic">
+            البريد الإلكتروني
+          </Label>
           <Input
             id="email"
             type="email"
             value={formData.email}
-            onChange={(e) => setFormData({...formData, email: e.target.value})}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             required
           />
         </div>
         <div>
-          <Label htmlFor="phone" className="arabic">رقم ا��هاتف</Label>
+          <Label htmlFor="phone" className="arabic">
+            رقم ا��هاتف
+          </Label>
           <Input
             id="phone"
             value={formData.phone}
-            onChange={(e) => setFormData({...formData, phone: e.target.value})}
+            onChange={(e) =>
+              setFormData({ ...formData, phone: e.target.value })
+            }
           />
         </div>
         <div>
-          <Label htmlFor="role" className="arabic">الدور</Label>
-          <Select value={formData.role} onValueChange={(value: UserRole) => setFormData({...formData, role: value})}>
+          <Label htmlFor="role" className="arabic">
+            الدور
+          </Label>
+          <Select
+            value={formData.role}
+            onValueChange={(value: UserRole) =>
+              setFormData({ ...formData, role: value })
+            }
+          >
             <SelectTrigger className="arabic">
               <SelectValue />
             </SelectTrigger>
@@ -872,8 +985,15 @@ function UserForm({ user, onClose }: { user?: User; onClose: () => void }) {
           </Select>
         </div>
         <div>
-          <Label htmlFor="language" className="arabic">اللغة المفضلة</Label>
-          <Select value={formData.language} onValueChange={(value: "ar" | "en") => setFormData({...formData, language: value})}>
+          <Label htmlFor="language" className="arabic">
+            اللغة المفضلة
+          </Label>
+          <Select
+            value={formData.language}
+            onValueChange={(value: "ar" | "en") =>
+              setFormData({ ...formData, language: value })
+            }
+          >
             <SelectTrigger className="arabic">
               <SelectValue />
             </SelectTrigger>
@@ -889,13 +1009,22 @@ function UserForm({ user, onClose }: { user?: User; onClose: () => void }) {
         <Switch
           id="isActive"
           checked={formData.isActive}
-          onCheckedChange={(checked) => setFormData({...formData, isActive: checked})}
+          onCheckedChange={(checked) =>
+            setFormData({ ...formData, isActive: checked })
+          }
         />
-        <Label htmlFor="isActive" className="arabic">حساب نشط</Label>
+        <Label htmlFor="isActive" className="arabic">
+          حساب نشط
+        </Label>
       </div>
 
       <div className="flex justify-end space-x-3 space-x-reverse">
-        <Button type="button" variant="outline" onClick={onClose} className="arabic">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onClose}
+          className="arabic"
+        >
           إلغا��
         </Button>
         <Button type="submit" className="arabic">

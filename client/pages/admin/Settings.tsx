@@ -30,7 +30,12 @@ import {
 import { useAppSettings } from "@/lib/appSettings";
 import { useAuth } from "@/lib/auth";
 import { regionsManager } from "@/lib/regionsManager";
-import { useRegions, useRegionsStats, useRegionsByCountry, useCountries } from "@/hooks/use-regions";
+import {
+  useRegions,
+  useRegionsStats,
+  useRegionsByCountry,
+  useCountries,
+} from "@/hooks/use-regions";
 import { useToast } from "@/hooks/use-toast";
 import { apiConfigManager, ApiConfiguration } from "@/lib/apiConfig";
 import { QuickApiStatus } from "@/components/ApiConnectionStatus";
@@ -55,7 +60,12 @@ export default function AdminSettings() {
   const { regions: deliveryRegions, notifyRegionsUpdate } = useRegions();
   const regionsStats = useRegionsStats();
   const countries = useCountries();
-  const { regionsByCountry, addRegionToCountry, removeRegionFromCountry, updateRegionInCountry } = useRegionsByCountry();
+  const {
+    regionsByCountry,
+    addRegionToCountry,
+    removeRegionFromCountry,
+    updateRegionInCountry,
+  } = useRegionsByCountry();
 
   const [selectedCountry, setSelectedCountry] = useState<string>("SA");
   const [newRegion, setNewRegion] = useState("");
@@ -63,10 +73,14 @@ export default function AdminSettings() {
   const [editingValue, setEditingValue] = useState("");
 
   // State for API configurations
-  const [apiConfigs, setApiConfigs] = useState<ApiConfiguration[]>(apiConfigManager.getAllConfigs());
-  const [activeApiConfig, setActiveApiConfig] = useState<ApiConfiguration | null>(apiConfigManager.getActiveConfig());
+  const [apiConfigs, setApiConfigs] = useState<ApiConfiguration[]>(
+    apiConfigManager.getAllConfigs(),
+  );
+  const [activeApiConfig, setActiveApiConfig] =
+    useState<ApiConfiguration | null>(apiConfigManager.getActiveConfig());
   const [showAddApiForm, setShowAddApiForm] = useState(false);
-  const [editingApiConfig, setEditingApiConfig] = useState<ApiConfiguration | null>(null);
+  const [editingApiConfig, setEditingApiConfig] =
+    useState<ApiConfiguration | null>(null);
   const [testingConfigId, setTestingConfigId] = useState<string | null>(null);
   const [newApiConfig, setNewApiConfig] = useState({
     name: "",
@@ -82,13 +96,13 @@ export default function AdminSettings() {
       companies: "/companies",
       jobs: "/jobs",
       orders: "/orders",
-      analytics: "/analytics"
+      analytics: "/analytics",
     },
     authentication: {
-      type: 'bearer' as const
+      type: "bearer" as const,
     },
     timeout: 10000,
-    retries: 3
+    retries: 3,
   });
 
   const handleThemeChange = (key: string, value: any) => {
@@ -142,7 +156,7 @@ export default function AdminSettings() {
       setUnsavedChanges(true);
       toast({
         title: "تم إضافة المنطقة بنجاح",
-        description: `تمت إضافة "${newRegion}" إلى قائمة مناطق ${countries.find(c => c.code === selectedCountry)?.name}`,
+        description: `تمت إضافة "${newRegion}" إلى قائمة مناطق ${countries.find((c) => c.code === selectedCountry)?.name}`,
       });
     } else {
       toast({
@@ -153,7 +167,11 @@ export default function AdminSettings() {
     }
   };
 
-  const deleteRegion = (regionId: string, countryCode: string, regionName: string) => {
+  const deleteRegion = (
+    regionId: string,
+    countryCode: string,
+    regionName: string,
+  ) => {
     if (removeRegionFromCountry(regionId, countryCode)) {
       setUnsavedChanges(true);
       toast({
@@ -169,7 +187,8 @@ export default function AdminSettings() {
   };
 
   const saveEdit = (regionId: string, countryCode: string) => {
-    const oldName = regionsByCountry[countryCode]?.find(r => r.id === regionId)?.name || "";
+    const oldName =
+      regionsByCountry[countryCode]?.find((r) => r.id === regionId)?.name || "";
     if (updateRegionInCountry(regionId, countryCode, editingValue)) {
       setEditingRegionId(null);
       setEditingValue("");
@@ -638,7 +657,9 @@ export default function AdminSettings() {
                 <div className="space-y-6">
                   {/* Country Selection */}
                   <div className="mb-6">
-                    <Label className="arabic mb-3 block font-semibold">اختر الدولة لإدارة مناطقها</Label>
+                    <Label className="arabic mb-3 block font-semibold">
+                      اختر الدولة لإدارة مناطقها
+                    </Label>
                     <select
                       value={selectedCountry}
                       onChange={(e) => setSelectedCountry(e.target.value)}
@@ -646,7 +667,8 @@ export default function AdminSettings() {
                     >
                       {countries.map((country) => (
                         <option key={country.code} value={country.code}>
-                          {country.name} ({regionsByCountry[country.code]?.length || 0} منطقة)
+                          {country.name} (
+                          {regionsByCountry[country.code]?.length || 0} منطقة)
                         </option>
                       ))}
                     </select>
@@ -657,7 +679,7 @@ export default function AdminSettings() {
                     <Input
                       value={newRegion}
                       onChange={(e) => setNewRegion(e.target.value)}
-                      placeholder={`أدخل اسم المنطقة الجديدة في ${countries.find(c => c.code === selectedCountry)?.name}`}
+                      placeholder={`أدخل اسم المنطقة الجديدة في ${countries.find((c) => c.code === selectedCountry)?.name}`}
                       className="flex-1 arabic text-right"
                       onKeyPress={(e) => e.key === "Enter" && addRegion()}
                     />
@@ -665,7 +687,9 @@ export default function AdminSettings() {
                       onClick={addRegion}
                       disabled={
                         !newRegion.trim() ||
-                        (regionsByCountry[selectedCountry] || []).some(r => r.name === newRegion.trim())
+                        (regionsByCountry[selectedCountry] || []).some(
+                          (r) => r.name === newRegion.trim(),
+                        )
                       }
                       className="arabic"
                     >
@@ -717,7 +741,12 @@ export default function AdminSettings() {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold text-lg arabic">
-                        مناطق {countries.find(c => c.code === selectedCountry)?.name} ({(regionsByCountry[selectedCountry] || []).length})
+                        مناطق{" "}
+                        {
+                          countries.find((c) => c.code === selectedCountry)
+                            ?.name
+                        }{" "}
+                        ({(regionsByCountry[selectedCountry] || []).length})
                       </h3>
                       <Badge variant="outline" className="arabic">
                         {selectedCountry}
@@ -725,71 +754,84 @@ export default function AdminSettings() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {(regionsByCountry[selectedCountry] || []).map((region) => (
-                        <div
-                          key={region.id}
-                          className="flex items-center justify-between p-3 border rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
-                        >
-                          {editingRegionId === region.id ? (
-                            <div className="flex items-center space-x-2 space-x-reverse flex-1">
-                              <Input
-                                value={editingValue}
-                                onChange={(e) =>
-                                  setEditingValue(e.target.value)
-                                }
-                                className="flex-1 arabic text-right text-sm"
-                                onKeyPress={(e) => {
-                                  if (e.key === "Enter") saveEdit(region.id, selectedCountry);
-                                  if (e.key === "Escape") cancelEdit();
-                                }}
-                                autoFocus
-                              />
-                              <div className="flex space-x-1 space-x-reverse">
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => saveEdit(region.id, selectedCountry)}
-                                  className="text-green-600 hover:text-green-700"
-                                >
-                                  ✓
-                                </Button>
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={cancelEdit}
-                                  className="text-red-600 hover:text-red-700"
-                                >
-                                  ✕
-                                </Button>
+                      {(regionsByCountry[selectedCountry] || []).map(
+                        (region) => (
+                          <div
+                            key={region.id}
+                            className="flex items-center justify-between p-3 border rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
+                          >
+                            {editingRegionId === region.id ? (
+                              <div className="flex items-center space-x-2 space-x-reverse flex-1">
+                                <Input
+                                  value={editingValue}
+                                  onChange={(e) =>
+                                    setEditingValue(e.target.value)
+                                  }
+                                  className="flex-1 arabic text-right text-sm"
+                                  onKeyPress={(e) => {
+                                    if (e.key === "Enter")
+                                      saveEdit(region.id, selectedCountry);
+                                    if (e.key === "Escape") cancelEdit();
+                                  }}
+                                  autoFocus
+                                />
+                                <div className="flex space-x-1 space-x-reverse">
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() =>
+                                      saveEdit(region.id, selectedCountry)
+                                    }
+                                    className="text-green-600 hover:text-green-700"
+                                  >
+                                    ✓
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={cancelEdit}
+                                    className="text-red-600 hover:text-red-700"
+                                  >
+                                    ✕
+                                  </Button>
+                                </div>
                               </div>
-                            </div>
-                          ) : (
-                            <>
-                              <span className="text-sm arabic font-medium flex-1">
-                                {region.name}
-                              </span>
-                              <div className="flex space-x-1 space-x-reverse">
-                                <Button
-                                  size="sm"
-                                  variant="ghost"
-                                  onClick={() => startEditing(region.id, region.name)}
-                                  className="text-blue-600 hover:text-blue-700"
-                                >
-                                  <Edit className="w-3 h-3" />
-                                </Button>
-                                <Button
-                                  size="sm"
-                                  variant="ghost"
-                                  onClick={() => deleteRegion(region.id, selectedCountry, region.name)}
-                                  className="text-red-600 hover:text-red-700"
-                                >
-                                  <Trash2 className="w-3 h-3" />
-                                </Button>
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      ))}
+                            ) : (
+                              <>
+                                <span className="text-sm arabic font-medium flex-1">
+                                  {region.name}
+                                </span>
+                                <div className="flex space-x-1 space-x-reverse">
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() =>
+                                      startEditing(region.id, region.name)
+                                    }
+                                    className="text-blue-600 hover:text-blue-700"
+                                  >
+                                    <Edit className="w-3 h-3" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() =>
+                                      deleteRegion(
+                                        region.id,
+                                        selectedCountry,
+                                        region.name,
+                                      )
+                                    }
+                                    className="text-red-600 hover:text-red-700"
+                                  >
+                                    <Trash2 className="w-3 h-3" />
+                                  </Button>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        ),
+                      )}
                     </div>
 
                     {(regionsByCountry[selectedCountry] || []).length === 0 && (
@@ -797,10 +839,15 @@ export default function AdminSettings() {
                         <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
                           <MapPin className="w-12 h-12 mx-auto mb-4 text-orange-400" />
                           <h4 className="font-semibold text-orange-700 arabic mb-2">
-                            لا توجد مناطق في {countries.find(c => c.code === selectedCountry)?.name}
+                            لا توجد مناطق في{" "}
+                            {
+                              countries.find((c) => c.code === selectedCountry)
+                                ?.name
+                            }
                           </h4>
                           <p className="text-orange-600 arabic text-sm mb-4">
-                            أضف مناطق لهذه الدولة لتتمكن الشركات من تحديد مناطق التوصيل
+                            أضف مناطق لهذه الدولة لتتمكن الشركات من تحديد مناطق
+                            التوصيل
                           </p>
                         </div>
                       </div>
@@ -880,14 +927,15 @@ export default function AdminSettings() {
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {countries.map((country) => {
-                        const countryRegions = regionsByCountry[country.code] || [];
+                        const countryRegions =
+                          regionsByCountry[country.code] || [];
                         return (
                           <div
                             key={country.code}
                             className={`p-3 rounded-lg border-2 transition-all cursor-pointer ${
                               selectedCountry === country.code
-                                ? 'border-blue-500 bg-blue-50'
-                                : 'border-gray-200 bg-white hover:border-gray-300'
+                                ? "border-blue-500 bg-blue-50"
+                                : "border-gray-200 bg-white hover:border-gray-300"
                             }`}
                             onClick={() => setSelectedCountry(country.code)}
                           >
@@ -895,16 +943,24 @@ export default function AdminSettings() {
                               <span className="font-semibold arabic">
                                 {country.name}
                               </span>
-                              <Badge variant={countryRegions.length > 0 ? "default" : "secondary"}>
+                              <Badge
+                                variant={
+                                  countryRegions.length > 0
+                                    ? "default"
+                                    : "secondary"
+                                }
+                              >
                                 {countryRegions.length} منطقة
                               </Badge>
                             </div>
                             <div className="text-xs text-gray-600 arabic">
                               {countryRegions.length > 0
-                                ? countryRegions.slice(0, 3).map(r => r.name).join(', ') +
-                                  (countryRegions.length > 3 ? '...' : '')
-                                : 'لا توجد مناطق'
-                              }
+                                ? countryRegions
+                                    .slice(0, 3)
+                                    .map((r) => r.name)
+                                    .join(", ") +
+                                  (countryRegions.length > 3 ? "..." : "")
+                                : "لا توجد مناطق"}
                             </div>
                           </div>
                         );
@@ -1067,7 +1123,9 @@ export default function AdminSettings() {
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                       <div className="flex items-center space-x-2 space-x-reverse">
                         <Settings className="w-5 h-5 text-blue-600" />
-                        <span className="text-sm text-blue-600 arabic">إجمالي الخوادم</span>
+                        <span className="text-sm text-blue-600 arabic">
+                          إجمالي الخوادم
+                        </span>
                       </div>
                       <div className="text-2xl font-bold text-blue-700 mt-2">
                         {apiConfigs.length}
@@ -1076,25 +1134,31 @@ export default function AdminSettings() {
                     <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                       <div className="flex items-center space-x-2 space-x-reverse">
                         <div className="w-5 h-5 bg-green-600 rounded-full"></div>
-                        <span className="text-sm text-green-600 arabic">نشطة</span>
+                        <span className="text-sm text-green-600 arabic">
+                          نشطة
+                        </span>
                       </div>
                       <div className="text-2xl font-bold text-green-700 mt-2">
-                        {apiConfigs.filter(c => c.isActive).length}
+                        {apiConfigs.filter((c) => c.isActive).length}
                       </div>
                     </div>
                     <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                       <div className="flex items-center space-x-2 space-x-reverse">
                         <div className="w-5 h-5 bg-red-600 rounded-full"></div>
-                        <span className="text-sm text-red-600 arabic">غير نشطة</span>
+                        <span className="text-sm text-red-600 arabic">
+                          غير نشطة
+                        </span>
                       </div>
                       <div className="text-2xl font-bold text-red-700 mt-2">
-                        {apiConfigs.filter(c => !c.isActive).length}
+                        {apiConfigs.filter((c) => !c.isActive).length}
                       </div>
                     </div>
                     <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
                       <div className="flex items-center space-x-2 space-x-reverse">
                         <div className="w-5 h-5 bg-orange-600 rounded-full"></div>
-                        <span className="text-sm text-orange-600 arabic">الخادم الحالي</span>
+                        <span className="text-sm text-orange-600 arabic">
+                          الخادم الحالي
+                        </span>
                       </div>
                       <div className="text-sm font-medium text-orange-700 mt-2 arabic">
                         {activeApiConfig?.name || "غير محدد"}
@@ -1104,7 +1168,9 @@ export default function AdminSettings() {
 
                   {/* Add New API Config */}
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-lg arabic">قائمة الخوادم</h3>
+                    <h3 className="font-semibold text-lg arabic">
+                      قائمة الخوادم
+                    </h3>
                     <Button
                       onClick={() => setShowAddApiForm(true)}
                       className="arabic"
@@ -1119,7 +1185,9 @@ export default function AdminSettings() {
                     <Card className="border-2 border-blue-200">
                       <CardHeader>
                         <CardTitle className="arabic">
-                          {editingApiConfig ? "تعديل الخادم" : "إضافة خادم جديد"}
+                          {editingApiConfig
+                            ? "تعديل الخادم"
+                            : "إضافة خادم جديد"}
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
@@ -1127,12 +1195,22 @@ export default function AdminSettings() {
                           <div>
                             <Label className="arabic">اسم الخادم</Label>
                             <Input
-                              value={editingApiConfig ? editingApiConfig.name : newApiConfig.name}
+                              value={
+                                editingApiConfig
+                                  ? editingApiConfig.name
+                                  : newApiConfig.name
+                              }
                               onChange={(e) => {
                                 if (editingApiConfig) {
-                                  setEditingApiConfig({...editingApiConfig, name: e.target.value});
+                                  setEditingApiConfig({
+                                    ...editingApiConfig,
+                                    name: e.target.value,
+                                  });
                                 } else {
-                                  setNewApiConfig({...newApiConfig, name: e.target.value});
+                                  setNewApiConfig({
+                                    ...newApiConfig,
+                                    name: e.target.value,
+                                  });
                                 }
                               }}
                               placeholder="خادم الإنتاج"
@@ -1142,12 +1220,22 @@ export default function AdminSettings() {
                           <div>
                             <Label className="arabic">رابط الخادم</Label>
                             <Input
-                              value={editingApiConfig ? editingApiConfig.baseUrl : newApiConfig.baseUrl}
+                              value={
+                                editingApiConfig
+                                  ? editingApiConfig.baseUrl
+                                  : newApiConfig.baseUrl
+                              }
                               onChange={(e) => {
                                 if (editingApiConfig) {
-                                  setEditingApiConfig({...editingApiConfig, baseUrl: e.target.value});
+                                  setEditingApiConfig({
+                                    ...editingApiConfig,
+                                    baseUrl: e.target.value,
+                                  });
                                 } else {
-                                  setNewApiConfig({...newApiConfig, baseUrl: e.target.value});
+                                  setNewApiConfig({
+                                    ...newApiConfig,
+                                    baseUrl: e.target.value,
+                                  });
                                 }
                               }}
                               placeholder="https://api.example.com"
@@ -1157,12 +1245,22 @@ export default function AdminSettings() {
                           <div className="md:col-span-2">
                             <Label className="arabic">الوصف</Label>
                             <Textarea
-                              value={editingApiConfig ? (editingApiConfig.description || "") : newApiConfig.description}
+                              value={
+                                editingApiConfig
+                                  ? editingApiConfig.description || ""
+                                  : newApiConfig.description
+                              }
                               onChange={(e) => {
                                 if (editingApiConfig) {
-                                  setEditingApiConfig({...editingApiConfig, description: e.target.value});
+                                  setEditingApiConfig({
+                                    ...editingApiConfig,
+                                    description: e.target.value,
+                                  });
                                 } else {
-                                  setNewApiConfig({...newApiConfig, description: e.target.value});
+                                  setNewApiConfig({
+                                    ...newApiConfig,
+                                    description: e.target.value,
+                                  });
                                 }
                               }}
                               placeholder="وصف الخادم واستخدامه"
@@ -1172,32 +1270,60 @@ export default function AdminSettings() {
                           </div>
                           <div className="flex items-center justify-between p-4 border rounded-lg">
                             <div>
-                              <Label className="font-medium arabic">خادم نشط</Label>
-                              <p className="text-sm text-gray-600 arabic">يمكن استخدام هذا الخادم</p>
+                              <Label className="font-medium arabic">
+                                خادم نشط
+                              </Label>
+                              <p className="text-sm text-gray-600 arabic">
+                                يمكن استخدام هذا الخادم
+                              </p>
                             </div>
                             <Switch
-                              checked={editingApiConfig ? editingApiConfig.isActive : newApiConfig.isActive}
+                              checked={
+                                editingApiConfig
+                                  ? editingApiConfig.isActive
+                                  : newApiConfig.isActive
+                              }
                               onCheckedChange={(checked) => {
                                 if (editingApiConfig) {
-                                  setEditingApiConfig({...editingApiConfig, isActive: checked});
+                                  setEditingApiConfig({
+                                    ...editingApiConfig,
+                                    isActive: checked,
+                                  });
                                 } else {
-                                  setNewApiConfig({...newApiConfig, isActive: checked});
+                                  setNewApiConfig({
+                                    ...newApiConfig,
+                                    isActive: checked,
+                                  });
                                 }
                               }}
                             />
                           </div>
                           <div className="flex items-center justify-between p-4 border rounded-lg">
                             <div>
-                              <Label className="font-medium arabic">الخادم الافتراضي</Label>
-                              <p className="text-sm text-gray-600 arabic">الخادم المستخدم افتراضياً</p>
+                              <Label className="font-medium arabic">
+                                الخادم الافتراضي
+                              </Label>
+                              <p className="text-sm text-gray-600 arabic">
+                                الخادم المستخدم افتراضياً
+                              </p>
                             </div>
                             <Switch
-                              checked={editingApiConfig ? editingApiConfig.isDefault : newApiConfig.isDefault}
+                              checked={
+                                editingApiConfig
+                                  ? editingApiConfig.isDefault
+                                  : newApiConfig.isDefault
+                              }
                               onCheckedChange={(checked) => {
                                 if (editingApiConfig) {
-                                  setEditingApiConfig({...editingApiConfig, isDefault: checked});
+                                  setEditingApiConfig({
+                                    ...editingApiConfig,
+                                    isDefault: checked,
+                                  });
                                 } else {
-                                  setNewApiConfig({...newApiConfig, isDefault: checked});
+                                  setNewApiConfig({
+                                    ...newApiConfig,
+                                    isDefault: checked,
+                                  });
                                 }
                               }}
                             />
@@ -1207,18 +1333,26 @@ export default function AdminSettings() {
                           <Button
                             onClick={() => {
                               if (editingApiConfig) {
-                                apiConfigManager.updateConfig(editingApiConfig.id, editingApiConfig);
+                                apiConfigManager.updateConfig(
+                                  editingApiConfig.id,
+                                  editingApiConfig,
+                                );
                                 setApiConfigs(apiConfigManager.getAllConfigs());
-                                setActiveApiConfig(apiConfigManager.getActiveConfig());
+                                setActiveApiConfig(
+                                  apiConfigManager.getActiveConfig(),
+                                );
                                 setEditingApiConfig(null);
                                 toast({
                                   title: "تم تحديث الخادم",
-                                  description: "تم حفظ إعدادات الخادم بنجاح"
+                                  description: "تم حفظ إعدادات الخادم بنجاح",
                                 });
                               } else {
-                                const id = apiConfigManager.addConfig(newApiConfig);
+                                const id =
+                                  apiConfigManager.addConfig(newApiConfig);
                                 setApiConfigs(apiConfigManager.getAllConfigs());
-                                setActiveApiConfig(apiConfigManager.getActiveConfig());
+                                setActiveApiConfig(
+                                  apiConfigManager.getActiveConfig(),
+                                );
                                 setShowAddApiForm(false);
                                 setNewApiConfig({
                                   name: "",
@@ -1234,21 +1368,27 @@ export default function AdminSettings() {
                                     companies: "/companies",
                                     jobs: "/jobs",
                                     orders: "/orders",
-                                    analytics: "/analytics"
+                                    analytics: "/analytics",
                                   },
                                   authentication: {
-                                    type: 'bearer' as const
+                                    type: "bearer" as const,
                                   },
                                   timeout: 10000,
-                                  retries: 3
+                                  retries: 3,
                                 });
                                 toast({
                                   title: "تم إضافة الخادم",
-                                  description: "تم إضافة الخادم الجديد بنجاح"
+                                  description: "تم إضافة الخادم الجديد بنجاح",
                                 });
                               }
                             }}
-                            disabled={editingApiConfig ? !editingApiConfig.name.trim() || !editingApiConfig.baseUrl.trim() : !newApiConfig.name.trim() || !newApiConfig.baseUrl.trim()}
+                            disabled={
+                              editingApiConfig
+                                ? !editingApiConfig.name.trim() ||
+                                  !editingApiConfig.baseUrl.trim()
+                                : !newApiConfig.name.trim() ||
+                                  !newApiConfig.baseUrl.trim()
+                            }
                             className="arabic"
                           >
                             <Save className="w-4 h-4 ml-2" />
@@ -1273,13 +1413,13 @@ export default function AdminSettings() {
                                   companies: "/companies",
                                   jobs: "/jobs",
                                   orders: "/orders",
-                                  analytics: "/analytics"
+                                  analytics: "/analytics",
                                 },
                                 authentication: {
-                                  type: 'bearer' as const
+                                  type: "bearer" as const,
                                 },
                                 timeout: 10000,
-                                retries: 3
+                                retries: 3,
                               });
                             }}
                             className="arabic"
@@ -1294,37 +1434,54 @@ export default function AdminSettings() {
                   {/* API Configs List */}
                   <div className="space-y-4">
                     {apiConfigs.map((config) => (
-                      <Card key={config.id} className={`border-2 transition-all ${
-                        activeApiConfig?.id === config.id
-                          ? 'border-blue-500 bg-blue-50'
-                          : config.isActive
-                            ? 'border-green-200 bg-green-50'
-                            : 'border-gray-200'
-                      }`}>
+                      <Card
+                        key={config.id}
+                        className={`border-2 transition-all ${
+                          activeApiConfig?.id === config.id
+                            ? "border-blue-500 bg-blue-50"
+                            : config.isActive
+                              ? "border-green-200 bg-green-50"
+                              : "border-gray-200"
+                        }`}
+                      >
                         <CardContent className="p-4">
                           <div className="flex items-center justify-between">
                             <div className="flex-1">
                               <div className="flex items-center space-x-3 space-x-reverse mb-2">
-                                <h4 className="font-semibold arabic">{config.name}</h4>
+                                <h4 className="font-semibold arabic">
+                                  {config.name}
+                                </h4>
                                 <div className="flex space-x-2 space-x-reverse">
                                   {config.isDefault && (
-                                    <Badge variant="secondary" className="arabic">
+                                    <Badge
+                                      variant="secondary"
+                                      className="arabic"
+                                    >
                                       افتراضي
                                     </Badge>
                                   )}
                                   {activeApiConfig?.id === config.id && (
-                                    <Badge className="arabic">
-                                      الحالي
-                                    </Badge>
+                                    <Badge className="arabic">الحالي</Badge>
                                   )}
-                                  <Badge variant={config.isActive ? "default" : "destructive"} className="arabic">
+                                  <Badge
+                                    variant={
+                                      config.isActive
+                                        ? "default"
+                                        : "destructive"
+                                    }
+                                    className="arabic"
+                                  >
                                     {config.isActive ? "نشط" : "غير نشط"}
                                   </Badge>
                                 </div>
                               </div>
-                              <p className="text-sm text-gray-600 mb-1">{config.baseUrl}</p>
+                              <p className="text-sm text-gray-600 mb-1">
+                                {config.baseUrl}
+                              </p>
                               {config.description && (
-                                <p className="text-sm text-gray-500 arabic">{config.description}</p>
+                                <p className="text-sm text-gray-500 arabic">
+                                  {config.description}
+                                </p>
                               )}
                             </div>
                             <div className="flex space-x-2 space-x-reverse">
@@ -1334,17 +1491,22 @@ export default function AdminSettings() {
                                 onClick={async () => {
                                   setTestingConfigId(config.id);
                                   try {
-                                    const result = await apiConfigManager.testConfig(config);
+                                    const result =
+                                      await apiConfigManager.testConfig(config);
                                     toast({
-                                      title: result.success ? "اختبار ناجح" : "اختبار فاشل",
-                                      description: `${result.message}${result.responseTime ? ` (${result.responseTime}ms)` : ''}`,
-                                      variant: result.success ? "default" : "destructive"
+                                      title: result.success
+                                        ? "اختبار ناجح"
+                                        : "اختبار فاشل",
+                                      description: `${result.message}${result.responseTime ? ` (${result.responseTime}ms)` : ""}`,
+                                      variant: result.success
+                                        ? "default"
+                                        : "destructive",
                                     });
                                   } catch (error) {
                                     toast({
                                       title: "خطأ في الاختبار",
                                       description: "فشل في اختبار الاتصال",
-                                      variant: "destructive"
+                                      variant: "destructive",
                                     });
                                   } finally {
                                     setTestingConfigId(null);
@@ -1353,24 +1515,31 @@ export default function AdminSettings() {
                                 disabled={testingConfigId === config.id}
                                 className="arabic"
                               >
-                                {testingConfigId === config.id ? "جاري الاختبار..." : "اختبار"}
+                                {testingConfigId === config.id
+                                  ? "جاري الاختبار..."
+                                  : "اختبار"}
                               </Button>
-                              {config.isActive && activeApiConfig?.id !== config.id && (
-                                <Button
-                                  size="sm"
-                                  onClick={() => {
-                                    apiConfigManager.setActiveConfig(config.id);
-                                    setActiveApiConfig(apiConfigManager.getActiveConfig());
-                                    toast({
-                                      title: "تم تغيير الخادم",
-                                      description: `تم تفعيل خادم: ${config.name}`
-                                    });
-                                  }}
-                                  className="arabic"
-                                >
-                                  تفعيل
-                                </Button>
-                              )}
+                              {config.isActive &&
+                                activeApiConfig?.id !== config.id && (
+                                  <Button
+                                    size="sm"
+                                    onClick={() => {
+                                      apiConfigManager.setActiveConfig(
+                                        config.id,
+                                      );
+                                      setActiveApiConfig(
+                                        apiConfigManager.getActiveConfig(),
+                                      );
+                                      toast({
+                                        title: "تم تغيير الخادم",
+                                        description: `تم تفعيل خادم: ${config.name}`,
+                                      });
+                                    }}
+                                    className="arabic"
+                                  >
+                                    تفعيل
+                                  </Button>
+                                )}
                               <Button
                                 size="sm"
                                 variant="outline"
@@ -1383,22 +1552,31 @@ export default function AdminSettings() {
                                 size="sm"
                                 variant="destructive"
                                 onClick={() => {
-                                  if (apiConfigManager.deleteConfig(config.id)) {
-                                    setApiConfigs(apiConfigManager.getAllConfigs());
-                                    setActiveApiConfig(apiConfigManager.getActiveConfig());
+                                  if (
+                                    apiConfigManager.deleteConfig(config.id)
+                                  ) {
+                                    setApiConfigs(
+                                      apiConfigManager.getAllConfigs(),
+                                    );
+                                    setActiveApiConfig(
+                                      apiConfigManager.getActiveConfig(),
+                                    );
                                     toast({
                                       title: "تم حذف الخادم",
-                                      description: `تم حذف خادم: ${config.name}`
+                                      description: `تم حذف خادم: ${config.name}`,
                                     });
                                   } else {
                                     toast({
                                       title: "خطأ في الحذف",
-                                      description: "لا يمكن حذف الخادم الافتراضي الوحيد",
-                                      variant: "destructive"
+                                      description:
+                                        "لا يمكن حذف الخادم الافتراضي الوحيد",
+                                      variant: "destructive",
                                     });
                                   }
                                 }}
-                                disabled={config.isDefault && apiConfigs.length === 1}
+                                disabled={
+                                  config.isDefault && apiConfigs.length === 1
+                                }
                               >
                                 <Trash2 className="w-4 h-4" />
                               </Button>
@@ -1420,7 +1598,8 @@ export default function AdminSettings() {
                         setActiveApiConfig(apiConfigManager.getActiveConfig());
                         toast({
                           title: "تم إعادة التعيين",
-                          description: "تم إعادة تعيين جميع الخوادم للإعدادات الافتراضية"
+                          description:
+                            "تم إعادة تعيين جميع الخوادم للإعدادات الافتراضية",
                         });
                       }}
                       className="arabic"
@@ -1433,11 +1612,13 @@ export default function AdminSettings() {
                       size="sm"
                       onClick={() => {
                         const configsJson = apiConfigManager.exportConfigs();
-                        const blob = new Blob([configsJson], { type: 'application/json' });
+                        const blob = new Blob([configsJson], {
+                          type: "application/json",
+                        });
                         const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
+                        const a = document.createElement("a");
                         a.href = url;
-                        a.download = 'api-configs.json';
+                        a.download = "api-configs.json";
                         a.click();
                         URL.revokeObjectURL(url);
                       }}
@@ -1449,23 +1630,32 @@ export default function AdminSettings() {
                       variant="outline"
                       size="sm"
                       onClick={() => {
-                        const input = document.createElement('input');
-                        input.type = 'file';
-                        input.accept = '.json';
+                        const input = document.createElement("input");
+                        input.type = "file";
+                        input.accept = ".json";
                         input.onchange = (e) => {
-                          const file = (e.target as HTMLInputElement).files?.[0];
+                          const file = (e.target as HTMLInputElement)
+                            .files?.[0];
                           if (file) {
                             const reader = new FileReader();
                             reader.onload = (e) => {
-                              const result = apiConfigManager.importConfigs(e.target?.result as string);
+                              const result = apiConfigManager.importConfigs(
+                                e.target?.result as string,
+                              );
                               if (result.success) {
                                 setApiConfigs(apiConfigManager.getAllConfigs());
-                                setActiveApiConfig(apiConfigManager.getActiveConfig());
+                                setActiveApiConfig(
+                                  apiConfigManager.getActiveConfig(),
+                                );
                               }
                               toast({
-                                title: result.success ? "نجح الاستيراد" : "فشل الاستيراد",
+                                title: result.success
+                                  ? "نجح الاستيراد"
+                                  : "فشل الاستيراد",
                                 description: result.message,
-                                variant: result.success ? "default" : "destructive"
+                                variant: result.success
+                                  ? "default"
+                                  : "destructive",
                               });
                             };
                             reader.readAsText(file);
@@ -1485,7 +1675,10 @@ export default function AdminSettings() {
                       تعليمات الاستخدام:
                     </h4>
                     <ul className="text-sm text-blue-700 arabic space-y-1">
-                      <li>• أضف خوادم API خارجية لربط التطبيق بقواعد البيا��ات المختلفة</li>
+                      <li>
+                        • أضف خوادم API خارجية لربط التطبيق بقواعد البيا��ات
+                        المختلفة
+                      </li>
                       <li>• يمكن تفعيل خادم واحد فقط في كل مرة</li>
                       <li>• استخدم اختبار الاتصال للتأكد من عمل الخادم</li>
                       <li>• الخادم الافتراضي هو الخادم المحلي للتطوير</li>

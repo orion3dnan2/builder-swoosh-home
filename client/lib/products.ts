@@ -458,7 +458,10 @@ export class ProductService {
       errors.push("يجب إضافة صورة واحدة على الأقل");
     }
 
-    if (product.inventory?.quantity === undefined || product.inventory.quantity < 0) {
+    if (
+      product.inventory?.quantity === undefined ||
+      product.inventory.quantity < 0
+    ) {
       errors.push("كمية المخزون يجب أن تكون صفر أو أكثر");
     }
 
@@ -539,14 +542,17 @@ export const useProducts = (storeId?: string) => {
     getProduct: (id: string) => ProductService.getProduct(id),
     saveProduct: (product: Product) => ProductService.saveProduct(product),
     deleteProduct: (id: string) => ProductService.deleteProduct(id),
-    updateStock: (id: string, quantity: number) => ProductService.updateStock(id, quantity),
+    updateStock: (id: string, quantity: number) =>
+      ProductService.updateStock(id, quantity),
     searchProducts: (query: string) =>
       ProductService.searchProducts(query, storeId),
     categories: ProductService.getCategories(),
     lowStockProducts: ProductService.getLowStockProducts(storeId),
     getProductsByStatus: (status: Product["status"]) =>
       ProductService.getProductsByStatus(status, storeId),
-    generateSKU: (category: string, name: string) => ProductService.generateSKU(category, name),
-    validateProduct: (product: Partial<Product>) => ProductService.validateProduct(product),
+    generateSKU: (category: string, name: string) =>
+      ProductService.generateSKU(category, name),
+    validateProduct: (product: Partial<Product>) =>
+      ProductService.validateProduct(product),
   };
 };

@@ -440,7 +440,11 @@ export default function AdminStores() {
     setIsSupportModalOpen(true);
   };
 
-  const openConfirmModal = (type: string, storeId: string, storeName: string) => {
+  const openConfirmModal = (
+    type: string,
+    storeId: string,
+    storeName: string,
+  ) => {
     setConfirmAction({ type, storeId, storeName });
     setIsConfirmModalOpen(true);
   };
@@ -463,13 +467,17 @@ export default function AdminStores() {
               return {
                 ...store,
                 status: "suspended" as const,
-                tags: updateStoreTags(store.tags, "مجدد حديثاً", "موقف")
+                tags: updateStoreTags(store.tags, "مجدد حديثاً", "موقف"),
               };
             case "renew":
               // تجدي�� الاشتراك - يمكن إضافة منطق تاريخ الانتهاء هنا
               return {
                 ...store,
-                tags: updateStoreTags(store.tags, "منتهي الصلاحية", "مجدد حديثاً")
+                tags: updateStoreTags(
+                  store.tags,
+                  "منتهي الصلاحية",
+                  "مجدد حديثاً",
+                ),
               };
             case "feature":
               return { ...store, status: "featured" as const, featured: true };
@@ -484,7 +492,7 @@ export default function AdminStores() {
           }
         }
         return store;
-      })
+      }),
     );
 
     setIsConfirmModalOpen(false);
@@ -492,12 +500,16 @@ export default function AdminStores() {
   };
 
   // Helper function to manage tags without duplicates
-  const updateStoreTags = (currentTags: string[], removeTag?: string, addTag?: string): string[] => {
+  const updateStoreTags = (
+    currentTags: string[],
+    removeTag?: string,
+    addTag?: string,
+  ): string[] => {
     let newTags = [...currentTags];
 
     // Remove specified tag if exists
     if (removeTag) {
-      newTags = newTags.filter(tag => tag !== removeTag);
+      newTags = newTags.filter((tag) => tag !== removeTag);
     }
 
     // Add new tag if provided and not already exists
@@ -508,11 +520,14 @@ export default function AdminStores() {
     return newTags;
   };
 
-  const updatePermissions = (storeId: string, permissions: StoreData["permissions"]) => {
+  const updatePermissions = (
+    storeId: string,
+    permissions: StoreData["permissions"],
+  ) => {
     setStores((prevStores) =>
       prevStores.map((store) =>
-        store.id === storeId ? { ...store, permissions } : store
-      )
+        store.id === storeId ? { ...store, permissions } : store,
+      ),
     );
   };
 
@@ -525,7 +540,7 @@ export default function AdminStores() {
 
   const createSupportTicket = () => {
     if (!selectedStore) return;
-    
+
     const newTicket: SupportTicket = {
       id: `ticket-${Date.now()}`,
       storeId: selectedStore.id,
@@ -534,7 +549,7 @@ export default function AdminStores() {
       message: supportMessage,
       priority: "medium",
       status: "open",
-      createdAt: new Date().toISOString().split('T')[0],
+      createdAt: new Date().toISOString().split("T")[0],
       lastUpdate: "الآن",
     };
 
@@ -554,7 +569,9 @@ export default function AdminStores() {
   const totalOrders = stores.reduce((sum, store) => sum + store.orders, 0);
   const totalProducts = stores.reduce((sum, store) => sum + store.products, 0);
   const openTickets = supportTickets.filter((t) => t.status === "open").length;
-  const urgentTickets = supportTickets.filter((t) => t.priority === "urgent").length;
+  const urgentTickets = supportTickets.filter(
+    (t) => t.priority === "urgent",
+  ).length;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
@@ -606,8 +623,12 @@ export default function AdminStores() {
               <div className="flex items-center">
                 <Store className="w-8 h-8 text-blue-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-blue-800">{totalStores}</p>
-                  <p className="text-blue-600 text-sm arabic">إجم��لي المتاجر</p>
+                  <p className="text-2xl font-bold text-blue-800">
+                    {totalStores}
+                  </p>
+                  <p className="text-blue-600 text-sm arabic">
+                    إجم��لي المتاجر
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -618,7 +639,9 @@ export default function AdminStores() {
               <div className="flex items-center">
                 <CheckCircle className="w-8 h-8 text-green-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-green-800">{activeStores}</p>
+                  <p className="text-2xl font-bold text-green-800">
+                    {activeStores}
+                  </p>
                   <p className="text-green-600 text-sm arabic">متاجر نشطة</p>
                 </div>
               </div>
@@ -630,7 +653,9 @@ export default function AdminStores() {
               <div className="flex items-center">
                 <Crown className="w-8 h-8 text-purple-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-purple-800">{featuredStores}</p>
+                  <p className="text-2xl font-bold text-purple-800">
+                    {featuredStores}
+                  </p>
                   <p className="text-purple-600 text-sm arabic">متاجر مميزة</p>
                 </div>
               </div>
@@ -642,7 +667,9 @@ export default function AdminStores() {
               <div className="flex items-center">
                 <Shield className="w-8 h-8 text-indigo-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-indigo-800">{verifiedStores}</p>
+                  <p className="text-2xl font-bold text-indigo-800">
+                    {verifiedStores}
+                  </p>
                   <p className="text-indigo-600 text-sm arabic">متاجر موثقة</p>
                 </div>
               </div>
@@ -654,8 +681,12 @@ export default function AdminStores() {
               <div className="flex items-center">
                 <DollarSign className="w-8 h-8 text-emerald-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-emerald-800">${totalRevenue.toLocaleString()}</p>
-                  <p className="text-emerald-600 text-sm arabic">إجمالي الإيرادات</p>
+                  <p className="text-2xl font-bold text-emerald-800">
+                    ${totalRevenue.toLocaleString()}
+                  </p>
+                  <p className="text-emerald-600 text-sm arabic">
+                    إجمالي الإيرادات
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -666,7 +697,9 @@ export default function AdminStores() {
               <div className="flex items-center">
                 <AlertCircle className="w-8 h-8 text-red-600" />
                 <div className="mr-4">
-                  <p className="text-2xl font-bold text-red-800">{openTickets}</p>
+                  <p className="text-2xl font-bold text-red-800">
+                    {openTickets}
+                  </p>
                   <p className="text-red-600 text-sm arabic">تذاكر الدعم</p>
                 </div>
               </div>
@@ -675,12 +708,24 @@ export default function AdminStores() {
         </div>
 
         {/* Advanced Tabs System */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="space-y-6"
+        >
           <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="stores" className="arabic">إدارة المتاجر</TabsTrigger>
-            <TabsTrigger value="permissions" className="arabic">الصلاحيات والأذونات</TabsTrigger>
-            <TabsTrigger value="support" className="arabic">الدعم والمساعدة</TabsTrigger>
-            <TabsTrigger value="analytics" className="arabic">التحليلات المتقدمة</TabsTrigger>
+            <TabsTrigger value="stores" className="arabic">
+              إدارة المتاجر
+            </TabsTrigger>
+            <TabsTrigger value="permissions" className="arabic">
+              الصلاحيات والأذونات
+            </TabsTrigger>
+            <TabsTrigger value="support" className="arabic">
+              الدعم والمساعدة
+            </TabsTrigger>
+            <TabsTrigger value="analytics" className="arabic">
+              التحليلات المتقدمة
+            </TabsTrigger>
           </TabsList>
 
           {/* Stores Management Tab */}
@@ -740,7 +785,10 @@ export default function AdminStores() {
             {/* Enhanced Stores Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {filteredStores.map((store) => (
-                <Card key={store.id} className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-blue-500">
+                <Card
+                  key={store.id}
+                  className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-blue-500"
+                >
                   <CardContent className="p-6">
                     {/* Store Header */}
                     <div className="flex justify-between items-start mb-4">
@@ -750,43 +798,67 @@ export default function AdminStores() {
                             {store.name}
                           </h3>
                           {store.verified && (
-                            <Shield className="w-5 h-5 text-blue-500" title="متجر موثق" />
+                            <Shield
+                              className="w-5 h-5 text-blue-500"
+                              title="متجر موثق"
+                            />
                           )}
                           {store.featured && (
-                            <Crown className="w-5 h-5 text-purple-500" title="متجر مميز" />
+                            <Crown
+                              className="w-5 h-5 text-purple-500"
+                              title="متجر مميز"
+                            />
                           )}
                         </div>
                         <div className="flex items-center space-x-2 space-x-reverse mb-2">
                           <User className="w-4 h-4 text-gray-400" />
-                          <span className="text-gray-600 arabic">{store.owner}</span>
+                          <span className="text-gray-600 arabic">
+                            {store.owner}
+                          </span>
                         </div>
                         <div className="flex items-center space-x-2 space-x-reverse mb-2">
                           <MapPin className="w-4 h-4 text-gray-400" />
-                          <span className="text-gray-600 arabic">{store.location}</span>
+                          <span className="text-gray-600 arabic">
+                            {store.location}
+                          </span>
                         </div>
                       </div>
-                      
+
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="sm">
                             <MoreVertical className="w-4 h-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="arabic w-56">
+                        <DropdownMenuContent
+                          align="end"
+                          className="arabic w-56"
+                        >
                           {/* الإجراءات المهمة والأساسية */}
                           {store.status === "pending" && (
                             <DropdownMenuItem
-                              onClick={() => openConfirmModal("approve", store.id, store.name)}
+                              onClick={() =>
+                                openConfirmModal(
+                                  "approve",
+                                  store.id,
+                                  store.name,
+                                )
+                              }
                               className="text-green-600 font-semibold"
                             >
-                              <Check className="w-4 h-4 ml-2" />
-                              ✅ قبول ال��تجر
+                              <Check className="w-4 h-4 ml-2" />✅ قبول ال��تجر
                             </DropdownMenuItem>
                           )}
 
                           {store.status === "active" && (
                             <DropdownMenuItem
-                              onClick={() => openConfirmModal("suspend", store.id, store.name)}
+                              onClick={() =>
+                                openConfirmModal(
+                                  "suspend",
+                                  store.id,
+                                  store.name,
+                                )
+                              }
                               className="text-orange-600 font-semibold"
                             >
                               <AlertTriangle className="w-4 h-4 ml-2" />
@@ -794,9 +866,12 @@ export default function AdminStores() {
                             </DropdownMenuItem>
                           )}
 
-                          {(store.status === "active" || store.status === "featured") && (
+                          {(store.status === "active" ||
+                            store.status === "featured") && (
                             <DropdownMenuItem
-                              onClick={() => openConfirmModal("block", store.id, store.name)}
+                              onClick={() =>
+                                openConfirmModal("block", store.id, store.name)
+                              }
                               className="text-red-600 font-semibold"
                             >
                               <Ban className="w-4 h-4 ml-2" />
@@ -806,7 +881,13 @@ export default function AdminStores() {
 
                           {store.status === "suspended" && (
                             <DropdownMenuItem
-                              onClick={() => openConfirmModal("reactivate", store.id, store.name)}
+                              onClick={() =>
+                                openConfirmModal(
+                                  "reactivate",
+                                  store.id,
+                                  store.name,
+                                )
+                              }
                               className="text-blue-600 font-semibold"
                             >
                               <RefreshCw className="w-4 h-4 ml-2" />
@@ -815,7 +896,9 @@ export default function AdminStores() {
                           )}
 
                           <DropdownMenuItem
-                            onClick={() => openConfirmModal("renew", store.id, store.name)}
+                            onClick={() =>
+                              openConfirmModal("renew", store.id, store.name)
+                            }
                             className="text-purple-600 font-semibold"
                           >
                             <Calendar className="w-4 h-4 ml-2" />
@@ -825,19 +908,27 @@ export default function AdminStores() {
                           <DropdownMenuSeparator />
 
                           {/* الإجراءات الثانوية */}
-                          <DropdownMenuItem onClick={() => handleViewDetails(store)}>
+                          <DropdownMenuItem
+                            onClick={() => handleViewDetails(store)}
+                          >
                             <Eye className="w-4 h-4 ml-2" />
                             عرض ��لتفاصيل
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleManagePermissions(store)}>
+                          <DropdownMenuItem
+                            onClick={() => handleManagePermissions(store)}
+                          >
                             <Key className="w-4 h-4 ml-2" />
                             إدارة الص��احيات
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleContactStore(store)}>
+                          <DropdownMenuItem
+                            onClick={() => handleContactStore(store)}
+                          >
                             <MessageSquare className="w-4 h-4 ml-2" />
                             إرس��ل رسالة
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleSupportTicket(store)}>
+                          <DropdownMenuItem
+                            onClick={() => handleSupportTicket(store)}
+                          >
                             <HelpCircle className="w-4 h-4 ml-2" />
                             ��قديم المساعدة
                           </DropdownMenuItem>
@@ -847,7 +938,13 @@ export default function AdminStores() {
                           {/* إجراءات إضافية */}
                           {store.status === "active" && !store.featured && (
                             <DropdownMenuItem
-                              onClick={() => openConfirmModal("feature", store.id, store.name)}
+                              onClick={() =>
+                                openConfirmModal(
+                                  "feature",
+                                  store.id,
+                                  store.name,
+                                )
+                              }
                             >
                               <Crown className="w-4 h-4 ml-2" />
                               جعله مميزاً
@@ -855,7 +952,13 @@ export default function AdminStores() {
                           )}
                           {store.featured && (
                             <DropdownMenuItem
-                              onClick={() => openConfirmModal("unfeature", store.id, store.name)}
+                              onClick={() =>
+                                openConfirmModal(
+                                  "unfeature",
+                                  store.id,
+                                  store.name,
+                                )
+                              }
                             >
                               <X className="w-4 h-4 ml-2" />
                               إلغاء التمييز
@@ -863,7 +966,9 @@ export default function AdminStores() {
                           )}
                           {!store.verified && (
                             <DropdownMenuItem
-                              onClick={() => openConfirmModal("verify", store.id, store.name)}
+                              onClick={() =>
+                                openConfirmModal("verify", store.id, store.name)
+                              }
                             >
                               <Shield className="w-4 h-4 ml-2" />
                               التوثيق
@@ -885,7 +990,11 @@ export default function AdminStores() {
                         عمولة {store.commission}%
                       </Badge>
                       {store.tags.map((tag, index) => (
-                        <Badge key={`${store.id}-tag-${index}`} variant="secondary" className="arabic">
+                        <Badge
+                          key={`${store.id}-tag-${index}`}
+                          variant="secondary"
+                          className="arabic"
+                        >
                           {tag}
                         </Badge>
                       ))}
@@ -894,16 +1003,24 @@ export default function AdminStores() {
                     {/* Store Stats */}
                     <div className="grid grid-cols-3 gap-4 mb-4">
                       <div className="text-center">
-                        <div className="text-xl font-bold text-blue-600">{store.products}</div>
+                        <div className="text-xl font-bold text-blue-600">
+                          {store.products}
+                        </div>
                         <div className="text-sm text-gray-600 arabic">منتج</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-xl font-bold text-green-600">{store.orders}</div>
+                        <div className="text-xl font-bold text-green-600">
+                          {store.orders}
+                        </div>
                         <div className="text-sm text-gray-600 arabic">طلب</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-xl font-bold text-purple-600">${store.revenue}</div>
-                        <div className="text-sm text-gray-600 arabic">إيراد</div>
+                        <div className="text-xl font-bold text-purple-600">
+                          ${store.revenue}
+                        </div>
+                        <div className="text-sm text-gray-600 arabic">
+                          إيراد
+                        </div>
                       </div>
                     </div>
 
@@ -926,11 +1043,12 @@ export default function AdminStores() {
                       {store.status === "pending" && (
                         <Button
                           size="sm"
-                          onClick={() => openConfirmModal("approve", store.id, store.name)}
+                          onClick={() =>
+                            openConfirmModal("approve", store.id, store.name)
+                          }
                           className="arabic flex-1 bg-green-600 hover:bg-green-700 text-white"
                         >
-                          <Check className="w-4 h-4 ml-2" />
-                          ✅ قبول المتجر
+                          <Check className="w-4 h-4 ml-2" />✅ قبول المتجر
                         </Button>
                       )}
 
@@ -938,7 +1056,9 @@ export default function AdminStores() {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => openConfirmModal("suspend", store.id, store.name)}
+                          onClick={() =>
+                            openConfirmModal("suspend", store.id, store.name)
+                          }
                           className="arabic flex-1 border-orange-500 text-orange-600 hover:bg-orange-50"
                         >
                           <AlertTriangle className="w-4 h-4 ml-2" />
@@ -949,7 +1069,9 @@ export default function AdminStores() {
                       {store.status === "suspended" && (
                         <Button
                           size="sm"
-                          onClick={() => openConfirmModal("reactivate", store.id, store.name)}
+                          onClick={() =>
+                            openConfirmModal("reactivate", store.id, store.name)
+                          }
                           className="arabic flex-1 bg-blue-600 hover:bg-blue-700 text-white"
                         >
                           <RefreshCw className="w-4 h-4 ml-2" />
@@ -960,7 +1082,9 @@ export default function AdminStores() {
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => openConfirmModal("renew", store.id, store.name)}
+                        onClick={() =>
+                          openConfirmModal("renew", store.id, store.name)
+                        }
                         className="arabic flex-1 border-purple-500 text-purple-600 hover:bg-purple-50"
                       >
                         <Calendar className="w-4 h-4 ml-2" />
@@ -1011,7 +1135,9 @@ export default function AdminStores() {
           <TabsContent value="permissions" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="arabic">إدارة الصلاحيات والأذونات</CardTitle>
+                <CardTitle className="arabic">
+                  إدارة الصلاحيات والأذونات
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -1020,17 +1146,24 @@ export default function AdminStores() {
                       <CardContent className="p-4">
                         <div className="flex justify-between items-center mb-4">
                           <div>
-                            <h4 className="font-semibold arabic">{store.name}</h4>
-                            <p className="text-sm text-gray-600 arabic">{store.owner}</p>
+                            <h4 className="font-semibold arabic">
+                              {store.name}
+                            </h4>
+                            <p className="text-sm text-gray-600 arabic">
+                              {store.owner}
+                            </p>
                           </div>
                           <Badge className={getStatusColor(store.status)}>
                             {getStatusText(store.status)}
                           </Badge>
                         </div>
-                        
+
                         <div className="space-y-3">
                           <div className="flex items-center justify-between">
-                            <Label htmlFor={`sell-${store.id}`} className="arabic">
+                            <Label
+                              htmlFor={`sell-${store.id}`}
+                              className="arabic"
+                            >
                               السماح بالبيع
                             </Label>
                             <Switch
@@ -1044,9 +1177,12 @@ export default function AdminStores() {
                               }
                             />
                           </div>
-                          
+
                           <div className="flex items-center justify-between">
-                            <Label htmlFor={`ship-${store.id}`} className="arabic">
+                            <Label
+                              htmlFor={`ship-${store.id}`}
+                              className="arabic"
+                            >
                               السماح بالشحن
                             </Label>
                             <Switch
@@ -1060,9 +1196,12 @@ export default function AdminStores() {
                               }
                             />
                           </div>
-                          
+
                           <div className="flex items-center justify-between">
-                            <Label htmlFor={`promote-${store.id}`} className="arabic">
+                            <Label
+                              htmlFor={`promote-${store.id}`}
+                              className="arabic"
+                            >
                               السماح بالترويج
                             </Label>
                             <Switch
@@ -1076,9 +1215,12 @@ export default function AdminStores() {
                               }
                             />
                           </div>
-                          
+
                           <div className="flex items-center justify-between">
-                            <Label htmlFor={`export-${store.id}`} className="arabic">
+                            <Label
+                              htmlFor={`export-${store.id}`}
+                              className="arabic"
+                            >
                               السماح بتصدير البيانات
                             </Label>
                             <Switch
@@ -1092,9 +1234,12 @@ export default function AdminStores() {
                               }
                             />
                           </div>
-                          
+
                           <div className="flex items-center justify-between">
-                            <Label htmlFor={`analytics-${store.id}`} className="arabic">
+                            <Label
+                              htmlFor={`analytics-${store.id}`}
+                              className="arabic"
+                            >
                               الوصول للتحليلات
                             </Label>
                             <Switch
@@ -1133,31 +1278,61 @@ export default function AdminStores() {
                           <CardContent className="p-4">
                             <div className="flex justify-between items-start mb-3">
                               <div>
-                                <h4 className="font-semibold arabic">{ticket.subject}</h4>
-                                <p className="text-sm text-gray-600 arabic">{ticket.storeName}</p>
+                                <h4 className="font-semibold arabic">
+                                  {ticket.subject}
+                                </h4>
+                                <p className="text-sm text-gray-600 arabic">
+                                  {ticket.storeName}
+                                </p>
                               </div>
                               <div className="flex gap-2">
-                                <Badge className={getPriorityColor(ticket.priority)}>
-                                  {ticket.priority === "urgent" ? "عاجل" : 
-                                   ticket.priority === "high" ? "عالي" :
-                                   ticket.priority === "medium" ? "متوسط" : "منخفض"}
+                                <Badge
+                                  className={getPriorityColor(ticket.priority)}
+                                >
+                                  {ticket.priority === "urgent"
+                                    ? "عاجل"
+                                    : ticket.priority === "high"
+                                      ? "عالي"
+                                      : ticket.priority === "medium"
+                                        ? "متوسط"
+                                        : "منخفض"}
                                 </Badge>
-                                <Badge className={getTicketStatusColor(ticket.status)}>
-                                  {ticket.status === "open" ? "مفتوح" :
-                                   ticket.status === "in-progress" ? "قيد المعالجة" :
-                                   ticket.status === "resolved" ? "محلول" : "مغلق"}
+                                <Badge
+                                  className={getTicketStatusColor(
+                                    ticket.status,
+                                  )}
+                                >
+                                  {ticket.status === "open"
+                                    ? "مفتوح"
+                                    : ticket.status === "in-progress"
+                                      ? "قيد المعالجة"
+                                      : ticket.status === "resolved"
+                                        ? "محلول"
+                                        : "مغلق"}
                                 </Badge>
                               </div>
                             </div>
-                            <p className="text-sm text-gray-700 mb-3 arabic">{ticket.message}</p>
+                            <p className="text-sm text-gray-700 mb-3 arabic">
+                              {ticket.message}
+                            </p>
                             <div className="flex justify-between items-center">
-                              <span className="text-xs text-gray-500 arabic">{ticket.lastUpdate}</span>
+                              <span className="text-xs text-gray-500 arabic">
+                                {ticket.lastUpdate}
+                              </span>
                               <div className="flex gap-2">
-                                <Button variant="outline" size="sm" className="arabic">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="arabic"
+                                >
                                   <MessageSquare className="w-4 h-4 ml-2" />
                                   رد
                                 </Button>
-                                <Button variant="outline" size="sm" className="arabic">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="arabic"
+                                >
                                   <Check className="w-4 h-4 ml-2" />
                                   حل
                                 </Button>
@@ -1218,19 +1393,30 @@ export default function AdminStores() {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="arabic">إجمالي الإيرادات</span>
-                      <span className="font-bold text-2xl">${totalRevenue.toLocaleString()}</span>
+                      <span className="font-bold text-2xl">
+                        ${totalRevenue.toLocaleString()}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="arabic">متوسط الإيراد لكل متجر</span>
-                      <span className="font-bold">${Math.round(totalRevenue / totalStores).toLocaleString()}</span>
+                      <span className="font-bold">
+                        $
+                        {Math.round(
+                          totalRevenue / totalStores,
+                        ).toLocaleString()}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="arabic">إجمالي الطلبات</span>
-                      <span className="font-bold">{totalOrders.toLocaleString()}</span>
+                      <span className="font-bold">
+                        {totalOrders.toLocaleString()}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="arabic">إجمالي المنتجات</span>
-                      <span className="font-bold">{totalProducts.toLocaleString()}</span>
+                      <span className="font-bold">
+                        {totalProducts.toLocaleString()}
+                      </span>
                     </div>
                   </div>
                 </CardContent>
@@ -1245,19 +1431,27 @@ export default function AdminStores() {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="arabic">معدل النشاط</span>
-                      <span className="font-bold">{Math.round((activeStores / totalStores) * 100)}%</span>
+                      <span className="font-bold">
+                        {Math.round((activeStores / totalStores) * 100)}%
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="arabic">معدل التوثيق</span>
-                      <span className="font-bold">{Math.round((verifiedStores / totalStores) * 100)}%</span>
+                      <span className="font-bold">
+                        {Math.round((verifiedStores / totalStores) * 100)}%
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="arabic">معدل الانتظار</span>
-                      <span className="font-bold">{Math.round((pendingStores / totalStores) * 100)}%</span>
+                      <span className="font-bold">
+                        {Math.round((pendingStores / totalStores) * 100)}%
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="arabic">معدل التمييز</span>
-                      <span className="font-bold">{Math.round((featuredStores / totalStores) * 100)}%</span>
+                      <span className="font-bold">
+                        {Math.round((featuredStores / totalStores) * 100)}%
+                      </span>
                     </div>
                   </div>
                 </CardContent>
@@ -1283,7 +1477,9 @@ export default function AdminStores() {
               {/* Basic Information */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="arabic text-right">المعلومات الأساسية</CardTitle>
+                  <CardTitle className="arabic text-right">
+                    المعلومات الأساسية
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
@@ -1295,7 +1491,9 @@ export default function AdminStores() {
                     <span className="arabic">{selectedStore.owner}</span>
                   </div>
                   <div>
-                    <span className="font-semibold arabic">البريد الإلكتروني: </span>
+                    <span className="font-semibold arabic">
+                      البريد الإلكتروني:{" "}
+                    </span>
                     <span>{selectedStore.email}</span>
                   </div>
                   <div>
@@ -1322,40 +1520,56 @@ export default function AdminStores() {
               {/* Performance Stats */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="arabic text-right">إحصائيات الأداء</CardTitle>
+                  <CardTitle className="arabic text-right">
+                    إحصائيات الأداء
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between">
                     <span className="arabic">إجمالي المنتجات:</span>
-                    <span className="font-bold text-blue-600">{selectedStore.products}</span>
+                    <span className="font-bold text-blue-600">
+                      {selectedStore.products}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="arabic">إجمالي الطلبات:</span>
-                    <span className="font-bold text-green-600">{selectedStore.orders}</span>
+                    <span className="font-bold text-green-600">
+                      {selectedStore.orders}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="arabic">الإيرادات:</span>
-                    <span className="font-bold text-purple-600">${selectedStore.revenue}</span>
+                    <span className="font-bold text-purple-600">
+                      ${selectedStore.revenue}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="arabic">التقييم:</span>
                     <div className="flex items-center space-x-1 space-x-reverse">
                       <Star className="w-4 h-4 text-yellow-500 fill-current" />
                       <span className="font-bold">{selectedStore.rating}</span>
-                      <span className="text-gray-500">({selectedStore.reviews} ت��ييم)</span>
+                      <span className="text-gray-500">
+                        ({selectedStore.reviews} ت��ييم)
+                      </span>
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="arabic">نسبة العمولة:</span>
-                    <span className="font-bold text-orange-600">{selectedStore.commission}%</span>
+                    <span className="font-bold text-orange-600">
+                      {selectedStore.commission}%
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="arabic">تاريخ الانض��ام:</span>
-                    <span className="font-medium">{selectedStore.joinDate}</span>
+                    <span className="font-medium">
+                      {selectedStore.joinDate}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="arabic">آخر ن��اط:</span>
-                    <span className="font-medium arabic">{selectedStore.lastActive}</span>
+                    <span className="font-medium arabic">
+                      {selectedStore.lastActive}
+                    </span>
                   </div>
                 </CardContent>
               </Card>
@@ -1363,72 +1577,102 @@ export default function AdminStores() {
               {/* Admin Actions */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="arabic text-right">إجراءات إدارية</CardTitle>
+                  <CardTitle className="arabic text-right">
+                    إجراءات إدارية
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <Button 
-                    className="w-full arabic justify-start" 
+                  <Button
+                    className="w-full arabic justify-start"
                     variant="outline"
                     onClick={() => handleManagePermissions(selectedStore)}
                   >
                     <Key className="w-4 h-4 ml-2" />
                     إدارة الصلاحيات
                   </Button>
-                  <Button 
-                    className="w-full arabic justify-start" 
+                  <Button
+                    className="w-full arabic justify-start"
                     variant="outline"
                     onClick={() => handleContactStore(selectedStore)}
                   >
                     <MessageSquare className="w-4 h-4 ml-2" />
                     إرسال رسالة
                   </Button>
-                  <Button 
-                    className="w-full arabic justify-start" 
+                  <Button
+                    className="w-full arabic justify-start"
                     variant="outline"
                     onClick={() => handleSupportTicket(selectedStore)}
                   >
                     <HelpCircle className="w-4 h-4 ml-2" />
                     تقديم المساعدة
                   </Button>
-                  <Button className="w-full arabic justify-start" variant="outline">
+                  <Button
+                    className="w-full arabic justify-start"
+                    variant="outline"
+                  >
                     <BarChart3 className="w-4 h-4 ml-2" />
                     تقرير مفصل
                   </Button>
-                  <Button className="w-full arabic justify-start" variant="outline">
+                  <Button
+                    className="w-full arabic justify-start"
+                    variant="outline"
+                  >
                     <Palette className="w-4 h-4 ml-2" />
                     تخصيص المظهر
                   </Button>
-                  <Button className="w-full arabic justify-start" variant="outline">
+                  <Button
+                    className="w-full arabic justify-start"
+                    variant="outline"
+                  >
                     <Gift className="w-4 h-4 ml-2" />
                     عرض خاص
                   </Button>
-                  
+
                   <Separator />
-                  
+
                   {selectedStore.status === "pending" && (
-                    <Button 
+                    <Button
                       className="w-full arabic"
-                      onClick={() => openConfirmModal("approve", selectedStore.id, selectedStore.name)}
+                      onClick={() =>
+                        openConfirmModal(
+                          "approve",
+                          selectedStore.id,
+                          selectedStore.name,
+                        )
+                      }
                     >
                       <Check className="w-4 h-4 ml-2" />
                       اعتماد المتجر
                     </Button>
                   )}
-                  
-                  {selectedStore.status === "active" && !selectedStore.featured && (
-                    <Button 
-                      className="w-full arabic"
-                      onClick={() => openConfirmModal("feature", selectedStore.id, selectedStore.name)}
-                    >
-                      <Crown className="w-4 h-4 ml-2" />
-                      جعله مميزاً
-                    </Button>
-                  )}
-                  
+
+                  {selectedStore.status === "active" &&
+                    !selectedStore.featured && (
+                      <Button
+                        className="w-full arabic"
+                        onClick={() =>
+                          openConfirmModal(
+                            "feature",
+                            selectedStore.id,
+                            selectedStore.name,
+                          )
+                        }
+                      >
+                        <Crown className="w-4 h-4 ml-2" />
+                        جعله مميزاً
+                      </Button>
+                    )}
+
                   {selectedStore.status === "suspended" && (
-                    <Button 
+                    <Button
                       className="w-full arabic"
-                      onClick={() => openConfirmModal("reactivate", selectedStore.id, selectedStore.name)}
+                      onClick={() =>
+                        openConfirmModal(
+                          "reactivate",
+                          selectedStore.id,
+                          selectedStore.name,
+                        )
+                      }
                     >
                       <CheckCircle className="w-4 h-4 ml-2" />
                       إعادة تفعيل
@@ -1451,7 +1695,10 @@ export default function AdminStores() {
       </Dialog>
 
       {/* Permissions Management Modal */}
-      <Dialog open={isPermissionModalOpen} onOpenChange={setIsPermissionModalOpen}>
+      <Dialog
+        open={isPermissionModalOpen}
+        onOpenChange={setIsPermissionModalOpen}
+      >
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle className="arabic text-right">
@@ -1467,12 +1714,14 @@ export default function AdminStores() {
                 <h3 className="font-semibold arabic">{selectedStore.name}</h3>
                 <p className="text-gray-600 arabic">{selectedStore.owner}</p>
               </div>
-              
+
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
                     <Label className="font-medium arabic">السماح بالبيع</Label>
-                    <p className="text-sm text-gray-600 arabic">يمكن للمتجر عرض وبيع المنتجات</p>
+                    <p className="text-sm text-gray-600 arabic">
+                      يمكن للمتجر عرض وبيع المنتجات
+                    </p>
                   </div>
                   <Switch
                     checked={selectedStore.permissions.canSell}
@@ -1484,11 +1733,13 @@ export default function AdminStores() {
                     }
                   />
                 </div>
-                
+
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
                     <Label className="font-medium arabic">السماح بالشحن</Label>
-                    <p className="text-sm text-gray-600 arabic">يمكن للمتجر إدارة الشحن والتوصيل</p>
+                    <p className="text-sm text-gray-600 arabic">
+                      يمكن للمتجر إدارة الشحن والتوصيل
+                    </p>
                   </div>
                   <Switch
                     checked={selectedStore.permissions.canShip}
@@ -1500,11 +1751,15 @@ export default function AdminStores() {
                     }
                   />
                 </div>
-                
+
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
-                    <Label className="font-medium arabic">السماح بالترويج</Label>
-                    <p className="text-sm text-gray-600 arabic">يمكن للمتجر إنشاء حملات ترويجية</p>
+                    <Label className="font-medium arabic">
+                      السماح بالترويج
+                    </Label>
+                    <p className="text-sm text-gray-600 arabic">
+                      يمكن للمتجر إنشاء حملات ترويجية
+                    </p>
                   </div>
                   <Switch
                     checked={selectedStore.permissions.canPromote}
@@ -1516,11 +1771,15 @@ export default function AdminStores() {
                     }
                   />
                 </div>
-                
+
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
-                    <Label className="font-medium arabic">السماح بتصدير البيانات</Label>
-                    <p className="text-sm text-gray-600 arabic">يمكن للمتجر تصدير بيانات الطلبات والعملاء</p>
+                    <Label className="font-medium arabic">
+                      السماح بتصدير البيانات
+                    </Label>
+                    <p className="text-sm text-gray-600 arabic">
+                      يمكن للمتجر تصدير بيانات الطلبات والعملاء
+                    </p>
                   </div>
                   <Switch
                     checked={selectedStore.permissions.canExport}
@@ -1532,11 +1791,15 @@ export default function AdminStores() {
                     }
                   />
                 </div>
-                
+
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
-                    <Label className="font-medium arabic">الوصول للتحليلات</Label>
-                    <p className="text-sm text-gray-600 arabic">يمكن للمتجر عرض التحليلا�� والإحصائيات</p>
+                    <Label className="font-medium arabic">
+                      الوصول للتحليلات
+                    </Label>
+                    <p className="text-sm text-gray-600 arabic">
+                      يمكن للمتجر عرض التحليلا�� والإحصائيات
+                    </p>
                   </div>
                   <Switch
                     checked={selectedStore.permissions.canAnalytics}
@@ -1583,17 +1846,19 @@ export default function AdminStores() {
           {selectedStore && (
             <div className="space-y-4">
               <div className="text-center p-4 bg-blue-50 rounded-lg">
-                <h3 className="font-semibold arabic">إلى: {selectedStore.name}</h3>
+                <h3 className="font-semibold arabic">
+                  إلى: {selectedStore.name}
+                </h3>
                 <p className="text-gray-600 arabic">{selectedStore.owner}</p>
               </div>
-              
+
               <Textarea
                 placeholder="اكتب رسالتك هنا..."
                 value={directMessage}
                 onChange={(e) => setDirectMessage(e.target.value)}
                 className="min-h-[150px] arabic text-right"
               />
-              
+
               <div className="flex gap-2">
                 <Button className="arabic" variant="outline">
                   <FileText className="w-4 h-4 ml-2" />
@@ -1640,17 +1905,19 @@ export default function AdminStores() {
           {selectedStore && (
             <div className="space-y-4">
               <div className="text-center p-4 bg-green-50 rounded-lg">
-                <h3 className="font-semibold arabic">مساع��ة: {selectedStore.name}</h3>
+                <h3 className="font-semibold arabic">
+                  مساع��ة: {selectedStore.name}
+                </h3>
                 <p className="text-gray-600 arabic">{selectedStore.owner}</p>
               </div>
-              
+
               <Textarea
                 placeholder="صف نوع المساعدة التي تريد تقديمها..."
                 value={supportMessage}
                 onChange={(e) => setSupportMessage(e.target.value)}
                 className="min-h-[150px] arabic text-right"
               />
-              
+
               <div className="grid grid-cols-2 gap-3">
                 <Button className="arabic" variant="outline">
                   <Users className="w-4 h-4 ml-2" />
@@ -1699,15 +1966,24 @@ export default function AdminStores() {
               تأكيد الإجراء
             </DialogTitle>
             <DialogDescription className="arabic text-right">
-              {confirmAction?.type === "approve" && "هل أنت متأكد من اعتماد هذا المتجر؟"}
-              {confirmAction?.type === "suspend" && "هل أنت متأكد من تعليق هذا المتجر؟"}
-              {confirmAction?.type === "block" && "هل أنت متأكد من إيقاف هذا المتجر نهائياً؟"}
-              {confirmAction?.type === "reactivate" && "هل أنت متأكد من إعادة تفعيل هذا المتجر؟"}
-              {confirmAction?.type === "renew" && "هل تريد تجديد اشتراك هذا المتجر؟"}
-              {confirmAction?.type === "feature" && "هل أنت متأكد من جعل هذا المتجر مميزاً؟"}
-              {confirmAction?.type === "unfeature" && "ه�� أنت متأكد من إلغاء تمييز هذا المتجر؟"}
-              {confirmAction?.type === "verify" && "هل أنت متأكد من توثيق هذا المتجر؟"}
-              {confirmAction?.type === "unverify" && "هل أنت متأكد من إلغاء توثيق هذا المتجر؟"}
+              {confirmAction?.type === "approve" &&
+                "هل أنت متأكد من اعتماد هذا المتجر؟"}
+              {confirmAction?.type === "suspend" &&
+                "هل أنت متأكد من تعليق هذا المتجر؟"}
+              {confirmAction?.type === "block" &&
+                "هل أنت متأكد من إيقاف هذا المتجر نهائياً؟"}
+              {confirmAction?.type === "reactivate" &&
+                "هل أنت متأكد من إعادة تفعيل هذا المتجر؟"}
+              {confirmAction?.type === "renew" &&
+                "هل تريد تجديد اشتراك هذا المتجر؟"}
+              {confirmAction?.type === "feature" &&
+                "هل أنت متأكد من جعل هذا المتجر مميزاً؟"}
+              {confirmAction?.type === "unfeature" &&
+                "ه�� أنت متأكد من إلغاء تمييز هذا المتجر؟"}
+              {confirmAction?.type === "verify" &&
+                "هل أنت متأكد من توثيق هذا المتجر؟"}
+              {confirmAction?.type === "unverify" &&
+                "هل أنت متأكد من إلغاء توثيق هذا المتجر؟"}
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
@@ -1715,7 +1991,9 @@ export default function AdminStores() {
               <strong>{confirmAction?.storeName}</strong>
             </p>
           </div>
-          <DialogFooter className={`${isRTL ? "flex-row-reverse" : "flex-row"}`}>
+          <DialogFooter
+            className={`${isRTL ? "flex-row-reverse" : "flex-row"}`}
+          >
             <Button
               variant="outline"
               onClick={() => setIsConfirmModalOpen(false)}
@@ -1726,11 +2004,12 @@ export default function AdminStores() {
             <Button
               onClick={executeAction}
               className={`arabic ${
-                confirmAction?.type === "suspend" || confirmAction?.type === "block"
+                confirmAction?.type === "suspend" ||
+                confirmAction?.type === "block"
                   ? "bg-red-600 hover:bg-red-700"
                   : confirmAction?.type === "renew"
-                  ? "bg-purple-600 hover:bg-purple-700"
-                  : "bg-green-600 hover:bg-green-700"
+                    ? "bg-purple-600 hover:bg-purple-700"
+                    : "bg-green-600 hover:bg-green-700"
               } text-white`}
             >
               {confirmAction?.type === "approve" && "✅ اعتماد"}

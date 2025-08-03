@@ -18,22 +18,30 @@ export interface Country {
 
 // الدول المتاحة
 export const AVAILABLE_COUNTRIES: Country[] = [
-  { code: 'SA', name: 'السعودية', regions: [] },
-  { code: 'AE', name: 'الإمارات', regions: [] },
-  { code: 'QA', name: 'قطر', regions: [] },
-  { code: 'KW', name: 'الكويت', regions: [] },
-  { code: 'BH', name: 'البحرين', regions: [] },
-  { code: 'OM', name: 'عمان', regions: [] },
+  { code: "SA", name: "السعودية", regions: [] },
+  { code: "AE", name: "الإمارات", regions: [] },
+  { code: "QA", name: "قطر", regions: [] },
+  { code: "KW", name: "الكويت", regions: [] },
+  { code: "BH", name: "البحرين", regions: [] },
+  { code: "OM", name: "عمان", regions: [] },
 ];
 
 // المناطق الافتراضية مرتبة حسب الدول
 const DEFAULT_REGIONS_BY_COUNTRY: Record<string, string[]> = {
-  'SA': ["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة ال��نورة"],
-  'AE': ["دبي", "أبوظبي", "الشارقة", "عجمان", "رأس الخيمة", "الفجيرة", "أم القيوين"],
-  'QA': ["الدوحة", "الريان", "الوكرة", "الخور"],
-  'KW': ["الكويت", "حولي", "الفروانية", "الأحمدي", "الجهراء", "مبارك الكبير"],
-  'BH': ["المنامة", "المحرق", "مدينة عيسى", "الرفاع", "مدينة حمد"],
-  'OM': ["مسقط", "صلالة", "نزوى", "صحار", "البريمي", "إبراء"]
+  SA: ["الرياض", "جدة", "الدمام", "مكة المكرمة", "المدينة ال��نورة"],
+  AE: [
+    "دبي",
+    "أبوظبي",
+    "الشارقة",
+    "عجمان",
+    "رأس الخيمة",
+    "الفجيرة",
+    "أم القيوين",
+  ],
+  QA: ["الدوحة", "الريان", "الوكرة", "الخور"],
+  KW: ["الكويت", "حولي", "الفروانية", "الأحمدي", "الجهراء", "مبارك الكبير"],
+  BH: ["المنامة", "المحرق", "مدينة عيسى", "الرفاع", "مدينة حمد"],
+  OM: ["مسقط", "صلالة", "نزوى", "صحار", "البريمي", "إبراء"],
 };
 
 export class RegionsManager {
@@ -61,7 +69,11 @@ export class RegionsManager {
         const parsedRegions = JSON.parse(savedRegions);
 
         // فحص إذا كانت البيانات بالتنسيق الجديد (object بمفاتيح الدول)
-        if (parsedRegions && typeof parsedRegions === 'object' && !Array.isArray(parsedRegions)) {
+        if (
+          parsedRegions &&
+          typeof parsedRegions === "object" &&
+          !Array.isArray(parsedRegions)
+        ) {
           // التحقق من أن البيانات صحيحة
           let isValidFormat = true;
           for (const [countryCode, regions] of Object.entries(parsedRegions)) {
@@ -78,7 +90,9 @@ export class RegionsManager {
         }
 
         // إذا كانت البيانات بالتنسيق القديم (array من strings) أو تنسيق غير صحيح
-        console.warn("تم العثور على بيانات مناطق بتنسيق قديم، سيتم إعادة تعيينها");
+        console.warn(
+          "تم العثور على بيانات مناطق بتنسيق قديم، سيتم إعادة تعيينها",
+        );
         localStorage.removeItem("adminDeliveryRegions");
       }
 
@@ -113,14 +127,14 @@ export class RegionsManager {
     const allRegions: string[] = [];
 
     // فحص أمان
-    if (!this.regionsByCountry || typeof this.regionsByCountry !== 'object') {
+    if (!this.regionsByCountry || typeof this.regionsByCountry !== "object") {
       this.resetToDefaults();
     }
 
-    Object.values(this.regionsByCountry).forEach(regions => {
+    Object.values(this.regionsByCountry).forEach((regions) => {
       if (Array.isArray(regions)) {
-        regions.forEach(region => {
-          if (region && typeof region === 'object' && region.name) {
+        regions.forEach((region) => {
+          if (region && typeof region === "object" && region.name) {
             allRegions.push(region.name);
           }
         });
@@ -141,7 +155,7 @@ export class RegionsManager {
    */
   public getAllRegionsByCountry(): Record<string, DeliveryRegion[]> {
     // فحص أمان
-    if (!this.regionsByCountry || typeof this.regionsByCountry !== 'object') {
+    if (!this.regionsByCountry || typeof this.regionsByCountry !== "object") {
       this.resetToDefaults();
     }
     return { ...this.regionsByCountry };
@@ -151,9 +165,9 @@ export class RegionsManager {
    * الحصول على الدول المتاحة
    */
   public getAvailableCountries(): Country[] {
-    return AVAILABLE_COUNTRIES.map(country => ({
+    return AVAILABLE_COUNTRIES.map((country) => ({
       ...country,
-      regions: this.getRegionsByCountry(country.code).map(r => r.name)
+      regions: this.getRegionsByCountry(country.code).map((r) => r.name),
     }));
   }
 
@@ -168,7 +182,7 @@ export class RegionsManager {
 
     // التحقق من عدم وجود المنطقة في نفس الدولة
     const existingRegions = this.regionsByCountry[countryCode] || [];
-    if (existingRegions.some(r => r.name === trimmedName)) {
+    if (existingRegions.some((r) => r.name === trimmedName)) {
       return false;
     }
 
@@ -178,7 +192,7 @@ export class RegionsManager {
       name: trimmedName,
       country: countryCode,
       isActive: true,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     };
 
     if (!this.regionsByCountry[countryCode]) {
@@ -199,7 +213,7 @@ export class RegionsManager {
       return false;
     }
 
-    const index = regions.findIndex(r => r.id === regionId);
+    const index = regions.findIndex((r) => r.id === regionId);
     if (index === -1) {
       return false;
     }
@@ -212,7 +226,11 @@ export class RegionsManager {
   /**
    * تحديث منطقة (النظام الجديد)
    */
-  public updateRegionNew(regionId: string, countryCode: string, newName: string): boolean {
+  public updateRegionNew(
+    regionId: string,
+    countryCode: string,
+    newName: string,
+  ): boolean {
     const trimmedNewName = newName.trim();
     if (!trimmedNewName) {
       return false;
@@ -223,13 +241,13 @@ export class RegionsManager {
       return false;
     }
 
-    const region = regions.find(r => r.id === regionId);
+    const region = regions.find((r) => r.id === regionId);
     if (!region) {
       return false;
     }
 
     // التحقق من عدم تكرار الاسم في نفس الدولة
-    if (regions.some(r => r.name === trimmedNewName && r.id !== regionId)) {
+    if (regions.some((r) => r.name === trimmedNewName && r.id !== regionId)) {
       return false;
     }
 
@@ -250,8 +268,10 @@ export class RegionsManager {
    * حذف منطقة (للتوافق مع النظام القديم)
    */
   public removeRegion(regionName: string): boolean {
-    for (const [countryCode, regions] of Object.entries(this.regionsByCountry)) {
-      const region = regions.find(r => r.name === regionName);
+    for (const [countryCode, regions] of Object.entries(
+      this.regionsByCountry,
+    )) {
+      const region = regions.find((r) => r.name === regionName);
       if (region) {
         return this.removeRegionNew(region.id, countryCode);
       }
@@ -263,8 +283,10 @@ export class RegionsManager {
    * تحديث منطقة (للتوافق مع النظام القديم)
    */
   public updateRegion(oldName: string, newName: string): boolean {
-    for (const [countryCode, regions] of Object.entries(this.regionsByCountry)) {
-      const region = regions.find(r => r.name === oldName);
+    for (const [countryCode, regions] of Object.entries(
+      this.regionsByCountry,
+    )) {
+      const region = regions.find((r) => r.name === oldName);
       if (region) {
         return this.updateRegionNew(region.id, countryCode, newName);
       }
@@ -278,12 +300,12 @@ export class RegionsManager {
   public hasRegion(regionName: string, countryCode?: string): boolean {
     if (countryCode) {
       const regions = this.regionsByCountry[countryCode] || [];
-      return regions.some(r => r.name === regionName);
+      return regions.some((r) => r.name === regionName);
     }
-    
+
     // البحث في جميع الدول
-    return Object.values(this.regionsByCountry).some(regions => 
-      regions.some(r => r.name === regionName)
+    return Object.values(this.regionsByCountry).some((regions) =>
+      regions.some((r) => r.name === regionName),
     );
   }
 
@@ -292,17 +314,21 @@ export class RegionsManager {
    */
   public resetToDefaults(): void {
     this.regionsByCountry = {};
-    
-    Object.entries(DEFAULT_REGIONS_BY_COUNTRY).forEach(([countryCode, regions]) => {
-      this.regionsByCountry[countryCode] = regions.map((regionName, index) => ({
-        id: `${countryCode}_${index}`,
-        name: regionName,
-        country: countryCode,
-        isActive: true,
-        createdAt: new Date().toISOString()
-      }));
-    });
-    
+
+    Object.entries(DEFAULT_REGIONS_BY_COUNTRY).forEach(
+      ([countryCode, regions]) => {
+        this.regionsByCountry[countryCode] = regions.map(
+          (regionName, index) => ({
+            id: `${countryCode}_${index}`,
+            name: regionName,
+            country: countryCode,
+            isActive: true,
+            createdAt: new Date().toISOString(),
+          }),
+        );
+      },
+    );
+
     this.saveRegions();
   }
 
@@ -315,24 +341,33 @@ export class RegionsManager {
     countries: number;
   } {
     // فحص أمان للتأكد من وجود البيانات
-    if (!this.regionsByCountry || typeof this.regionsByCountry !== 'object') {
-      console.warn("regionsByCountry is not properly initialized, resetting to defaults");
+    if (!this.regionsByCountry || typeof this.regionsByCountry !== "object") {
+      console.warn(
+        "regionsByCountry is not properly initialized, resetting to defaults",
+      );
       this.resetToDefaults();
     }
 
     let total = 0;
     const byCountry: Record<string, number> = {};
-    
+
     // حساب الإحصائيات من البيانات الفعلية
     Object.entries(this.regionsByCountry).forEach(([countryCode, regions]) => {
       // التأ��د من أن regions هو array صالح
       if (!Array.isArray(regions)) {
-        console.warn(`Invalid regions data for country ${countryCode}:`, regions);
+        console.warn(
+          `Invalid regions data for country ${countryCode}:`,
+          regions,
+        );
         return;
       }
 
-      const countryName = AVAILABLE_COUNTRIES.find(c => c.code === countryCode)?.name || countryCode;
-      const activeRegions = regions.filter(r => r && typeof r === 'object' && r.isActive);
+      const countryName =
+        AVAILABLE_COUNTRIES.find((c) => c.code === countryCode)?.name ||
+        countryCode;
+      const activeRegions = regions.filter(
+        (r) => r && typeof r === "object" && r.isActive,
+      );
       byCountry[countryName] = activeRegions.length;
       total += activeRegions.length;
     });
@@ -340,7 +375,7 @@ export class RegionsManager {
     return {
       total,
       byCountry,
-      countries: Object.keys(this.regionsByCountry).length
+      countries: Object.keys(this.regionsByCountry).length,
     };
   }
 
@@ -348,12 +383,14 @@ export class RegionsManager {
    * تحديد الدولة من اسم المنطقة
    */
   private detectCountryFromRegionName(regionName: string): string {
-    for (const [countryCode, regions] of Object.entries(DEFAULT_REGIONS_BY_COUNTRY)) {
+    for (const [countryCode, regions] of Object.entries(
+      DEFAULT_REGIONS_BY_COUNTRY,
+    )) {
       if (regions.includes(regionName)) {
         return countryCode;
       }
     }
-    return 'SA'; // افتراضي
+    return "SA"; // افتراضي
   }
 }
 

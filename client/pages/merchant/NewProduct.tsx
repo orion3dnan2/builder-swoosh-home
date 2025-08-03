@@ -88,7 +88,7 @@ export default function NewProduct() {
       }));
 
       // Reset the input
-      event.target.value = '';
+      event.target.value = "";
     }
   };
 
@@ -440,7 +440,9 @@ export default function NewProduct() {
                   type="button"
                   variant="outline"
                   className="arabic"
-                  onClick={() => document.getElementById('image-upload')?.click()}
+                  onClick={() =>
+                    document.getElementById("image-upload")?.click()
+                  }
                 >
                   <Upload className="w-4 h-4 ml-2" />
                   رفع صورة من الجهاز
@@ -469,10 +471,10 @@ export default function NewProduct() {
                     value={formData.inventory?.quantity ?? 0}
                     onChange={(e) => {
                       const value = e.target.value;
-                      const numValue = value === '' ? 0 : parseInt(value);
+                      const numValue = value === "" ? 0 : parseInt(value);
                       handleInventoryChange(
                         "quantity",
-                        isNaN(numValue) ? 0 : Math.max(0, numValue)
+                        isNaN(numValue) ? 0 : Math.max(0, numValue),
                       );
                     }}
                     className="mt-2"

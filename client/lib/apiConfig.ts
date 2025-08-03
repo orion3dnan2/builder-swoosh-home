@@ -20,7 +20,7 @@ export interface ApiConfiguration {
   };
   headers?: Record<string, string>;
   authentication?: {
-    type: 'bearer' | 'apikey' | 'basic' | 'none';
+    type: "bearer" | "apikey" | "basic" | "none";
     tokenKey?: string;
     apiKeyHeader?: string;
     apiKeyValue?: string;
@@ -51,7 +51,8 @@ export interface ApiConfigurationStats {
 
 export class ApiConfigManager {
   private static readonly STORAGE_KEY = "bayt_al_sudani_api_configs";
-  private static readonly ACTIVE_CONFIG_KEY = "bayt_al_sudani_active_api_config";
+  private static readonly ACTIVE_CONFIG_KEY =
+    "bayt_al_sudani_active_api_config";
   private static instance: ApiConfigManager;
 
   private constructor() {
@@ -83,25 +84,25 @@ export class ApiConfigManager {
           companies: "/companies",
           jobs: "/jobs",
           orders: "/orders",
-          analytics: "/analytics"
+          analytics: "/analytics",
         },
         authentication: {
-          type: 'bearer'
+          type: "bearer",
         },
         timeout: 10000,
         retries: 3,
         rateLimiting: {
           maxRequestsPerMinute: 60,
-          enabled: false
+          enabled: false,
         },
         healthCheck: {
           endpoint: "/health",
           interval: 300000, // 5 minutes
-          enabled: false
+          enabled: false,
         },
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      }
+        updatedAt: new Date().toISOString(),
+      },
     ];
   }
 
@@ -131,25 +132,32 @@ export class ApiConfigManager {
   // Get active configuration
   getActiveConfig(): ApiConfiguration | null {
     const configs = this.getAllConfigs();
-    
+
     // Try to get the stored active config ID
-    const activeConfigId = localStorage.getItem(ApiConfigManager.ACTIVE_CONFIG_KEY);
+    const activeConfigId = localStorage.getItem(
+      ApiConfigManager.ACTIVE_CONFIG_KEY,
+    );
     if (activeConfigId) {
-      const activeConfig = configs.find(config => config.id === activeConfigId && config.isActive);
+      const activeConfig = configs.find(
+        (config) => config.id === activeConfigId && config.isActive,
+      );
       if (activeConfig) return activeConfig;
     }
 
     // Fallback to first active or default config
-    return configs.find(config => config.isActive) || 
-           configs.find(config => config.isDefault) || 
-           configs[0] || null;
+    return (
+      configs.find((config) => config.isActive) ||
+      configs.find((config) => config.isDefault) ||
+      configs[0] ||
+      null
+    );
   }
 
   // Set active configuration
   setActiveConfig(configId: string): boolean {
     const configs = this.getAllConfigs();
-    const config = configs.find(c => c.id === configId);
-    
+    const config = configs.find((c) => c.id === configId);
+
     if (!config || !config.isActive) {
       return false;
     }
@@ -159,18 +167,20 @@ export class ApiConfigManager {
   }
 
   // Add new configuration
-  addConfig(config: Omit<ApiConfiguration, 'id' | 'createdAt' | 'updatedAt'>): string {
+  addConfig(
+    config: Omit<ApiConfiguration, "id" | "createdAt" | "updatedAt">,
+  ): string {
     const configs = this.getAllConfigs();
     const newConfig: ApiConfiguration = {
       ...config,
       id: this.generateId(),
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     // If this is set as default, remove default from others
     if (newConfig.isDefault) {
-      configs.forEach(c => c.isDefault = false);
+      configs.forEach((c) => (c.isDefault = false));
     }
 
     configs.push(newConfig);
@@ -181,20 +191,20 @@ export class ApiConfigManager {
   // Update configuration
   updateConfig(id: string, updates: Partial<ApiConfiguration>): boolean {
     const configs = this.getAllConfigs();
-    const configIndex = configs.findIndex(c => c.id === id);
-    
+    const configIndex = configs.findIndex((c) => c.id === id);
+
     if (configIndex === -1) return false;
 
     // If setting as default, remove default from others
     if (updates.isDefault) {
-      configs.forEach(c => c.isDefault = false);
+      configs.forEach((c) => (c.isDefault = false));
     }
 
     configs[configIndex] = {
       ...configs[configIndex],
       ...updates,
       id, // Ensure ID doesn't change
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     this.saveConfigs(configs);
@@ -204,17 +214,17 @@ export class ApiConfigManager {
   // Delete configuration
   deleteConfig(id: string): boolean {
     const configs = this.getAllConfigs();
-    const configToDelete = configs.find(c => c.id === id);
-    
+    const configToDelete = configs.find((c) => c.id === id);
+
     if (!configToDelete) return false;
-    
+
     // Can't delete the default config if it's the only one
     if (configToDelete.isDefault && configs.length === 1) {
       return false;
     }
 
-    const filteredConfigs = configs.filter(c => c.id !== id);
-    
+    const filteredConfigs = configs.filter((c) => c.id !== id);
+
     // If we deleted the default, make the first one default
     if (configToDelete.isDefault && filteredConfigs.length > 0) {
       filteredConfigs[0].isDefault = true;
@@ -223,7 +233,9 @@ export class ApiConfigManager {
     this.saveConfigs(filteredConfigs);
 
     // If this was the active config, clear it
-    const activeConfigId = localStorage.getItem(ApiConfigManager.ACTIVE_CONFIG_KEY);
+    const activeConfigId = localStorage.getItem(
+      ApiConfigManager.ACTIVE_CONFIG_KEY,
+    );
     if (activeConfigId === id) {
       localStorage.removeItem(ApiConfigManager.ACTIVE_CONFIG_KEY);
     }
@@ -232,40 +244,49 @@ export class ApiConfigManager {
   }
 
   // Test configuration connection
-  async testConfig(config: ApiConfiguration): Promise<{ success: boolean; message: string; responseTime?: number }> {
+  async testConfig(
+    config: ApiConfiguration,
+  ): Promise<{ success: boolean; message: string; responseTime?: number }> {
     const startTime = Date.now();
-    
+
     try {
-      const testUrl = `${config.baseUrl}${config.healthCheck?.endpoint || '/health'}`;
+      const testUrl = `${config.baseUrl}${config.healthCheck?.endpoint || "/health"}`;
       const headers: HeadersInit = {
-        'Content-Type': 'application/json',
-        ...config.headers
+        "Content-Type": "application/json",
+        ...config.headers,
       };
 
       // Add authentication if configured
       if (config.authentication) {
         switch (config.authentication.type) {
-          case 'bearer':
-            const token = localStorage.getItem('auth_token');
+          case "bearer":
+            const token = localStorage.getItem("auth_token");
             if (token) {
-              headers['Authorization'] = `Bearer ${token}`;
+              headers["Authorization"] = `Bearer ${token}`;
             }
             break;
-          case 'apikey':
-            if (config.authentication.apiKeyHeader && config.authentication.apiKeyValue) {
-              headers[config.authentication.apiKeyHeader] = config.authentication.apiKeyValue;
+          case "apikey":
+            if (
+              config.authentication.apiKeyHeader &&
+              config.authentication.apiKeyValue
+            ) {
+              headers[config.authentication.apiKeyHeader] =
+                config.authentication.apiKeyValue;
             }
             break;
         }
       }
 
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), config.timeout || 5000);
+      const timeoutId = setTimeout(
+        () => controller.abort(),
+        config.timeout || 5000,
+      );
 
       const response = await fetch(testUrl, {
-        method: 'GET',
+        method: "GET",
         headers,
-        signal: controller.signal
+        signal: controller.signal,
       });
 
       clearTimeout(timeoutId);
@@ -274,31 +295,31 @@ export class ApiConfigManager {
       if (response.ok) {
         return {
           success: true,
-          message: 'الاتصال ناجح',
-          responseTime
+          message: "الاتصال ناجح",
+          responseTime,
         };
       } else {
         return {
           success: false,
           message: `خطأ في الخادم: ${response.status} ${response.statusText}`,
-          responseTime
+          responseTime,
         };
       }
     } catch (error: any) {
       const responseTime = Date.now() - startTime;
-      
-      if (error.name === 'AbortError') {
+
+      if (error.name === "AbortError") {
         return {
           success: false,
-          message: 'انتهت مهلة الاتصال',
-          responseTime
+          message: "انتهت مهلة الاتصال",
+          responseTime,
         };
       }
-      
+
       return {
         success: false,
-        message: `فشل الاتصال: ${error.message || 'خطأ غير معروف'}`,
-        responseTime
+        message: `فشل الاتصال: ${error.message || "خطأ غير معروف"}`,
+        responseTime,
       };
     }
   }
@@ -306,14 +327,14 @@ export class ApiConfigManager {
   // Get configuration statistics
   getStats(): ApiConfigurationStats {
     const configs = this.getAllConfigs();
-    
+
     return {
       total: configs.length,
-      active: configs.filter(c => c.isActive).length,
-      inactive: configs.filter(c => !c.isActive).length,
+      active: configs.filter((c) => c.isActive).length,
+      inactive: configs.filter((c) => !c.isActive).length,
       healthy: 0, // Will be updated by health checks
       unhealthy: 0,
-      lastHealthCheck: undefined
+      lastHealthCheck: undefined,
     };
   }
 
@@ -324,15 +345,19 @@ export class ApiConfigManager {
   }
 
   // Import configurations
-  importConfigs(configsJson: string): { success: boolean; message: string; imported: number } {
+  importConfigs(configsJson: string): {
+    success: boolean;
+    message: string;
+    imported: number;
+  } {
     try {
       const importedConfigs = JSON.parse(configsJson);
-      
+
       if (!Array.isArray(importedConfigs)) {
         return {
           success: false,
-          message: 'صيغة الملف غير صحيحة',
-          imported: 0
+          message: "صيغة الملف غير صحيحة",
+          imported: 0,
         };
       }
 
@@ -344,7 +369,7 @@ export class ApiConfigManager {
             ...config,
             id: this.generateId(), // Generate new IDs
             createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
+            updatedAt: new Date().toISOString(),
           });
         }
       }
@@ -352,8 +377,8 @@ export class ApiConfigManager {
       if (validConfigs.length === 0) {
         return {
           success: false,
-          message: 'لا توجد إعدادات صحيحة للاستيراد',
-          imported: 0
+          message: "لا توجد إعدادات صحيحة للاستيراد",
+          imported: 0,
         };
       }
 
@@ -364,13 +389,13 @@ export class ApiConfigManager {
       return {
         success: true,
         message: `تم استيراد ${validConfigs.length} إعداد بنجاح`,
-        imported: validConfigs.length
+        imported: validConfigs.length,
       };
     } catch (error) {
       return {
         success: false,
-        message: 'خطأ في قراءة الملف',
-        imported: 0
+        message: "خطأ في قراءة الملف",
+        imported: 0,
       };
     }
   }
@@ -385,7 +410,10 @@ export class ApiConfigManager {
   // Private helper methods
   private saveConfigs(configs: ApiConfiguration[]): void {
     try {
-      localStorage.setItem(ApiConfigManager.STORAGE_KEY, JSON.stringify(configs));
+      localStorage.setItem(
+        ApiConfigManager.STORAGE_KEY,
+        JSON.stringify(configs),
+      );
     } catch (error) {
       console.error("Error saving API configurations:", error);
     }
@@ -397,11 +425,11 @@ export class ApiConfigManager {
 
   private validateConfig(config: any): boolean {
     return (
-      typeof config === 'object' &&
-      typeof config.name === 'string' &&
-      typeof config.baseUrl === 'string' &&
-      typeof config.isActive === 'boolean' &&
-      config.baseUrl.trim() !== ''
+      typeof config === "object" &&
+      typeof config.name === "string" &&
+      typeof config.baseUrl === "string" &&
+      typeof config.isActive === "boolean" &&
+      config.baseUrl.trim() !== ""
     );
   }
 

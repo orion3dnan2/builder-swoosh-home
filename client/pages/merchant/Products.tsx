@@ -42,7 +42,7 @@ export default function MerchantProducts() {
     deleteProduct,
     categories,
     getProductsByStatus,
-    searchProducts
+    searchProducts,
   } = useProducts();
 
   // Store selection state - in real app this would come from user context
@@ -55,12 +55,16 @@ export default function MerchantProducts() {
     { id: "store-003", name: "مطعم أم درمان", category: "food" },
     { id: "store-004", name: "خدمات التقنية السودانية", category: "services" },
     { id: "store-005", name: "أزياء النيل", category: "fashion" },
-    { id: "store-006", name: "سوبر ماركت الخرطوم", category: "grocery" }
+    { id: "store-006", name: "سوبر ماركت الخرطوم", category: "grocery" },
   ];
 
   // Filter products by current user's selected store
-  const products = allProducts.filter(product => product.storeId === currentStoreId);
-  const currentStore = availableStores.find(store => store.id === currentStoreId);
+  const products = allProducts.filter(
+    (product) => product.storeId === currentStoreId,
+  );
+  const currentStore = availableStores.find(
+    (store) => store.id === currentStoreId,
+  );
 
   // تحديد إذا كان التاجر جديد
   useEffect(() => {
@@ -179,7 +183,7 @@ export default function MerchantProducts() {
                     onChange={(e) => setCurrentStoreId(e.target.value)}
                     className="text-sm border border-gray-300 rounded px-2 py-1 arabic text-right bg-white"
                   >
-                    {availableStores.map(store => (
+                    {availableStores.map((store) => (
                       <option key={store.id} value={store.id}>
                         {store.name}
                       </option>
@@ -215,7 +219,8 @@ export default function MerchantProducts() {
                 عرض منتجات متجر: {currentStore?.name}
               </h3>
               <p className="text-xs text-blue-600 arabic">
-                يمكنك تغيير المتجر من القائمة أعلاه • المنتجات تظهر في السوق العام تلقائياً
+                يمكنك تغيير المتجر من القائمة أعلاه • المنتجات تظهر في السوق
+                العام تلقائياً
               </p>
             </div>
           </div>
