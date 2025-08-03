@@ -288,7 +288,7 @@ export default function AdminStores() {
       storeId: "store-001",
       storeName: "متجر الخير السوداني",
       subject: "مشكلة في عرض المنتجات",
-      message: "أوا��ه مشكلة في ظهور بعض المن��جات في المتجر",
+      message: "أوا��ه مشكلة في ظهور بعض المن����جات في المتجر",
       priority: "medium",
       status: "open",
       createdAt: "2024-03-15",
@@ -936,7 +936,7 @@ export default function AdminStores() {
               <div className="text-center py-12">
                 <Store className="w-24 h-24 text-gray-300 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2 arabic">
-                  لا ت��جد متاجر
+                  لا توجد متاجر
                 </h3>
                 <p className="text-gray-600 arabic">
                   لم يتم العثور على متاجر تطابق معايير البحث
@@ -1638,12 +1638,12 @@ export default function AdminStores() {
             </DialogTitle>
             <DialogDescription className="arabic text-right">
               {confirmAction?.type === "approve" && "هل أنت متأكد من اعتماد هذا المتجر؟"}
-              {confirmAction?.type === "suspend" && "هل أنت متأكد من ��عليق هذا المتجر؟"}
+              {confirmAction?.type === "suspend" && "هل أنت متأكد من تعليق هذا المتجر؟"}
               {confirmAction?.type === "block" && "هل أنت متأكد من إيقاف هذا المتجر نهائياً؟"}
               {confirmAction?.type === "reactivate" && "هل أنت متأكد من إعادة تفعيل هذا المتجر؟"}
               {confirmAction?.type === "renew" && "هل تريد تجديد اشتراك هذا المتجر؟"}
               {confirmAction?.type === "feature" && "هل أنت متأكد من جعل هذا المتجر مميزاً؟"}
-              {confirmAction?.type === "unfeature" && "هل أنت متأكد من إلغاء تمييز هذا المتجر؟"}
+              {confirmAction?.type === "unfeature" && "ه�� أنت متأكد من إلغاء تمييز هذا المتجر؟"}
               {confirmAction?.type === "verify" && "هل أنت متأكد من توثيق هذا المتجر؟"}
               {confirmAction?.type === "unverify" && "هل أنت متأكد من إلغاء توثيق هذا المتجر؟"}
             </DialogDescription>
@@ -1664,8 +1664,10 @@ export default function AdminStores() {
             <Button
               onClick={executeAction}
               className={`arabic ${
-                confirmAction?.type === "suspend"
+                confirmAction?.type === "suspend" || confirmAction?.type === "block"
                   ? "bg-red-600 hover:bg-red-700"
+                  : confirmAction?.type === "renew"
+                  ? "bg-purple-600 hover:bg-purple-700"
                   : "bg-green-600 hover:bg-green-700"
               } text-white`}
             >
