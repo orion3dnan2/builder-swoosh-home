@@ -285,7 +285,7 @@ export default function AdminStores() {
               <Link to="/admin/dashboard">
                 <Button variant="outline" size="sm">
                   <ArrowLeft className="w-4 h-4 ml-2" />
-                  {t("common.back")}
+                  العودة
                 </Button>
               </Link>
               <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl flex items-center justify-center">
