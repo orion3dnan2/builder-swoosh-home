@@ -96,7 +96,7 @@ export const countryCurrencies: Record<string, Currency> = {
     code: "JOD",
     symbol: "د.أ",
     name: "Jordanian Dinar",
-    nameAr: "دينا�� أردني"
+    nameAr: "دينار أردني"
   },
   "المملكة الأردنية الهاشمية": {
     code: "JOD",
@@ -130,12 +130,12 @@ export const countryCurrencies: Record<string, Currency> = {
   }
 };
 
-// العملة الافتراضية
+// العملة الافتراضية (للكويت)
 export const defaultCurrency: Currency = {
-  code: "USD",
-  symbol: "$",
-  name: "US Dollar",
-  nameAr: "دولار أمريكي"
+  code: "KWD",
+  symbol: "د.ك",
+  name: "Kuwaiti Dinar",
+  nameAr: "دينار كويتي"
 };
 
 // الحصول على العملة حسب البلد
