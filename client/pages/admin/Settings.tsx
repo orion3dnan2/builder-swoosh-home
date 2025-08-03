@@ -222,6 +222,7 @@ export default function AdminSettings() {
               </div>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
+              <QuickApiStatus />
               {unsavedChanges && (
                 <Badge variant="secondary" className="arabic">
                   تغييرات غير محفوظة
@@ -798,7 +799,7 @@ export default function AdminSettings() {
                             لا توجد مناطق في {countries.find(c => c.code === selectedCountry)?.name}
                           </h4>
                           <p className="text-orange-600 arabic text-sm mb-4">
-                            أضف مناطق لهذه الدولة لتتمكن الشركات من تحديد مناطق التوصيل
+                            أضف مناطق لهذه الدولة لتتمكن الشرك��ت من تحديد مناطق التوصيل
                           </p>
                         </div>
                       </div>
@@ -858,7 +859,7 @@ export default function AdminSettings() {
                         المناسبة
                       </li>
                       <li>
-                        • المناطق تُحفظ تلقائياً ولا تحتاج للضغط ع��ى "حفظ
+                        • المناطق تُحفظ تلقائياً ولا تحتاج للضغط على "حفظ
                         التغييرات"
                       </li>
                       <li>
@@ -1186,7 +1187,7 @@ export default function AdminSettings() {
                           </div>
                           <div className="flex items-center justify-between p-4 border rounded-lg">
                             <div>
-                              <Label className="font-medium arabic">الخادم الافتراضي</Label>
+                              <Label className="font-medium arabic">الخادم الافترا��ي</Label>
                               <p className="text-sm text-gray-600 arabic">الخادم المستخدم افتراضياً</p>
                             </div>
                             <Switch
@@ -1483,7 +1484,7 @@ export default function AdminSettings() {
                       تعليمات الاستخدام:
                     </h4>
                     <ul className="text-sm text-blue-700 arabic space-y-1">
-                      <li>• أضف خوادم API خارجية لربط التطبيق ��قواعد البيانات المختلفة</li>
+                      <li>• أضف خوادم API خارجية لربط التطبيق بقواعد البيانات المختلفة</li>
                       <li>• يمكن تفعيل خادم واحد فقط في كل مرة</li>
                       <li>• استخدم اختبار الاتصال للتأكد من عمل الخادم</li>
                       <li>• الخادم الافتراضي هو الخادم المحلي للتطوير</li>
@@ -1507,7 +1508,7 @@ export default function AdminSettings() {
               <CardContent className="space-y-6">
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-yellow-800 arabic">
-                    ⚠️ تحذير: الإعدادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
+                    ⚠️ تحذير: الإ��دادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
                     بعدم تغييرها إلا إذا كنت تعرف ما تفعل.
                   </p>
                 </div>
