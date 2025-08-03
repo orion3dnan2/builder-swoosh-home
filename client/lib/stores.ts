@@ -1,4 +1,5 @@
 import { Store } from "../../shared/types";
+import { getCurrencyByCountry } from "./currencies";
 
 export class StoresService {
   private static demoStores: Store[] = [
@@ -248,7 +249,7 @@ export class StoresService {
       reviewsCount: 89,
       price: "يبدأ من 200 ريال",
       image: "/placeholder.svg",
-      tags: ["تصميم", "شعارات", "هوية بصرية", "تسويق"],
+      tags: ["تصميم", "شعارات", "هو��ة بصرية", "تسويق"],
       availability: "من الأحد إلى الخميس",
       location: "عن بُعد - جميع المناطق",
     },
@@ -315,7 +316,7 @@ export class StoresService {
     {
       id: "ad-003",
       title: "تطبيق جوال مجاني لمتجرك",
-      description: "احصل على تطبيق جوال احترافي لمتجرك مع خصم 30%",
+      description: "احصل على تطبيق ج��ال احترافي لمتجرك مع خصم 30%",
       image: "/placeholder.svg",
       advertiser: "خدمات التقنية السودانية",
       category: "services",
