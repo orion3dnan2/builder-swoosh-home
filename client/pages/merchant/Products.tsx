@@ -189,6 +189,9 @@ export default function MerchantProducts() {
               </div>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
+              <Badge variant="outline" className="arabic">
+                {currentStore?.name}
+              </Badge>
               <Link to="/merchant/products/new">
                 <Button className="arabic">
                   <Plus className="w-4 h-4 ml-2" />
