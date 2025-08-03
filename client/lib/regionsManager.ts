@@ -284,8 +284,14 @@ export class RegionsManager {
     
     // حساب الإحصائيات من البيانات الفعلية
     Object.entries(this.regionsByCountry).forEach(([countryCode, regions]) => {
+      // التأكد من أن regions هو array صالح
+      if (!Array.isArray(regions)) {
+        console.warn(`Invalid regions data for country ${countryCode}:`, regions);
+        return;
+      }
+
       const countryName = AVAILABLE_COUNTRIES.find(c => c.code === countryCode)?.name || countryCode;
-      const activeRegions = regions.filter(r => r.isActive);
+      const activeRegions = regions.filter(r => r && typeof r === 'object' && r.isActive);
       byCountry[countryName] = activeRegions.length;
       total += activeRegions.length;
     });
