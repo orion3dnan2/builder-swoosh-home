@@ -217,11 +217,11 @@ export default function MerchantDashboard() {
                 <h1 className="text-2xl font-bold text-gray-900 arabic">
                   {loading
                     ? "جاري التحميل..."
-                    : userStore?.name || "لوحة إدارة المتجر"}
+                    : displayStore?.name || "لوحة إدارة المتجر"}
                 </h1>
                 <p className="text-gray-600 arabic">
                   مرحباً {user?.profile.name}
-                  {userStore && ` - ${userStore.name}`}
+                  {displayStore && ` - ${displayStore.name}`}
                 </p>
               </div>
             </div>
@@ -268,7 +268,7 @@ export default function MerchantDashboard() {
                       </h2>
                       <p className="text-gray-700 mb-4 arabic">
                         أهلاً وسهلاً {user?.profile.name}! متجرك الآن جاهز
-                        للبدء. ابدأ بإضافة منتجاتك الأولى وتخصيص مظهر متجرك.
+                        للبدء. اب��أ بإضافة منتجاتك الأولى وتخصيص مظهر متجرك.
                       </p>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <Link to="/merchant/products/new">
@@ -383,7 +383,7 @@ export default function MerchantDashboard() {
                 >
                   <div className="text-center">
                     <Package className="w-6 h-6 mx-auto mb-2" />
-                    <span className="text-sm arabic">إدارة المنتجات</span>
+                    <span className="text-sm arabic">إدارة المنتجا��</span>
                   </div>
                 </Button>
               </Link>
