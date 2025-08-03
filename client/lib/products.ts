@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Product } from "../../shared/types";
 
 export class ProductService {
@@ -55,7 +56,7 @@ export class ProductService {
       // إعادة تعيين المنتجات الأصلية فقط
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.demoProducts));
 
-      console.log("تم مسح جميع المنتجات وإعادة ضبط البيانات للمنتجات الأصلية");
+      console.log("تم مسح جميع المنتجات وإعادة ضبط البيانات للمنتجات ��لأصلية");
 
       // إعادة تحميل الصفحة لتطبيق التغييرات
       window.location.reload();
