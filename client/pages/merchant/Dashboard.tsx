@@ -48,8 +48,9 @@ export default function MerchantDashboard() {
 
   // Filter products by current user's store (we'll use store-001 for now)
   const userStoreId = "store-001"; // This should come from user context in a real app
-  const userProducts = allProducts.filter(
-    (product) => product.storeId === userStoreId,
+  const userProducts = useMemo(() =>
+    allProducts.filter((product) => product.storeId === userStoreId),
+    [allProducts, userStoreId]
   );
 
   // تحديد إذا كان التاجر جديد بناءً على تاريخ إنشاء ال��ساب
@@ -220,7 +221,7 @@ export default function MerchantDashboard() {
                     : displayStore?.name || "لوحة إدارة المتجر"}
                 </h1>
                 <p className="text-gray-600 arabic">
-                  مر��باً {user?.profile.name}
+                  مرحباً {user?.profile.name}
                   {displayStore && ` - ${displayStore.name}`}
                 </p>
               </div>
@@ -421,7 +422,7 @@ export default function MerchantDashboard() {
                   <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle className="flex items-center arabic">
                       <Clock className="w-5 h-5 ml-2" />
-                      الطلبات الأخيرة
+                      الطلبات الأخير��
                     </CardTitle>
                     <Link to="/merchant/orders">
                       <Button variant="outline" size="sm" className="arabic">
