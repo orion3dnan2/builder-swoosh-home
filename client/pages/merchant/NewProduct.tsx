@@ -20,6 +20,8 @@ import {
 } from "lucide-react";
 import { useProducts } from "@/lib/products";
 import { useAuth } from "@/contexts/AuthContext";
+import { StoresService } from "@/lib/stores";
+import { Currency, defaultCurrency } from "@/lib/currencies";
 import { Product } from "../../../shared/types";
 
 export default function NewProduct() {
@@ -615,7 +617,7 @@ export default function NewProduct() {
                 </div>
 
                 <div>
-                  <Label className="arabic">حد التنبيه للمخزون</Label>
+                  <Label className="arabic">حد الت��بيه للمخزون</Label>
                   <Input
                     type="number"
                     value={formData.inventory?.lowStockThreshold}
