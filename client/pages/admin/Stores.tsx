@@ -936,7 +936,7 @@ export default function AdminStores() {
               <div className="text-center py-12">
                 <Store className="w-24 h-24 text-gray-300 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2 arabic">
-                  لا توجد متاجر
+                  لا ت��جد متاجر
                 </h3>
                 <p className="text-gray-600 arabic">
                   لم يتم العثور على متاجر تطابق معايير البحث
@@ -1638,7 +1638,7 @@ export default function AdminStores() {
             </DialogTitle>
             <DialogDescription className="arabic text-right">
               {confirmAction?.type === "approve" && "هل أنت متأكد من اعتماد هذا المتجر؟"}
-              {confirmAction?.type === "suspend" && "هل أنت متأكد من تعليق هذا المتجر؟"}
+              {confirmAction?.type === "suspend" && "هل أنت متأكد من ��عليق هذا المتجر؟"}
               {confirmAction?.type === "block" && "هل أنت متأكد من إيقاف هذا المتجر نهائياً؟"}
               {confirmAction?.type === "reactivate" && "هل أنت متأكد من إعادة تفعيل هذا المتجر؟"}
               {confirmAction?.type === "renew" && "هل تريد تجديد اشتراك هذا المتجر؟"}
@@ -1669,9 +1669,11 @@ export default function AdminStores() {
                   : "bg-green-600 hover:bg-green-700"
               } text-white`}
             >
-              {confirmAction?.type === "approve" && "اعتماد"}
-              {confirmAction?.type === "suspend" && "تعليق"}
-              {confirmAction?.type === "reactivate" && "إعادة تفعيل"}
+              {confirmAction?.type === "approve" && "✅ اعتماد"}
+              {confirmAction?.type === "suspend" && "⏸️ تعليق"}
+              {confirmAction?.type === "block" && "🚫 إيقاف"}
+              {confirmAction?.type === "reactivate" && "🔄 إعادة تفعيل"}
+              {confirmAction?.type === "renew" && "📅 تجديد الاشتراك"}
               {confirmAction?.type === "feature" && "جعله مميزاً"}
               {confirmAction?.type === "unfeature" && "إلغاء التمييز"}
               {confirmAction?.type === "verify" && "توثيق"}
