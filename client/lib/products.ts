@@ -46,7 +46,7 @@ export class ProductService {
     }
   }
 
-  // مسح جميع المنتجات وإعا��ة ضبط البيانات للمنتجات الأصلية فقط
+  // مسح جميع المنتجات وإعادة ضبط البيانات للمنتجات الأصلية فقط
   static clearAllProducts(): void {
     try {
       // حذف جميع البيانات من localStorage
@@ -307,7 +307,7 @@ export class ProductService {
         storeId: storeId,
         name: "طلب اقاشي فراخ وسط",
         description: "طلب اقاشي فراخ وسط أصيل من مطعم زول اقاشي - فراخ مشوي طازج بالطريقة السودانية التقليدية",
-        price: 35.0,
+        price: 3.500,
         images: ["https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80"],
         category: "أطباق رئيسية",
         tags: ["اقاشي", "فراخ", "مشوي", "سوداني", "وسط"],
