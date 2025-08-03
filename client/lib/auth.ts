@@ -20,11 +20,18 @@ export class AuthService {
         body: JSON.stringify(credentials),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || "خطأ في تسجيل الدخول");
+        let errorMessage = "خطأ في تسجيل الدخول";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error || errorMessage;
+        } catch {
+          // If we can't parse JSON, use default error message
+        }
+        throw new Error(errorMessage);
       }
+
+      const data = await response.json();
 
       // حفظ الرمز المميز والمستخدم
       if (data.token) {
