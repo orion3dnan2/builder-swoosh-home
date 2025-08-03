@@ -33,7 +33,7 @@ export default function NewProduct() {
   const [currentImageUrl, setCurrentImageUrl] = useState("");
 
   const [formData, setFormData] = useState<Partial<Product>>({
-    storeId: "store-001", // Replace with actual store ID from user context
+    storeId: "store-001", // Using store-001 for merchant testing
     name: "",
     description: "",
     price: 0,
@@ -258,7 +258,7 @@ export default function NewProduct() {
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <Label className="arabic">اسم ��لمنتج *</Label>
+                  <Label className="arabic">اسم المنتج *</Label>
                   <Input
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
@@ -288,7 +288,7 @@ export default function NewProduct() {
                   </select>
                   {formData.category === "new" && (
                     <Input
-                      placeholder="أدخل اسم ال��ئة الجديدة"
+                      placeholder="أدخل اسم الفئة الجديدة"
                       className="mt-2 arabic text-right"
                       onChange={(e) =>
                         handleInputChange("category", e.target.value)
@@ -388,7 +388,7 @@ export default function NewProduct() {
                 <Input
                   value={currentImageUrl}
                   onChange={(e) => setCurrentImageUrl(e.target.value)}
-                  placeholder="رابط الصورة (https://...)"
+                  placeholder="رابط ��لصورة (https://...)"
                   className="flex-1"
                 />
                 <Button
@@ -463,7 +463,7 @@ export default function NewProduct() {
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <Label className="arabic">الكمية المتوفر�� *</Label>
+                  <Label className="arabic">الكمية المتوفرة *</Label>
                   <Input
                     type="number"
                     value={formData.inventory?.quantity ?? 0}
@@ -498,7 +498,7 @@ export default function NewProduct() {
                 </div>
 
                 <div>
-                  <Label className="arabic">رمز المنت�� (SKU)</Label>
+                  <Label className="arabic">رمز المنتج (SKU)</Label>
                   <div className="flex items-center space-x-2 space-x-reverse mt-2">
                     <Input
                       value={formData.inventory?.sku}
