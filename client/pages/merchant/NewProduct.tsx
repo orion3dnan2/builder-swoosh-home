@@ -37,20 +37,25 @@ export default function NewProduct() {
   useEffect(() => {
     if (!user?.id) return;
 
-    // Known store mappings from stores.json
+    // Known store mappings from stores.json - this must match actual store data
     const storeMapping: Record<string, string> = {
       "user-1753865301240-efsqj09s0": "store-1753868707117-r80zjqevj", // زول اقاشي
       "merchant-001": "store-001",
       "admin-001": "store-001",
     };
 
-    const userStoreId = storeMapping[user.id];
-    if (userStoreId) {
-      setUserStoreId(userStoreId);
+    const mappedStoreId = storeMapping[user.id];
+    if (mappedStoreId) {
+      setUserStoreId(mappedStoreId);
+      console.log("Store ID mapped:", mappedStoreId, "for user:", user.id);
     } else {
       // If user has businessName, assume they have a store
       if (user.profile?.businessName) {
-        setUserStoreId(`store-${user.id}`);
+        const fallbackStoreId = `store-${user.id}`;
+        setUserStoreId(fallbackStoreId);
+        console.log("Fallback store ID:", fallbackStoreId, "for user:", user.id);
+      } else {
+        console.log("No store found for user:", user.id);
       }
     }
   }, [user?.id]);
@@ -447,7 +452,7 @@ export default function NewProduct() {
                 </div>
 
                 <div>
-                  <Label className="arabic">سعر الخصم (اختياري)</Label>
+                  <Label className="arabic">��عر الخصم (اختياري)</Label>
                   <Input
                     type="number"
                     step="0.01"
