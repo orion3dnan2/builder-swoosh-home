@@ -4,6 +4,54 @@ import { StoreDatabase } from "../../lib/database";
 
 const router = Router();
 
+// Get restaurants (stores with type "restaurant") - يجب أن يكون قبل المسارات المتغيرة
+router.get("/restaurants", async (req, res) => {
+  try {
+    const stores = StoreDatabase.getAllStores();
+    const restaurants = stores.filter(
+      (store: any) =>
+        store.storeType === "restaurant" && store.status === "active",
+    );
+    res.json(restaurants);
+  } catch (error) {
+    console.error("Get restaurants error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
+  }
+});
+
+// Get companies (stores with type "company")
+router.get("/companies", async (req, res) => {
+  try {
+    const stores = StoreDatabase.getAllStores();
+    const companies = stores.filter(
+      (store: any) =>
+        store.storeType === "company" && store.status === "active",
+    );
+    res.json(companies);
+  } catch (error) {
+    console.error("Get companies error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
+  }
+});
+
+// Get general stores (stores with type "store" or other types)
+router.get("/general", async (req, res) => {
+  try {
+    const stores = StoreDatabase.getAllStores();
+    const generalStores = stores.filter(
+      (store: any) =>
+        store.status === "active" &&
+        (!store.storeType ||
+          store.storeType === "store" ||
+          !["restaurant", "company"].includes(store.storeType)),
+    );
+    res.json(generalStores);
+  } catch (error) {
+    console.error("Get general stores error:", error);
+    res.status(500).json({ error: "خطأ في الخادم" });
+  }
+});
+
 // Get all stores (للمديرين وأصحاب المتاجر)
 router.get("/", authenticateToken, async (req: any, res) => {
   try {
@@ -45,7 +93,7 @@ router.get("/:id", authenticateToken, async (req: any, res) => {
     res.json(store);
   } catch (error) {
     console.error("Get store error:", error);
-    res.status(500).json({ error: "خطأ في الخادم" });
+    res.status(500).json({ error: "خطأ ��ي الخادم" });
   }
 });
 
@@ -297,7 +345,7 @@ router.patch("/:id/status", authenticateToken, async (req: any, res) => {
     const store = StoreDatabase.findStore((s) => s.id === storeId);
 
     if (!store) {
-      return res.status(404).json({ error: "المتجر غير موجود" });
+      return res.status(404).json({ error: "ال��تجر غير موجود" });
     }
 
     if (!["active", "inactive", "pending", "suspended"].includes(status)) {
