@@ -793,7 +793,7 @@ export default function NewProduct() {
                 ) : (
                   <>
                     <Save className="w-4 h-4 ml-2" />
-                    حفظ المنتج
+                    {isEditing ? "تحديث المنتج" : "حفظ المنتج"}
                   </>
                 )}
               </Button>
