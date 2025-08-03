@@ -77,6 +77,21 @@ export default function NewProduct() {
     }
   };
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Create a temporary URL for the uploaded file
+      const tempUrl = URL.createObjectURL(file);
+      setFormData((prev) => ({
+        ...prev,
+        images: [...(prev.images || []), tempUrl],
+      }));
+
+      // Reset the input
+      event.target.value = '';
+    }
+  };
+
   const handleRemoveImage = (index: number) => {
     setFormData((prev) => ({
       ...prev,
@@ -243,7 +258,7 @@ export default function NewProduct() {
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <Label className="arabic">اسم المنتج *</Label>
+                  <Label className="arabic">اسم ��لمنتج *</Label>
                   <Input
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
@@ -273,7 +288,7 @@ export default function NewProduct() {
                   </select>
                   {formData.category === "new" && (
                     <Input
-                      placeholder="أدخل اسم الفئة الجديدة"
+                      placeholder="أدخل اسم ال��ئة الجديدة"
                       className="mt-2 arabic text-right"
                       onChange={(e) =>
                         handleInputChange("category", e.target.value)
@@ -414,7 +429,19 @@ export default function NewProduct() {
               )}
 
               <div className="flex items-center space-x-2 space-x-reverse">
-                <Button type="button" variant="outline" className="arabic">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  id="image-upload"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="arabic"
+                  onClick={() => document.getElementById('image-upload')?.click()}
+                >
                   <Upload className="w-4 h-4 ml-2" />
                   رفع صورة من الجهاز
                 </Button>
@@ -436,16 +463,18 @@ export default function NewProduct() {
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <Label className="arabic">الكمية المتوفرة *</Label>
+                  <Label className="arabic">الكمية المتوفر�� *</Label>
                   <Input
                     type="number"
-                    value={formData.inventory?.quantity}
-                    onChange={(e) =>
+                    value={formData.inventory?.quantity ?? 0}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      const numValue = value === '' ? 0 : parseInt(value);
                       handleInventoryChange(
                         "quantity",
-                        parseInt(e.target.value) || 0,
-                      )
-                    }
+                        isNaN(numValue) ? 0 : Math.max(0, numValue)
+                      );
+                    }}
                     className="mt-2"
                     min="0"
                     required
@@ -469,7 +498,7 @@ export default function NewProduct() {
                 </div>
 
                 <div>
-                  <Label className="arabic">رمز المنتج (SKU)</Label>
+                  <Label className="arabic">رمز المنت�� (SKU)</Label>
                   <div className="flex items-center space-x-2 space-x-reverse mt-2">
                     <Input
                       value={formData.inventory?.sku}
