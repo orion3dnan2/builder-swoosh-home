@@ -123,7 +123,7 @@ export default function MerchantProducts() {
       case "active":
         return "نشط";
       case "inactive":
-        return "غ��ر نشط";
+        return "غ���ر نشط";
       case "out_of_stock":
         return "نفد المخزون";
       default:
@@ -204,6 +204,23 @@ export default function MerchantProducts() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Store Info Banner */}
+        <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="flex items-center space-x-3 space-x-reverse">
+            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+              <Package className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-blue-800 arabic">
+                عرض منتجات متجر: {currentStore?.name}
+              </h3>
+              <p className="text-xs text-blue-600 arabic">
+                يمكنك تغيير المتجر من القائمة أعلاه • المنتجات تظهر في السوق العام تلقائياً
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Filters and Search */}
         <Card className="mb-6">
           <CardContent className="p-6">
