@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -220,7 +220,7 @@ export default function MerchantDashboard() {
                     : displayStore?.name || "لوحة إدارة المتجر"}
                 </h1>
                 <p className="text-gray-600 arabic">
-                  مرحباً {user?.profile.name}
+                  مر��باً {user?.profile.name}
                   {displayStore && ` - ${displayStore.name}`}
                 </p>
               </div>
