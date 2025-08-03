@@ -47,7 +47,7 @@ export class ProductService {
       specifications: {
         النوع: "خبز تقليدي",
         الحجم: "قطعة واحدة",
-        المدة: "طازج يومياً",
+        المدة: "طازج يوميا��",
         الوزن: "150 جرام",
       },
       status: "active",
@@ -325,7 +325,7 @@ export class ProductService {
     }
 
     if (!product.price || product.price <= 0) {
-      errors.push("سعر ا��منتج يجب أن يكون أكبر من صفر");
+      errors.push("سعر المنتج يجب أن يكون أكبر من صفر");
     }
 
     if (product.salePrice && product.salePrice >= product.price) {
@@ -389,7 +389,7 @@ export class ProductService {
 
   static getCategoryIcon(category: string): string {
     const icons: Record<string, string> = {
-      "عطور و��ستحضرات": "🌹",
+      "عطور ومستحضرات": "🌹",
       "أطعمة ومشروبات": "🍯",
       "أطباق رئيسية": "🍽️",
       "مخبوزات": "🥖",
@@ -427,7 +427,7 @@ export class ProductService {
         id: `prod-${Date.now()}-1`,
         storeId: storeId,
         name: "ملوخية سودانية",
-        description: "ملوخية سودانية أصيلة مطبوخة بالطريقة التقليدية ��ع اللحم",
+        description: "ملوخية سودانية أصيلة مطبوخة بالطريقة التقليدية مع اللحم",
         price: 25.0,
         images: ["https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&q=80"],
         category: "أطباق رئيسية",
@@ -551,5 +551,6 @@ export const useProducts = (storeId?: string) => {
     validateProduct: (product: Partial<Product>) =>
       ProductService.validateProduct(product),
     clearDemoProducts: () => ProductService.clearDemoProducts(),
+    clearAllProducts: () => ProductService.clearAllProducts(),
   };
 };
