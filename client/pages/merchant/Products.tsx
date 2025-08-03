@@ -38,6 +38,7 @@ export default function MerchantProducts() {
     "updated",
   );
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [storeCurrency, setStoreCurrency] = useState<Currency>(defaultCurrency);
 
   // Use products hook to get actual products
   const {
