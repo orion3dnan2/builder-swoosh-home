@@ -321,7 +321,7 @@ export default function MerchantSettings() {
           },
           {
             id: "driver2",
-            name: "فاطمة عبدالله",
+            name: "فاطمة ��بدالله",
             phone: "+971501234567",
             area: "دبي",
             rating: 4.9,
@@ -479,7 +479,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.email.trim()) {
-      alert("يرجى إدخ��ل ا��بريد الإلكتروني");
+      alert("يرجى إدخ��ل ا��بريد ا��إلكتروني");
       return;
     }
 
@@ -558,7 +558,7 @@ export default function MerchantSettings() {
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ الإعدا��ات.\n\nيرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ الإعدا��ات.\n\nيرجى ��لتحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", error);
     } finally {
@@ -597,9 +597,9 @@ export default function MerchantSettings() {
     "الجمعة",
   ];
 
-  // ��ائمة الدول والمدن التابعة لها
+  // قائمة ال��ول والمدن التابعة لها
   const countriesWithCities = {
-    ا��سودان: [
+    "السودان": [
       "الخرطوم",
       "أمدرمان",
       "بحري",
@@ -644,7 +644,7 @@ export default function MerchantSettings() {
       "الفروانية",
       "حولي",
     ],
-    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"],
+    "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أ�� صلال", "الخور", "الشمال"],
     "مملكة البحرين": ["ا��منامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
     "جمهورية مصر العربية": [
@@ -680,7 +680,7 @@ export default function MerchantSettings() {
     hasRegions,
   } = useRegions();
 
-  // دال�� لمعالجة تغيير نوع المتجر
+  // دال�� لمعا��جة تغيير نوع المتجر
   const handleCategoryChange = (value: string) => {
     if (value === "أخرى (حدد النوع)") {
       setShowCustomCategory(true);
@@ -1267,7 +1267,7 @@ export default function MerchantSettings() {
                       </div>
                       <div>
                         <h3 className="font-bold text-gray-900 arabic text-lg">
-                          إشعارات الطلبات
+                          إشعارات الطلب��ت
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
                           تلقى تحديثات حول طلباتك ومبيعاتك
@@ -1842,7 +1842,7 @@ export default function MerchantSettings() {
                           إعدادات التتبع والأتمتة
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تفعيل خيارات التتبع المباشر وتوزيع الطلبات التلقائي
+                          تف��يل خيارات التتبع المباشر وتوزيع الطلبات التلقائي
                         </p>
                       </div>
                     </div>
@@ -1923,7 +1923,7 @@ export default function MerchantSettings() {
                           تكامل الواتساب للتوصيل
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تواصل مباشر مع السائقين وتتبع الطلبات عبر الواتساب
+                          تواصل مبا��ر مع السائقين وتتبع الطلبات عبر الواتساب
                         </p>
                       </div>
                     </div>
@@ -2119,7 +2119,7 @@ export default function MerchantSettings() {
                             إشعارات تسجيل الدخول
                           </div>
                           <div className="text-sm text-gray-600 arabic">
-                            ت��بيه عند تسجيل دخول جديد
+                            ت��بيه عند ��سجيل دخول جديد
                           </div>
                         </div>
                         <Switch
