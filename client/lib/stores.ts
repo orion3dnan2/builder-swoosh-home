@@ -302,7 +302,7 @@ export class StoresService {
     {
       id: "ad-002",
       title: "وجبة مجانية عند طلب وجبتين",
-      description: "استمتع بوجبة ثالثة مجاناً عند طلب وجبتين من مطعم أم درمان",
+      description: "استمتع بوجبة ثالثة مجاناً عند طلب وجبتين من مطع�� أم درمان",
       image: "/placeholder.svg",
       advertiser: "مطعم أم درمان",
       category: "food",
@@ -441,9 +441,12 @@ export class StoresService {
   static getStoreDetails(storeId: string) {
     const store = this.storeDetailsMap[storeId];
     if (store) {
+      console.log("Store country:", store.country);
+      const currency = getCurrencyByCountry(store.country);
+      console.log("Currency for country:", currency);
       return {
         ...store,
-        currency: getCurrencyByCountry(store.country)
+        currency: currency
       };
     }
     return null;
