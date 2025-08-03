@@ -33,8 +33,8 @@ export class ProductService {
     {
       id: "prod-restaurant-real-002",
       storeId: "store-1753868707117-r80zjqevj",
-      name: "قرا��ة سودانية",
-      description: "خبز قراصة سوداني تقليدي مخبوز طازج يومياً من الدقيق المحلي الفاخر. يُقدم ساخن مع الوجبات الرئيسية",
+      name: "قراصة سودانية",
+      description: "خبز قراصة سوداني تق��يدي مخبوز طازج يومياً من الدقيق المحلي الفاخر. يُقدم ساخن مع الوجبات الرئيسية",
       price: 8.0,
       images: ["https://images.unsplash.com/photo-1585478259715-876acc5be8eb?w=400&q=80"],
       category: "مخبوزات",
@@ -96,7 +96,7 @@ export class ProductService {
       specifications: {
         النوع: "مشروب ساخن",
         الحجم: "كوب",
-        المكونات: "شاي أحمر، حليب، سكر، هيل",
+        ا��مكونات: "شاي أحمر، حليب، سكر، هيل",
         "درجة الحرارة": "ساخن",
       },
       status: "active",
@@ -311,7 +311,7 @@ export class ProductService {
     }
 
     if (product.salePrice && product.salePrice >= product.price) {
-      errors.push("سعر الخصم يجب أن يكون أقل من السعر الأصلي");
+      errors.push("سعر الخصم يجب أن يكون أقل من الس��ر الأصلي");
     }
 
     if (!product.category || product.category.trim().length === 0) {
