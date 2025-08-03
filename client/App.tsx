@@ -149,6 +149,14 @@ function App() {
                 }
               />
               <Route
+                path="/merchant/products/:id/edit"
+                element={
+                  <MerchantRoute>
+                    <NewProduct />
+                  </MerchantRoute>
+                }
+              />
+              <Route
                 path="/merchant/analytics"
                 element={
                   <MerchantRoute>
