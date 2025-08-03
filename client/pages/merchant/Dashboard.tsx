@@ -43,9 +43,9 @@ export default function MerchantDashboard() {
       const accountAge = Date.now() - new Date(user.createdAt).getTime();
       const daysSinceCreation = accountAge / (1000 * 60 * 60 * 24);
       // إذا كان الحساب أقل من 7 أيام وليس له منتجات أو طلبات، يُعتبر جديد
-      setIsNewMerchant(daysSinceCreation < 7);
+      setIsNewMerchant(daysSinceCreation < 7 && userProducts.length === 0);
     }
-  }, [user]);
+  }, [user, userProducts.length]);
 
   const [storeStats, setStoreStats] = useState({
     totalProducts: 0,
