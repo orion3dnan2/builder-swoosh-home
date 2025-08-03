@@ -77,18 +77,18 @@ export default function Restaurant() {
   };
 
   const addToCart = (productId: string) => {
-    setCart(prev => ({
+    setCart((prev) => ({
       ...prev,
-      [productId]: (prev[productId] || 0) + 1
+      [productId]: (prev[productId] || 0) + 1,
     }));
-    const product = restaurantProducts.find(p => p.id === productId);
+    const product = restaurantProducts.find((p) => p.id === productId);
     toast.success(`تم إضافة ${product?.name} إلى العربة`, {
-      description: `الكمية: ${(cart[productId] || 0) + 1}`
+      description: `الكمية: ${(cart[productId] || 0) + 1}`,
     });
   };
 
   const removeFromCart = (productId: string) => {
-    setCart(prev => {
+    setCart((prev) => {
       const newCart = { ...prev };
       if (newCart[productId] > 1) {
         newCart[productId]--;
@@ -102,7 +102,8 @@ export default function Restaurant() {
 
   const getCartQuantity = (productId: string) => cart[productId] || 0;
 
-  const getTotalCartItems = () => Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+  const getTotalCartItems = () =>
+    Object.values(cart).reduce((sum, qty) => sum + qty, 0);
 
   const viewProductDetails = (product: any) => {
     setSelectedProduct(product);
@@ -288,7 +289,9 @@ export default function Restaurant() {
                                       <Button
                                         size="sm"
                                         variant="outline"
-                                        onClick={() => removeFromCart(product.id)}
+                                        onClick={() =>
+                                          removeFromCart(product.id)
+                                        }
                                       >
                                         <Minus className="w-3 h-3" />
                                       </Button>
@@ -383,7 +386,9 @@ export default function Restaurant() {
                   <div className="mt-4 space-y-2">
                     <Button
                       className="w-full arabic bg-red-600 hover:bg-red-700"
-                      onClick={() => window.open(`tel:${restaurant.phone}`, '_self')}
+                      onClick={() =>
+                        window.open(`tel:${restaurant.phone}`, "_self")
+                      }
                     >
                       <Phone className="w-4 h-4 ml-2" />
                       اتصل الآن
@@ -392,8 +397,13 @@ export default function Restaurant() {
                       variant="outline"
                       className="w-full arabic"
                       onClick={() => {
-                        const address = encodeURIComponent(`${restaurant.address || restaurant.city}, ${restaurant.country}`);
-                        window.open(`https://www.google.com/maps/search/${address}`, '_blank');
+                        const address = encodeURIComponent(
+                          `${restaurant.address || restaurant.city}, ${restaurant.country}`,
+                        );
+                        window.open(
+                          `https://www.google.com/maps/search/${address}`,
+                          "_blank",
+                        );
                       }}
                     >
                       <Navigation className="w-4 h-4 ml-2" />
@@ -479,13 +489,21 @@ export default function Restaurant() {
                     </h3>
                     <div className="space-y-2 mb-4">
                       {Object.entries(cart).map(([productId, quantity]) => {
-                        const product = restaurantProducts.find(p => p.id === productId);
+                        const product = restaurantProducts.find(
+                          (p) => p.id === productId,
+                        );
                         if (!product) return null;
                         return (
-                          <div key={productId} className="flex justify-between items-center">
-                            <span className="arabic text-sm">{product.name}</span>
+                          <div
+                            key={productId}
+                            className="flex justify-between items-center"
+                          >
+                            <span className="arabic text-sm">
+                              {product.name}
+                            </span>
                             <span className="arabic text-sm font-medium">
-                              {quantity} × {formatPrice(product.salePrice || product.price)}
+                              {quantity} ×{" "}
+                              {formatPrice(product.salePrice || product.price)}
                             </span>
                           </div>
                         );
@@ -496,10 +514,21 @@ export default function Restaurant() {
                         <span>المجموع:</span>
                         <span>
                           {formatPrice(
-                            Object.entries(cart).reduce((total, [productId, quantity]) => {
-                              const product = restaurantProducts.find(p => p.id === productId);
-                              return total + (product ? (product.salePrice || product.price) * quantity : 0);
-                            }, 0)
+                            Object.entries(cart).reduce(
+                              (total, [productId, quantity]) => {
+                                const product = restaurantProducts.find(
+                                  (p) => p.id === productId,
+                                );
+                                return (
+                                  total +
+                                  (product
+                                    ? (product.salePrice || product.price) *
+                                      quantity
+                                    : 0)
+                                );
+                              },
+                              0,
+                            ),
                           )}
                         </span>
                       </div>
@@ -522,7 +551,9 @@ export default function Restaurant() {
           <Card className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <CardContent className="p-6">
               <div className="flex justify-between items-start mb-4">
-                <h2 className="text-2xl font-bold arabic">{selectedProduct.name}</h2>
+                <h2 className="text-2xl font-bold arabic">
+                  {selectedProduct.name}
+                </h2>
                 <Button
                   variant="outline"
                   size="sm"
@@ -546,12 +577,14 @@ export default function Restaurant() {
                 <div>
                   <h4 className="font-semibold arabic mb-2">المواصفات:</h4>
                   <div className="space-y-1">
-                    {Object.entries(selectedProduct.specifications || {}).map(([key, value]) => (
-                      <div key={key} className="flex justify-between text-sm">
-                        <span className="arabic text-gray-600">{key}:</span>
-                        <span className="arabic">{value as string}</span>
-                      </div>
-                    ))}
+                    {Object.entries(selectedProduct.specifications || {}).map(
+                      ([key, value]) => (
+                        <div key={key} className="flex justify-between text-sm">
+                          <span className="arabic text-gray-600">{key}:</span>
+                          <span className="arabic">{value as string}</span>
+                        </div>
+                      ),
+                    )}
                   </div>
                 </div>
                 <div>
@@ -563,7 +596,9 @@ export default function Restaurant() {
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="arabic text-gray-600">المخزون:</span>
-                      <span className="arabic">{selectedProduct.inventory.quantity} قطعة</span>
+                      <span className="arabic">
+                        {selectedProduct.inventory.quantity} قطعة
+                      </span>
                     </div>
                   </div>
                 </div>

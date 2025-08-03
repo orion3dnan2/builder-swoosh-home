@@ -61,7 +61,12 @@ export default function NewProduct() {
       if (user.profile?.businessName) {
         const fallbackStoreId = `store-${user.id}`;
         setUserStoreId(fallbackStoreId);
-        console.log("Fallback store ID:", fallbackStoreId, "for user:", user.id);
+        console.log(
+          "Fallback store ID:",
+          fallbackStoreId,
+          "for user:",
+          user.id,
+        );
       } else {
         console.log("No store found for user:", user.id);
       }
@@ -109,7 +114,7 @@ export default function NewProduct() {
         setHasLoadedProduct(true);
       } else {
         // Product not found, redirect back to products list
-        navigate('/merchant/products');
+        navigate("/merchant/products");
       }
     }
   }, [isEditing, id, hasLoadedProduct]);
@@ -244,7 +249,8 @@ export default function NewProduct() {
 
     try {
       // Use existing ID when editing, or generate new one when creating
-      const productId = isEditing && formData.id ? formData.id : `prod-${Date.now()}`;
+      const productId =
+        isEditing && formData.id ? formData.id : `prod-${Date.now()}`;
       const finalSKU =
         formData.inventory?.sku ||
         generateSKU(formData.category!, formData.name!);
@@ -266,7 +272,10 @@ export default function NewProduct() {
         },
         specifications: formData.specifications || {},
         status: formData.status as Product["status"],
-        createdAt: isEditing && formData.createdAt ? formData.createdAt : new Date().toISOString(),
+        createdAt:
+          isEditing && formData.createdAt
+            ? formData.createdAt
+            : new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
 
@@ -472,7 +481,8 @@ export default function NewProduct() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <Label className="arabic">
-                    السعر الأساسي * ({storeCurrency.symbol} {storeCurrency.nameAr})
+                    السعر الأساسي * ({storeCurrency.symbol}{" "}
+                    {storeCurrency.nameAr})
                   </Label>
                   <div className="relative mt-2">
                     <Input
@@ -502,7 +512,8 @@ export default function NewProduct() {
 
                 <div>
                   <Label className="arabic">
-                    سعر الخصم (اختياري) ({storeCurrency.symbol} {storeCurrency.nameAr})
+                    سعر الخصم (اختياري) ({storeCurrency.symbol}{" "}
+                    {storeCurrency.nameAr})
                   </Label>
                   <div className="relative mt-2">
                     <Input
@@ -512,7 +523,9 @@ export default function NewProduct() {
                       onChange={(e) =>
                         handleInputChange(
                           "salePrice",
-                          e.target.value ? parseFloat(e.target.value) : undefined,
+                          e.target.value
+                            ? parseFloat(e.target.value)
+                            : undefined,
                         )
                       }
                       className="pr-16"

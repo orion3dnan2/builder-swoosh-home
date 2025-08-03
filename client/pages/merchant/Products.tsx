@@ -191,7 +191,11 @@ export default function MerchantProducts() {
   };
 
   const handleResetToOriginalProduct = () => {
-    if (window.confirm("هل تريد مسح جميع المنتجات والاحتفاظ بـ 'طلب اقاشي فراخ وسط' فقط؟")) {
+    if (
+      window.confirm(
+        "هل تريد مسح جميع المنتجات والاحتفاظ بـ 'طلب اقاشي فراخ وسط' فقط؟",
+      )
+    ) {
       clearAllProducts();
     }
   };

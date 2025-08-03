@@ -433,8 +433,8 @@ export class StoresService {
       address: "",
       city: "الأحمدي",
       country: "دولة الكويت",
-      status: "active"
-    }
+      status: "active",
+    },
   };
 
   // الحصول على معلومات المتجر الكاملة
@@ -446,7 +446,7 @@ export class StoresService {
       console.log("Currency for country:", currency);
       return {
         ...store,
-        currency: currency
+        currency: currency,
       };
     }
     return null;

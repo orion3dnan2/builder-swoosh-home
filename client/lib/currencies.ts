@@ -12,122 +12,122 @@ export const countryCurrencies: Record<string, Currency> = {
     code: "KWD",
     symbol: "د.ك",
     name: "Kuwaiti Dinar",
-    nameAr: "دينار كويتي"
+    nameAr: "دينار كويتي",
   },
-  "الكويت": {
-    code: "KWD", 
+  الكويت: {
+    code: "KWD",
     symbol: "د.ك",
     name: "Kuwaiti Dinar",
-    nameAr: "دينار كويتي"
+    nameAr: "دينار كويتي",
   },
-  "السعودية": {
+  السعودية: {
     code: "SAR",
     symbol: "ر.س",
     name: "Saudi Riyal",
-    nameAr: "ريال سعودي"
+    nameAr: "ريال سعودي",
   },
   "المملكة العربية السعودية": {
     code: "SAR",
-    symbol: "ر.س", 
+    symbol: "ر.س",
     name: "Saudi Riyal",
-    nameAr: "ريال سعودي"
+    nameAr: "ريال سعودي",
   },
-  "الإمارات": {
+  الإمارات: {
     code: "AED",
     symbol: "د.إ",
     name: "UAE Dirham",
-    nameAr: "درهم إماراتي"
+    nameAr: "درهم إماراتي",
   },
   "الإمارات العربية المتحدة": {
     code: "AED",
     symbol: "د.إ",
-    name: "UAE Dirham", 
-    nameAr: "درهم إماراتي"
+    name: "UAE Dirham",
+    nameAr: "درهم إماراتي",
   },
-  "قطر": {
+  قطر: {
     code: "QAR",
     symbol: "ر.ق",
     name: "Qatari Riyal",
-    nameAr: "ريال قطري"
+    nameAr: "ريال قطري",
   },
   "دولة قطر": {
     code: "QAR",
     symbol: "ر.ق",
     name: "Qatari Riyal",
-    nameAr: "ريال قطري"
+    nameAr: "ريال قطري",
   },
-  "البحرين": {
+  البحرين: {
     code: "BHD",
     symbol: "د.ب",
     name: "Bahraini Dinar",
-    nameAr: "دينار بحريني"
+    nameAr: "دينار بحريني",
   },
   "مملكة البحرين": {
     code: "BHD",
-    symbol: "د.ب", 
+    symbol: "د.ب",
     name: "Bahraini Dinar",
-    nameAr: "دينار بحريني"
+    nameAr: "دينار بحريني",
   },
-  "عمان": {
+  عمان: {
     code: "OMR",
     symbol: "ر.ع",
     name: "Omani Rial",
-    nameAr: "ريال عماني"
+    nameAr: "ريال عماني",
   },
   "سلطنة عمان": {
     code: "OMR",
     symbol: "ر.ع",
-    name: "Omani Rial", 
-    nameAr: "ريال عماني"
+    name: "Omani Rial",
+    nameAr: "ريال عماني",
   },
-  "مصر": {
+  مصر: {
     code: "EGP",
     symbol: "ج.م",
     name: "Egyptian Pound",
-    nameAr: "جنيه مصري"
+    nameAr: "جنيه مصري",
   },
   "جمهورية مصر العربية": {
     code: "EGP",
     symbol: "ج.م",
     name: "Egyptian Pound",
-    nameAr: "جنيه مصري"
+    nameAr: "جنيه مصري",
   },
-  "الأردن": {
+  الأردن: {
     code: "JOD",
     symbol: "د.أ",
     name: "Jordanian Dinar",
-    nameAr: "دينار أردني"
+    nameAr: "دينار أردني",
   },
   "المملكة الأردنية الهاشمية": {
     code: "JOD",
     symbol: "د.أ",
     name: "Jordanian Dinar",
-    nameAr: "دينار أردني"
+    nameAr: "دينار أردني",
   },
-  "لبنان": {
+  لبنان: {
     code: "LBP",
     symbol: "ل.ل",
     name: "Lebanese Pound",
-    nameAr: "ليرة لبنانية"
+    nameAr: "ليرة لبنانية",
   },
   "الجمهورية اللبنانية": {
     code: "LBP",
     symbol: "ل.ل",
     name: "Lebanese Pound",
-    nameAr: "ليرة لبنانية"
+    nameAr: "ليرة لبنانية",
   },
-  "السودان": {
+  السودان: {
     code: "SDG",
     symbol: "ج.س",
     name: "Sudanese Pound",
-    nameAr: "جنيه سوداني"
+    nameAr: "جنيه سوداني",
   },
   "جمهورية السودان": {
     code: "SDG",
     symbol: "ج.س",
     name: "Sudanese Pound",
-    nameAr: "جنيه سوداني"
-  }
+    nameAr: "جنيه سوداني",
+  },
 };
 
 // العملة الافتراضية (للكويت)
@@ -135,7 +135,7 @@ export const defaultCurrency: Currency = {
   code: "KWD",
   symbol: "د.ك",
   name: "Kuwaiti Dinar",
-  nameAr: "دينار كويتي"
+  nameAr: "دينار كويتي",
 };
 
 // الحصول على العملة حسب البلد
@@ -162,24 +162,28 @@ export function getStoreCurrency(storeCountry: string): Currency {
 }
 
 // تحويل السعر من عملة لأخرى (يمكن تطويرها لاحقاً بأسعار الصرف الحقيقية)
-export function convertPrice(amount: number, fromCurrency: Currency, toCurrency: Currency): number {
+export function convertPrice(
+  amount: number,
+  fromCurrency: Currency,
+  toCurrency: Currency,
+): number {
   // هذه أسعار تقريبية للتوضيح - في التطبيق الحقيقي يجب استخدام API لأسعار الصرف
   const exchangeRates: Record<string, number> = {
-    "USD": 1,      // ا��دولار هو العملة المرجعية
-    "KWD": 0.30,   // دينار كويتي
-    "SAR": 3.75,   // ريال سعودي
-    "AED": 3.67,   // درهم إماراتي
-    "QAR": 3.64,   // ريال قطري
-    "BHD": 0.38,   // دينار بحريني
-    "OMR": 0.38,   // ريال عماني
-    "EGP": 30.90,  // جنيه مصري
-    "JOD": 0.71,   // دينار أردني
-    "LBP": 15000,  // ليرة لبنانية
-    "SDG": 600     // جنيه سوداني
+    USD: 1, // ا��دولار هو العملة المرجعية
+    KWD: 0.3, // دينار كويتي
+    SAR: 3.75, // ريال سعودي
+    AED: 3.67, // درهم إماراتي
+    QAR: 3.64, // ريال قطري
+    BHD: 0.38, // دينار بحريني
+    OMR: 0.38, // ريال عماني
+    EGP: 30.9, // جنيه مصري
+    JOD: 0.71, // دينار أردني
+    LBP: 15000, // ليرة لبنانية
+    SDG: 600, // جنيه سوداني
   };
 
   const fromRate = exchangeRates[fromCurrency.code] || 1;
   const toRate = exchangeRates[toCurrency.code] || 1;
-  
+
   return (amount / fromRate) * toRate;
 }

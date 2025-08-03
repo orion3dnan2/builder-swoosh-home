@@ -10,9 +10,12 @@ export class ProductService {
       id: "prod-restaurant-real-001",
       storeId: "store-1753868707117-r80zjqevj",
       name: "طلب اقاشي فراخ وسط",
-      description: "طلب اقاشي فراخ وسط أصيل من مطعم زول اقاشي - فراخ مشوي طازج بالطريقة السودانية التقليدية مع التوابل الخاصة والأرز الأبيض",
-      price: 3.500,
-      images: ["https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80"],
+      description:
+        "طلب اقاشي فراخ وسط أصيل من مطعم زول اقاشي - فراخ مشوي طازج بالطريقة السودانية التقليدية مع التوابل الخاصة والأرز الأبيض",
+      price: 3.5,
+      images: [
+        "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80",
+      ],
       category: "أطباق رئيسية",
       tags: ["اقاشي", "فراخ", "مشوي", "سوداني", "وسط"],
       inventory: {
@@ -38,10 +41,12 @@ export class ProductService {
     try {
       // الاحتفاظ بمنتجات زول اقاشي فقط
       const zoolProducts = this.demoProducts.filter(
-        (product) => product.storeId === "store-1753868707117-r80zjqevj"
+        (product) => product.storeId === "store-1753868707117-r80zjqevj",
       );
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(zoolProducts));
-      console.log("تم حذف جميع المنتجات الت��ريبية والاحتفاظ بمنتجات زول اقاشي فقط");
+      console.log(
+        "تم حذف جميع المنتجات الت��ريبية والاحتفاظ بمنتجات زول اقاشي فقط",
+      );
     } catch (error) {
       console.error("خطأ في حذف المنتجات التجريبية:", error);
     }
@@ -238,7 +243,10 @@ export class ProductService {
 
     // Store information mapping
     const storeInfo: Record<string, { name: string; category: string }> = {
-      "store-1753868707117-r80zjqevj": { name: "زول اقاشي", category: "restaurant" },
+      "store-1753868707117-r80zjqevj": {
+        name: "زول اقاشي",
+        category: "restaurant",
+      },
       "store-001": { name: "متجر التراث السوداني", category: "traditional" },
       "store-002": { name: "عطور الشرق", category: "perfumes" },
       "store-003": { name: "مطعم أم درمان", category: "food" },
@@ -272,9 +280,9 @@ export class ProductService {
       "عطور ومستحضرات": "🌹",
       "أطعمة ومشروبات": "🍯",
       "أطباق رئيسية": "🍽️",
-      "مخبوزات": "🥖",
-      "حلويات": "🍰", 
-      "مشروبات": "☕",
+      مخبوزات: "🥖",
+      حلويات: "🍰",
+      مشروبات: "☕",
       إكسسوارات: "👜",
       "أزياء وملابس": "👗",
       "خدمات تقنية": "💻",
@@ -307,9 +315,12 @@ export class ProductService {
         id: `prod-${Date.now()}-1`,
         storeId: storeId,
         name: "طلب اقاشي فراخ وسط",
-        description: "طلب اقاشي فراخ وسط أصيل من مطعم زول اقاشي - فراخ مشوي طازج بالطريقة السودانية التقليدية",
-        price: 3.500,
-        images: ["https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80"],
+        description:
+          "طلب اقاشي فراخ وسط أصيل من مطعم زول اقاشي - فراخ مشوي طازج بالطريقة السودانية التقليدية",
+        price: 3.5,
+        images: [
+          "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80",
+        ],
         category: "أطباق رئيسية",
         tags: ["اقاشي", "فراخ", "مشوي", "سوداني", "وسط"],
         inventory: {
@@ -360,18 +371,18 @@ export const useProducts = (storeId?: string) => {
       }
     };
 
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
 
     // الاستماع لتغييرات مخصصة من نفس التطبيق
     const handleCustomChange = () => {
       loadProducts();
     };
 
-    window.addEventListener('productsUpdated', handleCustomChange);
+    window.addEventListener("productsUpdated", handleCustomChange);
 
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('productsUpdated', handleCustomChange);
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("productsUpdated", handleCustomChange);
     };
   }, [storeId]);
 
@@ -381,15 +392,15 @@ export const useProducts = (storeId?: string) => {
     saveProduct: (product: Product) => {
       ProductService.saveProduct(product);
       // إرسال event لتحديث المكونات الأخرى
-      window.dispatchEvent(new CustomEvent('productsUpdated'));
+      window.dispatchEvent(new CustomEvent("productsUpdated"));
     },
     deleteProduct: (id: string) => {
       ProductService.deleteProduct(id);
-      window.dispatchEvent(new CustomEvent('productsUpdated'));
+      window.dispatchEvent(new CustomEvent("productsUpdated"));
     },
     updateStock: (id: string, quantity: number) => {
       ProductService.updateStock(id, quantity);
-      window.dispatchEvent(new CustomEvent('productsUpdated'));
+      window.dispatchEvent(new CustomEvent("productsUpdated"));
     },
     searchProducts: (query: string) =>
       ProductService.searchProducts(query, storeId),
@@ -403,11 +414,11 @@ export const useProducts = (storeId?: string) => {
       ProductService.validateProduct(product),
     clearDemoProducts: () => {
       ProductService.clearDemoProducts();
-      window.dispatchEvent(new CustomEvent('productsUpdated'));
+      window.dispatchEvent(new CustomEvent("productsUpdated"));
     },
     clearAllProducts: () => {
       ProductService.clearAllProducts();
-      window.dispatchEvent(new CustomEvent('productsUpdated'));
+      window.dispatchEvent(new CustomEvent("productsUpdated"));
     },
   };
 };

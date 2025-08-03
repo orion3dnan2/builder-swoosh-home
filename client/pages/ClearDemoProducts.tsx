@@ -7,7 +7,7 @@ export default function ClearDemoProducts() {
   useEffect(() => {
     // حذف جميع المنتجات التجريبية والاحتفاظ بمنتجات زول اقاشي فقط
     clearDemoProducts();
-    
+
     // إعادة تحميل الصفحة لضمان تطبيق التغييرات
     window.location.reload();
   }, [clearDemoProducts]);
@@ -17,7 +17,9 @@ export default function ClearDemoProducts() {
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
         <p className="text-gray-600 arabic">جاري تنظيف المنتجات التجريبية...</p>
-        <p className="text-sm text-gray-500 arabic mt-2">سيتم إعادة تحميل الصفحة تلقائياً</p>
+        <p className="text-sm text-gray-500 arabic mt-2">
+          سيتم إعادة تحميل الصفحة تلقائياً
+        </p>
       </div>
     </div>
   );
