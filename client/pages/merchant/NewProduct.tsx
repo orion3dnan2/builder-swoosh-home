@@ -32,8 +32,11 @@ export default function NewProduct() {
   const [errors, setErrors] = useState<string[]>([]);
   const [currentImageUrl, setCurrentImageUrl] = useState("");
 
+  // Get user's store ID
+  const userStoreId = user?.profile?.businessName ? `store-${user.id}` : null;
+
   const [formData, setFormData] = useState<Partial<Product>>({
-    storeId: "store-001", // Using store-001 for merchant testing
+    storeId: userStoreId, // Use actual user store ID
     name: "",
     description: "",
     price: 0,
