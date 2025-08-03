@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Product } from "../../shared/types";
 
 export class ProductService {
-  private static readonly STORAGE_KEY = "bayt_al_sudani_products";
+  static readonly STORAGE_KEY = "bayt_al_sudani_products";
 
   // المنتج الأصيل الوحيد لمطعم زول اقاشي
   private static demoProducts: Product[] = [
@@ -56,7 +56,7 @@ export class ProductService {
       // إعادة تعيين المنتجات الأصلية فقط
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.demoProducts));
 
-      console.log("تم مسح جميع المنتجات وإعادة ضبط البيانات للمنتجات ��لأصلية");
+      console.log("تم مسح جميع المنتجات وإعا��ة ضبط البيانات للمنتجات الأصلية");
 
       // إعادة تحميل الصفحة لتطبيق التغييرات
       window.location.reload();
