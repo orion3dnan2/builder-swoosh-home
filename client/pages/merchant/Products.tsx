@@ -41,6 +41,7 @@ export default function MerchantProducts() {
   const {
     products: allProducts,
     deleteProduct,
+    updateStock,
     categories,
     getProductsByStatus,
     searchProducts,
@@ -416,7 +417,7 @@ export default function MerchantProducts() {
                         الفئة
                       </th>
                       <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
-                        ��لسعر
+                        السعر
                       </th>
                       <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
                         المخزون
@@ -571,7 +572,7 @@ export default function MerchantProducts() {
                   </h3>
                   <p className="text-gray-700 mb-6 arabic">
                     أهلاً وسهلاً {user?.profile?.name}! متجر "{currentStore.name}" جاهز الآن. ابدأ
-                    بإضافة منتجاتك الأولى لتكون متاحة للعملاء.
+                    بإضافة منتجا��ك الأولى لتكون متاحة للعملاء.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link to="/merchant/products/new">
