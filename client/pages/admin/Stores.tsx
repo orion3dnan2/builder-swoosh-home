@@ -293,7 +293,7 @@ export default function AdminStores() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 arabic">
-                  {t("stores.title")}
+                  إدارة المتاجر
                 </h1>
                 <p className="text-gray-600 arabic">
                   {totalStores} {t("stores.subtitle")}
