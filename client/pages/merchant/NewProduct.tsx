@@ -91,6 +91,23 @@ export default function NewProduct() {
     }
   }, [userStoreId]);
 
+  // Load existing product data when editing
+  useEffect(() => {
+    if (isEditing && id) {
+      const existingProduct = getProduct(id);
+      if (existingProduct) {
+        setFormData({
+          ...existingProduct,
+          // Keep the id for updating
+          id: existingProduct.id,
+        });
+      } else {
+        // Product not found, redirect back to products list
+        navigate('/merchant/products');
+      }
+    }
+  }, [isEditing, id, getProduct, navigate]);
+
   const handleInputChange = (field: string, value: any) => {
     setFormData((prev) => ({
       ...prev,
