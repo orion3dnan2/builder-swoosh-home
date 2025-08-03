@@ -370,9 +370,13 @@ export default function Products() {
                       <div className="flex items-center gap-4 mb-3">
                         <div className="flex items-center gap-2">
                           <Store className="w-4 h-4 text-gray-400" />
-                          <span className="text-sm text-blue-600 arabic font-medium">
+                          <Link
+                            to={`/store/${product.storeId}`}
+                            className="text-sm text-blue-600 arabic font-medium hover:underline"
+                            onClick={(e) => e.stopPropagation()}
+                          >
                             {product.storeName}
-                          </span>
+                          </Link>
                         </div>
                         <Badge variant="outline" className="text-xs arabic">
                           {ProductService.getCategoryIcon(product.category)}{" "}
