@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -318,7 +317,7 @@ export default function NewProduct() {
                   إضافة منتج جديد
                 </h1>
                 <p className="text-gray-600 arabic">
-                  أدخل معلومات المنتج الجديد
+                  أدخل معلومات ا��منتج الجديد
                 </p>
               </div>
             </div>
