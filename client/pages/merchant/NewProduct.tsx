@@ -24,9 +24,12 @@ import { Product } from "../../../shared/types";
 
 export default function NewProduct() {
   const navigate = useNavigate();
+  const { id } = useParams();
   const { user } = useAuth();
-  const { saveProduct, generateSKU, validateProduct, categories } =
+  const { saveProduct, generateSKU, validateProduct, categories, getProduct } =
     useProducts();
+
+  const isEditing = !!id;
 
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
