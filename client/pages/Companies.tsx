@@ -259,10 +259,8 @@ export default function Companies() {
         {/* Companies Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {filteredCompanies.map((company) => (
-            <Card
-              key={company.id}
-              className="group hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden"
-            >
+            <Link to={`/company/${company.id}`} key={company.id}>
+              <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden">
               <div className="relative">
                 <img
                   src={company.coverImage || "/placeholder.svg"}
@@ -375,7 +373,8 @@ export default function Companies() {
                   </Button>
                 </div>
               </CardContent>
-            </Card>
+              </Card>
+            </Link>
           ))}
         </div>
 
