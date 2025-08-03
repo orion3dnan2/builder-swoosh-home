@@ -249,7 +249,7 @@ export default function AdminUsers() {
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl">
                   <DialogHeader>
-                    <DialogTitle className="arabic">إضافة مستخدم جديد</DialogTitle>
+                    <DialogTitle className="arabic">إضافة مستخد�� جديد</DialogTitle>
                   </DialogHeader>
                   <UserForm onClose={() => setIsCreateModalOpen(false)} />
                 </DialogContent>
@@ -269,6 +269,13 @@ export default function AdminUsers() {
                   <DropdownMenuItem>
                     <Upload className="w-4 h-4 ml-2" />
                     استيراد البيانات
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => handleBulkPasswordReset()}
+                    className="text-blue-600"
+                  >
+                    <RefreshCw className="w-4 h-4 ml-2" />
+                    إعادة تعيين كلمة المرور للمستخدمين المحددين
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -500,7 +507,7 @@ export default function AdminUsers() {
                                 variant="ghost"
                                 size="sm"
                                 className="text-blue-600 hover:text-blue-700"
-                                title="إعادة تعيين كلمة المرور"
+                                title="إعادة تعيين كلمة ال��رور"
                               >
                                 <Key className="w-4 h-4" />
                               </Button>
@@ -697,7 +704,7 @@ function UserDetails({ user }: { user: User }) {
                     </p>
                   </div>
                   <div>
-                    <Label className="arabic">نوع النشاط</Label>
+                    <Label className="arabic">نوع ��لنشاط</Label>
                     <p className="text-gray-900 dark:text-white arabic">
                       {user.profile.businessInfo.businessType}
                     </p>
