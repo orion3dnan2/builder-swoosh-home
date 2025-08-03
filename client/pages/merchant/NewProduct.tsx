@@ -502,20 +502,27 @@ export default function NewProduct() {
                 </div>
 
                 <div>
-                  <Label className="arabic">��عر الخصم (اختياري)</Label>
-                  <Input
-                    type="number"
-                    step="0.01"
-                    value={formData.salePrice || ""}
-                    onChange={(e) =>
-                      handleInputChange(
-                        "salePrice",
-                        e.target.value ? parseFloat(e.target.value) : undefined,
-                      )
-                    }
-                    className="mt-2"
-                    placeholder="0.00"
-                  />
+                  <Label className="arabic">
+                    سعر الخصم (اختياري) ({storeCurrency.symbol} {storeCurrency.nameAr})
+                  </Label>
+                  <div className="relative mt-2">
+                    <Input
+                      type="number"
+                      step="0.01"
+                      value={formData.salePrice || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "salePrice",
+                          e.target.value ? parseFloat(e.target.value) : undefined,
+                        )
+                      }
+                      className="pr-16"
+                      placeholder="0.00"
+                    />
+                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
+                      {storeCurrency.symbol}
+                    </div>
+                  </div>
                   {formData.salePrice &&
                     formData.price &&
                     formData.salePrice < formData.price && (
