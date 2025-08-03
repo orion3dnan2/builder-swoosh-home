@@ -169,9 +169,23 @@ export default function MerchantProducts() {
                 <h1 className="text-2xl font-bold text-gray-900 arabic">
                   إدارة المنتجات
                 </h1>
-                <p className="text-gray-600 arabic">
-                  {filteredProducts.length} منتج
-                </p>
+                <div className="flex items-center space-x-3 space-x-reverse mt-1">
+                  <p className="text-gray-600 arabic">
+                    {filteredProducts.length} منتج
+                  </p>
+                  <span className="text-gray-400">•</span>
+                  <select
+                    value={currentStoreId}
+                    onChange={(e) => setCurrentStoreId(e.target.value)}
+                    className="text-sm border border-gray-300 rounded px-2 py-1 arabic text-right bg-white"
+                  >
+                    {availableStores.map(store => (
+                      <option key={store.id} value={store.id}>
+                        {store.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">
