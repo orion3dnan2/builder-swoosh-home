@@ -23,6 +23,8 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useProducts } from "@/lib/products";
+import { StoresService } from "@/lib/stores";
+import { Currency, defaultCurrency, formatPriceArabic } from "@/lib/currencies";
 import { Product } from "../../../shared/types";
 
 export default function MerchantProducts() {
