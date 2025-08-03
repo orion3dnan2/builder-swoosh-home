@@ -32,6 +32,7 @@ import { useAuth } from "@/lib/auth";
 import { regionsManager } from "@/lib/regionsManager";
 import { useRegions, useRegionsStats, useRegionsByCountry, useCountries } from "@/hooks/use-regions";
 import { useToast } from "@/hooks/use-toast";
+import { apiConfigManager, ApiConfiguration } from "@/lib/apiConfig";
 
 export default function AdminSettings() {
   const { user } = useAuth();
@@ -59,6 +60,35 @@ export default function AdminSettings() {
   const [newRegion, setNewRegion] = useState("");
   const [editingRegionId, setEditingRegionId] = useState<string | null>(null);
   const [editingValue, setEditingValue] = useState("");
+
+  // State for API configurations
+  const [apiConfigs, setApiConfigs] = useState<ApiConfiguration[]>(apiConfigManager.getAllConfigs());
+  const [activeApiConfig, setActiveApiConfig] = useState<ApiConfiguration | null>(apiConfigManager.getActiveConfig());
+  const [showAddApiForm, setShowAddApiForm] = useState(false);
+  const [editingApiConfig, setEditingApiConfig] = useState<ApiConfiguration | null>(null);
+  const [testingConfigId, setTestingConfigId] = useState<string | null>(null);
+  const [newApiConfig, setNewApiConfig] = useState({
+    name: "",
+    baseUrl: "",
+    description: "",
+    isActive: true,
+    isDefault: false,
+    endpoints: {
+      auth: "/auth",
+      users: "/users",
+      stores: "/stores",
+      products: "/products",
+      companies: "/companies",
+      jobs: "/jobs",
+      orders: "/orders",
+      analytics: "/analytics"
+    },
+    authentication: {
+      type: 'bearer' as const
+    },
+    timeout: 10000,
+    retries: 3
+  });
 
   const handleThemeChange = (key: string, value: any) => {
     const updatedSettings = {
@@ -220,7 +250,7 @@ export default function AdminSettings() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs defaultValue="theme" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="theme" className="arabic">
               المظهر
             </TabsTrigger>
@@ -235,6 +265,9 @@ export default function AdminSettings() {
             </TabsTrigger>
             <TabsTrigger value="content" className="arabic">
               المحتوى
+            </TabsTrigger>
+            <TabsTrigger value="api" className="arabic">
+              الخوادم
             </TabsTrigger>
             <TabsTrigger value="advanced" className="arabic">
               متقدم
@@ -825,7 +858,7 @@ export default function AdminSettings() {
                         المناسبة
                       </li>
                       <li>
-                        • المناطق تُحفظ تلقائياً ولا تحتاج للضغط على "حفظ
+                        • المناطق تُحفظ تلقائياً ولا تحتاج للضغط ع��ى "حفظ
                         التغييرات"
                       </li>
                       <li>
@@ -1014,6 +1047,452 @@ export default function AdminSettings() {
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+
+          {/* API Configuration */}
+          <TabsContent value="api" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center arabic">
+                  <Settings className="w-5 h-5 ml-2" />
+                  إدارة خوادم الـ API
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {/* Stats */}
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <div className="flex items-center space-x-2 space-x-reverse">
+                        <Settings className="w-5 h-5 text-blue-600" />
+                        <span className="text-sm text-blue-600 arabic">إجمالي الخوادم</span>
+                      </div>
+                      <div className="text-2xl font-bold text-blue-700 mt-2">
+                        {apiConfigs.length}
+                      </div>
+                    </div>
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                      <div className="flex items-center space-x-2 space-x-reverse">
+                        <div className="w-5 h-5 bg-green-600 rounded-full"></div>
+                        <span className="text-sm text-green-600 arabic">نشطة</span>
+                      </div>
+                      <div className="text-2xl font-bold text-green-700 mt-2">
+                        {apiConfigs.filter(c => c.isActive).length}
+                      </div>
+                    </div>
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                      <div className="flex items-center space-x-2 space-x-reverse">
+                        <div className="w-5 h-5 bg-red-600 rounded-full"></div>
+                        <span className="text-sm text-red-600 arabic">غير نشطة</span>
+                      </div>
+                      <div className="text-2xl font-bold text-red-700 mt-2">
+                        {apiConfigs.filter(c => !c.isActive).length}
+                      </div>
+                    </div>
+                    <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                      <div className="flex items-center space-x-2 space-x-reverse">
+                        <div className="w-5 h-5 bg-orange-600 rounded-full"></div>
+                        <span className="text-sm text-orange-600 arabic">الخادم الحالي</span>
+                      </div>
+                      <div className="text-sm font-medium text-orange-700 mt-2 arabic">
+                        {activeApiConfig?.name || "غير محدد"}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Add New API Config */}
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-lg arabic">قائمة الخوادم</h3>
+                    <Button
+                      onClick={() => setShowAddApiForm(true)}
+                      className="arabic"
+                    >
+                      <Plus className="w-4 h-4 ml-2" />
+                      إضافة خادم جديد
+                    </Button>
+                  </div>
+
+                  {/* Add/Edit Form */}
+                  {(showAddApiForm || editingApiConfig) && (
+                    <Card className="border-2 border-blue-200">
+                      <CardHeader>
+                        <CardTitle className="arabic">
+                          {editingApiConfig ? "تعديل الخادم" : "إضافة خادم جديد"}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <Label className="arabic">اسم الخادم</Label>
+                            <Input
+                              value={editingApiConfig ? editingApiConfig.name : newApiConfig.name}
+                              onChange={(e) => {
+                                if (editingApiConfig) {
+                                  setEditingApiConfig({...editingApiConfig, name: e.target.value});
+                                } else {
+                                  setNewApiConfig({...newApiConfig, name: e.target.value});
+                                }
+                              }}
+                              placeholder="خادم الإنتاج"
+                              className="mt-2 arabic text-right"
+                            />
+                          </div>
+                          <div>
+                            <Label className="arabic">رابط الخادم</Label>
+                            <Input
+                              value={editingApiConfig ? editingApiConfig.baseUrl : newApiConfig.baseUrl}
+                              onChange={(e) => {
+                                if (editingApiConfig) {
+                                  setEditingApiConfig({...editingApiConfig, baseUrl: e.target.value});
+                                } else {
+                                  setNewApiConfig({...newApiConfig, baseUrl: e.target.value});
+                                }
+                              }}
+                              placeholder="https://api.example.com"
+                              className="mt-2"
+                            />
+                          </div>
+                          <div className="md:col-span-2">
+                            <Label className="arabic">الوصف</Label>
+                            <Textarea
+                              value={editingApiConfig ? (editingApiConfig.description || "") : newApiConfig.description}
+                              onChange={(e) => {
+                                if (editingApiConfig) {
+                                  setEditingApiConfig({...editingApiConfig, description: e.target.value});
+                                } else {
+                                  setNewApiConfig({...newApiConfig, description: e.target.value});
+                                }
+                              }}
+                              placeholder="وصف الخادم واستخدامه"
+                              className="mt-2 arabic text-right"
+                              rows={2}
+                            />
+                          </div>
+                          <div className="flex items-center justify-between p-4 border rounded-lg">
+                            <div>
+                              <Label className="font-medium arabic">خادم نشط</Label>
+                              <p className="text-sm text-gray-600 arabic">يمكن استخدام هذا الخادم</p>
+                            </div>
+                            <Switch
+                              checked={editingApiConfig ? editingApiConfig.isActive : newApiConfig.isActive}
+                              onCheckedChange={(checked) => {
+                                if (editingApiConfig) {
+                                  setEditingApiConfig({...editingApiConfig, isActive: checked});
+                                } else {
+                                  setNewApiConfig({...newApiConfig, isActive: checked});
+                                }
+                              }}
+                            />
+                          </div>
+                          <div className="flex items-center justify-between p-4 border rounded-lg">
+                            <div>
+                              <Label className="font-medium arabic">الخادم الافتراضي</Label>
+                              <p className="text-sm text-gray-600 arabic">الخادم المستخدم افتراضياً</p>
+                            </div>
+                            <Switch
+                              checked={editingApiConfig ? editingApiConfig.isDefault : newApiConfig.isDefault}
+                              onCheckedChange={(checked) => {
+                                if (editingApiConfig) {
+                                  setEditingApiConfig({...editingApiConfig, isDefault: checked});
+                                } else {
+                                  setNewApiConfig({...newApiConfig, isDefault: checked});
+                                }
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <div className="flex space-x-2 space-x-reverse mt-6">
+                          <Button
+                            onClick={() => {
+                              if (editingApiConfig) {
+                                apiConfigManager.updateConfig(editingApiConfig.id, editingApiConfig);
+                                setApiConfigs(apiConfigManager.getAllConfigs());
+                                setActiveApiConfig(apiConfigManager.getActiveConfig());
+                                setEditingApiConfig(null);
+                                toast({
+                                  title: "تم تحديث الخادم",
+                                  description: "تم حفظ إعدادات الخادم بنجاح"
+                                });
+                              } else {
+                                const id = apiConfigManager.addConfig(newApiConfig);
+                                setApiConfigs(apiConfigManager.getAllConfigs());
+                                setActiveApiConfig(apiConfigManager.getActiveConfig());
+                                setShowAddApiForm(false);
+                                setNewApiConfig({
+                                  name: "",
+                                  baseUrl: "",
+                                  description: "",
+                                  isActive: true,
+                                  isDefault: false,
+                                  endpoints: {
+                                    auth: "/auth",
+                                    users: "/users",
+                                    stores: "/stores",
+                                    products: "/products",
+                                    companies: "/companies",
+                                    jobs: "/jobs",
+                                    orders: "/orders",
+                                    analytics: "/analytics"
+                                  },
+                                  authentication: {
+                                    type: 'bearer' as const
+                                  },
+                                  timeout: 10000,
+                                  retries: 3
+                                });
+                                toast({
+                                  title: "تم إضافة الخادم",
+                                  description: "تم إضافة الخادم الجديد بنجاح"
+                                });
+                              }
+                            }}
+                            disabled={editingApiConfig ? !editingApiConfig.name.trim() || !editingApiConfig.baseUrl.trim() : !newApiConfig.name.trim() || !newApiConfig.baseUrl.trim()}
+                            className="arabic"
+                          >
+                            <Save className="w-4 h-4 ml-2" />
+                            {editingApiConfig ? "حفظ التعديل" : "إضافة الخادم"}
+                          </Button>
+                          <Button
+                            variant="outline"
+                            onClick={() => {
+                              setShowAddApiForm(false);
+                              setEditingApiConfig(null);
+                              setNewApiConfig({
+                                name: "",
+                                baseUrl: "",
+                                description: "",
+                                isActive: true,
+                                isDefault: false,
+                                endpoints: {
+                                  auth: "/auth",
+                                  users: "/users",
+                                  stores: "/stores",
+                                  products: "/products",
+                                  companies: "/companies",
+                                  jobs: "/jobs",
+                                  orders: "/orders",
+                                  analytics: "/analytics"
+                                },
+                                authentication: {
+                                  type: 'bearer' as const
+                                },
+                                timeout: 10000,
+                                retries: 3
+                              });
+                            }}
+                            className="arabic"
+                          >
+                            إلغاء
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {/* API Configs List */}
+                  <div className="space-y-4">
+                    {apiConfigs.map((config) => (
+                      <Card key={config.id} className={`border-2 transition-all ${
+                        activeApiConfig?.id === config.id
+                          ? 'border-blue-500 bg-blue-50'
+                          : config.isActive
+                            ? 'border-green-200 bg-green-50'
+                            : 'border-gray-200'
+                      }`}>
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-3 space-x-reverse mb-2">
+                                <h4 className="font-semibold arabic">{config.name}</h4>
+                                <div className="flex space-x-2 space-x-reverse">
+                                  {config.isDefault && (
+                                    <Badge variant="secondary" className="arabic">
+                                      افتراضي
+                                    </Badge>
+                                  )}
+                                  {activeApiConfig?.id === config.id && (
+                                    <Badge className="arabic">
+                                      الحالي
+                                    </Badge>
+                                  )}
+                                  <Badge variant={config.isActive ? "default" : "destructive"} className="arabic">
+                                    {config.isActive ? "نشط" : "غير نشط"}
+                                  </Badge>
+                                </div>
+                              </div>
+                              <p className="text-sm text-gray-600 mb-1">{config.baseUrl}</p>
+                              {config.description && (
+                                <p className="text-sm text-gray-500 arabic">{config.description}</p>
+                              )}
+                            </div>
+                            <div className="flex space-x-2 space-x-reverse">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={async () => {
+                                  setTestingConfigId(config.id);
+                                  try {
+                                    const result = await apiConfigManager.testConfig(config);
+                                    toast({
+                                      title: result.success ? "اختبار ناجح" : "اختبار فاشل",
+                                      description: `${result.message}${result.responseTime ? ` (${result.responseTime}ms)` : ''}`,
+                                      variant: result.success ? "default" : "destructive"
+                                    });
+                                  } catch (error) {
+                                    toast({
+                                      title: "خطأ في الاختبار",
+                                      description: "فشل في اختبار الاتصال",
+                                      variant: "destructive"
+                                    });
+                                  } finally {
+                                    setTestingConfigId(null);
+                                  }
+                                }}
+                                disabled={testingConfigId === config.id}
+                                className="arabic"
+                              >
+                                {testingConfigId === config.id ? "جاري الاختبار..." : "اختبار"}
+                              </Button>
+                              {config.isActive && activeApiConfig?.id !== config.id && (
+                                <Button
+                                  size="sm"
+                                  onClick={() => {
+                                    apiConfigManager.setActiveConfig(config.id);
+                                    setActiveApiConfig(apiConfigManager.getActiveConfig());
+                                    toast({
+                                      title: "تم تغيير الخادم",
+                                      description: `تم تفعيل خادم: ${config.name}`
+                                    });
+                                  }}
+                                  className="arabic"
+                                >
+                                  تفعيل
+                                </Button>
+                              )}
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => setEditingApiConfig(config)}
+                                className="arabic"
+                              >
+                                <Edit className="w-4 h-4" />
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => {
+                                  if (apiConfigManager.deleteConfig(config.id)) {
+                                    setApiConfigs(apiConfigManager.getAllConfigs());
+                                    setActiveApiConfig(apiConfigManager.getActiveConfig());
+                                    toast({
+                                      title: "تم حذف الخادم",
+                                      description: `تم حذف خادم: ${config.name}`
+                                    });
+                                  } else {
+                                    toast({
+                                      title: "خطأ في الحذف",
+                                      description: "لا يمكن حذف الخادم الافتراضي الوحيد",
+                                      variant: "destructive"
+                                    });
+                                  }
+                                }}
+                                disabled={config.isDefault && apiConfigs.length === 1}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+
+                  {/* Quick Actions */}
+                  <div className="flex flex-wrap gap-2 mt-6">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        apiConfigManager.resetToDefaults();
+                        setApiConfigs(apiConfigManager.getAllConfigs());
+                        setActiveApiConfig(apiConfigManager.getActiveConfig());
+                        toast({
+                          title: "تم إعادة التعيين",
+                          description: "تم إعادة تعيين جميع الخوادم للإعدادات الافتراضية"
+                        });
+                      }}
+                      className="arabic"
+                    >
+                      <RotateCcw className="w-4 h-4 ml-2" />
+                      إعادة تعيين
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const configsJson = apiConfigManager.exportConfigs();
+                        const blob = new Blob([configsJson], { type: 'application/json' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'api-configs.json';
+                        a.click();
+                        URL.revokeObjectURL(url);
+                      }}
+                      className="arabic"
+                    >
+                      تصدير الإعدادات
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const input = document.createElement('input');
+                        input.type = 'file';
+                        input.accept = '.json';
+                        input.onchange = (e) => {
+                          const file = (e.target as HTMLInputElement).files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (e) => {
+                              const result = apiConfigManager.importConfigs(e.target?.result as string);
+                              if (result.success) {
+                                setApiConfigs(apiConfigManager.getAllConfigs());
+                                setActiveApiConfig(apiConfigManager.getActiveConfig());
+                              }
+                              toast({
+                                title: result.success ? "نجح الاستيراد" : "فشل الاستيراد",
+                                description: result.message,
+                                variant: result.success ? "default" : "destructive"
+                              });
+                            };
+                            reader.readAsText(file);
+                          }
+                        };
+                        input.click();
+                      }}
+                      className="arabic"
+                    >
+                      استيراد الإعدادات
+                    </Button>
+                  </div>
+
+                  {/* Instructions */}
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h4 className="font-semibold text-blue-800 arabic mb-2">
+                      تعليمات الاستخدام:
+                    </h4>
+                    <ul className="text-sm text-blue-700 arabic space-y-1">
+                      <li>• أضف خوادم API خارجية لربط التطبيق ��قواعد البيانات المختلفة</li>
+                      <li>• يمكن تفعيل خادم واحد فقط في كل مرة</li>
+                      <li>• استخدم اختبار الاتصال للتأكد من عمل الخادم</li>
+                      <li>• الخادم الافتراضي هو الخادم المحلي للتطوير</li>
+                      <li>• يمكن تصدير واستيراد إعدادات الخوادم</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Advanced Settings */}
