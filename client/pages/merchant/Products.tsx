@@ -104,7 +104,9 @@ export default function MerchantProducts() {
   useEffect(() => {
     if (userStoreId) {
       const details = StoresService.getStoreDetails(userStoreId);
+      console.log("Store details:", details);
       if (details && details.currency) {
+        console.log("Setting currency:", details.currency);
         setStoreCurrency(details.currency);
       }
     }
@@ -274,7 +276,7 @@ export default function MerchantProducts() {
                   يجب إعداد معلومات المتجر أولاً
                 </h3>
                 <p className="text-xs text-yellow-700 arabic">
-                  لعرض وإدارة منتجاتك، يرجى إكمال مع��ومات العمل التجاري في
+                  لعرض وإدارة منتجاتك، يرجى إك��ال مع��ومات العمل التجاري في
                   إعدادات الملف الشخصي
                 </p>
               </div>
