@@ -45,6 +45,7 @@ export default function MerchantProducts() {
     categories,
     getProductsByStatus,
     searchProducts,
+    clearAllProducts,
   } = useProducts();
 
   // Get user's store information - use proper store mapping
@@ -463,7 +464,7 @@ export default function MerchantProducts() {
                         المخزون
                       </th>
                       <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
-                        الحالة
+                        الحا��ة
                       </th>
                       <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
                         الإجراءات
