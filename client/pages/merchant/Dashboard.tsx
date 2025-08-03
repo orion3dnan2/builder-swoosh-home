@@ -20,6 +20,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useProducts } from "@/lib/products";
 
 export default function MerchantDashboard() {
   const { user } = useAuth();
