@@ -265,7 +265,7 @@ export class StoresService {
       image: "/placeholder.svg",
       tags: ["طبخ", "وجبات تقليدية", "مناسبات", "ضيافة"],
       availability: "يجب الحجز مسبقاً",
-      location: "الرياض والمناطق المجاورة",
+      location: "الري��ض والمناطق المجاورة",
     },
     {
       id: "service-004",
@@ -419,29 +419,39 @@ export class StoresService {
     return icons[category] || "🏪";
   }
 
-  // الحصول على معلومات المتجر الكاملة من ملف stores.json
-  static async getStoreDetails(storeId: string) {
-    try {
-      const response = await fetch('/data/stores.json');
-      const stores = await response.json();
-      const store = stores.find((s: any) => s.id === storeId);
-
-      if (store) {
-        return {
-          ...store,
-          currency: getCurrencyByCountry(store.country)
-        };
-      }
-      return null;
-    } catch (error) {
-      console.error('Error fetching store details:', error);
-      return null;
+  // خريطة ثابتة لمعلومات المتاجر من stores.json
+  private static storeDetailsMap: Record<string, any> = {
+    "store-1753868707117-r80zjqevj": {
+      id: "store-1753868707117-r80zjqevj",
+      merchantId: "user-1753865301240-efsqj09s0",
+      name: "زول اقاشي",
+      description: "اكل سوداني",
+      category: "مواد غذائية وأطعمة",
+      storeType: "restaurant",
+      phone: "+96551325559",
+      email: "oriontvinetwork@gmail.com",
+      address: "",
+      city: "الأحمدي",
+      country: "دولة الكويت",
+      status: "active"
     }
+  };
+
+  // الحصول على معلومات المتجر الكاملة
+  static getStoreDetails(storeId: string) {
+    const store = this.storeDetailsMap[storeId];
+    if (store) {
+      return {
+        ...store,
+        currency: getCurrencyByCountry(store.country)
+      };
+    }
+    return null;
   }
 
   // الحصول على عملة المتجر
-  static async getStoreCurrency(storeId: string) {
-    const storeDetails = await this.getStoreDetails(storeId);
+  static getStoreCurrency(storeId: string) {
+    const storeDetails = this.getStoreDetails(storeId);
     return storeDetails?.currency || null;
   }
 }
