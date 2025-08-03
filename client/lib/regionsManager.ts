@@ -86,7 +86,7 @@ export class RegionsManager {
       this.resetToDefaults();
     } catch (error) {
       console.error("خطأ في تحميل المناطق:", error);
-      // إزالة البيانات التالفة وإعادة تعيين افتراضية
+      // إزالة البيان��ت التالفة وإعادة تعيين افتراضية
       localStorage.removeItem("adminDeliveryRegions");
       this.resetToDefaults();
     }
@@ -298,6 +298,12 @@ export class RegionsManager {
     byCountry: Record<string, number>;
     countries: number;
   } {
+    // فحص أمان للتأكد من وجود البيانات
+    if (!this.regionsByCountry || typeof this.regionsByCountry !== 'object') {
+      console.warn("regionsByCountry is not properly initialized, resetting to defaults");
+      this.resetToDefaults();
+    }
+
     let total = 0;
     const byCountry: Record<string, number> = {};
     
