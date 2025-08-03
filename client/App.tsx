@@ -33,6 +33,7 @@ import MerchantOrders from "./pages/merchant/Orders";
 import MerchantSettings from "./pages/merchant/Settings";
 import Profile from "./pages/Profile";
 import DebugProducts from "./pages/DebugProducts";
+import AddSampleProducts from "./pages/AddSampleProducts";
 import { SuperAdminRoute, MerchantRoute } from "./components/ProtectedRoute";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
