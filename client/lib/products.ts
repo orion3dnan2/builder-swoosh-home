@@ -36,7 +36,7 @@ export class ProductService {
       storeId: "store-001",
       name: "كركديه سوداني طبيعي",
       description:
-        "كركديه طبيعي من أجود أنواع الكركديه السوداني. غني بالفيتامينات ومضادات الأكسدة.",
+        "كركديه طبيعي من أجود أنواع الكركديه السوداني. غني ��الفيتامينات ومضادات الأكسدة.",
       price: 15.5,
       images: ["/placeholder.svg"],
       category: "أطعمة ومشروبات",
@@ -360,7 +360,7 @@ export class ProductService {
       id: "prod-restaurant-real-003",
       storeId: "store-1753868707117-r80zjqevj",
       name: "عصيدة بالملبن",
-      description: "عصيدة سودانية تقليدية بالملبن الطازج والعسل",
+      description: "عصيدة سودانية تقليدي�� بالملبن الطازج والعسل",
       price: 18.0,
       salePrice: 15.0,
       images: ["/placeholder.svg"],
@@ -431,7 +431,15 @@ export class ProductService {
   static getProducts(storeId?: string): Product[] {
     try {
       const productsStr = localStorage.getItem(this.STORAGE_KEY);
-      let products = productsStr ? JSON.parse(productsStr) : this.demoProducts;
+      let products;
+
+      if (!productsStr) {
+        // Initialize localStorage with demo products if empty
+        products = this.demoProducts;
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(products));
+      } else {
+        products = JSON.parse(productsStr);
+      }
 
       if (storeId) {
         products = products.filter(
