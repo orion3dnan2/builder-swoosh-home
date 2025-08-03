@@ -110,7 +110,7 @@ export default function MerchantProducts() {
       case "active":
         return "نشط";
       case "inactive":
-        return "غير نشط";
+        return "غ��ر نشط";
       case "out_of_stock":
         return "نفد المخزون";
       default:
@@ -196,7 +196,7 @@ export default function MerchantProducts() {
                 className="border border-gray-300 rounded-lg px-3 py-2 arabic text-right"
               >
                 <option value="all">جميع الفئات</option>
-                {categories.map((category) => (
+                {userCategories.map((category) => (
                   <option key={category} value={category}>
                     {category}
                   </option>
