@@ -528,7 +528,12 @@ export default function AdminUsers() {
                           </AlertDialog>
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-red-600 hover:text-red-700"
+                                title="حذف المستخدم"
+                              >
                                 <Trash2 className="w-4 h-4" />
                               </Button>
                             </AlertDialogTrigger>
@@ -700,7 +705,7 @@ function UserDetails({ user }: { user: User }) {
                   <div>
                     <Label className="arabic">الرقم الضريبي</Label>
                     <p className="text-gray-900 dark:text-white">
-                      {user.profile.businessInfo.taxId || 'غ��ر محدد'}
+                      {user.profile.businessInfo.taxId || 'غير محدد'}
                     </p>
                   </div>
                 </div>
