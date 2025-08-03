@@ -42,6 +42,7 @@ import {
   Plus,
   Edit,
   Trash2,
+  DollarSign,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -333,7 +334,7 @@ export default function MerchantSettings() {
             id: "driver3",
             name: "عثمان عبدالرحمن",
             phone: "+96550123456",
-            area: "الكويت",
+            area: "ال��ويت",
             rating: 4.7,
             isActive: true,
             vehicle: "شاحنة صغيرة",
@@ -534,7 +535,7 @@ export default function MerchantSettings() {
           await ApiService.createStore(storeData);
         }
       } catch (apiError: any) {
-        // إذا فشل API، نستخدم ��لتخزين المحلي كنسخة احتياطية
+        // إذا فشل API، نستخدم ��لتخزين المحلي كنس��ة احتياطية
         console.warn(
           "فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:",
           apiError,
@@ -567,7 +568,7 @@ export default function MerchantSettings() {
   };
 
   const tabs = [
-    { id: "store", label: "بيانات المتجر", icon: Store },
+    { id: "store", label: "بيانات الم��جر", icon: Store },
     { id: "notifications", label: "الإشعارا��", icon: Bell },
     { id: "shipping", label: "الشحن والتوصيل", icon: Truck },
     { id: "account", label: "الحساب والأمان", icon: Shield },
@@ -613,7 +614,7 @@ export default function MerchantSettings() {
       "القضارف",
       "سنار",
     ],
-    "المملكة العربية السعودية": [
+    "ا��مملكة العربية السعودية": [
       "الرياض",
       "جدة",
       "الدمام",
@@ -646,10 +647,10 @@ export default function MerchantSettings() {
     ],
     "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أم صلال", "الخور", "الشمال"],
     "مملكة البحرين": ["ا��منامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
-    "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرستاق", "صحار"],
+    "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرست��ق", "صحار"],
     "جمهورية مصر العربية": [
       "القاهرة",
-      "ال��سكندرية",
+      "ال��س��ندرية",
       "الجيزة",
       "الأقصر",
       "أسوان",
@@ -691,7 +692,7 @@ export default function MerchantSettings() {
     }
   };
 
-  // دالة لمعالجة تغيير الدولة
+  // دالة لمعالجة تغي��ر الدولة
   const handleCountryChange = (country: string) => {
     setSelectedCountry(country);
     // إعادة تعيين المدينة عند تغيير الدولة
@@ -1136,7 +1137,7 @@ export default function MerchantSettings() {
                         className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 text-right arabic"
                         disabled={!selectedCountry}
                       >
-                        <option value="">اختر المدينة</option>
+                        <option value="">��ختر المدينة</option>
                         {selectedCountry &&
                           countriesWithCities[selectedCountry]?.map((city) => (
                             <option key={city} value={city}>
@@ -1482,7 +1483,7 @@ export default function MerchantSettings() {
                           حفظ الإعدادات
                         </h3>
                         <p className="text-primary-100 arabic text-sm">
-                          تأكد من حفظ تغييراتك
+                          تأكد من حفظ تغ��يراتك
                         </p>
                       </div>
                       <Button
@@ -1506,25 +1507,33 @@ export default function MerchantSettings() {
 
             {/* Shipping Tab */}
             {activeTab === "shipping" && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="arabic text-right flex items-center">
-                    <Truck className="w-5 h-5 ml-2" />
+              <Card className="shadow-lg border-0 bg-gradient-to-br from-white to-gray-50">
+                <CardHeader className="pb-4">
+                  <CardTitle className="arabic text-right flex items-center text-xl font-bold text-gray-800">
+                    <div className="flex items-center ml-3 bg-primary/10 p-2 rounded-lg">
+                      <Truck className="w-6 h-6 text-primary" />
+                    </div>
                     إعدادات الشحن والتوصيل
                   </CardTitle>
+                  <p className="text-gray-600 arabic text-sm text-right mt-2">
+                    قم بتخصيص أسعار الشحن وأوقات التحضير لمتجرك
+                  </p>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-8">
                   {/* Shipping Costs */}
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-4 arabic">
                       ��كاليف الشحن
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div>
-                        <Label htmlFor="freeShipping" className="arabic">
+                      <div className="group">
+                        <Label
+                          htmlFor="freeShipping"
+                          className="arabic font-semibold text-gray-700 mb-2 block"
+                        >
                           الشحن المجاني عند
                         </Label>
-                        <div className="mt-1 relative">
+                        <div className="relative">
                           <Input
                             id="freeShipping"
                             type="number"
@@ -1535,12 +1544,18 @@ export default function MerchantSettings() {
                                 freeShippingThreshold: Number(e.target.value),
                               })
                             }
-                            className="text-right"
+                            className="text-right pl-12 pr-4 h-12 border-2 border-gray-200 focus:border-primary transition-colors group-hover:border-gray-300"
+                            placeholder="أدخل المبلغ"
                           />
-                          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                            جنيه
-                          </span>
+                          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center">
+                            <span className="text-gray-500 font-medium">
+                              جنيه
+                            </span>
+                          </div>
                         </div>
+                        <p className="text-xs text-gray-500 arabic mt-2">
+                          عند تجاوز هذا المبلغ سيكون الشحن مجاني
+                        </p>
                       </div>
                       <div>
                         <Label htmlFor="standardShipping" className="arabic">
@@ -1623,10 +1638,10 @@ export default function MerchantSettings() {
 
                   <Separator />
 
-                  {/* Shipping Areas */}
-                  <div>
+                  {/* Shipping Areas - مخفي حسب طلب المستخدم */}
+                  <div className="hidden">
                     <div className="flex items-center justify-between mb-2">
-                      <Label className="arabic">مناطق ال��وصيل</Label>
+                      <Label className="arabic">مناطق ال����وصيل</Label>
                       <div className="text-xs text-gray-500 arabic">
                         {regionsLoading
                           ? "جارٍ التحميل..."
@@ -1708,7 +1723,7 @@ export default function MerchantSettings() {
                             السائ��ون ومؤسسات التوصيل
                           </h3>
                           <p className="text-sm text-gray-600 arabic">
-                            إدارة شبكة السائقين المتاحين لتوصيل طلباتك
+                            إدارة شبكة السائقي�� المتاحين لتوصيل طلباتك
                           </p>
                         </div>
                       </div>
@@ -1721,7 +1736,7 @@ export default function MerchantSettings() {
                             id: `driver${Date.now()}`,
                             name: "سائق جديد",
                             phone: "+966500000000",
-                            area: "منطقة جديدة",
+                            area: "منطقة جدي��ة",
                             rating: 0,
                             isActive: false,
                             vehicle: "سيارة",
@@ -1870,7 +1885,7 @@ export default function MerchantSettings() {
                         {
                           key: "customerNotifications",
                           title: "إشعارات العملاء",
-                          desc: "إشعار العملا�� عند كل مرحلة من التوصيل",
+                          desc: "إشعار العملا�� عند ��ل مرحلة من التوصيل",
                           icon: "🔔",
                         },
                       ].map((setting) => (
@@ -1933,7 +1948,7 @@ export default function MerchantSettings() {
                         <div className="text-center">
                           <div className="text-2xl mb-2">📱</div>
                           <h4 className="font-semibold arabic text-sm mb-2">
-                            تواصل فوري
+                            تواصل ف��ري
                           </h4>
                           <p className="text-xs text-gray-600 arabic">
                             تواصل مع السائقين مباشرة عبر الواتساب
@@ -2095,7 +2110,7 @@ export default function MerchantSettings() {
                       >
                         <div className={isRTL ? "text-right" : "text-left"}>
                           <div className="font-medium arabic">
-                            المصادقة الثنائية
+                            المصادق�� الثنائية
                           </div>
                           <div className="text-sm text-gray-600 arabic">
                             حماية إضافية لحسابك
