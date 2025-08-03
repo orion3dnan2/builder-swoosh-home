@@ -139,13 +139,8 @@ export default function MerchantDashboard() {
     }
   }, [user]);
 
-  const lowStockProducts = isNewMerchant
-    ? []
-    : [
-        { name: "عطر صندل سوداني", stock: 2, sku: "PER-001" },
-        { name: "كركديه طبيعي", stock: 1, sku: "TEA-003" },
-        { name: "حقيبة سودانية", stock: 0, sku: "BAG-012" },
-      ];
+  // Filter low stock products for current user's store
+  const userLowStockProducts = lowStockProducts.filter(product => product.storeId === userStoreId);
 
   const getStatusColor = (status: string) => {
     switch (status) {
