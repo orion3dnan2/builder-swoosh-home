@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Marketplace from "./pages/Marketplace";
 import Products from "./pages/Products";
+import Store from "./pages/Store";
 import Companies from "./pages/Companies";
 import Company from "./pages/Company";
 import Jobs from "./pages/Jobs";
