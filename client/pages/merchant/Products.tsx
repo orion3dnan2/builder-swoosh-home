@@ -103,11 +103,10 @@ export default function MerchantProducts() {
   // تحميل عملة المتجر
   useEffect(() => {
     if (userStoreId) {
-      StoresService.getStoreDetails(userStoreId).then(details => {
-        if (details && details.currency) {
-          setStoreCurrency(details.currency);
-        }
-      });
+      const details = StoresService.getStoreDetails(userStoreId);
+      if (details && details.currency) {
+        setStoreCurrency(details.currency);
+      }
     }
   }, [userStoreId]);
 
