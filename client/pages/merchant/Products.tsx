@@ -21,6 +21,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useProducts } from "@/lib/products";
+import { Product } from "../../../shared/types";
 
 export default function MerchantProducts() {
   const { user } = useAuth();
@@ -183,7 +185,7 @@ export default function MerchantProducts() {
                 onChange={(e) => setSelectedCategory(e.target.value)}
                 className="border border-gray-300 rounded-lg px-3 py-2 arabic text-right"
               >
-                <option value="all">جميع الفئات</option>
+                <option value="all">جميع ال��ئات</option>
                 {categories.map((category) => (
                   <option key={category} value={category}>
                     {category}
