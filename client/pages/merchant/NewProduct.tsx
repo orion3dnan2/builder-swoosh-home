@@ -153,6 +153,13 @@ export default function NewProduct() {
     setIsLoading(true);
     setErrors([]);
 
+    // Check if user has store setup
+    if (!userStoreId) {
+      setErrors(["يجب إعداد معلومات المتجر أولاً. يرجى إكمال معلومات العمل التجاري في ملفك الشخصي."]);
+      setIsLoading(false);
+      return;
+    }
+
     // Validate form
     const validationErrors = validateProduct(formData);
     if (validationErrors.length > 0) {
