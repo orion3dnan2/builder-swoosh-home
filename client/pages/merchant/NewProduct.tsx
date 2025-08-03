@@ -114,6 +114,18 @@ export default function NewProduct() {
     }
   }, [isEditing, id, hasLoadedProduct]);
 
+  // تحميل معلومات المتجر والعملة
+  useEffect(() => {
+    if (userStoreId) {
+      StoresService.getStoreDetails(userStoreId).then(details => {
+        if (details) {
+          setStoreDetails(details);
+          setStoreCurrency(details.currency);
+        }
+      });
+    }
+  }, [userStoreId]);
+
   const handleInputChange = (field: string, value: any) => {
     setFormData((prev) => ({
       ...prev,
