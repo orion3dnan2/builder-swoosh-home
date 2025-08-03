@@ -140,7 +140,9 @@ export default function MerchantProducts() {
 
   const handleStockUpdate = (id: string, newQuantity: number) => {
     try {
-      updateStock(id, newQuantity);
+      // TODO: Implement updateStock function in products hook
+      console.log("Update stock for product", id, "to", newQuantity);
+      // updateStock(id, newQuantity);
     } catch (error) {
       console.error("Error updating stock:", error);
     }
@@ -215,7 +217,7 @@ export default function MerchantProducts() {
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-yellow-800 arabic">
-                  يجب إعداد معلومات ��لمتجر أولاً
+                  يجب إعداد معلومات المتجر أولاً
                 </h3>
                 <p className="text-xs text-yellow-700 arabic">
                   لعرض وإدارة منتجاتك، يرجى إكمال معلومات العمل التجاري في إعدادات الملف الشخصي
@@ -414,7 +416,7 @@ export default function MerchantProducts() {
                         الفئة
                       </th>
                       <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
-                        السعر
+                        ��لسعر
                       </th>
                       <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
                         المخزون
@@ -575,7 +577,7 @@ export default function MerchantProducts() {
                     <Link to="/merchant/products/new">
                       <Button className="arabic bg-green-600 hover:bg-green-700">
                         <Plus className="w-4 h-4 ml-2" />
-                        أضف منتجك ا��أول
+                        أضف منتجك الأول
                       </Button>
                     </Link>
                     <Link to="/merchant/settings">
