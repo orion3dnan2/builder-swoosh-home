@@ -134,7 +134,7 @@ export class ProductService {
       description: "مشروب كركديه طبيعي طازج من أجود أنواع الكركديه السوداني - بارد ومنعش مثالي للطقس الحار",
       price: 7.0,
       images: ["https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&q=80"],
-      category: "مشروب��ت",
+      category: "مشروبات",
       tags: ["كركديه", "طبيعي", "بارد", "منعش"],
       inventory: {
         quantity: 40,
@@ -164,6 +164,24 @@ export class ProductService {
       console.log("تم حذف جميع المنتجات التجريبية والاحتفاظ بمنتجات زول اقاشي فقط");
     } catch (error) {
       console.error("خطأ في حذف المنتجات التجريبية:", error);
+    }
+  }
+
+  // مسح جميع المنتجات وإعادة ضبط البيانات للمنتجات الأصلية فقط
+  static clearAllProducts(): void {
+    try {
+      // حذف جميع البيانات من localStorage
+      localStorage.removeItem(this.STORAGE_KEY);
+
+      // إعادة تعيين المنتجات الأصلية فقط
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.demoProducts));
+
+      console.log("تم مسح جميع المنتجات وإعادة ضبط البيانات للمنتجات الأصلية");
+
+      // إعادة تحميل الصفحة لتطبيق التغييرات
+      window.location.reload();
+    } catch (error) {
+      console.error("خطأ في مسح المنتجات:", error);
     }
   }
 
@@ -249,7 +267,7 @@ export class ProductService {
       }
     } catch (error) {
       console.error("Failed to update stock:", error);
-      throw new Error("فشل في تحدي�� المخزون");
+      throw new Error("فشل في تحديث المخزون");
     }
   }
 
@@ -307,7 +325,7 @@ export class ProductService {
     }
 
     if (!product.price || product.price <= 0) {
-      errors.push("سعر المنتج يجب أن يكون أكبر من صفر");
+      errors.push("سعر ا��منتج يجب أن يكون أكبر من صفر");
     }
 
     if (product.salePrice && product.salePrice >= product.price) {
@@ -326,7 +344,7 @@ export class ProductService {
       product.inventory?.quantity === undefined ||
       product.inventory.quantity < 0
     ) {
-      errors.push("كمية المخزون يجب ��ن تكون صفر أو أكثر");
+      errors.push("كمية المخزون يجب أن تكون صفر أو أكثر");
     }
 
     return errors;
@@ -371,7 +389,7 @@ export class ProductService {
 
   static getCategoryIcon(category: string): string {
     const icons: Record<string, string> = {
-      "عطور ومستحضرات": "🌹",
+      "عطور و��ستحضرات": "🌹",
       "أطعمة ومشروبات": "🍯",
       "أطباق رئيسية": "🍽️",
       "مخبوزات": "🥖",
@@ -409,7 +427,7 @@ export class ProductService {
         id: `prod-${Date.now()}-1`,
         storeId: storeId,
         name: "ملوخية سودانية",
-        description: "ملوخية سودانية أصيلة مطبوخة بالطريقة التقليدية مع اللحم",
+        description: "ملوخية سودانية أصيلة مطبوخة بالطريقة التقليدية ��ع اللحم",
         price: 25.0,
         images: ["https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&q=80"],
         category: "أطباق رئيسية",
