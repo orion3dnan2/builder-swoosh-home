@@ -298,7 +298,7 @@ export default function AdminStores() {
       id: "ticket-002",
       storeId: "store-002",
       storeName: "العطور السودانية الأصيلة",
-      subject: "طلب تفعيل المتجر",
+      subject: "ط��ب تفعيل المتجر",
       message: "أرجو تفعيل متجري لبدء البيع",
       priority: "high",
       status: "in-progress",
@@ -460,7 +460,8 @@ export default function AdminStores() {
             case "reactivate":
               return { ...store, status: "active" as const };
             case "block":
-              return { ...store, status: "suspended" as const, tags: [...store.tags.filter(tag => tag !== "موقف"), "موقف"] };
+              const blockedTags = store.tags.filter(tag => tag !== "موقف" && tag !== "مجدد حديثاً");
+              return { ...store, status: "suspended" as const, tags: [...blockedTags, "موقف"] };
             case "renew":
               // تجدي�� الاشتراك - يمكن إضافة منطق تاريخ الانتهاء هنا
               return { ...store, tags: [...store.tags.filter(tag => tag !== "منتهي الصلاحية"), "مجدد حديثاً"] };
@@ -1193,7 +1194,7 @@ export default function AdminStores() {
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="arabic">إجمالي الإيرادات</span>
+                      <span className="arabic">إج��الي الإيرادات</span>
                       <span className="font-bold text-2xl">${totalRevenue.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between items-center">
