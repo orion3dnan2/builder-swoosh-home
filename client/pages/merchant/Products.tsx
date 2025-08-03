@@ -522,7 +522,40 @@ export default function MerchantProducts() {
           </Card>
         )}
 
-        {filteredProducts.length === 0 && (
+        {/* No Store Setup Message */}
+        {!currentStore && (
+          <div className="text-center py-12">
+            <Card className="max-w-2xl mx-auto bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-200">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <AlertTriangle className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2 arabic">
+                  إعداد المتجر مطلوب
+                </h3>
+                <p className="text-gray-700 mb-6 arabic">
+                  لبدء إدارة منتجاتك، يرجى إكمال معلومات العمل التجاري (اسم العمل، نوع العمل) في ملفك الشخصي أولاً.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link to="/profile">
+                    <Button className="arabic bg-yellow-600 hover:bg-yellow-700">
+                      <Settings className="w-4 h-4 ml-2" />
+                      إكمال معلومات المتجر
+                    </Button>
+                  </Link>
+                  <Link to="/merchant/settings">
+                    <Button variant="outline" className="arabic">
+                      إعدادات التاجر
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* No Products Message */}
+        {currentStore && filteredProducts.length === 0 && (
           <div className="text-center py-12">
             {isNewMerchant ? (
               <Card className="max-w-2xl mx-auto bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
@@ -531,10 +564,10 @@ export default function MerchantProducts() {
                     <Sparkles className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-2 arabic">
-                    ابد�� رحلتك التجارية! 🚀
+                    ابدأ رحلتك التجارية! 🚀
                   </h3>
                   <p className="text-gray-700 mb-6 arabic">
-                    أهلاً وسهلاً {user?.profile?.name}! متجرك جاهز الآن. ابدأ
+                    أهلاً وسهلاً {user?.profile?.name}! متجر "{currentStore.name}" جاهز الآن. ابدأ
                     بإضافة منتجاتك الأولى لتكون متاحة للعملاء.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -556,10 +589,10 @@ export default function MerchantProducts() {
               <>
                 <Package className="w-24 h-24 text-gray-300 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2 arabic">
-                  لا توجد منتجات
+                  لا توجد منتجات في متجرك
                 </h3>
                 <p className="text-gray-600 arabic mb-4">
-                  لم يتم العثور على منتجات تطابق معايير البحث
+                  لم يتم العثور على منتجات في متجر "{currentStore.name}" تطابق معايير البحث
                 </p>
                 <Link to="/merchant/products/new">
                   <Button className="arabic">
