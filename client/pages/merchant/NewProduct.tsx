@@ -38,6 +38,8 @@ export default function NewProduct() {
   const [currentImageUrl, setCurrentImageUrl] = useState("");
   const [userStoreId, setUserStoreId] = useState<string | null>(null);
   const [hasLoadedProduct, setHasLoadedProduct] = useState(false);
+  const [storeCurrency, setStoreCurrency] = useState<Currency>(defaultCurrency);
+  const [storeDetails, setStoreDetails] = useState<any>(null);
 
   // Get user's store ID - use known mapping for current user
   useEffect(() => {
@@ -396,7 +398,7 @@ export default function NewProduct() {
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
                     className="mt-2 arabic text-right"
-                    placeholder="مثال: عطر صندل سوداني أصلي"
+                    placeholder="مثال: عطر ��ندل سوداني أصلي"
                     required
                   />
                 </div>
