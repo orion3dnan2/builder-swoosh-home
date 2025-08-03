@@ -342,7 +342,7 @@ export default function NewProduct() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 arabic">
-                  إضافة منتج جديد
+                  {isEditing ? "تعديل المنتج" : "إضافة منتج جديد"}
                 </h1>
                 <p className="text-gray-600 arabic">
                   أدخل معلومات ا��منتج الجديد
