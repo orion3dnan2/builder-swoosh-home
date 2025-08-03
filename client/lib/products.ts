@@ -3,28 +3,28 @@ import { Product } from "../../shared/types";
 export class ProductService {
   private static readonly STORAGE_KEY = "bayt_al_sudani_products";
 
-  // Only زول اقاشي restaurant products with real images
+  // المنتج الأصيل الوحيد لمطعم زول اقاشي
   private static demoProducts: Product[] = [
     {
       id: "prod-restaurant-real-001",
       storeId: "store-1753868707117-r80zjqevj",
-      name: "ملوخية سودانية",
-      description:
-        "ملوخية سودانية أصيلة مطبوخة بالطريقة التقليدية مع اللحم الطازج والتوابل السودانية الأصيلة. طبق شعبي مشهور من المطبخ السوداني",
-      price: 25.0,
-      images: ["https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&q=80"],
+      name: "طلب اقاشي فراخ وسط",
+      description: "طلب اقاشي فراخ وسط أصيل من مطعم زول اقاشي - فراخ مشوي طازج بالطريقة السودانية التقليدية مع التوابل الخاصة والأرز الأبيض",
+      price: 35.0,
+      images: ["https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80"],
       category: "أطباق رئيسية",
-      tags: ["ملوخية", "سوداني", "تقليدي", "لحم"],
+      tags: ["اقاشي", "فراخ", "مشوي", "سوداني", "وسط"],
       inventory: {
-        quantity: 20,
-        sku: "MEAL-MLW-001",
-        lowStockThreshold: 5,
+        quantity: 50,
+        sku: "GRILL-CHKN-001",
+        lowStockThreshold: 10,
       },
       specifications: {
-        الحجم: "طبق كبير",
-        المكونات: "ملوخية، لحم، توابل سودانية",
-        "وقت التحضير": "20 دقيقة",
-        "السعرات الحرارية": "380 سعرة",
+        الحجم: "وجبة وسط",
+        المكونات: "فراخ مشوي، أرز أبيض، توابل سودانية خاصة، سلطة",
+        "وقت التحضير": "25 دقيقة",
+        "السعرات الحرارية": "520 سعرة",
+        النوع: "مشوي على الفحم",
       },
       status: "active",
       createdAt: "2025-01-30T10:00:00Z",
