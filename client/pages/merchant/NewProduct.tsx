@@ -74,7 +74,7 @@ export default function NewProduct() {
     status: "active",
   });
 
-  // Update storeId when user changes
+  // Update storeId when user store ID is fetched
   useEffect(() => {
     if (userStoreId) {
       setFormData(prev => ({
