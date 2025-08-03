@@ -33,6 +33,7 @@ import { regionsManager } from "@/lib/regionsManager";
 import { useRegions, useRegionsStats, useRegionsByCountry, useCountries } from "@/hooks/use-regions";
 import { useToast } from "@/hooks/use-toast";
 import { apiConfigManager, ApiConfiguration } from "@/lib/apiConfig";
+import { QuickApiStatus } from "@/components/ApiConnectionStatus";
 
 export default function AdminSettings() {
   const { user } = useAuth();
@@ -799,7 +800,7 @@ export default function AdminSettings() {
                             لا توجد مناطق في {countries.find(c => c.code === selectedCountry)?.name}
                           </h4>
                           <p className="text-orange-600 arabic text-sm mb-4">
-                            أضف مناطق لهذه الدولة لتتمكن الشرك��ت من تحديد مناطق التوصيل
+                            أضف مناطق لهذه الدولة لتتمكن الشركات من تحديد مناطق التوصيل
                           </p>
                         </div>
                       </div>
@@ -1187,7 +1188,7 @@ export default function AdminSettings() {
                           </div>
                           <div className="flex items-center justify-between p-4 border rounded-lg">
                             <div>
-                              <Label className="font-medium arabic">الخادم الافترا��ي</Label>
+                              <Label className="font-medium arabic">الخادم الافتراضي</Label>
                               <p className="text-sm text-gray-600 arabic">الخادم المستخدم افتراضياً</p>
                             </div>
                             <Switch
@@ -1484,7 +1485,7 @@ export default function AdminSettings() {
                       تعليمات الاستخدام:
                     </h4>
                     <ul className="text-sm text-blue-700 arabic space-y-1">
-                      <li>• أضف خوادم API خارجية لربط التطبيق بقواعد البيانات المختلفة</li>
+                      <li>• أضف خوادم API خارجية لربط التطبيق بقواعد البيا��ات المختلفة</li>
                       <li>• يمكن تفعيل خادم واحد فقط في كل مرة</li>
                       <li>• استخدم اختبار الاتصال للتأكد من عمل الخادم</li>
                       <li>• الخادم الافتراضي هو الخادم المحلي للتطوير</li>
@@ -1508,7 +1509,7 @@ export default function AdminSettings() {
               <CardContent className="space-y-6">
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                   <p className="text-yellow-800 arabic">
-                    ⚠️ تحذير: الإ��دادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
+                    ⚠️ تحذير: الإعدادات المتقدمة قد تؤثر على أداء التطبيق. يُنصح
                     بعدم تغييرها إلا إذا كنت تعرف ما تفعل.
                   </p>
                 </div>
@@ -1537,7 +1538,7 @@ export default function AdminSettings() {
                   <div className="flex items-center justify-between p-4 border rounded-lg">
                     <div>
                       <Label className="font-medium arabic">
-                        دعم الكتابة من اليمين لليسار
+                        دعم الكت��بة من اليمين لليسار
                       </Label>
                       <p className="text-sm text-gray-600 arabic">
                         تفعيل RTL للغة العربية
