@@ -13,26 +13,28 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
-  ArrowLeft, 
-  Users, 
-  Plus, 
-  Search, 
-  Filter, 
-  Edit, 
-  Trash2, 
-  Eye, 
-  Shield, 
-  ShieldCheck, 
-  Mail, 
-  Phone, 
-  Calendar, 
+import {
+  ArrowLeft,
+  Users,
+  Plus,
+  Search,
+  Filter,
+  Edit,
+  Trash2,
+  Eye,
+  Shield,
+  ShieldCheck,
+  Mail,
+  Phone,
+  Calendar,
   Clock,
   UserCheck,
   UserX,
   Download,
   Upload,
-  MoreVertical
+  MoreVertical,
+  Key,
+  RefreshCw
 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { User, UserRole } from "@shared/types";
@@ -208,7 +210,7 @@ export default function AdminUsers() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white arabic">
-                  إدارة المستخدمين
+                  إدارة ال��ستخدمين
                 </h1>
                 <p className="text-gray-600 dark:text-gray-300 arabic">
                   إدارة وتتبع جميع المستخدمين في النظام
@@ -367,7 +369,7 @@ export default function AdminUsers() {
         {/* جدول المستخدمين */}
         <Card>
           <CardHeader>
-            <CardTitle className="arabic">قائمة المستخدمين</CardTitle>
+            <CardTitle className="arabic">ق��ئمة المستخدمين</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -713,7 +715,7 @@ function UserForm({ user, onClose }: { user?: User; onClose: () => void }) {
     // هنا يتم إرسال البيانات للخادم
     toast({
       title: user ? "تم تحديث المستخدم" : "تم إضافة المستخدم",
-      description: user ? "تم تحديث بيانات المستخدم بنجاح" : "تم إضافة المستخدم الجديد بنجاح",
+      description: user ? "تم تحديث بيانات المستخدم بنجا��" : "تم إضافة المستخدم الجديد بنجاح",
     });
     
     onClose();
