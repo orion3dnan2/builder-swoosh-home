@@ -168,13 +168,34 @@ export default function AdminUsers() {
   };
 
   const handleToggleUserStatus = (userId: string) => {
-    setUsers(users.map(user => 
+    setUsers(users.map(user =>
       user.id === userId ? { ...user, isActive: !user.isActive } : user
     ));
     toast({
       title: "تم تحديث حالة المستخدم",
       description: "تم تحديث حالة المستخدم بنجاح",
     });
+  };
+
+  const handleResetPassword = async (userId: string, email: string, userName: string) => {
+    try {
+      // في التطبيق الحقيقي، سيتم إرسال طلب إلى API لإعادة تعيين كلمة المرور
+      // await resetUserPassword(userId);
+
+      // محاكاة تأخير العملية
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      toast({
+        title: "تم إرسال رابط إعادة تعيين كلمة المرور",
+        description: `تم إرسال رابط إعادة تعيين كلمة المرور إلى ${email} للمستخدم ${userName}`,
+      });
+    } catch (error) {
+      toast({
+        title: "خطأ في إعادة تعيين كلمة المرور",
+        description: "حدث خطأ أثناء إرسال رابط إعادة تعيين كلمة المرور. يرجى المحاولة مرة أخرى.",
+        variant: "destructive",
+      });
+    }
   };
 
   const formatDate = (dateString: string) => {
@@ -223,7 +244,7 @@ export default function AdminUsers() {
                 <DialogTrigger asChild>
                   <Button className="arabic">
                     <Plus className="w-4 h-4 ml-2" />
-                    إضافة مستخدم جديد
+                    إضافة مستخد�� جديد
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl">
