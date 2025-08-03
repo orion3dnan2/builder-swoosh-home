@@ -197,7 +197,7 @@ export default function AdminStores() {
       phone: "+966509876543",
       status: "pending",
       category: "عطور ومستحضرات",
-      location: "جدة، السعودية",
+      location: "جدة، الس��ودية",
       products: 23,
       orders: 67,
       revenue: 8900,
@@ -697,7 +697,7 @@ export default function AdminStores() {
 
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-600 arabic">
-                      {filteredStores.length} من {totalStores} متجر
+                      {filteredStores.length} من {totalStores} ��تجر
                     </span>
                     <Button variant="outline" size="sm" className="arabic">
                       <Download className="w-4 h-4 ml-2" />
@@ -743,7 +743,59 @@ export default function AdminStores() {
                             <MoreVertical className="w-4 h-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="arabic">
+                        <DropdownMenuContent align="end" className="arabic w-56">
+                          {/* الإجراءات المهمة والأساسية */}
+                          {store.status === "pending" && (
+                            <DropdownMenuItem
+                              onClick={() => openConfirmModal("approve", store.id, store.name)}
+                              className="text-green-600 font-semibold"
+                            >
+                              <Check className="w-4 h-4 ml-2" />
+                              ✅ قبول المتجر
+                            </DropdownMenuItem>
+                          )}
+
+                          {store.status === "active" && (
+                            <DropdownMenuItem
+                              onClick={() => openConfirmModal("suspend", store.id, store.name)}
+                              className="text-orange-600 font-semibold"
+                            >
+                              <AlertTriangle className="w-4 h-4 ml-2" />
+                              ⏸️ تعليق المتجر
+                            </DropdownMenuItem>
+                          )}
+
+                          {(store.status === "active" || store.status === "featured") && (
+                            <DropdownMenuItem
+                              onClick={() => openConfirmModal("block", store.id, store.name)}
+                              className="text-red-600 font-semibold"
+                            >
+                              <Ban className="w-4 h-4 ml-2" />
+                              🚫 إيقاف المتجر
+                            </DropdownMenuItem>
+                          )}
+
+                          {store.status === "suspended" && (
+                            <DropdownMenuItem
+                              onClick={() => openConfirmModal("reactivate", store.id, store.name)}
+                              className="text-blue-600 font-semibold"
+                            >
+                              <RefreshCw className="w-4 h-4 ml-2" />
+                              🔄 إعادة تفعيل
+                            </DropdownMenuItem>
+                          )}
+
+                          <DropdownMenuItem
+                            onClick={() => openConfirmModal("renew", store.id, store.name)}
+                            className="text-purple-600 font-semibold"
+                          >
+                            <Calendar className="w-4 h-4 ml-2" />
+                            📅 تجديد الاشتراك
+                          </DropdownMenuItem>
+
+                          <DropdownMenuSeparator />
+
+                          {/* الإجراءات الثانوية */}
                           <DropdownMenuItem onClick={() => handleViewDetails(store)}>
                             <Eye className="w-4 h-4 ml-2" />
                             عرض التفاصيل
@@ -760,15 +812,10 @@ export default function AdminStores() {
                             <HelpCircle className="w-4 h-4 ml-2" />
                             تقديم المساعدة
                           </DropdownMenuItem>
+
                           <DropdownMenuSeparator />
-                          {store.status === "pending" && (
-                            <DropdownMenuItem
-                              onClick={() => openConfirmModal("approve", store.id, store.name)}
-                            >
-                              <Check className="w-4 h-4 ml-2" />
-                              اعتماد المتجر
-                            </DropdownMenuItem>
-                          )}
+
+                          {/* إجراءات إضافية */}
                           {store.status === "active" && !store.featured && (
                             <DropdownMenuItem
                               onClick={() => openConfirmModal("feature", store.id, store.name)}
@@ -1240,7 +1287,7 @@ export default function AdminStores() {
                     <span className="font-medium">{selectedStore.joinDate}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="arabic">آخر نشاط:</span>
+                    <span className="arabic">آخر ن��اط:</span>
                     <span className="font-medium arabic">{selectedStore.lastActive}</span>
                   </div>
                 </CardContent>
