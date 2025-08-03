@@ -210,7 +210,7 @@ export default function AdminUsers() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white arabic">
-                  إدارة ال��ستخدمين
+                  إدارة المستخدمين
                 </h1>
                 <p className="text-gray-600 dark:text-gray-300 arabic">
                   إدارة وتتبع جميع المستخدمين في النظام
@@ -369,14 +369,14 @@ export default function AdminUsers() {
         {/* جدول المستخدمين */}
         <Card>
           <CardHeader>
-            <CardTitle className="arabic">ق��ئمة المستخدمين</CardTitle>
+            <CardTitle className="arabic">قائمة المستخدمين</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="arabic">المستخدم</TableHead>
+                    <TableHead className="arabic">ا��مستخدم</TableHead>
                     <TableHead className="arabic">الدور</TableHead>
                     <TableHead className="arabic">الحالة</TableHead>
                     <TableHead className="arabic">تاريخ التسجيل</TableHead>
@@ -470,6 +470,38 @@ export default function AdminUsers() {
                           >
                             {user.isActive ? <UserX className="w-4 h-4" /> : <UserCheck className="w-4 h-4" />}
                           </Button>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-blue-600 hover:text-blue-700"
+                                title="إعادة تعيين كلمة المرور"
+                              >
+                                <Key className="w-4 h-4" />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent className="arabic">
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>إعادة تعيين كلمة المرور</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  هل أنت متأكد من إعادة تعيين كلمة المرور للمستخدم "{user.profile.name}"؟
+                                  <br />
+                                  سيتم إرسال رابط إعادة تعيين كلمة المرور إلى البريد الإلكتروني: {user.email}
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>إلغاء</AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() => handleResetPassword(user.id, user.email, user.profile.name)}
+                                  className="bg-blue-600 hover:bg-blue-700"
+                                >
+                                  <Key className="w-4 h-4 ml-2" />
+                                  إعادة تعيين كلمة المرور
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
                               <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
@@ -712,10 +744,10 @@ function UserForm({ user, onClose }: { user?: User; onClose: () => void }) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // هنا يتم إرسال البيانات للخادم
+    // هنا يتم إرسال البي��نات للخادم
     toast({
       title: user ? "تم تحديث المستخدم" : "تم إضافة المستخدم",
-      description: user ? "تم تحديث بيانات المستخدم بنجا��" : "تم إضافة المستخدم الجديد بنجاح",
+      description: user ? "تم تحديث بيانات المستخدم بنجاح" : "تم إضافة المستخدم الجديد بنجاح",
     });
     
     onClose();
