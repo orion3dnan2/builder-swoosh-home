@@ -61,8 +61,7 @@ export default function MerchantDashboard() {
     totalReviews: 0,
   };
 
-  const [userStore, setUserStore] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [recentOrders, setRecentOrders] = useState([]);
 
   // جلب بيانات المتجر من API
