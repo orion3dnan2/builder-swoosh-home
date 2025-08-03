@@ -215,7 +215,7 @@ export default function MerchantDashboard() {
           <div className="flex justify-center items-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
             <span className="ml-3 text-gray-600 arabic">
-              جاري تحميل بيانات المتجر...
+              جاري تحمي�� بيانات المتجر...
             </span>
           </div>
         )}
@@ -294,7 +294,7 @@ export default function MerchantDashboard() {
                         {storeStats.totalOrders}
                       </p>
                       <p className="text-green-600 text-sm arabic">
-                        إجمالي الطلبات
+                        إجمالي ا��طلبات
                       </p>
                     </div>
                   </div>
@@ -519,7 +519,7 @@ export default function MerchantDashboard() {
                 </Card>
 
                 {/* Low Stock Alert */}
-                {!isNewMerchant && lowStockProducts.length > 0 && (
+                {!isNewMerchant && userLowStockProducts.length > 0 && (
                   <Card className="border-red-200 bg-red-50">
                     <CardHeader>
                       <CardTitle className="flex items-center text-red-800 arabic">
