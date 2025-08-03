@@ -2,6 +2,7 @@ import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 import {
   ChefHat,
   Filter,
@@ -96,7 +97,7 @@ export default function Restaurants() {
                 className="flex items-center gap-2 arabic"
               >
                 <Filter className="w-4 h-4" />
-                تصفية النتائج
+                ��صفية النتائج
               </Button>
             </div>
           </CardContent>
