@@ -228,8 +228,8 @@ export default function NewProduct() {
     }
 
     try {
-      // Generate ID and SKU if not provided
-      const productId = `prod-${Date.now()}`;
+      // Use existing ID when editing, or generate new one when creating
+      const productId = isEditing && formData.id ? formData.id : `prod-${Date.now()}`;
       const finalSKU =
         formData.inventory?.sku ||
         generateSKU(formData.category!, formData.name!);
@@ -364,7 +364,7 @@ export default function NewProduct() {
                 <div className="flex items-center text-red-800 mb-2">
                   <X className="w-5 h-5 ml-2" />
                   <span className="font-semibold arabic">
-                    يرجى تصحيح الأخطاء الت��لية:
+                    يرجى تصحيح الأخطاء الت����لية:
                   </span>
                 </div>
                 <ul className="space-y-1">
