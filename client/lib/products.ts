@@ -340,15 +340,56 @@ export class ProductService {
 
 // React hook for product management
 export const useProducts = (storeId?: string) => {
-  const products = ProductService.getProducts(storeId);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  // تحديث المنتجات عند تغيير storeId أو localStorage
+  useEffect(() => {
+    const loadProducts = () => {
+      const allProducts = ProductService.getProducts(storeId);
+      setProducts(allProducts);
+    };
+
+    // تحميل أولي
+    loadProducts();
+
+    // الاستماع لتغييرات localStorage
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === ProductService.STORAGE_KEY) {
+        loadProducts();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    // الاستماع لتغييرات مخصصة من نفس التطبيق
+    const handleCustomChange = () => {
+      loadProducts();
+    };
+
+    window.addEventListener('productsUpdated', handleCustomChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('productsUpdated', handleCustomChange);
+    };
+  }, [storeId]);
 
   return {
     products,
     getProduct: (id: string) => ProductService.getProduct(id),
-    saveProduct: (product: Product) => ProductService.saveProduct(product),
-    deleteProduct: (id: string) => ProductService.deleteProduct(id),
-    updateStock: (id: string, quantity: number) =>
-      ProductService.updateStock(id, quantity),
+    saveProduct: (product: Product) => {
+      ProductService.saveProduct(product);
+      // إرسال event لتحديث المكونات الأخرى
+      window.dispatchEvent(new CustomEvent('productsUpdated'));
+    },
+    deleteProduct: (id: string) => {
+      ProductService.deleteProduct(id);
+      window.dispatchEvent(new CustomEvent('productsUpdated'));
+    },
+    updateStock: (id: string, quantity: number) => {
+      ProductService.updateStock(id, quantity);
+      window.dispatchEvent(new CustomEvent('productsUpdated'));
+    },
     searchProducts: (query: string) =>
       ProductService.searchProducts(query, storeId),
     categories: ProductService.getCategories(),
@@ -359,7 +400,13 @@ export const useProducts = (storeId?: string) => {
       ProductService.generateSKU(category, name),
     validateProduct: (product: Partial<Product>) =>
       ProductService.validateProduct(product),
-    clearDemoProducts: () => ProductService.clearDemoProducts(),
-    clearAllProducts: () => ProductService.clearAllProducts(),
+    clearDemoProducts: () => {
+      ProductService.clearDemoProducts();
+      window.dispatchEvent(new CustomEvent('productsUpdated'));
+    },
+    clearAllProducts: () => {
+      ProductService.clearAllProducts();
+      window.dispatchEvent(new CustomEvent('productsUpdated'));
+    },
   };
 };
