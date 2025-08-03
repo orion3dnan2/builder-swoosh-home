@@ -17,20 +17,30 @@ import {
   Heart,
   Share,
   Navigation,
+  Eye,
+  Plus,
+  Minus,
 } from "lucide-react";
 import { useProducts } from "@/lib/products";
+import { toast } from "sonner";
 
 export default function Restaurant() {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [cart, setCart] = useState<Record<string, number>>({});
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
-  // جلب منتجات المطعم
-  const { products: allProducts } = useProducts();
+  // ��لب منتجات المطعم مباشرة بناءً على storeId
+  const { products: allProducts } = useProducts(id);
   const restaurantProducts = allProducts.filter(
-    (product) => product.storeId === id && product.status === "active",
+    (product) => product.status === "active",
   );
+
+  console.log("Store ID:", id);
+  console.log("All products for store:", allProducts);
+  console.log("Restaurant products (active):", restaurantProducts);
 
   // جلب معلومات المطعم
   useEffect(() => {
@@ -64,6 +74,39 @@ export default function Restaurant() {
 
   const formatPrice = (price: number) => {
     return `${price.toFixed(2)} ريال`;
+  };
+
+  const addToCart = (productId: string) => {
+    setCart((prev) => ({
+      ...prev,
+      [productId]: (prev[productId] || 0) + 1,
+    }));
+    const product = restaurantProducts.find((p) => p.id === productId);
+    toast.success(`تم إضافة ${product?.name} إلى العربة`, {
+      description: `الكمية: ${(cart[productId] || 0) + 1}`,
+    });
+  };
+
+  const removeFromCart = (productId: string) => {
+    setCart((prev) => {
+      const newCart = { ...prev };
+      if (newCart[productId] > 1) {
+        newCart[productId]--;
+      } else {
+        delete newCart[productId];
+      }
+      return newCart;
+    });
+    toast.info("تم تقليل الكمية من العربة");
+  };
+
+  const getCartQuantity = (productId: string) => cart[productId] || 0;
+
+  const getTotalCartItems = () =>
+    Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+
+  const viewProductDetails = (product: any) => {
+    setSelectedProduct(product);
   };
 
   if (loading) {
@@ -230,10 +273,49 @@ export default function Restaurant() {
                                     </span>
                                   )}
                                 </div>
-                                <Button size="sm" className="arabic">
-                                  <ShoppingCart className="w-3 h-3 ml-1" />
-                                  إضافة
-                                </Button>
+                                <div className="flex items-center gap-1">
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => viewProductDetails(product)}
+                                    className="arabic"
+                                  >
+                                    <Eye className="w-3 h-3 ml-1" />
+                                    عرض
+                                  </Button>
+
+                                  {getCartQuantity(product.id) > 0 ? (
+                                    <div className="flex items-center gap-1">
+                                      <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() =>
+                                          removeFromCart(product.id)
+                                        }
+                                      >
+                                        <Minus className="w-3 h-3" />
+                                      </Button>
+                                      <span className="text-sm font-medium px-2">
+                                        {getCartQuantity(product.id)}
+                                      </span>
+                                      <Button
+                                        size="sm"
+                                        onClick={() => addToCart(product.id)}
+                                      >
+                                        <Plus className="w-3 h-3" />
+                                      </Button>
+                                    </div>
+                                  ) : (
+                                    <Button
+                                      size="sm"
+                                      onClick={() => addToCart(product.id)}
+                                      className="arabic"
+                                    >
+                                      <ShoppingCart className="w-3 h-3 ml-1" />
+                                      إضافة
+                                    </Button>
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -302,11 +384,28 @@ export default function Restaurant() {
                     </div>
                   </div>
                   <div className="mt-4 space-y-2">
-                    <Button className="w-full arabic bg-red-600 hover:bg-red-700">
+                    <Button
+                      className="w-full arabic bg-red-600 hover:bg-red-700"
+                      onClick={() =>
+                        window.open(`tel:${restaurant.phone}`, "_self")
+                      }
+                    >
                       <Phone className="w-4 h-4 ml-2" />
                       اتصل الآن
                     </Button>
-                    <Button variant="outline" className="w-full arabic">
+                    <Button
+                      variant="outline"
+                      className="w-full arabic"
+                      onClick={() => {
+                        const address = encodeURIComponent(
+                          `${restaurant.address || restaurant.city}, ${restaurant.country}`,
+                        );
+                        window.open(
+                          `https://www.google.com/maps/search/${address}`,
+                          "_blank",
+                        );
+                      }}
+                    >
                       <Navigation className="w-4 h-4 ml-2" />
                       الاتجاهات
                     </Button>
@@ -363,7 +462,7 @@ export default function Restaurant() {
                       <span className="font-medium arabic">50 ريال</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600 arabic">وقت التوصيل</span>
+                      <span className="text-gray-600 arabic">وقت التوصي��</span>
                       <span className="font-medium arabic">
                         {restaurant.shippingSettings?.processingTime}
                       </span>
@@ -380,10 +479,178 @@ export default function Restaurant() {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Shopping Cart Summary */}
+              {getTotalCartItems() > 0 && (
+                <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-bold arabic mb-4 text-green-800">
+                      عربة التسوق
+                    </h3>
+                    <div className="space-y-2 mb-4">
+                      {Object.entries(cart).map(([productId, quantity]) => {
+                        const product = restaurantProducts.find(
+                          (p) => p.id === productId,
+                        );
+                        if (!product) return null;
+                        return (
+                          <div
+                            key={productId}
+                            className="flex justify-between items-center"
+                          >
+                            <span className="arabic text-sm">
+                              {product.name}
+                            </span>
+                            <span className="arabic text-sm font-medium">
+                              {quantity} ×{" "}
+                              {formatPrice(product.salePrice || product.price)}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="border-t pt-3">
+                      <div className="flex justify-between font-bold arabic">
+                        <span>المجموع:</span>
+                        <span>
+                          {formatPrice(
+                            Object.entries(cart).reduce(
+                              (total, [productId, quantity]) => {
+                                const product = restaurantProducts.find(
+                                  (p) => p.id === productId,
+                                );
+                                return (
+                                  total +
+                                  (product
+                                    ? (product.salePrice || product.price) *
+                                      quantity
+                                    : 0)
+                                );
+                              },
+                              0,
+                            ),
+                          )}
+                        </span>
+                      </div>
+                      <Button className="w-full mt-3 arabic bg-green-600 hover:bg-green-700">
+                        <ShoppingCart className="w-4 h-4 ml-2" />
+                        إتمام الطلب ({getTotalCartItems()} منتج)
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Product Details Modal */}
+      {selectedProduct && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <Card className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <CardContent className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <h2 className="text-2xl font-bold arabic">
+                  {selectedProduct.name}
+                </h2>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSelectedProduct(null)}
+                >
+                  ✕
+                </Button>
+              </div>
+
+              <img
+                src={selectedProduct.images[0] || "/placeholder.svg"}
+                alt={selectedProduct.name}
+                className="w-full h-64 object-cover rounded-lg mb-4"
+              />
+
+              <p className="text-gray-700 arabic mb-4 leading-relaxed">
+                {selectedProduct.description}
+              </p>
+
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                  <h4 className="font-semibold arabic mb-2">المواصفات:</h4>
+                  <div className="space-y-1">
+                    {Object.entries(selectedProduct.specifications || {}).map(
+                      ([key, value]) => (
+                        <div key={key} className="flex justify-between text-sm">
+                          <span className="arabic text-gray-600">{key}:</span>
+                          <span className="arabic">{value as string}</span>
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-semibold arabic mb-2">معلومات إضافية:</h4>
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-sm">
+                      <span className="arabic text-gray-600">الفئة:</span>
+                      <span className="arabic">{selectedProduct.category}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="arabic text-gray-600">المخزون:</span>
+                      <span className="arabic">
+                        {selectedProduct.inventory.quantity} قطعة
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-4 border-t">
+                <div className="text-right">
+                  {selectedProduct.salePrice ? (
+                    <div>
+                      <span className="font-bold text-green-600 arabic text-xl">
+                        {formatPrice(selectedProduct.salePrice)}
+                      </span>
+                      <span className="text-sm text-gray-500 line-through arabic mr-2">
+                        {formatPrice(selectedProduct.price)}
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="font-bold text-gray-800 arabic text-xl">
+                      {formatPrice(selectedProduct.price)}
+                    </span>
+                  )}
+                </div>
+
+                {getCartQuantity(selectedProduct.id) > 0 ? (
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={() => removeFromCart(selectedProduct.id)}
+                    >
+                      <Minus className="w-4 h-4" />
+                    </Button>
+                    <span className="font-medium px-3">
+                      {getCartQuantity(selectedProduct.id)}
+                    </span>
+                    <Button onClick={() => addToCart(selectedProduct.id)}>
+                      <Plus className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    onClick={() => addToCart(selectedProduct.id)}
+                    className="arabic"
+                  >
+                    <ShoppingCart className="w-4 h-4 ml-2" />
+                    إضافة للعربة
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </Layout>
   );
 }

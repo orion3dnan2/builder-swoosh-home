@@ -28,6 +28,8 @@ import AdminActivity from "./pages/admin/Activity";
 import MerchantDashboard from "./pages/merchant/Dashboard";
 import MerchantProducts from "./pages/merchant/Products";
 import NewProduct from "./pages/merchant/NewProduct";
+import ClearDemoProducts from "./pages/ClearDemoProducts";
+import ClearAllProducts from "./pages/ClearAllProducts";
 import MerchantAnalytics from "./pages/merchant/Analytics";
 import MerchantOrders from "./pages/merchant/Orders";
 import MerchantSettings from "./pages/merchant/Settings";
@@ -147,6 +149,14 @@ function App() {
                 }
               />
               <Route
+                path="/merchant/products/:id/edit"
+                element={
+                  <MerchantRoute>
+                    <NewProduct />
+                  </MerchantRoute>
+                }
+              />
+              <Route
                 path="/merchant/analytics"
                 element={
                   <MerchantRoute>
@@ -172,6 +182,14 @@ function App() {
               />
 
               {/* Public Routes */}
+              <Route
+                path="/clear-demo-products"
+                element={<ClearDemoProducts />}
+              />
+              <Route
+                path="/clear-all-products"
+                element={<ClearAllProducts />}
+              />
               <Route path="/marketplace" element={<Marketplace />} />
               <Route path="/products" element={<Products />} />
               <Route path="/store/:id" element={<Store />} />

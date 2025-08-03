@@ -1,433 +1,74 @@
+import { useState, useEffect } from "react";
 import { Product } from "../../shared/types";
 
 export class ProductService {
-  private static readonly STORAGE_KEY = "bayt_al_sudani_products";
+  static readonly STORAGE_KEY = "bayt_al_sudani_products";
 
-  // Demo products for development
+  // المنتج الأصيل الوحيد لمطعم زول اقاشي
   private static demoProducts: Product[] = [
-    {
-      id: "prod-001",
-      storeId: "store-001",
-      name: "عطر صندل سوداني أصلي",
-      description:
-        "عطر صندل طبيعي من السودان بأجود الخامات. رائحة فواحة تدوم طويلاً مع خليط من الورود السودانية الأصيلة.",
-      price: 45.0,
-      salePrice: 39.99,
-      images: ["/placeholder.svg"],
-      category: "عطور ومستحضرات",
-      tags: ["عطر", "صندل", "سوداني", "طبيعي"],
-      inventory: {
-        quantity: 25,
-        sku: "PER-SDL-001",
-        lowStockThreshold: 5,
-      },
-      specifications: {
-        الحجم: "50 مل",
-        النوع: "عطر زيتي",
-        المنشأ: "السودان",
-        التركيز: "20%",
-      },
-      status: "active",
-      createdAt: "2024-01-15T10:00:00Z",
-      updatedAt: "2024-01-20T14:30:00Z",
-    },
-    {
-      id: "prod-002",
-      storeId: "store-001",
-      name: "كركديه سوداني طبيعي",
-      description:
-        "كركديه طبيعي من أجود أنواع الكركديه السود��ني. غني ��الفيتامينات ومضادات الأكسدة.",
-      price: 15.5,
-      images: ["/placeholder.svg"],
-      category: "أطعمة ومشروبات",
-      tags: ["كركديه", "طبيعي", "صحي", "سوداني"],
-      inventory: {
-        quantity: 50,
-        sku: "BEV-HIB-002",
-        lowStockThreshold: 10,
-      },
-      specifications: {
-        الوزن: "500 جرام",
-        النوع: "مجفف طبيعي",
-        المنشأ: "شمال السودان",
-        الصلاحية: "سنتان",
-      },
-      status: "active",
-      createdAt: "2024-01-10T08:00:00Z",
-      updatedAt: "2024-01-18T16:45:00Z",
-    },
-    {
-      id: "prod-003",
-      storeId: "store-001",
-      name: "حقيبة جلدية سودانية",
-      description:
-        "حقيبة يد نس��ئية من الجلد السوداني الأصلي. تصميم عصري مع لمسة تراثية سودانية.",
-      price: 89.99,
-      images: ["/placeholder.svg"],
-      category: "إكسسوارات",
-      tags: ["حقيبة", "جلد", "نسائي", "سوداني"],
-      inventory: {
-        quantity: 0,
-        sku: "ACC-BAG-003",
-        lowStockThreshold: 3,
-      },
-      specifications: {
-        المقاس: "30x25x10 سم",
-        المادة: "جلد طبيعي",
-        اللون: "بني",
-        الإغلاق: "سوستة",
-      },
-      status: "out_of_stock",
-      createdAt: "2024-01-05T12:00:00Z",
-      updatedAt: "2024-01-25T09:15:00Z",
-    },
-    {
-      id: "prod-004",
-      storeId: "store-002",
-      name: "بخور لبان ذكر أصلي",
-      description:
-        "بخور لبان ذكر من أجود الأنواع السودانية. رائحة عطرة تملأ المكان بالعبق الأصيل.",
-      price: 32.5,
-      salePrice: 27.99,
-      images: ["/placeholder.svg"],
-      category: "عطور ومستحضرات",
-      tags: ["بخور", "لبان", "ذكر", "سوداني"],
-      inventory: {
-        quantity: 18,
-        sku: "INC-LBN-004",
-        lowStockThreshold: 5,
-      },
-      specifications: {
-        الوزن: "100 جرام",
-        النوع: "لبان ذكر خالص",
-        المنشأ: "شرق السودان",
-        الدرجة: "فاخر",
-      },
-      status: "active",
-      createdAt: "2024-02-01T10:00:00Z",
-      updatedAt: "2024-02-10T14:30:00Z",
-    },
-    {
-      id: "prod-005",
-      storeId: "store-002",
-      name: "عطر زهر الياسمين",
-      description:
-        "عطر طبيعي من زهر الياسمين السوداني. رائحة ناعمة ومنعشة تدوم لساعات طويلة.",
-      price: 52.0,
-      images: ["/placeholder.svg"],
-      category: "عطور ومستحضرات",
-      tags: ["عطر", "ياسمين", "طبيعي", "نسائي"],
-      inventory: {
-        quantity: 22,
-        sku: "PER-JAS-005",
-        lowStockThreshold: 3,
-      },
-      specifications: {
-        الحجم: "30 مل",
-        النوع: "عطر طبيعي",
-        المنشأ: "السودان",
-        التركيز: "15%",
-      },
-      status: "active",
-      createdAt: "2024-02-05T09:00:00Z",
-      updatedAt: "2024-02-15T11:45:00Z",
-    },
-    {
-      id: "prod-006",
-      storeId: "store-003",
-      name: "ملوخية سودانية مجففة",
-      description:
-        "ملوخية سودانية مجففة من أجود الأنواع. طبق تقليدي شهي ومغذي من المطبخ السوداني.",
-      price: 12.75,
-      images: ["/placeholder.svg"],
-      category: "أطعمة ومشروبات",
-      tags: ["ملوخية", "مجففة", "سودانية", "تقليدية"],
-      inventory: {
-        quantity: 35,
-        sku: "FOOD-MLK-006",
-        lowStockThreshold: 8,
-      },
-      specifications: {
-        الوزن: "250 جرام",
-        النوع: "مجففة طبيعياً",
-        المنشأ: "وسط السودان",
-        الصلاحية: "18 شهر",
-      },
-      status: "active",
-      createdAt: "2024-02-10T08:00:00Z",
-      updatedAt: "2024-02-20T16:30:00Z",
-    },
-    {
-      id: "prod-007",
-      storeId: "store-003",
-      name: "توابل دقة سودانية",
-      description:
-        "خلطة توابل الدقة السودانية الأصيلة. تضفي نكهة مميزة على الأطباق التقليدية.",
-      price: 8.5,
-      images: ["/placeholder.svg"],
-      category: "أطعمة ومشروبات",
-      tags: ["توابل", "دقة", "سودانية", "خلطة"],
-      inventory: {
-        quantity: 42,
-        sku: "SPICE-DQA-007",
-        lowStockThreshold: 10,
-      },
-      specifications: {
-        الوزن: "150 جرام",
-        النوع: "خلطة توابل طبيعية",
-        المنشأ: "السودان",
-        الصلاحية: "سنة واحدة",
-      },
-      status: "active",
-      createdAt: "2024-02-12T10:30:00Z",
-      updatedAt: "2024-02-22T14:15:00Z",
-    },
-    {
-      id: "prod-008",
-      storeId: "store-005",
-      name: "فستان سودا��ي تقليدي",
-      description:
-        "فستان نسائي بالطراز السوداني التقليدي. قماش عالي الجودة وتطريز يدوي أنيق.",
-      price: 125.0,
-      salePrice: 99.99,
-      images: ["/placeholder.svg"],
-      category: "أزياء وملابس",
-      tags: ["فستان", "تقليدي", "سوداني", "نسائي"],
-      inventory: {
-        quantity: 8,
-        sku: "DRESS-TRD-008",
-        lowStockThreshold: 2,
-      },
-      specifications: {
-        المقاس: "متوسط (M)",
-        المادة: "قطن طبيعي",
-        اللون: "أزرق مع تطريز ذهبي",
-        النوع: "فستان تقليدي",
-      },
-      status: "active",
-      createdAt: "2024-02-15T12:00:00Z",
-      updatedAt: "2024-02-25T10:45:00Z",
-    },
-    {
-      id: "prod-009",
-      storeId: "store-005",
-      name: "شم��غ سوداني أصلي",
-      description:
-        "شماغ سوداني تقليدي بنقوش أصيلة. قماش ناعم ومريح مناسب لجميع المناسبات.",
-      price: 35.0,
-      images: ["/placeholder.svg"],
-      category: "أزياء وملابس",
-      tags: ["شماغ", "سوداني", "تقليدي", "رجالي"],
-      inventory: {
-        quantity: 15,
-        sku: "SHMG-TRD-009",
-        lowStockThreshold: 3,
-      },
-      specifications: {
-        المقاس: "120x120 سم",
-        المادة: "قطن خالص",
-        اللون: "أبيض وأحمر",
-        النوع: "شماغ تقليدي",
-      },
-      status: "active",
-      createdAt: "2024-02-18T09:30:00Z",
-      updatedAt: "2024-02-28T15:20:00Z",
-    },
-    {
-      id: "prod-010",
-      storeId: "store-006",
-      name: "عدس أحمر سوداني",
-      description:
-        "عدس أحمر من أجود الأنواع السودانية. غني بالبروتين والألياف الطبيعية.",
-      price: 6.25,
-      images: ["/placeholder.svg"],
-      category: "أطعمة و��شروبات",
-      tags: ["عدس", "أحمر", "سوداني", "بقوليات"],
-      inventory: {
-        quantity: 60,
-        sku: "LENTIL-RED-010",
-        lowStockThreshold: 15,
-      },
-      specifications: {
-        الوزن: "1 كيلو",
-        النوع: "عدس أحمر خا��ص",
-        المنشأ: "شمال السودان",
-        الصلاحية: "سنتان",
-      },
-      status: "active",
-      createdAt: "2024-02-20T11:00:00Z",
-      updatedAt: "2024-03-01T09:30:00Z",
-    },
-    {
-      id: "prod-011",
-      storeId: "store-006",
-      name: "فول سوداني محمص",
-      description:
-        "فول سوداني مح��ص بطريقة تقليدية. وجبة خفيفة صحية ولذيذة من المكسرات السودانية.",
-      price: 4.5,
-      images: ["/placeholder.svg"],
-      category: "أطعمة ومشروبات",
-      tags: ["فول سوداني", "محمص", "مكسرات", "وجبة خفيفة"],
-      inventory: {
-        quantity: 75,
-        sku: "PEANUT-RST-011",
-        lowStockThreshold: 20,
-      },
-      specifications: {
-        الوزن: "500 جرام",
-        النوع: "محمص طبيعياً",
-        المنشأ: "غرب السودان",
-        الصلاحية: "6 أشهر",
-      },
-      status: "active",
-      createdAt: "2024-02-22T14:00:00Z",
-      updatedAt: "2024-03-02T16:45:00Z",
-    },
-    {
-      id: "prod-012",
-      storeId: "store-004",
-      name: "خدمة تصميم موقع إلكتروني",
-      description:
-        "خ��مة تصميم وتطوير موقع إلكتروني احترافي بأحدث التقنيات والمعايي�� العالمية.",
-      price: 850.0,
-      salePrice: 699.99,
-      images: ["/placeholder.svg"],
-      category: "خدمات تقنية",
-      tags: ["تصميم", "موقع", "تطوير", "تقنية"],
-      inventory: {
-        quantity: 999,
-        sku: "SERV-WEB-012",
-        lowStockThreshold: 1,
-      },
-      specifications: {
-        النوع: "خدمة تقنية",
-        المدة: "2-4 أسابيع",
-        التقنيات: "React, Node.js",
-        الضمان: "سنة واحدة",
-      },
-      status: "active",
-      createdAt: "2024-02-25T10:00:00Z",
-      updatedAt: "2024-03-05T12:30:00Z",
-    },
-    // منتجات مطعم زول اقاشي الحقيقي
     {
       id: "prod-restaurant-real-001",
       storeId: "store-1753868707117-r80zjqevj",
-      name: "ملوخية سودانية",
+      name: "طلب اقاشي فراخ وسط",
       description:
-        "ملوخية سودانية أصيلة مطبوخة بالطريقة التقليدية مع اللحم الطازج",
-      price: 25.0,
-      images: ["/placeholder.svg"],
+        "طلب اقاشي فراخ وسط أصيل من مطعم زول اقاشي - فراخ مشوي طازج بالطريقة السودانية التقليدية مع التوابل الخاصة والأرز الأبيض",
+      price: 3.5,
+      images: [
+        "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80",
+      ],
       category: "أطباق رئيسية",
-      tags: ["ملوخية", "سوداني", "تقليدي", "لحم"],
-      inventory: {
-        quantity: 20,
-        sku: "MEAL-MLW-001",
-        lowStockThreshold: 5,
-      },
-      specifications: {
-        الحجم: "طبق كبير",
-        المكونات: "ملوخية، لحم، توابل سودانية",
-        "وقت التحضير": "20 دقيقة",
-      },
-      status: "active",
-      createdAt: "2025-01-30T10:00:00Z",
-      updatedAt: "2025-01-30T10:00:00Z",
-    },
-    {
-      id: "prod-restaurant-real-002",
-      storeId: "store-1753868707117-r80zjqevj",
-      name: "قراصة سودانية",
-      description: "خبز قراصة سوداني تقليدي مخبوز طازج يومياً",
-      price: 8.0,
-      images: ["/placeholder.svg"],
-      category: "مخبوزات",
-      tags: ["قراصة", "خبز", "سوداني", "طازج"],
-      inventory: {
-        quantity: 30,
-        sku: "BREAD-QRS-002",
-        lowStockThreshold: 10,
-      },
-      specifications: {
-        النوع: "خبز تقليدي",
-        الحجم: "قطعة واحدة",
-        المدة: "طازج يومياً",
-      },
-      status: "active",
-      createdAt: "2025-01-30T10:00:00Z",
-      updatedAt: "2025-01-30T10:00:00Z",
-    },
-    {
-      id: "prod-restaurant-real-003",
-      storeId: "store-1753868707117-r80zjqevj",
-      name: "عصيدة بالملبن",
-      description: "عصيدة سودا��ية تقليدي�� بالملبن الطازج والعسل",
-      price: 18.0,
-      salePrice: 15.0,
-      images: ["/placeholder.svg"],
-      category: "حلويات",
-      tags: ["عصيدة", "ملبن", "سوداني", "حلو"],
-      inventory: {
-        quantity: 15,
-        sku: "DESS-ASD-003",
-        lowStockThreshold: 5,
-      },
-      specifications: {
-        النوع: "حلو تقليدي",
-        المكونات: "عصيدة، ملبن، عسل",
-        الحجم: "كوب متوسط",
-      },
-      status: "active",
-      createdAt: "2025-01-30T10:00:00Z",
-      updatedAt: "2025-01-30T10:00:00Z",
-    },
-    {
-      id: "prod-restaurant-real-004",
-      storeId: "store-1753868707117-r80zjqevj",
-      name: "شاي كشري سوداني",
-      description: "شاي سوداني أحمر تقليدي مع الحليب والسكر",
-      price: 5.0,
-      images: ["/placeholder.svg"],
-      category: "مشروبات",
-      tags: ["شاي", "كشري", "سوداني", "ساخن"],
+      tags: ["اقاشي", "فراخ", "مشوي", "سوداني", "وسط"],
       inventory: {
         quantity: 50,
-        sku: "TEA-KSH-004",
+        sku: "GRILL-CHKN-001",
         lowStockThreshold: 10,
       },
       specifications: {
-        النوع: "مشروب ساخن",
-        الحجم: "كوب",
-        المكونات: "شاي، حليب، سكر",
-      },
-      status: "active",
-      createdAt: "2025-01-30T10:00:00Z",
-      updatedAt: "2025-01-30T10:00:00Z",
-    },
-    {
-      id: "prod-restaurant-real-005",
-      storeId: "store-1753868707117-r80zjqevj",
-      name: "فول سوداني مدمس",
-      description: "فول سوداني مدمس بالطريقة التقليدية مع الطحينة والسلطة",
-      price: 12.0,
-      images: ["/placeholder.svg"],
-      category: "أطباق رئيسية",
-      tags: ["فول", "مدمس", "سوداني", "طحينة"],
-      inventory: {
-        quantity: 25,
-        sku: "MEAL-FUL-005",
-        lowStockThreshold: 5,
-      },
-      specifications: {
-        الحجم: "طبق متوسط",
-        المكونات: "فول، طحينة، سلطة، خبز",
-        "وقت التحضير": "15 دقيقة",
+        الحجم: "وجبة وسط",
+        المكونات: "فراخ مشوي، أرز أبيض، توابل سودانية خاصة، سلطة",
+        "وقت التحضير": "25 دقيقة",
+        "السعرات الحرارية": "520 سعرة",
+        النوع: "مشوي على الفحم",
       },
       status: "active",
       createdAt: "2025-01-30T10:00:00Z",
       updatedAt: "2025-01-30T10:00:00Z",
     },
   ];
+
+  // حذف جميع المنتجات التجريبية والاحتفاظ بمنتجات زول اقاشي فقط
+  static clearDemoProducts(): void {
+    try {
+      // الاحتفاظ بمنتجات زول اقاشي فقط
+      const zoolProducts = this.demoProducts.filter(
+        (product) => product.storeId === "store-1753868707117-r80zjqevj",
+      );
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(zoolProducts));
+      console.log(
+        "تم حذف جميع المنتجات الت��ريبية والاحتفاظ بمنتجات زول اقاشي فقط",
+      );
+    } catch (error) {
+      console.error("خطأ في حذف المنتجات التجريبية:", error);
+    }
+  }
+
+  // مسح جميع المنتجات وإعادة ضبط البيانات للمنتجات الأصلية فقط
+  static clearAllProducts(): void {
+    try {
+      // حذف جميع البيانات من localStorage
+      localStorage.removeItem(this.STORAGE_KEY);
+
+      // إعادة تعيين المنتجات الأصلية فقط
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.demoProducts));
+
+      console.log("تم مسح جميع المنتجات وإعا��ة ضبط البيانات للمنتجات الأصلية");
+
+      // إعادة تحميل الصفحة لتطبيق التغييرات
+      window.location.reload();
+    } catch (error) {
+      console.error("خطأ في مسح المنتجات:", error);
+    }
+  }
 
   static getProducts(storeId?: string): Product[] {
     try {
@@ -602,12 +243,16 @@ export class ProductService {
 
     // Store information mapping
     const storeInfo: Record<string, { name: string; category: string }> = {
-      "store-001": { name: "متجر التر��ث السوداني", category: "traditional" },
+      "store-1753868707117-r80zjqevj": {
+        name: "زول اقاشي",
+        category: "restaurant",
+      },
+      "store-001": { name: "متجر التراث السوداني", category: "traditional" },
       "store-002": { name: "عطور الشرق", category: "perfumes" },
       "store-003": { name: "مطعم أم درمان", category: "food" },
       "store-004": { name: "خدمات التقنية السودانية", category: "services" },
       "store-005": { name: "أزياء النيل", category: "fashion" },
-      "store-006": { name: "سوبر ماركت ا���خرطوم", category: "grocery" },
+      "store-006": { name: "سوبر ماركت الخرطوم", category: "grocery" },
     };
 
     return products.map((product) => ({
@@ -619,10 +264,11 @@ export class ProductService {
 
   static getStoreNameById(storeId: string): string {
     const storeNames: Record<string, string> = {
+      "store-1753868707117-r80zjqevj": "زول اقاشي",
       "store-001": "متجر التراث السوداني",
       "store-002": "عطور الشرق",
       "store-003": "مطعم أم درمان",
-      "store-004": "خدمات التقنية السودان��ة",
+      "store-004": "خدمات التقنية السودانية",
       "store-005": "أزياء النيل",
       "store-006": "سوبر ماركت الخرطوم",
     };
@@ -633,6 +279,10 @@ export class ProductService {
     const icons: Record<string, string> = {
       "عطور ومستحضرات": "🌹",
       "أطعمة ومشروبات": "🍯",
+      "أطباق رئيسية": "🍽️",
+      مخبوزات: "🥖",
+      حلويات: "🍰",
+      مشروبات: "☕",
       إكسسوارات: "👜",
       "أزياء وملابس": "👗",
       "خدمات تقنية": "💻",
@@ -664,91 +314,24 @@ export class ProductService {
       {
         id: `prod-${Date.now()}-1`,
         storeId: storeId,
-        name: "ملوخية سودانية",
-        description: "ملوخية سودانية أصيلة مطبوخة بالطريقة التقليدية مع اللحم",
-        price: 25.0,
-        images: ["/placeholder.svg"],
+        name: "طلب اقاشي فراخ وسط",
+        description:
+          "طلب اقاشي فراخ وسط أصيل من مطعم زول اقاشي - فراخ مشوي طازج بالطريقة السودانية التقليدية",
+        price: 3.5,
+        images: [
+          "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80",
+        ],
         category: "أطباق رئيسية",
-        tags: ["ملوخية", "سوداني", "تقليدي", "لحم"],
-        inventory: {
-          quantity: 20,
-          sku: `MEAL-MLW-${Date.now()}`,
-          lowStockThreshold: 5,
-        },
-        specifications: {
-          الحجم: "طبق كبير",
-          المكونات: "ملوخية، لحم، توابل سودانية",
-          "وقت التحضير": "20 دقيقة",
-        },
-        status: "active" as const,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: `prod-${Date.now()}-2`,
-        storeId: storeId,
-        name: "قراصة سودانية",
-        description: "خبز قراصة سوداني تقليدي مخبوز طازج",
-        price: 8.0,
-        images: ["/placeholder.svg"],
-        category: "مخبوزات",
-        tags: ["قراصة", "خبز", "سوداني", "طازج"],
-        inventory: {
-          quantity: 30,
-          sku: `BREAD-QRS-${Date.now()}`,
-          lowStockThreshold: 10,
-        },
-        specifications: {
-          النوع: "خبز تقليدي",
-          الحجم: "قطعة واحدة",
-          المدة: "طازج يومياً",
-        },
-        status: "active" as const,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: `prod-${Date.now()}-3`,
-        storeId: storeId,
-        name: "عصيدة بالملبن",
-        description: "عصيدة سودانية تقليدية بالملبن الطازج",
-        price: 18.0,
-        salePrice: 15.0,
-        images: ["/placeholder.svg"],
-        category: "حلويات",
-        tags: ["عصيدة", "ملبن", "سوداني", "حلو"],
-        inventory: {
-          quantity: 15,
-          sku: `DESS-ASD-${Date.now()}`,
-          lowStockThreshold: 5,
-        },
-        specifications: {
-          النوع: "حلو تقليدي",
-          المكونات: "عصيدة، ملبن، سكر",
-          الحجم: "كوب متوسط",
-        },
-        status: "active" as const,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        id: `prod-${Date.now()}-4`,
-        storeId: storeId,
-        name: "شاي كشري سوداني",
-        description: "شاي سوداني أحمر مع الحليب والسكر",
-        price: 5.0,
-        images: ["/placeholder.svg"],
-        category: "مشروبا��",
-        tags: ["شاي", "كشري", "سوداني", "ساخن"],
+        tags: ["اقاشي", "فراخ", "مشوي", "سوداني", "وسط"],
         inventory: {
           quantity: 50,
-          sku: `TEA-KSH-${Date.now()}`,
+          sku: `GRILL-CHKN-${Date.now()}`,
           lowStockThreshold: 10,
         },
         specifications: {
-          النوع: "مشروب ساخن",
-          الحجم: "كوب",
-          المكونات: "شاي، حليب، سكر",
+          الحجم: "وجبة وسط",
+          المكونات: "فراخ مشوي، أرز أبيض، توابل سودانية خاصة",
+          "وقت التحضير": "25 دقيقة",
         },
         status: "active" as const,
         createdAt: new Date().toISOString(),
@@ -769,15 +352,56 @@ export class ProductService {
 
 // React hook for product management
 export const useProducts = (storeId?: string) => {
-  const products = ProductService.getProducts(storeId);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  // تحديث المنتجات عند تغيير storeId أو localStorage
+  useEffect(() => {
+    const loadProducts = () => {
+      const allProducts = ProductService.getProducts(storeId);
+      setProducts(allProducts);
+    };
+
+    // تحميل أولي
+    loadProducts();
+
+    // الاستماع لتغييرات localStorage
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === ProductService.STORAGE_KEY) {
+        loadProducts();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    // الاستماع لتغييرات مخصصة من نفس التطبيق
+    const handleCustomChange = () => {
+      loadProducts();
+    };
+
+    window.addEventListener("productsUpdated", handleCustomChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("productsUpdated", handleCustomChange);
+    };
+  }, [storeId]);
 
   return {
     products,
     getProduct: (id: string) => ProductService.getProduct(id),
-    saveProduct: (product: Product) => ProductService.saveProduct(product),
-    deleteProduct: (id: string) => ProductService.deleteProduct(id),
-    updateStock: (id: string, quantity: number) =>
-      ProductService.updateStock(id, quantity),
+    saveProduct: (product: Product) => {
+      ProductService.saveProduct(product);
+      // إرسال event لتحديث المكونات الأخرى
+      window.dispatchEvent(new CustomEvent("productsUpdated"));
+    },
+    deleteProduct: (id: string) => {
+      ProductService.deleteProduct(id);
+      window.dispatchEvent(new CustomEvent("productsUpdated"));
+    },
+    updateStock: (id: string, quantity: number) => {
+      ProductService.updateStock(id, quantity);
+      window.dispatchEvent(new CustomEvent("productsUpdated"));
+    },
     searchProducts: (query: string) =>
       ProductService.searchProducts(query, storeId),
     categories: ProductService.getCategories(),
@@ -788,5 +412,13 @@ export const useProducts = (storeId?: string) => {
       ProductService.generateSKU(category, name),
     validateProduct: (product: Partial<Product>) =>
       ProductService.validateProduct(product),
+    clearDemoProducts: () => {
+      ProductService.clearDemoProducts();
+      window.dispatchEvent(new CustomEvent("productsUpdated"));
+    },
+    clearAllProducts: () => {
+      ProductService.clearAllProducts();
+      window.dispatchEvent(new CustomEvent("productsUpdated"));
+    },
   };
 };

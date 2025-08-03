@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,37 +20,55 @@ import {
 } from "lucide-react";
 import { useProducts } from "@/lib/products";
 import { useAuth } from "@/contexts/AuthContext";
+import { StoresService } from "@/lib/stores";
+import { Currency, defaultCurrency } from "@/lib/currencies";
 import { Product } from "../../../shared/types";
 
 export default function NewProduct() {
   const navigate = useNavigate();
+  const { id } = useParams();
   const { user } = useAuth();
-  const { saveProduct, generateSKU, validateProduct, categories } =
+  const { saveProduct, generateSKU, validateProduct, categories, getProduct } =
     useProducts();
+
+  const isEditing = !!id;
 
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [currentImageUrl, setCurrentImageUrl] = useState("");
   const [userStoreId, setUserStoreId] = useState<string | null>(null);
+  const [hasLoadedProduct, setHasLoadedProduct] = useState(false);
+  const [storeCurrency, setStoreCurrency] = useState<Currency>(defaultCurrency);
+  const [storeDetails, setStoreDetails] = useState<any>(null);
 
   // Get user's store ID - use known mapping for current user
   useEffect(() => {
     if (!user?.id) return;
 
-    // Known store mappings from stores.json
+    // Known store mappings from stores.json - this must match actual store data
     const storeMapping: Record<string, string> = {
       "user-1753865301240-efsqj09s0": "store-1753868707117-r80zjqevj", // زول اقاشي
       "merchant-001": "store-001",
       "admin-001": "store-001",
     };
 
-    const userStoreId = storeMapping[user.id];
-    if (userStoreId) {
-      setUserStoreId(userStoreId);
+    const mappedStoreId = storeMapping[user.id];
+    if (mappedStoreId) {
+      setUserStoreId(mappedStoreId);
+      console.log("Store ID mapped:", mappedStoreId, "for user:", user.id);
     } else {
       // If user has businessName, assume they have a store
       if (user.profile?.businessName) {
-        setUserStoreId(`store-${user.id}`);
+        const fallbackStoreId = `store-${user.id}`;
+        setUserStoreId(fallbackStoreId);
+        console.log(
+          "Fallback store ID:",
+          fallbackStoreId,
+          "for user:",
+          user.id,
+        );
+      } else {
+        console.log("No store found for user:", user.id);
       }
     }
   }, [user?.id]);
@@ -80,6 +98,35 @@ export default function NewProduct() {
         ...prev,
         storeId: userStoreId,
       }));
+    }
+  }, [userStoreId]);
+
+  // Load existing product data when editing
+  useEffect(() => {
+    if (isEditing && id && !hasLoadedProduct) {
+      const existingProduct = getProduct(id);
+      if (existingProduct) {
+        setFormData({
+          ...existingProduct,
+          // Keep the id for updating
+          id: existingProduct.id,
+        });
+        setHasLoadedProduct(true);
+      } else {
+        // Product not found, redirect back to products list
+        navigate("/merchant/products");
+      }
+    }
+  }, [isEditing, id, hasLoadedProduct]);
+
+  // تحميل معلومات المتجر والعملة
+  useEffect(() => {
+    if (userStoreId) {
+      const details = StoresService.getStoreDetails(userStoreId);
+      if (details) {
+        setStoreDetails(details);
+        setStoreCurrency(details.currency);
+      }
     }
   }, [userStoreId]);
 
@@ -186,7 +233,7 @@ export default function NewProduct() {
     // Check if user has store setup
     if (!userStoreId) {
       setErrors([
-        "يجب إعداد معلومات المتجر أولاً. يرجى إكمال معلومات العمل التجاري في ملفك الشخصي.",
+        "يجب إعداد معلومات المتجر أولاً. يرجى إكمال معلومات ا��عمل التجا��ي في ملفك الشخصي.",
       ]);
       setIsLoading(false);
       return;
@@ -201,8 +248,9 @@ export default function NewProduct() {
     }
 
     try {
-      // Generate ID and SKU if not provided
-      const productId = `prod-${Date.now()}`;
+      // Use existing ID when editing, or generate new one when creating
+      const productId =
+        isEditing && formData.id ? formData.id : `prod-${Date.now()}`;
       const finalSKU =
         formData.inventory?.sku ||
         generateSKU(formData.category!, formData.name!);
@@ -224,7 +272,10 @@ export default function NewProduct() {
         },
         specifications: formData.specifications || {},
         status: formData.status as Product["status"],
-        createdAt: new Date().toISOString(),
+        createdAt:
+          isEditing && formData.createdAt
+            ? formData.createdAt
+            : new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
 
@@ -277,7 +328,7 @@ export default function NewProduct() {
                 يجب إعداد معلومات المتجر أولاً
               </h2>
               <p className="text-gray-700 mb-6 arabic">
-                لإضافة منتجات، يرجى إكمال معلومات العمل التجاري (اسم العمل، نوع
+                لإضافة منتجات، يرجى إكمال معلومات العمل التجاري (اسم ا��عمل، نوع
                 العمل) في ملفك الشخصي أولاً.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -317,7 +368,7 @@ export default function NewProduct() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 arabic">
-                  إضافة منتج جديد
+                  {isEditing ? "تعديل المنتج" : "إضافة منتج جديد"}
                 </h1>
                 <p className="text-gray-600 arabic">
                   أدخل معلومات ا��منتج الجديد
@@ -337,7 +388,7 @@ export default function NewProduct() {
                 <div className="flex items-center text-red-800 mb-2">
                   <X className="w-5 h-5 ml-2" />
                   <span className="font-semibold arabic">
-                    يرجى تصحيح الأخطاء الت��لية:
+                    يرجى تصحيح الأخطاء الت����لية:
                   </span>
                 </div>
                 <ul className="space-y-1">
@@ -367,7 +418,7 @@ export default function NewProduct() {
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
                     className="mt-2 arabic text-right"
-                    placeholder="مثال: عطر صندل سوداني أصلي"
+                    placeholder="مثال: عطر ��ندل سوداني أصلي"
                     required
                   />
                 </div>
@@ -429,38 +480,61 @@ export default function NewProduct() {
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <Label className="arabic">السعر الأساسي *</Label>
-                  <Input
-                    type="number"
-                    step="0.01"
-                    value={formData.price}
-                    onChange={(e) =>
-                      handleInputChange(
-                        "price",
-                        parseFloat(e.target.value) || 0,
-                      )
-                    }
-                    className="mt-2"
-                    placeholder="0.00"
-                    required
-                  />
+                  <Label className="arabic">
+                    السعر الأساسي * ({storeCurrency.symbol}{" "}
+                    {storeCurrency.nameAr})
+                  </Label>
+                  <div className="relative mt-2">
+                    <Input
+                      type="number"
+                      step="0.01"
+                      value={formData.price}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "price",
+                          parseFloat(e.target.value) || 0,
+                        )
+                      }
+                      className="pr-16"
+                      placeholder="0.00"
+                      required
+                    />
+                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
+                      {storeCurrency.symbol}
+                    </div>
+                  </div>
+                  {storeDetails && (
+                    <p className="text-xs text-gray-500 mt-1 arabic">
+                      العملة المحددة حسب موقع المتجر: {storeDetails.country}
+                    </p>
+                  )}
                 </div>
 
                 <div>
-                  <Label className="arabic">سعر الخصم (اختياري)</Label>
-                  <Input
-                    type="number"
-                    step="0.01"
-                    value={formData.salePrice || ""}
-                    onChange={(e) =>
-                      handleInputChange(
-                        "salePrice",
-                        e.target.value ? parseFloat(e.target.value) : undefined,
-                      )
-                    }
-                    className="mt-2"
-                    placeholder="0.00"
-                  />
+                  <Label className="arabic">
+                    سعر الخصم (اختياري) ({storeCurrency.symbol}{" "}
+                    {storeCurrency.nameAr})
+                  </Label>
+                  <div className="relative mt-2">
+                    <Input
+                      type="number"
+                      step="0.01"
+                      value={formData.salePrice || ""}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "salePrice",
+                          e.target.value
+                            ? parseFloat(e.target.value)
+                            : undefined,
+                        )
+                      }
+                      className="pr-16"
+                      placeholder="0.00"
+                    />
+                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
+                      {storeCurrency.symbol}
+                    </div>
+                  </div>
                   {formData.salePrice &&
                     formData.price &&
                     formData.salePrice < formData.price && (
@@ -588,7 +662,7 @@ export default function NewProduct() {
                 </div>
 
                 <div>
-                  <Label className="arabic">حد التنبيه للمخزون</Label>
+                  <Label className="arabic">حد الت��بيه للمخزون</Label>
                   <Input
                     type="number"
                     value={formData.inventory?.lowStockThreshold}
@@ -768,7 +842,7 @@ export default function NewProduct() {
                 ) : (
                   <>
                     <Save className="w-4 h-4 ml-2" />
-                    حفظ المنتج
+                    {isEditing ? "تحديث المنتج" : "حفظ المنتج"}
                   </>
                 )}
               </Button>

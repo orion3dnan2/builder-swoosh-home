@@ -23,6 +23,8 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useProducts } from "@/lib/products";
+import { StoresService } from "@/lib/stores";
+import { Currency, defaultCurrency, formatPriceArabic } from "@/lib/currencies";
 import { Product } from "../../../shared/types";
 
 export default function MerchantProducts() {
@@ -36,6 +38,7 @@ export default function MerchantProducts() {
     "updated",
   );
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [storeCurrency, setStoreCurrency] = useState<Currency>(defaultCurrency);
 
   // Use products hook to get actual products
   const {
@@ -45,10 +48,34 @@ export default function MerchantProducts() {
     categories,
     getProductsByStatus,
     searchProducts,
+    clearAllProducts,
   } = useProducts();
 
-  // Get user's store information
-  const userStoreId = user?.profile?.businessName ? `store-${user.id}` : null;
+  // Get user's store information - use proper store mapping
+  const getUserStoreId = () => {
+    if (!user?.id) return null;
+
+    // Known store mappings from stores.json
+    const storeMapping: Record<string, string> = {
+      "user-1753865301240-efsqj09s0": "store-1753868707117-r80zjqevj", // زول اقاشي
+      "merchant-001": "store-001",
+      "admin-001": "store-001",
+    };
+
+    const userStoreId = storeMapping[user.id];
+    if (userStoreId) {
+      return userStoreId;
+    }
+
+    // Fallback: if user has businessName, assume they have a store
+    if (user.profile?.businessName) {
+      return `store-${user.id}`;
+    }
+
+    return null;
+  };
+
+  const userStoreId = getUserStoreId();
   const userStoreName = user?.profile?.businessName || "متجرك";
 
   // Filter products by current user's store only
@@ -72,6 +99,18 @@ export default function MerchantProducts() {
       setIsNewMerchant(daysSinceCreation < 7 && products.length === 0);
     }
   }, [user, products.length]);
+
+  // تحميل عملة المتجر
+  useEffect(() => {
+    if (userStoreId) {
+      const details = StoresService.getStoreDetails(userStoreId);
+      console.log("Store details:", details);
+      if (details && details.currency) {
+        console.log("Setting currency:", details.currency);
+        setStoreCurrency(details.currency);
+      }
+    }
+  }, [userStoreId]);
 
   // Filter and sort products
   const filteredProducts = products
@@ -151,6 +190,16 @@ export default function MerchantProducts() {
     }
   };
 
+  const handleResetToOriginalProduct = () => {
+    if (
+      window.confirm(
+        "هل تريد مسح جميع المنتجات والاحتفاظ بـ 'طلب اقاشي فراخ وسط' فقط؟",
+      )
+    ) {
+      clearAllProducts();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-green-50">
       {/* Header */}
@@ -180,6 +229,13 @@ export default function MerchantProducts() {
               <Badge variant="outline" className="arabic">
                 {currentStore?.name}
               </Badge>
+              <Button
+                variant="outline"
+                onClick={handleResetToOriginalProduct}
+                className="arabic text-red-600 border-red-300 hover:bg-red-50"
+              >
+                إعادة تعيين المنتجات
+              </Button>
               <Link to="/merchant/products/new">
                 <Button className="arabic">
                   <Plus className="w-4 h-4 ml-2" />
@@ -224,7 +280,7 @@ export default function MerchantProducts() {
                   يجب إعداد معلومات المتجر أولاً
                 </h3>
                 <p className="text-xs text-yellow-700 arabic">
-                  لعرض وإدارة منتجاتك، يرجى إكمال معلومات العمل التجاري في
+                  لعرض وإدارة منتجاتك، يرجى إك��ال مع��ومات العمل التجاري في
                   إعدادات الملف الشخصي
                 </p>
               </div>
@@ -289,7 +345,7 @@ export default function MerchantProducts() {
                 <option value="name-desc">الاسم ي-أ</option>
                 <option value="price-asc">السعر (منخفض-عالي)</option>
                 <option value="price-desc">السعر (عالي-منخفض)</option>
-                <option value="stock-asc">المخزون (قليل-كثير)</option>
+                <option value="stock-asc">المخزون (��ليل-كثير)</option>
                 <option value="stock-desc">المخزون (كثير-قليل)</option>
               </select>
 
@@ -427,7 +483,7 @@ export default function MerchantProducts() {
                         المخزون
                       </th>
                       <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
-                        الحالة
+                        الحا��ة
                       </th>
                       <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider arabic">
                         الإجراءات
@@ -543,7 +599,7 @@ export default function MerchantProducts() {
                 </h3>
                 <p className="text-gray-700 mb-6 arabic">
                   لبدء إدارة منتجاتك، يرجى إكمال معلومات العمل التجاري (اسم
-                  العمل، نوع العمل) في ملفك الشخصي أولاً.
+                  العمل، نوع ال��مل) في ملفك الشخصي أولاً.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link to="/profile">

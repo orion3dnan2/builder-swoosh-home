@@ -13,6 +13,7 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { StoresService } from "@/lib/stores";
 
 export default function Marketplace() {
   const [stores, setStores] = useState([]);
