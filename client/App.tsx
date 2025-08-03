@@ -172,6 +172,7 @@ function App() {
               <Route path="/marketplace" element={<Marketplace />} />
               <Route path="/products" element={<Products />} />
               <Route path="/companies" element={<Companies />} />
+              <Route path="/company/:id" element={<Company />} />
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/services" element={<Services />} />
               <Route path="/restaurants" element={<Restaurants />} />
