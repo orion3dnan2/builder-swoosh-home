@@ -53,6 +53,16 @@ export default function NewProduct() {
     status: "active",
   });
 
+  // Update storeId when user changes
+  useEffect(() => {
+    if (userStoreId) {
+      setFormData(prev => ({
+        ...prev,
+        storeId: userStoreId
+      }));
+    }
+  }, [userStoreId]);
+
   const handleInputChange = (field: string, value: any) => {
     setFormData((prev) => ({
       ...prev,
@@ -459,7 +469,7 @@ export default function NewProduct() {
                 <Input
                   value={currentImageUrl}
                   onChange={(e) => setCurrentImageUrl(e.target.value)}
-                  placeholder="رابط ��لصورة (https://...)"
+                  placeholder="رابط ����لصورة (https://...)"
                   className="flex-1"
                 />
                 <Button
