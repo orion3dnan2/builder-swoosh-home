@@ -252,7 +252,7 @@ export default function AdminStores() {
     {
       id: "store-004",
       name: "الألبسة التراثية",
-      owner: "عائشة السيد",
+      owner: "عا��شة السيد",
       email: "aisha@example.com",
       phone: "+966587654321",
       status: "suspended",
@@ -297,7 +297,7 @@ export default function AdminStores() {
     {
       id: "ticket-002",
       storeId: "store-002",
-      storeName: "العطور السودانية الأصيلة",
+      storeName: "العط��ر السودانية الأصيلة",
       subject: "طلب تفعيل المتجر",
       message: "أرجو تفعيل متجري لبدء البيع",
       priority: "high",
@@ -460,8 +460,11 @@ export default function AdminStores() {
             case "reactivate":
               return { ...store, status: "active" as const };
             case "block":
-              const blockedTags = store.tags.filter(tag => tag !== "موقف" && tag !== "مجدد حديثاً");
-              return { ...store, status: "suspended" as const, tags: [...blockedTags, "موقف"] };
+              return {
+                ...store,
+                status: "suspended" as const,
+                tags: updateStoreTags(store.tags, "مجدد حديثاً", "موقف")
+              };
             case "renew":
               // تجدي�� الاشتراك - يمكن إضافة منطق تاريخ الانتهاء هنا
               const renewedTags = store.tags.filter(tag => tag !== "منتهي الصلاحية" && tag !== "مجدد حديثاً");
@@ -1090,7 +1093,7 @@ export default function AdminStores() {
                           
                           <div className="flex items-center justify-between">
                             <Label htmlFor={`analytics-${store.id}`} className="arabic">
-                              الوصول للتحليلات
+                              ال��صول للتحليلات
                             </Label>
                             <Switch
                               id={`analytics-${store.id}`}
@@ -1702,7 +1705,7 @@ export default function AdminStores() {
               {confirmAction?.type === "feature" && "هل أنت متأكد من جعل هذا المتجر مميزاً؟"}
               {confirmAction?.type === "unfeature" && "ه�� أنت متأكد من إلغاء تمييز هذا المتجر؟"}
               {confirmAction?.type === "verify" && "هل أنت متأكد من توثيق هذا المتجر؟"}
-              {confirmAction?.type === "unverify" && "هل أنت متأكد من إلغاء توثيق هذا المتجر؟"}
+              {confirmAction?.type === "unverify" && "هل أنت متأكد من إلغاء توثيق هذا المتجر��"}
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
