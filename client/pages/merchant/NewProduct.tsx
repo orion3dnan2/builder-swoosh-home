@@ -39,16 +39,32 @@ export default function NewProduct() {
       if (!user?.id) return;
 
       try {
-        const response = await fetch('/api/stores');
+        // Get auth token
+        const token = localStorage.getItem('auth_token');
+        const headers: HeadersInit = {
+          'Content-Type': 'application/json',
+        };
+
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        const response = await fetch('/api/stores', { headers });
         if (response.ok) {
           const stores = await response.json();
           const userStore = stores.find((store: any) => store.merchantId === user.id);
           if (userStore) {
             setUserStoreId(userStore.id);
           }
+        } else if (response.status === 401) {
+          // If unauthorized, fallback to generating store ID based on user
+          // This is temporary until proper auth is implemented
+          setUserStoreId(`store-${user.id}`);
         }
       } catch (error) {
         console.error('خطأ في جلب معلومات المتجر:', error);
+        // Fallback: generate store ID based on user
+        setUserStoreId(`store-${user.id}`);
       }
     };
 
