@@ -26,6 +26,17 @@ export default function MerchantDashboard() {
   const { user } = useAuth();
   const [isNewMerchant, setIsNewMerchant] = useState(true);
 
+  // Use products hook to get actual products
+  const {
+    products: allProducts,
+    getProductsByStatus,
+    lowStockProducts
+  } = useProducts();
+
+  // Filter products by current user's store (we'll use store-001 for now)
+  const userStoreId = "store-001"; // This should come from user context in a real app
+  const userProducts = allProducts.filter(product => product.storeId === userStoreId);
+
   // تحديد إذا كان التاجر جديد بناءً على تاريخ إنشاء ال��ساب
   useEffect(() => {
     if (user?.createdAt) {
