@@ -550,9 +550,9 @@ export default function MerchantDashboard() {
                               }
                               className="arabic"
                             >
-                              {product.stock === 0
+                              {product.inventory.quantity === 0
                                 ? "نفد المخزون"
-                                : `${product.stock} متبقي`}
+                                : `${product.inventory.quantity} متبقي`}
                             </Badge>
                           </div>
                         ))}
