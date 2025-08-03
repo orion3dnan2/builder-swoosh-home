@@ -209,6 +209,13 @@ export default function MerchantProducts() {
               <Badge variant="outline" className="arabic">
                 {currentStore?.name}
               </Badge>
+              <Button
+                variant="outline"
+                onClick={handleResetToOriginalProduct}
+                className="arabic text-red-600 border-red-300 hover:bg-red-50"
+              >
+                إعادة تعيين المنتجات
+              </Button>
               <Link to="/merchant/products/new">
                 <Button className="arabic">
                   <Plus className="w-4 h-4 ml-2" />
@@ -318,7 +325,7 @@ export default function MerchantProducts() {
                 <option value="name-desc">الاسم ي-أ</option>
                 <option value="price-asc">السعر (منخفض-عالي)</option>
                 <option value="price-desc">السعر (عالي-منخفض)</option>
-                <option value="stock-asc">المخزون (قليل-كثير)</option>
+                <option value="stock-asc">المخزون (��ليل-كثير)</option>
                 <option value="stock-desc">المخزون (كثير-قليل)</option>
               </select>
 
@@ -572,7 +579,7 @@ export default function MerchantProducts() {
                 </h3>
                 <p className="text-gray-700 mb-6 arabic">
                   لبدء إدارة منتجاتك، يرجى إكمال معلومات العمل التجاري (اسم
-                  العمل، نوع العمل) في ملفك الشخصي أولاً.
+                  العمل، نوع ال��مل) في ملفك الشخصي أولاً.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link to="/profile">
