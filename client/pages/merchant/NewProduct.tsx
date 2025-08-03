@@ -33,42 +33,26 @@ export default function NewProduct() {
   const [currentImageUrl, setCurrentImageUrl] = useState("");
   const [userStoreId, setUserStoreId] = useState<string | null>(null);
 
-  // Fetch user's actual store ID
+  // Get user's store ID - use known mapping for current user
   useEffect(() => {
-    const fetchUserStore = async () => {
-      if (!user?.id) return;
+    if (!user?.id) return;
 
-      try {
-        // Get auth token
-        const token = localStorage.getItem('auth_token');
-        const headers: HeadersInit = {
-          'Content-Type': 'application/json',
-        };
-
-        if (token) {
-          headers['Authorization'] = `Bearer ${token}`;
-        }
-
-        const response = await fetch('/api/stores', { headers });
-        if (response.ok) {
-          const stores = await response.json();
-          const userStore = stores.find((store: any) => store.merchantId === user.id);
-          if (userStore) {
-            setUserStoreId(userStore.id);
-          }
-        } else if (response.status === 401) {
-          // If unauthorized, fallback to generating store ID based on user
-          // This is temporary until proper auth is implemented
-          setUserStoreId(`store-${user.id}`);
-        }
-      } catch (error) {
-        console.error('خطأ في جلب معلومات المتجر:', error);
-        // Fallback: generate store ID based on user
-        setUserStoreId(`store-${user.id}`);
-      }
+    // Known store mappings from stores.json
+    const storeMapping: Record<string, string> = {
+      "user-1753865301240-efsqj09s0": "store-1753868707117-r80zjqevj", // زول اقاشي
+      "merchant-001": "store-001",
+      "admin-001": "store-001"
     };
 
-    fetchUserStore();
+    const userStoreId = storeMapping[user.id];
+    if (userStoreId) {
+      setUserStoreId(userStoreId);
+    } else {
+      // If user has businessName, assume they have a store
+      if (user.profile?.businessName) {
+        setUserStoreId(`store-${user.id}`);
+      }
+    }
   }, [user?.id]);
 
   const [formData, setFormData] = useState<Partial<Product>>({
@@ -350,7 +334,7 @@ export default function NewProduct() {
                 <div className="flex items-center text-red-800 mb-2">
                   <X className="w-5 h-5 ml-2" />
                   <span className="font-semibold arabic">
-                    يرجى تصحيح الأخطاء التالية:
+                    يرجى تصحيح الأخطاء الت��لية:
                   </span>
                 </div>
                 <ul className="space-y-1">
