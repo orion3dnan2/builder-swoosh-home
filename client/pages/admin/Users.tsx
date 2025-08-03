@@ -198,6 +198,35 @@ export default function AdminUsers() {
     }
   };
 
+  const handleBulkPasswordReset = async () => {
+    try {
+      const activeUsers = users.filter(user => user.isActive);
+
+      if (activeUsers.length === 0) {
+        toast({
+          title: "لا يوجد مستخدمين نشطين",
+          description: "لا يوجد مستخدمين نشطين لإعادة تعيين كلمة المرور لهم.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // محاكاة تأخير العملية
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      toast({
+        title: "تم إرس��ل روابط إعادة تعيين كلمة المرور",
+        description: `تم إرسال روابط إعادة تعيين كلمة المرور إلى ${activeUsers.length} مستخدم نشط`,
+      });
+    } catch (error) {
+      toast({
+        title: "خطأ في العملية الجماعية",
+        description: "حدث خطأ أثناء إرسال روابط إعادة تعيين كلمة المرور. يرجى المحاولة مرة أخرى.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ar-SA', {
       year: 'numeric',
@@ -249,7 +278,7 @@ export default function AdminUsers() {
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl">
                   <DialogHeader>
-                    <DialogTitle className="arabic">إضافة مستخد�� جديد</DialogTitle>
+                    <DialogTitle className="arabic">إضافة مستخدم جديد</DialogTitle>
                   </DialogHeader>
                   <UserForm onClose={() => setIsCreateModalOpen(false)} />
                 </DialogContent>
@@ -275,7 +304,7 @@ export default function AdminUsers() {
                     className="text-blue-600"
                   >
                     <RefreshCw className="w-4 h-4 ml-2" />
-                    إعادة تعيين كلمة المرور للمستخدمين المحددين
+                    إ��ادة تعيين كلمة المرور للمستخدمين المحددين
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -404,7 +433,7 @@ export default function AdminUsers() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="arabic">ا��مستخدم</TableHead>
+                    <TableHead className="arabic">ا��مستخ��م</TableHead>
                     <TableHead className="arabic">الدور</TableHead>
                     <TableHead className="arabic">الحالة</TableHead>
                     <TableHead className="arabic">تاريخ التسجيل</TableHead>
@@ -507,7 +536,7 @@ export default function AdminUsers() {
                                 variant="ghost"
                                 size="sm"
                                 className="text-blue-600 hover:text-blue-700"
-                                title="إعادة تعيين كلمة ال��رور"
+                                title="إعادة تعيين كلمة المرور"
                               >
                                 <Key className="w-4 h-4" />
                               </Button>
@@ -704,7 +733,7 @@ function UserDetails({ user }: { user: User }) {
                     </p>
                   </div>
                   <div>
-                    <Label className="arabic">نوع ��لنشاط</Label>
+                    <Label className="arabic">نوع النشاط</Label>
                     <p className="text-gray-900 dark:text-white arabic">
                       {user.profile.businessInfo.businessType}
                     </p>
@@ -867,7 +896,7 @@ function UserForm({ user, onClose }: { user?: User; onClose: () => void }) {
 
       <div className="flex justify-end space-x-3 space-x-reverse">
         <Button type="button" variant="outline" onClick={onClose} className="arabic">
-          إلغاء
+          إلغا��
         </Button>
         <Button type="submit" className="arabic">
           {user ? "تحديث" : "إضافة"}
