@@ -177,7 +177,7 @@ export default function NewProduct() {
 
       const newProduct: Product = {
         id: productId,
-        storeId: formData.storeId!,
+        storeId: userStoreId!,
         name: formData.name!,
         description: formData.description!,
         price: formData.price!,
