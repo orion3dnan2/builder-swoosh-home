@@ -121,7 +121,7 @@ export class ProductService {
         الحجم: "طبق متوسط",
         المكونات: "فول، طحينة، سلطة، خبز، بصل، طماطم",
         "وقت التحضير": "15 دقيقة",
-        "السعرات الحرارية": "320 سعرة",
+        "السعرات الحر��رية": "320 سعرة",
       },
       status: "active",
       createdAt: "2025-01-30T10:00:00Z",
@@ -492,7 +492,7 @@ export class ProductService {
         specifications: {
           النوع: "مشروب ساخن",
           الحجم: "كوب",
-          المك��نات: "شاي، حليب، سكر",
+          المكونات: "شاي أحمر، حليب، سكر، هيل",
         },
         status: "active" as const,
         createdAt: new Date().toISOString(),
