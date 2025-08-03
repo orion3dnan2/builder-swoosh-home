@@ -105,10 +105,8 @@ export default function Restaurants() {
         {/* Restaurants Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {filteredRestaurants.map((restaurant) => (
-            <Card
-              key={restaurant.id}
-              className="group hover:shadow-lg transition-all duration-300 cursor-pointer"
-            >
+            <Link to={`/restaurant/${restaurant.id}`} key={restaurant.id}>
+              <Card className="group hover:shadow-lg transition-all duration-300 cursor-pointer">
               <div className="relative">
                 <img
                   src={restaurant.coverImage || "/placeholder.svg"}
@@ -190,7 +188,8 @@ export default function Restaurants() {
                   </Button>
                 </div>
               </CardContent>
-            </Card>
+              </Card>
+            </Link>
           ))}
         </div>
 
