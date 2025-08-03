@@ -45,26 +45,18 @@ export default function MerchantProducts() {
     searchProducts,
   } = useProducts();
 
-  // Store selection state - in real app this would come from user context
-  const [currentStoreId, setCurrentStoreId] = useState("store-001");
+  // Get user's store information
+  const userStoreId = user?.profile?.businessName ? `store-${user.id}` : null;
+  const userStoreName = user?.profile?.businessName || "متجرك";
 
-  // Available stores for demo
-  const availableStores = [
-    { id: "store-001", name: "متجر التراث السوداني", category: "traditional" },
-    { id: "store-002", name: "عطور الشرق", category: "perfumes" },
-    { id: "store-003", name: "مطعم أم درمان", category: "food" },
-    { id: "store-004", name: "خدمات التقنية السودانية", category: "services" },
-    { id: "store-005", name: "أزياء النيل", category: "fashion" },
-    { id: "store-006", name: "سوبر ماركت الخرطوم", category: "grocery" },
-  ];
+  // Filter products by current user's store only
+  const products = userStoreId
+    ? allProducts.filter((product) => product.storeId === userStoreId)
+    : [];
 
-  // Filter products by current user's selected store
-  const products = allProducts.filter(
-    (product) => product.storeId === currentStoreId,
-  );
-  const currentStore = availableStores.find(
-    (store) => store.id === currentStoreId,
-  );
+  const currentStore = userStoreId
+    ? { id: userStoreId, name: userStoreName, category: user?.profile?.businessType || "general" }
+    : null;
 
   // تحديد إذا كان التاجر جديد
   useEffect(() => {
