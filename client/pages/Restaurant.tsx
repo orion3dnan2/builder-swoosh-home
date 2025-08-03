@@ -32,10 +32,10 @@ export default function Restaurant() {
   const [cart, setCart] = useState<Record<string, number>>({});
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
 
-  // جلب منتجات المطعم
-  const { products: allProducts } = useProducts();
+  // جلب منتجات المطعم مباشرة بناءً على storeId
+  const { products: allProducts } = useProducts(id);
   const restaurantProducts = allProducts.filter(
-    (product) => product.storeId === id && product.status === "active",
+    (product) => product.status === "active",
   );
 
   // جلب معلومات المطعم
