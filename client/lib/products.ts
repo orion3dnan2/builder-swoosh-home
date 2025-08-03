@@ -74,7 +74,7 @@ export class ProductService {
       specifications: {
         المقاس: "30x25x10 سم",
         المادة: "جلد طبيعي",
-        اللون: "بني",
+        اللون: "بن��",
         الإغلاق: "سوستة",
       },
       status: "out_of_stock",
@@ -530,6 +530,114 @@ export class ProductService {
       out_of_stock: "نفد المخزون",
     };
     return texts[status] || status;
+  }
+
+  // Add sample products for a restaurant
+  static addSampleRestaurantProducts(storeId: string): void {
+    const sampleProducts = [
+      {
+        id: `prod-${Date.now()}-1`,
+        storeId: storeId,
+        name: "ملوخية سودانية",
+        description: "ملوخية سودانية أصيلة مطبوخة بالطريقة التقليدية مع اللحم",
+        price: 25.0,
+        images: ["/placeholder.svg"],
+        category: "أطباق رئيسية",
+        tags: ["ملوخية", "سوداني", "تقليدي", "لحم"],
+        inventory: {
+          quantity: 20,
+          sku: `MEAL-MLW-${Date.now()}`,
+          lowStockThreshold: 5,
+        },
+        specifications: {
+          "الحجم": "طبق كبير",
+          "المكونات": "ملوخية، لحم، توابل سودانية",
+          "وقت التحضير": "20 دقيقة",
+        },
+        status: "active" as const,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+      {
+        id: `prod-${Date.now()}-2`,
+        storeId: storeId,
+        name: "قراصة سودانية",
+        description: "خبز قراصة سوداني تقليدي مخبوز طازج",
+        price: 8.0,
+        images: ["/placeholder.svg"],
+        category: "مخبوزات",
+        tags: ["قراصة", "خبز", "سوداني", "طازج"],
+        inventory: {
+          quantity: 30,
+          sku: `BREAD-QRS-${Date.now()}`,
+          lowStockThreshold: 10,
+        },
+        specifications: {
+          "النوع": "خبز تقليدي",
+          "الحجم": "قطعة واحدة",
+          "المدة": "طازج يومياً",
+        },
+        status: "active" as const,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+      {
+        id: `prod-${Date.now()}-3`,
+        storeId: storeId,
+        name: "عصيدة بالملبن",
+        description: "عصيدة سودانية تقليدية بالملبن الطازج",
+        price: 18.0,
+        salePrice: 15.0,
+        images: ["/placeholder.svg"],
+        category: "حلويات",
+        tags: ["عصيدة", "ملبن", "سوداني", "حلو"],
+        inventory: {
+          quantity: 15,
+          sku: `DESS-ASD-${Date.now()}`,
+          lowStockThreshold: 5,
+        },
+        specifications: {
+          "النوع": "حلو تقليدي",
+          "المكونات": "عصيدة، ملبن، سكر",
+          "الحجم": "كوب متوسط",
+        },
+        status: "active" as const,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+      {
+        id: `prod-${Date.now()}-4`,
+        storeId: storeId,
+        name: "شاي كشري سوداني",
+        description: "شاي سوداني أحمر مع الحليب والسكر",
+        price: 5.0,
+        images: ["/placeholder.svg"],
+        category: "مشروبات",
+        tags: ["شاي", "كشري", "سوداني", "ساخن"],
+        inventory: {
+          quantity: 50,
+          sku: `TEA-KSH-${Date.now()}`,
+          lowStockThreshold: 10,
+        },
+        specifications: {
+          "النوع": "مشروب ساخن",
+          "الحجم": "كوب",
+          "المكونات": "شاي، حليب، سكر",
+        },
+        status: "active" as const,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      }
+    ];
+
+    // Add products to localStorage
+    try {
+      const existingProducts = this.getProducts();
+      const allProducts = [...existingProducts, ...sampleProducts];
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(allProducts));
+    } catch (error) {
+      console.error("Failed to add sample products:", error);
+    }
   }
 }
 
