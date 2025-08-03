@@ -117,7 +117,7 @@ export default function MerchantDashboard() {
           setUserStore(currentStore);
 
           if (currentStore) {
-            // تحديث الإحصائيات من بيانات المتجر
+            // ت��ديث الإحصائيات من بيانات المتجر
             setStoreStats({
               totalProducts: currentStore.analytics?.totalProducts || 0,
               totalOrders: currentStore.analytics?.totalOrders || 0,
@@ -173,8 +173,9 @@ export default function MerchantDashboard() {
   }, [user]);
 
   // Filter low stock products for current user's store
-  const userLowStockProducts = lowStockProducts.filter(
-    (product) => product.storeId === userStoreId,
+  const userLowStockProducts = useMemo(() =>
+    lowStockProducts.filter((product) => product.storeId === userStoreId),
+    [lowStockProducts, userStoreId]
   );
 
   // Fallback store data for display
