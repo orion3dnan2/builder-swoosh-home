@@ -47,18 +47,19 @@ export default function MerchantDashboard() {
     }
   }, [user, userProducts.length]);
 
-  const [storeStats, setStoreStats] = useState({
-    totalProducts: 0,
+  // Calculate stats from local products data
+  const storeStats = {
+    totalProducts: userProducts.length,
     totalOrders: 0,
     monthlyRevenue: 0,
     storeViews: 0,
-    activeProducts: 0,
-    outOfStock: 0,
+    activeProducts: userProducts.filter(p => p.status === 'active').length,
+    outOfStock: userProducts.filter(p => p.status === 'out_of_stock').length,
     pendingOrders: 0,
     completedOrders: 0,
     averageRating: 0,
     totalReviews: 0,
-  });
+  };
 
   const [userStore, setUserStore] = useState(null);
   const [loading, setLoading] = useState(true);
