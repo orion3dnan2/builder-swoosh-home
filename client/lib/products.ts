@@ -74,7 +74,7 @@ export class ProductService {
       specifications: {
         المقاس: "30x25x10 سم",
         المادة: "جلد طبيعي",
-        ��للون: "بن��",
+        اللون: "بني",
         الإغلاق: "سوستة",
       },
       status: "out_of_stock",
@@ -263,7 +263,7 @@ export class ProductService {
       storeId: "store-006",
       name: "فول سوداني محمص",
       description:
-        "فول سوداني محمص بطريقة تقليدية. وجبة خفيفة صحية ولذيذة من المكسرات السودانية.",
+        "فول سوداني مح��ص بطريقة تقليدية. وجبة خفيفة صحية ولذيذة من المكسرات السودانية.",
       price: 4.5,
       images: ["/placeholder.svg"],
       category: "أطعمة ومشروبات",
@@ -598,7 +598,7 @@ export class ProductService {
       "store-003": { name: "مطعم أم درمان", category: "food" },
       "store-004": { name: "خدمات التقنية السودانية", category: "services" },
       "store-005": { name: "أزياء النيل", category: "fashion" },
-      "store-006": { name: "سوبر ماركت ا��خرطوم", category: "grocery" },
+      "store-006": { name: "سوبر ماركت ا���خرطوم", category: "grocery" },
     };
 
     return products.map((product) => ({
