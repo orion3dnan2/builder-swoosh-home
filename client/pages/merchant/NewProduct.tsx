@@ -35,6 +35,7 @@ export default function NewProduct() {
   const [errors, setErrors] = useState<string[]>([]);
   const [currentImageUrl, setCurrentImageUrl] = useState("");
   const [userStoreId, setUserStoreId] = useState<string | null>(null);
+  const [hasLoadedProduct, setHasLoadedProduct] = useState(false);
 
   // Get user's store ID - use known mapping for current user
   useEffect(() => {
@@ -302,7 +303,7 @@ export default function NewProduct() {
                 يجب إعداد معلومات المتجر أولاً
               </h2>
               <p className="text-gray-700 mb-6 arabic">
-                لإض��فة منتجات، يرجى إكمال معلومات العمل التجاري (اسم العمل، نوع
+                لإضافة منتجات، يرجى إكمال معلومات العمل التجاري (اسم العمل، نوع
                 العمل) في ملفك الشخصي أولاً.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
