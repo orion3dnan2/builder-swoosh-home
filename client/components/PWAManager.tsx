@@ -44,6 +44,7 @@ export function PWAManager({ children }: PWAManagerProps) {
           "sync" in window.ServiceWorkerRegistration.prototype
         ) {
           console.log("✅ PWA Manager: Background sync supported");
+          // Note: Background sync registration is done when needed, not on initialization
         }
 
         // Set up periodic sync if supported
