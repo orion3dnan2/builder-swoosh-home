@@ -18,6 +18,7 @@ import {
   Clock,
   User,
 } from "lucide-react";
+import { useCurrencySafe } from "@/contexts/CurrencyContext";
 import { toast } from "sonner";
 
 interface OrderData {
@@ -32,6 +33,7 @@ interface OrderData {
 
 export default function Checkout() {
   const navigate = useNavigate();
+  const { formatPrice, currentCurrency } = useCurrencySafe();
   const [orderData, setOrderData] = useState<OrderData | null>(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState<string>("");
@@ -56,10 +58,6 @@ export default function Checkout() {
       navigate("/cart");
     }
   }, [navigate]);
-
-  const formatPrice = (price: number) => {
-    return `${price.toFixed(3)} د.ك`;
-  };
 
   const paymentMethods = [
     {
@@ -452,7 +450,7 @@ export default function Checkout() {
                   </div>
 
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600 arabic">الضريبة</span>
+                    <span className="text-gray-600 arabic">��لضريبة</span>
                     <span className="arabic">{formatPrice(orderData.tax)}</span>
                   </div>
 
@@ -513,7 +511,7 @@ export default function Checkout() {
               className="w-full py-3 text-lg arabic bg-green-600 hover:bg-green-700"
             >
               {isProcessing ? (
-                "جاري المعالجة..."
+                "جاري الم��الجة..."
               ) : (
                 <>
                   <CreditCard className="w-5 h-5 ml-2" />
