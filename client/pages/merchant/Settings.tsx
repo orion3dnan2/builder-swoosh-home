@@ -578,20 +578,33 @@ export default function MerchantSettings() {
       // التحقق من صحة البريد الإلكتروني
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(storeData.email)) {
-        throw new Error("يرجى إدخال بريد إلكتروني صحيح");
+        throw new Error("يرجى إدخال بريد إلك��روني صحيح");
       }
 
       // البحث عن متجر موجود للمستخدم أولاً
       try {
         const userStores = await ApiService.getStores();
-        const existingStore = userStores.find(
-          (store) => store.merchantId === user?.id,
+        console.log("📋 User stores found:", userStores.length);
+
+        // البحث عن متجر بنفس الاسم أو أي متجر للمستخدم
+        const existingStoreByName = userStores.find(
+          (store) =>
+            store.merchantId === user?.id &&
+            store.name.toLowerCase() === storeData.name.toLowerCase()
         );
 
-        if (existingStore) {
-          // تحديث متجر موجود
-          console.log("🔄 Updating existing store:", existingStore.id);
-          await ApiService.updateStore(existingStore.id, storeData);
+        const existingStoreByUser = userStores.find(
+          (store) => store.merchantId === user?.id
+        );
+
+        if (existingStoreByName) {
+          // تحديث متجر موجود بنفس الاسم
+          console.log("🔄 Updating existing store with same name:", existingStoreByName.id);
+          await ApiService.updateStore(existingStoreByName.id, storeData);
+        } else if (existingStoreByUser) {
+          // تحديث أي متجر موجود للمستخدم
+          console.log("🔄 Updating existing store for user:", existingStoreByUser.id);
+          await ApiService.updateStore(existingStoreByUser.id, storeData);
         } else {
           // إنشاء متجر جديد
           console.log("➕ Creating new store");
@@ -690,13 +703,13 @@ export default function MerchantSettings() {
   const tabs = [
     { id: "store", label: "بيانات الم��جر", icon: Store },
     { id: "notifications", label: "الإشعارا��", icon: Bell },
-    { id: "shipping", label: "الشحن والتوص��ل", icon: Truck },
+    { id: "shipping", label: "الشحن والتوصيل", icon: Truck },
     { id: "account", label: "الحساب والأمان", icon: Shield },
   ];
 
   // أنواع المتاجر المحددة مسبقاً (يمكن تعديلها من قبل الإدارة)
   const predefinedCategories = [
-    "م��اد غذائ��ة وأطعمة",
+    "مواد غذائ��ة وأطعمة",
     "عطور ومستحضرات تجميل",
     "ملابس وأزياء",
     "إلكترونيات وتقنية",
@@ -1289,7 +1302,7 @@ export default function MerchantSettings() {
                           })
                         }
                         className="mt-1 text-right arabic"
-                        placeholder="شارع ال��ي��، الخرطوم"
+                        placeholder="شارع ال��يل، الخرطوم"
                       />
                     </div>
                   </div>
@@ -1424,7 +1437,7 @@ export default function MerchantSettings() {
                         {
                           key: "paymentReceived",
                           label: "استلام الدفعات",
-                          desc: "إشعارات عند استلام المدف��عات",
+                          desc: "إشعارات عند استلام المدفوعات",
                           icon: "💰",
                           color:
                             "bg-yellow-50 border-yellow-200 hover:bg-yellow-100",
@@ -1555,7 +1568,7 @@ export default function MerchantSettings() {
                         {
                           key: "smsNotifications",
                           label: "رسائل SMS",
-                          desc: "استقبال الإشعارات عبر الرسائل النصية",
+                          desc: "استق��ال الإشعارات عبر الرسائل النصية",
                           icon: "📱",
                           color: "bg-cyan-50 border-cyan-200 hover:bg-cyan-100",
                         },
@@ -1683,7 +1696,7 @@ export default function MerchantSettings() {
                           </div>
                         </div>
                         <p className="text-xs text-gray-500 arabic mt-2">
-                          عند تجاوز هذا المبلغ سيكون الشحن مجاني
+                          ع��د تجاوز هذا المبلغ سيكون الشحن مجاني
                         </p>
                       </div>
                       <div>
@@ -1951,7 +1964,7 @@ export default function MerchantSettings() {
                                 openWhatsApp(driver.phone, driver.name)
                               }
                             >
-                              📱 وا��سا��
+                              📱 وا��ساب
                             </Button>
                             <Button
                               size="sm"
@@ -2067,7 +2080,7 @@ export default function MerchantSettings() {
                           تكامل الواتساب للتوصيل
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تواصل مبا��ر مع السائقين وتتبع الطلبات عبر الواتساب
+                          تواصل مبا����ر مع السائقين وتتبع الطلبات عبر الواتساب
                         </p>
                       </div>
                     </div>
