@@ -243,19 +243,57 @@ export default function Login() {
                 </div>
                 <div className="bg-white p-3 rounded-lg border">
                   <h4 className="font-bold text-secondary-700 arabic mb-1">
-                    صاحب متجر (Merchant)
+                    🏪 صاحب متجر (Merchant)
                   </h4>
                   <div className="text-sm space-y-1">
                     <div>
                       اسم المستخدم:{" "}
                       <code className="bg-secondary-200 px-2 py-1 rounded-lg">
-                        merchant
+                        merchant1
                       </code>
                     </div>
                     <div>
                       كلمة المرور:{" "}
                       <code className="bg-secondary-200 px-2 py-1 rounded-lg">
-                        merchant
+                        user123
+                      </code>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white p-3 rounded-lg border">
+                  <h4 className="font-bold text-green-700 arabic mb-1">
+                    👤 عميل عادي (Customer)
+                  </h4>
+                  <div className="text-sm space-y-1">
+                    <div>
+                      اسم المستخدم:{" "}
+                      <code className="bg-green-200 px-2 py-1 rounded-lg">
+                        customer1
+                      </code>
+                    </div>
+                    <div>
+                      كلمة المرور:{" "}
+                      <code className="bg-green-200 px-2 py-1 rounded-lg">
+                        user123
+                      </code>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white p-3 rounded-lg border">
+                  <h4 className="font-bold text-purple-700 arabic mb-1">
+                    🧪 مستخدم تجريبي (Test User)
+                  </h4>
+                  <div className="text-sm space-y-1">
+                    <div>
+                      اسم المستخدم:{" "}
+                      <code className="bg-purple-200 px-2 py-1 rounded-lg">
+                        testuser
+                      </code>
+                    </div>
+                    <div>
+                      كلمة المرور:{" "}
+                      <code className="bg-purple-200 px-2 py-1 rounded-lg">
+                        user123
                       </code>
                     </div>
                   </div>
