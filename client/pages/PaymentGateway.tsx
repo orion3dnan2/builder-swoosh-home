@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useCart } from "@/lib/cart";
+import { useCurrencySafe } from "@/contexts/CurrencyContext";
 import { PromoCodeService } from "@/lib/promoCodes";
 
 interface PaymentData {
@@ -29,6 +30,7 @@ interface PaymentData {
 export default function PaymentGateway() {
   const navigate = useNavigate();
   const { clearCart } = useCart();
+  const { formatPrice, currentCurrency } = useCurrencySafe();
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
   const [paymentStep, setPaymentStep] = useState<
     "form" | "processing" | "success" | "failed"
@@ -52,10 +54,6 @@ export default function PaymentGateway() {
       navigate("/cart");
     }
   }, [navigate]);
-
-  const formatPrice = (price: number) => {
-    return `${price.toFixed(3)} د.ك`;
-  };
 
   const getPaymentMethodInfo = (method: string) => {
     const methods = {
