@@ -320,7 +320,7 @@ export default function MerchantSettings() {
             id: "driver1",
             name: "أحمد محمد الطيب",
             phone: "+966501234567",
-            area: "الرياض",
+            area: "ال��ياض",
             rating: 4.8,
             isActive: true,
             vehicle: "سيارة صالون",
@@ -430,7 +430,7 @@ export default function MerchantSettings() {
 
       // التحق�� م�� حجم الملف (أقل من 10 م��جابايت)
       if (file.size > 10 * 1024 * 1024) {
-        alert("حجم الصو��ة يجب أن يكون أقل من 10 ميجابايت");
+        alert("حجم ال��و��ة يجب أن يكون أقل من 10 ميجابايت");
         return;
       }
 
@@ -464,6 +464,17 @@ export default function MerchantSettings() {
   };
 
   const handleSaveSettings = async () => {
+    // التحقق من تسجيل الدخول
+    if (!user) {
+      alert("يرجى تسجيل الدخول أولاً");
+      return;
+    }
+
+    if (user.role !== "merchant") {
+      alert("يجب أن تكون تاجراً لحفظ إعدادات المتجر");
+      return;
+    }
+
     // التحقق من صحة البي��نا��
     if (!storeSettings.storeName.trim()) {
       alert("يرجى إدخ��ل اسم المتجر");
@@ -768,7 +779,7 @@ export default function MerchantSettings() {
             جاري تحميل بيانات المتجر...
           </div>
           <p className="mt-4 text-gray-600 arabic">
-            يتم تحميل إعدادات متجرك، يرجى الانت��ار...
+            يتم تحميل إعدادات ��تجرك، يرجى الانت��ار...
           </p>
         </div>
       </div>
@@ -1062,7 +1073,7 @@ export default function MerchantSettings() {
                       <option value="">اختر نوع المتجر</option>
                       <option value="restaurant">مطعم</option>
                       <option value="company">شركة</option>
-                      <option value="store">متجر عام</option>
+                      <option value="store">متجر عا��</option>
                       <option value="service">خدمات</option>
                       <option value="pharmacy">صيدلية</option>
                       <option value="supermarket">سوبر ماركت</option>
@@ -1739,7 +1750,7 @@ export default function MerchantSettings() {
                           <MapPin className="w-4 h-4 text-blue-600" />
                           <p className="text-sm text-blue-700 arabic">
                             المناطق المتاحة يديرها مدير النظام. للتواصل حول
-                            إضافة منطقة جديدة تواصل مع الدعم الفني.
+                            ��ضافة منطقة جديدة تواصل مع الدعم الفني.
                           </p>
                         </div>
                       </div>
