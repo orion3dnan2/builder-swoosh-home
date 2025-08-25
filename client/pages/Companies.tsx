@@ -321,22 +321,24 @@ export default function Companies() {
                         متعدد الموظفين
                       </span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm text-gray-600 arabic">
-                        تأسست في {company.founded}
-                      </span>
-                    </div>
+                    {company.founded && (
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <span className="text-sm text-gray-600 arabic">
+                          تأسست في {company.founded}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-1">
                       <Star className="w-4 h-4 text-yellow-500" />
                       <span className="text-sm font-semibold arabic">
-                        {company.rating}
+                        {company.rating || "N/A"}
                       </span>
                       <span className="text-sm text-gray-500 arabic">
-                        ({company.reviewsCount} تقييم)
+                        ({company.reviewsCount || 0} تقييم)
                       </span>
                     </div>
                     <Badge variant="outline" className="text-xs arabic">
@@ -346,7 +348,7 @@ export default function Companies() {
 
                   <div className="mb-4">
                     <h4 className="text-sm font-semibold text-gray-700 mb-2 arabic">
-                      الخدمات:
+                      الخدم��ت:
                     </h4>
                     <div className="flex flex-wrap gap-1">
                       {(company.services || []).slice(0, 3).map((service, index) => (
@@ -470,7 +472,7 @@ export default function Companies() {
               لا توجد شركات مطابقة للبحث
             </h2>
             <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
-              جرب تغيير كلمات الب��ث أو الفلاتر المختارة
+              جرب تغيير كلمات البحث أو الفلاتر المختارة
             </p>
             <Button
               variant="outline"
