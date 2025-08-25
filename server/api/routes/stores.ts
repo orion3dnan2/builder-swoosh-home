@@ -152,8 +152,23 @@ router.post("/", authenticateToken, async (req: any, res) => {
         s.name.toLowerCase() === name.toLowerCase(),
     );
 
+    console.log("🔍 Checking for existing store:", {
+      searchingFor: name.toLowerCase(),
+      merchantId: req.user.id,
+      existingStore: existingStore ? {
+        id: existingStore.id,
+        name: existingStore.name,
+        merchantId: existingStore.merchantId
+      } : null
+    });
+
     if (existingStore) {
-      return res.status(400).json({ error: "لديك متجر بنفس الاسم بالفعل" });
+      console.log("❌ Store already exists with same name");
+      return res.status(400).json({
+        error: "لديك متجر بنفس الاسم بالفعل",
+        existingStoreName: existingStore.name,
+        existingStoreId: existingStore.id
+      });
     }
 
     const newStore = {
@@ -289,7 +304,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
     console.log(`✅ تم تحديث متجر: ${updatedStore.name}`);
 
     res.json({
-      message: "تم تحديث بيانات المتجر بنجاح",
+      message: "تم تحديث بيانات المتجر بنج��ح",
       store: updatedStore,
     });
   } catch (error) {
