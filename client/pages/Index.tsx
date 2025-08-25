@@ -59,7 +59,7 @@ export default function Index() {
     {
       icon: Building2,
       title: "دليل الشركات",
-      description: "تواصل مع الشركات والمؤسسات السودانية في الخليج",
+      description: "تواصل مع الشركات وا��مؤسسات السودانية في الخليج",
       href: "/companies",
       color: "from-green-500 to-green-600",
       bgColor: "bg-green-50 dark:bg-green-900/20",
@@ -95,7 +95,7 @@ export default function Index() {
       name: "أحمد محمد",
       role: "صاحب متجر",
       content:
-        "البيت السوداني ساعدني في الوصول لعملاء جدد وتنمية تجارتي بشكل كبير",
+        "البيت السوداني ساعدني في الوصول لعملاء جدد و��نمية تجارتي بشكل كبير",
       rating: 5,
     },
     {
@@ -128,7 +128,7 @@ export default function Index() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary-900/80 via-primary-800/70 to-secondary-800/80 dark:from-primary-950/90 dark:via-primary-900/80 dark:to-secondary-900/90" />
 
         {/* Content */}
-        <div className="relative container mx-auto px-4 py-12 md:py-20 lg:py-28">
+        <div className="relative container mx-auto px-4 iphone:px-6 py-12 md:py-20 lg:py-28">
           <div
             className={`max-w-4xl mx-auto text-center ${isRTL ? "text-right" : "text-center"}`}
           >
@@ -340,7 +340,7 @@ export default function Index() {
                 variant="outline"
                 className="w-full xs:w-auto px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl border-white/20 text-white hover:bg-white/10 arabic button-iphone touch-target"
               >
-                تسجيل الدخول
+                تسجيل ال��خول
               </Button>
             </Link>
           </div>
