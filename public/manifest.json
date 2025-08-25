@@ -1,0 +1,136 @@
+{
+  "name": "البيت السوداني - سوق وخدمات السودان",
+  "short_name": "البيت السوداني",
+  "description": "منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0ea5e9",
+  "background_color": "#ffffff",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["business", "shopping", "social"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-screenshot.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "الصفحة الرئيسية للبيت السوداني"
+    },
+    {
+      "src": "/screenshots/mobile-screenshot.png",
+      "sizes": "360x640",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "تطبيق البيت السوداني المحمول"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "السوق",
+      "short_name": "السوق",
+      "description": "تصفح المنتجات والخدمات",
+      "url": "/marketplace",
+      "icons": [
+        {
+          "src": "/icons/shortcut-marketplace.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "الشركات",
+      "short_name": "الشركات",
+      "description": "دليل الشركات السودانية",
+      "url": "/companies",
+      "icons": [
+        {
+          "src": "/icons/shortcut-companies.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "الوظائف",
+      "short_name": "الوظائف",
+      "description": "فرص العمل المتاحة",
+      "url": "/jobs",
+      "icons": [
+        {
+          "src": "/icons/shortcut-jobs.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+sudanese",
+      "url": "/handle?type=%s"
+    }
+  ]
+}
