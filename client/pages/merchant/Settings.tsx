@@ -274,7 +274,7 @@ export default function MerchantSettings() {
       end: isNewMerchant ? "17:00" : "22:00",
       days: isNewMerchant
         ? []
-        : ["السبت", "الأحد", "الاثنين", "ا��ثلاثا��", "الأربعاء", "الخميس"],
+        : ["الس��ت", "الأحد", "الاثنين", "ا��ثلاثا��", "الأربعاء", "الخميس"],
     },
     logo: "/placeholder.svg",
     banner: "/placeholder.svg",
@@ -553,6 +553,12 @@ export default function MerchantSettings() {
         }
       } catch (apiError: any) {
         // إذا فشل API، نستخدم ��لتخزين المحلي كنس��ة احتياطية
+        // طباعة تفاصيل الخطأ للتشخيص
+        console.error("API Error details:", {
+          message: apiError.message,
+          storeData: storeData
+        });
+
         console.warn(
           "فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:",
           apiError,
@@ -578,7 +584,12 @@ export default function MerchantSettings() {
       alert(
         "❌ حدث خطأ أثناء حفظ الإعدا��ات.\n\nيرجى ��لتحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
       );
-      console.error("خطأ في حفظ الإعدادات:", error);
+      console.error("خطأ في حفظ الإعدادات:", {
+        message: error.message,
+        stack: error.stack,
+        storeSettings,
+        selectedCountry
+      });
     } finally {
       setIsSaving(false);
     }
@@ -607,7 +618,7 @@ export default function MerchantSettings() {
 
   const workingDays = [
     "السبت",
-    "ال��حد",
+    "ال����حد",
     "الاثنين",
     "الثلاثاء",
     "��لأربعاء",
