@@ -174,7 +174,19 @@ export class ApiService {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `HTTP ${response.status}`);
+        console.error("API Request failed:", {
+          status: response.status,
+          statusText: response.statusText,
+          url,
+          errorData,
+          requestConfig: config
+        });
+
+        const error = new Error(errorData.error || `HTTP ${response.status}`);
+        (error as any).status = response.status;
+        (error as any).statusText = response.statusText;
+        (error as any).errorData = errorData;
+        throw error;
       }
 
       return await response.json();
