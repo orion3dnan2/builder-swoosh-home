@@ -75,7 +75,7 @@ const translations = {
       "تواصل مع الشركات والمؤسسات السودانية في الخليج",
     "home.services.jobs": "لوحة الوظائف",
     "home.services.jobs_desc": "ابحث عن فرص عمل مناسبة أو أعلن عن وظائف شاغرة",
-    "home.services.professional": "الخدمات ا��مهن��ة",
+    "home.services.professional": "الخدمات ا��مهنية",
     "home.services.professional_desc":
       "احصل على خدمات مهنية متخصصة من خبراء سودانيين",
     "home.services.ads": "الإعلانات",
@@ -122,7 +122,7 @@ const translations = {
     "dashboard.registered_stores": "المتاجر المسجلة",
     "dashboard.total_products": "إجمالي المنتجات",
     "dashboard.monthly_revenue": "إيرادات الشهر",
-    "dashboard.active_stores": "المت��جر النشطة",
+    "dashboard.active_stores": "المتاجر النشطة",
     "dashboard.pending_approvals": "طلبات الاعتماد",
     "dashboard.new_registrations": "تسجيلات جديدة",
     "dashboard.total_orders": "إجمالي الطلبات",
@@ -166,7 +166,7 @@ const translations = {
     "stores.suspend_store": "تعليق المتجر",
     "stores.reactivate_store": "إعادة تفعيل",
     "stores.no_stores_found": "لا توجد متاجر",
-    "stores.no_stores_match": "لم ي��م العثور على متاجر تطابق معايير البحث",
+    "stores.no_stores_match": "لم يتم العثور على متاجر تطابق معايير البحث",
     "stores.filter_results": "من",
     "stores.store_details": "تفاصيل المتجر",
     "stores.store_details_desc": "معلومات شاملة عن المتجر ونشاطه",
@@ -190,7 +190,7 @@ const translations = {
     "stores.action_reactivate": "إعادة تفعيل",
     "stores.success_approve": "تم اعتماد المتجر بنجاح! ✅",
     "stores.success_suspend": "تم تعليق المتجر بنجاح! ⚠️",
-    "stores.success_reactivate": "تم إعادة تفعيل المتجر بنجاح! ✅",
+    "stores.success_reactivate": "تم إعادة ��فعيل المتجر بنجاح! ✅",
     "stores.reviews_count": "تقييم",
 
     // Error messages
@@ -506,17 +506,22 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       }
     };
 
-  // Translation function
-  const t = (key: string): string => {
-    const keys = key.split(".");
-    let value: any = translations[language];
+    // Translation function
+    const t = (key: string): string => {
+      try {
+        const keys = key.split(".");
+        let value: any = translations[language];
 
-    for (const k of keys) {
-      value = value?.[k];
-    }
+        for (const k of keys) {
+          value = value?.[k];
+        }
 
-    return value || key;
-  };
+        return value || key;
+      } catch (error) {
+        console.error('Error in translation function:', error);
+        return key; // Fallback to key if translation fails
+      }
+    };
 
   const isRTL = language === "ar";
 
