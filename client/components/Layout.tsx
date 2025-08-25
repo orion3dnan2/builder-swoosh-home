@@ -9,6 +9,7 @@ import {
   LogOut,
   Settings,
   BarChart3,
+  ShoppingCart,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -28,11 +29,13 @@ import {
   PWAUpdateBanner,
   PWAConnectionStatus,
 } from "./PWABanner";
+import { useCart } from "../lib/cart";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const { isRTL } = useTheme();
   const { user, isAuthenticated, logout } = useAuth();
+  const { cart } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = () => {
@@ -80,6 +83,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   5
                 </span>
               </div>
+              <Link to="/cart" className={`flex items-center gap-2 ${isRTL ? "flex-row-reverse" : "flex-row"}`}>
+                <ShoppingCart className="w-4 h-4 text-muted-foreground hover:text-primary" />
+                {cart.totalItems > 0 && (
+                  <span className="bg-primary text-white rounded-full px-2 py-0.5 text-xs">
+                    {cart.totalItems}
+                  </span>
+                )}
+              </Link>
             </div>
             <div
               className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : "flex-row"}`}
