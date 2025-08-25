@@ -176,11 +176,29 @@
       -webkit-touch-callout: none;
       -webkit-user-select: none;
       user-select: none;
+      /* Prevent iOS Safari bounce */
+      -webkit-overflow-scrolling: touch;
+      /* Better text rendering on retina */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     input, textarea, [contenteditable] {
       -webkit-user-select: auto;
       user-select: auto;
+      /* Prevent zoom on focus */
+      font-size: 16px;
+    }
+
+    /* Improve touch scrolling performance */
+    * {
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Fix for sticky elements on iOS */
+    .sticky {
+      position: -webkit-sticky;
+      position: sticky;
     }
   }
 
