@@ -50,7 +50,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-background transition-colors duration-300 sudanese-pattern">
       {/* Header */}
       <header className="header-glass iphone-safe-top sticky top-0 z-50 shadow-cultural">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 iphone:px-6">
           {/* Top Bar */}
           <div className="hidden md:flex items-center justify-between py-2 text-sm">
             <div
