@@ -67,7 +67,8 @@
       }
     ],
     "createdAt": "2025-08-25T08:08:38.957Z",
-    "isActive": true
+    "isActive": true,
+    "lastLogin": "2025-08-25T10:56:35.766Z"
   },
   {
     "id": "customer-001",
