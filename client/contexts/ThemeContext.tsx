@@ -69,7 +69,7 @@ const translations = {
       "مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج والعالم",
     "home.services.marketplace": "السوق التجاري",
     "home.services.marketplace_desc":
-      "اكتشف منتجات سودانية أصيلة من تجار موثوقين",
+      "ا��تشف منتجات سودانية أصيلة من تجار موثوقين",
     "home.services.companies": "دليل الشركات",
     "home.services.companies_desc":
       "تواصل مع الشركات والمؤسسات السودانية في الخليج",
@@ -179,7 +179,7 @@ const translations = {
     "stores.location": "الموقع",
     "stores.status": "الحالة",
     "stores.total_products": "إجمالي المنتجات",
-    "stores.total_orders": "إجمالي الطلبات",
+    "stores.total_orders": "إجمال�� الطلبات",
     "stores.revenues": "الإيرادات",
     "stores.confirm_action": "تأكيد الإجراء",
     "stores.confirm_approve": "هل أنت متأكد من اعتماد هذ�� المتجر؟",
@@ -583,7 +583,8 @@ export function useTheme() {
 
 // Font loading utilities
 export const loadFonts = () => {
-  const fonts = [
+  try {
+    const fonts = [
     {
       family: "Cairo",
       weights: ["300", "400", "500", "600", "700"],
@@ -630,19 +631,22 @@ export const loadFonts = () => {
     document.head.appendChild(link);
   });
 
-  // Force font display optimization
-  const style = document.createElement("style");
-  style.textContent = `
-    @font-face {
-      font-family: 'ArabicFallback';
-      src: local('Tahoma'), local('Arial Unicode MS');
-      font-display: swap;
-      unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
-    }
+    // Force font display optimization
+    const style = document.createElement("style");
+    style.textContent = `
+      @font-face {
+        font-family: 'ArabicFallback';
+        src: local('Tahoma'), local('Arial Unicode MS');
+        font-display: swap;
+        unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF;
+      }
 
-    * {
-      font-family: 'Cairo', 'Noto Sans Arabic', 'Tajawal', 'ArabicFallback', 'Tahoma', 'Arial Unicode MS', sans-serif !important;
-    }
-  `;
-  document.head.appendChild(style);
+      * {
+        font-family: 'Cairo', 'Noto Sans Arabic', 'Tajawal', 'ArabicFallback', 'Tahoma', 'Arial Unicode MS', sans-serif !important;
+      }
+    `;
+    document.head.appendChild(style);
+  } catch (error) {
+    console.error('Error loading fonts:', error);
+  }
 };
