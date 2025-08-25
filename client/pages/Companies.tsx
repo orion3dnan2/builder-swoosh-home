@@ -50,6 +50,22 @@ export default function Companies() {
   const [selectedSize, setSelectedSize] = useState<string>("all");
   const [showVerifiedOnly, setShowVerifiedOnly] = useState(false);
 
+  // عرض حالة التحميل إذا كانت البيانات لا تزال قيد التحميل
+  if (loading) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center py-20">
+            <Building className="w-24 h-24 text-gray-300 mx-auto mb-6 animate-pulse" />
+            <h2 className="text-2xl font-bold text-gray-400 mb-4 arabic">
+              جاري تحميل الشركات...
+            </h2>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
   const filteredCompanies = (companies || []).filter((company) => {
     if (!company) return false;
 
