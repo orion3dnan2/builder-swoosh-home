@@ -33,7 +33,14 @@ export const SmartLinkButton: React.FC<SmartLinkButtonProps> = ({
 
 // مكون banner للتطبيق الجوال
 export const AppPromoBanner: React.FC = () => {
-  const [showBanner, setShowBanner] = React.useState(false);
+  // Check for browser environment
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    return null;
+  }
+
+  // Wrap in try-catch to prevent crashes
+  try {
+    const [showBanner, setShowBanner] = React.useState(false);
 
   React.useEffect(() => {
     const checkMobile = async () => {
@@ -97,7 +104,11 @@ export const AppPromoBanner: React.FC = () => {
         </div>
       </div>
     </div>
-  );
+    );
+  } catch (error) {
+    console.error('❌ AppPromoBanner: Critical error:', error);
+    return null;
+  }
 };
 
 // مكون لأزرار فتح في التطبيق
