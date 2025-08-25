@@ -23,6 +23,11 @@ import { useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
 import { LanguageAndThemeControls } from "./ThemeToggle";
 import { AppPromoBanner, SyncIndicator } from "./MobileIntegration";
+import {
+  PWAInstallBanner,
+  PWAUpdateBanner,
+  PWAConnectionStatus,
+} from "./PWABanner";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
@@ -49,8 +54,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background transition-colors duration-300 sudanese-pattern">
       {/* Header */}
-      <header className="header-glass sticky top-0 z-50 shadow-cultural">
-        <div className="container mx-auto px-4">
+      <header className="header-glass iphone-safe-top sticky top-0 z-50 shadow-cultural">
+        <div className="container mx-auto px-4 iphone:px-6">
           {/* Top Bar */}
           <div className="hidden md:flex items-center justify-between py-2 text-sm">
             <div
@@ -94,7 +99,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   {/* قائمة المستخدم المنسدلة */}
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="outline" size="sm" className="gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-2 touch-target button-iphone"
+                      >
                         <User className="w-4 h-4" />
                         حسابي
                       </Button>
@@ -156,7 +165,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
+                    className="hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20 touch-target button-iphone"
                   >
                     تسجيل الدخول
                   </Button>
@@ -204,7 +213,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="text-xs px-2 py-1 gap-1"
+                        className="text-xs px-3 py-2 gap-1 touch-target"
                       >
                         <User className="w-3 h-3" />
                         {user?.profile.name.split(" ")[0]}
@@ -268,7 +277,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="text-xs px-2 py-1 hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
+                    className="text-xs px-3 py-2 hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20 touch-target"
                   >
                     دخول
                   </Button>
@@ -335,20 +344,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
             >
               <div className="relative hidden lg:block">
                 <Search
-                  className={`absolute top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground ${
-                    isRTL ? "right-3" : "left-3"
+                  className={`absolute top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground ${
+                    isRTL ? "right-4" : "left-4"
                   }`}
                 />
                 <input
                   type="text"
                   placeholder="ابحث في البيت السوداني..."
-                  className={`${isRTL ? "pr-10 pl-4 text-right" : "pl-10 pr-4"} py-2 w-64 xl:w-80 rounded-xl input-dark arabic border shadow-sm focus:shadow-md transition-all duration-200 focus:ring-2 focus:ring-primary-500`}
+                  className={`${isRTL ? "pr-12 pl-4 text-right" : "pl-12 pr-4"} py-3 w-64 xl:w-80 rounded-xl input-dark input-iphone arabic border shadow-sm focus:shadow-md transition-all duration-200 focus:ring-2 focus:ring-primary-500 text-base`}
                 />
               </div>
               <Button
                 variant="ghost"
                 size="icon"
-                className="xl:hidden text-foreground hover:bg-muted p-2"
+                className="xl:hidden text-foreground hover:bg-muted p-3 touch-target"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 <Menu className="w-5 h-5" />
@@ -366,7 +375,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     variant="ghost"
                     size="icon"
                     onClick={handleLogout}
-                    className="text-foreground hover:bg-red-50 hover:text-red-600 p-2"
+                    className="text-foreground hover:bg-red-50 hover:text-red-600 p-3 touch-target"
                     title="تسجيل الخروج"
                   >
                     <LogOut className="w-5 h-5" />
@@ -388,13 +397,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <div className="xl:hidden pb-4 animate-slide-up">
-              <nav className="grid grid-cols-2 gap-2 mb-4">
+            <div className="xl:hidden pb-4 animate-slide-up iphone-safe-bottom">
+              <nav className="grid grid-cols-2 gap-3 mb-5">
                 {navigation.map((item) => (
                   <Link
                     key={item.href}
                     to={item.href}
-                    className={`flex items-center gap-2 px-3 py-3 rounded-xl transition-all duration-200 arabic text-sm ${
+                    className={`flex items-center gap-3 px-4 py-4 rounded-xl transition-all duration-200 arabic text-base touch-target ${
                       isRTL ? "flex-row-reverse" : "flex-row"
                     } ${
                       location.pathname === item.href
@@ -403,8 +412,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <span>{item.icon}</span>
-                    <span>{item.name}</span>
+                    <span className="text-lg">{item.icon}</span>
+                    <span className="font-medium">{item.name}</span>
                   </Link>
                 ))}
               </nav>
@@ -412,14 +421,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
               {/* Mobile search */}
               <div className="relative">
                 <Search
-                  className={`absolute top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground ${
-                    isRTL ? "right-3" : "left-3"
+                  className={`absolute top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground ${
+                    isRTL ? "right-4" : "left-4"
                   }`}
                 />
                 <input
                   type="text"
                   placeholder="ابحث في البيت السوداني..."
-                  className={`${isRTL ? "pr-10 pl-4 text-right" : "pl-10 pr-4"} py-3 w-full rounded-xl input-dark arabic border shadow-sm focus:shadow-md transition-all duration-200 focus:ring-2 focus:ring-primary-500`}
+                  className={`${isRTL ? "pr-12 pl-4 text-right" : "pl-12 pr-4"} py-4 w-full rounded-xl input-dark input-iphone arabic border shadow-sm focus:shadow-md transition-all duration-200 focus:ring-2 focus:ring-primary-500 text-base touch-target`}
                 />
               </div>
             </div>
@@ -431,8 +440,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <main className="arabic animate-fade-in">{children}</main>
 
       {/* Footer */}
-      <footer className="bg-card border-t border-border py-12 mt-20">
-        <div className="container mx-auto px-4">
+      <footer className="bg-card border-t border-border py-12 mt-20 iphone-safe-bottom">
+        <div className="container mx-auto px-4 iphone:px-6">
           <div
             className={`grid grid-cols-1 md:grid-cols-4 gap-8 ${isRTL ? "text-right" : "text-left"}`}
           >
@@ -530,6 +539,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Mobile App Promo Banner */}
       <AppPromoBanner />
+
+      {/* PWA Components */}
+      <PWAInstallBanner />
+      <PWAUpdateBanner />
+      <PWAConnectionStatus />
     </div>
   );
 }

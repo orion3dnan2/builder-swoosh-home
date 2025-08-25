@@ -36,186 +36,191 @@ import MerchantSettings from "./pages/merchant/Settings";
 import Profile from "./pages/Profile";
 import DebugProducts from "./pages/DebugProducts";
 import AddSampleProducts from "./pages/AddSampleProducts";
+import PWAInfo from "./pages/PWAInfo";
 import { SuperAdminRoute, MerchantRoute } from "./components/ProtectedRoute";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { TextCleaner } from "./components/SafeText";
 import { Toaster } from "./components/ui/toaster";
+import { PWAManager } from "./components/PWAManager";
 import "./global.css";
 
 function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <TextCleaner>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/unauthorized" element={<Unauthorized />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/theme-showcase" element={<ThemeShowcase />} />
+    <PWAManager>
+      <ThemeProvider>
+        <AuthProvider>
+          <TextCleaner>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/unauthorized" element={<Unauthorized />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/theme-showcase" element={<ThemeShowcase />} />
 
-              {/* Admin Routes */}
-              <Route
-                path="/admin/dashboard"
-                element={
-                  <SuperAdminRoute>
-                    <AdminDashboard />
-                  </SuperAdminRoute>
-                }
-              />
-              <Route
-                path="/admin/settings"
-                element={
-                  <SuperAdminRoute>
-                    <AdminSettings />
-                  </SuperAdminRoute>
-                }
-              />
-              <Route
-                path="/admin/stores"
-                element={
-                  <SuperAdminRoute>
-                    <AdminStores />
-                  </SuperAdminRoute>
-                }
-              />
-              <Route
-                path="/admin/users"
-                element={
-                  <SuperAdminRoute>
-                    <AdminUsers />
-                  </SuperAdminRoute>
-                }
-              />
-              <Route
-                path="/admin/appearance"
-                element={
-                  <SuperAdminRoute>
-                    <AdminAppearance />
-                  </SuperAdminRoute>
-                }
-              />
-              <Route
-                path="/admin/system"
-                element={
-                  <SuperAdminRoute>
-                    <AdminSystem />
-                  </SuperAdminRoute>
-                }
-              />
-              <Route
-                path="/admin/content"
-                element={
-                  <SuperAdminRoute>
-                    <AdminContent />
-                  </SuperAdminRoute>
-                }
-              />
-              <Route
-                path="/admin/activity"
-                element={
-                  <SuperAdminRoute>
-                    <AdminActivity />
-                  </SuperAdminRoute>
-                }
-              />
+                {/* Admin Routes */}
+                <Route
+                  path="/admin/dashboard"
+                  element={
+                    <SuperAdminRoute>
+                      <AdminDashboard />
+                    </SuperAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/settings"
+                  element={
+                    <SuperAdminRoute>
+                      <AdminSettings />
+                    </SuperAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/stores"
+                  element={
+                    <SuperAdminRoute>
+                      <AdminStores />
+                    </SuperAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/users"
+                  element={
+                    <SuperAdminRoute>
+                      <AdminUsers />
+                    </SuperAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/appearance"
+                  element={
+                    <SuperAdminRoute>
+                      <AdminAppearance />
+                    </SuperAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/system"
+                  element={
+                    <SuperAdminRoute>
+                      <AdminSystem />
+                    </SuperAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/content"
+                  element={
+                    <SuperAdminRoute>
+                      <AdminContent />
+                    </SuperAdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/activity"
+                  element={
+                    <SuperAdminRoute>
+                      <AdminActivity />
+                    </SuperAdminRoute>
+                  }
+                />
 
-              {/* Merchant Routes */}
-              <Route
-                path="/merchant/dashboard"
-                element={
-                  <MerchantRoute>
-                    <MerchantDashboard />
-                  </MerchantRoute>
-                }
-              />
-              <Route
-                path="/merchant/products"
-                element={
-                  <MerchantRoute>
-                    <MerchantProducts />
-                  </MerchantRoute>
-                }
-              />
-              <Route
-                path="/merchant/products/new"
-                element={
-                  <MerchantRoute>
-                    <NewProduct />
-                  </MerchantRoute>
-                }
-              />
-              <Route
-                path="/merchant/products/:id/edit"
-                element={
-                  <MerchantRoute>
-                    <NewProduct />
-                  </MerchantRoute>
-                }
-              />
-              <Route
-                path="/merchant/analytics"
-                element={
-                  <MerchantRoute>
-                    <MerchantAnalytics />
-                  </MerchantRoute>
-                }
-              />
-              <Route
-                path="/merchant/orders"
-                element={
-                  <MerchantRoute>
-                    <MerchantOrders />
-                  </MerchantRoute>
-                }
-              />
-              <Route
-                path="/merchant/settings"
-                element={
-                  <MerchantRoute>
-                    <MerchantSettings />
-                  </MerchantRoute>
-                }
-              />
+                {/* Merchant Routes */}
+                <Route
+                  path="/merchant/dashboard"
+                  element={
+                    <MerchantRoute>
+                      <MerchantDashboard />
+                    </MerchantRoute>
+                  }
+                />
+                <Route
+                  path="/merchant/products"
+                  element={
+                    <MerchantRoute>
+                      <MerchantProducts />
+                    </MerchantRoute>
+                  }
+                />
+                <Route
+                  path="/merchant/products/new"
+                  element={
+                    <MerchantRoute>
+                      <NewProduct />
+                    </MerchantRoute>
+                  }
+                />
+                <Route
+                  path="/merchant/products/:id/edit"
+                  element={
+                    <MerchantRoute>
+                      <NewProduct />
+                    </MerchantRoute>
+                  }
+                />
+                <Route
+                  path="/merchant/analytics"
+                  element={
+                    <MerchantRoute>
+                      <MerchantAnalytics />
+                    </MerchantRoute>
+                  }
+                />
+                <Route
+                  path="/merchant/orders"
+                  element={
+                    <MerchantRoute>
+                      <MerchantOrders />
+                    </MerchantRoute>
+                  }
+                />
+                <Route
+                  path="/merchant/settings"
+                  element={
+                    <MerchantRoute>
+                      <MerchantSettings />
+                    </MerchantRoute>
+                  }
+                />
 
-              {/* Public Routes */}
-              <Route
-                path="/clear-demo-products"
-                element={<ClearDemoProducts />}
-              />
-              <Route
-                path="/clear-all-products"
-                element={<ClearAllProducts />}
-              />
-              <Route path="/marketplace" element={<Marketplace />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/store/:id" element={<Store />} />
-              <Route path="/companies" element={<Companies />} />
-              <Route path="/company/:id" element={<Company />} />
-              <Route path="/jobs" element={<Jobs />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/restaurants" element={<Restaurants />} />
-              <Route path="/restaurant/:id" element={<Restaurant />} />
-              <Route path="/ads" element={<Ads />} />
-              <Route path="/store/:id" element={<StoreDetails />} />
-              <Route path="/store/:id/visit" element={<StoreVisit />} />
-              <Route path="/debug/products/:id" element={<DebugProducts />} />
-              <Route
-                path="/admin/add-sample-products"
-                element={<AddSampleProducts />}
-              />
+                {/* Public Routes */}
+                <Route
+                  path="/clear-demo-products"
+                  element={<ClearDemoProducts />}
+                />
+                <Route
+                  path="/clear-all-products"
+                  element={<ClearAllProducts />}
+                />
+                <Route path="/marketplace" element={<Marketplace />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/store/:id" element={<Store />} />
+                <Route path="/companies" element={<Companies />} />
+                <Route path="/company/:id" element={<Company />} />
+                <Route path="/jobs" element={<Jobs />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/pwa" element={<PWAInfo />} />
+                <Route path="/restaurants" element={<Restaurants />} />
+                <Route path="/restaurant/:id" element={<Restaurant />} />
+                <Route path="/ads" element={<Ads />} />
+                <Route path="/store/:id" element={<StoreDetails />} />
+                <Route path="/store/:id/visit" element={<StoreVisit />} />
+                <Route path="/debug/products/:id" element={<DebugProducts />} />
+                <Route
+                  path="/admin/add-sample-products"
+                  element={<AddSampleProducts />}
+                />
 
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-          <Toaster />
-        </TextCleaner>
-      </AuthProvider>
-    </ThemeProvider>
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+            <Toaster />
+          </TextCleaner>
+        </AuthProvider>
+      </ThemeProvider>
+    </PWAManager>
   );
 }
 

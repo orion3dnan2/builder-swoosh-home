@@ -67,7 +67,7 @@ export default function Index() {
     {
       icon: Briefcase,
       title: "لوحة الوظائف",
-      description: "ابحث عن فرص عمل مناسبة أو أعلن عن وظائف شاغرة",
+      description: "ابحث عن فرص عمل ��ناسبة أو أعلن عن وظائف شاغرة",
       href: "/jobs",
       color: "from-purple-500 to-purple-600",
       bgColor: "bg-purple-50 dark:bg-purple-900/20",
@@ -128,7 +128,7 @@ export default function Index() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary-900/80 via-primary-800/70 to-secondary-800/80 dark:from-primary-950/90 dark:via-primary-900/80 dark:to-secondary-900/90" />
 
         {/* Content */}
-        <div className="relative container mx-auto px-4 py-12 md:py-20 lg:py-28">
+        <div className="relative container mx-auto px-4 iphone:px-6 py-12 md:py-20 lg:py-28">
           <div
             className={`max-w-4xl mx-auto text-center ${isRTL ? "text-right" : "text-center"}`}
           >
@@ -142,16 +142,16 @@ export default function Index() {
 
             {/* CTA Buttons */}
             <div
-              className={`flex flex-col xs:flex-row gap-3 md:gap-4 justify-center mb-8 md:mb-12 px-4 ${isRTL ? "xs:flex-row-reverse" : ""}`}
+              className={`flex flex-col xs:flex-row gap-4 md:gap-6 justify-center mb-8 md:mb-12 px-4 ${isRTL ? "xs:flex-row-reverse" : ""}`}
             >
               <Link to="/marketplace" className="w-full xs:w-auto">
                 <Button
                   size="lg"
-                  className="button-cultural w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg arabic"
+                  className="button-cultural w-full xs:w-auto px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl arabic button-iphone touch-target"
                 >
                   استكشف السوق
                   <ArrowIcon
-                    className={`w-4 h-4 md:w-5 md:h-5 ${isRTL ? "mr-2" : "ml-2"}`}
+                    className={`w-5 h-5 md:w-6 md:h-6 ${isRTL ? "mr-3" : "ml-3"}`}
                   />
                 </Button>
               </Link>
@@ -159,7 +159,7 @@ export default function Index() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white hover:text-primary-700 arabic"
+                  className="w-full xs:w-auto px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white hover:text-primary-700 arabic button-iphone touch-target"
                 >
                   انضم إلينا
                 </Button>
@@ -167,20 +167,20 @@ export default function Index() {
             </div>
 
             {/* Hero Stats */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 lg:gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
               {heroStats.map((stat, index) => (
                 <div
                   key={index}
                   className="text-center animate-slide-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="inline-flex items-center justify-center w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-white/20 backdrop-blur-sm rounded-xl mb-2 md:mb-3">
-                    <stat.icon className="w-5 h-5 md:w-7 md:h-7 lg:w-8 lg:h-8 text-white" />
+                  <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-white/20 backdrop-blur-sm rounded-xl mb-3 md:mb-4">
+                    <stat.icon className="w-6 h-6 md:w-8 md:h-8 lg:w-9 lg:h-9 text-white" />
                   </div>
-                  <div className="text-lg md:text-2xl lg:text-3xl font-bold text-white mb-1">
+                  <div className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">
                     {stat.number}
                   </div>
-                  <div className="text-xs md:text-sm lg:text-base text-white/80 arabic px-1">
+                  <div className="text-sm md:text-base lg:text-lg text-white/80 arabic px-1">
                     {stat.label}
                   </div>
                 </div>
@@ -192,7 +192,7 @@ export default function Index() {
 
       {/* Services Section */}
       <section className="py-12 md:py-20 lg:py-24 bg-background">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 iphone:px-6">
           <div
             className={`text-center mb-12 md:mb-16 ${isRTL ? "text-right" : "text-center"}`}
           >
@@ -205,7 +205,7 @@ export default function Index() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
             {services.map((service, index) => (
               <Card
                 key={index}
@@ -214,10 +214,10 @@ export default function Index() {
               >
                 <CardHeader className="text-center pb-4">
                   <div
-                    className={`w-12 h-12 md:w-16 md:h-16 mx-auto ${service.bgColor} rounded-xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300`}
+                    className={`w-14 h-14 md:w-18 md:h-18 mx-auto ${service.bgColor} rounded-xl flex items-center justify-center mb-4 md:mb-5 group-hover:scale-110 transition-transform duration-300`}
                   >
                     <service.icon
-                      className={`w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br ${service.color} bg-clip-text text-transparent`}
+                      className={`w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br ${service.color} bg-clip-text text-transparent`}
                     />
                   </div>
                   <CardTitle
@@ -229,16 +229,16 @@ export default function Index() {
                 <CardContent
                   className={`${isRTL ? "text-right" : "text-center"} pb-6`}
                 >
-                  <p className="text-sm md:text-base text-muted-foreground arabic mb-4 md:mb-6 leading-relaxed">
+                  <p className="text-base md:text-lg text-muted-foreground arabic mb-5 md:mb-7 leading-relaxed">
                     {service.description}
                   </p>
                   <Link to={service.href}>
                     <Button
-                      className={`w-full bg-gradient-to-r ${service.color} hover:opacity-90 transition-opacity arabic text-sm md:text-base`}
+                      className={`w-full bg-gradient-to-r ${service.color} hover:opacity-90 transition-opacity arabic text-base md:text-lg button-iphone touch-target py-3 md:py-4`}
                     >
                       اكتشف المزيد
                       <ArrowIcon
-                        className={`w-4 h-4 ${isRTL ? "mr-2" : "ml-2"}`}
+                        className={`w-5 h-5 ${isRTL ? "mr-3" : "ml-3"}`}
                       />
                     </Button>
                   </Link>
@@ -251,7 +251,7 @@ export default function Index() {
 
       {/* Testimonials Section */}
       <section className="py-12 md:py-20 lg:py-24 bg-muted/50">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 iphone:px-6">
           <div
             className={`text-center mb-12 md:mb-16 ${isRTL ? "text-right" : "text-center"}`}
           >
@@ -312,25 +312,26 @@ export default function Index() {
 
       {/* CTA Section */}
       <section className="py-12 md:py-20 lg:py-24 bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 dark:from-primary-800 dark:via-primary-900 dark:to-secondary-800">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 iphone:px-6 text-center">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-4 arabic">
             ابدأ رحلتك معنا اليوم
           </h2>
           <p className="text-base md:text-lg lg:text-xl text-white/90 mb-6 md:mb-8 arabic max-w-2xl mx-auto px-4">
-            ��نضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم
+            ��نضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية
+            أعمالهم وخدماتهم
           </p>
           <div
-            className={`flex flex-col xs:flex-row gap-3 md:gap-4 justify-center px-4 ${isRTL ? "xs:flex-row-reverse" : ""}`}
+            className={`flex flex-col xs:flex-row gap-4 md:gap-6 justify-center px-4 ${isRTL ? "xs:flex-row-reverse" : ""}`}
           >
             <Link to="/register" className="w-full xs:w-auto">
               <Button
                 size="lg"
                 variant="secondary"
-                className="w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg arabic bg-white text-primary-700 hover:bg-white/90"
+                className="w-full xs:w-auto px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl arabic bg-white text-primary-700 hover:bg-white/90 button-iphone touch-target"
               >
                 إنشاء حساب مجاني
                 <ArrowIcon
-                  className={`w-4 h-4 md:w-5 md:h-5 ${isRTL ? "mr-2" : "ml-2"}`}
+                  className={`w-5 h-5 md:w-6 md:h-6 ${isRTL ? "mr-3" : "ml-3"}`}
                 />
               </Button>
             </Link>
@@ -338,7 +339,7 @@ export default function Index() {
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg border-white/20 text-white hover:bg-white/10 arabic"
+                className="w-full xs:w-auto px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl border-white/20 text-white hover:bg-white/10 arabic button-iphone touch-target"
               >
                 تسجيل الدخول
               </Button>

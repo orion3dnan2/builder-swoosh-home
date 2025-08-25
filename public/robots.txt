@@ -1,14 +1,21 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
 Allow: /
+
+# PWA files
+Allow: /manifest.json
+Allow: /sw.js
+Allow: /offline.html
+Allow: /icons/
+
+# Important pages
+Allow: /marketplace
+Allow: /companies
+Allow: /jobs
+Allow: /products
+Allow: /services
+Allow: /ads
+
+Sitemap: /sitemap.xml
+
+# البيت السوداني - سوق وخدمات السودان في الخليج والعالم
+# Sudanese House - Sudan's marketplace and services in the Gulf and worldwide
