@@ -50,13 +50,15 @@ export default function Companies() {
   const [selectedSize, setSelectedSize] = useState<string>("all");
   const [showVerifiedOnly, setShowVerifiedOnly] = useState(false);
 
-  const filteredCompanies = companies.filter((company) => {
+  const filteredCompanies = (companies || []).filter((company) => {
+    if (!company) return false;
+
     const matchesSearch =
       searchQuery === "" ||
-      company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.city.toLowerCase().includes(searchQuery.toLowerCase());
+      (company.name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (company.description || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (company.category || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (company.city || "").toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesIndustry =
       selectedIndustry === "all" || company.category === selectedIndustry;
