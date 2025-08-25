@@ -18,7 +18,9 @@ import {
   Heart,
 } from "lucide-react";
 import { ProductService, useProducts } from "@/lib/products";
+import { useCart } from "@/lib/cart";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Products() {
   const { products } = useProducts();
@@ -107,7 +109,7 @@ export default function Products() {
             </div>
           </div>
           <h1 className="text-4xl font-bold text-gray-800 mb-4 arabic">
-            المنتجات السودانية
+            المنتجات ��لسودانية
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto arabic">
             أفضل المنتجات التقليدية والحديثة من السودان
