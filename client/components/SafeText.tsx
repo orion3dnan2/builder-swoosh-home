@@ -1,6 +1,6 @@
 import React from "react";
 
-// دالة لتنظيف النصوص العربية المعطوبة
+// دالة لتنظيف ال��صوص العربية المعطوبة
 const cleanArabicText = (text: string): string => {
   if (!text) return text;
 
@@ -39,7 +39,7 @@ const cleanArabicText = (text: string): string => {
       .replace(/��ين/gi, "أين")
       .replace(/��يام/gi, "أيام")
 
-      // تنظ��ف المسافات الزائدة
+      // تنظيف المسافات الزائدة
       .replace(/\s+/g, " ")
       .trim()
   );
@@ -169,8 +169,12 @@ export const TextCleaner: React.FC<{ children: React.ReactNode }> = ({
       const interval = setInterval(cleanupTexts, 5000);
 
       return () => {
-        observer.disconnect();
-        clearInterval(interval);
+        try {
+          observer.disconnect();
+          clearInterval(interval);
+        } catch (cleanupError) {
+          console.error('Error in TextCleaner cleanup:', cleanupError);
+        }
       };
     }, []);
 
