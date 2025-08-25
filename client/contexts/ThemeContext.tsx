@@ -129,7 +129,7 @@ const translations = {
     "dashboard.app_settings": "إعدادات التطبيق",
     "dashboard.app_settings_desc": "تخصيص المظهر والألوان والخطوط",
     "dashboard.user_management": "إدارة المستخدمين",
-    "dashboard.user_management_desc": "عرض وإدارة حسابات المستخدمين",
+    "dashboard.user_management_desc": "عرض وإدارة حسابات الم��تخدمين",
     "dashboard.store_management": "إد��رة المتاجر",
     "dashboard.store_management_desc": "مراجعة وإدارة المتاجر المسجلة",
     "dashboard.appearance": "تخصيص المظهر",
@@ -174,7 +174,7 @@ const translations = {
     "stores.performance_stats": "إحصائيات الأداء",
     "stores.store_name": "اسم المتجر",
     "stores.owner": "المالك",
-    "stores.email": "البريد الإلكتروني",
+    "stores.email": "البريد ال��لكتروني",
     "stores.phone": "رقم الهاتف",
     "stores.location": "الموقع",
     "stores.status": "الحالة",
@@ -190,7 +190,7 @@ const translations = {
     "stores.action_reactivate": "إعادة تفعيل",
     "stores.success_approve": "تم اعتماد المتجر بنجاح! ✅",
     "stores.success_suspend": "تم تعليق المتجر بنجاح! ⚠️",
-    "stores.success_reactivate": "تم إعادة ��فعيل المتجر بنجاح! ✅",
+    "stores.success_reactivate": "تم إعادة تفعيل المتجر بنجاح! ✅",
     "stores.reviews_count": "تقييم",
 
     // Error messages
@@ -523,18 +523,18 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       }
     };
 
-  const isRTL = language === "ar";
+    const isRTL = language === "ar";
 
-  const contextValue: ThemeContextType = {
-    theme,
-    language,
-    fontFamily,
-    toggleTheme,
-    toggleLanguage,
-    setFontFamily,
-    t,
-    isRTL,
-  };
+    const contextValue: ThemeContextType = {
+      theme,
+      language,
+      fontFamily,
+      toggleTheme,
+      toggleLanguage,
+      setFontFamily,
+      t,
+      isRTL,
+    };
 
     return (
       <ThemeContext.Provider value={contextValue}>
