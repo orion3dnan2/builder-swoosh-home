@@ -57,7 +57,7 @@ async function main() {
           state: "الخرطوم",
           country: "السودان",
           zipCode: "11112",
-          businessName: "متجر أحمد للإلكترونيات",
+          businessName: "متجر أحم�� للإلكترونيات",
           businessType: "إلكترونيات",
           description: "متجر متخصص في بيع الأجهزة الإلكترونية والهواتف الذكية",
         },
@@ -103,7 +103,7 @@ async function main() {
     },
   });
 
-  // إنشاء مستخد�� تجريبي عادي آخر
+  // إنشاء مستخدم تجريبي عادي آخر
   const testUser = await prisma.user.upsert({
     where: { email: "test@baytsudani.com" },
     update: {},
@@ -326,7 +326,7 @@ async function main() {
         title: "من نحن",
         slug: "about-us",
         content:
-          "<h1>مرحباً بكم في بيت السودان��</h1><p>منصة التجارة الإلكترونية الرائدة في السودان</p>",
+          "<h1>مرحباً بكم في بيت السوداني</h1><p>منصة التجارة الإلكترونية الرائدة في السودان</p>",
         excerpt: "تعرف على قصتنا ورؤيتنا",
         status: "PUBLISHED",
         type: "PAGE",
@@ -386,7 +386,7 @@ async function main() {
     },
   });
 
-  // إنشاء إعدادات النظام
+  // إنشاء إعدادا�� النظام
   const systemSettings = await prisma.systemSettings.upsert({
     where: { id: "main-system" },
     update: {},
@@ -490,6 +490,7 @@ async function main() {
   console.log(`👤 المدير: ${adminUser.email} (كلمة المرور: admin)`);
   console.log(`🏪 التاجر: ${merchantUser.email} (كلمة المرور: user123)`);
   console.log(`🛒 العميل: ${customerUser.email} (كلمة المرور: user123)`);
+  console.log(`🧪 مستخدم تجريبي: ${testUser.email} (كلمة المرور: user123)`);
   console.log(`🏬 المتجر: ${store.name}`);
   console.log(`📦 المنتجات: ${products.length}`);
   console.log(`🛍️ الطلبات: 1`);
