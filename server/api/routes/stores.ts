@@ -280,6 +280,23 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
       });
     }
 
+    // التحقق من عدم وجود متجر آخر بنفس الاسم (ما عدا المتجر الحالي)
+    const duplicateStore = StoreDatabase.findStore(
+      (s) =>
+        s.merchantId === req.user.id &&
+        s.id !== storeId &&
+        s.name.toLowerCase() === name.toLowerCase(),
+    );
+
+    if (duplicateStore) {
+      console.log("❌ Another store exists with same name during update");
+      return res.status(400).json({
+        error: "لديك متجر آخر بنفس الاسم. يرجى اختيار اسم مختلف.",
+        duplicateStoreName: duplicateStore.name,
+        duplicateStoreId: duplicateStore.id
+      });
+    }
+
     // تحديث بيانات المتجر
     const updates = {
       name: name || store.name,
@@ -301,10 +318,10 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
 
     const updatedStore = StoreDatabase.updateStore(storeId, updates);
 
-    console.log(`✅ تم تحديث متجر: ${updatedStore.name}`);
+    console.log(`✅ تم تحديث متج��: ${updatedStore.name}`);
 
     res.json({
-      message: "تم تحديث بيانات المتجر بنج��ح",
+      message: "تم تحديث بيانات المتجر بنجاح",
       store: updatedStore,
     });
   } catch (error) {
@@ -426,7 +443,7 @@ router.get("/:id/orders", authenticateToken, async (req: any, res) => {
     const store = StoreDatabase.findStore((s) => s.id === storeId);
 
     if (!store) {
-      return res.status(404).json({ error: "المتجر غير موجود" });
+      return res.status(404).json({ error: "ا��متجر غير موجود" });
     }
 
     // التحقق من الصلاحيات
