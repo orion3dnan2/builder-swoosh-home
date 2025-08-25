@@ -81,7 +81,7 @@ export default function Login() {
                 </div>
               </div>
               <h1 className="text-2xl font-bold text-secondary-800 arabic">
-                تسجيل الدخول
+                تسجيل ال��خول
               </h1>
               <p className="text-secondary-600 arabic">
                 أدخل بيانات تسجيل دخولك
@@ -234,7 +234,7 @@ export default function Login() {
                       </code>
                     </div>
                     <div>
-                      ك��مة المرور:{" "}
+                      كلمة المرور:{" "}
                       <code className="bg-primary-200 px-2 py-1 rounded-lg">
                         admin
                       </code>
