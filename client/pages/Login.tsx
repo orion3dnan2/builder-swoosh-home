@@ -117,6 +117,10 @@ export default function Login() {
                         }))
                       }
                       className="text-right arabic rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600"
+                      autoComplete="username"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck={false}
                       required
                     />
                   </div>
