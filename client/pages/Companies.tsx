@@ -97,19 +97,19 @@ export default function Companies() {
           <div className="flex items-center justify-center gap-6 mt-6 text-sm text-gray-500">
             <div className="flex items-center gap-2">
               <Building className="w-4 h-4" />
-              <span className="arabic">{companies.length} شركة</span>
+              <span className="arabic">{(companies || []).length} شركة</span>
             </div>
             <div className="flex items-center gap-2">
               <Verified className="w-4 h-4" />
               <span className="arabic">
-                {companies.filter((c) => c.status === "active").length} شركة
+                {(companies || []).filter((c) => c?.status === "active").length} شركة
                 نشطة
               </span>
             </div>
             <div className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
               <span className="arabic">
-                {new Set(companies.map((c) => c.category)).size} قطاع
+                {new Set((companies || []).map((c) => c?.category).filter(Boolean)).size} قطاع
               </span>
             </div>
           </div>
