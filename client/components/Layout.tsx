@@ -23,6 +23,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
 import { LanguageAndThemeControls } from "./ThemeToggle";
 import { AppPromoBanner, SyncIndicator } from "./MobileIntegration";
+import { PWAInstallBanner, PWAUpdateBanner, PWAConnectionStatus } from "./PWABanner";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
@@ -462,7 +463,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/products"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    ا��منتجات
+                    المنتجات
                   </Link>
                 </li>
                 <li>
@@ -530,6 +531,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Mobile App Promo Banner */}
       <AppPromoBanner />
+
+      {/* PWA Components */}
+      <PWAInstallBanner />
+      <PWAUpdateBanner />
+      <PWAConnectionStatus />
     </div>
   );
 }
