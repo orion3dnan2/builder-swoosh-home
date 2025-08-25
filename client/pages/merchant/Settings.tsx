@@ -428,7 +428,7 @@ export default function MerchantSettings() {
         return;
       }
 
-      // التحق�� م�� حجم الملف (أقل من 10 م��جابايت)
+      // التحق�� م�� ح��م الملف (أقل من 10 م��جابايت)
       if (file.size > 10 * 1024 * 1024) {
         alert("حجم ال��و��ة يجب أن يكون أقل من 10 ميجابايت");
         return;
@@ -449,7 +449,7 @@ export default function MerchantSettings() {
 
   // حذف الشعار
   const handleRemoveLogo = () => {
-    if (window.confirm("هل أنت متأكد من حذف شعار الم��جر؟")) {
+    if (window.confirm("هل أنت متأكد من حذف شعار المتجر؟")) {
       setStoreSettings({ ...storeSettings, logo: "/placeholder.svg" });
       alert("تم حذف الشعار بنجاح");
     }
@@ -596,6 +596,25 @@ export default function MerchantSettings() {
 
         // Check for specific error conditions
         if (apiError.message.includes("لديك متجر بنفس الاسم بالفعل")) {
+          // If trying to create but store exists, try to find and update it instead
+          console.log("🔄 Store exists, trying to update instead of create");
+          try {
+            const allStores = await ApiService.getStores();
+            const existingStoreByName = allStores.find(
+              (store) =>
+                store.merchantId === user?.id &&
+                store.name.toLowerCase() === storeData.name.toLowerCase()
+            );
+
+            if (existingStoreByName) {
+              console.log("🔄 Found existing store, updating:", existingStoreByName.id);
+              await ApiService.updateStore(existingStoreByName.id, storeData);
+              return; // Success, exit this catch block
+            }
+          } catch (retryError) {
+            console.error("Failed to update existing store:", retryError);
+          }
+
           throw new Error("لديك متجر بنفس الاسم بالفعل. يرجى اختيار اسم مختلف للمتجر.");
         }
 
@@ -627,7 +646,7 @@ export default function MerchantSettings() {
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ الإعدا��ات.\n\nيرجى ��لتحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ الإعدا���ات.\n\nيرجى ��لتحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
       );
       console.error("خطأ في حفظ الإعدادات:", {
         message: error.message,
@@ -1165,7 +1184,7 @@ export default function MerchantSettings() {
                     </div>
                     <div>
                       <Label htmlFor="email" className="arabic">
-                        البريد الإلكتروني
+                        البريد الإ��كتروني
                       </Label>
                       <Input
                         id="email"
@@ -1499,7 +1518,7 @@ export default function MerchantSettings() {
                           طرق الإشعار
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          اختر كيفية تلقي الإ��عارات
+                          ا��تر كيفية تلقي الإ��عارات
                         </p>
                       </div>
                     </div>
@@ -1636,7 +1655,7 @@ export default function MerchantSettings() {
                           </div>
                         </div>
                         <p className="text-xs text-gray-500 arabic mt-2">
-                          عند تجاوز هذا المبلغ س��كون الشحن مجاني
+                          عند تجاوز هذا المبلغ سيكون الشحن مجاني
                         </p>
                       </div>
                       <div>
@@ -2030,7 +2049,7 @@ export default function MerchantSettings() {
                         <div className="text-center">
                           <div className="text-2xl mb-2">📱</div>
                           <h4 className="font-semibold arabic text-sm mb-2">
-                            ��واصل ف��ري
+                            تواصل ف��ري
                           </h4>
                           <p className="text-xs text-gray-600 arabic">
                             تواصل مع السائقين مباشرة عبر الواتساب
