@@ -167,20 +167,20 @@ export default function Index() {
             </div>
 
             {/* Hero Stats */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 lg:gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
               {heroStats.map((stat, index) => (
                 <div
                   key={index}
                   className="text-center animate-slide-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="inline-flex items-center justify-center w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 bg-white/20 backdrop-blur-sm rounded-xl mb-2 md:mb-3">
-                    <stat.icon className="w-5 h-5 md:w-7 md:h-7 lg:w-8 lg:h-8 text-white" />
+                  <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-white/20 backdrop-blur-sm rounded-xl mb-3 md:mb-4">
+                    <stat.icon className="w-6 h-6 md:w-8 md:h-8 lg:w-9 lg:h-9 text-white" />
                   </div>
-                  <div className="text-lg md:text-2xl lg:text-3xl font-bold text-white mb-1">
+                  <div className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2">
                     {stat.number}
                   </div>
-                  <div className="text-xs md:text-sm lg:text-base text-white/80 arabic px-1">
+                  <div className="text-sm md:text-base lg:text-lg text-white/80 arabic px-1">
                     {stat.label}
                   </div>
                 </div>
