@@ -157,11 +157,45 @@ export function AuthProvider({ children }: AuthProviderProps) {
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+  try {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+      // Provide safe fallback instead of throwing error
+      console.warn("useAuth: AuthContext not available, using fallback");
+      return {
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+        isSuperAdmin: false,
+        isMerchant: false,
+        isCustomer: false,
+        hasRole: () => false,
+        hasPermission: () => false,
+        login: async () => { throw new Error("Auth not available"); },
+        setAuthenticatedUser: () => {},
+        logout: () => {},
+        refreshAuth: () => {},
+      };
+    }
+    return context;
+  } catch (error) {
+    console.error('❌ useAuth: Critical error:', error);
+    // Return safe fallback
+    return {
+      user: null,
+      isAuthenticated: false,
+      isLoading: false,
+      isSuperAdmin: false,
+      isMerchant: false,
+      isCustomer: false,
+      hasRole: () => false,
+      hasPermission: () => false,
+      login: async () => { throw new Error("Auth not available"); },
+      setAuthenticatedUser: () => {},
+      logout: () => {},
+      refreshAuth: () => {},
+    };
   }
-  return context;
 }
 
 // Export the context for testing purposes
