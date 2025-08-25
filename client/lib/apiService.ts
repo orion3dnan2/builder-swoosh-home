@@ -170,10 +170,10 @@ export class ApiService {
 
     try {
       console.log("🌐 Making API request:", {
-        method: config.method || 'GET',
+        method: config.method || "GET",
         url,
         headers: config.headers,
-        bodySize: config.body ? config.body.toString().length : 0
+        bodySize: config.body ? config.body.toString().length : 0,
       });
 
       const response = await fetch(url, config);
@@ -183,12 +183,12 @@ export class ApiService {
         status: response.status,
         statusText: response.statusText,
         ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries())
+        headers: Object.fromEntries(response.headers.entries()),
       });
 
       if (!response.ok) {
         let errorData: any = {};
-        let errorText = '';
+        let errorText = "";
 
         try {
           // Try to get response as text first
@@ -210,10 +210,12 @@ export class ApiService {
           url,
           rawResponse: errorText,
           errorData,
-          parseSuccess: !!errorData.error
+          parseSuccess: !!errorData.error,
         });
 
-        const error = new Error(errorData.error || errorText || `HTTP ${response.status}`);
+        const error = new Error(
+          errorData.error || errorText || `HTTP ${response.status}`,
+        );
         (error as any).status = response.status;
         (error as any).statusText = response.statusText;
         (error as any).errorData = errorData;

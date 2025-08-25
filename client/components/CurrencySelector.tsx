@@ -25,7 +25,8 @@ export function CurrencySelector({
   showCountry = true,
   className = "",
 }: CurrencySelectorProps) {
-  const { currentCurrency, storeCountry, updateCurrencyByCountry } = useCurrencySafe();
+  const { currentCurrency, storeCountry, updateCurrencyByCountry } =
+    useCurrencySafe();
   const [isOpen, setIsOpen] = useState(false);
 
   const availableCountries = Object.keys(countryCurrencies);
@@ -38,24 +39,24 @@ export function CurrencySelector({
   const getCurrentFlag = (country: string) => {
     const flags: Record<string, string> = {
       "دولة الكويت": "🇰🇼",
-      "الكويت": "🇰🇼",
-      "السعودية": "🇸🇦",
+      الكويت: "🇰🇼",
+      السعودية: "🇸🇦",
       "المملكة العربية السعودية": "🇸🇦",
-      "الإمارات": "🇦🇪",
+      الإمارات: "🇦🇪",
       "الإمارات العربية المتحدة": "🇦🇪",
-      "قطر": "🇶🇦",
+      قطر: "🇶🇦",
       "دولة قطر": "🇶🇦",
-      "البحرين": "🇧🇭",
+      البحرين: "🇧🇭",
       "مملكة البحرين": "🇧🇭",
-      "عمان": "🇴🇲",
+      عمان: "🇴🇲",
       "سلطنة عمان": "🇴🇲",
-      "مصر": "🇪🇬",
+      مصر: "🇪🇬",
       "جمهورية مصر العربية": "🇪🇬",
-      "الأردن": "🇯🇴",
+      الأردن: "🇯🇴",
       "المملكة الأردنية الهاشمية": "🇯🇴",
-      "لبنان": "🇱🇧",
+      لبنان: "🇱🇧",
       "الجمهورية اللبنانية": "🇱🇧",
-      "السودان": "🇸🇩",
+      السودان: "🇸🇩",
       "جمهورية السودان": "🇸🇩",
     };
     return flags[country] || "🌍";
@@ -87,7 +88,7 @@ export function CurrencySelector({
                 </div>
               </div>
             </div>
-            
+
             <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="arabic">
@@ -97,11 +98,13 @@ export function CurrencySelector({
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-64" align="end">
                 <div className="p-2">
-                  <div className="text-sm font-semibold arabic mb-2">اختر الدولة:</div>
+                  <div className="text-sm font-semibold arabic mb-2">
+                    اختر الدولة:
+                  </div>
                   {availableCountries.map((country) => {
                     const currency = countryCurrencies[country];
                     const isSelected = country === storeCountry;
-                    
+
                     return (
                       <DropdownMenuItem
                         key={country}
@@ -109,7 +112,9 @@ export function CurrencySelector({
                         className="flex items-center justify-between p-2 arabic cursor-pointer"
                       >
                         <div className="flex items-center gap-3">
-                          <span className="text-lg">{getCurrentFlag(country)}</span>
+                          <span className="text-lg">
+                            {getCurrentFlag(country)}
+                          </span>
                           <div>
                             <div className="font-medium text-sm">{country}</div>
                             <div className="text-xs text-gray-500">
@@ -156,7 +161,7 @@ export function CurrencySelector({
           {availableCountries.map((country) => {
             const currency = countryCurrencies[country];
             const isSelected = country === storeCountry;
-            
+
             return (
               <DropdownMenuItem
                 key={country}
@@ -172,9 +177,7 @@ export function CurrencySelector({
                     </div>
                   </div>
                 </div>
-                {isSelected && (
-                  <Check className="w-4 h-4 text-green-600" />
-                )}
+                {isSelected && <Check className="w-4 h-4 text-green-600" />}
               </DropdownMenuItem>
             );
           })}
@@ -187,7 +190,7 @@ export function CurrencySelector({
 // مكون مبسط لعرض العملة الحالية فقط
 export function CurrencyDisplay({ className = "" }: { className?: string }) {
   const { currentCurrency, storeCountry } = useCurrencySafe();
-  
+
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <DollarSign className="w-4 h-4 text-gray-500" />

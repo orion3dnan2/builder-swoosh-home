@@ -124,9 +124,14 @@ router.post("/", authenticateToken, async (req: any, res) => {
 
     // طباعة البيانات المستلمة للتشخيص
     console.log("🔍 Create Store Request Data:", {
-      name, category, phone, email, city, storeType,
+      name,
+      category,
+      phone,
+      email,
+      city,
+      storeType,
       userId: req.user.id,
-      userRole: req.user.role
+      userRole: req.user.role,
     });
 
     // التحقق من البيانات المطلوبة
@@ -136,12 +141,12 @@ router.post("/", authenticateToken, async (req: any, res) => {
         category: !!category,
         phone: !!phone,
         email: !!email,
-        city: !!city
+        city: !!city,
       });
       return res.status(400).json({
         error: "جميع الحقول الأساسية مطلوبة",
         requiredFields: ["name", "category", "phone", "email", "city"],
-        receivedData: { name, category, phone, email, city }
+        receivedData: { name, category, phone, email, city },
       });
     }
 
@@ -155,11 +160,13 @@ router.post("/", authenticateToken, async (req: any, res) => {
     console.log("🔍 Checking for existing store:", {
       searchingFor: name.toLowerCase(),
       merchantId: req.user.id,
-      existingStore: existingStore ? {
-        id: existingStore.id,
-        name: existingStore.name,
-        merchantId: existingStore.merchantId
-      } : null
+      existingStore: existingStore
+        ? {
+            id: existingStore.id,
+            name: existingStore.name,
+            merchantId: existingStore.merchantId,
+          }
+        : null,
     });
 
     if (existingStore) {
@@ -167,7 +174,7 @@ router.post("/", authenticateToken, async (req: any, res) => {
       return res.status(400).json({
         error: "لديك متجر بنفس الاسم بالفعل",
         existingStoreName: existingStore.name,
-        existingStoreId: existingStore.id
+        existingStoreId: existingStore.id,
       });
     }
 
@@ -266,9 +273,14 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
     // طباعة البيانات المستلمة للتشخيص
     console.log("🔍 Update Store Request Data:", {
       storeId,
-      name, category, phone, email, city, storeType,
+      name,
+      category,
+      phone,
+      email,
+      city,
+      storeType,
       userId: req.user.id,
-      userRole: req.user.role
+      userRole: req.user.role,
     });
 
     // التحقق من البيانات المطلوبة للتحديث
@@ -276,7 +288,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
       return res.status(400).json({
         error: "جميع الحقول الأساسية مطلوبة للتحديث",
         requiredFields: ["name", "category", "phone", "email", "city"],
-        receivedData: { name, category, phone, email, city }
+        receivedData: { name, category, phone, email, city },
       });
     }
 
@@ -293,7 +305,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
       return res.status(400).json({
         error: "لديك متجر آخر بنفس الاسم. يرجى اختيار اسم مختلف.",
         duplicateStoreName: duplicateStore.name,
-        duplicateStoreId: duplicateStore.id
+        duplicateStoreId: duplicateStore.id,
       });
     }
 

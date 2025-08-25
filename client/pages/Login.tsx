@@ -45,7 +45,9 @@ export default function Login() {
         username: formData.username,
         password: formData.password,
         passwordLength: formData.password.length,
-        passwordChars: Array.from(formData.password).map(char => `${char} (${char.charCodeAt(0)})`).join(', ')
+        passwordChars: Array.from(formData.password)
+          .map((char) => `${char} (${char.charCodeAt(0)})`)
+          .join(", "),
       });
 
       const user = await login({

@@ -51,7 +51,7 @@ export default function Cart() {
 
   const handleCheckout = () => {
     setIsCheckingOut(true);
-    console.log('Checkout initiated'); // Debug log
+    console.log("Checkout initiated"); // Debug log
 
     // Calculate tax (0% for Sudan/Kuwait - no VAT currently applied)
     const taxRate = 0; // 0% tax rate - can be configured later

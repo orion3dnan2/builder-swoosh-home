@@ -36,12 +36,8 @@ export default function ProductDetails() {
   const navigate = useNavigate();
   const { products } = useProducts();
   const { formatPrice } = useCurrencySafe();
-  const {
-    addToCart,
-    removeFromCart,
-    updateQuantity,
-    getProductQuantity,
-  } = useCart();
+  const { addToCart, removeFromCart, updateQuantity, getProductQuantity } =
+    useCart();
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -140,7 +136,9 @@ export default function ProductDetails() {
               onClick={() => setIsWishlisted(!isWishlisted)}
               className={isWishlisted ? "text-red-500" : ""}
             >
-              <Heart className={`w-4 h-4 ${isWishlisted ? "fill-current" : ""}`} />
+              <Heart
+                className={`w-4 h-4 ${isWishlisted ? "fill-current" : ""}`}
+              />
             </Button>
             <Button variant="outline" size="sm" onClick={handleShare}>
               <Share2 className="w-4 h-4" />
@@ -159,7 +157,8 @@ export default function ProductDetails() {
               />
               {product.salePrice && (
                 <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold arabic">
-                  خصم {Math.round((1 - product.salePrice / product.price) * 100)}%
+                  خصم{" "}
+                  {Math.round((1 - product.salePrice / product.price) * 100)}%
                 </div>
               )}
               <div className="absolute top-4 left-4">
@@ -246,7 +245,8 @@ export default function ProductDetails() {
             {/* Category and Tags */}
             <div className="flex flex-wrap gap-2">
               <Badge variant="outline" className="arabic">
-                {ProductService.getCategoryIcon(product.category)} {product.category}
+                {ProductService.getCategoryIcon(product.category)}{" "}
+                {product.category}
               </Badge>
               {product.tags.map((tag) => (
                 <Badge key={tag} variant="secondary" className="arabic text-xs">
@@ -293,14 +293,14 @@ export default function ProductDetails() {
                       variant="ghost"
                       size="sm"
                       onClick={handleIncreaseQuantity}
-                      disabled={currentCartQuantity >= product.inventory.quantity}
+                      disabled={
+                        currentCartQuantity >= product.inventory.quantity
+                      }
                     >
                       <Plus className="w-4 h-4" />
                     </Button>
                   </div>
-                  <div className="text-sm text-gray-600 arabic">
-                    في السلة
-                  </div>
+                  <div className="text-sm text-gray-600 arabic">في السلة</div>
                 </div>
               ) : (
                 <div className="flex items-center gap-4">
@@ -317,7 +317,11 @@ export default function ProductDetails() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => setQuantity(Math.min(product.inventory.quantity, quantity + 1))}
+                      onClick={() =>
+                        setQuantity(
+                          Math.min(product.inventory.quantity, quantity + 1),
+                        )
+                      }
                       disabled={quantity >= product.inventory.quantity}
                     >
                       <Plus className="w-4 h-4" />
@@ -362,9 +366,7 @@ export default function ProductDetails() {
             <CardContent className="p-6 text-center">
               <RotateCcw className="w-8 h-8 text-purple-600 mx-auto mb-3" />
               <h3 className="font-bold arabic mb-2">إرجاع مجاني</h3>
-              <p className="text-sm text-gray-600 arabic">
-                إرجاع خلال 14 يوم
-              </p>
+              <p className="text-sm text-gray-600 arabic">إرجاع خلال 14 يوم</p>
             </CardContent>
           </Card>
         </div>
@@ -381,7 +383,9 @@ export default function ProductDetails() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600 arabic">المخزون:</span>
-                  <span className="font-medium arabic">{product.inventory.quantity} قطعة</span>
+                  <span className="font-medium arabic">
+                    {product.inventory.quantity} قطعة
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600 arabic">الحالة:</span>
@@ -446,14 +450,17 @@ export default function ProductDetails() {
                       <Star
                         key={i}
                         className={`w-4 h-4 ${
-                          i < 5 ? "text-yellow-400 fill-current" : "text-gray-300"
+                          i < 5
+                            ? "text-yellow-400 fill-current"
+                            : "text-gray-300"
                         }`}
                       />
                     ))}
                   </div>
                 </div>
                 <p className="text-gray-700 arabic">
-                  منتج ممتاز وجودة عالية. وصل في الوقت المحدد والتغليف ممتاز. أنصح بالشراء.
+                  منتج ممتاز وجودة عالية. وصل في الوقت المحدد والتغليف ممتاز.
+                  أنصح بالشراء.
                 </p>
               </div>
 
@@ -473,7 +480,9 @@ export default function ProductDetails() {
                       <Star
                         key={i}
                         className={`w-4 h-4 ${
-                          i < 4 ? "text-yellow-400 fill-current" : "text-gray-300"
+                          i < 4
+                            ? "text-yellow-400 fill-current"
+                            : "text-gray-300"
                         }`}
                       />
                     ))}

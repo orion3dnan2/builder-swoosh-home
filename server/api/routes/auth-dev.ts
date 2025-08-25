@@ -32,22 +32,58 @@ router.post("/login", async (req, res) => {
     const { username, password, platform = "web" } = req.body;
 
     console.log(`🔐 محاولة تسجيل دخول: ${username}`);
-    console.log(`🔑 كلمة المرور المدخلة: "${password}" (length: ${password.length})`);
+    console.log(
+      `🔑 كلمة المرور المدخلة: "${password}" (length: ${password.length})`,
+    );
 
     // تحويل الأحرف العربية إلى إنجليزية إذا لزم الأمر (مشكلة لوحة المفاتيح العربية)
     const arabicToEnglishMap: { [key: string]: string } = {
       // الأحرف الأساسية
-      'ع': 'u', 'س': 's', 'ث': 'e', 'ق': 'r', 'ف': 'f', 'غ': 'g', 'ه': 'h',
-      'ج': 'j', 'ك': 'k', 'ل': 'l', 'ا': 'a', 'د': 'd', 'ذ': 'z', 'ر': 'r',
-      'ز': 'z', 'ت': 't', 'ي': 'y', 'ب': 'b', 'ن': 'n', 'م': 'm',
-      'و': 'w', 'ء': 'x', 'ح': 'c', 'خ': 'v', 'ص': 'p', 'ض': 'o',
+      ع: "u",
+      س: "s",
+      ث: "e",
+      ق: "r",
+      ف: "f",
+      غ: "g",
+      ه: "h",
+      ج: "j",
+      ك: "k",
+      ل: "l",
+      ا: "a",
+      د: "d",
+      ذ: "z",
+      ر: "r",
+      ز: "z",
+      ت: "t",
+      ي: "y",
+      ب: "b",
+      ن: "n",
+      م: "m",
+      و: "w",
+      ء: "x",
+      ح: "c",
+      خ: "v",
+      ص: "p",
+      ض: "o",
       // الأرقام العربية
-      '١': '1', '٢': '2', '٣': '3', '٤': '4', '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9', '٠': '0'
+      "١": "1",
+      "٢": "2",
+      "٣": "3",
+      "٤": "4",
+      "٥": "5",
+      "٦": "6",
+      "٧": "7",
+      "٨": "8",
+      "٩": "9",
+      "٠": "0",
     };
 
     let normalizedPassword = password;
     for (const [arabic, english] of Object.entries(arabicToEnglishMap)) {
-      normalizedPassword = normalizedPassword.replace(new RegExp(arabic, 'g'), english);
+      normalizedPassword = normalizedPassword.replace(
+        new RegExp(arabic, "g"),
+        english,
+      );
     }
 
     console.log(`🔄 كلمة المرور بعد التحويل: "${normalizedPassword}"`);
@@ -64,7 +100,9 @@ router.post("/login", async (req, res) => {
         .json({ error: "اسم المستخدم أو كلمة المرور غير صحيحة" });
     }
 
-    console.log(`✅ المستخدم موجود: ${user.username}, كلمة المرور المحفوظة: ${user.password}`);
+    console.log(
+      `✅ المستخدم موجود: ${user.username}, كلمة المرور المحفوظة: ${user.password}`,
+    );
 
     // التحقق من حالة المستخدم
     if (!user.isActive) {
@@ -79,21 +117,27 @@ router.post("/login", async (req, res) => {
     // إذا كانت كلمة المرور تبدأ بـ $2b$ فهي مشفرة، وإلا فهي بسيطة
     if (user.password.startsWith("$2b$")) {
       try {
-        isPasswordValid = await bcrypt.compare(normalizedPassword, user.password);
+        isPasswordValid = await bcrypt.compare(
+          normalizedPassword,
+          user.password,
+        );
       } catch (bcryptError) {
         console.error("خطأ في فك تشفير كلمة المرور:", bcryptError);
         isPasswordValid = false;
       }
     } else {
       // كلمة مرور بسيطة للتجربة - تجربة كلا النسختين
-      isPasswordValid = normalizedPassword === user.password || password === user.password;
+      isPasswordValid =
+        normalizedPassword === user.password || password === user.password;
     }
 
     console.log(`🔍 نتيجة التحقق من كلمة المرور: ${isPasswordValid}`);
 
     if (!isPasswordValid) {
       console.log(`❌ كلمة المرور غير صحيحة للمستخدم: ${username}`);
-      console.log(`❌ المطلوب: "${user.password}", المستلم: "${password}", المحول: "${normalizedPassword}"`);
+      console.log(
+        `❌ المطلوب: "${user.password}", المستلم: "${password}", المحول: "${normalizedPassword}"`,
+      );
       return res
         .status(401)
         .json({ error: "اسم المستخدم أو كلمة المرور غير صحيحة" });

@@ -487,7 +487,7 @@ export default function MerchantSettings() {
       userRole: user.role,
       hasToken: !!token,
       tokenLength: token ? token.length : 0,
-      userObject: user
+      userObject: user,
     });
 
     // التحقق من صحة البي��نا��
@@ -556,25 +556,25 @@ export default function MerchantSettings() {
       console.log("📋 Store data being sent:", {
         ...storeData,
         dataValidation: {
-          hasName: !!storeData.name && storeData.name.trim() !== '',
-          hasCategory: !!storeData.category && storeData.category.trim() !== '',
-          hasPhone: !!storeData.phone && storeData.phone.trim() !== '',
-          hasEmail: !!storeData.email && storeData.email.trim() !== '',
-          hasCity: !!storeData.city && storeData.city.trim() !== '',
-          hasCountry: !!storeData.country && storeData.country.trim() !== ''
-        }
+          hasName: !!storeData.name && storeData.name.trim() !== "",
+          hasCategory: !!storeData.category && storeData.category.trim() !== "",
+          hasPhone: !!storeData.phone && storeData.phone.trim() !== "",
+          hasEmail: !!storeData.email && storeData.email.trim() !== "",
+          hasCity: !!storeData.city && storeData.city.trim() !== "",
+          hasCountry: !!storeData.country && storeData.country.trim() !== "",
+        },
       });
 
       // التأكد من أن جميع الحقول المطلوبة موجودة
-      const requiredFields = ['name', 'category', 'phone', 'email', 'city'];
-      const missingFields = requiredFields.filter(field => {
+      const requiredFields = ["name", "category", "phone", "email", "city"];
+      const missingFields = requiredFields.filter((field) => {
         const value = storeData[field];
-        return !value || (typeof value === 'string' && value.trim() === '');
+        return !value || (typeof value === "string" && value.trim() === "");
       });
 
       if (missingFields.length > 0) {
         console.error("❌ Missing required fields:", missingFields);
-        throw new Error(`الحقول التالية مطلوبة: ${missingFields.join(', ')}`);
+        throw new Error(`الحقول التالية مطلوبة: ${missingFields.join(", ")}`);
       }
 
       // التحقق من صحة البريد الإلكتروني
@@ -592,20 +592,26 @@ export default function MerchantSettings() {
         const existingStoreByName = userStores.find(
           (store) =>
             store.merchantId === user?.id &&
-            store.name.toLowerCase() === storeData.name.toLowerCase()
+            store.name.toLowerCase() === storeData.name.toLowerCase(),
         );
 
         const existingStoreByUser = userStores.find(
-          (store) => store.merchantId === user?.id
+          (store) => store.merchantId === user?.id,
         );
 
         if (existingStoreByName) {
           // تحديث متجر موجود بنفس الاسم
-          console.log("🔄 Updating existing store with same name:", existingStoreByName.id);
+          console.log(
+            "🔄 Updating existing store with same name:",
+            existingStoreByName.id,
+          );
           await ApiService.updateStore(existingStoreByName.id, storeData);
         } else if (existingStoreByUser) {
           // تحديث أي متجر موجود للمستخدم
-          console.log("🔄 Updating existing store for user:", existingStoreByUser.id);
+          console.log(
+            "🔄 Updating existing store for user:",
+            existingStoreByUser.id,
+          );
           await ApiService.updateStore(existingStoreByUser.id, storeData);
         } else {
           // إنشاء متجر جديد
@@ -620,16 +626,18 @@ export default function MerchantSettings() {
           error: apiError,
           status: apiError.status,
           errorData: apiError.errorData,
-          storeData: storeData
+          storeData: storeData,
         });
 
         // Log the full error object for debugging
         console.error("Full API Error:", JSON.stringify(apiError, null, 2));
 
         // Check for specific error conditions
-        if (apiError.message.includes("لديك متجر بنفس الاسم بالفعل") ||
-            apiError.message.includes("Store already exists") ||
-            (apiError.errorData && apiError.errorData.existingStoreId)) {
+        if (
+          apiError.message.includes("لديك متجر بنفس الاسم بالفعل") ||
+          apiError.message.includes("Store already exists") ||
+          (apiError.errorData && apiError.errorData.existingStoreId)
+        ) {
           // If trying to create but store exists, try to find and update it instead
           console.log("🔄 Store exists, trying to update instead of create");
           try {
@@ -637,20 +645,31 @@ export default function MerchantSettings() {
             const existingStoreByName = allStores.find(
               (store) =>
                 store.merchantId === user?.id &&
-                store.name.toLowerCase() === storeData.name.toLowerCase()
+                store.name.toLowerCase() === storeData.name.toLowerCase(),
             );
 
             if (existingStoreByName) {
-              console.log("🔄 Found existing store, updating:", existingStoreByName.id);
+              console.log(
+                "🔄 Found existing store, updating:",
+                existingStoreByName.id,
+              );
               await ApiService.updateStore(existingStoreByName.id, storeData);
               console.log("✅ Successfully updated existing store");
               return; // Success, exit this catch block
             } else {
               // Try using the existing store ID from error response
               if (apiError.errorData && apiError.errorData.existingStoreId) {
-                console.log("🔄 Using store ID from error response:", apiError.errorData.existingStoreId);
-                await ApiService.updateStore(apiError.errorData.existingStoreId, storeData);
-                console.log("✅ Successfully updated existing store via error ID");
+                console.log(
+                  "🔄 Using store ID from error response:",
+                  apiError.errorData.existingStoreId,
+                );
+                await ApiService.updateStore(
+                  apiError.errorData.existingStoreId,
+                  storeData,
+                );
+                console.log(
+                  "✅ Successfully updated existing store via error ID",
+                );
                 return;
               }
             }
@@ -695,7 +714,7 @@ export default function MerchantSettings() {
         message: error.message,
         stack: error.stack,
         storeSettings,
-        selectedCountry
+        selectedCountry,
       });
     } finally {
       setIsSaving(false);
