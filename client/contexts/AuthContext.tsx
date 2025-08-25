@@ -30,8 +30,15 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Check for browser environment
+  if (typeof window === 'undefined') {
+    return <>{children}</>;
+  }
+
+  // Wrap in try-catch to prevent crashes
+  try {
+    const [user, setUser] = useState<User | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
   // Initialize auth state
   useEffect(() => {
@@ -139,9 +146,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     refreshAuth,
   };
 
-  return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
-  );
+    return (
+      <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    );
+  } catch (error) {
+    console.error('❌ AuthProvider: Critical error:', error);
+    // Fallback: return children without auth functionality
+    return <>{children}</>;
+  }
 }
 
 export function useAuth() {
