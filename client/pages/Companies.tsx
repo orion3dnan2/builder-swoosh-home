@@ -389,8 +389,8 @@ export default function Companies() {
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {industries.map((industry) => {
-                const industryCount = companies.filter(
-                  (c) => c.category === industry,
+                const industryCount = (companies || []).filter(
+                  (c) => c?.category === industry,
                 ).length;
                 return (
                   <div
