@@ -42,6 +42,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { TextCleaner } from "./components/SafeText";
 import { Toaster } from "./components/ui/toaster";
+import { PWAManager } from "./components/PWAManager";
 import "./global.css";
 
 function App() {
