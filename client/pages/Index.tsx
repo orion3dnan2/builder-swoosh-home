@@ -33,7 +33,7 @@ export default function Index() {
     {
       icon: Building2,
       number: "5K+",
-      label: "شر��ة مسجلة",
+      label: "شركة مسجلة",
     },
     {
       icon: ShoppingBag,
@@ -75,7 +75,7 @@ export default function Index() {
     {
       icon: Wrench,
       title: "الخدمات المهنية",
-      description: "احصل على خدمات ��هنية متخصصة من خبراء سودانيين",
+      description: "احصل على خدمات مهنية متخصصة من خبراء سودانيين",
       href: "/services",
       color: "from-orange-500 to-orange-600",
       bgColor: "bg-orange-50 dark:bg-orange-900/20",
@@ -142,16 +142,16 @@ export default function Index() {
 
             {/* CTA Buttons */}
             <div
-              className={`flex flex-col xs:flex-row gap-3 md:gap-4 justify-center mb-8 md:mb-12 px-4 ${isRTL ? "xs:flex-row-reverse" : ""}`}
+              className={`flex flex-col xs:flex-row gap-4 md:gap-6 justify-center mb-8 md:mb-12 px-4 ${isRTL ? "xs:flex-row-reverse" : ""}`}
             >
               <Link to="/marketplace" className="w-full xs:w-auto">
                 <Button
                   size="lg"
-                  className="button-cultural w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg arabic"
+                  className="button-cultural w-full xs:w-auto px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl arabic button-iphone touch-target"
                 >
                   استكشف السوق
                   <ArrowIcon
-                    className={`w-4 h-4 md:w-5 md:h-5 ${isRTL ? "mr-2" : "ml-2"}`}
+                    className={`w-5 h-5 md:w-6 md:h-6 ${isRTL ? "mr-3" : "ml-3"}`}
                   />
                 </Button>
               </Link>
@@ -159,7 +159,7 @@ export default function Index() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="w-full xs:w-auto px-6 md:px-8 py-3 md:py-4 text-base md:text-lg bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white hover:text-primary-700 arabic"
+                  className="w-full xs:w-auto px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white hover:text-primary-700 arabic button-iphone touch-target"
                 >
                   انضم إلينا
                 </Button>
