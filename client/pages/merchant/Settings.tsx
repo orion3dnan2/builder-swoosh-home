@@ -110,6 +110,7 @@ interface ShippingSettings {
 export default function MerchantSettings() {
   const { t, isRTL } = useTheme();
   const { user } = useAuth();
+  const { updateCurrencyByCountry } = useCurrencySafe();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("store");
   const [showPassword, setShowPassword] = useState(false);
@@ -148,7 +149,7 @@ export default function MerchantSettings() {
         setShipping(JSON.parse(savedShipping));
       }
     } catch (error) {
-      console.error("خطأ في تحميل البيانات المحلية:", error);
+      console.error("خطأ في تحميل الب��انات المحلية:", error);
     }
   };
 
@@ -560,7 +561,7 @@ export default function MerchantSettings() {
 
       // عرض رسالة نجاح
       alert(
-        "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.",
+        "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات ا��خاصة بمتجرك.",
       );
     } catch (error) {
       alert(
@@ -595,7 +596,7 @@ export default function MerchantSettings() {
 
   const workingDays = [
     "السبت",
-    "الأحد",
+    "ال��حد",
     "الاثنين",
     "الثلاثاء",
     "��لأربعاء",
@@ -646,7 +647,7 @@ export default function MerchantSettings() {
       "مدينة الكويت",
       "الأحمدي",
       "الجهراء",
-      "مبارك الكبير",
+      "��بارك الكبير",
       "الفروانية",
       "حولي",
     ],
@@ -679,7 +680,7 @@ export default function MerchantSettings() {
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
 
-  // إدارة المناطق من النظام الإداري
+  // إدارة ا��مناطق من النظام الإداري
   const {
     regions: availableRegions,
     isLoading: regionsLoading,
@@ -704,6 +705,15 @@ export default function MerchantSettings() {
     setStoreSettings({
       ...storeSettings,
       city: "",
+    });
+
+    // تحديث العملة حسب الدولة المختارة
+    updateCurrencyByCountry(country);
+
+    // إظهار رسالة تأكيد للمستخدم
+    toast({
+      title: "تم تحديث العملة",
+      description: `تم تحديث عملة المتجر لتتناسب مع ${country}`,
     });
   };
 
@@ -943,7 +953,7 @@ export default function MerchantSettings() {
                                 className="arabic text-red-600 hover:bg-red-50"
                                 onClick={handleRemoveBanner}
                               >
-                                حذف
+                                ��ذف
                               </Button>
                             )}
                           </div>
