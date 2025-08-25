@@ -52,10 +52,16 @@ export const SafeText: React.FC<{
   as?: keyof JSX.IntrinsicElements;
   fallback?: string;
 }> = ({ children, className, as: Component = "span", fallback = "" }) => {
-  const cleanedText = cleanArabicText(children);
-  const finalText = cleanedText || fallback;
+  try {
+    const cleanedText = cleanArabicText(children);
+    const finalText = cleanedText || fallback;
 
-  return React.createElement(Component, { className }, finalText);
+    return React.createElement(Component, { className }, finalText);
+  } catch (error) {
+    console.error('Error in SafeText:', error);
+    // Return fallback or original text if cleaning fails
+    return React.createElement(Component, { className }, children || fallback);
+  }
 };
 
 // Hook لتنظيف النصوص
