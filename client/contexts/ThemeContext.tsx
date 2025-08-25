@@ -129,7 +129,7 @@ const translations = {
     "dashboard.app_settings": "إعدادات التطبيق",
     "dashboard.app_settings_desc": "تخصيص المظهر والألوان والخطوط",
     "dashboard.user_management": "إدارة المستخدمين",
-    "dashboard.user_management_desc": "عرض وإدارة حسابات الم��تخدمين",
+    "dashboard.user_management_desc": "عرض وإدارة حسابات المستخدمين",
     "dashboard.store_management": "إد��رة المتاجر",
     "dashboard.store_management_desc": "مراجعة وإدارة المتاجر المسجلة",
     "dashboard.appearance": "تخصيص المظهر",
@@ -160,7 +160,7 @@ const translations = {
     "stores.rating": "التقييم",
     "stores.products": "منتج",
     "stores.orders": "طلب",
-    "stores.revenue": "إيراد",
+    "stores.revenue": "إي��اد",
     "stores.view_details": "عرض التفاصيل",
     "stores.approve_store": "اعتماد المتجر",
     "stores.suspend_store": "تعليق المتجر",
@@ -174,7 +174,7 @@ const translations = {
     "stores.performance_stats": "إحصائيات الأداء",
     "stores.store_name": "اسم المتجر",
     "stores.owner": "المالك",
-    "stores.email": "البريد ال��لكتروني",
+    "stores.email": "البريد الإلكتروني",
     "stores.phone": "رقم الهاتف",
     "stores.location": "الموقع",
     "stores.status": "الحالة",
@@ -549,9 +549,25 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 }
 
 export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    // Provide a safe fallback during initial render
+  try {
+    const context = useContext(ThemeContext);
+    if (context === undefined) {
+      // Provide a safe fallback during initial render
+      return {
+        theme: "light" as Theme,
+        language: "ar" as Language,
+        fontFamily: "cairo" as FontFamily,
+        toggleTheme: () => {},
+        toggleLanguage: () => {},
+        setFontFamily: () => {},
+        t: (key: string) => key,
+        isRTL: true,
+      };
+    }
+    return context;
+  } catch (error) {
+    console.error('❌ useTheme: Critical error:', error);
+    // Return safe fallback
     return {
       theme: "light" as Theme,
       language: "ar" as Language,
@@ -563,7 +579,6 @@ export function useTheme() {
       isRTL: true,
     };
   }
-  return context;
 }
 
 // Font loading utilities
