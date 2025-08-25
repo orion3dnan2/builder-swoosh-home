@@ -6,6 +6,11 @@ interface PWAManagerProps {
 }
 
 export function PWAManager({ children }: PWAManagerProps) {
+  // Check if React hooks are available
+  if (typeof window === 'undefined') {
+    return <>{children}</>;
+  }
+
   const { isInstalled, isStandalone } = usePWA();
   const [isReady, setIsReady] = useState(false);
 
