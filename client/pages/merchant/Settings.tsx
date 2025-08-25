@@ -338,7 +338,7 @@ export default function MerchantSettings() {
           },
           {
             id: "driver3",
-            name: "عثمان عبدالرحمن",
+            name: "��ثمان عبدالرحمن",
             phone: "+96550123456",
             area: "ال��ويت",
             rating: 4.7,
@@ -383,7 +383,7 @@ export default function MerchantSettings() {
     window.open(whatsappUrl, "_blank");
   };
 
-  // معالجة تغ��ير الشعا��
+  // معالجة تغ��ير الشعار
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -497,7 +497,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.email.trim()) {
-      alert("يرجى إدخ��ل ا��بريد ا��إلكتروني");
+      alert("يرجى إدخ��ل ا���بريد ا��إلكتروني");
       return;
     }
 
@@ -557,9 +557,11 @@ export default function MerchantSettings() {
 
         if (existingStore) {
           // تحديث متجر موجود
+          console.log("🔄 Updating existing store:", existingStore.id);
           await ApiService.updateStore(existingStore.id, storeData);
         } else {
           // إنشاء متجر جديد
+          console.log("➕ Creating new store");
           await ApiService.createStore(storeData);
         }
       } catch (apiError: any) {
@@ -580,7 +582,7 @@ export default function MerchantSettings() {
           apiError,
         );
 
-        // حفظ البيانات محل��اً
+        // حفظ البيانات محلياً
         localStorage.setItem(
           "storeSettings",
           JSON.stringify({ ...storeSettings, selectedCountry }),
@@ -660,7 +662,7 @@ export default function MerchantSettings() {
     ],
     "ا��مملكة العربية السعودية": [
       "الرياض",
-      "ج��ة",
+      "جدة",
       "الدمام",
       "��كة المكرمة",
       "المدينة المنورة",
@@ -690,7 +692,7 @@ export default function MerchantSettings() {
       "حولي",
     ],
     "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أ�� صلال", "الخور", "الشمال"],
-    "مملكة البحرين": ["ا��منامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
+    "م��لكة البحرين": ["ا��منامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرست��ق", "صحار"],
     "جمهورية مصر العربية": [
       "القاهرة",
@@ -1088,7 +1090,7 @@ export default function MerchantSettings() {
                       <option value="beauty">تجميل وعناية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
-                      يحدد نوع المت��ر مكا�� ظهوره في الموقع (صفحة المطاعم،
+                      يحدد نوع المت��ر مكان ظهوره في الموقع (صفحة المطاعم،
                       الشركات، أو المت��جر)
                     </p>
                   </div>
@@ -1108,7 +1110,7 @@ export default function MerchantSettings() {
                         })
                       }
                       className="mt-1 text-right arabic"
-                      placeholder="اكتب وصفاً مختصراً عن متج��ك ��منتجاتك..."
+                      placeholder="اكتب وصفاً مختصراً عن متج��ك ��منتجات��..."
                     />
                   </div>
 
@@ -1401,7 +1403,7 @@ export default function MerchantSettings() {
                           إشعارات المخزون
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تنبيه��ت حول مستوى المخزون والمراجعات
+                          تنبيهات حول مستوى المخزون والمراجعات
                         </p>
                       </div>
                     </div>
@@ -1470,7 +1472,7 @@ export default function MerchantSettings() {
                           طرق الإشعار
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          اختر كيفية تلقي الإشعارات
+                          اختر كيفية تلقي الإ��عارات
                         </p>
                       </div>
                     </div>
