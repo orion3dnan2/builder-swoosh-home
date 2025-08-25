@@ -388,13 +388,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <div className="xl:hidden pb-4 animate-slide-up">
-              <nav className="grid grid-cols-2 gap-2 mb-4">
+            <div className="xl:hidden pb-4 animate-slide-up iphone-safe-bottom">
+              <nav className="grid grid-cols-2 gap-3 mb-5">
                 {navigation.map((item) => (
                   <Link
                     key={item.href}
                     to={item.href}
-                    className={`flex items-center gap-2 px-3 py-3 rounded-xl transition-all duration-200 arabic text-sm ${
+                    className={`flex items-center gap-3 px-4 py-4 rounded-xl transition-all duration-200 arabic text-base touch-target ${
                       isRTL ? "flex-row-reverse" : "flex-row"
                     } ${
                       location.pathname === item.href
@@ -403,8 +403,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <span>{item.icon}</span>
-                    <span>{item.name}</span>
+                    <span className="text-lg">{item.icon}</span>
+                    <span className="font-medium">{item.name}</span>
                   </Link>
                 ))}
               </nav>
