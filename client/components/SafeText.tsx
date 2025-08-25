@@ -39,7 +39,7 @@ const cleanArabicText = (text: string): string => {
       .replace(/��ين/gi, "أين")
       .replace(/��يام/gi, "أيام")
 
-      // تنظيف المسافات الزائدة
+      // تنظ��ف المسافات الزائدة
       .replace(/\s+/g, " ")
       .trim()
   );
@@ -107,54 +107,66 @@ export const TextCleaner: React.FC<{ children: React.ReactNode }> = ({
         }
       };
 
-    // تنظيف فوري
-    cleanupTexts();
+      // تنظيف فوري
+      cleanupTexts();
 
-    // مراقبة التغييرات في DOM وتنظيف المحتوى الجديد
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === "childList") {
-          mutation.addedNodes.forEach((node) => {
-            if (
-              node.nodeType === Node.TEXT_NODE &&
-              node.textContent?.includes("��")
-            ) {
-              node.textContent = cleanArabicText(node.textContent);
-            } else if (node.nodeType === Node.ELEMENT_NODE) {
-              const walker = document.createTreeWalker(
-                node as Element,
-                NodeFilter.SHOW_TEXT,
-                {
-                  acceptNode: (textNode) => {
-                    return textNode.textContent &&
-                      textNode.textContent.includes("��")
-                      ? NodeFilter.FILTER_ACCEPT
-                      : NodeFilter.FILTER_REJECT;
-                  },
-                },
-              );
+      // مراقبة التغييرات في DOM وتنظيف المحتوى الجديد
+      const observer = new MutationObserver((mutations) => {
+        try {
+          mutations.forEach((mutation) => {
+            if (mutation.type === "childList") {
+              mutation.addedNodes.forEach((node) => {
+                try {
+                  if (
+                    node.nodeType === Node.TEXT_NODE &&
+                    node.textContent?.includes("��")
+                  ) {
+                    node.textContent = cleanArabicText(node.textContent);
+                  } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    const walker = document.createTreeWalker(
+                      node as Element,
+                      NodeFilter.SHOW_TEXT,
+                      {
+                        acceptNode: (textNode) => {
+                          return textNode.textContent &&
+                            textNode.textContent.includes("��")
+                            ? NodeFilter.FILTER_ACCEPT
+                            : NodeFilter.FILTER_REJECT;
+                        },
+                      },
+                    );
 
-              let textNode;
-              while ((textNode = walker.nextNode())) {
-                if (textNode.textContent) {
-                  textNode.textContent = cleanArabicText(textNode.textContent);
+                    let textNode;
+                    while ((textNode = walker.nextNode())) {
+                      if (textNode.textContent) {
+                        textNode.textContent = cleanArabicText(textNode.textContent);
+                      }
+                    }
+                  }
+                } catch (nodeError) {
+                  console.error('Error processing node:', nodeError);
                 }
-              }
+              });
             }
           });
+        } catch (mutationError) {
+          console.error('Error in MutationObserver:', mutationError);
         }
       });
-    });
 
-    // بدء مراقبة DOM
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-    });
+      // بدء مراقبة DOM
+      try {
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+          characterData: true,
+        });
+      } catch (observerError) {
+        console.error('Error starting MutationObserver:', observerError);
+      }
 
-    // تنظيف دوري كنسخة احتياطية
-    const interval = setInterval(cleanupTexts, 5000);
+      // تنظيف دوري كنسخة احتياطية
+      const interval = setInterval(cleanupTexts, 5000);
 
       return () => {
         observer.disconnect();
