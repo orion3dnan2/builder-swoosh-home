@@ -69,13 +69,13 @@ export default function Companies() {
   });
 
   // استخراج القطاعات والدول من البيانات
-  const industries = [...new Set(companies.map((c) => c.category))];
-  const countries = [...new Set(companies.map((c) => c.country))];
+  const industries = [...new Set((companies || []).map((c) => c?.category).filter(Boolean))];
+  const countries = [...new Set((companies || []).map((c) => c?.country).filter(Boolean))];
   const sizes = ["صغيرة", "متوسطة", "كبيرة"];
 
   // الشركات المميزة (أول 3 شركات نشطة)
-  const featuredCompanies = companies
-    .filter((c) => c.status === "active")
+  const featuredCompanies = (companies || [])
+    .filter((c) => c?.status === "active")
     .slice(0, 3);
 
   return (
