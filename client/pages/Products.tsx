@@ -21,9 +21,11 @@ import { ProductService, useProducts } from "@/lib/products";
 import { useCart } from "@/lib/cart";
 import { useCurrencySafe } from "@/contexts/CurrencyContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function Products() {
+  const navigate = useNavigate();
   const { products } = useProducts();
   const {
     cart,
@@ -403,7 +405,15 @@ export default function Products() {
                           أضف للسلة
                         </Button>
                       )}
-                      <Button variant="outline" size="sm" className="arabic">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="arabic"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleProductDetails(product.id);
+                        }}
+                      >
                         تفاصيل
                       </Button>
                     </div>
@@ -520,6 +530,10 @@ export default function Products() {
                             variant="outline"
                             size="sm"
                             className="arabic"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleProductDetails(product.id);
+                            }}
                           >
                             تفاصيل
                           </Button>
@@ -574,7 +588,7 @@ export default function Products() {
               لا توجد منتجات مط��بقة للبحث
             </h2>
             <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
-              جرب تغيير كلمات البحث أو الفئات المختارة
+              جرب تغيير كلما�� البحث أو الفئات المختارة
             </p>
             <Button
               variant="outline"
