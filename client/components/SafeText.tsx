@@ -1,6 +1,6 @@
 import React from "react";
 
-// دالة لتنظيف ال��صوص العربية المعطوبة
+// دالة لتنظيف النصوص العربية المعطوبة
 const cleanArabicText = (text: string): string => {
   if (!text) return text;
 
@@ -60,7 +60,12 @@ export const SafeText: React.FC<{
 
 // Hook لتنظيف النصوص
 export const useCleanText = (text: string): string => {
-  return React.useMemo(() => cleanArabicText(text), [text]);
+  try {
+    return React.useMemo(() => cleanArabicText(text), [text]);
+  } catch (error) {
+    console.error('Error in useCleanText:', error);
+    return text; // Return original text if cleaning fails
+  }
 };
 
 // مكون عالي المستوى لتنظيف جميع النصوص في شجرة المكونات
