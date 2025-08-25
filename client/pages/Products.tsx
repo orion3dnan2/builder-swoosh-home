@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { ProductService, useProducts } from "@/lib/products";
 import { useCart } from "@/lib/cart";
+import { useCurrencySafe } from "@/contexts/CurrencyContext";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -31,6 +32,7 @@ export default function Products() {
     updateQuantity,
     getProductQuantity,
   } = useCart();
+  const { formatPrice, currentCurrency } = useCurrencySafe();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedStore, setSelectedStore] = useState<string>("all");
@@ -95,15 +97,11 @@ export default function Products() {
 
   const priceRanges = [
     { value: "all", label: "جميع الأسعار" },
-    { value: "under-5", label: "أقل من 5 د.ك" },
-    { value: "5-15", label: "5 - 15 د.ك" },
-    { value: "15-30", label: "15 - 30 د.ك" },
-    { value: "over-30", label: "أكثر من 30 د.ك" },
+    { value: "under-5", label: `أقل من 5 ${currentCurrency.symbol}` },
+    { value: "5-15", label: `5 - 15 ${currentCurrency.symbol}` },
+    { value: "15-30", label: `15 - 30 ${currentCurrency.symbol}` },
+    { value: "over-30", label: `أكثر من 30 ${currentCurrency.symbol}` },
   ];
-
-  const formatPrice = (price: number) => {
-    return `${price.toFixed(3)} د.ك`;
-  };
 
   const handleAddToCart = (product: any) => {
     try {
