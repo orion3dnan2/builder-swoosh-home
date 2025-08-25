@@ -44,6 +44,7 @@ import { SuperAdminRoute, MerchantRoute } from "./components/ProtectedRoute";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { CurrencyProvider } from "./contexts/CurrencyContext";
+import { CurrencyProvider } from "./contexts/CurrencyContext";
 import { TextCleaner } from "./components/SafeText";
 import { SafeToaster as Toaster } from "./components/ui/safe-toaster";
 import { PWAManager } from "./components/PWAManager";
@@ -53,8 +54,9 @@ function App() {
   return (
     <PWAManager>
       <ThemeProvider>
-        <AuthProvider>
-          <TextCleaner>
+        <CurrencyProvider>
+          <AuthProvider>
+            <TextCleaner>
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
@@ -224,8 +226,9 @@ function App() {
               </Routes>
             </BrowserRouter>
             <Toaster />
-          </TextCleaner>
-        </AuthProvider>
+            </TextCleaner>
+          </AuthProvider>
+        </CurrencyProvider>
       </ThemeProvider>
     </PWAManager>
   );
