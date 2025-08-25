@@ -457,7 +457,7 @@ export default function MerchantSettings() {
 
   // حذف الغلاف
   const handleRemoveBanner = () => {
-    if (window.confirm("هل أنت متأكد من حذف غلاف المتجر؟")) {
+    if (window.confirm("هل أنت متأكد من حذف غلا�� المتجر؟")) {
       setStoreSettings({ ...storeSettings, banner: "/placeholder.svg" });
       alert("تم حذف الغلاف بنجاح");
     }
@@ -551,9 +551,19 @@ export default function MerchantSettings() {
       };
 
       // التحقق من البيانات قبل الإرسال
-      console.log("Store data being sent:", storeData);
+      console.log("📋 Store data being sent:", {
+        ...storeData,
+        dataValidation: {
+          hasName: !!storeData.name && storeData.name.trim() !== '',
+          hasCategory: !!storeData.category && storeData.category.trim() !== '',
+          hasPhone: !!storeData.phone && storeData.phone.trim() !== '',
+          hasEmail: !!storeData.email && storeData.email.trim() !== '',
+          hasCity: !!storeData.city && storeData.city.trim() !== '',
+          hasCountry: !!storeData.country && storeData.country.trim() !== ''
+        }
+      });
 
-      // التأكد من أن جميع ال��قول المطلوبة موجودة
+      // التأكد من أن جميع الحقول المطلوبة موجودة
       const requiredFields = ['name', 'category', 'phone', 'email', 'city'];
       const missingFields = requiredFields.filter(field => {
         const value = storeData[field];
@@ -1261,7 +1271,7 @@ export default function MerchantSettings() {
                           })
                         }
                         className="mt-1 text-right arabic"
-                        placeholder="شارع ال��يل، الخرطوم"
+                        placeholder="شارع ال��يل، الخر��وم"
                       />
                     </div>
                   </div>
@@ -1746,7 +1756,7 @@ export default function MerchantSettings() {
                       <div className="text-xs text-gray-500 arabic">
                         {regionsLoading
                           ? "جارٍ التحميل..."
-                          : `(${availableRegions.length} منطقة متاحة)`}
+                          : `(${availableRegions.length} من��قة متاحة)`}
                       </div>
                     </div>
 
