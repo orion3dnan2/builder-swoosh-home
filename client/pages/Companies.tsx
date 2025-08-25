@@ -349,7 +349,7 @@ export default function Companies() {
                       الخدمات:
                     </h4>
                     <div className="flex flex-wrap gap-1">
-                      {company.services.slice(0, 3).map((service, index) => (
+                      {(company.services || []).slice(0, 3).map((service, index) => (
                         <Badge
                           key={index}
                           variant="secondary"
@@ -358,9 +358,9 @@ export default function Companies() {
                           {service}
                         </Badge>
                       ))}
-                      {company.services.length > 3 && (
+                      {(company.services || []).length > 3 && (
                         <Badge variant="secondary" className="text-xs arabic">
-                          +{company.services.length - 3}
+                          +{(company.services || []).length - 3}
                         </Badge>
                       )}
                     </div>
