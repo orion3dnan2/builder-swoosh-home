@@ -178,6 +178,16 @@ export function PWAManager({ children }: PWAManagerProps) {
 
 // Hook for PWA-specific features
 export function usePWAFeatures() {
+  // Check for browser environment
+  if (typeof window === 'undefined') {
+    return {
+      canInstall: false,
+      isUpdateAvailable: false,
+      installApp: async () => {},
+      updateApp: () => {},
+    };
+  }
+
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
 
