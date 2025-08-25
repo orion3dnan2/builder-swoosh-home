@@ -24,6 +24,7 @@ import { toast } from "sonner";
 
 export default function Products() {
   const { products } = useProducts();
+  const { cart, addToCart, removeFromCart, updateQuantity, getProductQuantity } = useCart();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedStore, setSelectedStore] = useState<string>("all");
@@ -98,6 +99,42 @@ export default function Products() {
     return `${price.toFixed(2)} ريال`;
   };
 
+  const handleAddToCart = (product: any) => {
+    try {
+      addToCart(product, 1);
+      toast.success(`تم إضافة ${product.name} إلى السلة`, {
+        description: `الكمية: ${getProductQuantity(product.id) + 1}`,
+      });
+    } catch (error) {
+      console.error("Failed to add product to cart:", error);
+      toast.error("فشل في إضافة المنتج إلى ��لسلة");
+    }
+  };
+
+  const handleRemoveFromCart = (productId: string) => {
+    try {
+      const currentQuantity = getProductQuantity(productId);
+      if (currentQuantity > 1) {
+        updateQuantity(productId, currentQuantity - 1);
+      } else {
+        removeFromCart(productId);
+      }
+    } catch (error) {
+      console.error("Failed to remove product from cart:", error);
+      toast.error("فشل في تحديث السلة");
+    }
+  };
+
+  const handleIncreaseQuantity = (productId: string) => {
+    try {
+      const currentQuantity = getProductQuantity(productId);
+      updateQuantity(productId, currentQuantity + 1);
+    } catch (error) {
+      console.error("Failed to increase quantity:", error);
+      toast.error("فشل في تحديث الكمية");
+    }
+  };
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-12">
@@ -109,7 +146,7 @@ export default function Products() {
             </div>
           </div>
           <h1 className="text-4xl font-bold text-gray-800 mb-4 arabic">
-            المنتجات ��لسودانية
+            المنتجات السودانية
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto arabic">
             أفضل المنتجات التقليدية والحديثة من السودان
