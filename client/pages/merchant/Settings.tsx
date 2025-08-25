@@ -457,7 +457,7 @@ export default function MerchantSettings() {
 
   // حذف الغلاف
   const handleRemoveBanner = () => {
-    if (window.confirm("هل أنت متأكد من حذف غلا�� المتجر؟")) {
+    if (window.confirm("هل أنت متأكد من حذف غلاف المتجر؟")) {
       setStoreSettings({ ...storeSettings, banner: "/placeholder.svg" });
       alert("تم حذف الغلاف بنجاح");
     }
@@ -571,7 +571,14 @@ export default function MerchantSettings() {
       });
 
       if (missingFields.length > 0) {
+        console.error("❌ Missing required fields:", missingFields);
         throw new Error(`الحقول التالية مطلوبة: ${missingFields.join(', ')}`);
+      }
+
+      // التحقق من صحة البريد الإلكتروني
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(storeData.email)) {
+        throw new Error("يرجى إدخال بريد إلكتروني صحيح");
       }
 
       // البحث عن متجر موجود للمستخدم أولاً
@@ -725,7 +732,7 @@ export default function MerchantSettings() {
       "الطائف",
       "الخبر",
       "الأحساء",
-      "تبوك",
+      "تب��ك",
       "أبها",
       "جا��ان",
       "نجران",
@@ -1271,7 +1278,7 @@ export default function MerchantSettings() {
                           })
                         }
                         className="mt-1 text-right arabic"
-                        placeholder="شارع ال��يل، الخر��وم"
+                        placeholder="شارع ال��يل، الخرطوم"
                       />
                     </div>
                   </div>
@@ -1280,7 +1287,7 @@ export default function MerchantSettings() {
 
                   {/* Working Hours */}
                   <div>
-                    <Label className="arabic">ساعات العمل</Label>
+                    <Label className="arabic">س��عات العمل</Label>
                     <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
                         <Label className="arabic text-sm">من الساعة</Label>
@@ -1544,7 +1551,7 @@ export default function MerchantSettings() {
                         {
                           key: "emailNotifications",
                           label: "البريد الإلكتروني",
-                          desc: "استقبال ا��إشعارات عبر ا��بريد الإلكتروني",
+                          desc: "استقبال ا��إشعارات عبر ا����بريد الإلكتروني",
                           icon: "📧",
                           color:
                             "bg-indigo-50 border-indigo-200 hover:bg-indigo-100",
@@ -1756,7 +1763,7 @@ export default function MerchantSettings() {
                       <div className="text-xs text-gray-500 arabic">
                         {regionsLoading
                           ? "جارٍ التحميل..."
-                          : `(${availableRegions.length} من��قة متاحة)`}
+                          : `(${availableRegions.length} منطقة متاحة)`}
                       </div>
                     </div>
 
