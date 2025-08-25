@@ -67,7 +67,14 @@ export const useCleanText = (text: string): string => {
 export const TextCleaner: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  React.useEffect(() => {
+  // Check for browser environment
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return <>{children}</>;
+  }
+
+  // Wrap in try-catch to prevent crashes
+  try {
+    React.useEffect(() => {
     const cleanupTexts = () => {
       // Find all text nodes with corrupted characters
       const walker = document.createTreeWalker(
@@ -145,13 +152,18 @@ export const TextCleaner: React.FC<{ children: React.ReactNode }> = ({
     // تنظيف دوري كنسخة احتياطية
     const interval = setInterval(cleanupTexts, 5000);
 
-    return () => {
-      observer.disconnect();
-      clearInterval(interval);
-    };
-  }, []);
+      return () => {
+        observer.disconnect();
+        clearInterval(interval);
+      };
+    }, []);
 
-  return <>{children}</>;
+    return <>{children}</>;
+  } catch (error) {
+    console.error('❌ TextCleaner: Critical error:', error);
+    // Fallback: return children without text cleaning functionality
+    return <>{children}</>;
+  }
 };
 
 export default SafeText;
