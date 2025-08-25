@@ -64,7 +64,7 @@ router.post("/login", async (req, res) => {
     if (!user.isActive) {
       return res
         .status(401)
-        .json({ error: "تم إيقاف الحساب، تواصل مع ا��إدارة" });
+        .json({ error: "تم إيقاف الحساب، تواصل مع الإدارة" });
     }
 
     // التحقق من كلمة المرور
@@ -73,15 +73,17 @@ router.post("/login", async (req, res) => {
     // إذا كانت كلمة المرور تبدأ بـ $2b$ فهي مشفرة، وإلا فهي بسيطة
     if (user.password.startsWith("$2b$")) {
       try {
-        isPasswordValid = await bcrypt.compare(password, user.password);
+        isPasswordValid = await bcrypt.compare(normalizedPassword, user.password);
       } catch (bcryptError) {
         console.error("خطأ في فك تشفير كلمة المرور:", bcryptError);
         isPasswordValid = false;
       }
     } else {
-      // كلمة مرور بسيطة للتجربة
-      isPasswordValid = password === user.password;
+      // كلمة مرور بسيطة للتجربة - تجربة كلا النسختين
+      isPasswordValid = normalizedPassword === user.password || password === user.password;
     }
+
+    console.log(`🔍 نتيجة التحقق من كلمة المرور: ${isPasswordValid}`);
 
     if (!isPasswordValid) {
       return res
