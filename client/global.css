@@ -482,6 +482,8 @@
   .header-glass {
     @apply backdrop-blur-md bg-white/90 dark:bg-gray-900/90;
     border-bottom: 1px solid hsl(var(--border));
+    /* iPhone Safe Area support for header */
+    padding-top: env(safe-area-inset-top);
   }
 
   .card-dark {
@@ -493,13 +495,58 @@
   }
 
   .button-cultural {
-    @apply bg-gradient-to-r from-primary-600 to-secondary-600 
-           hover:from-primary-700 hover:to-secondary-700 
+    @apply bg-gradient-to-r from-primary-600 to-secondary-600
+           hover:from-primary-700 hover:to-secondary-700
            text-white shadow-cultural transition-all duration-200;
   }
 
   .dark .button-cultural {
-    @apply from-primary-500 to-secondary-500 
+    @apply from-primary-500 to-secondary-500
            hover:from-primary-400 hover:to-secondary-400;
+  }
+
+  /* iPhone specific component styles */
+  .iphone-safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .iphone-safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .iphone-safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .iphone-safe-right {
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .iphone-safe-all {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* iPhone touch optimization */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* iPhone specific button styles */
+  .button-iphone {
+    min-height: 44px;
+    padding: 12px 24px;
+    font-size: 16px;
+    -webkit-appearance: none;
+    border-radius: 12px;
+  }
+
+  /* Prevent zoom on iOS when focusing inputs */
+  .input-iphone {
+    font-size: 16px;
+    -webkit-appearance: none;
   }
 }
