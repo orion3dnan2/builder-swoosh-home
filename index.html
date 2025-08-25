@@ -83,6 +83,138 @@
   <body>
     <div id="root"></div>
 
+    <!-- PWA Install Banner -->
+    <div id="pwa-install-banner" style="display: none;">
+      <div style="position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #0ea5e9, #f59e0b); color: white; padding: 1rem; text-align: center; z-index: 1000; direction: rtl;">
+        <p style="margin: 0 0 1rem 0; font-weight: 600;">قم بتثبيت تطبيق البيت السوداني للحصول على تجربة أفضل</p>
+        <button id="pwa-install-btn" style="background: white; color: #0ea5e9; border: none; padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; margin-left: 1rem; cursor: pointer;">تثبيت التطبيق</button>
+        <button id="pwa-dismiss-btn" style="background: transparent; color: white; border: 1px solid white; padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer;">لاحقاً</button>
+      </div>
+    </div>
+
     <script type="module" src="/client/main.tsx"></script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+      // Register Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('✅ Service Worker registered successfully:', registration.scope);
+
+              // Check for updates
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                if (newWorker) {
+                  newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                      // New content is available
+                      showUpdateNotification();
+                    }
+                  });
+                }
+              });
+            })
+            .catch((error) => {
+              console.log('❌ Service Worker registration failed:', error);
+            });
+        });
+      }
+
+      // PWA Install Prompt
+      let deferredPrompt;
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        // Stash the event so it can be triggered later
+        deferredPrompt = e;
+        // Show install banner
+        showInstallBanner();
+      });
+
+      function showInstallBanner() {
+        const banner = document.getElementById('pwa-install-banner');
+        const installBtn = document.getElementById('pwa-install-btn');
+        const dismissBtn = document.getElementById('pwa-dismiss-btn');
+
+        if (banner && !localStorage.getItem('pwa-install-dismissed')) {
+          banner.style.display = 'block';
+
+          installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+              deferredPrompt.prompt();
+              const { outcome } = await deferredPrompt.userChoice;
+
+              if (outcome === 'accepted') {
+                console.log('✅ User accepted the install prompt');
+                gtag && gtag('event', 'pwa_install_accepted');
+              } else {
+                console.log('❌ User dismissed the install prompt');
+                gtag && gtag('event', 'pwa_install_dismissed');
+              }
+
+              deferredPrompt = null;
+              banner.style.display = 'none';
+            }
+          });
+
+          dismissBtn.addEventListener('click', () => {
+            banner.style.display = 'none';
+            localStorage.setItem('pwa-install-dismissed', 'true');
+            gtag && gtag('event', 'pwa_install_banner_dismissed');
+          });
+        }
+      }
+
+      // Show update notification
+      function showUpdateNotification() {
+        if (confirm('يتوفر تحديث جديد للتطبيق. هل تريد إعادة تحميل الصفحة؟')) {
+          window.location.reload();
+        }
+      }
+
+      // Track PWA usage
+      window.addEventListener('appinstalled', (evt) => {
+        console.log('✅ App was installed successfully');
+        gtag && gtag('event', 'pwa_installed');
+        localStorage.setItem('pwa-installed', 'true');
+      });
+
+      // Check if running as PWA
+      function isPWA() {
+        return window.matchMedia('(display-mode: standalone)').matches ||
+               window.navigator.standalone ||
+               document.referrer.includes('android-app://');
+      }
+
+      // Add PWA class to body if running as PWA
+      if (isPWA()) {
+        document.addEventListener('DOMContentLoaded', () => {
+          document.body.classList.add('pwa-mode');
+        });
+      }
+
+      // Handle offline/online events
+      window.addEventListener('online', () => {
+        console.log('🟢 Back online');
+        document.body.classList.remove('offline');
+        document.body.classList.add('online');
+      });
+
+      window.addEventListener('offline', () => {
+        console.log('🔴 Gone offline');
+        document.body.classList.remove('online');
+        document.body.classList.add('offline');
+      });
+
+      // Initial online/offline state
+      if (navigator.onLine) {
+        document.body.classList.add('online');
+      } else {
+        document.body.classList.add('offline');
+      }
+    </script>
   </body>
 </html>
