@@ -60,7 +60,7 @@ const translations = {
       "منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم",
 
     // Homepage
-    "home.hero.title": "البيت السوداني",
+    "home.hero.title": "البيت السود��ني",
     "home.hero.subtitle": "سوق وخدمات وشركات السودان في الخليج والعالم",
     "home.hero.explore_market": "استكشف السوق",
     "home.hero.join_us": "انضم إلينا",
@@ -103,7 +103,7 @@ const translations = {
     // Theme Settings
     "theme.light": "الوضع النهاري",
     "theme.dark": "الوضع ��لليلي",
-    "theme.toggle": "تبديل الثيم",
+    "theme.toggle": "تبديل الث��م",
     "language.toggle": "تبديل اللغة",
 
     // Dashboard
@@ -183,13 +183,13 @@ const translations = {
     "stores.revenues": "الإيرادات",
     "stores.confirm_action": "تأكيد الإجراء",
     "stores.confirm_approve": "هل أنت متأكد من اعتماد هذ�� المتجر؟",
-    "stores.confirm_suspend": "ه�� أنت متأكد من تعليق هذا المتجر؟",
+    "stores.confirm_suspend": "هل أنت متأكد من تعليق هذا المتجر؟",
     "stores.confirm_reactivate": "هل أنت متأكد من إعادة تفعيل هذا المتجر؟",
     "stores.action_approve": "اعتماد",
     "stores.action_suspend": "تعليق",
     "stores.action_reactivate": "إعادة تفعيل",
     "stores.success_approve": "تم اعتماد المتجر بنجاح! ✅",
-    "stores.success_suspend": "تم تعليق المتجر بنجاح! ⚠️",
+    "stores.success_suspend": "تم تعليق المتج�� بنجاح! ⚠️",
     "stores.success_reactivate": "تم إعادة تفعيل المتجر بنجاح! ✅",
     "stores.reviews_count": "تقييم",
 
@@ -425,17 +425,21 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       }
     }, []);
 
-  // Apply theme to document root
-  useEffect(() => {
-    const root = document.documentElement;
+    // Apply theme to document root
+    useEffect(() => {
+      try {
+        const root = document.documentElement;
 
-    // Remove previous theme classes
-    root.classList.remove("light", "dark");
-    root.classList.add(theme);
+        // Remove previous theme classes
+        root.classList.remove("light", "dark");
+        root.classList.add(theme);
 
-    // Store in localStorage
-    localStorage.setItem(STORAGE_KEYS.THEME, theme);
-  }, [theme]);
+        // Store in localStorage
+        localStorage.setItem(STORAGE_KEYS.THEME, theme);
+      } catch (error) {
+        console.error('Error applying theme:', error);
+      }
+    }, [theme]);
 
   // Apply language and direction to document
   useEffect(() => {
