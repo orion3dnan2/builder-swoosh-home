@@ -52,12 +52,16 @@ export default function Cart() {
   };
 
   const handleCheckout = () => {
+    // Calculate tax (0% for Sudan/Kuwait - no VAT currently applied)
+    const taxRate = 0; // 0% tax rate - can be configured later
+    const taxAmount = (calculateSubtotal() - discountAmount) * taxRate;
+
     // Navigate to checkout page with order summary
     const orderData = {
       items: cart.items,
       subtotal: calculateSubtotal(),
       shipping: finalShippingCost,
-      tax: tax,
+      tax: taxAmount,
       discount: discountAmount,
       promoCode: appliedPromoCode,
       total: finalTotal,
