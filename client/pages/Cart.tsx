@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -17,12 +17,16 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useCart } from "@/lib/cart";
+import { PromoCodeService } from "@/lib/promoCodes";
 import { toast } from "sonner";
 
 export default function Cart() {
+  const navigate = useNavigate();
   const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [promoCode, setPromoCode] = useState("");
+  const [appliedPromoCode, setAppliedPromoCode] = useState<any>(null);
+  const [promoCodeError, setPromoCodeError] = useState("");
 
   const formatPrice = (price: number) => {
     return `${price.toFixed(2)} ريال`;
@@ -48,13 +52,49 @@ export default function Cart() {
   };
 
   const handleCheckout = () => {
-    setIsCheckingOut(true);
-    // Simulate checkout process
-    setTimeout(() => {
-      setIsCheckingOut(false);
-      toast.success("تم إرسال طلبك بنجاح!");
-      clearCart();
-    }, 2000);
+    // Navigate to checkout page with order summary
+    const orderData = {
+      items: cart.items,
+      subtotal: calculateSubtotal(),
+      shipping: finalShippingCost,
+      tax: tax,
+      discount: discountAmount,
+      promoCode: appliedPromoCode,
+      total: finalTotal
+    };
+
+    // Store order data temporarily
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('orderData', JSON.stringify(orderData));
+    }
+
+    navigate('/checkout');
+  };
+
+  const handleApplyPromoCode = () => {
+    if (!promoCode.trim()) {
+      setPromoCodeError("الرجاء إدخال كود الخصم");
+      return;
+    }
+
+    const subtotal = calculateSubtotal();
+    const validation = PromoCodeService.validatePromoCode(promoCode.trim(), subtotal);
+
+    if (validation.isValid && validation.promoCode) {
+      setAppliedPromoCode(validation.promoCode);
+      setPromoCodeError("");
+      toast.success(`تم تطبيق كود الخصم: ${validation.message}`);
+      setPromoCode(""); // Clear input after successful application
+    } else {
+      setPromoCodeError(validation.message);
+      toast.error(validation.message);
+    }
+  };
+
+  const handleRemovePromoCode = () => {
+    setAppliedPromoCode(null);
+    setPromoCodeError("");
+    toast.success("تم إلغاء كود الخصم");
   };
 
   const calculateSubtotal = () => {
@@ -64,9 +104,20 @@ export default function Cart() {
     }, 0);
   };
 
-  const shippingCost = cart.totalItems > 0 ? 10 : 0;
-  const tax = calculateSubtotal() * 0.15; // 15% VAT
-  const total = calculateSubtotal() + shippingCost + tax;
+  const baseShippingCost = cart.totalItems > 0 ? 10 : 0;
+
+  // Calculate discount if promo code is applied
+  const discountData = appliedPromoCode
+    ? PromoCodeService.calculateDiscount(appliedPromoCode, calculateSubtotal(), baseShippingCost)
+    : { discountAmount: 0, finalAmount: calculateSubtotal(), shippingDiscount: 0 };
+
+  const discountAmount = discountData.discountAmount;
+  const shippingDiscount = discountData.shippingDiscount;
+  const finalShippingCost = Math.max(0, baseShippingCost - shippingDiscount);
+
+  const subtotalAfterDiscount = calculateSubtotal() - discountAmount;
+  const tax = subtotalAfterDiscount * 0.15; // 15% VAT on discounted amount
+  const finalTotal = subtotalAfterDiscount + finalShippingCost + tax;
 
   if (cart.totalItems === 0) {
     return (
@@ -229,42 +280,125 @@ export default function Cart() {
                       {formatPrice(calculateSubtotal())}
                     </span>
                   </div>
+
+                  {/* Applied Promo Code */}
+                  {appliedPromoCode && (
+                    <div className="bg-green-50 p-3 rounded-lg border border-green-200">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-700 font-medium arabic">
+                            كود الخصم: {appliedPromoCode.code}
+                          </span>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={handleRemovePromoCode}
+                          className="text-red-600 hover:text-red-700 p-1"
+                        >
+                          ×
+                        </Button>
+                      </div>
+                      <p className="text-sm text-green-600 arabic">
+                        {appliedPromoCode.description}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Discount Amount */}
+                  {discountAmount > 0 && (
+                    <div className="flex justify-between text-green-600">
+                      <span className="arabic">خصم المنتجات</span>
+                      <span className="font-medium arabic">
+                        -{formatPrice(discountAmount)}
+                      </span>
+                    </div>
+                  )}
+
                   <div className="flex justify-between">
                     <span className="text-gray-600 arabic">الشحن</span>
-                    <span className="font-medium arabic">
-                      {shippingCost > 0 ? formatPrice(shippingCost) : "مجاني"}
-                    </span>
+                    <div className="text-right">
+                      {shippingDiscount > 0 ? (
+                        <div>
+                          <span className="text-sm text-gray-500 line-through arabic">
+                            {formatPrice(baseShippingCost)}
+                          </span>
+                          <span className="font-medium text-green-600 arabic mr-2">
+                            {finalShippingCost > 0 ? formatPrice(finalShippingCost) : "مجاني"}
+                          </span>
+                        </div>
+                      ) : (
+                        <span className="font-medium arabic">
+                          {finalShippingCost > 0 ? formatPrice(finalShippingCost) : "مجاني"}
+                        </span>
+                      )}
+                    </div>
                   </div>
+
                   <div className="flex justify-between">
                     <span className="text-gray-600 arabic">ضريبة القيمة المضافة</span>
                     <span className="font-medium arabic">
                       {formatPrice(tax)}
                     </span>
                   </div>
+
                   <hr className="border-gray-200" />
                   <div className="flex justify-between text-lg font-bold">
                     <span className="arabic">المجموع الكلي</span>
                     <span className="arabic text-green-600">
-                      {formatPrice(total)}
+                      {formatPrice(finalTotal)}
                     </span>
                   </div>
+
+                  {/* Savings Display */}
+                  {(discountAmount > 0 || shippingDiscount > 0) && (
+                    <div className="text-center p-2 bg-green-50 rounded-lg">
+                      <span className="text-green-700 font-medium arabic">
+                        وفرت {formatPrice(discountAmount + shippingDiscount)} 🎉
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Promo Code */}
-                <div className="mt-4">
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      placeholder="كود الخصم"
-                      value={promoCode}
-                      onChange={(e) => setPromoCode(e.target.value)}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-right arabic"
-                    />
-                    <Button variant="outline" size="sm" className="arabic">
-                      تطبيق
-                    </Button>
+                {!appliedPromoCode && (
+                  <div className="mt-4">
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="كود الخصم (مثال: WELCOME10)"
+                        value={promoCode}
+                        onChange={(e) => {
+                          setPromoCode(e.target.value);
+                          setPromoCodeError(""); // Clear error when user types
+                        }}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter') {
+                            handleApplyPromoCode();
+                          }
+                        }}
+                        className={`flex-1 px-3 py-2 border rounded-lg text-right arabic ${
+                          promoCodeError ? 'border-red-300' : 'border-gray-300'
+                        }`}
+                      />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="arabic"
+                        onClick={handleApplyPromoCode}
+                        disabled={!promoCode.trim()}
+                      >
+                        تطبيق
+                      </Button>
+                    </div>
+                    {promoCodeError && (
+                      <p className="text-red-600 text-sm mt-1 arabic">{promoCodeError}</p>
+                    )}
+                    <div className="mt-2 text-xs text-gray-500 arabic">
+                      <p>أكواد متاحة للتجربة: WELCOME10, SUDAN20, FREESHIP, 3030</p>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Checkout Button */}
                 <Button
