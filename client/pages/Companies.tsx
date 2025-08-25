@@ -220,33 +220,33 @@ export default function Companies() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {featuredCompanies.slice(0, 3).map((company) => (
                   <div
-                    key={company.id}
+                    key={company?.id || Math.random()}
                     className="bg-white rounded-lg p-4 border border-orange-200"
                   >
                     <div className="flex items-start gap-3">
                       <img
-                        src={company.logo || "/placeholder.svg"}
-                        alt={company.name}
+                        src={company?.logo || "/placeholder.svg"}
+                        alt={company?.name || "شركة"}
                         className="w-12 h-12 object-cover rounded-lg"
                       />
                       <div className="flex-1 min-w-0">
                         <h3 className="font-bold text-gray-800 arabic text-sm mb-1 truncate">
-                          {company.name}
+                          {company?.name || "اسم غير متوفر"}
                         </h3>
                         <p className="text-orange-600 text-xs arabic mb-2">
-                          {company.category}
+                          {company?.category || "فئة غير محددة"}
                         </p>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1">
                             <MapPin className="w-3 h-3 text-gray-400" />
                             <span className="text-xs text-gray-600 arabic">
-                              {company.city}
+                              {company?.city || "موقع غير محدد"}
                             </span>
                           </div>
                           <div className="flex items-center gap-1">
                             <Star className="w-3 h-3 text-yellow-500" />
                             <span className="text-xs text-gray-600">
-                              {company.rating}
+                              {company?.rating || "N/A"}
                             </span>
                           </div>
                         </div>
@@ -348,7 +348,7 @@ export default function Companies() {
 
                   <div className="mb-4">
                     <h4 className="text-sm font-semibold text-gray-700 mb-2 arabic">
-                      الخدم��ت:
+                      الخدمات:
                     </h4>
                     <div className="flex flex-wrap gap-1">
                       {(company.services || []).slice(0, 3).map((service, index) => (
