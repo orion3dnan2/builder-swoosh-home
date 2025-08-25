@@ -52,7 +52,7 @@ export class ProductService {
     }
   }
 
-  // مسح جميع المنتجات وإعادة ضبط البيانات للمنتجات الأصلية فقط
+  // مسح جميع المنتجات وإعادة ضبط البيانات ��لمنتجات الأصلية فقط
   static clearAllProducts(): void {
     try {
       // حذف جميع البيانات من localStorage
@@ -352,73 +352,312 @@ export class ProductService {
 
 // React hook for product management
 export const useProducts = (storeId?: string) => {
-  const [products, setProducts] = useState<Product[]>([]);
+  // Check for browser environment
+  if (typeof window === "undefined") {
+    return {
+      products: [],
+      getProduct: () => null,
+      saveProduct: () => {},
+      deleteProduct: () => {},
+      updateStock: () => {},
+      searchProducts: () => [],
+      categories: [],
+      lowStockProducts: [],
+      getProductsByStatus: () => [],
+      generateSKU: () => "",
+      validateProduct: () => ({ isValid: false, errors: [] }),
+      clearDemoProducts: () => {},
+      clearAllProducts: () => {},
+    };
+  }
+
+  let products: Product[] = [];
+  let setProducts: (products: Product[]) => void = () => {};
+
+  try {
+    const [productsState, setProductsState] = useState<Product[]>([]);
+    products = productsState;
+    setProducts = setProductsState;
+  } catch (error) {
+    console.error("useProducts: useState failed:", error);
+    return {
+      products: [],
+      getProduct: (id: string) => {
+        try {
+          return ProductService.getProduct(id);
+        } catch (error) {
+          console.error("useProducts: getProduct failed:", error);
+          return null;
+        }
+      },
+      saveProduct: (product: Product) => {
+        try {
+          ProductService.saveProduct(product);
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("productsUpdated"));
+          }
+        } catch (error) {
+          console.error("useProducts: saveProduct failed:", error);
+        }
+      },
+      deleteProduct: (id: string) => {
+        try {
+          ProductService.deleteProduct(id);
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("productsUpdated"));
+          }
+        } catch (error) {
+          console.error("useProducts: deleteProduct failed:", error);
+        }
+      },
+      updateStock: (id: string, quantity: number) => {
+        try {
+          ProductService.updateStock(id, quantity);
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("productsUpdated"));
+          }
+        } catch (error) {
+          console.error("useProducts: updateStock failed:", error);
+        }
+      },
+      searchProducts: (query: string) => {
+        try {
+          return ProductService.searchProducts(query, storeId);
+        } catch (error) {
+          console.error("useProducts: searchProducts failed:", error);
+          return [];
+        }
+      },
+      categories: (() => {
+        try {
+          return ProductService.getCategories();
+        } catch (error) {
+          console.error("useProducts: getCategories failed:", error);
+          return [];
+        }
+      })(),
+      lowStockProducts: (() => {
+        try {
+          return ProductService.getLowStockProducts(storeId);
+        } catch (error) {
+          console.error("useProducts: getLowStockProducts failed:", error);
+          return [];
+        }
+      })(),
+      getProductsByStatus: (status: Product["status"]) => {
+        try {
+          return ProductService.getProductsByStatus(status, storeId);
+        } catch (error) {
+          console.error("useProducts: getProductsByStatus failed:", error);
+          return [];
+        }
+      },
+      generateSKU: (category: string, name: string) => {
+        try {
+          return ProductService.generateSKU(category, name);
+        } catch (error) {
+          console.error("useProducts: generateSKU failed:", error);
+          return "";
+        }
+      },
+      validateProduct: (product: Partial<Product>) => {
+        try {
+          return ProductService.validateProduct(product);
+        } catch (error) {
+          console.error("useProducts: validateProduct failed:", error);
+          return { isValid: false, errors: [] };
+        }
+      },
+      clearDemoProducts: () => {
+        try {
+          ProductService.clearDemoProducts();
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("productsUpdated"));
+          }
+        } catch (error) {
+          console.error("useProducts: clearDemoProducts failed:", error);
+        }
+      },
+      clearAllProducts: () => {
+        try {
+          ProductService.clearAllProducts();
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("productsUpdated"));
+          }
+        } catch (error) {
+          console.error("useProducts: clearAllProducts failed:", error);
+        }
+      },
+    };
+  }
 
   // تحديث المنتجات عند تغيير storeId أو localStorage
-  useEffect(() => {
-    const loadProducts = () => {
-      const allProducts = ProductService.getProducts(storeId);
-      setProducts(allProducts);
-    };
+  try {
+    useEffect(() => {
+      try {
+        const loadProducts = () => {
+          try {
+            const allProducts = ProductService.getProducts(storeId);
+            setProducts(allProducts);
+          } catch (error) {
+            console.error("useProducts: loadProducts failed:", error);
+            setProducts([]);
+          }
+        };
 
-    // تحميل أولي
-    loadProducts();
-
-    // الاستماع لتغييرات localStorage
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === ProductService.STORAGE_KEY) {
+        // تحميل أولي
         loadProducts();
+
+        // الاستماع لتغييرات localStorage
+        const handleStorageChange = (e: StorageEvent) => {
+          try {
+            if (e.key === ProductService.STORAGE_KEY) {
+              loadProducts();
+            }
+          } catch (error) {
+            console.error("useProducts: handleStorageChange failed:", error);
+          }
+        };
+
+        const handleCustomChange = () => {
+          try {
+            loadProducts();
+          } catch (error) {
+            console.error("useProducts: handleCustomChange failed:", error);
+          }
+        };
+
+        if (typeof window !== "undefined") {
+          window.addEventListener("storage", handleStorageChange);
+          window.addEventListener("productsUpdated", handleCustomChange);
+        }
+
+        return () => {
+          try {
+            if (typeof window !== "undefined") {
+              window.removeEventListener("storage", handleStorageChange);
+              window.removeEventListener("productsUpdated", handleCustomChange);
+            }
+          } catch (error) {
+            console.error("useProducts: cleanup failed:", error);
+          }
+        };
+      } catch (error) {
+        console.error("useProducts: useEffect setup failed:", error);
+        return () => {};
       }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    // الاستماع لتغييرات مخصصة من نفس التطبيق
-    const handleCustomChange = () => {
-      loadProducts();
-    };
-
-    window.addEventListener("productsUpdated", handleCustomChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-      window.removeEventListener("productsUpdated", handleCustomChange);
-    };
-  }, [storeId]);
+    }, [storeId]);
+  } catch (error) {
+    console.error("useProducts: useEffect failed:", error);
+  }
 
   return {
     products,
-    getProduct: (id: string) => ProductService.getProduct(id),
+    getProduct: (id: string) => {
+      try {
+        return ProductService.getProduct(id);
+      } catch (error) {
+        console.error("useProducts: getProduct failed:", error);
+        return null;
+      }
+    },
     saveProduct: (product: Product) => {
-      ProductService.saveProduct(product);
-      // إرسال event لتحديث المكونات الأخرى
-      window.dispatchEvent(new CustomEvent("productsUpdated"));
+      try {
+        ProductService.saveProduct(product);
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("productsUpdated"));
+        }
+      } catch (error) {
+        console.error("useProducts: saveProduct failed:", error);
+      }
     },
     deleteProduct: (id: string) => {
-      ProductService.deleteProduct(id);
-      window.dispatchEvent(new CustomEvent("productsUpdated"));
+      try {
+        ProductService.deleteProduct(id);
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("productsUpdated"));
+        }
+      } catch (error) {
+        console.error("useProducts: deleteProduct failed:", error);
+      }
     },
     updateStock: (id: string, quantity: number) => {
-      ProductService.updateStock(id, quantity);
-      window.dispatchEvent(new CustomEvent("productsUpdated"));
+      try {
+        ProductService.updateStock(id, quantity);
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("productsUpdated"));
+        }
+      } catch (error) {
+        console.error("useProducts: updateStock failed:", error);
+      }
     },
-    searchProducts: (query: string) =>
-      ProductService.searchProducts(query, storeId),
-    categories: ProductService.getCategories(),
-    lowStockProducts: ProductService.getLowStockProducts(storeId),
-    getProductsByStatus: (status: Product["status"]) =>
-      ProductService.getProductsByStatus(status, storeId),
-    generateSKU: (category: string, name: string) =>
-      ProductService.generateSKU(category, name),
-    validateProduct: (product: Partial<Product>) =>
-      ProductService.validateProduct(product),
+    searchProducts: (query: string) => {
+      try {
+        return ProductService.searchProducts(query, storeId);
+      } catch (error) {
+        console.error("useProducts: searchProducts failed:", error);
+        return [];
+      }
+    },
+    categories: (() => {
+      try {
+        return ProductService.getCategories();
+      } catch (error) {
+        console.error("useProducts: getCategories failed:", error);
+        return [];
+      }
+    })(),
+    lowStockProducts: (() => {
+      try {
+        return ProductService.getLowStockProducts(storeId);
+      } catch (error) {
+        console.error("useProducts: getLowStockProducts failed:", error);
+        return [];
+      }
+    })(),
+    getProductsByStatus: (status: Product["status"]) => {
+      try {
+        return ProductService.getProductsByStatus(status, storeId);
+      } catch (error) {
+        console.error("useProducts: getProductsByStatus failed:", error);
+        return [];
+      }
+    },
+    generateSKU: (category: string, name: string) => {
+      try {
+        return ProductService.generateSKU(category, name);
+      } catch (error) {
+        console.error("useProducts: generateSKU failed:", error);
+        return "";
+      }
+    },
+    validateProduct: (product: Partial<Product>) => {
+      try {
+        return ProductService.validateProduct(product);
+      } catch (error) {
+        console.error("useProducts: validateProduct failed:", error);
+        return { isValid: false, errors: [] };
+      }
+    },
     clearDemoProducts: () => {
-      ProductService.clearDemoProducts();
-      window.dispatchEvent(new CustomEvent("productsUpdated"));
+      try {
+        ProductService.clearDemoProducts();
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("productsUpdated"));
+        }
+      } catch (error) {
+        console.error("useProducts: clearDemoProducts failed:", error);
+      }
     },
     clearAllProducts: () => {
-      ProductService.clearAllProducts();
-      window.dispatchEvent(new CustomEvent("productsUpdated"));
+      try {
+        ProductService.clearAllProducts();
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("productsUpdated"));
+        }
+      } catch (error) {
+        console.error("useProducts: clearAllProducts failed:", error);
+      }
     },
   };
 };

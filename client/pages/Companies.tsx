@@ -50,13 +50,35 @@ export default function Companies() {
   const [selectedSize, setSelectedSize] = useState<string>("all");
   const [showVerifiedOnly, setShowVerifiedOnly] = useState(false);
 
-  const filteredCompanies = companies.filter((company) => {
+  // عرض حالة التحميل إذا كانت البيانات لا تزال قيد التحميل
+  if (loading) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center py-20">
+            <Building className="w-24 h-24 text-gray-300 mx-auto mb-6 animate-pulse" />
+            <h2 className="text-2xl font-bold text-gray-400 mb-4 arabic">
+              جاري تحميل الشركات...
+            </h2>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  const filteredCompanies = (companies || []).filter((company) => {
+    if (!company) return false;
+
     const matchesSearch =
       searchQuery === "" ||
-      company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      company.city.toLowerCase().includes(searchQuery.toLowerCase());
+      (company.name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (company.description || "")
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      (company.category || "")
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      (company.city || "").toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesIndustry =
       selectedIndustry === "all" || company.category === selectedIndustry;
@@ -67,13 +89,17 @@ export default function Companies() {
   });
 
   // استخراج القطاعات والدول من البيانات
-  const industries = [...new Set(companies.map((c) => c.category))];
-  const countries = [...new Set(companies.map((c) => c.country))];
+  const industries = [
+    ...new Set((companies || []).map((c) => c?.category).filter(Boolean)),
+  ];
+  const countries = [
+    ...new Set((companies || []).map((c) => c?.country).filter(Boolean)),
+  ];
   const sizes = ["صغيرة", "متوسطة", "كبيرة"];
 
   // الشركات المميزة (أول 3 شركات نشطة)
-  const featuredCompanies = companies
-    .filter((c) => c.status === "active")
+  const featuredCompanies = (companies || [])
+    .filter((c) => c?.status === "active")
     .slice(0, 3);
 
   return (
@@ -95,19 +121,24 @@ export default function Companies() {
           <div className="flex items-center justify-center gap-6 mt-6 text-sm text-gray-500">
             <div className="flex items-center gap-2">
               <Building className="w-4 h-4" />
-              <span className="arabic">{companies.length} شركة</span>
+              <span className="arabic">{(companies || []).length} شركة</span>
             </div>
             <div className="flex items-center gap-2">
               <Verified className="w-4 h-4" />
               <span className="arabic">
-                {companies.filter((c) => c.status === "active").length} شركة
-                نشطة
+                {(companies || []).filter((c) => c?.status === "active").length}{" "}
+                شركة نشطة
               </span>
             </div>
             <div className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
               <span className="arabic">
-                {new Set(companies.map((c) => c.category)).size} قطاع
+                {
+                  new Set(
+                    (companies || []).map((c) => c?.category).filter(Boolean),
+                  ).size
+                }{" "}
+                قطاع
               </span>
             </div>
           </div>
@@ -218,33 +249,33 @@ export default function Companies() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {featuredCompanies.slice(0, 3).map((company) => (
                   <div
-                    key={company.id}
+                    key={company?.id || Math.random()}
                     className="bg-white rounded-lg p-4 border border-orange-200"
                   >
                     <div className="flex items-start gap-3">
                       <img
-                        src={company.logo || "/placeholder.svg"}
-                        alt={company.name}
+                        src={company?.logo || "/placeholder.svg"}
+                        alt={company?.name || "شركة"}
                         className="w-12 h-12 object-cover rounded-lg"
                       />
                       <div className="flex-1 min-w-0">
                         <h3 className="font-bold text-gray-800 arabic text-sm mb-1 truncate">
-                          {company.name}
+                          {company?.name || "اسم غير متوفر"}
                         </h3>
                         <p className="text-orange-600 text-xs arabic mb-2">
-                          {company.category}
+                          {company?.category || "فئة غير محددة"}
                         </p>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1">
                             <MapPin className="w-3 h-3 text-gray-400" />
                             <span className="text-xs text-gray-600 arabic">
-                              {company.city}
+                              {company?.city || "موقع غير محدد"}
                             </span>
                           </div>
                           <div className="flex items-center gap-1">
                             <Star className="w-3 h-3 text-yellow-500" />
                             <span className="text-xs text-gray-600">
-                              {company.rating}
+                              {company?.rating || "N/A"}
                             </span>
                           </div>
                         </div>
@@ -319,22 +350,24 @@ export default function Companies() {
                         متعدد الموظفين
                       </span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm text-gray-600 arabic">
-                        تأسست في {company.founded}
-                      </span>
-                    </div>
+                    {company.founded && (
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <span className="text-sm text-gray-600 arabic">
+                          تأسست في {company.founded}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-1">
                       <Star className="w-4 h-4 text-yellow-500" />
                       <span className="text-sm font-semibold arabic">
-                        {company.rating}
+                        {company.rating || "N/A"}
                       </span>
                       <span className="text-sm text-gray-500 arabic">
-                        ({company.reviewsCount} تقييم)
+                        ({company.reviewsCount || 0} تقييم)
                       </span>
                     </div>
                     <Badge variant="outline" className="text-xs arabic">
@@ -347,18 +380,20 @@ export default function Companies() {
                       الخدمات:
                     </h4>
                     <div className="flex flex-wrap gap-1">
-                      {company.services.slice(0, 3).map((service, index) => (
-                        <Badge
-                          key={index}
-                          variant="secondary"
-                          className="text-xs arabic"
-                        >
-                          {service}
-                        </Badge>
-                      ))}
-                      {company.services.length > 3 && (
+                      {(company.services || [])
+                        .slice(0, 3)
+                        .map((service, index) => (
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className="text-xs arabic"
+                          >
+                            {service}
+                          </Badge>
+                        ))}
+                      {(company.services || []).length > 3 && (
                         <Badge variant="secondary" className="text-xs arabic">
-                          +{company.services.length - 3}
+                          +{(company.services || []).length - 3}
                         </Badge>
                       )}
                     </div>
@@ -387,8 +422,8 @@ export default function Companies() {
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {industries.map((industry) => {
-                const industryCount = companies.filter(
-                  (c) => c.category === industry,
+                const industryCount = (companies || []).filter(
+                  (c) => c?.category === industry,
                 ).length;
                 return (
                   <div
@@ -422,7 +457,7 @@ export default function Companies() {
                   <Building className="w-8 h-8 text-orange-600" />
                 </div>
                 <div className="text-2xl font-bold text-gray-800 mb-1">
-                  {companies.length}
+                  {(companies || []).length}
                 </div>
                 <div className="text-sm text-gray-600 arabic">
                   إجمالي الشركات
@@ -433,7 +468,10 @@ export default function Companies() {
                   <Verified className="w-8 h-8 text-blue-600" />
                 </div>
                 <div className="text-2xl font-bold text-gray-800 mb-1">
-                  {companies.filter((c) => c.status === "active").length}
+                  {
+                    (companies || []).filter((c) => c?.status === "active")
+                      .length
+                  }
                 </div>
                 <div className="text-sm text-gray-600 arabic">شركة موثقة</div>
               </div>
@@ -451,7 +489,7 @@ export default function Companies() {
                   <Users className="w-8 h-8 text-purple-600" />
                 </div>
                 <div className="text-2xl font-bold text-gray-800 mb-1">
-                  {Math.round((companies.length * 50) / 1000)}
+                  {Math.round(((companies || []).length * 50) / 1000)}
                   k+
                 </div>
                 <div className="text-sm text-gray-600 arabic">موظف</div>

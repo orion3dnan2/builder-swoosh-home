@@ -65,7 +65,7 @@ export default function Company() {
   }, [id]);
 
   const formatPrice = (price: number) => {
-    return `${price.toFixed(2)} ريال`;
+    return `${price.toFixed(3)} د.ك`;
   };
 
   if (loading) {
@@ -339,7 +339,7 @@ export default function Company() {
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                       <span className="text-green-700 font-medium arabic">
-                        مفتوح الآن
+                        مفتوح ��لآن
                       </span>
                     </div>
                   </div>

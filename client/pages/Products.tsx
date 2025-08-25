@@ -18,10 +18,19 @@ import {
   Heart,
 } from "lucide-react";
 import { ProductService, useProducts } from "@/lib/products";
+import { useCart } from "@/lib/cart";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Products() {
   const { products } = useProducts();
+  const {
+    cart,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    getProductQuantity,
+  } = useCart();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedStore, setSelectedStore] = useState<string>("all");
@@ -49,17 +58,17 @@ export default function Products() {
     if (priceRange !== "all") {
       const price = product.salePrice || product.price;
       switch (priceRange) {
-        case "under-20":
-          matchesPrice = price < 20;
+        case "under-5":
+          matchesPrice = price < 5;
           break;
-        case "20-50":
-          matchesPrice = price >= 20 && price <= 50;
+        case "5-15":
+          matchesPrice = price >= 5 && price <= 15;
           break;
-        case "50-100":
-          matchesPrice = price > 50 && price <= 100;
+        case "15-30":
+          matchesPrice = price > 15 && price <= 30;
           break;
-        case "over-100":
-          matchesPrice = price > 100;
+        case "over-30":
+          matchesPrice = price > 30;
           break;
       }
     }
@@ -86,14 +95,50 @@ export default function Products() {
 
   const priceRanges = [
     { value: "all", label: "جميع الأسعار" },
-    { value: "under-20", label: "أقل من 20 ريال" },
-    { value: "20-50", label: "20 - 50 ريال" },
-    { value: "50-100", label: "50 - 100 ريال" },
-    { value: "over-100", label: "أكثر من 100 ريال" },
+    { value: "under-5", label: "أقل من 5 د.ك" },
+    { value: "5-15", label: "5 - 15 د.ك" },
+    { value: "15-30", label: "15 - 30 د.ك" },
+    { value: "over-30", label: "أكثر من 30 د.ك" },
   ];
 
   const formatPrice = (price: number) => {
-    return `${price.toFixed(2)} ريال`;
+    return `${price.toFixed(3)} د.ك`;
+  };
+
+  const handleAddToCart = (product: any) => {
+    try {
+      addToCart(product, 1);
+      toast.success(`تم إضافة ${product.name} إلى السلة`, {
+        description: `الكمية: ${getProductQuantity(product.id) + 1}`,
+      });
+    } catch (error) {
+      console.error("Failed to add product to cart:", error);
+      toast.error("فشل في إضافة المنتج إلى السلة");
+    }
+  };
+
+  const handleRemoveFromCart = (productId: string) => {
+    try {
+      const currentQuantity = getProductQuantity(productId);
+      if (currentQuantity > 1) {
+        updateQuantity(productId, currentQuantity - 1);
+      } else {
+        removeFromCart(productId);
+      }
+    } catch (error) {
+      console.error("Failed to remove product from cart:", error);
+      toast.error("فشل في تحديث السلة");
+    }
+  };
+
+  const handleIncreaseQuantity = (productId: string) => {
+    try {
+      const currentQuantity = getProductQuantity(productId);
+      updateQuantity(productId, currentQuantity + 1);
+    } catch (error) {
+      console.error("Failed to increase quantity:", error);
+      toast.error("فشل في تحديث الكمية");
+    }
   };
 
   return (
@@ -322,10 +367,44 @@ export default function Products() {
                     </div>
 
                     <div className="flex gap-2">
-                      <Button className="flex-1 arabic" size="sm">
-                        <ShoppingCart className="w-4 h-4 ml-1" />
-                        أضف للسلة
-                      </Button>
+                      {getProductQuantity(product.id) > 0 ? (
+                        <div className="flex items-center gap-1 flex-1">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRemoveFromCart(product.id);
+                            }}
+                          >
+                            -
+                          </Button>
+                          <span className="text-sm font-medium px-2">
+                            {getProductQuantity(product.id)}
+                          </span>
+                          <Button
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleIncreaseQuantity(product.id);
+                            }}
+                          >
+                            +
+                          </Button>
+                        </div>
+                      ) : (
+                        <Button
+                          className="flex-1 arabic"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart(product);
+                          }}
+                        >
+                          <ShoppingCart className="w-4 h-4 ml-1" />
+                          أضف للسلة
+                        </Button>
+                      )}
                       <Button variant="outline" size="sm" className="arabic">
                         تفاصيل
                       </Button>
@@ -401,10 +480,44 @@ export default function Products() {
                           </div>
                         </div>
                         <div className="flex gap-2">
-                          <Button className="arabic" size="sm">
-                            <ShoppingCart className="w-4 h-4 ml-1" />
-                            أضف للسلة
-                          </Button>
+                          {getProductQuantity(product.id) > 0 ? (
+                            <div className="flex items-center gap-1">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleRemoveFromCart(product.id);
+                                }}
+                              >
+                                -
+                              </Button>
+                              <span className="text-sm font-medium px-2">
+                                {getProductQuantity(product.id)}
+                              </span>
+                              <Button
+                                size="sm"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleIncreaseQuantity(product.id);
+                                }}
+                              >
+                                +
+                              </Button>
+                            </div>
+                          ) : (
+                            <Button
+                              className="arabic"
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleAddToCart(product);
+                              }}
+                            >
+                              <ShoppingCart className="w-4 h-4 ml-1" />
+                              أضف للسلة
+                            </Button>
+                          )}
                           <Button
                             variant="outline"
                             size="sm"
@@ -460,7 +573,7 @@ export default function Products() {
           <div className="text-center py-20">
             <Package className="w-24 h-24 text-gray-300 mx-auto mb-6" />
             <h2 className="text-2xl font-bold text-gray-400 mb-4 arabic">
-              لا توجد منتجات مطابقة للبحث
+              لا توجد منتجات مط��بقة للبحث
             </h2>
             <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
               جرب تغيير كلمات البحث أو الفئات المختارة
@@ -477,6 +590,18 @@ export default function Products() {
             >
               إعادة تعيين البحث
             </Button>
+          </div>
+        )}
+
+        {/* Floating Cart Button */}
+        {cart.totalItems > 0 && (
+          <div className="fixed bottom-6 right-6 z-50">
+            <Link to="/cart">
+              <Button className="arabic shadow-lg rounded-full px-6 py-3 bg-green-600 hover:bg-green-700">
+                <ShoppingCart className="w-5 h-5 ml-2" />
+                عرض السلة ({cart.totalItems})
+              </Button>
+            </Link>
           </div>
         )}
       </div>

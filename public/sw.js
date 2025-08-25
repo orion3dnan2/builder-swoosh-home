@@ -326,7 +326,7 @@ self.addEventListener("appinstalled", (event) => {
 self.addEventListener("periodicsync", (event) => {
   console.log("⏰ Service Worker: Periodic sync triggered");
 
-  if (event.tag === "content-sync") {
+  if (event.tag === "sync") {
     event.waitUntil(
       // Sync content periodically
       handlePeriodicSync(),

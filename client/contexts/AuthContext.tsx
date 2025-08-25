@@ -30,126 +30,178 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Check for browser environment
+  if (typeof window === "undefined") {
+    return <>{children}</>;
+  }
 
-  // Initialize auth state
-  useEffect(() => {
-    try {
-      const currentUser = AuthService.getCurrentUser();
-      setUser(currentUser);
-    } catch (error) {
-      console.error("Error initializing auth:", error);
-      setUser(null);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  // Wrap in try-catch to prevent crashes
+  try {
+    const [user, setUser] = useState<User | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-  const refreshAuth = () => {
-    try {
-      const currentUser = AuthService.getCurrentUser();
-      setUser(currentUser);
-    } catch (error) {
-      console.error("Error refreshing auth:", error);
-      setUser(null);
-    }
-  };
+    // Initialize auth state
+    useEffect(() => {
+      try {
+        const currentUser = AuthService.getCurrentUser();
+        setUser(currentUser);
+      } catch (error) {
+        console.error("Error initializing auth:", error);
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
+    }, []);
 
-  const login = async (credentials: {
-    username: string;
-    password: string;
-  }): Promise<User> => {
-    try {
-      setIsLoading(true);
-      const loggedInUser = await AuthService.login(credentials);
-      setUser(loggedInUser);
-      return loggedInUser;
-    } catch (error) {
-      console.error("Login error:", error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    const refreshAuth = () => {
+      try {
+        const currentUser = AuthService.getCurrentUser();
+        setUser(currentUser);
+      } catch (error) {
+        console.error("Error refreshing auth:", error);
+        setUser(null);
+      }
+    };
 
-  const setAuthenticatedUser = (userData: User, token: string) => {
-    try {
-      // حفظ الرمز المميز
-      localStorage.setItem("auth_token", token);
-      // تعيين المستخدم
-      setUser(userData);
-    } catch (error) {
-      console.error("Error setting authenticated user:", error);
-    }
-  };
+    const login = async (credentials: {
+      username: string;
+      password: string;
+    }): Promise<User> => {
+      try {
+        setIsLoading(true);
+        const loggedInUser = await AuthService.login(credentials);
+        setUser(loggedInUser);
+        return loggedInUser;
+      } catch (error) {
+        console.error("Login error:", error);
+        throw error;
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  const logout = () => {
-    try {
-      AuthService.logout();
-      setUser(null);
-    } catch (error) {
-      console.error("Logout error:", error);
-      setUser(null);
-    }
-  };
+    const setAuthenticatedUser = (userData: User, token: string) => {
+      try {
+        // حفظ الرمز المميز
+        localStorage.setItem("auth_token", token);
+        // تعيين المستخدم
+        setUser(userData);
+      } catch (error) {
+        console.error("Error setting authenticated user:", error);
+      }
+    };
 
-  const hasRole = (role: UserRole): boolean => {
-    try {
-      return user?.role === role || false;
-    } catch (error) {
-      console.error("Error checking role:", error);
-      return false;
-    }
-  };
+    const logout = () => {
+      try {
+        AuthService.logout();
+        setUser(null);
+      } catch (error) {
+        console.error("Logout error:", error);
+        setUser(null);
+      }
+    };
 
-  const hasPermission = (resource: string, action: string): boolean => {
-    try {
-      if (!user) return false;
+    const hasRole = (role: UserRole): boolean => {
+      try {
+        return user?.role === role || false;
+      } catch (error) {
+        console.error("Error checking role:", error);
+        return false;
+      }
+    };
 
-      // Super admin has all permissions
-      if (user.role === "super_admin") return true;
+    const hasPermission = (resource: string, action: string): boolean => {
+      try {
+        if (!user) return false;
 
-      return user.permissions.some((permission) => {
-        const hasResource =
-          permission.resource === "*" || permission.resource === resource;
-        const hasAction =
-          permission.actions.includes("*") ||
-          permission.actions.includes(action);
-        return hasResource && hasAction;
-      });
-    } catch (error) {
-      console.error("Error checking permission:", error);
-      return false;
-    }
-  };
+        // Super admin has all permissions
+        if (user.role === "super_admin") return true;
 
-  const contextValue: AuthContextType = {
-    user,
-    isAuthenticated: user !== null,
-    isLoading,
-    isSuperAdmin: hasRole("super_admin"),
-    isMerchant: hasRole("merchant"),
-    isCustomer: hasRole("customer"),
-    hasRole,
-    hasPermission,
-    login,
-    setAuthenticatedUser,
-    logout,
-    refreshAuth,
-  };
+        return user.permissions.some((permission) => {
+          const hasResource =
+            permission.resource === "*" || permission.resource === resource;
+          const hasAction =
+            permission.actions.includes("*") ||
+            permission.actions.includes(action);
+          return hasResource && hasAction;
+        });
+      } catch (error) {
+        console.error("Error checking permission:", error);
+        return false;
+      }
+    };
 
-  return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
-  );
+    const contextValue: AuthContextType = {
+      user,
+      isAuthenticated: user !== null,
+      isLoading,
+      isSuperAdmin: hasRole("super_admin"),
+      isMerchant: hasRole("merchant"),
+      isCustomer: hasRole("customer"),
+      hasRole,
+      hasPermission,
+      login,
+      setAuthenticatedUser,
+      logout,
+      refreshAuth,
+    };
+
+    return (
+      <AuthContext.Provider value={contextValue}>
+        {children}
+      </AuthContext.Provider>
+    );
+  } catch (error) {
+    console.error("❌ AuthProvider: Critical error:", error);
+    // Fallback: return children without auth functionality
+    return <>{children}</>;
+  }
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+  try {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+      // Provide safe fallback instead of throwing error
+      console.warn("useAuth: AuthContext not available, using fallback");
+      return {
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+        isSuperAdmin: false,
+        isMerchant: false,
+        isCustomer: false,
+        hasRole: () => false,
+        hasPermission: () => false,
+        login: async () => {
+          throw new Error("Auth not available");
+        },
+        setAuthenticatedUser: () => {},
+        logout: () => {},
+        refreshAuth: () => {},
+      };
+    }
+    return context;
+  } catch (error) {
+    console.error("❌ useAuth: Critical error:", error);
+    // Return safe fallback
+    return {
+      user: null,
+      isAuthenticated: false,
+      isLoading: false,
+      isSuperAdmin: false,
+      isMerchant: false,
+      isCustomer: false,
+      hasRole: () => false,
+      hasPermission: () => false,
+      login: async () => {
+        throw new Error("Auth not available");
+      },
+      setAuthenticatedUser: () => {},
+      logout: () => {},
+      refreshAuth: () => {},
+    };
   }
-  return context;
 }
 
 // Export the context for testing purposes

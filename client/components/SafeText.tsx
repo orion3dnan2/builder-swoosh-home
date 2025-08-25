@@ -52,106 +52,151 @@ export const SafeText: React.FC<{
   as?: keyof JSX.IntrinsicElements;
   fallback?: string;
 }> = ({ children, className, as: Component = "span", fallback = "" }) => {
-  const cleanedText = cleanArabicText(children);
-  const finalText = cleanedText || fallback;
+  try {
+    const cleanedText = cleanArabicText(children);
+    const finalText = cleanedText || fallback;
 
-  return React.createElement(Component, { className }, finalText);
+    return React.createElement(Component, { className }, finalText);
+  } catch (error) {
+    console.error("Error in SafeText:", error);
+    // Return fallback or original text if cleaning fails
+    return React.createElement(Component, { className }, children || fallback);
+  }
 };
 
 // Hook لتنظيف النصوص
 export const useCleanText = (text: string): string => {
-  return React.useMemo(() => cleanArabicText(text), [text]);
+  try {
+    return React.useMemo(() => cleanArabicText(text), [text]);
+  } catch (error) {
+    console.error("Error in useCleanText:", error);
+    return text; // Return original text if cleaning fails
+  }
 };
 
 // مكون عالي المستوى لتنظيف جميع النصوص في شجرة المكونات
 export const TextCleaner: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  React.useEffect(() => {
-    const cleanupTexts = () => {
-      // Find all text nodes with corrupted characters
-      const walker = document.createTreeWalker(
-        document.body,
-        NodeFilter.SHOW_TEXT,
-        {
-          acceptNode: (node) => {
-            return node.textContent && node.textContent.includes("��")
-              ? NodeFilter.FILTER_ACCEPT
-              : NodeFilter.FILTER_REJECT;
-          },
-        },
-      );
+  // Check for browser environment
+  if (typeof window === "undefined" || typeof document === "undefined") {
+    return <>{children}</>;
+  }
 
-      const corruptedNodes = [];
-      let node;
-      while ((node = walker.nextNode())) {
-        corruptedNodes.push(node);
-      }
+  // Wrap in try-catch to prevent crashes
+  try {
+    React.useEffect(() => {
+      const cleanupTexts = () => {
+        try {
+          // Find all text nodes with corrupted characters
+          const walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT,
+            {
+              acceptNode: (node) => {
+                return node.textContent && node.textContent.includes("��")
+                  ? NodeFilter.FILTER_ACCEPT
+                  : NodeFilter.FILTER_REJECT;
+              },
+            },
+          );
 
-      // Clean each corrupted node
-      corruptedNodes.forEach((textNode) => {
-        if (textNode.textContent) {
-          textNode.textContent = cleanArabicText(textNode.textContent);
-        }
-      });
-    };
+          const corruptedNodes = [];
+          let node;
+          while ((node = walker.nextNode())) {
+            corruptedNodes.push(node);
+          }
 
-    // تنظيف فوري
-    cleanupTexts();
-
-    // مراقبة التغييرات في DOM وتنظيف المحتوى الجديد
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === "childList") {
-          mutation.addedNodes.forEach((node) => {
-            if (
-              node.nodeType === Node.TEXT_NODE &&
-              node.textContent?.includes("��")
-            ) {
-              node.textContent = cleanArabicText(node.textContent);
-            } else if (node.nodeType === Node.ELEMENT_NODE) {
-              const walker = document.createTreeWalker(
-                node as Element,
-                NodeFilter.SHOW_TEXT,
-                {
-                  acceptNode: (textNode) => {
-                    return textNode.textContent &&
-                      textNode.textContent.includes("��")
-                      ? NodeFilter.FILTER_ACCEPT
-                      : NodeFilter.FILTER_REJECT;
-                  },
-                },
-              );
-
-              let textNode;
-              while ((textNode = walker.nextNode())) {
-                if (textNode.textContent) {
-                  textNode.textContent = cleanArabicText(textNode.textContent);
-                }
-              }
+          // Clean each corrupted node
+          corruptedNodes.forEach((textNode) => {
+            if (textNode.textContent) {
+              textNode.textContent = cleanArabicText(textNode.textContent);
             }
           });
+        } catch (error) {
+          console.error("Error in cleanupTexts:", error);
+        }
+      };
+
+      // تنظيف فوري
+      cleanupTexts();
+
+      // مراقبة التغييرات في DOM وتنظيف المحتوى الجديد
+      const observer = new MutationObserver((mutations) => {
+        try {
+          mutations.forEach((mutation) => {
+            if (mutation.type === "childList") {
+              mutation.addedNodes.forEach((node) => {
+                try {
+                  if (
+                    node.nodeType === Node.TEXT_NODE &&
+                    node.textContent?.includes("��")
+                  ) {
+                    node.textContent = cleanArabicText(node.textContent);
+                  } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    const walker = document.createTreeWalker(
+                      node as Element,
+                      NodeFilter.SHOW_TEXT,
+                      {
+                        acceptNode: (textNode) => {
+                          return textNode.textContent &&
+                            textNode.textContent.includes("��")
+                            ? NodeFilter.FILTER_ACCEPT
+                            : NodeFilter.FILTER_REJECT;
+                        },
+                      },
+                    );
+
+                    let textNode;
+                    while ((textNode = walker.nextNode())) {
+                      if (textNode.textContent) {
+                        textNode.textContent = cleanArabicText(
+                          textNode.textContent,
+                        );
+                      }
+                    }
+                  }
+                } catch (nodeError) {
+                  console.error("Error processing node:", nodeError);
+                }
+              });
+            }
+          });
+        } catch (mutationError) {
+          console.error("Error in MutationObserver:", mutationError);
         }
       });
-    });
 
-    // بدء مراقبة DOM
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-    });
+      // بدء مراقبة DOM
+      try {
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+          characterData: true,
+        });
+      } catch (observerError) {
+        console.error("Error starting MutationObserver:", observerError);
+      }
 
-    // تنظيف دوري كنسخة احتياطية
-    const interval = setInterval(cleanupTexts, 5000);
+      // تنظيف دوري كنسخة احتياطية
+      const interval = setInterval(cleanupTexts, 5000);
 
-    return () => {
-      observer.disconnect();
-      clearInterval(interval);
-    };
-  }, []);
+      return () => {
+        try {
+          observer.disconnect();
+          clearInterval(interval);
+        } catch (cleanupError) {
+          console.error("Error in TextCleaner cleanup:", cleanupError);
+        }
+      };
+    }, []);
 
-  return <>{children}</>;
+    return <>{children}</>;
+  } catch (error) {
+    console.error("❌ TextCleaner: Critical error:", error);
+    // Fallback: return children without text cleaning functionality
+    return <>{children}</>;
+  }
 };
 
 export default SafeText;

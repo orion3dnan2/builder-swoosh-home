@@ -57,7 +57,7 @@ async function main() {
           state: "الخرطوم",
           country: "السودان",
           zipCode: "11112",
-          businessName: "متجر أحمد للإلكترونيات",
+          businessName: "متجر أحم�� للإلكترونيات",
           businessType: "إلكترونيات",
           description: "متجر متخصص في بيع الأجهزة الإلكترونية والهواتف الذكية",
         },
@@ -92,6 +92,37 @@ async function main() {
           state: "الخرطوم",
           country: "السودان",
           zipCode: "11113",
+        },
+      },
+      permissions: {
+        create: [
+          { resource: "profile", actions: ["read", "write"] },
+          { resource: "orders", actions: ["read", "write"] },
+        ],
+      },
+    },
+  });
+
+  // إنشاء مستخدم تجريبي عادي آخر
+  const testUser = await prisma.user.upsert({
+    where: { email: "test@baytsudani.com" },
+    update: {},
+    create: {
+      username: "testuser",
+      email: "test@baytsudani.com",
+      password: hashedUserPassword,
+      role: "CUSTOMER",
+      isActive: true,
+      profile: {
+        create: {
+          name: "محمد أحمد التجريبي",
+          phone: "+249123987654",
+          language: "AR",
+          street: "شارع الزبير",
+          city: "أم درمان",
+          state: "الخرطوم",
+          country: "السودان",
+          zipCode: "11114",
         },
       },
       permissions: {
@@ -355,7 +386,7 @@ async function main() {
     },
   });
 
-  // إنشاء إعدادات النظام
+  // إنشاء إعدادا�� النظام
   const systemSettings = await prisma.systemSettings.upsert({
     where: { id: "main-system" },
     update: {},
@@ -459,6 +490,7 @@ async function main() {
   console.log(`👤 المدير: ${adminUser.email} (كلمة المرور: admin)`);
   console.log(`🏪 التاجر: ${merchantUser.email} (كلمة المرور: user123)`);
   console.log(`🛒 العميل: ${customerUser.email} (كلمة المرور: user123)`);
+  console.log(`🧪 مستخدم تجريبي: ${testUser.email} (كلمة المرور: user123)`);
   console.log(`🏬 المتجر: ${store.name}`);
   console.log(`📦 المنتجات: ${products.length}`);
   console.log(`🛍️ الطلبات: 1`);

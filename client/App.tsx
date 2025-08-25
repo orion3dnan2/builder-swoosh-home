@@ -17,6 +17,9 @@ import StoreVisit from "./pages/StoreVisit";
 import NotFound from "./pages/NotFound";
 import Unauthorized from "./pages/Unauthorized";
 import ThemeShowcase from "./pages/ThemeShowcase";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import PaymentGateway from "./pages/PaymentGateway";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminSettings from "./pages/admin/Settings";
 import AdminStores from "./pages/admin/Stores";
@@ -41,7 +44,7 @@ import { SuperAdminRoute, MerchantRoute } from "./components/ProtectedRoute";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { TextCleaner } from "./components/SafeText";
-import { Toaster } from "./components/ui/toaster";
+import { SafeToaster as Toaster } from "./components/ui/safe-toaster";
 import { PWAManager } from "./components/PWAManager";
 import "./global.css";
 
@@ -195,6 +198,9 @@ function App() {
                 />
                 <Route path="/marketplace" element={<Marketplace />} />
                 <Route path="/products" element={<Products />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/payment-gateway" element={<PaymentGateway />} />
                 <Route path="/store/:id" element={<Store />} />
                 <Route path="/companies" element={<Companies />} />
                 <Route path="/company/:id" element={<Company />} />

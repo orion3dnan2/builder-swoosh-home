@@ -18,63 +18,28 @@
         ]
       }
     ],
-    "createdAt": "2025-07-30T08:45:22.015Z",
-    "isActive": true,
-    "lastLogin": "2025-07-31T11:44:30.824Z"
-  },
-  {
-    "id": "user-1753865301240-efsqj09s0",
-    "username": "orion",
-    "email": "oriontvinetwork@gmail.com",
-    "password": "user123",
-    "role": "merchant",
-    "profile": {
-      "name": "Mohamed Adnan",
-      "phone": "+96551325559",
-      "country": "الكويت",
-      "city": "kuwait",
-      "language": "ar",
-      "avatar": "/placeholder.svg",
-      "businessName": "زول اقاشي",
-      "businessType": "food"
-    },
-    "permissions": [
-      {
-        "resource": "store",
-        "actions": [
-          "read",
-          "write",
-          "delete"
-        ]
-      },
-      {
-        "resource": "products",
-        "actions": [
-          "read",
-          "write",
-          "delete"
-        ]
-      }
-    ],
-    "createdAt": "2025-07-30T08:48:21.241Z",
-    "isActive": true,
-    "lastLogin": "2025-08-03T08:41:43.076Z"
+    "createdAt": "2025-08-25T08:08:38.957Z",
+    "isActive": true
   },
   {
     "id": "merchant-001",
-    "username": "merchant",
+    "username": "merchant1",
     "email": "merchant@baytsudani.com",
-    "password": "merchant",
+    "password": "user123",
     "role": "merchant",
     "profile": {
-      "name": "تاجر تجريبي",
+      "name": "أحمد محمد التاجر",
       "phone": "+249123456789",
-      "country": "السودان",
-      "city": "الخرطوم",
       "language": "ar",
       "avatar": "/placeholder.svg",
-      "businessName": "متجر تجريبي",
-      "businessType": "general"
+      "street": "شارع الجمهورية",
+      "city": "الخرطوم",
+      "state": "الخرطوم",
+      "country": "السودان",
+      "zipCode": "11112",
+      "businessName": "متجر أحمد للإلكترونيات",
+      "businessType": "إلكترونيات",
+      "description": "متجر متخصص في بيع الأجهزة الإلكترونية والهواتف الذكية"
     },
     "permissions": [
       {
@@ -92,9 +57,89 @@
           "write",
           "delete"
         ]
+      },
+      {
+        "resource": "orders",
+        "actions": [
+          "read",
+          "write"
+        ]
       }
     ],
-    "createdAt": "2025-07-30T08:45:22.015Z",
+    "createdAt": "2025-08-25T08:08:38.957Z",
+    "isActive": true
+  },
+  {
+    "id": "customer-001",
+    "username": "customer1",
+    "email": "customer@baytsudani.com",
+    "password": "user123",
+    "role": "customer",
+    "profile": {
+      "name": "فاطمة عبد الله",
+      "phone": "+249987654321",
+      "language": "ar",
+      "avatar": "/placeholder.svg",
+      "street": "شارع الستين",
+      "city": "الخرطوم",
+      "state": "الخرطوم",
+      "country": "السودان",
+      "zipCode": "11113"
+    },
+    "permissions": [
+      {
+        "resource": "profile",
+        "actions": [
+          "read",
+          "write"
+        ]
+      },
+      {
+        "resource": "orders",
+        "actions": [
+          "read",
+          "write"
+        ]
+      }
+    ],
+    "createdAt": "2025-08-25T08:08:38.957Z",
+    "isActive": true,
+    "lastLogin": "2025-08-25T08:15:00.580Z"
+  },
+  {
+    "id": "testuser-001",
+    "username": "testuser",
+    "email": "test@baytsudani.com",
+    "password": "user123",
+    "role": "customer",
+    "profile": {
+      "name": "محمد أحمد التجريبي",
+      "phone": "+249123987654",
+      "language": "ar",
+      "avatar": "/placeholder.svg",
+      "street": "شارع الزبير",
+      "city": "أم درمان",
+      "state": "الخرطوم",
+      "country": "السودان",
+      "zipCode": "11114"
+    },
+    "permissions": [
+      {
+        "resource": "profile",
+        "actions": [
+          "read",
+          "write"
+        ]
+      },
+      {
+        "resource": "orders",
+        "actions": [
+          "read",
+          "write"
+        ]
+      }
+    ],
+    "createdAt": "2025-08-25T08:08:38.957Z",
     "isActive": true
   }
 ]

@@ -166,23 +166,51 @@ function toast({ ...props }: Toast) {
 }
 
 function useToast() {
-  const [state, setState] = React.useState<State>(memoryState);
-
-  React.useEffect(() => {
-    listeners.push(setState);
-    return () => {
-      const index = listeners.indexOf(setState);
-      if (index > -1) {
-        listeners.splice(index, 1);
-      }
+  // Check for React availability
+  if (typeof React === "undefined" || React.useState === undefined) {
+    console.error("useToast: React hooks are not available");
+    return {
+      toasts: [],
+      toast: () => ({ id: "", dismiss: () => {}, update: () => {} }),
+      dismiss: () => {},
     };
-  }, [state]);
+  }
 
-  return {
-    ...state,
-    toast,
-    dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
-  };
+  try {
+    const [state, setState] = React.useState<State>(memoryState);
+
+    React.useEffect(() => {
+      try {
+        listeners.push(setState);
+        return () => {
+          try {
+            const index = listeners.indexOf(setState);
+            if (index > -1) {
+              listeners.splice(index, 1);
+            }
+          } catch (cleanupError) {
+            console.error("Error in useToast cleanup:", cleanupError);
+          }
+        };
+      } catch (error) {
+        console.error("Error in useToast useEffect:", error);
+      }
+    }, [state]);
+
+    return {
+      ...state,
+      toast,
+      dismiss: (toastId?: string) =>
+        dispatch({ type: "DISMISS_TOAST", toastId }),
+    };
+  } catch (error) {
+    console.error("❌ useToast: Critical error:", error);
+    return {
+      toasts: [],
+      toast: () => ({ id: "", dismiss: () => {}, update: () => {} }),
+      dismiss: () => {},
+    };
+  }
 }
 
 export { useToast, toast };
