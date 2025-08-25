@@ -24,7 +24,13 @@ import { toast } from "sonner";
 
 export default function Products() {
   const { products } = useProducts();
-  const { cart, addToCart, removeFromCart, updateQuantity, getProductQuantity } = useCart();
+  const {
+    cart,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    getProductQuantity,
+  } = useCart();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedStore, setSelectedStore] = useState<string>("all");

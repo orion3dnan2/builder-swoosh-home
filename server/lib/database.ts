@@ -60,7 +60,8 @@ export class UserDatabase {
               zipCode: "11112",
               businessName: "متجر أحمد للإلكترونيات",
               businessType: "إلكترونيات",
-              description: "متجر متخصص في بيع الأجهزة الإلكترونية والهواتف الذكية",
+              description:
+                "متجر متخصص في بيع الأجهزة الإلكترونية والهواتف الذكية",
             },
             permissions: [
               { resource: "store", actions: ["read", "write", "delete"] },

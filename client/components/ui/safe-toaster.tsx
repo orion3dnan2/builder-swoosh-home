@@ -21,20 +21,28 @@ const FallbackToaster: React.FC = () => {
         setToasts(hookToasts);
       }
     } catch (error) {
-      console.warn("FallbackToaster: useToast failed, using empty toasts:", error);
+      console.warn(
+        "FallbackToaster: useToast failed, using empty toasts:",
+        error,
+      );
       setToasts([]);
     }
   }, []);
 
   if (!toasts || toasts.length === 0) {
     return (
-      <div className="toast-container fixed top-0 z-[100] w-full sm:bottom-0 sm:right-0 sm:top-auto md:max-w-[420px]" data-fallback="true">
-      </div>
+      <div
+        className="toast-container fixed top-0 z-[100] w-full sm:bottom-0 sm:right-0 sm:top-auto md:max-w-[420px]"
+        data-fallback="true"
+      ></div>
     );
   }
 
   return (
-    <div className="toast-container fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]" data-fallback="true">
+    <div
+      className="toast-container fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"
+      data-fallback="true"
+    >
       {toasts.map((toast) => (
         <div
           key={toast.id || Math.random()}
@@ -49,11 +57,13 @@ const FallbackToaster: React.FC = () => {
             )}
           </div>
           {toast.action}
-          <button 
+          <button
             className="absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100"
             onClick={() => {
               // Remove toast from state
-              setToasts(prevToasts => prevToasts.filter(t => t.id !== toast.id));
+              setToasts((prevToasts) =>
+                prevToasts.filter((t) => t.id !== toast.id),
+              );
             }}
           >
             ×
@@ -66,7 +76,7 @@ const FallbackToaster: React.FC = () => {
 
 export function SafeToaster() {
   // Check if we're in a browser environment
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return null;
   }
 
@@ -94,7 +104,10 @@ export function SafeToaster() {
       </SafeToastProvider>
     );
   } catch (error) {
-    console.warn("SafeToaster: Safe components failed, using fallback toaster:", error);
+    console.warn(
+      "SafeToaster: Safe components failed, using fallback toaster:",
+      error,
+    );
     return <FallbackToaster />;
   }
 }

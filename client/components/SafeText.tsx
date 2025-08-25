@@ -58,7 +58,7 @@ export const SafeText: React.FC<{
 
     return React.createElement(Component, { className }, finalText);
   } catch (error) {
-    console.error('Error in SafeText:', error);
+    console.error("Error in SafeText:", error);
     // Return fallback or original text if cleaning fails
     return React.createElement(Component, { className }, children || fallback);
   }
@@ -69,7 +69,7 @@ export const useCleanText = (text: string): string => {
   try {
     return React.useMemo(() => cleanArabicText(text), [text]);
   } catch (error) {
-    console.error('Error in useCleanText:', error);
+    console.error("Error in useCleanText:", error);
     return text; // Return original text if cleaning fails
   }
 };
@@ -79,7 +79,7 @@ export const TextCleaner: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   // Check for browser environment
-  if (typeof window === 'undefined' || typeof document === 'undefined') {
+  if (typeof window === "undefined" || typeof document === "undefined") {
     return <>{children}</>;
   }
 
@@ -114,7 +114,7 @@ export const TextCleaner: React.FC<{ children: React.ReactNode }> = ({
             }
           });
         } catch (error) {
-          console.error('Error in cleanupTexts:', error);
+          console.error("Error in cleanupTexts:", error);
         }
       };
 
@@ -150,18 +150,20 @@ export const TextCleaner: React.FC<{ children: React.ReactNode }> = ({
                     let textNode;
                     while ((textNode = walker.nextNode())) {
                       if (textNode.textContent) {
-                        textNode.textContent = cleanArabicText(textNode.textContent);
+                        textNode.textContent = cleanArabicText(
+                          textNode.textContent,
+                        );
                       }
                     }
                   }
                 } catch (nodeError) {
-                  console.error('Error processing node:', nodeError);
+                  console.error("Error processing node:", nodeError);
                 }
               });
             }
           });
         } catch (mutationError) {
-          console.error('Error in MutationObserver:', mutationError);
+          console.error("Error in MutationObserver:", mutationError);
         }
       });
 
@@ -173,7 +175,7 @@ export const TextCleaner: React.FC<{ children: React.ReactNode }> = ({
           characterData: true,
         });
       } catch (observerError) {
-        console.error('Error starting MutationObserver:', observerError);
+        console.error("Error starting MutationObserver:", observerError);
       }
 
       // تنظيف دوري كنسخة احتياطية
@@ -184,14 +186,14 @@ export const TextCleaner: React.FC<{ children: React.ReactNode }> = ({
           observer.disconnect();
           clearInterval(interval);
         } catch (cleanupError) {
-          console.error('Error in TextCleaner cleanup:', cleanupError);
+          console.error("Error in TextCleaner cleanup:", cleanupError);
         }
       };
     }, []);
 
     return <>{children}</>;
   } catch (error) {
-    console.error('❌ TextCleaner: Critical error:', error);
+    console.error("❌ TextCleaner: Critical error:", error);
     // Fallback: return children without text cleaning functionality
     return <>{children}</>;
   }

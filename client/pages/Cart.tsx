@@ -60,15 +60,15 @@ export default function Cart() {
       tax: tax,
       discount: discountAmount,
       promoCode: appliedPromoCode,
-      total: finalTotal
+      total: finalTotal,
     };
 
     // Store order data temporarily
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('orderData', JSON.stringify(orderData));
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("orderData", JSON.stringify(orderData));
     }
 
-    navigate('/checkout');
+    navigate("/checkout");
   };
 
   const handleApplyPromoCode = () => {
@@ -78,7 +78,10 @@ export default function Cart() {
     }
 
     const subtotal = calculateSubtotal();
-    const validation = PromoCodeService.validatePromoCode(promoCode.trim(), subtotal);
+    const validation = PromoCodeService.validatePromoCode(
+      promoCode.trim(),
+      subtotal,
+    );
 
     if (validation.isValid && validation.promoCode) {
       setAppliedPromoCode(validation.promoCode);
@@ -100,7 +103,7 @@ export default function Cart() {
   const calculateSubtotal = () => {
     return cart.items.reduce((sum, item) => {
       const price = item.product.salePrice || item.product.price;
-      return sum + (price * item.quantity);
+      return sum + price * item.quantity;
     }, 0);
   };
 
@@ -108,8 +111,16 @@ export default function Cart() {
 
   // Calculate discount if promo code is applied
   const discountData = appliedPromoCode
-    ? PromoCodeService.calculateDiscount(appliedPromoCode, calculateSubtotal(), baseShippingCost)
-    : { discountAmount: 0, finalAmount: calculateSubtotal(), shippingDiscount: 0 };
+    ? PromoCodeService.calculateDiscount(
+        appliedPromoCode,
+        calculateSubtotal(),
+        baseShippingCost,
+      )
+    : {
+        discountAmount: 0,
+        finalAmount: calculateSubtotal(),
+        shippingDiscount: 0,
+      };
 
   const discountAmount = discountData.discountAmount;
   const shippingDiscount = discountData.shippingDiscount;
@@ -128,7 +139,8 @@ export default function Cart() {
               السلة فارغة
             </h2>
             <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
-              لم تقم بإضافة أي منتجات إلى السلة بعد. تصفح منتجاتنا واختر ما يناسبك!
+              لم تقم بإضافة أي منتجات إلى السلة بعد. تصفح منتجاتنا واختر ما
+              يناسبك!
             </p>
             <Link to="/products">
               <Button className="arabic">
@@ -195,7 +207,10 @@ export default function Cart() {
                           <p className="text-sm text-gray-600 arabic line-clamp-2">
                             {item.product.description}
                           </p>
-                          <Badge variant="outline" className="text-xs arabic mt-2">
+                          <Badge
+                            variant="outline"
+                            className="text-xs arabic mt-2"
+                          >
                             {item.product.category}
                           </Badge>
                         </div>
@@ -215,7 +230,10 @@ export default function Cart() {
                             variant="outline"
                             size="sm"
                             onClick={() =>
-                              handleUpdateQuantity(item.productId, item.quantity - 1)
+                              handleUpdateQuantity(
+                                item.productId,
+                                item.quantity - 1,
+                              )
                             }
                           >
                             <Minus className="w-4 h-4" />
@@ -227,7 +245,10 @@ export default function Cart() {
                             variant="outline"
                             size="sm"
                             onClick={() =>
-                              handleUpdateQuantity(item.productId, item.quantity + 1)
+                              handleUpdateQuantity(
+                                item.productId,
+                                item.quantity + 1,
+                              )
                             }
                           >
                             <Plus className="w-4 h-4" />
@@ -238,11 +259,13 @@ export default function Cart() {
                             <div>
                               <span className="text-lg font-bold text-green-600 arabic">
                                 {formatPrice(
-                                  item.product.salePrice * item.quantity
+                                  item.product.salePrice * item.quantity,
                                 )}
                               </span>
                               <span className="text-sm text-gray-500 line-through arabic mr-2">
-                                {formatPrice(item.product.price * item.quantity)}
+                                {formatPrice(
+                                  item.product.price * item.quantity,
+                                )}
                               </span>
                             </div>
                           ) : (
@@ -252,7 +275,7 @@ export default function Cart() {
                           )}
                           <p className="text-xs text-gray-500 arabic">
                             {formatPrice(
-                              item.product.salePrice || item.product.price
+                              item.product.salePrice || item.product.price,
                             )}{" "}
                             للقطعة
                           </p>
@@ -323,12 +346,16 @@ export default function Cart() {
                             {formatPrice(baseShippingCost)}
                           </span>
                           <span className="font-medium text-green-600 arabic mr-2">
-                            {finalShippingCost > 0 ? formatPrice(finalShippingCost) : "مجاني"}
+                            {finalShippingCost > 0
+                              ? formatPrice(finalShippingCost)
+                              : "مجاني"}
                           </span>
                         </div>
                       ) : (
                         <span className="font-medium arabic">
-                          {finalShippingCost > 0 ? formatPrice(finalShippingCost) : "مجاني"}
+                          {finalShippingCost > 0
+                            ? formatPrice(finalShippingCost)
+                            : "مجاني"}
                         </span>
                       )}
                     </div>
@@ -365,12 +392,12 @@ export default function Cart() {
                           setPromoCodeError(""); // Clear error when user types
                         }}
                         onKeyPress={(e) => {
-                          if (e.key === 'Enter') {
+                          if (e.key === "Enter") {
                             handleApplyPromoCode();
                           }
                         }}
                         className={`flex-1 px-3 py-2 border rounded-lg text-right arabic ${
-                          promoCodeError ? 'border-red-300' : 'border-gray-300'
+                          promoCodeError ? "border-red-300" : "border-gray-300"
                         }`}
                       />
                       <Button
@@ -384,10 +411,14 @@ export default function Cart() {
                       </Button>
                     </div>
                     {promoCodeError && (
-                      <p className="text-red-600 text-sm mt-1 arabic">{promoCodeError}</p>
+                      <p className="text-red-600 text-sm mt-1 arabic">
+                        {promoCodeError}
+                      </p>
                     )}
                     <div className="mt-2 text-xs text-gray-500 arabic">
-                      <p>أكواد متاحة للتجربة: WELCOME10, SUDAN20, FREESHIP, KWD10</p>
+                      <p>
+                        أكواد متاحة للتجربة: WELCOME10, SUDAN20, FREESHIP, KWD10
+                      </p>
                     </div>
                   </div>
                 )}

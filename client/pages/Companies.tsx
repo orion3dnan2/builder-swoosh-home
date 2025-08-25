@@ -72,8 +72,12 @@ export default function Companies() {
     const matchesSearch =
       searchQuery === "" ||
       (company.name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (company.description || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (company.category || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (company.description || "")
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      (company.category || "")
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
       (company.city || "").toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesIndustry =
@@ -85,8 +89,12 @@ export default function Companies() {
   });
 
   // استخراج القطاعات والدول من البيانات
-  const industries = [...new Set((companies || []).map((c) => c?.category).filter(Boolean))];
-  const countries = [...new Set((companies || []).map((c) => c?.country).filter(Boolean))];
+  const industries = [
+    ...new Set((companies || []).map((c) => c?.category).filter(Boolean)),
+  ];
+  const countries = [
+    ...new Set((companies || []).map((c) => c?.country).filter(Boolean)),
+  ];
   const sizes = ["صغيرة", "متوسطة", "كبيرة"];
 
   // الشركات المميزة (أول 3 شركات نشطة)
@@ -118,14 +126,19 @@ export default function Companies() {
             <div className="flex items-center gap-2">
               <Verified className="w-4 h-4" />
               <span className="arabic">
-                {(companies || []).filter((c) => c?.status === "active").length} شركة
-                نشطة
+                {(companies || []).filter((c) => c?.status === "active").length}{" "}
+                شركة نشطة
               </span>
             </div>
             <div className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4" />
               <span className="arabic">
-                {new Set((companies || []).map((c) => c?.category).filter(Boolean)).size} قطاع
+                {
+                  new Set(
+                    (companies || []).map((c) => c?.category).filter(Boolean),
+                  ).size
+                }{" "}
+                قطاع
               </span>
             </div>
           </div>
@@ -367,15 +380,17 @@ export default function Companies() {
                       الخدمات:
                     </h4>
                     <div className="flex flex-wrap gap-1">
-                      {(company.services || []).slice(0, 3).map((service, index) => (
-                        <Badge
-                          key={index}
-                          variant="secondary"
-                          className="text-xs arabic"
-                        >
-                          {service}
-                        </Badge>
-                      ))}
+                      {(company.services || [])
+                        .slice(0, 3)
+                        .map((service, index) => (
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className="text-xs arabic"
+                          >
+                            {service}
+                          </Badge>
+                        ))}
                       {(company.services || []).length > 3 && (
                         <Badge variant="secondary" className="text-xs arabic">
                           +{(company.services || []).length - 3}
@@ -453,7 +468,10 @@ export default function Companies() {
                   <Verified className="w-8 h-8 text-blue-600" />
                 </div>
                 <div className="text-2xl font-bold text-gray-800 mb-1">
-                  {(companies || []).filter((c) => c?.status === "active").length}
+                  {
+                    (companies || []).filter((c) => c?.status === "active")
+                      .length
+                  }
                 </div>
                 <div className="text-sm text-gray-600 arabic">شركة موثقة</div>
               </div>

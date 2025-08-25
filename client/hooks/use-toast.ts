@@ -167,11 +167,11 @@ function toast({ ...props }: Toast) {
 
 function useToast() {
   // Check for React availability
-  if (typeof React === 'undefined' || React.useState === undefined) {
-    console.error('useToast: React hooks are not available');
+  if (typeof React === "undefined" || React.useState === undefined) {
+    console.error("useToast: React hooks are not available");
     return {
       toasts: [],
-      toast: () => ({ id: '', dismiss: () => {}, update: () => {} }),
+      toast: () => ({ id: "", dismiss: () => {}, update: () => {} }),
       dismiss: () => {},
     };
   }
@@ -189,24 +189,25 @@ function useToast() {
               listeners.splice(index, 1);
             }
           } catch (cleanupError) {
-            console.error('Error in useToast cleanup:', cleanupError);
+            console.error("Error in useToast cleanup:", cleanupError);
           }
         };
       } catch (error) {
-        console.error('Error in useToast useEffect:', error);
+        console.error("Error in useToast useEffect:", error);
       }
     }, [state]);
 
     return {
       ...state,
       toast,
-      dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
+      dismiss: (toastId?: string) =>
+        dispatch({ type: "DISMISS_TOAST", toastId }),
     };
   } catch (error) {
-    console.error('❌ useToast: Critical error:', error);
+    console.error("❌ useToast: Critical error:", error);
     return {
       toasts: [],
-      toast: () => ({ id: '', dismiss: () => {}, update: () => {} }),
+      toast: () => ({ id: "", dismiss: () => {}, update: () => {} }),
       dismiss: () => {},
     };
   }

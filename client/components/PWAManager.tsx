@@ -7,7 +7,7 @@ interface PWAManagerProps {
 
 export function PWAManager({ children }: PWAManagerProps) {
   // Check for browser environment
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return <>{children}</>;
   }
 
@@ -22,7 +22,8 @@ export function PWAManager({ children }: PWAManagerProps) {
         try {
           // Register service worker if not already registered
           if ("serviceWorker" in navigator) {
-            const registration = await navigator.serviceWorker.register("/sw.js");
+            const registration =
+              await navigator.serviceWorker.register("/sw.js");
             console.log("✅ PWA Manager: Service Worker registered");
 
             // Listen for updates
@@ -69,10 +70,15 @@ export function PWAManager({ children }: PWAManagerProps) {
                 await (registration as any).periodicSync.register("sync", {
                   minInterval: 24 * 60 * 60 * 1000, // 24 hours
                 });
-                console.log("✅ PWA Manager: Periodic sync registered successfully");
+                console.log(
+                  "✅ PWA Manager: Periodic sync registered successfully",
+                );
               }
             } catch (error) {
-              console.log("⚠️ PWA Manager: Periodic sync registration failed:", error);
+              console.log(
+                "⚠️ PWA Manager: Periodic sync registration failed:",
+                error,
+              );
               // Fail silently - periodic sync is not critical for app functionality
             }
           }
@@ -94,11 +100,13 @@ export function PWAManager({ children }: PWAManagerProps) {
             if (document.visibilityState === "visible") {
               // App became visible, check for updates
               if ("serviceWorker" in navigator) {
-                navigator.serviceWorker.getRegistration().then((registration) => {
-                  if (registration) {
-                    registration.update();
-                  }
-                });
+                navigator.serviceWorker
+                  .getRegistration()
+                  .then((registration) => {
+                    if (registration) {
+                      registration.update();
+                    }
+                  });
               }
             }
           });
@@ -177,7 +185,9 @@ export function PWAManager({ children }: PWAManagerProps) {
             <h2 className="text-xl font-bold text-foreground mb-2 arabic">
               البيت السوداني
             </h2>
-            <p className="text-muted-foreground arabic">جاري تحميل التطبيق...</p>
+            <p className="text-muted-foreground arabic">
+              جاري تحميل التطبيق...
+            </p>
           </div>
         </div>
       );
@@ -194,7 +204,7 @@ export function PWAManager({ children }: PWAManagerProps) {
 // Hook for PWA-specific features
 export function usePWAFeatures() {
   // Check for browser environment
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return {
       canInstall: false,
       isUpdateAvailable: false,
@@ -225,7 +235,10 @@ export function usePWAFeatures() {
           setIsUpdateAvailable(true);
         };
 
-        window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+        window.addEventListener(
+          "beforeinstallprompt",
+          handleBeforeInstallPrompt,
+        );
         window.addEventListener("appinstalled", handleAppInstalled);
 
         // Listen for service worker updates

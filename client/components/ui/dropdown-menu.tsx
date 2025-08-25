@@ -10,7 +10,7 @@ const DropdownMenu = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Root>
 >(({ children, ...props }, ref) => {
   // Check for browser environment
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return <div>{children}</div>;
   }
 
@@ -21,7 +21,7 @@ const DropdownMenu = React.forwardRef<
       </DropdownMenuPrimitive.Root>
     );
   } catch (error) {
-    console.error('❌ DropdownMenu: Critical error:', error);
+    console.error("❌ DropdownMenu: Critical error:", error);
     // Fallback: render children without dropdown functionality
     return <div>{children}</div>;
   }

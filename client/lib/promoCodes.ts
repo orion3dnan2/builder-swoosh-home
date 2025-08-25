@@ -1,7 +1,7 @@
 export interface PromoCode {
   code: string;
   description: string;
-  discountType: 'percentage' | 'fixed';
+  discountType: "percentage" | "fixed";
   discountValue: number;
   minOrderAmount?: number;
   maxDiscount?: number;
@@ -68,7 +68,7 @@ export class PromoCodeService {
   // Get all promo codes
   static getPromoCodes(): PromoCode[] {
     try {
-      if (typeof window === 'undefined') return this.defaultPromoCodes;
+      if (typeof window === "undefined") return this.defaultPromoCodes;
       const stored = localStorage.getItem(this.STORAGE_KEY);
       if (!stored) {
         this.savePromoCodes(this.defaultPromoCodes);
@@ -84,7 +84,7 @@ export class PromoCodeService {
   // Save promo codes
   static savePromoCodes(codes: PromoCode[]): void {
     try {
-      if (typeof window === 'undefined') return;
+      if (typeof window === "undefined") return;
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(codes));
     } catch (error) {
       console.error("Failed to save promo codes:", error);
@@ -92,61 +92,68 @@ export class PromoCodeService {
   }
 
   // Validate promo code
-  static validatePromoCode(code: string, orderAmount: number): {
+  static validatePromoCode(
+    code: string,
+    orderAmount: number,
+  ): {
     isValid: boolean;
     message: string;
     promoCode?: PromoCode;
   } {
     try {
       const promoCodes = this.getPromoCodes();
-      const promoCode = promoCodes.find(p => 
-        p.code.toUpperCase() === code.toUpperCase() && p.isActive
+      const promoCode = promoCodes.find(
+        (p) => p.code.toUpperCase() === code.toUpperCase() && p.isActive,
       );
 
       if (!promoCode) {
         return {
           isValid: false,
-          message: "كود الخصم غير صالح"
+          message: "كود الخصم غير صالح",
         };
       }
 
       if (promoCode.minOrderAmount && orderAmount < promoCode.minOrderAmount) {
         return {
           isValid: false,
-          message: `الحد الأدنى للطلب ${promoCode.minOrderAmount} د.ك`
+          message: `الحد الأدنى للطلب ${promoCode.minOrderAmount} د.ك`,
         };
       }
 
       if (promoCode.validUntil && new Date() > new Date(promoCode.validUntil)) {
         return {
           isValid: false,
-          message: "كود الخصم منتهي الصلاحية"
+          message: "كود الخصم منتهي الصلاحية",
         };
       }
 
       if (promoCode.usageLimit && promoCode.usedCount >= promoCode.usageLimit) {
         return {
           isValid: false,
-          message: "تم استنفاد عدد مرات الاستخدام"
+          message: "تم استنفاد عدد مرات الاستخدام",
         };
       }
 
       return {
         isValid: true,
         message: promoCode.description,
-        promoCode
+        promoCode,
       };
     } catch (error) {
       console.error("Failed to validate promo code:", error);
       return {
         isValid: false,
-        message: "خطأ في التحقق من الكود"
+        message: "خطأ في التحقق من الكود",
       };
     }
   }
 
   // Calculate discount
-  static calculateDiscount(promoCode: PromoCode, orderAmount: number, shippingCost: number = 0): {
+  static calculateDiscount(
+    promoCode: PromoCode,
+    orderAmount: number,
+    shippingCost: number = 0,
+  ): {
     discountAmount: number;
     finalAmount: number;
     shippingDiscount: number;
@@ -155,14 +162,14 @@ export class PromoCodeService {
       let discountAmount = 0;
       let shippingDiscount = 0;
 
-      if (promoCode.discountType === 'percentage') {
+      if (promoCode.discountType === "percentage") {
         discountAmount = (orderAmount * promoCode.discountValue) / 100;
         if (promoCode.maxDiscount) {
           discountAmount = Math.min(discountAmount, promoCode.maxDiscount);
         }
-      } else if (promoCode.discountType === 'fixed') {
+      } else if (promoCode.discountType === "fixed") {
         // If code is for free shipping
-        if (promoCode.code === 'FREESHIP') {
+        if (promoCode.code === "FREESHIP") {
           shippingDiscount = shippingCost;
           discountAmount = 0;
         } else {
@@ -175,14 +182,14 @@ export class PromoCodeService {
       return {
         discountAmount,
         finalAmount,
-        shippingDiscount
+        shippingDiscount,
       };
     } catch (error) {
       console.error("Failed to calculate discount:", error);
       return {
         discountAmount: 0,
         finalAmount: orderAmount,
-        shippingDiscount: 0
+        shippingDiscount: 0,
       };
     }
   }
@@ -191,8 +198,8 @@ export class PromoCodeService {
   static usePromoCode(code: string): void {
     try {
       const promoCodes = this.getPromoCodes();
-      const promoCodeIndex = promoCodes.findIndex(p => 
-        p.code.toUpperCase() === code.toUpperCase()
+      const promoCodeIndex = promoCodes.findIndex(
+        (p) => p.code.toUpperCase() === code.toUpperCase(),
       );
 
       if (promoCodeIndex >= 0) {

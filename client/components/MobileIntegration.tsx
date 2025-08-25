@@ -34,7 +34,7 @@ export const SmartLinkButton: React.FC<SmartLinkButtonProps> = ({
 // مكون banner للتطبيق الجوال
 export const AppPromoBanner: React.FC = () => {
   // Check for browser environment
-  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+  if (typeof window === "undefined" || typeof navigator === "undefined") {
     return null;
   }
 
@@ -61,7 +61,7 @@ export const AppPromoBanner: React.FC = () => {
 
         checkMobile();
       } catch (error) {
-        console.error('Error in AppPromoBanner useEffect:', error);
+        console.error("Error in AppPromoBanner useEffect:", error);
       }
     }, []);
 
@@ -70,7 +70,7 @@ export const AppPromoBanner: React.FC = () => {
         DeepLinkingService.redirectToApp();
         setShowBanner(false);
       } catch (error) {
-        console.error('Error in handleInstallApp:', error);
+        console.error("Error in handleInstallApp:", error);
       }
     };
 
@@ -79,46 +79,46 @@ export const AppPromoBanner: React.FC = () => {
         localStorage.setItem("app_banner_dismissed", "true");
         setShowBanner(false);
       } catch (error) {
-        console.error('Error in dismissBanner:', error);
+        console.error("Error in dismissBanner:", error);
       }
     };
 
-  if (!showBanner) return null;
+    if (!showBanner) return null;
 
-  return (
-    <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-4 fixed bottom-0 left-0 right-0 z-50 shadow-lg">
-      <div className="flex items-center justify-between max-w-md mx-auto">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-            <span className="text-xl">🇸🇩</span>
+    return (
+      <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white p-4 fixed bottom-0 left-0 right-0 z-50 shadow-lg">
+        <div className="flex items-center justify-between max-w-md mx-auto">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+              <span className="text-xl">🇸🇩</span>
+            </div>
+            <div>
+              <div className="font-bold text-sm arabic">البيت السوداني</div>
+              <div className="text-xs opacity-90 arabic">احصل على التطبيق</div>
+            </div>
           </div>
-          <div>
-            <div className="font-bold text-sm arabic">البيت السوداني</div>
-            <div className="text-xs opacity-90 arabic">احصل على التطبيق</div>
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={handleInstallApp}
+              className="text-xs arabic"
+            >
+              <Download className="w-3 h-3 ml-1" />
+              تحميل
+            </Button>
+            <button
+              onClick={dismissBanner}
+              className="text-white/70 hover:text-white text-lg w-6 h-6 flex items-center justify-center"
+            >
+              ✕
+            </button>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            size="sm"
-            variant="secondary"
-            onClick={handleInstallApp}
-            className="text-xs arabic"
-          >
-            <Download className="w-3 h-3 ml-1" />
-            تحميل
-          </Button>
-          <button
-            onClick={dismissBanner}
-            className="text-white/70 hover:text-white text-lg w-6 h-6 flex items-center justify-center"
-          >
-            ✕
-          </button>
         </div>
       </div>
-    </div>
     );
   } catch (error) {
-    console.error('❌ AppPromoBanner: Critical error:', error);
+    console.error("❌ AppPromoBanner: Critical error:", error);
     return null;
   }
 };

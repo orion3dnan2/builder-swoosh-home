@@ -20,7 +20,7 @@ interface PWAState {
 
 export function usePWA() {
   // Add safety check for browser environment
-  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+  if (typeof window === "undefined" || typeof navigator === "undefined") {
     return {
       isInstallable: false,
       isInstalled: false,
@@ -43,7 +43,7 @@ export function usePWA() {
       isInstallable: false,
       isInstalled: false,
       isStandalone: false,
-      isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
+      isOnline: typeof navigator !== "undefined" ? navigator.onLine : true,
       hasUpdate: false,
       installPrompt: null,
     });
@@ -135,7 +135,8 @@ export function usePWA() {
             // Check for updates periodically
             const checkForUpdates = async () => {
               try {
-                const registration = await navigator.serviceWorker.getRegistration();
+                const registration =
+                  await navigator.serviceWorker.getRegistration();
                 if (registration) {
                   registration.update();
                 }

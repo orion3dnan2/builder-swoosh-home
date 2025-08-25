@@ -31,7 +31,7 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   // Check for browser environment
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return <>{children}</>;
   }
 
@@ -147,10 +147,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     };
 
     return (
-      <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+      <AuthContext.Provider value={contextValue}>
+        {children}
+      </AuthContext.Provider>
     );
   } catch (error) {
-    console.error('❌ AuthProvider: Critical error:', error);
+    console.error("❌ AuthProvider: Critical error:", error);
     // Fallback: return children without auth functionality
     return <>{children}</>;
   }
@@ -171,7 +173,9 @@ export function useAuth() {
         isCustomer: false,
         hasRole: () => false,
         hasPermission: () => false,
-        login: async () => { throw new Error("Auth not available"); },
+        login: async () => {
+          throw new Error("Auth not available");
+        },
         setAuthenticatedUser: () => {},
         logout: () => {},
         refreshAuth: () => {},
@@ -179,7 +183,7 @@ export function useAuth() {
     }
     return context;
   } catch (error) {
-    console.error('❌ useAuth: Critical error:', error);
+    console.error("❌ useAuth: Critical error:", error);
     // Return safe fallback
     return {
       user: null,
@@ -190,7 +194,9 @@ export function useAuth() {
       isCustomer: false,
       hasRole: () => false,
       hasPermission: () => false,
-      login: async () => { throw new Error("Auth not available"); },
+      login: async () => {
+        throw new Error("Auth not available");
+      },
       setAuthenticatedUser: () => {},
       logout: () => {},
       refreshAuth: () => {},

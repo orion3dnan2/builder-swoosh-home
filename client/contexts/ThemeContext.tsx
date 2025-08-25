@@ -396,7 +396,7 @@ const STORAGE_KEYS = {
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
   // Check for browser environment
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return <>{children}</>;
   }
 
@@ -421,7 +421,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
         if (savedLanguage) setLanguage(savedLanguage);
         if (savedFont) setFontFamilyState(savedFont);
       } catch (error) {
-        console.error('Error loading theme preferences:', error);
+        console.error("Error loading theme preferences:", error);
       }
     }, []);
 
@@ -437,7 +437,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
         // Store in localStorage
         localStorage.setItem(STORAGE_KEYS.THEME, theme);
       } catch (error) {
-        console.error('Error applying theme:', error);
+        console.error("Error applying theme:", error);
       }
     }, [theme]);
 
@@ -457,7 +457,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
         // Store in localStorage
         localStorage.setItem(STORAGE_KEYS.LANGUAGE, language);
       } catch (error) {
-        console.error('Error applying language:', error);
+        console.error("Error applying language:", error);
       }
     }, [language]);
 
@@ -478,7 +478,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
         // Store in localStorage
         localStorage.setItem(STORAGE_KEYS.FONT_FAMILY, fontFamily);
       } catch (error) {
-        console.error('Error applying font family:', error);
+        console.error("Error applying font family:", error);
       }
     }, [fontFamily]);
 
@@ -486,7 +486,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       try {
         setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
       } catch (error) {
-        console.error('Error toggling theme:', error);
+        console.error("Error toggling theme:", error);
       }
     };
 
@@ -494,7 +494,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       try {
         setLanguage((prevLang) => (prevLang === "ar" ? "en" : "ar"));
       } catch (error) {
-        console.error('Error toggling language:', error);
+        console.error("Error toggling language:", error);
       }
     };
 
@@ -502,7 +502,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       try {
         setFontFamilyState(font);
       } catch (error) {
-        console.error('Error setting font family:', error);
+        console.error("Error setting font family:", error);
       }
     };
 
@@ -518,7 +518,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
         return value || key;
       } catch (error) {
-        console.error('Error in translation function:', error);
+        console.error("Error in translation function:", error);
         return key; // Fallback to key if translation fails
       }
     };
@@ -542,7 +542,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       </ThemeContext.Provider>
     );
   } catch (error) {
-    console.error('❌ ThemeProvider: Critical error:', error);
+    console.error("❌ ThemeProvider: Critical error:", error);
     // Fallback: return children without theme functionality
     return <>{children}</>;
   }
@@ -566,7 +566,7 @@ export function useTheme() {
     }
     return context;
   } catch (error) {
-    console.error('❌ useTheme: Critical error:', error);
+    console.error("❌ useTheme: Critical error:", error);
     // Return safe fallback
     return {
       theme: "light" as Theme,
@@ -585,51 +585,51 @@ export function useTheme() {
 export const loadFonts = () => {
   try {
     const fonts = [
-    {
-      family: "Cairo",
-      weights: ["300", "400", "500", "600", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap&subset=arabic",
-    },
-    {
-      family: "Tajawal",
-      weights: ["300", "400", "500", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap&subset=arabic",
-    },
-    {
-      family: "Noto Sans Arabic",
-      weights: ["300", "400", "500", "600", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap&subset=arabic",
-    },
-    {
-      family: "Noto Kufi Arabic",
-      weights: ["400", "500", "600", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap&subset=arabic",
-    },
-    {
-      family: "Amiri",
-      weights: ["400", "700"],
-      url: "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap&subset=arabic",
-    },
-  ];
+      {
+        family: "Cairo",
+        weights: ["300", "400", "500", "600", "700"],
+        url: "https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap&subset=arabic",
+      },
+      {
+        family: "Tajawal",
+        weights: ["300", "400", "500", "700"],
+        url: "https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap&subset=arabic",
+      },
+      {
+        family: "Noto Sans Arabic",
+        weights: ["300", "400", "500", "600", "700"],
+        url: "https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap&subset=arabic",
+      },
+      {
+        family: "Noto Kufi Arabic",
+        weights: ["400", "500", "600", "700"],
+        url: "https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap&subset=arabic",
+      },
+      {
+        family: "Amiri",
+        weights: ["400", "700"],
+        url: "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap&subset=arabic",
+      },
+    ];
 
-  fonts.forEach((font) => {
-    const link = document.createElement("link");
-    link.href = font.url;
-    link.rel = "stylesheet";
-    link.type = "text/css";
-    link.crossOrigin = "anonymous";
+    fonts.forEach((font) => {
+      const link = document.createElement("link");
+      link.href = font.url;
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.crossOrigin = "anonymous";
 
-    // Add error handling
-    link.onerror = () => {
-      console.warn(`Failed to load font: ${font.family}`);
-    };
+      // Add error handling
+      link.onerror = () => {
+        console.warn(`Failed to load font: ${font.family}`);
+      };
 
-    link.onload = () => {
-      console.log(`Successfully loaded font: ${font.family}`);
-    };
+      link.onload = () => {
+        console.log(`Successfully loaded font: ${font.family}`);
+      };
 
-    document.head.appendChild(link);
-  });
+      document.head.appendChild(link);
+    });
 
     // Force font display optimization
     const style = document.createElement("style");
@@ -647,6 +647,6 @@ export const loadFonts = () => {
     `;
     document.head.appendChild(style);
   } catch (error) {
-    console.error('Error loading fonts:', error);
+    console.error("Error loading fonts:", error);
   }
 };

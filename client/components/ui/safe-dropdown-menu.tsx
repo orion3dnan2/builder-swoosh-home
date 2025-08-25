@@ -15,11 +15,15 @@ const FallbackDropdownMenuTrigger = ({ children, asChild, ...props }: any) => {
   return <button {...props}>{children}</button>;
 };
 
-const FallbackDropdownMenuContent = ({ children, className, ...props }: any) => (
+const FallbackDropdownMenuContent = ({
+  children,
+  className,
+  ...props
+}: any) => (
   <div
     className={cn(
       "absolute right-0 mt-2 w-56 origin-top-right bg-white border border-gray-300 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50",
-      className
+      className,
     )}
     {...props}
   >
@@ -27,17 +31,29 @@ const FallbackDropdownMenuContent = ({ children, className, ...props }: any) => 
   </div>
 );
 
-const FallbackDropdownMenuItem = ({ children, className, onClick, asChild, ...props }: any) => {
+const FallbackDropdownMenuItem = ({
+  children,
+  className,
+  onClick,
+  asChild,
+  ...props
+}: any) => {
   if (asChild) {
     return React.cloneElement(children, {
-      className: cn("block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", className),
+      className: cn(
+        "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
+        className,
+      ),
       onClick,
-      ...props
+      ...props,
     });
   }
   return (
     <button
-      className={cn("block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", className)}
+      className={cn(
+        "block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
+        className,
+      )}
       onClick={onClick}
       {...props}
     >
@@ -47,7 +63,10 @@ const FallbackDropdownMenuItem = ({ children, className, onClick, asChild, ...pr
 };
 
 const FallbackDropdownMenuLabel = ({ children, className, ...props }: any) => (
-  <div className={cn("px-4 py-2 text-sm font-semibold text-gray-900", className)} {...props}>
+  <div
+    className={cn("px-4 py-2 text-sm font-semibold text-gray-900", className)}
+    {...props}
+  >
     {children}
   </div>
 );
@@ -59,7 +78,7 @@ const FallbackDropdownMenuSeparator = ({ className, ...props }: any) => (
 // Safe wrapper that tries Radix UI first, falls back to simple components
 export const SafeDropdownMenu = ({ children, ...props }: any) => {
   // Check for browser environment
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return <FallbackDropdownMenu {...props}>{children}</FallbackDropdownMenu>;
   }
 
@@ -72,14 +91,18 @@ export const SafeDropdownMenu = ({ children, ...props }: any) => {
       </DropdownMenuPrimitive.Root>
     );
   } catch (error) {
-    console.warn('⚠️ SafeDropdownMenu: Falling back to basic dropdown:', error);
+    console.warn("⚠️ SafeDropdownMenu: Falling back to basic dropdown:", error);
     return <FallbackDropdownMenu {...props}>{children}</FallbackDropdownMenu>;
   }
 };
 
 export const SafeDropdownMenuTrigger = ({ children, ...props }: any) => {
-  if (typeof window === 'undefined') {
-    return <FallbackDropdownMenuTrigger {...props}>{children}</FallbackDropdownMenuTrigger>;
+  if (typeof window === "undefined") {
+    return (
+      <FallbackDropdownMenuTrigger {...props}>
+        {children}
+      </FallbackDropdownMenuTrigger>
+    );
   }
 
   try {
@@ -90,14 +113,26 @@ export const SafeDropdownMenuTrigger = ({ children, ...props }: any) => {
       </DropdownMenuPrimitive.Trigger>
     );
   } catch (error) {
-    console.warn('⚠️ SafeDropdownMenuTrigger: Using fallback');
-    return <FallbackDropdownMenuTrigger {...props}>{children}</FallbackDropdownMenuTrigger>;
+    console.warn("⚠️ SafeDropdownMenuTrigger: Using fallback");
+    return (
+      <FallbackDropdownMenuTrigger {...props}>
+        {children}
+      </FallbackDropdownMenuTrigger>
+    );
   }
 };
 
-export const SafeDropdownMenuContent = ({ children, className, ...props }: any) => {
-  if (typeof window === 'undefined') {
-    return <FallbackDropdownMenuContent className={className} {...props}>{children}</FallbackDropdownMenuContent>;
+export const SafeDropdownMenuContent = ({
+  children,
+  className,
+  ...props
+}: any) => {
+  if (typeof window === "undefined") {
+    return (
+      <FallbackDropdownMenuContent className={className} {...props}>
+        {children}
+      </FallbackDropdownMenuContent>
+    );
   }
 
   try {
@@ -116,14 +151,26 @@ export const SafeDropdownMenuContent = ({ children, className, ...props }: any) 
       </DropdownMenuPrimitive.Portal>
     );
   } catch (error) {
-    console.warn('⚠️ SafeDropdownMenuContent: Using fallback');
-    return <FallbackDropdownMenuContent className={className} {...props}>{children}</FallbackDropdownMenuContent>;
+    console.warn("⚠️ SafeDropdownMenuContent: Using fallback");
+    return (
+      <FallbackDropdownMenuContent className={className} {...props}>
+        {children}
+      </FallbackDropdownMenuContent>
+    );
   }
 };
 
-export const SafeDropdownMenuItem = ({ children, className, ...props }: any) => {
-  if (typeof window === 'undefined') {
-    return <FallbackDropdownMenuItem className={className} {...props}>{children}</FallbackDropdownMenuItem>;
+export const SafeDropdownMenuItem = ({
+  children,
+  className,
+  ...props
+}: any) => {
+  if (typeof window === "undefined") {
+    return (
+      <FallbackDropdownMenuItem className={className} {...props}>
+        {children}
+      </FallbackDropdownMenuItem>
+    );
   }
 
   try {
@@ -140,14 +187,26 @@ export const SafeDropdownMenuItem = ({ children, className, ...props }: any) => 
       </DropdownMenuPrimitive.Item>
     );
   } catch (error) {
-    console.warn('⚠️ SafeDropdownMenuItem: Using fallback');
-    return <FallbackDropdownMenuItem className={className} {...props}>{children}</FallbackDropdownMenuItem>;
+    console.warn("⚠️ SafeDropdownMenuItem: Using fallback");
+    return (
+      <FallbackDropdownMenuItem className={className} {...props}>
+        {children}
+      </FallbackDropdownMenuItem>
+    );
   }
 };
 
-export const SafeDropdownMenuLabel = ({ children, className, ...props }: any) => {
-  if (typeof window === 'undefined') {
-    return <FallbackDropdownMenuLabel className={className} {...props}>{children}</FallbackDropdownMenuLabel>;
+export const SafeDropdownMenuLabel = ({
+  children,
+  className,
+  ...props
+}: any) => {
+  if (typeof window === "undefined") {
+    return (
+      <FallbackDropdownMenuLabel className={className} {...props}>
+        {children}
+      </FallbackDropdownMenuLabel>
+    );
   }
 
   try {
@@ -161,13 +220,17 @@ export const SafeDropdownMenuLabel = ({ children, className, ...props }: any) =>
       </DropdownMenuPrimitive.Label>
     );
   } catch (error) {
-    console.warn('⚠️ SafeDropdownMenuLabel: Using fallback');
-    return <FallbackDropdownMenuLabel className={className} {...props}>{children}</FallbackDropdownMenuLabel>;
+    console.warn("⚠️ SafeDropdownMenuLabel: Using fallback");
+    return (
+      <FallbackDropdownMenuLabel className={className} {...props}>
+        {children}
+      </FallbackDropdownMenuLabel>
+    );
   }
 };
 
 export const SafeDropdownMenuSeparator = ({ className, ...props }: any) => {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return <FallbackDropdownMenuSeparator className={className} {...props} />;
   }
 
@@ -180,7 +243,7 @@ export const SafeDropdownMenuSeparator = ({ className, ...props }: any) => {
       />
     );
   } catch (error) {
-    console.warn('⚠️ SafeDropdownMenuSeparator: Using fallback');
+    console.warn("⚠️ SafeDropdownMenuSeparator: Using fallback");
     return <FallbackDropdownMenuSeparator className={className} {...props} />;
   }
 };

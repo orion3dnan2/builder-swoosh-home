@@ -353,7 +353,7 @@ export class ProductService {
 // React hook for product management
 export const useProducts = (storeId?: string) => {
   // Check for browser environment
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return {
       products: [],
       getProduct: () => null,
@@ -364,7 +364,7 @@ export const useProducts = (storeId?: string) => {
       categories: [],
       lowStockProducts: [],
       getProductsByStatus: () => [],
-      generateSKU: () => '',
+      generateSKU: () => "",
       validateProduct: () => ({ isValid: false, errors: [] }),
       clearDemoProducts: () => {},
       clearAllProducts: () => {},
@@ -393,7 +393,7 @@ export const useProducts = (storeId?: string) => {
       saveProduct: (product: Product) => {
         try {
           ProductService.saveProduct(product);
-          if (typeof window !== 'undefined') {
+          if (typeof window !== "undefined") {
             window.dispatchEvent(new CustomEvent("productsUpdated"));
           }
         } catch (error) {
@@ -403,7 +403,7 @@ export const useProducts = (storeId?: string) => {
       deleteProduct: (id: string) => {
         try {
           ProductService.deleteProduct(id);
-          if (typeof window !== 'undefined') {
+          if (typeof window !== "undefined") {
             window.dispatchEvent(new CustomEvent("productsUpdated"));
           }
         } catch (error) {
@@ -413,7 +413,7 @@ export const useProducts = (storeId?: string) => {
       updateStock: (id: string, quantity: number) => {
         try {
           ProductService.updateStock(id, quantity);
-          if (typeof window !== 'undefined') {
+          if (typeof window !== "undefined") {
             window.dispatchEvent(new CustomEvent("productsUpdated"));
           }
         } catch (error) {
@@ -457,7 +457,7 @@ export const useProducts = (storeId?: string) => {
           return ProductService.generateSKU(category, name);
         } catch (error) {
           console.error("useProducts: generateSKU failed:", error);
-          return '';
+          return "";
         }
       },
       validateProduct: (product: Partial<Product>) => {
@@ -471,7 +471,7 @@ export const useProducts = (storeId?: string) => {
       clearDemoProducts: () => {
         try {
           ProductService.clearDemoProducts();
-          if (typeof window !== 'undefined') {
+          if (typeof window !== "undefined") {
             window.dispatchEvent(new CustomEvent("productsUpdated"));
           }
         } catch (error) {
@@ -481,7 +481,7 @@ export const useProducts = (storeId?: string) => {
       clearAllProducts: () => {
         try {
           ProductService.clearAllProducts();
-          if (typeof window !== 'undefined') {
+          if (typeof window !== "undefined") {
             window.dispatchEvent(new CustomEvent("productsUpdated"));
           }
         } catch (error) {
@@ -527,14 +527,14 @@ export const useProducts = (storeId?: string) => {
           }
         };
 
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
           window.addEventListener("storage", handleStorageChange);
           window.addEventListener("productsUpdated", handleCustomChange);
         }
 
         return () => {
           try {
-            if (typeof window !== 'undefined') {
+            if (typeof window !== "undefined") {
               window.removeEventListener("storage", handleStorageChange);
               window.removeEventListener("productsUpdated", handleCustomChange);
             }
@@ -564,7 +564,7 @@ export const useProducts = (storeId?: string) => {
     saveProduct: (product: Product) => {
       try {
         ProductService.saveProduct(product);
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
           window.dispatchEvent(new CustomEvent("productsUpdated"));
         }
       } catch (error) {
@@ -574,7 +574,7 @@ export const useProducts = (storeId?: string) => {
     deleteProduct: (id: string) => {
       try {
         ProductService.deleteProduct(id);
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
           window.dispatchEvent(new CustomEvent("productsUpdated"));
         }
       } catch (error) {
@@ -584,7 +584,7 @@ export const useProducts = (storeId?: string) => {
     updateStock: (id: string, quantity: number) => {
       try {
         ProductService.updateStock(id, quantity);
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
           window.dispatchEvent(new CustomEvent("productsUpdated"));
         }
       } catch (error) {
@@ -628,7 +628,7 @@ export const useProducts = (storeId?: string) => {
         return ProductService.generateSKU(category, name);
       } catch (error) {
         console.error("useProducts: generateSKU failed:", error);
-        return '';
+        return "";
       }
     },
     validateProduct: (product: Partial<Product>) => {
@@ -642,7 +642,7 @@ export const useProducts = (storeId?: string) => {
     clearDemoProducts: () => {
       try {
         ProductService.clearDemoProducts();
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
           window.dispatchEvent(new CustomEvent("productsUpdated"));
         }
       } catch (error) {
@@ -652,7 +652,7 @@ export const useProducts = (storeId?: string) => {
     clearAllProducts: () => {
       try {
         ProductService.clearAllProducts();
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
           window.dispatchEvent(new CustomEvent("productsUpdated"));
         }
       } catch (error) {

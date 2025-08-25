@@ -30,7 +30,9 @@ export default function PaymentGateway() {
   const navigate = useNavigate();
   const { clearCart } = useCart();
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
-  const [paymentStep, setPaymentStep] = useState<'form' | 'processing' | 'success' | 'failed'>('form');
+  const [paymentStep, setPaymentStep] = useState<
+    "form" | "processing" | "success" | "failed"
+  >("form");
   const [paymentForm, setPaymentForm] = useState({
     cardNumber: "",
     expiryDate: "",
@@ -42,12 +44,12 @@ export default function PaymentGateway() {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    const storedPaymentData = sessionStorage.getItem('paymentData');
+    const storedPaymentData = sessionStorage.getItem("paymentData");
     if (storedPaymentData) {
       setPaymentData(JSON.parse(storedPaymentData));
     } else {
       toast.error("بيانات الدفع غير متوفرة");
-      navigate('/cart');
+      navigate("/cart");
     }
   }, [navigate]);
 
@@ -61,43 +63,45 @@ export default function PaymentGateway() {
         name: "فيزا / ماستركارد",
         icon: <CreditCard className="w-6 h-6" />,
         color: "text-blue-600",
-        fields: ['cardNumber', 'expiryDate', 'cvv', 'cardName']
+        fields: ["cardNumber", "expiryDate", "cvv", "cardName"],
       },
       mada: {
         name: "مدى",
         icon: <Wallet className="w-6 h-6" />,
         color: "text-green-600",
-        fields: ['cardNumber', 'expiryDate', 'cvv', 'cardName']
+        fields: ["cardNumber", "expiryDate", "cvv", "cardName"],
       },
       knet: {
         name: "كي نت",
         icon: <Building2 className="w-6 h-6" />,
         color: "text-purple-600",
-        fields: ['cardNumber', 'pin']
+        fields: ["cardNumber", "pin"],
       },
       stcpay: {
         name: "STC Pay",
         icon: <Phone className="w-6 h-6" />,
         color: "text-indigo-600",
-        fields: ['phoneNumber', 'pin']
-      }
+        fields: ["phoneNumber", "pin"],
+      },
     };
     return methods[method as keyof typeof methods] || methods.visa;
   };
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    const methodInfo = getPaymentMethodInfo(paymentData?.paymentMethod || 'visa');
+    const methodInfo = getPaymentMethodInfo(
+      paymentData?.paymentMethod || "visa",
+    );
 
-    if (methodInfo.fields.includes('cardNumber')) {
-      if (!paymentForm.cardNumber.replace(/\s/g, '')) {
+    if (methodInfo.fields.includes("cardNumber")) {
+      if (!paymentForm.cardNumber.replace(/\s/g, "")) {
         newErrors.cardNumber = "رقم البطاقة مطلوب";
-      } else if (paymentForm.cardNumber.replace(/\s/g, '').length < 16) {
+      } else if (paymentForm.cardNumber.replace(/\s/g, "").length < 16) {
         newErrors.cardNumber = "رقم البطاقة غير صحيح";
       }
     }
 
-    if (methodInfo.fields.includes('expiryDate')) {
+    if (methodInfo.fields.includes("expiryDate")) {
       if (!paymentForm.expiryDate) {
         newErrors.expiryDate = "تاريخ الانتهاء مطلوب";
       } else if (!/^\d{2}\/\d{2}$/.test(paymentForm.expiryDate)) {
@@ -105,7 +109,7 @@ export default function PaymentGateway() {
       }
     }
 
-    if (methodInfo.fields.includes('cvv')) {
+    if (methodInfo.fields.includes("cvv")) {
       if (!paymentForm.cvv) {
         newErrors.cvv = "رمز الأمان مطلوب";
       } else if (paymentForm.cvv.length < 3) {
@@ -113,13 +117,13 @@ export default function PaymentGateway() {
       }
     }
 
-    if (methodInfo.fields.includes('cardName')) {
+    if (methodInfo.fields.includes("cardName")) {
       if (!paymentForm.cardName.trim()) {
         newErrors.cardName = "اسم حامل البطاقة مطلوب";
       }
     }
 
-    if (methodInfo.fields.includes('phoneNumber')) {
+    if (methodInfo.fields.includes("phoneNumber")) {
       if (!paymentForm.phoneNumber) {
         newErrors.phoneNumber = "رقم الجوال مطلوب";
       } else if (!/^05\d{8}$/.test(paymentForm.phoneNumber)) {
@@ -127,7 +131,7 @@ export default function PaymentGateway() {
       }
     }
 
-    if (methodInfo.fields.includes('pin')) {
+    if (methodInfo.fields.includes("pin")) {
       if (!paymentForm.pin) {
         newErrors.pin = "الرقم السري مطلوب";
       } else if (paymentForm.pin.length < 4) {
@@ -142,13 +146,13 @@ export default function PaymentGateway() {
   const handlePayment = async () => {
     if (!validateForm()) return;
 
-    setPaymentStep('processing');
+    setPaymentStep("processing");
 
     // Simulate payment processing
     setTimeout(() => {
       // 90% success rate for demo
       const isSuccess = Math.random() > 0.1;
-      
+
       if (isSuccess) {
         // Use promo code if applied
         if (paymentData?.orderData.promoCode) {
@@ -157,39 +161,39 @@ export default function PaymentGateway() {
 
         // Clear cart
         clearCart();
-        
+
         // Clear session data
-        sessionStorage.removeItem('orderData');
-        sessionStorage.removeItem('paymentData');
-        
-        setPaymentStep('success');
+        sessionStorage.removeItem("orderData");
+        sessionStorage.removeItem("paymentData");
+
+        setPaymentStep("success");
         toast.success("تم الدفع بنجاح!");
       } else {
-        setPaymentStep('failed');
+        setPaymentStep("failed");
         toast.error("فشل في عملية الدفع. يرجى المحاولة مرة أخرى");
       }
     }, 3000);
   };
 
   const formatCardNumber = (value: string) => {
-    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
     const matches = v.match(/\d{4,16}/g);
-    const match = (matches && matches[0]) || '';
+    const match = (matches && matches[0]) || "";
     const parts = [];
     for (let i = 0, len = match.length; i < len; i += 4) {
       parts.push(match.substring(i, i + 4));
     }
     if (parts.length) {
-      return parts.join(' ');
+      return parts.join(" ");
     } else {
       return v;
     }
   };
 
   const formatExpiryDate = (value: string) => {
-    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
     if (v.length >= 2) {
-      return v.substring(0, 2) + '/' + v.substring(2, 4);
+      return v.substring(0, 2) + "/" + v.substring(2, 4);
     }
     return v;
   };
@@ -211,7 +215,7 @@ export default function PaymentGateway() {
 
   const methodInfo = getPaymentMethodInfo(paymentData.paymentMethod);
 
-  if (paymentStep === 'success') {
+  if (paymentStep === "success") {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-12">
@@ -234,15 +238,15 @@ export default function PaymentGateway() {
                   </p>
                 </div>
                 <div className="space-y-3">
-                  <Button 
-                    onClick={() => navigate('/products')}
+                  <Button
+                    onClick={() => navigate("/products")}
                     className="w-full arabic"
                   >
                     متابعة التسوق
                   </Button>
-                  <Button 
+                  <Button
                     variant="outline"
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate("/")}
                     className="w-full arabic"
                   >
                     العودة للرئيسية
@@ -256,7 +260,7 @@ export default function PaymentGateway() {
     );
   }
 
-  if (paymentStep === 'failed') {
+  if (paymentStep === "failed") {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-12">
@@ -271,15 +275,15 @@ export default function PaymentGateway() {
                   عذراً، لم نتمكن من إتمام عملية الدفع. يرجى المحاولة مرة أخرى
                 </p>
                 <div className="space-y-3">
-                  <Button 
-                    onClick={() => setPaymentStep('form')}
+                  <Button
+                    onClick={() => setPaymentStep("form")}
                     className="w-full arabic"
                   >
                     إعادة المحاولة
                   </Button>
-                  <Button 
+                  <Button
                     variant="outline"
-                    onClick={() => navigate('/checkout')}
+                    onClick={() => navigate("/checkout")}
                     className="w-full arabic"
                   >
                     العودة لصفحة الدفع
@@ -293,7 +297,7 @@ export default function PaymentGateway() {
     );
   }
 
-  if (paymentStep === 'processing') {
+  if (paymentStep === "processing") {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-12">
@@ -328,11 +332,11 @@ export default function PaymentGateway() {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <Button 
-            variant="outline" 
-            size="sm" 
+          <Button
+            variant="outline"
+            size="sm"
             className="arabic"
-            onClick={() => navigate('/checkout')}
+            onClick={() => navigate("/checkout")}
           >
             <ArrowLeft className="w-4 h-4 ml-2" />
             العودة
@@ -348,23 +352,25 @@ export default function PaymentGateway() {
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className={methodInfo.color}>
-                    {methodInfo.icon}
-                  </div>
+                  <div className={methodInfo.color}>{methodInfo.icon}</div>
                   <div>
-                    <h3 className="text-xl font-bold arabic">{methodInfo.name}</h3>
+                    <h3 className="text-xl font-bold arabic">
+                      {methodInfo.name}
+                    </h3>
                     <p className="text-sm text-gray-600 arabic">
                       أدخل بيانات الدفع بشكل آمن
                     </p>
                   </div>
                   <div className="mr-auto flex items-center gap-2">
                     <Lock className="w-4 h-4 text-green-600" />
-                    <span className="text-sm text-green-600 arabic font-medium">آمن</span>
+                    <span className="text-sm text-green-600 arabic font-medium">
+                      آمن
+                    </span>
                   </div>
                 </div>
 
                 <div className="space-y-4">
-                  {methodInfo.fields.includes('cardNumber') && (
+                  {methodInfo.fields.includes("cardNumber") && (
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2 arabic">
                         رقم البطاقة
@@ -375,23 +381,31 @@ export default function PaymentGateway() {
                         onChange={(e) => {
                           const formatted = formatCardNumber(e.target.value);
                           if (formatted.length <= 19) {
-                            setPaymentForm({...paymentForm, cardNumber: formatted});
-                            if (errors.cardNumber) setErrors({...errors, cardNumber: ''});
+                            setPaymentForm({
+                              ...paymentForm,
+                              cardNumber: formatted,
+                            });
+                            if (errors.cardNumber)
+                              setErrors({ ...errors, cardNumber: "" });
                           }
                         }}
                         className={`w-full px-3 py-3 border rounded-lg text-center text-lg tracking-wider ${
-                          errors.cardNumber ? 'border-red-300' : 'border-gray-300'
+                          errors.cardNumber
+                            ? "border-red-300"
+                            : "border-gray-300"
                         }`}
                         placeholder="1234 5678 9012 3456"
                         maxLength={19}
                       />
                       {errors.cardNumber && (
-                        <p className="text-red-600 text-sm mt-1 arabic">{errors.cardNumber}</p>
+                        <p className="text-red-600 text-sm mt-1 arabic">
+                          {errors.cardNumber}
+                        </p>
                       )}
                     </div>
                   )}
 
-                  {methodInfo.fields.includes('phoneNumber') && (
+                  {methodInfo.fields.includes("phoneNumber") && (
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2 arabic">
                         رقم الجوال
@@ -400,26 +414,34 @@ export default function PaymentGateway() {
                         type="tel"
                         value={paymentForm.phoneNumber}
                         onChange={(e) => {
-                          const value = e.target.value.replace(/[^0-9]/g, '');
+                          const value = e.target.value.replace(/[^0-9]/g, "");
                           if (value.length <= 10) {
-                            setPaymentForm({...paymentForm, phoneNumber: value});
-                            if (errors.phoneNumber) setErrors({...errors, phoneNumber: ''});
+                            setPaymentForm({
+                              ...paymentForm,
+                              phoneNumber: value,
+                            });
+                            if (errors.phoneNumber)
+                              setErrors({ ...errors, phoneNumber: "" });
                           }
                         }}
                         className={`w-full px-3 py-3 border rounded-lg text-right arabic ${
-                          errors.phoneNumber ? 'border-red-300' : 'border-gray-300'
+                          errors.phoneNumber
+                            ? "border-red-300"
+                            : "border-gray-300"
                         }`}
                         placeholder="05xxxxxxxx"
                         maxLength={10}
                       />
                       {errors.phoneNumber && (
-                        <p className="text-red-600 text-sm mt-1 arabic">{errors.phoneNumber}</p>
+                        <p className="text-red-600 text-sm mt-1 arabic">
+                          {errors.phoneNumber}
+                        </p>
                       )}
                     </div>
                   )}
 
                   <div className="grid grid-cols-2 gap-4">
-                    {methodInfo.fields.includes('expiryDate') && (
+                    {methodInfo.fields.includes("expiryDate") && (
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2 arabic">
                           تاريخ الانتهاء
@@ -430,23 +452,31 @@ export default function PaymentGateway() {
                           onChange={(e) => {
                             const formatted = formatExpiryDate(e.target.value);
                             if (formatted.length <= 5) {
-                              setPaymentForm({...paymentForm, expiryDate: formatted});
-                              if (errors.expiryDate) setErrors({...errors, expiryDate: ''});
+                              setPaymentForm({
+                                ...paymentForm,
+                                expiryDate: formatted,
+                              });
+                              if (errors.expiryDate)
+                                setErrors({ ...errors, expiryDate: "" });
                             }
                           }}
                           className={`w-full px-3 py-3 border rounded-lg text-center ${
-                            errors.expiryDate ? 'border-red-300' : 'border-gray-300'
+                            errors.expiryDate
+                              ? "border-red-300"
+                              : "border-gray-300"
                           }`}
                           placeholder="MM/YY"
                           maxLength={5}
                         />
                         {errors.expiryDate && (
-                          <p className="text-red-600 text-sm mt-1 arabic">{errors.expiryDate}</p>
+                          <p className="text-red-600 text-sm mt-1 arabic">
+                            {errors.expiryDate}
+                          </p>
                         )}
                       </div>
                     )}
 
-                    {methodInfo.fields.includes('cvv') && (
+                    {methodInfo.fields.includes("cvv") && (
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2 arabic">
                           رمز الأمان (CVV)
@@ -455,25 +485,27 @@ export default function PaymentGateway() {
                           type="password"
                           value={paymentForm.cvv}
                           onChange={(e) => {
-                            const value = e.target.value.replace(/[^0-9]/g, '');
+                            const value = e.target.value.replace(/[^0-9]/g, "");
                             if (value.length <= 4) {
-                              setPaymentForm({...paymentForm, cvv: value});
-                              if (errors.cvv) setErrors({...errors, cvv: ''});
+                              setPaymentForm({ ...paymentForm, cvv: value });
+                              if (errors.cvv) setErrors({ ...errors, cvv: "" });
                             }
                           }}
                           className={`w-full px-3 py-3 border rounded-lg text-center ${
-                            errors.cvv ? 'border-red-300' : 'border-gray-300'
+                            errors.cvv ? "border-red-300" : "border-gray-300"
                           }`}
                           placeholder="123"
                           maxLength={4}
                         />
                         {errors.cvv && (
-                          <p className="text-red-600 text-sm mt-1 arabic">{errors.cvv}</p>
+                          <p className="text-red-600 text-sm mt-1 arabic">
+                            {errors.cvv}
+                          </p>
                         )}
                       </div>
                     )}
 
-                    {methodInfo.fields.includes('pin') && (
+                    {methodInfo.fields.includes("pin") && (
                       <div className="col-span-2">
                         <label className="block text-sm font-medium text-gray-700 mb-2 arabic">
                           الرقم السري
@@ -482,26 +514,28 @@ export default function PaymentGateway() {
                           type="password"
                           value={paymentForm.pin}
                           onChange={(e) => {
-                            const value = e.target.value.replace(/[^0-9]/g, '');
+                            const value = e.target.value.replace(/[^0-9]/g, "");
                             if (value.length <= 6) {
-                              setPaymentForm({...paymentForm, pin: value});
-                              if (errors.pin) setErrors({...errors, pin: ''});
+                              setPaymentForm({ ...paymentForm, pin: value });
+                              if (errors.pin) setErrors({ ...errors, pin: "" });
                             }
                           }}
                           className={`w-full px-3 py-3 border rounded-lg text-center ${
-                            errors.pin ? 'border-red-300' : 'border-gray-300'
+                            errors.pin ? "border-red-300" : "border-gray-300"
                           }`}
                           placeholder="••••••"
                           maxLength={6}
                         />
                         {errors.pin && (
-                          <p className="text-red-600 text-sm mt-1 arabic">{errors.pin}</p>
+                          <p className="text-red-600 text-sm mt-1 arabic">
+                            {errors.pin}
+                          </p>
                         )}
                       </div>
                     )}
                   </div>
 
-                  {methodInfo.fields.includes('cardName') && (
+                  {methodInfo.fields.includes("cardName") && (
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2 arabic">
                         اسم حامل البطاقة
@@ -510,16 +544,22 @@ export default function PaymentGateway() {
                         type="text"
                         value={paymentForm.cardName}
                         onChange={(e) => {
-                          setPaymentForm({...paymentForm, cardName: e.target.value});
-                          if (errors.cardName) setErrors({...errors, cardName: ''});
+                          setPaymentForm({
+                            ...paymentForm,
+                            cardName: e.target.value,
+                          });
+                          if (errors.cardName)
+                            setErrors({ ...errors, cardName: "" });
                         }}
                         className={`w-full px-3 py-3 border rounded-lg text-right arabic ${
-                          errors.cardName ? 'border-red-300' : 'border-gray-300'
+                          errors.cardName ? "border-red-300" : "border-gray-300"
                         }`}
                         placeholder="الاسم كما هو مكتوب على البطاقة"
                       />
                       {errors.cardName && (
-                        <p className="text-red-600 text-sm mt-1 arabic">{errors.cardName}</p>
+                        <p className="text-red-600 text-sm mt-1 arabic">
+                          {errors.cardName}
+                        </p>
                       )}
                     </div>
                   )}
@@ -553,42 +593,54 @@ export default function PaymentGateway() {
             <Card>
               <CardContent className="p-6">
                 <h3 className="text-lg font-bold arabic mb-4">ملخص الطلب</h3>
-                
+
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600 arabic">المنتجات</span>
-                    <span className="arabic">{paymentData.orderData.items.length}</span>
+                    <span className="arabic">
+                      {paymentData.orderData.items.length}
+                    </span>
                   </div>
-                  
+
                   <div className="flex justify-between">
                     <span className="text-gray-600 arabic">المجموع الفرعي</span>
-                    <span className="arabic">{formatPrice(paymentData.orderData.subtotal)}</span>
+                    <span className="arabic">
+                      {formatPrice(paymentData.orderData.subtotal)}
+                    </span>
                   </div>
-                  
+
                   {paymentData.orderData.discount > 0 && (
                     <div className="flex justify-between text-green-600">
                       <span className="arabic">الخصم</span>
-                      <span className="arabic">-{formatPrice(paymentData.orderData.discount)}</span>
+                      <span className="arabic">
+                        -{formatPrice(paymentData.orderData.discount)}
+                      </span>
                     </div>
                   )}
-                  
+
                   <div className="flex justify-between">
                     <span className="text-gray-600 arabic">الشحن</span>
                     <span className="arabic">
-                      {paymentData.orderData.shipping > 0 ? formatPrice(paymentData.orderData.shipping) : "مجاني"}
+                      {paymentData.orderData.shipping > 0
+                        ? formatPrice(paymentData.orderData.shipping)
+                        : "مجاني"}
                     </span>
                   </div>
-                  
+
                   <div className="flex justify-between">
                     <span className="text-gray-600 arabic">الضريبة</span>
-                    <span className="arabic">{formatPrice(paymentData.orderData.tax)}</span>
+                    <span className="arabic">
+                      {formatPrice(paymentData.orderData.tax)}
+                    </span>
                   </div>
-                  
+
                   <hr className="border-gray-200" />
-                  
+
                   <div className="flex justify-between text-lg font-bold">
                     <span className="arabic">المجموع</span>
-                    <span className="text-green-600 arabic">{formatPrice(paymentData.orderData.total)}</span>
+                    <span className="text-green-600 arabic">
+                      {formatPrice(paymentData.orderData.total)}
+                    </span>
                   </div>
                 </div>
 

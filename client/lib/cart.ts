@@ -20,7 +20,7 @@ export class CartService {
   // Get cart from localStorage
   static getCart(): CartItem[] {
     try {
-      if (typeof window === 'undefined') return [];
+      if (typeof window === "undefined") return [];
       const cartData = localStorage.getItem(this.STORAGE_KEY);
       return cartData ? JSON.parse(cartData) : [];
     } catch (error) {
@@ -32,7 +32,7 @@ export class CartService {
   // Save cart to localStorage
   static saveCart(cart: CartItem[]): void {
     try {
-      if (typeof window === 'undefined') return;
+      if (typeof window === "undefined") return;
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(cart));
       // Dispatch custom event to notify other components
       window.dispatchEvent(new CustomEvent("cartUpdated", { detail: cart }));
@@ -45,7 +45,9 @@ export class CartService {
   static addToCart(product: Product, quantity: number = 1): CartItem[] {
     try {
       const cart = this.getCart();
-      const existingItemIndex = cart.findIndex(item => item.productId === product.id);
+      const existingItemIndex = cart.findIndex(
+        (item) => item.productId === product.id,
+      );
 
       if (existingItemIndex >= 0) {
         // Update existing item quantity
@@ -73,7 +75,7 @@ export class CartService {
   static removeFromCart(productId: string): CartItem[] {
     try {
       const cart = this.getCart();
-      const updatedCart = cart.filter(item => item.productId !== productId);
+      const updatedCart = cart.filter((item) => item.productId !== productId);
       this.saveCart(updatedCart);
       return updatedCart;
     } catch (error) {
@@ -90,13 +92,13 @@ export class CartService {
       }
 
       const cart = this.getCart();
-      const itemIndex = cart.findIndex(item => item.productId === productId);
-      
+      const itemIndex = cart.findIndex((item) => item.productId === productId);
+
       if (itemIndex >= 0) {
         cart[itemIndex].quantity = quantity;
         this.saveCart(cart);
       }
-      
+
       return cart;
     } catch (error) {
       console.error("Failed to update cart quantity:", error);
@@ -107,7 +109,7 @@ export class CartService {
   // Clear cart
   static clearCart(): void {
     try {
-      if (typeof window === 'undefined') return;
+      if (typeof window === "undefined") return;
       localStorage.removeItem(this.STORAGE_KEY);
       window.dispatchEvent(new CustomEvent("cartUpdated", { detail: [] }));
     } catch (error) {
@@ -122,7 +124,7 @@ export class CartService {
       const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
       const totalPrice = items.reduce((sum, item) => {
         const price = item.product.salePrice || item.product.price;
-        return sum + (price * item.quantity);
+        return sum + price * item.quantity;
       }, 0);
 
       return {
@@ -144,7 +146,7 @@ export class CartService {
   static isInCart(productId: string): boolean {
     try {
       const cart = this.getCart();
-      return cart.some(item => item.productId === productId);
+      return cart.some((item) => item.productId === productId);
     } catch (error) {
       console.error("Failed to check if product is in cart:", error);
       return false;
@@ -155,7 +157,7 @@ export class CartService {
   static getProductQuantity(productId: string): number {
     try {
       const cart = this.getCart();
-      const item = cart.find(item => item.productId === productId);
+      const item = cart.find((item) => item.productId === productId);
       return item ? item.quantity : 0;
     } catch (error) {
       console.error("Failed to get product quantity:", error);
@@ -167,7 +169,7 @@ export class CartService {
 // React hook for cart management
 export const useCart = () => {
   // Check for browser environment
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return {
       cart: { items: [], totalItems: 0, totalPrice: 0 },
       addToCart: () => {},
@@ -183,7 +185,9 @@ export const useCart = () => {
   let setCart: (cart: Cart) => void = () => {};
 
   try {
-    const [cartState, setCartState] = useState<Cart>(CartService.getCartSummary());
+    const [cartState, setCartState] = useState<Cart>(
+      CartService.getCartSummary(),
+    );
     cart = cartState;
     setCart = setCartState;
   } catch (error) {
@@ -262,7 +266,7 @@ export const useCart = () => {
           }
         };
 
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
           window.addEventListener("cartUpdated", handleCartUpdate);
           window.addEventListener("storage", (e) => {
             try {
@@ -277,7 +281,7 @@ export const useCart = () => {
 
         return () => {
           try {
-            if (typeof window !== 'undefined') {
+            if (typeof window !== "undefined") {
               window.removeEventListener("cartUpdated", handleCartUpdate);
             }
           } catch (error) {
