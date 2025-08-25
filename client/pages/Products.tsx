@@ -141,6 +141,10 @@ export default function Products() {
     }
   };
 
+  const handleProductDetails = (productId: string) => {
+    navigate(`/product/${productId}`);
+  };
+
   return (
     <Layout>
       <div className="container mx-auto px-4 py-12">
