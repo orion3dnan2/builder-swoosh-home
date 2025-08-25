@@ -42,24 +42,28 @@ export const AppPromoBanner: React.FC = () => {
   try {
     const [showBanner, setShowBanner] = React.useState(false);
 
-  React.useEffect(() => {
-    const checkMobile = async () => {
-      // فحص إذا كان الجهاز محمول
-      const isMobile =
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent,
-        );
+    React.useEffect(() => {
+      try {
+        const checkMobile = async () => {
+          // فحص إذا كان الجهاز محمول
+          const isMobile =
+            /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+              navigator.userAgent,
+            );
 
-      if (isMobile && !localStorage.getItem("app_banner_dismissed")) {
-        const isInstalled = await DeepLinkingService.isAppInstalled();
-        if (!isInstalled) {
-          setShowBanner(true);
-        }
+          if (isMobile && !localStorage.getItem("app_banner_dismissed")) {
+            const isInstalled = await DeepLinkingService.isAppInstalled();
+            if (!isInstalled) {
+              setShowBanner(true);
+            }
+          }
+        };
+
+        checkMobile();
+      } catch (error) {
+        console.error('Error in AppPromoBanner useEffect:', error);
       }
-    };
-
-    checkMobile();
-  }, []);
+    }, []);
 
   const handleInstallApp = () => {
     DeepLinkingService.redirectToApp();
