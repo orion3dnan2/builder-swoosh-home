@@ -18,19 +18,17 @@ import {
 } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { PromoCodeService } from "@/lib/promoCodes";
+import { useCurrencySafe } from "@/contexts/CurrencyContext";
 import { toast } from "sonner";
 
 export default function Cart() {
   const navigate = useNavigate();
   const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
+  const { formatPrice, currentCurrency } = useCurrencySafe();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [appliedPromoCode, setAppliedPromoCode] = useState<any>(null);
   const [promoCodeError, setPromoCodeError] = useState("");
-
-  const formatPrice = (price: number) => {
-    return `${price.toFixed(3)} د.ك`;
-  };
 
   const handleUpdateQuantity = (productId: string, newQuantity: number) => {
     if (newQuantity <= 0) {
