@@ -75,33 +75,37 @@ export const TextCleaner: React.FC<{ children: React.ReactNode }> = ({
   // Wrap in try-catch to prevent crashes
   try {
     React.useEffect(() => {
-    const cleanupTexts = () => {
-      // Find all text nodes with corrupted characters
-      const walker = document.createTreeWalker(
-        document.body,
-        NodeFilter.SHOW_TEXT,
-        {
-          acceptNode: (node) => {
-            return node.textContent && node.textContent.includes("��")
-              ? NodeFilter.FILTER_ACCEPT
-              : NodeFilter.FILTER_REJECT;
-          },
-        },
-      );
+      const cleanupTexts = () => {
+        try {
+          // Find all text nodes with corrupted characters
+          const walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT,
+            {
+              acceptNode: (node) => {
+                return node.textContent && node.textContent.includes("��")
+                  ? NodeFilter.FILTER_ACCEPT
+                  : NodeFilter.FILTER_REJECT;
+              },
+            },
+          );
 
-      const corruptedNodes = [];
-      let node;
-      while ((node = walker.nextNode())) {
-        corruptedNodes.push(node);
-      }
+          const corruptedNodes = [];
+          let node;
+          while ((node = walker.nextNode())) {
+            corruptedNodes.push(node);
+          }
 
-      // Clean each corrupted node
-      corruptedNodes.forEach((textNode) => {
-        if (textNode.textContent) {
-          textNode.textContent = cleanArabicText(textNode.textContent);
+          // Clean each corrupted node
+          corruptedNodes.forEach((textNode) => {
+            if (textNode.textContent) {
+              textNode.textContent = cleanArabicText(textNode.textContent);
+            }
+          });
+        } catch (error) {
+          console.error('Error in cleanupTexts:', error);
         }
-      });
-    };
+      };
 
     // تنظيف فوري
     cleanupTexts();
