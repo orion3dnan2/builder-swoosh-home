@@ -65,15 +65,23 @@ export const AppPromoBanner: React.FC = () => {
       }
     }, []);
 
-  const handleInstallApp = () => {
-    DeepLinkingService.redirectToApp();
-    setShowBanner(false);
-  };
+    const handleInstallApp = () => {
+      try {
+        DeepLinkingService.redirectToApp();
+        setShowBanner(false);
+      } catch (error) {
+        console.error('Error in handleInstallApp:', error);
+      }
+    };
 
-  const dismissBanner = () => {
-    localStorage.setItem("app_banner_dismissed", "true");
-    setShowBanner(false);
-  };
+    const dismissBanner = () => {
+      try {
+        localStorage.setItem("app_banner_dismissed", "true");
+        setShowBanner(false);
+      } catch (error) {
+        console.error('Error in dismissBanner:', error);
+      }
+    };
 
   if (!showBanner) return null;
 
@@ -252,7 +260,7 @@ export const SyncIndicator: React.FC = () => {
 export const AppQRCode: React.FC = () => {
   const [showQR, setShowQR] = React.useState(false);
 
-  // في التطبيق الحقيقي، استخدم مكتبة لإنشاء QR code
+  // في التطبيق الحقيقي، استخدم مكتبة ل��نشاء QR code
   const appStoreLink = "https://apps.apple.com/app/sudan-house";
   const playStoreLink =
     "https://play.google.com/store/apps/details?id=com.sudanhouse.app";
