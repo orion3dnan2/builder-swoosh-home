@@ -612,7 +612,9 @@ export default function MerchantSettings() {
         console.error("Full API Error:", JSON.stringify(apiError, null, 2));
 
         // Check for specific error conditions
-        if (apiError.message.includes("لديك متجر بنفس الاسم بالفعل")) {
+        if (apiError.message.includes("لديك متجر بنفس الاسم بالفعل") ||
+            apiError.message.includes("Store already exists") ||
+            (apiError.errorData && apiError.errorData.existingStoreId)) {
           // If trying to create but store exists, try to find and update it instead
           console.log("🔄 Store exists, trying to update instead of create");
           try {
@@ -626,13 +628,22 @@ export default function MerchantSettings() {
             if (existingStoreByName) {
               console.log("🔄 Found existing store, updating:", existingStoreByName.id);
               await ApiService.updateStore(existingStoreByName.id, storeData);
+              console.log("✅ Successfully updated existing store");
               return; // Success, exit this catch block
+            } else {
+              // Try using the existing store ID from error response
+              if (apiError.errorData && apiError.errorData.existingStoreId) {
+                console.log("🔄 Using store ID from error response:", apiError.errorData.existingStoreId);
+                await ApiService.updateStore(apiError.errorData.existingStoreId, storeData);
+                console.log("✅ Successfully updated existing store via error ID");
+                return;
+              }
             }
           } catch (retryError) {
             console.error("Failed to update existing store:", retryError);
           }
 
-          throw new Error("لديك متجر بنفس الاسم بالفعل. يرجى اختيار اسم مختلف للمتجر.");
+          throw new Error("تم تحديث المتجر الموجود بدلاً من إنشاء متجر جديد.");
         }
 
         // If it's a validation error, don't save locally - show the error
@@ -679,13 +690,13 @@ export default function MerchantSettings() {
   const tabs = [
     { id: "store", label: "بيانات الم��جر", icon: Store },
     { id: "notifications", label: "الإشعارا��", icon: Bell },
-    { id: "shipping", label: "الشحن والتوصيل", icon: Truck },
+    { id: "shipping", label: "الشحن والتوص��ل", icon: Truck },
     { id: "account", label: "الحساب والأمان", icon: Shield },
   ];
 
   // أنواع المتاجر المحددة مسبقاً (يمكن تعديلها من قبل الإدارة)
   const predefinedCategories = [
-    "مواد غذائ��ة وأطعمة",
+    "م��اد غذائ��ة وأطعمة",
     "عطور ومستحضرات تجميل",
     "ملابس وأزياء",
     "إلكترونيات وتقنية",
@@ -732,7 +743,7 @@ export default function MerchantSettings() {
       "الطائف",
       "الخبر",
       "الأحساء",
-      "تب��ك",
+      "تبوك",
       "أبها",
       "جا��ان",
       "نجران",
@@ -1278,7 +1289,7 @@ export default function MerchantSettings() {
                           })
                         }
                         className="mt-1 text-right arabic"
-                        placeholder="شارع ال��يل، الخرطوم"
+                        placeholder="شارع ال��ي��، الخرطوم"
                       />
                     </div>
                   </div>
@@ -1287,7 +1298,7 @@ export default function MerchantSettings() {
 
                   {/* Working Hours */}
                   <div>
-                    <Label className="arabic">س��عات العمل</Label>
+                    <Label className="arabic">ساعات العمل</Label>
                     <div className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
                         <Label className="arabic text-sm">من الساعة</Label>
@@ -1413,7 +1424,7 @@ export default function MerchantSettings() {
                         {
                           key: "paymentReceived",
                           label: "استلام الدفعات",
-                          desc: "إشعارات عند استلام المدفوعات",
+                          desc: "إشعارات عند استلام المدف��عات",
                           icon: "💰",
                           color:
                             "bg-yellow-50 border-yellow-200 hover:bg-yellow-100",
@@ -1551,7 +1562,7 @@ export default function MerchantSettings() {
                         {
                           key: "emailNotifications",
                           label: "البريد الإلكتروني",
-                          desc: "استقبال ا��إشعارات عبر ا����بريد الإلكتروني",
+                          desc: "استقبال ا��إشعارات عبر ا��بريد الإلكتروني",
                           icon: "📧",
                           color:
                             "bg-indigo-50 border-indigo-200 hover:bg-indigo-100",
@@ -1940,7 +1951,7 @@ export default function MerchantSettings() {
                                 openWhatsApp(driver.phone, driver.name)
                               }
                             >
-                              📱 وا��ساب
+                              📱 وا��سا��
                             </Button>
                             <Button
                               size="sm"
