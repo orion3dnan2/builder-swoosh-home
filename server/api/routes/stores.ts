@@ -55,7 +55,7 @@ router.get("/general", async (req, res) => {
 // Get all stores (للمديرين وأصحاب المتاجر)
 router.get("/", authenticateToken, async (req: any, res) => {
   try {
-    // إذا كان المستخدم تاجر، أرجع متاجره فقط
+    // إذا كان ا��مستخدم تاجر، أرجع متاجره فقط
     if (req.user.role === "merchant") {
       const userStores = StoreDatabase.findStores(
         (store) => store.merchantId === req.user.id,
@@ -122,9 +122,27 @@ router.post("/", authenticateToken, async (req: any, res) => {
       shippingSettings,
     } = req.body;
 
+    // طباعة البيانات المستلمة للتشخيص
+    console.log("🔍 Create Store Request Data:", {
+      name, category, phone, email, city, storeType,
+      userId: req.user.id,
+      userRole: req.user.role
+    });
+
     // التحقق من البيانات المطلوبة
     if (!name || !category || !phone || !email || !city) {
-      return res.status(400).json({ error: "جميع الحقول الأساسية مطلوبة" });
+      console.error("❌ Missing required fields:", {
+        name: !!name,
+        category: !!category,
+        phone: !!phone,
+        email: !!email,
+        city: !!city
+      });
+      return res.status(400).json({
+        error: "جميع الحقول الأساسية مطلوبة",
+        requiredFields: ["name", "category", "phone", "email", "city"],
+        receivedData: { name, category, phone, email, city }
+      });
     }
 
     // التحقق من عدم و��ود متجر بنفس الاسم للتاجر
@@ -229,6 +247,23 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
       notificationSettings,
       shippingSettings,
     } = req.body;
+
+    // طباعة البيانات المستلمة للتشخيص
+    console.log("🔍 Update Store Request Data:", {
+      storeId,
+      name, category, phone, email, city, storeType,
+      userId: req.user.id,
+      userRole: req.user.role
+    });
+
+    // التحقق من البيانات المطلوبة للتحديث
+    if (!name || !category || !phone || !email || !city) {
+      return res.status(400).json({
+        error: "جميع الحقول الأساسية مطلوبة للتحديث",
+        requiredFields: ["name", "category", "phone", "email", "city"],
+        receivedData: { name, category, phone, email, city }
+      });
+    }
 
     // تحديث بيانات المتجر
     const updates = {
