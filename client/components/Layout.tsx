@@ -49,7 +49,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background transition-colors duration-300 sudanese-pattern">
       {/* Header */}
-      <header className="header-glass sticky top-0 z-50 shadow-cultural">
+      <header className="header-glass iphone-safe-top sticky top-0 z-50 shadow-cultural">
         <div className="container mx-auto px-4">
           {/* Top Bar */}
           <div className="hidden md:flex items-center justify-between py-2 text-sm">
@@ -94,7 +94,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   {/* قائمة المستخدم المنسدلة */}
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="outline" size="sm" className="gap-2">
+                      <Button variant="outline" size="sm" className="gap-2 touch-target button-iphone">
                         <User className="w-4 h-4" />
                         حسابي
                       </Button>
@@ -156,7 +156,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
+                    className="hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20 touch-target button-iphone"
                   >
                     تسجيل الدخول
                   </Button>
@@ -204,7 +204,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="text-xs px-2 py-1 gap-1"
+                        className="text-xs px-3 py-2 gap-1 touch-target"
                       >
                         <User className="w-3 h-3" />
                         {user?.profile.name.split(" ")[0]}
@@ -268,7 +268,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="text-xs px-2 py-1 hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20"
+                    className="text-xs px-3 py-2 hover:bg-primary-50 hover:text-primary-700 dark:hover:bg-primary-900/20 touch-target"
                   >
                     دخول
                   </Button>
@@ -348,7 +348,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="xl:hidden text-foreground hover:bg-muted p-2"
+                className="xl:hidden text-foreground hover:bg-muted p-3 touch-target"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 <Menu className="w-5 h-5" />
@@ -366,7 +366,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     variant="ghost"
                     size="icon"
                     onClick={handleLogout}
-                    className="text-foreground hover:bg-red-50 hover:text-red-600 p-2"
+                    className="text-foreground hover:bg-red-50 hover:text-red-600 p-3 touch-target"
                     title="تسجيل الخروج"
                   >
                     <LogOut className="w-5 h-5" />
