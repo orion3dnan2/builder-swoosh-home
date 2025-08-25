@@ -41,6 +41,13 @@ export default function Login() {
     }
 
     try {
+      console.log("🔐 Frontend login attempt:", {
+        username: formData.username,
+        password: formData.password,
+        passwordLength: formData.password.length,
+        passwordChars: Array.from(formData.password).map(char => `${char} (${char.charCodeAt(0)})`).join(', ')
+      });
+
       const user = await login({
         username: formData.username,
         password: formData.password,
