@@ -424,7 +424,7 @@ export default function Companies() {
                   <Building className="w-8 h-8 text-orange-600" />
                 </div>
                 <div className="text-2xl font-bold text-gray-800 mb-1">
-                  {companies.length}
+                  {(companies || []).length}
                 </div>
                 <div className="text-sm text-gray-600 arabic">
                   إجمالي الشركات
@@ -435,7 +435,7 @@ export default function Companies() {
                   <Verified className="w-8 h-8 text-blue-600" />
                 </div>
                 <div className="text-2xl font-bold text-gray-800 mb-1">
-                  {companies.filter((c) => c.status === "active").length}
+                  {(companies || []).filter((c) => c?.status === "active").length}
                 </div>
                 <div className="text-sm text-gray-600 arabic">شركة موثقة</div>
               </div>
@@ -453,7 +453,7 @@ export default function Companies() {
                   <Users className="w-8 h-8 text-purple-600" />
                 </div>
                 <div className="text-2xl font-bold text-gray-800 mb-1">
-                  {Math.round((companies.length * 50) / 1000)}
+                  {Math.round(((companies || []).length * 50) / 1000)}
                   k+
                 </div>
                 <div className="text-sm text-gray-600 arabic">موظف</div>
@@ -470,7 +470,7 @@ export default function Companies() {
               لا توجد شركات مطابقة للبحث
             </h2>
             <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
-              جرب تغيير كلمات البحث أو الفلاتر المختارة
+              جرب تغيير كلمات الب��ث أو الفلاتر المختارة
             </p>
             <Button
               variant="outline"
