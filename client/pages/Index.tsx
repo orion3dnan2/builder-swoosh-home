@@ -205,7 +205,7 @@ export default function Index() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
             {services.map((service, index) => (
               <Card
                 key={index}
@@ -214,10 +214,10 @@ export default function Index() {
               >
                 <CardHeader className="text-center pb-4">
                   <div
-                    className={`w-12 h-12 md:w-16 md:h-16 mx-auto ${service.bgColor} rounded-xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300`}
+                    className={`w-14 h-14 md:w-18 md:h-18 mx-auto ${service.bgColor} rounded-xl flex items-center justify-center mb-4 md:mb-5 group-hover:scale-110 transition-transform duration-300`}
                   >
                     <service.icon
-                      className={`w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br ${service.color} bg-clip-text text-transparent`}
+                      className={`w-7 h-7 md:w-9 md:h-9 bg-gradient-to-br ${service.color} bg-clip-text text-transparent`}
                     />
                   </div>
                   <CardTitle
@@ -229,16 +229,16 @@ export default function Index() {
                 <CardContent
                   className={`${isRTL ? "text-right" : "text-center"} pb-6`}
                 >
-                  <p className="text-sm md:text-base text-muted-foreground arabic mb-4 md:mb-6 leading-relaxed">
+                  <p className="text-base md:text-lg text-muted-foreground arabic mb-5 md:mb-7 leading-relaxed">
                     {service.description}
                   </p>
                   <Link to={service.href}>
                     <Button
-                      className={`w-full bg-gradient-to-r ${service.color} hover:opacity-90 transition-opacity arabic text-sm md:text-base`}
+                      className={`w-full bg-gradient-to-r ${service.color} hover:opacity-90 transition-opacity arabic text-base md:text-lg button-iphone touch-target py-3 md:py-4`}
                     >
                       اكتشف المزيد
                       <ArrowIcon
-                        className={`w-4 h-4 ${isRTL ? "mr-2" : "ml-2"}`}
+                        className={`w-5 h-5 ${isRTL ? "mr-3" : "ml-3"}`}
                       />
                     </Button>
                   </Link>
