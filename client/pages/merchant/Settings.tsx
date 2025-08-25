@@ -46,6 +46,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCurrencySafe } from "@/contexts/CurrencyContext";
 import { ApiService } from "@/lib/apiService";
 import { useToast } from "@/hooks/use-toast";
 import { cleanArabicText } from "@/lib/textUtils";
@@ -272,7 +273,7 @@ export default function MerchantSettings() {
       end: isNewMerchant ? "17:00" : "22:00",
       days: isNewMerchant
         ? []
-        : ["السبت", "الأحد", "الاثنين", "الثلاثا��", "الأربعاء", "الخميس"],
+        : ["السبت", "الأحد", "الاثنين", "ا��ثلاثا��", "الأربعاء", "الخميس"],
     },
     logo: "/placeholder.svg",
     banner: "/placeholder.svg",
@@ -385,7 +386,7 @@ export default function MerchantSettings() {
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // التحقق من نوع الملف
+      // التحقق من نوع المل��
       if (!file.type.startsWith("image/")) {
         alert("يرجى اختيا�� ملف صورة صالح (PNG, JPG, JPEG)");
         return;
@@ -428,7 +429,7 @@ export default function MerchantSettings() {
 
       // التحق�� م�� حجم الملف (أقل من 10 م��جابايت)
       if (file.size > 10 * 1024 * 1024) {
-        alert("حجم الصورة يجب أن يكون أقل من 10 ميجابايت");
+        alert("حجم الصو��ة يجب أن يكون أقل من 10 ميجابايت");
         return;
       }
 
@@ -464,7 +465,7 @@ export default function MerchantSettings() {
   const handleSaveSettings = async () => {
     // التحقق من صحة البي��نا��
     if (!storeSettings.storeName.trim()) {
-      alert("يرجى إدخال اسم المتجر");
+      alert("يرجى إدخ��ل اسم المتجر");
       return;
     }
 
@@ -671,7 +672,7 @@ export default function MerchantSettings() {
     ],
   };
 
-  // إضافة حالات جديدة
+  // إ��افة حالات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
     isNewMerchant ? user?.profile?.country || "السودان" : "الس��دان",
   );
@@ -735,7 +736,7 @@ export default function MerchantSettings() {
             جاري تحميل بيانات المتجر...
           </div>
           <p className="mt-4 text-gray-600 arabic">
-            يتم تحميل إعدادات متجرك، يرجى الانتظار...
+            يتم تحميل إعدادات متجرك، يرجى الانت��ار...
           </p>
         </div>
       </div>
@@ -1877,7 +1878,7 @@ export default function MerchantSettings() {
                         {
                           key: "autoAssignDrivers",
                           title: "توز��ع تلقائي للطلبات",
-                          desc: "توزيع الطلبات تلقائياً على أقرب سائق متاح",
+                          desc: "توزيع الطلبات ��لقائياً على أقرب سائق متاح",
                           icon: "🤖",
                         },
                         {
