@@ -11,7 +11,7 @@ export class ApiService {
     this.platform = platform;
   }
 
-  // تفعيل/إلغاء استخدام الإعدادات الخار��ية
+  // تفعيل/إلغاء استخدام الإعدادات الخارجية
   static setUseExternalConfig(useExternal: boolean) {
     this.useExternalConfig = useExternal;
   }
@@ -169,8 +169,22 @@ export class ApiService {
     };
 
     try {
+      console.log("🌐 Making API request:", {
+        method: config.method || 'GET',
+        url,
+        headers: config.headers,
+        bodySize: config.body ? config.body.toString().length : 0
+      });
+
       const response = await fetch(url, config);
       clearTimeout(timeoutId);
+
+      console.log("📡 API response received:", {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries())
+      });
 
       if (!response.ok) {
         let errorData: any = {};
@@ -248,7 +262,7 @@ export class ApiService {
     this.setUseExternalConfig(false);
   }
 
-  // الحصول على حالة الاتصال الحالية
+  // الحصول على ��الة الاتصال الحالية
   static getConnectionStatus(): {
     isExternal: boolean;
     activeConfig: any | null;
