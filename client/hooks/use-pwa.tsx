@@ -37,14 +37,37 @@ export function usePWA() {
     };
   }
 
-  const [pwaState, setPWAState] = useState<PWAState>({
-    isInstallable: false,
-    isInstalled: false,
-    isStandalone: false,
-    isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
-    hasUpdate: false,
-    installPrompt: null,
-  });
+  // Wrap useState in try-catch for extra safety
+  let pwaState: PWAState;
+  let setPWAState: React.Dispatch<React.SetStateAction<PWAState>>;
+
+  try {
+    [pwaState, setPWAState] = useState<PWAState>({
+      isInstallable: false,
+      isInstalled: false,
+      isStandalone: false,
+      isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
+      hasUpdate: false,
+      installPrompt: null,
+    });
+  } catch (error) {
+    console.error("❌ usePWA: useState failed:", error);
+    // Return safe fallback
+    return {
+      isInstallable: false,
+      isInstalled: false,
+      isStandalone: false,
+      isOnline: true,
+      hasUpdate: false,
+      installPrompt: null,
+      installApp: async () => {},
+      dismissInstallPrompt: () => {},
+      reloadForUpdate: () => {},
+      shareApp: async () => false,
+      requestNotificationPermission: async () => false,
+      showNotification: () => null,
+    };
+  }
 
   useEffect(() => {
     // Check if running as PWA
