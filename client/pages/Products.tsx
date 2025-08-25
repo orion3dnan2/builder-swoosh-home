@@ -586,6 +586,18 @@ export default function Products() {
             </Button>
           </div>
         )}
+
+        {/* Floating Cart Button */}
+        {cart.totalItems > 0 && (
+          <div className="fixed bottom-6 right-6 z-50">
+            <Link to="/cart">
+              <Button className="arabic shadow-lg rounded-full px-6 py-3 bg-green-600 hover:bg-green-700">
+                <ShoppingCart className="w-5 h-5 ml-2" />
+                عرض السلة ({cart.totalItems})
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </Layout>
   );
