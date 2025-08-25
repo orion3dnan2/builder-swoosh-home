@@ -50,14 +50,17 @@ export default function Cart() {
   };
 
   const handleCheckout = () => {
+    setIsCheckingOut(true);
+
     // Calculate tax (0% for Sudan/Kuwait - no VAT currently applied)
     const taxRate = 0; // 0% tax rate - can be configured later
-    const taxAmount = (calculateSubtotal() - discountAmount) * taxRate;
+    const subtotal = calculateSubtotal();
+    const taxAmount = (subtotal - discountAmount) * taxRate;
 
     // Navigate to checkout page with order summary
     const orderData = {
       items: cart.items,
-      subtotal: calculateSubtotal(),
+      subtotal: subtotal,
       shipping: finalShippingCost,
       tax: taxAmount,
       discount: discountAmount,
@@ -147,7 +150,7 @@ export default function Cart() {
             <Link to="/products">
               <Button className="arabic">
                 <Package className="w-4 h-4 ml-2" />
-                تصفح المنتجات
+                تصفح الم��تجات
               </Button>
             </Link>
           </div>
