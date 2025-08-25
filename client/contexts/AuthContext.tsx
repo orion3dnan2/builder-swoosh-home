@@ -40,18 +40,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize auth state
-  useEffect(() => {
-    try {
-      const currentUser = AuthService.getCurrentUser();
-      setUser(currentUser);
-    } catch (error) {
-      console.error("Error initializing auth:", error);
-      setUser(null);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+    // Initialize auth state
+    useEffect(() => {
+      try {
+        const currentUser = AuthService.getCurrentUser();
+        setUser(currentUser);
+      } catch (error) {
+        console.error("Error initializing auth:", error);
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
+    }, []);
 
   const refreshAuth = () => {
     try {
