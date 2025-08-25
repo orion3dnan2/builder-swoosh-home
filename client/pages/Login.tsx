@@ -108,7 +108,7 @@ export default function Login() {
                     <Input
                       id="username"
                       type="text"
-                      placeholder="أدخل اسم المستخدم"
+                      placeholder="أدخل اسم ��لمستخدم"
                       value={formData.username}
                       onChange={(e) =>
                         setFormData((prev) => ({
@@ -145,6 +145,11 @@ export default function Login() {
                           }))
                         }
                         className="text-right arabic pr-12 rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600"
+                        autoComplete="current-password"
+                        autoCorrect="off"
+                        autoCapitalize="off"
+                        spellCheck={false}
+                        dir="ltr"
                         required
                       />
                       <button
