@@ -230,7 +230,7 @@ export default function MerchantSettings() {
           });
         }
       } catch (error) {
-        console.error("خطأ في تحميل بيانات المتجر:", error);
+        console.error("خطأ في تحميل بيا��ات المتجر:", error);
 
         // عرض رسالة للمستخدم في حالة عدم وج��د اتصال أو مشكلة في المص��دقة
         if (
@@ -441,7 +441,7 @@ export default function MerchantSettings() {
         alert("تم تحديث غلاف المتجر بنجاح! 🎨");
       };
       reader.onerror = () => {
-        alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
+        alert("فشل في قراءة الصورة. يرجى المحاولة مرة أ��رى.");
       };
       reader.readAsDataURL(file);
     }
@@ -542,7 +542,10 @@ export default function MerchantSettings() {
 
       // التأكد من أن جميع ال��قول المطلوبة موجودة
       const requiredFields = ['name', 'category', 'phone', 'email', 'city'];
-      const missingFields = requiredFields.filter(field => !storeData[field]);
+      const missingFields = requiredFields.filter(field => {
+        const value = storeData[field];
+        return !value || (typeof value === 'string' && value.trim() === '');
+      });
 
       if (missingFields.length > 0) {
         throw new Error(`الحقول التالية مطلوبة: ${missingFields.join(', ')}`);
@@ -560,7 +563,7 @@ export default function MerchantSettings() {
           console.log("🔄 Updating existing store:", existingStore.id);
           await ApiService.updateStore(existingStore.id, storeData);
         } else {
-          // إنشاء متجر جديد
+          // إنشاء م��جر جديد
           console.log("➕ Creating new store");
           await ApiService.createStore(storeData);
         }
@@ -596,7 +599,7 @@ export default function MerchantSettings() {
 
       // عرض رسالة نجاح
       alert(
-        "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات ا��خاصة بمتجرك.",
+        "🎉 تم حفظ إعدادات المتجر بنجا��!\n\nتم تحديث جميع البيانات والإعدادات ا��خاصة بمتجرك.",
       );
     } catch (error) {
       alert(
@@ -679,7 +682,7 @@ export default function MerchantSettings() {
       "أبوظبي",
       "الشارقة",
       "عجمان",
-      "��أس الخيمة",
+      "��أس الخي��ة",
       "الفجيرة",
       "أم القيوين",
     ],
@@ -715,7 +718,7 @@ export default function MerchantSettings() {
 
   // إ��افة حالات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
-    isNewMerchant ? user?.profile?.country || "السودان" : "الس��دان",
+    isNewMerchant ? user?.profile?.country || "الس��دان" : "الس��دان",
   );
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
@@ -783,7 +786,7 @@ export default function MerchantSettings() {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            جاري تحميل بيانات المتجر...
+            جاري تح��يل بيانات المتجر...
           </div>
           <p className="mt-4 text-gray-600 arabic">
             يتم تحميل إعدادات ��تجرك، يرجى الانت��ار...
@@ -1489,7 +1492,7 @@ export default function MerchantSettings() {
                           key: "emailNotifications",
                           label: "البريد الإلكتروني",
                           desc: "استقبال ا��إشعارات عبر ا��بريد الإلكتروني",
-                          icon: "📧",
+                          icon: "����",
                           color:
                             "bg-indigo-50 border-indigo-200 hover:bg-indigo-100",
                         },
