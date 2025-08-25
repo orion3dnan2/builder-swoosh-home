@@ -179,15 +179,23 @@ function useToast() {
   try {
     const [state, setState] = React.useState<State>(memoryState);
 
-  React.useEffect(() => {
-    listeners.push(setState);
-    return () => {
-      const index = listeners.indexOf(setState);
-      if (index > -1) {
-        listeners.splice(index, 1);
+    React.useEffect(() => {
+      try {
+        listeners.push(setState);
+        return () => {
+          try {
+            const index = listeners.indexOf(setState);
+            if (index > -1) {
+              listeners.splice(index, 1);
+            }
+          } catch (cleanupError) {
+            console.error('Error in useToast cleanup:', cleanupError);
+          }
+        };
+      } catch (error) {
+        console.error('Error in useToast useEffect:', error);
       }
-    };
-  }, [state]);
+    }, [state]);
 
     return {
       ...state,
