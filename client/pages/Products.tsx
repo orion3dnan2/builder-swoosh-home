@@ -107,7 +107,7 @@ export default function Products() {
       });
     } catch (error) {
       console.error("Failed to add product to cart:", error);
-      toast.error("فشل في إضافة المنتج إلى ��لسلة");
+      toast.error("فشل في إضافة المنتج إلى السلة");
     }
   };
 
@@ -361,10 +361,44 @@ export default function Products() {
                     </div>
 
                     <div className="flex gap-2">
-                      <Button className="flex-1 arabic" size="sm">
-                        <ShoppingCart className="w-4 h-4 ml-1" />
-                        أضف للسلة
-                      </Button>
+                      {getProductQuantity(product.id) > 0 ? (
+                        <div className="flex items-center gap-1 flex-1">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRemoveFromCart(product.id);
+                            }}
+                          >
+                            -
+                          </Button>
+                          <span className="text-sm font-medium px-2">
+                            {getProductQuantity(product.id)}
+                          </span>
+                          <Button
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleIncreaseQuantity(product.id);
+                            }}
+                          >
+                            +
+                          </Button>
+                        </div>
+                      ) : (
+                        <Button
+                          className="flex-1 arabic"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart(product);
+                          }}
+                        >
+                          <ShoppingCart className="w-4 h-4 ml-1" />
+                          أضف للسلة
+                        </Button>
+                      )}
                       <Button variant="outline" size="sm" className="arabic">
                         تفاصيل
                       </Button>
@@ -440,10 +474,44 @@ export default function Products() {
                           </div>
                         </div>
                         <div className="flex gap-2">
-                          <Button className="arabic" size="sm">
-                            <ShoppingCart className="w-4 h-4 ml-1" />
-                            أضف للسلة
-                          </Button>
+                          {getProductQuantity(product.id) > 0 ? (
+                            <div className="flex items-center gap-1">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleRemoveFromCart(product.id);
+                                }}
+                              >
+                                -
+                              </Button>
+                              <span className="text-sm font-medium px-2">
+                                {getProductQuantity(product.id)}
+                              </span>
+                              <Button
+                                size="sm"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleIncreaseQuantity(product.id);
+                                }}
+                              >
+                                +
+                              </Button>
+                            </div>
+                          ) : (
+                            <Button
+                              className="arabic"
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleAddToCart(product);
+                              }}
+                            >
+                              <ShoppingCart className="w-4 h-4 ml-1" />
+                              أضف للسلة
+                            </Button>
+                          )}
                           <Button
                             variant="outline"
                             size="sm"
