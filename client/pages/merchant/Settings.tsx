@@ -395,7 +395,7 @@ export default function MerchantSettings() {
 
       // التحقق من حجم الملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
-        alert("حجم الصورة يجب أن يكون أقل من 5 ميجابايت");
+        alert("حجم الصورة يجب أن يكون أقل ��ن 5 ميجابايت");
         return;
       }
 
@@ -438,7 +438,7 @@ export default function MerchantSettings() {
       reader.onload = (e) => {
         const bannerUrl = e.target?.result as string;
         setStoreSettings({ ...storeSettings, banner: bannerUrl });
-        alert("تم تحديث غلاف المتجر بنجاح! 🎨");
+        alert("تم تحديث غلاف المتجر ب��جاح! 🎨");
       };
       reader.onerror = () => {
         alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
@@ -485,7 +485,9 @@ export default function MerchantSettings() {
     console.log("🔐 Authentication check passed:", {
       userId: user.id,
       userRole: user.role,
-      hasToken: !!token
+      hasToken: !!token,
+      tokenLength: token ? token.length : 0,
+      userObject: user
     });
 
     // التحقق من صحة البي��نا��
@@ -525,7 +527,7 @@ export default function MerchantSettings() {
     }
 
     if (storeSettings.workingHours.days.length === 0) {
-      alert("يرجى اختيار أيام العمل");
+      alert("يرجى اختي��ر أيام العمل");
       return;
     }
 
@@ -578,7 +580,7 @@ export default function MerchantSettings() {
       // التحقق من صحة البريد الإلكتروني
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(storeData.email)) {
-        throw new Error("يرجى إدخال بريد إلك��روني صحيح");
+        throw new Error("يرجى إدخال بريد إلكتروني صحيح");
       }
 
       // البحث عن متجر موجود للمستخدم أولاً
@@ -928,7 +930,7 @@ export default function MerchantSettings() {
                     وضع غير متصل
                   </span>
                   <p className="text-xs text-yellow-700 arabic mt-1">
-                    تعمل بالبيانات المحفوظة محلياً. ستتم مزامنة التغييرات عند
+                    تعمل بالبيانات المحفوظة محليا��. ستتم مزامنة التغييرات عند
                     استعادة الاتصال.
                   </p>
                 </div>
@@ -1568,7 +1570,7 @@ export default function MerchantSettings() {
                         {
                           key: "smsNotifications",
                           label: "رسائل SMS",
-                          desc: "استق��ال الإشعارات عبر الرسائل النصية",
+                          desc: "استقبال الإشعارات عبر الرسائل النصية",
                           icon: "📱",
                           color: "bg-cyan-50 border-cyan-200 hover:bg-cyan-100",
                         },
@@ -1696,7 +1698,7 @@ export default function MerchantSettings() {
                           </div>
                         </div>
                         <p className="text-xs text-gray-500 arabic mt-2">
-                          ع��د تجاوز هذا المبلغ سيكون الشحن مجاني
+                          عند تجاوز هذا المبلغ سيكون الشحن مجاني
                         </p>
                       </div>
                       <div>
@@ -2080,7 +2082,7 @@ export default function MerchantSettings() {
                           تكامل الواتساب للتوصيل
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تواصل مبا����ر مع السائقين وتتبع الطلبات عبر الواتساب
+                          تواصل مبا��ر مع السائقين وتتبع الطلبات عبر الواتساب
                         </p>
                       </div>
                     </div>
