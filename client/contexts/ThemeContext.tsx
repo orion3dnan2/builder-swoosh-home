@@ -60,7 +60,7 @@ const translations = {
       "منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم",
 
     // Homepage
-    "home.hero.title": "البيت السود��ني",
+    "home.hero.title": "البيت السوداني",
     "home.hero.subtitle": "سوق وخدمات وشركات السودان في الخليج والعالم",
     "home.hero.explore_market": "استكشف السوق",
     "home.hero.join_us": "انضم إلينا",
@@ -103,7 +103,7 @@ const translations = {
     // Theme Settings
     "theme.light": "الوضع النهاري",
     "theme.dark": "الوضع ��لليلي",
-    "theme.toggle": "تبديل الث��م",
+    "theme.toggle": "تبديل الثيم",
     "language.toggle": "تبديل اللغة",
 
     // Dashboard
@@ -185,11 +185,11 @@ const translations = {
     "stores.confirm_approve": "هل أنت متأكد من اعتماد هذ�� المتجر؟",
     "stores.confirm_suspend": "هل أنت متأكد من تعليق هذا المتجر؟",
     "stores.confirm_reactivate": "هل أنت متأكد من إعادة تفعيل هذا المتجر؟",
-    "stores.action_approve": "اعتماد",
+    "stores.action_approve": "اعتم��د",
     "stores.action_suspend": "تعليق",
     "stores.action_reactivate": "إعادة تفعيل",
     "stores.success_approve": "تم اعتماد المتجر بنجاح! ✅",
-    "stores.success_suspend": "تم تعليق المتج�� بنجاح! ⚠️",
+    "stores.success_suspend": "تم تعليق المتجر بنجاح! ⚠️",
     "stores.success_reactivate": "تم إعادة تفعيل المتجر بنجاح! ✅",
     "stores.reviews_count": "تقييم",
 
@@ -441,21 +441,25 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       }
     }, [theme]);
 
-  // Apply language and direction to document
-  useEffect(() => {
-    const root = document.documentElement;
-    const body = document.body;
+    // Apply language and direction to document
+    useEffect(() => {
+      try {
+        const root = document.documentElement;
+        const body = document.body;
 
-    // Set direction
-    root.dir = language === "ar" ? "rtl" : "ltr";
-    body.dir = language === "ar" ? "rtl" : "ltr";
+        // Set direction
+        root.dir = language === "ar" ? "rtl" : "ltr";
+        body.dir = language === "ar" ? "rtl" : "ltr";
 
-    // Set language attribute
-    root.lang = language;
+        // Set language attribute
+        root.lang = language;
 
-    // Store in localStorage
-    localStorage.setItem(STORAGE_KEYS.LANGUAGE, language);
-  }, [language]);
+        // Store in localStorage
+        localStorage.setItem(STORAGE_KEYS.LANGUAGE, language);
+      } catch (error) {
+        console.error('Error applying language:', error);
+      }
+    }, [language]);
 
   // Apply font family
   useEffect(() => {
