@@ -29,7 +29,6 @@ const FallbackToaster: React.FC = () => {
   if (!toasts || toasts.length === 0) {
     return (
       <div className="toast-container fixed top-0 z-[100] w-full sm:bottom-0 sm:right-0 sm:top-auto md:max-w-[420px]" data-fallback="true">
-        {/* Empty toaster */}
       </div>
     );
   }
