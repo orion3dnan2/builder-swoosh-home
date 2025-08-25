@@ -75,7 +75,7 @@ const translations = {
       "تواصل مع الشركات والمؤسسات السودانية في الخليج",
     "home.services.jobs": "لوحة الوظائف",
     "home.services.jobs_desc": "ابحث عن فرص عمل مناسبة أو أعلن عن وظائف شاغرة",
-    "home.services.professional": "الخدمات ا��مهنية",
+    "home.services.professional": "الخدمات ا��مهن��ة",
     "home.services.professional_desc":
       "احصل على خدمات مهنية متخصصة من خبراء سودانيين",
     "home.services.ads": "الإعلانات",
@@ -122,7 +122,7 @@ const translations = {
     "dashboard.registered_stores": "المتاجر المسجلة",
     "dashboard.total_products": "إجمالي المنتجات",
     "dashboard.monthly_revenue": "إيرادات الشهر",
-    "dashboard.active_stores": "المتاجر النشطة",
+    "dashboard.active_stores": "المت��جر النشطة",
     "dashboard.pending_approvals": "طلبات الاعتماد",
     "dashboard.new_registrations": "تسجيلات جديدة",
     "dashboard.total_orders": "إجمالي الطلبات",
@@ -166,7 +166,7 @@ const translations = {
     "stores.suspend_store": "تعليق المتجر",
     "stores.reactivate_store": "إعادة تفعيل",
     "stores.no_stores_found": "لا توجد متاجر",
-    "stores.no_stores_match": "لم يتم العثور على متاجر تطابق معايير البحث",
+    "stores.no_stores_match": "لم ي��م العثور على متاجر تطابق معايير البحث",
     "stores.filter_results": "من",
     "stores.store_details": "تفاصيل المتجر",
     "stores.store_details_desc": "معلومات شاملة عن المتجر ونشاطه",
@@ -482,17 +482,29 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       }
     }, [fontFamily]);
 
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
+    const toggleTheme = () => {
+      try {
+        setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+      } catch (error) {
+        console.error('Error toggling theme:', error);
+      }
+    };
 
-  const toggleLanguage = () => {
-    setLanguage((prevLang) => (prevLang === "ar" ? "en" : "ar"));
-  };
+    const toggleLanguage = () => {
+      try {
+        setLanguage((prevLang) => (prevLang === "ar" ? "en" : "ar"));
+      } catch (error) {
+        console.error('Error toggling language:', error);
+      }
+    };
 
-  const setFontFamily = (font: FontFamily) => {
-    setFontFamilyState(font);
-  };
+    const setFontFamily = (font: FontFamily) => {
+      try {
+        setFontFamilyState(font);
+      } catch (error) {
+        console.error('Error setting font family:', error);
+      }
+    };
 
   // Translation function
   const t = (key: string): string => {
