@@ -40,6 +40,7 @@ import Profile from "./pages/Profile";
 import DebugProducts from "./pages/DebugProducts";
 import AddSampleProducts from "./pages/AddSampleProducts";
 import PWAInfo from "./pages/PWAInfo";
+import ProductDetails from "./pages/ProductDetails";
 import { SuperAdminRoute, MerchantRoute } from "./components/ProtectedRoute";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -200,6 +201,7 @@ function App() {
                 />
                 <Route path="/marketplace" element={<Marketplace />} />
                 <Route path="/products" element={<Products />} />
+                <Route path="/product/:id" element={<ProductDetails />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/payment-gateway" element={<PaymentGateway />} />
