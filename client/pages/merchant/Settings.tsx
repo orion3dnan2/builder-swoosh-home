@@ -300,7 +300,7 @@ export default function MerchantSettings() {
     processingTime: isNewMerchant ? "30" : "45",
     shippingAreas: isNewMerchant
       ? []
-      : ["الخرطوم", "أمدرمان", "بحري", "مدن��", "����سلا"],
+      : ["الخرطوم", "أمدرمان", "بحري", "مدني", "����سلا"],
   });
 
   const [accountSettings, setAccountSettings] = useState({
@@ -449,7 +449,7 @@ export default function MerchantSettings() {
 
   // حذف الشعار
   const handleRemoveLogo = () => {
-    if (window.confirm("هل أنت متأكد من حذف شعار المتجر؟")) {
+    if (window.confirm("هل أنت متأكد من حذف شعار الم��جر؟")) {
       setStoreSettings({ ...storeSettings, logo: "/placeholder.svg" });
       alert("تم حذف الشعار بنجاح");
     }
@@ -587,11 +587,22 @@ export default function MerchantSettings() {
           message: apiError.message,
           error: apiError,
           status: apiError.status,
+          errorData: apiError.errorData,
           storeData: storeData
         });
 
         // Log the full error object for debugging
         console.error("Full API Error:", JSON.stringify(apiError, null, 2));
+
+        // Check for specific error conditions
+        if (apiError.message.includes("لديك متجر بنفس الاسم بالفعل")) {
+          throw new Error("لديك متجر بنفس الاسم بالفعل. يرجى اختيار اسم مختلف للمتجر.");
+        }
+
+        // If it's a validation error, don't save locally - show the error
+        if (apiError.status === 400 && apiError.errorData?.error) {
+          throw new Error(apiError.errorData.error);
+        }
 
         console.warn(
           "فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:",
@@ -612,7 +623,7 @@ export default function MerchantSettings() {
 
       // عرض رسالة نجاح
       alert(
-        "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات ا��خاصة بمتجر��.",
+        "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات ا��خاصة بمتجرك.",
       );
     } catch (error) {
       alert(
@@ -647,7 +658,7 @@ export default function MerchantSettings() {
     "صحة ورياضة",
     "حرف يدوية وتقليدية",
     "خدمات عامة",
-    "أ��رى (حدد النوع)",
+    "أخرى (حدد النوع)",
   ];
 
   const workingDays = [
@@ -699,7 +710,7 @@ export default function MerchantSettings() {
       "الفجيرة",
       "أم القيوين",
     ],
-    "دولة الكو��ت": [
+    "دولة الكويت": [
       "مدينة الكويت",
       "الأحمدي",
       "الجهراء",
@@ -1616,7 +1627,7 @@ export default function MerchantSettings() {
                               })
                             }
                             className="text-right pl-12 pr-4 h-12 border-2 border-gray-200 focus:border-primary transition-colors group-hover:border-gray-300"
-                            placeholder="أدخل ا��مبلغ"
+                            placeholder="أدخل المبلغ"
                           />
                           <div className="absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center">
                             <span className="text-gray-500 font-medium">
@@ -1625,7 +1636,7 @@ export default function MerchantSettings() {
                           </div>
                         </div>
                         <p className="text-xs text-gray-500 arabic mt-2">
-                          عند تجاوز هذا المبلغ سيكون الشحن مجاني
+                          عند تجاوز هذا المبلغ س��كون الشحن مجاني
                         </p>
                       </div>
                       <div>
@@ -2019,7 +2030,7 @@ export default function MerchantSettings() {
                         <div className="text-center">
                           <div className="text-2xl mb-2">📱</div>
                           <h4 className="font-semibold arabic text-sm mb-2">
-                            تواصل ف��ري
+                            ��واصل ف��ري
                           </h4>
                           <p className="text-xs text-gray-600 arabic">
                             تواصل مع السائقين مباشرة عبر الواتساب
