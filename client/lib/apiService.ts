@@ -169,12 +169,58 @@ export class ApiService {
     };
 
     try {
+      console.log("🌐 Making API request:", {
+        method: config.method || "GET",
+        url,
+        headers: config.headers,
+        bodySize: config.body ? config.body.toString().length : 0,
+      });
+
       const response = await fetch(url, config);
       clearTimeout(timeoutId);
 
+      console.log("📡 API response received:", {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries()),
+      });
+
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `HTTP ${response.status}`);
+        let errorData: any = {};
+        let errorText = "";
+
+        try {
+          // Try to get response as text first
+          errorText = await response.text();
+          console.log("Raw error response:", errorText);
+
+          // Try to parse as JSON
+          if (errorText) {
+            errorData = JSON.parse(errorText);
+          }
+        } catch (parseError) {
+          console.error("Failed to parse error response:", parseError);
+          errorData = { error: errorText || `HTTP ${response.status}` };
+        }
+
+        console.error("API Request failed:", {
+          status: response.status,
+          statusText: response.statusText,
+          url,
+          rawResponse: errorText,
+          errorData,
+          parseSuccess: !!errorData.error,
+        });
+
+        const error = new Error(
+          errorData.error || errorText || `HTTP ${response.status}`,
+        );
+        (error as any).status = response.status;
+        (error as any).statusText = response.statusText;
+        (error as any).errorData = errorData;
+        (error as any).rawResponse = errorText;
+        throw error;
       }
 
       return await response.json();
@@ -218,7 +264,7 @@ export class ApiService {
     this.setUseExternalConfig(false);
   }
 
-  // الحصول على حالة الاتصال الحالية
+  // الحصول على ��الة الاتصال الحالية
   static getConnectionStatus(): {
     isExternal: boolean;
     activeConfig: any | null;

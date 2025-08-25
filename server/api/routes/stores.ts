@@ -55,7 +55,7 @@ router.get("/general", async (req, res) => {
 // Get all stores (للمديرين وأصحاب المتاجر)
 router.get("/", authenticateToken, async (req: any, res) => {
   try {
-    // إذا كان المستخدم تاجر، أرجع متاجره فقط
+    // إذا كان ا��مستخدم تاجر، أرجع متاجره فقط
     if (req.user.role === "merchant") {
       const userStores = StoreDatabase.findStores(
         (store) => store.merchantId === req.user.id,
@@ -122,9 +122,32 @@ router.post("/", authenticateToken, async (req: any, res) => {
       shippingSettings,
     } = req.body;
 
+    // طباعة البيانات المستلمة للتشخيص
+    console.log("🔍 Create Store Request Data:", {
+      name,
+      category,
+      phone,
+      email,
+      city,
+      storeType,
+      userId: req.user.id,
+      userRole: req.user.role,
+    });
+
     // التحقق من البيانات المطلوبة
     if (!name || !category || !phone || !email || !city) {
-      return res.status(400).json({ error: "جميع الحقول الأساسية مطلوبة" });
+      console.error("❌ Missing required fields:", {
+        name: !!name,
+        category: !!category,
+        phone: !!phone,
+        email: !!email,
+        city: !!city,
+      });
+      return res.status(400).json({
+        error: "جميع الحقول الأساسية مطلوبة",
+        requiredFields: ["name", "category", "phone", "email", "city"],
+        receivedData: { name, category, phone, email, city },
+      });
     }
 
     // التحقق من عدم و��ود متجر بنفس الاسم للتاجر
@@ -134,8 +157,25 @@ router.post("/", authenticateToken, async (req: any, res) => {
         s.name.toLowerCase() === name.toLowerCase(),
     );
 
+    console.log("🔍 Checking for existing store:", {
+      searchingFor: name.toLowerCase(),
+      merchantId: req.user.id,
+      existingStore: existingStore
+        ? {
+            id: existingStore.id,
+            name: existingStore.name,
+            merchantId: existingStore.merchantId,
+          }
+        : null,
+    });
+
     if (existingStore) {
-      return res.status(400).json({ error: "لديك متجر بنفس الاسم بالفعل" });
+      console.log("❌ Store already exists with same name");
+      return res.status(400).json({
+        error: "لديك متجر بنفس الاسم بالفعل",
+        existingStoreName: existingStore.name,
+        existingStoreId: existingStore.id,
+      });
     }
 
     const newStore = {
@@ -230,6 +270,45 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
       shippingSettings,
     } = req.body;
 
+    // طباعة البيانات المستلمة للتشخيص
+    console.log("🔍 Update Store Request Data:", {
+      storeId,
+      name,
+      category,
+      phone,
+      email,
+      city,
+      storeType,
+      userId: req.user.id,
+      userRole: req.user.role,
+    });
+
+    // التحقق من البيانات المطلوبة للتحديث
+    if (!name || !category || !phone || !email || !city) {
+      return res.status(400).json({
+        error: "جميع الحقول الأساسية مطلوبة للتحديث",
+        requiredFields: ["name", "category", "phone", "email", "city"],
+        receivedData: { name, category, phone, email, city },
+      });
+    }
+
+    // التحقق من عدم وجود متجر آخر بنفس الاسم (ما عدا المتجر الحالي)
+    const duplicateStore = StoreDatabase.findStore(
+      (s) =>
+        s.merchantId === req.user.id &&
+        s.id !== storeId &&
+        s.name.toLowerCase() === name.toLowerCase(),
+    );
+
+    if (duplicateStore) {
+      console.log("❌ Another store exists with same name during update");
+      return res.status(400).json({
+        error: "لديك متجر آخر بنفس الاسم. يرجى اختيار اسم مختلف.",
+        duplicateStoreName: duplicateStore.name,
+        duplicateStoreId: duplicateStore.id,
+      });
+    }
+
     // تحديث بيانات المتجر
     const updates = {
       name: name || store.name,
@@ -251,7 +330,7 @@ router.put("/:id", authenticateToken, async (req: any, res) => {
 
     const updatedStore = StoreDatabase.updateStore(storeId, updates);
 
-    console.log(`✅ تم تحديث متجر: ${updatedStore.name}`);
+    console.log(`✅ تم تحديث متج��: ${updatedStore.name}`);
 
     res.json({
       message: "تم تحديث بيانات المتجر بنجاح",
@@ -376,7 +455,7 @@ router.get("/:id/orders", authenticateToken, async (req: any, res) => {
     const store = StoreDatabase.findStore((s) => s.id === storeId);
 
     if (!store) {
-      return res.status(404).json({ error: "المتجر غير موجود" });
+      return res.status(404).json({ error: "ا��متجر غير موجود" });
     }
 
     // التحقق من الصلاحيات

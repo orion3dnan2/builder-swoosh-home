@@ -41,6 +41,15 @@ export default function Login() {
     }
 
     try {
+      console.log("🔐 Frontend login attempt:", {
+        username: formData.username,
+        password: formData.password,
+        passwordLength: formData.password.length,
+        passwordChars: Array.from(formData.password)
+          .map((char) => `${char} (${char.charCodeAt(0)})`)
+          .join(", "),
+      });
+
       const user = await login({
         username: formData.username,
         password: formData.password,
@@ -101,7 +110,7 @@ export default function Login() {
                     <Input
                       id="username"
                       type="text"
-                      placeholder="أدخل اسم المستخدم"
+                      placeholder="أدخل اسم ��لمستخدم"
                       value={formData.username}
                       onChange={(e) =>
                         setFormData((prev) => ({
@@ -110,6 +119,10 @@ export default function Login() {
                         }))
                       }
                       className="text-right arabic rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600"
+                      autoComplete="username"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck={false}
                       required
                     />
                   </div>
@@ -134,6 +147,11 @@ export default function Login() {
                           }))
                         }
                         className="text-right arabic pr-12 rounded-xl border-secondary-200 focus:border-primary-600 focus:ring-primary-600"
+                        autoComplete="current-password"
+                        autoCorrect="off"
+                        autoCapitalize="off"
+                        spellCheck={false}
+                        dir="ltr"
                         required
                       />
                       <button

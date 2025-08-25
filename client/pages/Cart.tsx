@@ -18,19 +18,17 @@ import {
 } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { PromoCodeService } from "@/lib/promoCodes";
+import { useCurrencySafe } from "@/contexts/CurrencyContext";
 import { toast } from "sonner";
 
 export default function Cart() {
   const navigate = useNavigate();
   const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
+  const { formatPrice, currentCurrency } = useCurrencySafe();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [appliedPromoCode, setAppliedPromoCode] = useState<any>(null);
   const [promoCodeError, setPromoCodeError] = useState("");
-
-  const formatPrice = (price: number) => {
-    return `${price.toFixed(3)} د.ك`;
-  };
 
   const handleUpdateQuantity = (productId: string, newQuantity: number) => {
     if (newQuantity <= 0) {
@@ -52,12 +50,20 @@ export default function Cart() {
   };
 
   const handleCheckout = () => {
+    setIsCheckingOut(true);
+    console.log("Checkout initiated"); // Debug log
+
+    // Calculate tax (0% for Sudan/Kuwait - no VAT currently applied)
+    const taxRate = 0; // 0% tax rate - can be configured later
+    const subtotal = calculateSubtotal();
+    const taxAmount = (subtotal - discountAmount) * taxRate;
+
     // Navigate to checkout page with order summary
     const orderData = {
       items: cart.items,
-      subtotal: calculateSubtotal(),
+      subtotal: subtotal,
       shipping: finalShippingCost,
-      tax: tax,
+      tax: taxAmount,
       discount: discountAmount,
       promoCode: appliedPromoCode,
       total: finalTotal,
@@ -68,7 +74,13 @@ export default function Cart() {
       sessionStorage.setItem("orderData", JSON.stringify(orderData));
     }
 
+    // Navigate to checkout
     navigate("/checkout");
+
+    // Reset loading state after a short delay
+    setTimeout(() => {
+      setIsCheckingOut(false);
+    }, 1000);
   };
 
   const handleApplyPromoCode = () => {

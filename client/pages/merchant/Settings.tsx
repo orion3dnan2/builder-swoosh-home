@@ -46,6 +46,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCurrencySafe } from "@/contexts/CurrencyContext";
 import { ApiService } from "@/lib/apiService";
 import { useToast } from "@/hooks/use-toast";
 import { cleanArabicText } from "@/lib/textUtils";
@@ -109,6 +110,7 @@ interface ShippingSettings {
 export default function MerchantSettings() {
   const { t, isRTL } = useTheme();
   const { user } = useAuth();
+  const { updateCurrencyByCountry } = useCurrencySafe();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("store");
   const [showPassword, setShowPassword] = useState(false);
@@ -147,7 +149,7 @@ export default function MerchantSettings() {
         setShipping(JSON.parse(savedShipping));
       }
     } catch (error) {
-      console.error("خطأ في تحميل البيانات المحلية:", error);
+      console.error("خطأ في تحميل الب��انات المحلية:", error);
     }
   };
 
@@ -260,7 +262,7 @@ export default function MerchantSettings() {
       : "متجر الخير السوداني",
     description: isNewMerchant
       ? ""
-      : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
+      : "متجر متخصص في بيع المنتجات السود��نية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
     storeType: isNewMerchant ? "" : "restaurant",
     phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
@@ -272,7 +274,7 @@ export default function MerchantSettings() {
       end: isNewMerchant ? "17:00" : "22:00",
       days: isNewMerchant
         ? []
-        : ["السبت", "الأحد", "الاثنين", "الثلاثا��", "الأربعاء", "الخميس"],
+        : ["الس��ت", "الأحد", "الاثنين", "ا��ثلاثا��", "الأربعاء", "الخميس"],
     },
     logo: "/placeholder.svg",
     banner: "/placeholder.svg",
@@ -318,7 +320,7 @@ export default function MerchantSettings() {
             id: "driver1",
             name: "أحمد محمد الطيب",
             phone: "+966501234567",
-            area: "الرياض",
+            area: "ال��ياض",
             rating: 4.8,
             isActive: true,
             vehicle: "سيارة صالون",
@@ -332,11 +334,11 @@ export default function MerchantSettings() {
             rating: 4.9,
             isActive: true,
             vehicle: "دراجة نارية",
-            speciality: ["طلبات صغيرة", "مستندات"],
+            speciality: ["طلبات صغيرة", "مستن��ات"],
           },
           {
             id: "driver3",
-            name: "عثمان عبدالرحمن",
+            name: "��ثمان عبدالرحمن",
             phone: "+96550123456",
             area: "ال��ويت",
             rating: 4.7,
@@ -385,7 +387,7 @@ export default function MerchantSettings() {
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // التحقق من نوع الملف
+      // التحقق من نوع المل��
       if (!file.type.startsWith("image/")) {
         alert("يرجى اختيا�� ملف صورة صالح (PNG, JPG, JPEG)");
         return;
@@ -393,7 +395,7 @@ export default function MerchantSettings() {
 
       // التحقق من حجم الملف (أقل من 5 ميجابايت)
       if (file.size > 5 * 1024 * 1024) {
-        alert("حجم الصورة يجب أن يكون أقل من 5 ميجابايت");
+        alert("حجم الصورة يجب أن يكون أقل ��ن 5 ميجابايت");
         return;
       }
 
@@ -426,9 +428,9 @@ export default function MerchantSettings() {
         return;
       }
 
-      // التحق�� م�� حجم الملف (أقل من 10 م��جابايت)
+      // التحق�� م�� ح��م الملف (أقل من 10 م��جابايت)
       if (file.size > 10 * 1024 * 1024) {
-        alert("حجم الصورة يجب أن يكون أقل من 10 ميجابايت");
+        alert("حجم ال��و��ة يجب أن يكون أقل من 10 ميجابايت");
         return;
       }
 
@@ -436,7 +438,7 @@ export default function MerchantSettings() {
       reader.onload = (e) => {
         const bannerUrl = e.target?.result as string;
         setStoreSettings({ ...storeSettings, banner: bannerUrl });
-        alert("تم تحديث غلاف المتجر بنجاح! 🎨");
+        alert("تم تحديث غلاف المتجر ب��جاح! 🎨");
       };
       reader.onerror = () => {
         alert("فشل في قراءة الصورة. يرجى المحاولة مرة أخرى.");
@@ -462,9 +464,35 @@ export default function MerchantSettings() {
   };
 
   const handleSaveSettings = async () => {
+    // التحقق من تسجيل الدخول
+    if (!user) {
+      alert("يرجى تسجيل الدخول أولاً");
+      return;
+    }
+
+    if (user.role !== "merchant") {
+      alert("يجب أن تكون تاجراً لحفظ إعدادات المتجر");
+      return;
+    }
+
+    // التحقق من وجود رمز المصادقة
+    const token = localStorage.getItem("auth_token");
+    if (!token) {
+      alert("انتهت جلسة تسجيل الدخول. يرجى تسجيل الدخول مرة أخرى");
+      return;
+    }
+
+    console.log("🔐 Authentication check passed:", {
+      userId: user.id,
+      userRole: user.role,
+      hasToken: !!token,
+      tokenLength: token ? token.length : 0,
+      userObject: user,
+    });
+
     // التحقق من صحة البي��نا��
     if (!storeSettings.storeName.trim()) {
-      alert("يرجى إدخال اسم المتجر");
+      alert("يرجى إدخ��ل اسم المتجر");
       return;
     }
 
@@ -484,7 +512,7 @@ export default function MerchantSettings() {
     }
 
     if (!storeSettings.email.trim()) {
-      alert("يرجى إدخ��ل ا��بريد ا��إلكتروني");
+      alert("يرجى إدخ��ل ا���بريد ا��إلكتروني");
       return;
     }
 
@@ -499,7 +527,7 @@ export default function MerchantSettings() {
     }
 
     if (storeSettings.workingHours.days.length === 0) {
-      alert("يرجى اختيار أيام العمل");
+      alert("يرجى اختي��ر أيام العمل");
       return;
     }
 
@@ -508,15 +536,15 @@ export default function MerchantSettings() {
     try {
       // إرسال البيانات إلى الخادم
       const storeData = {
-        name: storeSettings.storeName,
-        description: storeSettings.description,
-        category: storeSettings.category,
-        storeType: storeSettings.storeType,
-        phone: storeSettings.phone,
-        email: storeSettings.email,
-        address: storeSettings.address,
-        city: storeSettings.city,
-        country: selectedCountry,
+        name: storeSettings.storeName.trim(),
+        description: storeSettings.description.trim(),
+        category: storeSettings.category.trim(),
+        storeType: storeSettings.storeType.trim(),
+        phone: storeSettings.phone.trim(),
+        email: storeSettings.email.trim(),
+        address: storeSettings.address.trim(),
+        city: storeSettings.city.trim(),
+        country: selectedCountry.trim(),
         workingHours: storeSettings.workingHours,
         logo: storeSettings.logo,
         banner: storeSettings.banner,
@@ -524,22 +552,139 @@ export default function MerchantSettings() {
         shippingSettings: shipping,
       };
 
+      // التحقق من البيانات قبل الإرسال
+      console.log("📋 Store data being sent:", {
+        ...storeData,
+        dataValidation: {
+          hasName: !!storeData.name && storeData.name.trim() !== "",
+          hasCategory: !!storeData.category && storeData.category.trim() !== "",
+          hasPhone: !!storeData.phone && storeData.phone.trim() !== "",
+          hasEmail: !!storeData.email && storeData.email.trim() !== "",
+          hasCity: !!storeData.city && storeData.city.trim() !== "",
+          hasCountry: !!storeData.country && storeData.country.trim() !== "",
+        },
+      });
+
+      // التأكد من أن جميع الحقول المطلوبة موجودة
+      const requiredFields = ["name", "category", "phone", "email", "city"];
+      const missingFields = requiredFields.filter((field) => {
+        const value = storeData[field];
+        return !value || (typeof value === "string" && value.trim() === "");
+      });
+
+      if (missingFields.length > 0) {
+        console.error("❌ Missing required fields:", missingFields);
+        throw new Error(`الحقول التالية مطلوبة: ${missingFields.join(", ")}`);
+      }
+
+      // التحقق من صحة البريد الإلكتروني
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(storeData.email)) {
+        throw new Error("يرجى إدخال بريد إلكتروني صحيح");
+      }
+
       // البحث عن متجر موجود للمستخدم أولاً
       try {
         const userStores = await ApiService.getStores();
-        const existingStore = userStores.find(
+        console.log("📋 User stores found:", userStores.length);
+
+        // البحث عن متجر بنفس الاسم أو أي متجر للمستخدم
+        const existingStoreByName = userStores.find(
+          (store) =>
+            store.merchantId === user?.id &&
+            store.name.toLowerCase() === storeData.name.toLowerCase(),
+        );
+
+        const existingStoreByUser = userStores.find(
           (store) => store.merchantId === user?.id,
         );
 
-        if (existingStore) {
-          // تحديث متجر موجود
-          await ApiService.updateStore(existingStore.id, storeData);
+        if (existingStoreByName) {
+          // تحديث متجر موجود بنفس الاسم
+          console.log(
+            "🔄 Updating existing store with same name:",
+            existingStoreByName.id,
+          );
+          await ApiService.updateStore(existingStoreByName.id, storeData);
+        } else if (existingStoreByUser) {
+          // تحديث أي متجر موجود للمستخدم
+          console.log(
+            "🔄 Updating existing store for user:",
+            existingStoreByUser.id,
+          );
+          await ApiService.updateStore(existingStoreByUser.id, storeData);
         } else {
           // إنشاء متجر جديد
+          console.log("➕ Creating new store");
           await ApiService.createStore(storeData);
         }
       } catch (apiError: any) {
         // إذا فشل API، نستخدم ��لتخزين المحلي كنس��ة احتياطية
+        // طباعة تفاصيل الخطأ للتشخيص
+        console.error("API Error details:", {
+          message: apiError.message,
+          error: apiError,
+          status: apiError.status,
+          errorData: apiError.errorData,
+          storeData: storeData,
+        });
+
+        // Log the full error object for debugging
+        console.error("Full API Error:", JSON.stringify(apiError, null, 2));
+
+        // Check for specific error conditions
+        if (
+          apiError.message.includes("لديك متجر بنفس الاسم بالفعل") ||
+          apiError.message.includes("Store already exists") ||
+          (apiError.errorData && apiError.errorData.existingStoreId)
+        ) {
+          // If trying to create but store exists, try to find and update it instead
+          console.log("🔄 Store exists, trying to update instead of create");
+          try {
+            const allStores = await ApiService.getStores();
+            const existingStoreByName = allStores.find(
+              (store) =>
+                store.merchantId === user?.id &&
+                store.name.toLowerCase() === storeData.name.toLowerCase(),
+            );
+
+            if (existingStoreByName) {
+              console.log(
+                "🔄 Found existing store, updating:",
+                existingStoreByName.id,
+              );
+              await ApiService.updateStore(existingStoreByName.id, storeData);
+              console.log("✅ Successfully updated existing store");
+              return; // Success, exit this catch block
+            } else {
+              // Try using the existing store ID from error response
+              if (apiError.errorData && apiError.errorData.existingStoreId) {
+                console.log(
+                  "🔄 Using store ID from error response:",
+                  apiError.errorData.existingStoreId,
+                );
+                await ApiService.updateStore(
+                  apiError.errorData.existingStoreId,
+                  storeData,
+                );
+                console.log(
+                  "✅ Successfully updated existing store via error ID",
+                );
+                return;
+              }
+            }
+          } catch (retryError) {
+            console.error("Failed to update existing store:", retryError);
+          }
+
+          throw new Error("تم تحديث المتجر الموجود بدلاً من إنشاء متجر جديد.");
+        }
+
+        // If it's a validation error, don't save locally - show the error
+        if (apiError.status === 400 && apiError.errorData?.error) {
+          throw new Error(apiError.errorData.error);
+        }
+
         console.warn(
           "فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:",
           apiError,
@@ -559,13 +704,18 @@ export default function MerchantSettings() {
 
       // عرض رسالة نجاح
       alert(
-        "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات الخاصة بمتجرك.",
+        "🎉 تم حفظ إعدادات المتجر بنجاح!\n\nتم تحديث جميع البيانات والإعدادات ا��خاصة بمتجرك.",
       );
     } catch (error) {
       alert(
-        "❌ حدث خطأ أثناء حفظ الإعدا��ات.\n\nيرجى ��لتحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
+        "❌ حدث خطأ أثناء حفظ الإعدا���ات.\n\nيرجى ��لتحقق من اتصال الإنترنت والمحاولة مرة أخرى.",
       );
-      console.error("خطأ في حفظ الإعدادات:", error);
+      console.error("خطأ في حفظ الإعدادات:", {
+        message: error.message,
+        stack: error.stack,
+        storeSettings,
+        selectedCountry,
+      });
     } finally {
       setIsSaving(false);
     }
@@ -594,7 +744,7 @@ export default function MerchantSettings() {
 
   const workingDays = [
     "السبت",
-    "الأحد",
+    "ال����حد",
     "الاثنين",
     "الثلاثاء",
     "��لأربعاء",
@@ -629,7 +779,7 @@ export default function MerchantSettings() {
       "الأحساء",
       "تبوك",
       "أبها",
-      "جازان",
+      "جا��ان",
       "نجران",
     ],
     "الإمارات العربية المتحدة": [
@@ -645,12 +795,12 @@ export default function MerchantSettings() {
       "مدينة الكويت",
       "الأحمدي",
       "الجهراء",
-      "مبارك الكبير",
+      "��بارك الكبير",
       "الفروانية",
       "حولي",
     ],
     "دولة قطر": ["الدوحة", "الريان", "الوكرة", "أ�� صلال", "الخور", "الشمال"],
-    "مملكة البحرين": ["ا��منامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
+    "م��لكة البحرين": ["ا��منامة", "المحرق", "الرفاع", "حمد", "عيسى", "جدحفص"],
     "سلطنة عُمان": ["مسقط", "صلالة", "نزوى", "صور", "الرست��ق", "صحار"],
     "جمهورية مصر العربية": [
       "القاهرة",
@@ -671,14 +821,14 @@ export default function MerchantSettings() {
     ],
   };
 
-  // إضافة حالات جديدة
+  // إ��افة حالات جديدة
   const [selectedCountry, setSelectedCountry] = useState<string>(
     isNewMerchant ? user?.profile?.country || "السودان" : "الس��دان",
   );
   const [customCategory, setCustomCategory] = useState<string>("");
   const [showCustomCategory, setShowCustomCategory] = useState<boolean>(false);
 
-  // إدارة المناطق من النظام الإداري
+  // إدارة ا��مناطق من النظام الإداري
   const {
     regions: availableRegions,
     isLoading: regionsLoading,
@@ -703,6 +853,15 @@ export default function MerchantSettings() {
     setStoreSettings({
       ...storeSettings,
       city: "",
+    });
+
+    // تحديث العملة حس�� الدولة المختارة
+    updateCurrencyByCountry(country);
+
+    // إظهار رسالة تأكيد للمستخدم
+    toast({
+      title: "تم تحديث العملة",
+      description: `تم تحديث عملة المتجر لتتناسب مع ${country}`,
     });
   };
 
@@ -735,7 +894,7 @@ export default function MerchantSettings() {
             جاري تحميل بيانات المتجر...
           </div>
           <p className="mt-4 text-gray-600 arabic">
-            يتم تحميل إعدادات متجرك، يرجى الانتظار...
+            يتم تحميل إعدادات ��تجرك، يرجى الانت��ار...
           </p>
         </div>
       </div>
@@ -764,7 +923,7 @@ export default function MerchantSettings() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 arabic">
-                  إعدادات المتجر
+                  إ��دادات المتجر
                 </h1>
                 <p className="text-gray-600 arabic">
                   إدارة معلومات وإعدادات متجرك
@@ -790,7 +949,7 @@ export default function MerchantSettings() {
                     وضع غير متصل
                   </span>
                   <p className="text-xs text-yellow-700 arabic mt-1">
-                    تعمل بالبيانات المحفوظة محلياً. ستتم مزامنة التغييرات عند
+                    تعمل بالبيانات المحفوظة محليا��. ستتم مزامنة التغييرات عند
                     استعادة الاتصال.
                   </p>
                 </div>
@@ -906,7 +1065,7 @@ export default function MerchantSettings() {
                           storeSettings.banner !== "/placeholder.svg" ? (
                             <img
                               src={storeSettings.banner}
-                              alt="غلاف المت��ر"
+                              alt="غلا�� المت��ر"
                               className="w-full h-full object-cover rounded-lg"
                             />
                           ) : (
@@ -942,7 +1101,7 @@ export default function MerchantSettings() {
                                 className="arabic text-red-600 hover:bg-red-50"
                                 onClick={handleRemoveBanner}
                               >
-                                حذف
+                                ��ذف
                               </Button>
                             )}
                           </div>
@@ -1029,7 +1188,7 @@ export default function MerchantSettings() {
                       <option value="">اختر نوع المتجر</option>
                       <option value="restaurant">مطعم</option>
                       <option value="company">شركة</option>
-                      <option value="store">متجر عام</option>
+                      <option value="store">متجر عا��</option>
                       <option value="service">خدمات</option>
                       <option value="pharmacy">صيدلية</option>
                       <option value="supermarket">سوبر ماركت</option>
@@ -1059,7 +1218,7 @@ export default function MerchantSettings() {
                         })
                       }
                       className="mt-1 text-right arabic"
-                      placeholder="اكتب وصفاً مختصراً عن متج��ك ��منتجاتك..."
+                      placeholder="اكتب وصفاً مختصراً عن متج��ك ��منتجات��..."
                     />
                   </div>
 
@@ -1087,7 +1246,7 @@ export default function MerchantSettings() {
                     </div>
                     <div>
                       <Label htmlFor="email" className="arabic">
-                        البريد الإلكتروني
+                        البريد الإ��كتروني
                       </Label>
                       <Input
                         id="email"
@@ -1421,7 +1580,7 @@ export default function MerchantSettings() {
                           طرق الإشعار
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          اختر كيفية تلقي الإشعارات
+                          ا��تر كيفية تلقي الإ��عارات
                         </p>
                       </div>
                     </div>
@@ -1706,7 +1865,7 @@ export default function MerchantSettings() {
                           <MapPin className="w-4 h-4 text-blue-600" />
                           <p className="text-sm text-blue-700 arabic">
                             المناطق المتاحة يديرها مدير النظام. للتواصل حول
-                            إضافة منطقة جديدة تواصل مع الدعم الفني.
+                            ��ضافة منطقة جديدة تواصل مع الدعم الفني.
                           </p>
                         </div>
                       </div>
@@ -1861,7 +2020,7 @@ export default function MerchantSettings() {
                           إعدادات التتبع والأتمتة
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تف��يل خيارات التتبع المباشر وتوزيع الطلبات التلقائي
+                          تف��يل خيارات التت��ع المباشر وتوزيع الطلبات التلقائي
                         </p>
                       </div>
                     </div>
@@ -1877,7 +2036,7 @@ export default function MerchantSettings() {
                         {
                           key: "autoAssignDrivers",
                           title: "توز��ع تلقائي للطلبات",
-                          desc: "توزيع الطلبات تلقائياً على أقرب سائق متاح",
+                          desc: "توزيع الطلبات ��لقائياً على أقرب سائق متاح",
                           icon: "🤖",
                         },
                         {

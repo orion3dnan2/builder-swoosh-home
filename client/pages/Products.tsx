@@ -19,10 +19,13 @@ import {
 } from "lucide-react";
 import { ProductService, useProducts } from "@/lib/products";
 import { useCart } from "@/lib/cart";
+import { useCurrencySafe } from "@/contexts/CurrencyContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function Products() {
+  const navigate = useNavigate();
   const { products } = useProducts();
   const {
     cart,
@@ -31,6 +34,7 @@ export default function Products() {
     updateQuantity,
     getProductQuantity,
   } = useCart();
+  const { formatPrice, currentCurrency } = useCurrencySafe();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedStore, setSelectedStore] = useState<string>("all");
@@ -95,15 +99,11 @@ export default function Products() {
 
   const priceRanges = [
     { value: "all", label: "جميع الأسعار" },
-    { value: "under-5", label: "أقل من 5 د.ك" },
-    { value: "5-15", label: "5 - 15 د.ك" },
-    { value: "15-30", label: "15 - 30 د.ك" },
-    { value: "over-30", label: "أكثر من 30 د.ك" },
+    { value: "under-5", label: `أقل من 5 ${currentCurrency.symbol}` },
+    { value: "5-15", label: `5 - 15 ${currentCurrency.symbol}` },
+    { value: "15-30", label: `15 - 30 ${currentCurrency.symbol}` },
+    { value: "over-30", label: `أكثر من 30 ${currentCurrency.symbol}` },
   ];
-
-  const formatPrice = (price: number) => {
-    return `${price.toFixed(3)} د.ك`;
-  };
 
   const handleAddToCart = (product: any) => {
     try {
@@ -139,6 +139,10 @@ export default function Products() {
       console.error("Failed to increase quantity:", error);
       toast.error("فشل في تحديث الكمية");
     }
+  };
+
+  const handleProductDetails = (productId: string) => {
+    navigate(`/product/${productId}`);
   };
 
   return (
@@ -405,7 +409,15 @@ export default function Products() {
                           أضف للسلة
                         </Button>
                       )}
-                      <Button variant="outline" size="sm" className="arabic">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="arabic"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleProductDetails(product.id);
+                        }}
+                      >
                         تفاصيل
                       </Button>
                     </div>
@@ -522,6 +534,10 @@ export default function Products() {
                             variant="outline"
                             size="sm"
                             className="arabic"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleProductDetails(product.id);
+                            }}
                           >
                             تفاصيل
                           </Button>
@@ -576,7 +592,7 @@ export default function Products() {
               لا توجد منتجات مط��بقة للبحث
             </h2>
             <p className="text-gray-500 mb-8 arabic max-w-md mx-auto">
-              جرب تغيير كلمات البحث أو الفئات المختارة
+              جرب تغيير كلما�� البحث أو الفئات المختارة
             </p>
             <Button
               variant="outline"
