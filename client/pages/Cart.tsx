@@ -73,7 +73,13 @@ export default function Cart() {
       sessionStorage.setItem("orderData", JSON.stringify(orderData));
     }
 
+    // Navigate to checkout
     navigate("/checkout");
+
+    // Reset loading state after a short delay
+    setTimeout(() => {
+      setIsCheckingOut(false);
+    }, 1000);
   };
 
   const handleApplyPromoCode = () => {
@@ -150,7 +156,7 @@ export default function Cart() {
             <Link to="/products">
               <Button className="arabic">
                 <Package className="w-4 h-4 ml-2" />
-                تصفح الم��تجات
+                تصفح المنتجات
               </Button>
             </Link>
           </div>
