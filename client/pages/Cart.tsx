@@ -358,7 +358,7 @@ export default function Cart() {
                     <div className="flex gap-2">
                       <input
                         type="text"
-                        placeholder="كود الخصم (مثال: WELCOME10)"
+                        placeholder="كود الخص�� (مثال: WELCOME10)"
                         value={promoCode}
                         onChange={(e) => {
                           setPromoCode(e.target.value);
@@ -465,7 +465,7 @@ export default function Cart() {
                       <p className="font-medium text-sm arabic">
                         منتج سوداني أصيل
                       </p>
-                      <p className="text-sm text-gray-600 arabic">25.99 ريال</p>
+                      <p className="text-sm text-gray-600 arabic">8.000 د.ك</p>
                     </div>
                     <Button size="sm" variant="outline" className="arabic">
                       إضافة
