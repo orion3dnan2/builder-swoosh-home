@@ -224,7 +224,7 @@ export default function Login() {
               <div className="space-y-3">
                 <div className="bg-white p-3 rounded-lg border">
                   <h4 className="font-bold text-primary-700 arabic mb-1">
-                    مدير التطبيق (Super Admin)
+                    👑 مدير التطبيق (Super Admin)
                   </h4>
                   <div className="text-sm space-y-1">
                     <div>
