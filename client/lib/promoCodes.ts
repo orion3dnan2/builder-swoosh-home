@@ -21,18 +21,18 @@ export class PromoCodeService {
       description: "خصم 10% للعملاء الجدد",
       discountType: "percentage",
       discountValue: 10,
-      minOrderAmount: 50,
-      maxDiscount: 20,
+      minOrderAmount: 15,
+      maxDiscount: 5,
       isActive: true,
       usedCount: 0,
     },
     {
       code: "SUDAN20",
       description: "خصم 20% على المنتجات السودانية",
-      discountType: "percentage", 
+      discountType: "percentage",
       discountValue: 20,
-      minOrderAmount: 100,
-      maxDiscount: 50,
+      minOrderAmount: 30,
+      maxDiscount: 15,
       isActive: true,
       usedCount: 0,
     },
@@ -41,7 +41,7 @@ export class PromoCodeService {
       description: "خصم 15% خاص برمضان",
       discountType: "percentage",
       discountValue: 15,
-      minOrderAmount: 30,
+      minOrderAmount: 10,
       isActive: true,
       usedCount: 0,
     },
@@ -49,17 +49,17 @@ export class PromoCodeService {
       code: "FREESHIP",
       description: "شحن مجاني",
       discountType: "fixed",
-      discountValue: 10, // قيمة الشحن
-      minOrderAmount: 25,
+      discountValue: 2, // قيمة الشحن بالدينار الكويتي
+      minOrderAmount: 8,
       isActive: true,
       usedCount: 0,
     },
     {
-      code: "3030",
-      description: "خصم خاص 30 ريال",
+      code: "KWD10",
+      description: "خصم خاص 10 دنانير",
       discountType: "fixed",
-      discountValue: 30,
-      minOrderAmount: 100,
+      discountValue: 10,
+      minOrderAmount: 30,
       isActive: true,
       usedCount: 0,
     },
@@ -113,7 +113,7 @@ export class PromoCodeService {
       if (promoCode.minOrderAmount && orderAmount < promoCode.minOrderAmount) {
         return {
           isValid: false,
-          message: `الحد الأدنى للطلب ${promoCode.minOrderAmount} ريال`
+          message: `الحد الأدنى للطلب ${promoCode.minOrderAmount} د.ك`
         };
       }
 

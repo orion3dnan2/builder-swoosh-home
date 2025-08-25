@@ -29,7 +29,7 @@ export default function Cart() {
   const [promoCodeError, setPromoCodeError] = useState("");
 
   const formatPrice = (price: number) => {
-    return `${price.toFixed(2)} ريال`;
+    return `${price.toFixed(3)} د.ك`;
   };
 
   const handleUpdateQuantity = (productId: string, newQuantity: number) => {
@@ -104,7 +104,7 @@ export default function Cart() {
     }, 0);
   };
 
-  const baseShippingCost = cart.totalItems > 0 ? 10 : 0;
+  const baseShippingCost = cart.totalItems > 0 ? 2 : 0; // 2 KD shipping cost
 
   // Calculate discount if promo code is applied
   const discountData = appliedPromoCode
@@ -116,8 +116,7 @@ export default function Cart() {
   const finalShippingCost = Math.max(0, baseShippingCost - shippingDiscount);
 
   const subtotalAfterDiscount = calculateSubtotal() - discountAmount;
-  const tax = subtotalAfterDiscount * 0.15; // 15% VAT on discounted amount
-  const finalTotal = subtotalAfterDiscount + finalShippingCost + tax;
+  const finalTotal = subtotalAfterDiscount + finalShippingCost;
 
   if (cart.totalItems === 0) {
     return (
@@ -335,13 +334,6 @@ export default function Cart() {
                     </div>
                   </div>
 
-                  <div className="flex justify-between">
-                    <span className="text-gray-600 arabic">ضريبة القيمة المضافة</span>
-                    <span className="font-medium arabic">
-                      {formatPrice(tax)}
-                    </span>
-                  </div>
-
                   <hr className="border-gray-200" />
                   <div className="flex justify-between text-lg font-bold">
                     <span className="arabic">المجموع الكلي</span>
@@ -395,7 +387,7 @@ export default function Cart() {
                       <p className="text-red-600 text-sm mt-1 arabic">{promoCodeError}</p>
                     )}
                     <div className="mt-2 text-xs text-gray-500 arabic">
-                      <p>أكواد متاحة للتجربة: WELCOME10, SUDAN20, FREESHIP, 3030</p>
+                      <p>أكواد متاحة للتجربة: WELCOME10, SUDAN20, FREESHIP, KWD10</p>
                     </div>
                   </div>
                 )}

@@ -52,7 +52,7 @@ export default function PaymentGateway() {
   }, [navigate]);
 
   const formatPrice = (price: number) => {
-    return `${price.toFixed(2)} ريال`;
+    return `${price.toFixed(3)} د.ك`;
   };
 
   const getPaymentMethodInfo = (method: string) => {
@@ -101,7 +101,7 @@ export default function PaymentGateway() {
       if (!paymentForm.expiryDate) {
         newErrors.expiryDate = "تاريخ الانتهاء مطلوب";
       } else if (!/^\d{2}\/\d{2}$/.test(paymentForm.expiryDate)) {
-        newErrors.expiryDate = "تاريخ الانتهاء غير صحيح";
+        newErrors.expiryDate = "تاريخ ا��انتهاء غير صحيح";
       }
     }
 
@@ -115,7 +115,7 @@ export default function PaymentGateway() {
 
     if (methodInfo.fields.includes('cardName')) {
       if (!paymentForm.cardName.trim()) {
-        newErrors.cardName = "اسم حامل البطا��ة مطلوب";
+        newErrors.cardName = "اسم حامل البطاقة مطلوب";
       }
     }
 
@@ -223,7 +223,7 @@ export default function PaymentGateway() {
                   تم الدفع بنجاح!
                 </h1>
                 <p className="text-green-700 arabic text-lg">
-                  تم استلام طلبك وسيتم تجهيزه خلال 24 ساعة
+                  تم استلام طلبك وسيتم تجهيزه خلال 24 ساع��
                 </p>
                 <div className="bg-white p-4 rounded-lg border border-green-200">
                   <p className="text-sm text-gray-600 arabic mb-2">

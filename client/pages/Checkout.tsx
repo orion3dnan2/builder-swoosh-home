@@ -57,7 +57,7 @@ export default function Checkout() {
   }, [navigate]);
 
   const formatPrice = (price: number) => {
-    return `${price.toFixed(2)} ريال`;
+    return `${price.toFixed(3)} د.ك`;
   };
 
   const paymentMethods = [
@@ -289,7 +289,7 @@ export default function Checkout() {
               <CardContent className="p-6">
                 <h3 className="text-xl font-bold arabic mb-4 flex items-center gap-2">
                   <CreditCard className="w-5 h-5" />
-                  طريقة الدفع
+                  ط��يقة الدفع
                 </h3>
                 <div className="space-y-3">
                   {paymentMethods.map((method) => (
