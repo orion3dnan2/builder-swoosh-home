@@ -185,7 +185,7 @@ const translations = {
     "stores.confirm_approve": "هل أنت متأكد من اعتماد هذ�� المتجر؟",
     "stores.confirm_suspend": "هل أنت متأكد من تعليق هذا المتجر؟",
     "stores.confirm_reactivate": "هل أنت متأكد من إعادة تفعيل هذا المتجر؟",
-    "stores.action_approve": "اعتم��د",
+    "stores.action_approve": "اعتماد",
     "stores.action_suspend": "تعليق",
     "stores.action_reactivate": "إعادة تفعيل",
     "stores.success_approve": "تم اعتماد المتجر بنجاح! ✅",
@@ -461,22 +461,26 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       }
     }, [language]);
 
-  // Apply font family
-  useEffect(() => {
-    const root = document.documentElement;
+    // Apply font family
+    useEffect(() => {
+      try {
+        const root = document.documentElement;
 
-    // Remove previous font classes
-    root.classList.remove(
-      "font-cairo",
-      "font-tajawal",
-      "font-noto-kufi",
-      "font-amiri",
-    );
-    root.classList.add(`font-${fontFamily}`);
+        // Remove previous font classes
+        root.classList.remove(
+          "font-cairo",
+          "font-tajawal",
+          "font-noto-kufi",
+          "font-amiri",
+        );
+        root.classList.add(`font-${fontFamily}`);
 
-    // Store in localStorage
-    localStorage.setItem(STORAGE_KEYS.FONT_FAMILY, fontFamily);
-  }, [fontFamily]);
+        // Store in localStorage
+        localStorage.setItem(STORAGE_KEYS.FONT_FAMILY, fontFamily);
+      } catch (error) {
+        console.error('Error applying font family:', error);
+      }
+    }, [fontFamily]);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
