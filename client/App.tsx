@@ -43,6 +43,7 @@ import PWAInfo from "./pages/PWAInfo";
 import { SuperAdminRoute, MerchantRoute } from "./components/ProtectedRoute";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
+import { CurrencyProvider } from "./contexts/CurrencyContext";
 import { TextCleaner } from "./components/SafeText";
 import { SafeToaster as Toaster } from "./components/ui/safe-toaster";
 import { PWAManager } from "./components/PWAManager";
