@@ -262,7 +262,7 @@ export default function MerchantSettings() {
       : "متجر الخير السوداني",
     description: isNewMerchant
       ? ""
-      : "متجر متخصص في بيع المنتجات السودانية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
+      : "متجر متخصص في بيع المنتجات السود��نية الأصيلة والطبيعية من عطور وأطعمة وحرف يدوية",
     category: isNewMerchant ? "" : "مواد غذائية وعطور",
     storeType: isNewMerchant ? "" : "restaurant",
     phone: isNewMerchant ? user?.profile?.phone || "" : "+249123456789",
@@ -334,7 +334,7 @@ export default function MerchantSettings() {
             rating: 4.9,
             isActive: true,
             vehicle: "دراجة نارية",
-            speciality: ["طلبات صغيرة", "مستندات"],
+            speciality: ["طلبات صغيرة", "مستن��ات"],
           },
           {
             id: "driver3",
@@ -510,21 +510,32 @@ export default function MerchantSettings() {
     try {
       // إرسال البيانات إلى الخادم
       const storeData = {
-        name: storeSettings.storeName,
-        description: storeSettings.description,
-        category: storeSettings.category,
-        storeType: storeSettings.storeType,
-        phone: storeSettings.phone,
-        email: storeSettings.email,
-        address: storeSettings.address,
-        city: storeSettings.city,
-        country: selectedCountry,
+        name: storeSettings.storeName.trim(),
+        description: storeSettings.description.trim(),
+        category: storeSettings.category.trim(),
+        storeType: storeSettings.storeType.trim(),
+        phone: storeSettings.phone.trim(),
+        email: storeSettings.email.trim(),
+        address: storeSettings.address.trim(),
+        city: storeSettings.city.trim(),
+        country: selectedCountry.trim(),
         workingHours: storeSettings.workingHours,
         logo: storeSettings.logo,
         banner: storeSettings.banner,
         notificationSettings: notifications,
         shippingSettings: shipping,
       };
+
+      // التحقق من البيانات قبل الإرسال
+      console.log("Store data being sent:", storeData);
+
+      // التأكد من أن جميع ال��قول المطلوبة موجودة
+      const requiredFields = ['name', 'category', 'phone', 'email', 'city'];
+      const missingFields = requiredFields.filter(field => !storeData[field]);
+
+      if (missingFields.length > 0) {
+        throw new Error(`الحقول التالية مطلوبة: ${missingFields.join(', ')}`);
+      }
 
       // البحث عن متجر موجود للمستخدم أولاً
       try {
@@ -631,7 +642,7 @@ export default function MerchantSettings() {
       "الأحساء",
       "تبوك",
       "أبها",
-      "جازان",
+      "جا��ان",
       "نجران",
     ],
     "الإمارات العربية المتحدة": [
@@ -707,7 +718,7 @@ export default function MerchantSettings() {
       city: "",
     });
 
-    // تحديث العملة حسب الدولة المختارة
+    // تحديث العملة حس�� الدولة المختارة
     updateCurrencyByCountry(country);
 
     // إظهار رسالة تأكيد للمستخدم
@@ -775,7 +786,7 @@ export default function MerchantSettings() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900 arabic">
-                  إعدادات المتجر
+                  إ��دادات المتجر
                 </h1>
                 <p className="text-gray-600 arabic">
                   إدارة معلومات وإعدادات متجرك
@@ -917,7 +928,7 @@ export default function MerchantSettings() {
                           storeSettings.banner !== "/placeholder.svg" ? (
                             <img
                               src={storeSettings.banner}
-                              alt="غلاف المت��ر"
+                              alt="غلا�� المت��ر"
                               className="w-full h-full object-cover rounded-lg"
                             />
                           ) : (
@@ -1872,7 +1883,7 @@ export default function MerchantSettings() {
                           إعدادات التتبع والأتمتة
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تف��يل خيارات التتبع المباشر وتوزيع الطلبات التلقائي
+                          تف��يل خيارات التت��ع المباشر وتوزيع الطلبات التلقائي
                         </p>
                       </div>
                     </div>
