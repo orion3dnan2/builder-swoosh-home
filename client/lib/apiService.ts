@@ -11,7 +11,7 @@ export class ApiService {
     this.platform = platform;
   }
 
-  // تفعيل/إلغاء استخدام الإعدادات الخارجية
+  // تفعيل/إلغاء استخدام الإعدادات الخار��ية
   static setUseExternalConfig(useExternal: boolean) {
     this.useExternalConfig = useExternal;
   }
@@ -173,19 +173,37 @@ export class ApiService {
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
+        let errorData: any = {};
+        let errorText = '';
+
+        try {
+          // Try to get response as text first
+          errorText = await response.text();
+          console.log("Raw error response:", errorText);
+
+          // Try to parse as JSON
+          if (errorText) {
+            errorData = JSON.parse(errorText);
+          }
+        } catch (parseError) {
+          console.error("Failed to parse error response:", parseError);
+          errorData = { error: errorText || `HTTP ${response.status}` };
+        }
+
         console.error("API Request failed:", {
           status: response.status,
           statusText: response.statusText,
           url,
+          rawResponse: errorText,
           errorData,
-          requestConfig: config
+          parseSuccess: !!errorData.error
         });
 
-        const error = new Error(errorData.error || `HTTP ${response.status}`);
+        const error = new Error(errorData.error || errorText || `HTTP ${response.status}`);
         (error as any).status = response.status;
         (error as any).statusText = response.statusText;
         (error as any).errorData = errorData;
+        (error as any).rawResponse = errorText;
         throw error;
       }
 
