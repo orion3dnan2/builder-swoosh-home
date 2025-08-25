@@ -52,11 +52,21 @@ export function PWAManager({ children }: PWAManagerProps) {
           "periodicSync" in window.ServiceWorkerRegistration.prototype
         ) {
           console.log("✅ PWA Manager: Periodic sync supported");
-          // Request periodic background sync
-          const registration = await navigator.serviceWorker.ready;
-          await (registration as any).periodicSync.register("content-sync", {
-            minInterval: 24 * 60 * 60 * 1000, // 24 hours
-          });
+          try {
+            // Request periodic background sync with proper error handling
+            const registration = await navigator.serviceWorker.ready;
+
+            // Check if registration exists and has periodicSync
+            if (registration && (registration as any).periodicSync) {
+              await (registration as any).periodicSync.register("sync", {
+                minInterval: 24 * 60 * 60 * 1000, // 24 hours
+              });
+              console.log("✅ PWA Manager: Periodic sync registered successfully");
+            }
+          } catch (error) {
+            console.log("⚠️ PWA Manager: Periodic sync registration failed:", error);
+            // Fail silently - periodic sync is not critical for app functionality
+          }
         }
 
         // Handle app updates
