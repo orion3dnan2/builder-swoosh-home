@@ -42,7 +42,7 @@ const translations = {
     "common.back": "العودة",
     "common.close": "إغلاق",
     "common.cancel": "إلغاء",
-    "common.confirm": "تأكيد",
+    "common.confirm": "تأك��د",
     "common.save": "حفظ",
     "common.edit": "تعديل",
     "common.delete": "حذف",
@@ -69,7 +69,7 @@ const translations = {
       "مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج والعالم",
     "home.services.marketplace": "السوق التجاري",
     "home.services.marketplace_desc":
-      "اكتشف منتجات سودانية أصيلة من تجار موثوقين",
+      "اكتشف منتجات ��ودانية أصيلة من تجار موثوقين",
     "home.services.companies": "دليل الشركات",
     "home.services.companies_desc":
       "تواصل مع الشركات والمؤسسات السودانية في الخليج",
@@ -86,7 +86,7 @@ const translations = {
     "home.cta.title": "ابدأ رحلتك معنا اليوم",
     "home.cta.subtitle":
       "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم",
-    "home.cta.create_account": "إنشاء حساب مجاني",
+    "home.cta.create_account": "إنشاء ح��اب مجاني",
     "home.stats.users": "مستخدم نشط",
     "home.stats.companies": "شركة مسجلة",
     "home.stats.products": "منتج متوفر",
@@ -395,9 +395,16 @@ const STORAGE_KEYS = {
 };
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>("light");
-  const [language, setLanguage] = useState<Language>("ar");
-  const [fontFamily, setFontFamilyState] = useState<FontFamily>("cairo");
+  // Check for browser environment
+  if (typeof window === 'undefined') {
+    return <>{children}</>;
+  }
+
+  // Wrap in try-catch to prevent crashes
+  try {
+    const [theme, setTheme] = useState<Theme>("light");
+    const [language, setLanguage] = useState<Language>("ar");
+    const [fontFamily, setFontFamilyState] = useState<FontFamily>("cairo");
 
   // Load preferences from localStorage on mount
   useEffect(() => {
@@ -496,11 +503,16 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     isRTL,
   };
 
-  return (
-    <ThemeContext.Provider value={contextValue}>
-      {children}
-    </ThemeContext.Provider>
-  );
+    return (
+      <ThemeContext.Provider value={contextValue}>
+        {children}
+      </ThemeContext.Provider>
+    );
+  } catch (error) {
+    console.error('❌ ThemeProvider: Critical error:', error);
+    // Fallback: return children without theme functionality
+    return <>{children}</>;
+  }
 }
 
 export function useTheme() {
