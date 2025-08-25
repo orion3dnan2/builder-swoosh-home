@@ -32,6 +32,19 @@ router.post("/login", async (req, res) => {
     const { username, password, platform = "web" } = req.body;
 
     console.log(`🔐 محاولة تسجيل دخول: ${username}`);
+    console.log(`🔑 كلمة المرور المدخلة: "${password}" (length: ${password.length})`);
+
+    // تحويل الأحرف العربية إلى إنجليزية إذا لزم الأمر
+    const arabicToEnglishMap: { [key: string]: string } = {
+      'ع': 'u', 'س': 's', 'ث': 'e', 'ق': 'r', '١': '1', '٢': '2', '٣': '3'
+    };
+
+    let normalizedPassword = password;
+    for (const [arabic, english] of Object.entries(arabicToEnglishMap)) {
+      normalizedPassword = normalizedPassword.replace(new RegExp(arabic, 'g'), english);
+    }
+
+    console.log(`🔄 كلمة المرور بعد التحويل: "${normalizedPassword}"`);
 
     // البحث عن المستخدم في قاعدة البيانات
     const user = UserDatabase.findUser(
@@ -45,17 +58,13 @@ router.post("/login", async (req, res) => {
         .json({ error: "اسم المستخدم أو كلمة المرور غير صحيحة" });
     }
 
-    console.log(
-      `✅ المستخدم موجود: ${user.username}, كلمة المرور المحفوظة: ${user.password}`,
-    );
-    console.log(`🔑 كلمة المرور المدخلة: ${password}`);
-    console.log(`🔍 البحث في قاعدة البيانات...`);
+    console.log(`✅ المستخدم موجود: ${user.username}, كلمة المرور المحفوظة: ${user.password}`);
 
     // التحقق من حالة المستخدم
     if (!user.isActive) {
       return res
         .status(401)
-        .json({ error: "تم إيقاف الحساب، تواصل مع الإدارة" });
+        .json({ error: "تم إيقاف الحساب، تواصل مع ا��إدارة" });
     }
 
     // التحقق من كلمة المرور
