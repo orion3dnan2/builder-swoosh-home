@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -19,11 +19,30 @@ interface PWAState {
 }
 
 export function usePWA() {
+  // Add safety check for React context
+  if (typeof React === 'undefined' || React.useState === undefined) {
+    console.error('usePWA: React hooks are not available');
+    return {
+      isInstallable: false,
+      isInstalled: false,
+      isStandalone: false,
+      isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
+      hasUpdate: false,
+      installPrompt: null,
+      installApp: async () => {},
+      dismissInstallPrompt: () => {},
+      reloadForUpdate: () => {},
+      shareApp: async () => false,
+      requestNotificationPermission: async () => false,
+      showNotification: () => null,
+    };
+  }
+
   const [pwaState, setPWAState] = useState<PWAState>({
     isInstallable: false,
     isInstalled: false,
     isStandalone: false,
-    isOnline: navigator.onLine,
+    isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
     hasUpdate: false,
     installPrompt: null,
   });
