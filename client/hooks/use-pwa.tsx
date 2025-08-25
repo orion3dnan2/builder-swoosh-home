@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
   readonly userChoice: Promise<{
-    outcome: 'accepted' | 'dismissed';
+    outcome: "accepted" | "dismissed";
     platform: string;
   }>;
   prompt(): Promise<void>;
@@ -30,15 +30,16 @@ export function usePWA() {
 
   useEffect(() => {
     // Check if running as PWA
-    const isStandalone = 
-      window.matchMedia('(display-mode: standalone)').matches ||
+    const isStandalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
       (window.navigator as any).standalone ||
-      document.referrer.includes('android-app://');
+      document.referrer.includes("android-app://");
 
     // Check if already installed
-    const isInstalled = localStorage.getItem('pwa-installed') === 'true' || isStandalone;
+    const isInstalled =
+      localStorage.getItem("pwa-installed") === "true" || isStandalone;
 
-    setPWAState(prev => ({
+    setPWAState((prev) => ({
       ...prev,
       isStandalone,
       isInstalled,
@@ -47,7 +48,7 @@ export function usePWA() {
     // Listen for install prompt
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
-      setPWAState(prev => ({
+      setPWAState((prev) => ({
         ...prev,
         isInstallable: true,
         installPrompt: e,
@@ -56,34 +57,37 @@ export function usePWA() {
 
     // Listen for app installed
     const handleAppInstalled = () => {
-      setPWAState(prev => ({
+      setPWAState((prev) => ({
         ...prev,
         isInstalled: true,
         isInstallable: false,
         installPrompt: null,
       }));
-      localStorage.setItem('pwa-installed', 'true');
+      localStorage.setItem("pwa-installed", "true");
     };
 
     // Listen for online/offline
     const handleOnline = () => {
-      setPWAState(prev => ({ ...prev, isOnline: true }));
+      setPWAState((prev) => ({ ...prev, isOnline: true }));
     };
 
     const handleOffline = () => {
-      setPWAState(prev => ({ ...prev, isOnline: false }));
+      setPWAState((prev) => ({ ...prev, isOnline: false }));
     };
 
     // Register event listeners
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
-    window.addEventListener('appinstalled', handleAppInstalled);
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener(
+      "beforeinstallprompt",
+      handleBeforeInstallPrompt as EventListener,
+    );
+    window.addEventListener("appinstalled", handleAppInstalled);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     // Check for service worker updates
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        setPWAState(prev => ({ ...prev, hasUpdate: true }));
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        setPWAState((prev) => ({ ...prev, hasUpdate: true }));
       });
 
       // Check for updates periodically
@@ -94,7 +98,7 @@ export function usePWA() {
             registration.update();
           }
         } catch (error) {
-          console.error('Error checking for updates:', error);
+          console.error("Error checking for updates:", error);
         }
       };
 
@@ -102,19 +106,25 @@ export function usePWA() {
       const updateInterval = setInterval(checkForUpdates, 30 * 60 * 1000);
 
       return () => {
-        window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
-        window.removeEventListener('appinstalled', handleAppInstalled);
-        window.removeEventListener('online', handleOnline);
-        window.removeEventListener('offline', handleOffline);
+        window.removeEventListener(
+          "beforeinstallprompt",
+          handleBeforeInstallPrompt as EventListener,
+        );
+        window.removeEventListener("appinstalled", handleAppInstalled);
+        window.removeEventListener("online", handleOnline);
+        window.removeEventListener("offline", handleOffline);
         clearInterval(updateInterval);
       };
     }
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt as EventListener);
-      window.removeEventListener('appinstalled', handleAppInstalled);
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt as EventListener,
+      );
+      window.removeEventListener("appinstalled", handleAppInstalled);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 
@@ -123,30 +133,30 @@ export function usePWA() {
       try {
         await pwaState.installPrompt.prompt();
         const choiceResult = await pwaState.installPrompt.userChoice;
-        
-        if (choiceResult.outcome === 'accepted') {
-          console.log('✅ User accepted the install prompt');
-          setPWAState(prev => ({
+
+        if (choiceResult.outcome === "accepted") {
+          console.log("✅ User accepted the install prompt");
+          setPWAState((prev) => ({
             ...prev,
             isInstallable: false,
             installPrompt: null,
           }));
         } else {
-          console.log('❌ User dismissed the install prompt');
+          console.log("❌ User dismissed the install prompt");
         }
       } catch (error) {
-        console.error('Error installing app:', error);
+        console.error("Error installing app:", error);
       }
     }
   };
 
   const dismissInstallPrompt = () => {
-    setPWAState(prev => ({
+    setPWAState((prev) => ({
       ...prev,
       isInstallable: false,
       installPrompt: null,
     }));
-    localStorage.setItem('pwa-install-dismissed', 'true');
+    localStorage.setItem("pwa-install-dismissed", "true");
   };
 
   const reloadForUpdate = () => {
@@ -155,8 +165,8 @@ export function usePWA() {
 
   const shareApp = async (shareData?: ShareData) => {
     const defaultShareData = {
-      title: 'البيت السوداني',
-      text: 'منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم',
+      title: "البيت السوداني",
+      text: "منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم",
       url: window.location.origin,
     };
 
@@ -168,31 +178,33 @@ export function usePWA() {
         return true;
       } else {
         // Fallback to clipboard
-        await navigator.clipboard.writeText(dataToShare.url || window.location.href);
+        await navigator.clipboard.writeText(
+          dataToShare.url || window.location.href,
+        );
         return false; // Indicates fallback was used
       }
     } catch (error) {
-      console.error('Error sharing:', error);
+      console.error("Error sharing:", error);
       throw error;
     }
   };
 
   const requestNotificationPermission = async () => {
-    if ('Notification' in window) {
+    if ("Notification" in window) {
       const permission = await Notification.requestPermission();
-      return permission === 'granted';
+      return permission === "granted";
     }
     return false;
   };
 
   const showNotification = (title: string, options?: NotificationOptions) => {
-    if ('Notification' in window && Notification.permission === 'granted') {
+    if ("Notification" in window && Notification.permission === "granted") {
       const defaultOptions: NotificationOptions = {
-        body: 'إشعار من البيت السوداني',
-        icon: '/icons/icon-192x192.png',
-        badge: '/icons/badge-72x72.png',
-        dir: 'rtl',
-        lang: 'ar',
+        body: "إشعار من البيت السوداني",
+        icon: "/icons/icon-192x192.png",
+        badge: "/icons/badge-72x72.png",
+        dir: "rtl",
+        lang: "ar",
         vibrate: [100, 50, 100],
         ...options,
       };

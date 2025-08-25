@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { usePWA } from '../hooks/use-pwa';
+import React, { useEffect, useState } from "react";
+import { usePWA } from "../hooks/use-pwa";
 
 interface PWAManagerProps {
   children: React.ReactNode;
@@ -14,17 +14,20 @@ export function PWAManager({ children }: PWAManagerProps) {
     const initializePWA = async () => {
       try {
         // Register service worker if not already registered
-        if ('serviceWorker' in navigator) {
-          const registration = await navigator.serviceWorker.register('/sw.js');
-          console.log('✅ PWA Manager: Service Worker registered');
+        if ("serviceWorker" in navigator) {
+          const registration = await navigator.serviceWorker.register("/sw.js");
+          console.log("✅ PWA Manager: Service Worker registered");
 
           // Listen for updates
-          registration.addEventListener('updatefound', () => {
+          registration.addEventListener("updatefound", () => {
             const newWorker = registration.installing;
             if (newWorker) {
-              newWorker.addEventListener('statechange', () => {
-                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                  console.log('🔄 PWA Manager: New content available');
+              newWorker.addEventListener("statechange", () => {
+                if (
+                  newWorker.state === "installed" &&
+                  navigator.serviceWorker.controller
+                ) {
+                  console.log("🔄 PWA Manager: New content available");
                   // The PWAUpdateBanner component will handle showing update notification
                 }
               });
@@ -36,38 +39,44 @@ export function PWAManager({ children }: PWAManagerProps) {
         }
 
         // Set up background sync if supported
-        if ('serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype) {
-          console.log('✅ PWA Manager: Background sync supported');
+        if (
+          "serviceWorker" in navigator &&
+          "sync" in window.ServiceWorkerRegistration.prototype
+        ) {
+          console.log("✅ PWA Manager: Background sync supported");
         }
 
         // Set up periodic sync if supported
-        if ('serviceWorker' in navigator && 'periodicSync' in window.ServiceWorkerRegistration.prototype) {
-          console.log('✅ PWA Manager: Periodic sync supported');
+        if (
+          "serviceWorker" in navigator &&
+          "periodicSync" in window.ServiceWorkerRegistration.prototype
+        ) {
+          console.log("✅ PWA Manager: Periodic sync supported");
           // Request periodic background sync
           const registration = await navigator.serviceWorker.ready;
-          await (registration as any).periodicSync.register('content-sync', {
+          await (registration as any).periodicSync.register("content-sync", {
             minInterval: 24 * 60 * 60 * 1000, // 24 hours
           });
         }
 
         // Handle app updates
-        window.addEventListener('appinstalled', () => {
-          console.log('🎉 PWA Manager: App installed successfully');
+        window.addEventListener("appinstalled", () => {
+          console.log("🎉 PWA Manager: App installed successfully");
           // Track installation analytics
-          if (typeof gtag !== 'undefined') {
-            gtag('event', 'pwa_installed', {
-              event_category: 'PWA',
-              event_label: 'App Installed'
+          if (typeof gtag !== "undefined") {
+            gtag("event", "pwa_installed", {
+              event_category: "PWA",
+              event_label: "App Installed",
             });
           }
         });
 
         // Handle visibility changes for better performance
-        document.addEventListener('visibilitychange', () => {
-          if (document.visibilityState === 'visible') {
+        document.addEventListener("visibilitychange", () => {
+          if (document.visibilityState === "visible") {
             // App became visible, check for updates
-            if ('serviceWorker' in navigator) {
-              navigator.serviceWorker.getRegistration().then(registration => {
+            if ("serviceWorker" in navigator) {
+              navigator.serviceWorker.getRegistration().then((registration) => {
                 if (registration) {
                   registration.update();
                 }
@@ -78,7 +87,7 @@ export function PWAManager({ children }: PWAManagerProps) {
 
         setIsReady(true);
       } catch (error) {
-        console.error('❌ PWA Manager: Initialization failed:', error);
+        console.error("❌ PWA Manager: Initialization failed:", error);
         setIsReady(true); // Still allow app to work
       }
     };
@@ -89,15 +98,15 @@ export function PWAManager({ children }: PWAManagerProps) {
   useEffect(() => {
     // Add PWA-specific classes to body
     if (isInstalled) {
-      document.body.classList.add('pwa-installed');
+      document.body.classList.add("pwa-installed");
     }
 
     if (isStandalone) {
-      document.body.classList.add('pwa-standalone');
+      document.body.classList.add("pwa-standalone");
     }
 
     return () => {
-      document.body.classList.remove('pwa-installed', 'pwa-standalone');
+      document.body.classList.remove("pwa-installed", "pwa-standalone");
     };
   }, [isInstalled, isStandalone]);
 
@@ -106,13 +115,25 @@ export function PWAManager({ children }: PWAManagerProps) {
     const handlePWAStyles = () => {
       // Add custom CSS variables for PWA
       const root = document.documentElement;
-      
+
       if (isStandalone) {
         // Adjust layout for standalone mode
-        root.style.setProperty('--pwa-safe-area-top', 'env(safe-area-inset-top)');
-        root.style.setProperty('--pwa-safe-area-bottom', 'env(safe-area-inset-bottom)');
-        root.style.setProperty('--pwa-safe-area-left', 'env(safe-area-inset-left)');
-        root.style.setProperty('--pwa-safe-area-right', 'env(safe-area-inset-right)');
+        root.style.setProperty(
+          "--pwa-safe-area-top",
+          "env(safe-area-inset-top)",
+        );
+        root.style.setProperty(
+          "--pwa-safe-area-bottom",
+          "env(safe-area-inset-bottom)",
+        );
+        root.style.setProperty(
+          "--pwa-safe-area-left",
+          "env(safe-area-inset-left)",
+        );
+        root.style.setProperty(
+          "--pwa-safe-area-right",
+          "env(safe-area-inset-right)",
+        );
       }
     };
 
@@ -130,9 +151,7 @@ export function PWAManager({ children }: PWAManagerProps) {
           <h2 className="text-xl font-bold text-foreground mb-2 arabic">
             البيت السوداني
           </h2>
-          <p className="text-muted-foreground arabic">
-            جاري تحميل التطبيق...
-          </p>
+          <p className="text-muted-foreground arabic">جاري تحميل التطبيق...</p>
         </div>
       </div>
     );
@@ -163,20 +182,29 @@ export function usePWAFeatures() {
       setIsUpdateAvailable(true);
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    window.addEventListener('appinstalled', handleAppInstalled);
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    window.addEventListener("appinstalled", handleAppInstalled);
 
     // Listen for service worker updates
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('controllerchange', handleServiceWorkerUpdate);
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener(
+        "controllerchange",
+        handleServiceWorkerUpdate,
+      );
     }
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.removeEventListener('appinstalled', handleAppInstalled);
-      
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.removeEventListener('controllerchange', handleServiceWorkerUpdate);
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt,
+      );
+      window.removeEventListener("appinstalled", handleAppInstalled);
+
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.removeEventListener(
+          "controllerchange",
+          handleServiceWorkerUpdate,
+        );
       }
     };
   }, []);
@@ -186,13 +214,13 @@ export function usePWAFeatures() {
       try {
         await deferredPrompt.prompt();
         const choiceResult = await deferredPrompt.userChoice;
-        
-        if (choiceResult.outcome === 'accepted') {
-          console.log('✅ User accepted install prompt');
+
+        if (choiceResult.outcome === "accepted") {
+          console.log("✅ User accepted install prompt");
           setDeferredPrompt(null);
         }
       } catch (error) {
-        console.error('Error installing app:', error);
+        console.error("Error installing app:", error);
       }
     }
   };

@@ -5,7 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <!-- Enhanced viewport for iPhone optimization -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover"
+    />
 
     <!-- iPhone specific meta tags -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -23,13 +26,37 @@
     <link rel="manifest" href="/manifest.json" />
 
     <!-- Touch icons for iPhone and PWA -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/icons/icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/icon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/icon-16x16.png"
+    />
 
     <!-- Additional PWA icons -->
-    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192x192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512x512.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/icons/icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="/icons/icon-512x512.png"
+    />
     <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#0ea5e9" />
 
     <!-- Microsoft specific -->
@@ -40,13 +67,22 @@
     <!-- PWA specific meta tags -->
     <meta name="application-name" content="البيت السوداني" />
     <meta name="apple-mobile-web-app-title" content="البيت السوداني" />
-    <meta name="description" content="منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم" />
-    <meta name="keywords" content="السودان, الخليج, تجارة, خدمات, شركات, وظائف, سوق" />
+    <meta
+      name="description"
+      content="منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم"
+    />
+    <meta
+      name="keywords"
+      content="السودان, الخليج, تجارة, خدمات, شركات, وظائف, سوق"
+    />
 
     <!-- Open Graph for social sharing -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="البيت السوداني - سوق وخدمات السودان" />
-    <meta property="og:description" content="منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم" />
+    <meta
+      property="og:description"
+      content="منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم"
+    />
     <meta property="og:image" content="/icons/og-image.png" />
     <meta property="og:url" content="/" />
     <meta property="og:site_name" content="البيت السوداني" />
@@ -55,7 +91,10 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="البيت السوداني" />
-    <meta name="twitter:description" content="منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم" />
+    <meta
+      name="twitter:description"
+      content="منصة شاملة للخدمات والتجارة السودانية في الخليج والعالم"
+    />
     <meta name="twitter:image" content="/icons/twitter-card.png" />
 
     <title>البيت السوداني - سوق وخدمات السودان في الخليج والعالم</title>
@@ -84,11 +123,53 @@
     <div id="root"></div>
 
     <!-- PWA Install Banner -->
-    <div id="pwa-install-banner" style="display: none;">
-      <div style="position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #0ea5e9, #f59e0b); color: white; padding: 1rem; text-align: center; z-index: 1000; direction: rtl;">
-        <p style="margin: 0 0 1rem 0; font-weight: 600;">قم بتثبيت تطبيق البيت السوداني للحصول على تجربة أفضل</p>
-        <button id="pwa-install-btn" style="background: white; color: #0ea5e9; border: none; padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; margin-left: 1rem; cursor: pointer;">تثبيت التطبيق</button>
-        <button id="pwa-dismiss-btn" style="background: transparent; color: white; border: 1px solid white; padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer;">لاحقاً</button>
+    <div id="pwa-install-banner" style="display: none">
+      <div
+        style="
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: linear-gradient(135deg, #0ea5e9, #f59e0b);
+          color: white;
+          padding: 1rem;
+          text-align: center;
+          z-index: 1000;
+          direction: rtl;
+        "
+      >
+        <p style="margin: 0 0 1rem 0; font-weight: 600">
+          قم بتثبيت تطبيق البيت السوداني للحصول على تجربة أفضل
+        </p>
+        <button
+          id="pwa-install-btn"
+          style="
+            background: white;
+            color: #0ea5e9;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-left: 1rem;
+            cursor: pointer;
+          "
+        >
+          تثبيت التطبيق
+        </button>
+        <button
+          id="pwa-dismiss-btn"
+          style="
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+          "
+        >
+          لاحقاً
+        </button>
       </div>
     </div>
 
@@ -97,18 +178,25 @@
     <!-- PWA Service Worker Registration -->
     <script>
       // Register Service Worker
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
             .then((registration) => {
-              console.log('✅ Service Worker registered successfully:', registration.scope);
+              console.log(
+                "✅ Service Worker registered successfully:",
+                registration.scope,
+              );
 
               // Check for updates
-              registration.addEventListener('updatefound', () => {
+              registration.addEventListener("updatefound", () => {
                 const newWorker = registration.installing;
                 if (newWorker) {
-                  newWorker.addEventListener('statechange', () => {
-                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  newWorker.addEventListener("statechange", () => {
+                    if (
+                      newWorker.state === "installed" &&
+                      navigator.serviceWorker.controller
+                    ) {
                       // New content is available
                       showUpdateNotification();
                     }
@@ -117,7 +205,7 @@
               });
             })
             .catch((error) => {
-              console.log('❌ Service Worker registration failed:', error);
+              console.log("❌ Service Worker registration failed:", error);
             });
         });
       }
@@ -125,7 +213,7 @@
       // PWA Install Prompt
       let deferredPrompt;
 
-      window.addEventListener('beforeinstallprompt', (e) => {
+      window.addEventListener("beforeinstallprompt", (e) => {
         // Prevent the mini-infobar from appearing on mobile
         e.preventDefault();
         // Stash the event so it can be triggered later
@@ -135,85 +223,87 @@
       });
 
       function showInstallBanner() {
-        const banner = document.getElementById('pwa-install-banner');
-        const installBtn = document.getElementById('pwa-install-btn');
-        const dismissBtn = document.getElementById('pwa-dismiss-btn');
+        const banner = document.getElementById("pwa-install-banner");
+        const installBtn = document.getElementById("pwa-install-btn");
+        const dismissBtn = document.getElementById("pwa-dismiss-btn");
 
-        if (banner && !localStorage.getItem('pwa-install-dismissed')) {
-          banner.style.display = 'block';
+        if (banner && !localStorage.getItem("pwa-install-dismissed")) {
+          banner.style.display = "block";
 
-          installBtn.addEventListener('click', async () => {
+          installBtn.addEventListener("click", async () => {
             if (deferredPrompt) {
               deferredPrompt.prompt();
               const { outcome } = await deferredPrompt.userChoice;
 
-              if (outcome === 'accepted') {
-                console.log('✅ User accepted the install prompt');
-                gtag && gtag('event', 'pwa_install_accepted');
+              if (outcome === "accepted") {
+                console.log("✅ User accepted the install prompt");
+                gtag && gtag("event", "pwa_install_accepted");
               } else {
-                console.log('❌ User dismissed the install prompt');
-                gtag && gtag('event', 'pwa_install_dismissed');
+                console.log("❌ User dismissed the install prompt");
+                gtag && gtag("event", "pwa_install_dismissed");
               }
 
               deferredPrompt = null;
-              banner.style.display = 'none';
+              banner.style.display = "none";
             }
           });
 
-          dismissBtn.addEventListener('click', () => {
-            banner.style.display = 'none';
-            localStorage.setItem('pwa-install-dismissed', 'true');
-            gtag && gtag('event', 'pwa_install_banner_dismissed');
+          dismissBtn.addEventListener("click", () => {
+            banner.style.display = "none";
+            localStorage.setItem("pwa-install-dismissed", "true");
+            gtag && gtag("event", "pwa_install_banner_dismissed");
           });
         }
       }
 
       // Show update notification
       function showUpdateNotification() {
-        if (confirm('يتوفر تحديث جديد للتطبيق. هل تريد إعادة تحميل الصفحة؟')) {
+        if (confirm("يتوفر تحديث جديد للتطبيق. هل تريد إعادة تحميل الصفحة؟")) {
           window.location.reload();
         }
       }
 
       // Track PWA usage
-      window.addEventListener('appinstalled', (evt) => {
-        console.log('✅ App was installed successfully');
-        gtag && gtag('event', 'pwa_installed');
-        localStorage.setItem('pwa-installed', 'true');
+      window.addEventListener("appinstalled", (evt) => {
+        console.log("✅ App was installed successfully");
+        gtag && gtag("event", "pwa_installed");
+        localStorage.setItem("pwa-installed", "true");
       });
 
       // Check if running as PWA
       function isPWA() {
-        return window.matchMedia('(display-mode: standalone)').matches ||
-               window.navigator.standalone ||
-               document.referrer.includes('android-app://');
+        return (
+          window.matchMedia("(display-mode: standalone)").matches ||
+          window.navigator.standalone ||
+          document.referrer.includes("android-app://")
+        );
       }
 
       // Add PWA class to body if running as PWA
       if (isPWA()) {
-        document.addEventListener('DOMContentLoaded', () => {
-          document.body.classList.add('pwa-mode');
+        document.addEventListener("DOMContentLoaded", () => {
+          document.body.classList.add("pwa-mode");
         });
       }
 
       // Handle offline/online events
-      window.addEventListener('online', () => {
-        console.log('🟢 Back online');
-        document.body.classList.remove('offline');
-        document.body.classList.add('online');
+      window.addEventListener("online", () => {
+        console.log("🟢 Back online");
+        document.body.classList.remove("offline");
+        document.body.classList.add("online");
       });
 
-      window.addEventListener('offline', () => {
-        console.log('🔴 Gone offline');
-        document.body.classList.remove('online');
-        document.body.classList.add('offline');
+      window.addEventListener("offline", () => {
+        console.log("🔴 Gone offline");
+        document.body.classList.remove("online");
+        document.body.classList.add("offline");
       });
 
       // Initial online/offline state
       if (navigator.onLine) {
-        document.body.classList.add('online');
+        document.body.classList.add("online");
       } else {
-        document.body.classList.add('offline');
+        document.body.classList.add("offline");
       }
     </script>
   </body>

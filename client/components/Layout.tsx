@@ -23,7 +23,11 @@ import { useTheme } from "../contexts/ThemeContext";
 import { useAuth } from "../contexts/AuthContext";
 import { LanguageAndThemeControls } from "./ThemeToggle";
 import { AppPromoBanner, SyncIndicator } from "./MobileIntegration";
-import { PWAInstallBanner, PWAUpdateBanner, PWAConnectionStatus } from "./PWABanner";
+import {
+  PWAInstallBanner,
+  PWAUpdateBanner,
+  PWAConnectionStatus,
+} from "./PWABanner";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
@@ -95,7 +99,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   {/* قائمة المستخدم المنسدلة */}
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="outline" size="sm" className="gap-2 touch-target button-iphone">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-2 touch-target button-iphone"
+                      >
                         <User className="w-4 h-4" />
                         حسابي
                       </Button>

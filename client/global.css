@@ -183,7 +183,9 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    input, textarea, [contenteditable] {
+    input,
+    textarea,
+    [contenteditable] {
       -webkit-user-select: auto;
       user-select: auto;
       /* Prevent zoom on focus */
