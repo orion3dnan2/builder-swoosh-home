@@ -42,7 +42,7 @@ const translations = {
     "common.back": "العودة",
     "common.close": "إغلاق",
     "common.cancel": "إلغاء",
-    "common.confirm": "تأك��د",
+    "common.confirm": "تأكيد",
     "common.save": "حفظ",
     "common.edit": "تعديل",
     "common.delete": "حذف",
@@ -69,7 +69,7 @@ const translations = {
       "مجموعة شاملة من الخدمات المصممة خصيصاً للمجتمع السوداني في الخليج والعالم",
     "home.services.marketplace": "السوق التجاري",
     "home.services.marketplace_desc":
-      "اكتشف منتجات ��ودانية أصيلة من تجار موثوقين",
+      "اكتشف منتجات سودانية أصيلة من تجار موثوقين",
     "home.services.companies": "دليل الشركات",
     "home.services.companies_desc":
       "تواصل مع الشركات والمؤسسات السودانية في الخليج",
@@ -86,7 +86,7 @@ const translations = {
     "home.cta.title": "ابدأ رحلتك معنا اليوم",
     "home.cta.subtitle":
       "انضم إلى آلاف السودانيين الذين يستخدمون البيت السوداني لتنمية أعمالهم وخدماتهم",
-    "home.cta.create_account": "إنشاء ح��اب مجاني",
+    "home.cta.create_account": "إنشاء حساب مجاني",
     "home.stats.users": "مستخدم نشط",
     "home.stats.companies": "شركة مسجلة",
     "home.stats.products": "منتج متوفر",
@@ -183,7 +183,7 @@ const translations = {
     "stores.revenues": "الإيرادات",
     "stores.confirm_action": "تأكيد الإجراء",
     "stores.confirm_approve": "هل أنت متأكد من اعتماد هذ�� المتجر؟",
-    "stores.confirm_suspend": "هل أنت متأكد من تعليق هذا المتجر؟",
+    "stores.confirm_suspend": "ه�� أنت متأكد من تعليق هذا المتجر؟",
     "stores.confirm_reactivate": "هل أنت متأكد من إعادة تفعيل هذا المتجر؟",
     "stores.action_approve": "اعتماد",
     "stores.action_suspend": "تعليق",
@@ -406,20 +406,24 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     const [language, setLanguage] = useState<Language>("ar");
     const [fontFamily, setFontFamilyState] = useState<FontFamily>("cairo");
 
-  // Load preferences from localStorage on mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as Theme;
-    const savedLanguage = localStorage.getItem(
-      STORAGE_KEYS.LANGUAGE,
-    ) as Language;
-    const savedFont = localStorage.getItem(
-      STORAGE_KEYS.FONT_FAMILY,
-    ) as FontFamily;
+    // Load preferences from localStorage on mount
+    useEffect(() => {
+      try {
+        const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as Theme;
+        const savedLanguage = localStorage.getItem(
+          STORAGE_KEYS.LANGUAGE,
+        ) as Language;
+        const savedFont = localStorage.getItem(
+          STORAGE_KEYS.FONT_FAMILY,
+        ) as FontFamily;
 
-    if (savedTheme) setTheme(savedTheme);
-    if (savedLanguage) setLanguage(savedLanguage);
-    if (savedFont) setFontFamilyState(savedFont);
-  }, []);
+        if (savedTheme) setTheme(savedTheme);
+        if (savedLanguage) setLanguage(savedLanguage);
+        if (savedFont) setFontFamilyState(savedFont);
+      } catch (error) {
+        console.error('Error loading theme preferences:', error);
+      }
+    }, []);
 
   // Apply theme to document root
   useEffect(() => {
