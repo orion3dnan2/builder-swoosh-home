@@ -383,7 +383,7 @@ export default function MerchantSettings() {
     window.open(whatsappUrl, "_blank");
   };
 
-  // معالجة تغ��ير الشعار
+  // معالجة تغ��ير الشعا��
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -567,15 +567,20 @@ export default function MerchantSettings() {
         // طباعة تفاصيل الخطأ للتشخيص
         console.error("API Error details:", {
           message: apiError.message,
+          error: apiError,
+          status: apiError.status,
           storeData: storeData
         });
+
+        // Log the full error object for debugging
+        console.error("Full API Error:", JSON.stringify(apiError, null, 2));
 
         console.warn(
           "فشل في حفظ البيانات في الخادم، سيتم الحفظ محلياً:",
           apiError,
         );
 
-        // حفظ البيانات محلياً
+        // حفظ البيانات محل��اً
         localStorage.setItem(
           "storeSettings",
           JSON.stringify({ ...storeSettings, selectedCountry }),
@@ -655,7 +660,7 @@ export default function MerchantSettings() {
     ],
     "ا��مملكة العربية السعودية": [
       "الرياض",
-      "جدة",
+      "ج��ة",
       "الدمام",
       "��كة المكرمة",
       "المدينة المنورة",
@@ -1083,7 +1088,7 @@ export default function MerchantSettings() {
                       <option value="beauty">تجميل وعناية</option>
                     </select>
                     <p className="text-xs text-gray-500 mt-1 arabic">
-                      يحدد نوع المت��ر مكان ظهوره في الموقع (صفحة المطاعم،
+                      يحدد نوع المت��ر مكا�� ظهوره في الموقع (صفحة المطاعم،
                       الشركات، أو المت��جر)
                     </p>
                   </div>
@@ -1396,7 +1401,7 @@ export default function MerchantSettings() {
                           إشعارات المخزون
                         </h3>
                         <p className="text-sm text-gray-600 arabic">
-                          تنبيهات حول مستوى المخزون والمراجعات
+                          تنبيه��ت حول مستوى المخزون والمراجعات
                         </p>
                       </div>
                     </div>
