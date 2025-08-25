@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>البيت السوداني - غير متصل</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', 'Noto Sans Arabic', 'Tajawal', 'Tahoma', 'Arial Unicode MS', sans-serif;
+            background: linear-gradient(135deg, #0ea5e9 0%, #f59e0b 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            direction: rtl;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo-emoji {
+            font-size: 3rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .message {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .message h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fbbf24;
+        }
+        
+        .message p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .offline-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #0ea5e9;
+        }
+        
+        .btn-primary:hover {
+            background: white;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .feature h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #fbbf24;
+        }
+        
+        .feature p {
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .connection-status {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .connection-status.online {
+            background: rgba(34, 197, 94, 0.9);
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .message {
+                padding: 1.5rem;
+            }
+            
+            .connection-status {
+                top: 1rem;
+                right: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .container > * {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .logo { animation-delay: 0.1s; }
+        h1 { animation-delay: 0.2s; }
+        .subtitle { animation-delay: 0.3s; }
+        .message { animation-delay: 0.4s; }
+        .offline-actions { animation-delay: 0.5s; }
+        .features { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <div class="connection-status" id="connectionStatus">
+        🔴 غير متصل بالإنترنت
+    </div>
+    
+    <div class="container">
+        <div class="logo">
+            <span class="logo-emoji">🇸🇩</span>
+        </div>
+        
+        <h1>البيت السوداني</h1>
+        <p class="subtitle">سوق وخدمات السودان في الخليج والعالم</p>
+        
+        <div class="message">
+            <h2>📡 لا يوجد اتصال بالإنترنت</h2>
+            <p>يبدو أنك غير متصل بالإنترنت حالياً. لا تقلق، يمكنك الاستمرار في استخدام التطبيق بميزات محدودة.</p>
+            <p>سيتم تحديث المحتوى تلقائياً عند عودة الاتصال.</p>
+        </div>
+        
+        <div class="offline-actions">
+            <button class="btn btn-primary" onclick="retryConnection()">
+                🔄 إعادة المحاولة
+            </button>
+            <button class="btn" onclick="goToHome()">
+                🏠 العودة للرئيسية
+            </button>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>🔍 البحث المحفوظ</h3>
+                <p>يمكنك الوصول للصفحات التي زرتها مؤخراً</p>
+            </div>
+            <div class="feature">
+                <h3>💾 البيانات المحفوظة</h3>
+                <p>المعلومات المهمة محفوظة محلياً على جهازك</p>
+            </div>
+            <div class="feature">
+                <h3>🔄 التحديث التلقائي</h3>
+                <p>سيتم تحديث التطبيق تلقائياً عند عودة الاتصال</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check connection status
+        function updateConnectionStatus() {
+            const statusElement = document.getElementById('connectionStatus');
+            
+            if (navigator.onLine) {
+                statusElement.textContent = '🟢 متصل بالإنترنت';
+                statusElement.classList.add('online');
+                
+                // Automatically redirect when back online
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+            } else {
+                statusElement.textContent = '🔴 غير متصل بالإنترنت';
+                statusElement.classList.remove('online');
+            }
+        }
+        
+        // Retry connection
+        function retryConnection() {
+            updateConnectionStatus();
+            
+            if (navigator.onLine) {
+                window.location.href = '/';
+            } else {
+                // Show temporary message
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '⏳ جاري التحقق...';
+                btn.disabled = true;
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    updateConnectionStatus();
+                }, 2000);
+            }
+        }
+        
+        // Go to home (cached version)
+        function goToHome() {
+            window.location.href = '/';
+        }
+        
+        // Listen for connection changes
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+        
+        // Initial check
+        updateConnectionStatus();
+        
+        // Register service worker if available
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('Service Worker registered:', registration);
+                })
+                .catch(error => {
+                    console.log('Service Worker registration failed:', error);
+                });
+        }
+    </script>
+</body>
+</html>
