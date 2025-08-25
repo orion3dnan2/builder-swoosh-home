@@ -198,6 +198,7 @@ function App() {
               <Route path="/company/:id" element={<Company />} />
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/services" element={<Services />} />
+              <Route path="/pwa" element={<PWAInfo />} />
               <Route path="/restaurants" element={<Restaurants />} />
               <Route path="/restaurant/:id" element={<Restaurant />} />
               <Route path="/ads" element={<Ads />} />
