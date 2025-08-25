@@ -19,14 +19,13 @@ interface PWAState {
 }
 
 export function usePWA() {
-  // Add safety check for React context
-  if (typeof React === 'undefined' || React.useState === undefined) {
-    console.error('usePWA: React hooks are not available');
+  // Add safety check for browser environment
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
     return {
       isInstallable: false,
       isInstalled: false,
       isStandalone: false,
-      isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
+      isOnline: true,
       hasUpdate: false,
       installPrompt: null,
       installApp: async () => {},
