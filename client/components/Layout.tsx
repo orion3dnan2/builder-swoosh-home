@@ -431,8 +431,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <main className="arabic animate-fade-in">{children}</main>
 
       {/* Footer */}
-      <footer className="bg-card border-t border-border py-12 mt-20">
-        <div className="container mx-auto px-4">
+      <footer className="bg-card border-t border-border py-12 mt-20 iphone-safe-bottom">
+        <div className="container mx-auto px-4 iphone:px-6">
           <div
             className={`grid grid-cols-1 md:grid-cols-4 gap-8 ${isRTL ? "text-right" : "text-left"}`}
           >
@@ -462,7 +462,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     to="/products"
                     className="text-muted-foreground hover:text-primary-600 transition-colors"
                   >
-                    المنتجات
+                    ا��منتجات
                   </Link>
                 </li>
                 <li>
