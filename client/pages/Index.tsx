@@ -59,7 +59,7 @@ export default function Index() {
     {
       icon: Building2,
       title: "دليل الشركات",
-      description: "تواصل مع الشركات وا��مؤسسات السودانية في الخليج",
+      description: "تواصل مع الشركات والمؤسسات السودانية في الخليج",
       href: "/companies",
       color: "from-green-500 to-green-600",
       bgColor: "bg-green-50 dark:bg-green-900/20",
@@ -67,7 +67,7 @@ export default function Index() {
     {
       icon: Briefcase,
       title: "لوحة الوظائف",
-      description: "ابحث عن فرص عمل مناسبة أو أعلن عن وظائف شاغرة",
+      description: "ابحث عن فرص عمل ��ناسبة أو أعلن عن وظائف شاغرة",
       href: "/jobs",
       color: "from-purple-500 to-purple-600",
       bgColor: "bg-purple-50 dark:bg-purple-900/20",
@@ -95,7 +95,7 @@ export default function Index() {
       name: "أحمد محمد",
       role: "صاحب متجر",
       content:
-        "البيت السوداني ساعدني في الوصول لعملاء جدد و��نمية تجارتي بشكل كبير",
+        "البيت السوداني ساعدني في الوصول لعملاء جدد وتنمية تجارتي بشكل كبير",
       rating: 5,
     },
     {
@@ -192,7 +192,7 @@ export default function Index() {
 
       {/* Services Section */}
       <section className="py-12 md:py-20 lg:py-24 bg-background">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 iphone:px-6">
           <div
             className={`text-center mb-12 md:mb-16 ${isRTL ? "text-right" : "text-center"}`}
           >
@@ -251,7 +251,7 @@ export default function Index() {
 
       {/* Testimonials Section */}
       <section className="py-12 md:py-20 lg:py-24 bg-muted/50">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 iphone:px-6">
           <div
             className={`text-center mb-12 md:mb-16 ${isRTL ? "text-right" : "text-center"}`}
           >
@@ -312,7 +312,7 @@ export default function Index() {
 
       {/* CTA Section */}
       <section className="py-12 md:py-20 lg:py-24 bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 dark:from-primary-800 dark:via-primary-900 dark:to-secondary-800">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 iphone:px-6 text-center">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-4 arabic">
             ابدأ رحلتك معنا اليوم
           </h2>
@@ -340,7 +340,7 @@ export default function Index() {
                 variant="outline"
                 className="w-full xs:w-auto px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl border-white/20 text-white hover:bg-white/10 arabic button-iphone touch-target"
               >
-                تسجيل ال��خول
+                تسجيل الدخول
               </Button>
             </Link>
           </div>
