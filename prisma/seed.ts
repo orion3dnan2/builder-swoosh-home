@@ -103,6 +103,37 @@ async function main() {
     },
   });
 
+  // إنشاء مستخد�� تجريبي عادي آخر
+  const testUser = await prisma.user.upsert({
+    where: { email: "test@baytsudani.com" },
+    update: {},
+    create: {
+      username: "testuser",
+      email: "test@baytsudani.com",
+      password: hashedUserPassword,
+      role: "CUSTOMER",
+      isActive: true,
+      profile: {
+        create: {
+          name: "محمد أحمد التجريبي",
+          phone: "+249123987654",
+          language: "AR",
+          street: "شارع الزبير",
+          city: "أم درمان",
+          state: "الخرطوم",
+          country: "السودان",
+          zipCode: "11114",
+        },
+      },
+      permissions: {
+        create: [
+          { resource: "profile", actions: ["read", "write"] },
+          { resource: "orders", actions: ["read", "write"] },
+        ],
+      },
+    },
+  });
+
   // إنشاء متجر للتاجر
   const store = await prisma.store.upsert({
     where: { id: "store-1" },
@@ -295,7 +326,7 @@ async function main() {
         title: "من نحن",
         slug: "about-us",
         content:
-          "<h1>مرحباً بكم في بيت السوداني</h1><p>منصة التجارة الإلكترونية الرائدة في السودان</p>",
+          "<h1>مرحباً بكم في بيت السودان��</h1><p>منصة التجارة الإلكترونية الرائدة في السودان</p>",
         excerpt: "تعرف على قصتنا ورؤيتنا",
         status: "PUBLISHED",
         type: "PAGE",
